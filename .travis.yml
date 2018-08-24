@@ -2,6 +2,15 @@ sudo: required
 dist: xenial
 group: edge
 
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+      - screen
+  sauce_connect: true
+
 language: node_js
 node_js: 11
 
@@ -16,7 +25,15 @@ cache:
 
 before_script:
   - npm install npm@latest -g
+  - npm install -g @angular/cli
+  - npm i npm@latest protractor -g
+  # - npm i -g webdriver-manager
+  # - webdriver-manager update
+  # - screen webdriver-manager start
   - gulp
+  # - rm -Rf node_modules/electron-builder-squirrel-windows node_modules/electron-windows-notifications #Avoid electron fail
+  - screen -dm ionic serve -b -a -d --nogulp --address localhost --port 8100 # We use screen here because nohup does not work with ionic serve.
+  - sleep 15  # Wait a lot here, selenium and gulp:before task and ionic must be running.
 
 script:
   - npm run build
@@ -24,3 +41,7 @@ script:
 after_success:
   - chmod +x scripts/aot.sh
   - scripts/aot.sh
+matrix:
+    include:
+      - script:
+        - ./node_modules/protractor/bin/protractor e2e/sauce/browser/protractor-sauce-browser-login.js
