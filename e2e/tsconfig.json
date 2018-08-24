@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2016"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@e2e/*": ["./*"],
+    },
+    "include": [
+      "../src/**/*.spec.ts",
+      "e2e/**/*.ts"
+    ],
+    "outDir": "../dist/out-tsc-e2e",
+    "module": "commonjs",
+    "types":[
+      "jasmine",
+      "node"
+    ]
+  }
+}
