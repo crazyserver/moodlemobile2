@@ -576,6 +576,16 @@ export class CoreCourseProvider {
     }
 
     /**
+     * Returns if the icon is not in a default theme.
+     *
+     * @param {string} modicon The mod icon URL string.
+     * @return {boolean}     If the modicon URL is from a default theme.
+     */
+    isModIconInDefaultTheme(modicon?: string): boolean {
+        return !modicon || modicon.indexOf('/boost/') > 0 || modicon.indexOf('/clean/') > 0 || modicon.indexOf('/more/') > 0;
+    }
+
+    /**
      * Returns the source to a module icon.
      *
      * @param moduleName The module name.
@@ -583,18 +593,20 @@ export class CoreCourseProvider {
      * @return The IMG src.
      */
     getModuleIconSrc(moduleName: string, modicon?: string): string {
-        // @TODO: Check modicon url theme to apply other theme icons.
+        if (this.isModIconInDefaultTheme(modicon)) {
+            if (this.CORE_MODULES.indexOf(moduleName) < 0) {
+                if (modicon) {
+                    return modicon;
+                }
 
-        // Use default icon on core themes.
-        if (this.CORE_MODULES.indexOf(moduleName) < 0) {
-            if (modicon) {
-                return modicon;
+                moduleName = 'external-tool';
             }
 
-            moduleName = 'external-tool';
+            // Use default icon on core themes.
+            return 'assets/img/mod/' + moduleName + '.svg';
         }
 
-        return 'assets/img/mod/' + moduleName + '.svg';
+        return modicon;
     }
 
     /**

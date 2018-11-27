@@ -184,7 +184,9 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
             } else if (files && files.length) {
                 const file = files[0];
 
-                resourceData.icon = this.mimetypeUtils.getFileIcon(file.filename);
+                resourceData.icon = this.courseProvider.isModIconInDefaultTheme(module.modicon) ?
+                    this.mimetypeUtils.getFileIcon(file.filename) :
+                    module.modicon;
 
                 if (options.showsize) {
                     let size;

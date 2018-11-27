@@ -130,7 +130,9 @@ export class AddonModUrlModuleHandler implements CoreCourseModuleHandler {
 
             if (module.contents && module.contents[0]) {
                 // Calculate the icon to use.
-                handlerData.icon = this.urlProvider.guessIcon(module.contents[0].fileurl) ||
+                handlerData.icon = this.courseProvider.isModIconInDefaultTheme(module.modicon) ?
+                    this.urlProvider.guessIcon(module.contents[0].fileurl) ||
+                    this.courseProvider.getModuleIconSrc(this.modName, module.modicon) :
                     this.courseProvider.getModuleIconSrc(this.modName, module.modicon);
             }
         });
