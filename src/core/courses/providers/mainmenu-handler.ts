@@ -96,7 +96,7 @@ export class CoreDashboardMainMenuHandler implements CoreMainMenuHandler {
      */
     getDisplayData(): CoreMainMenuHandlerData {
         return {
-            icon: 'home',
+            icon: 'fa-compass',
             title: 'core.courses.mymoodle',
             page: 'CoreCoursesDashboardPage',
             class: 'core-dashboard-handler'

@@ -40,4 +40,31 @@ ion-app.app-root page-core-mainmenu {
         font-size: 23px;
         height: 23px;
     }
+
+    .ion-md-fa-compass,
+    .ion-ios-fa-compass,
+    .ion-ios-fa-compass-outline,
+    .ion-wp-fa-compass,
+    .ion-fa-graduation-cap {
+        @extend .fa-compass;
+        @extend .fa;
+        font-size: 24px;
+        height: 24px;
+        line-height: 24px;
+    }
+
+    .ion-ios-fa-compass {
+        font-size: 30px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .ion-ios-fa-compass-outline {
+        color: transparent;
+        -webkit-text-stroke-width: 0.8px;
+        -webkit-text-stroke-color: $tabs-tab-color-inactive;
+        font-size: 25px;
+        height: 25px;
+        line-height: 25px;
+    }
 }
