@@ -1,0 +1,12 @@
+<ion-item-divider>
+    <h2>{{ 'addon.block_feedback.pluginname' | translate }}</h2>
+</ion-item-divider>
+<core-loading [hideUntil]="loaded" class="core-loading-center">
+    <a *ngFor="let feedback of feedbacks" ion-item text-wrap id="core-course-module-{{feedback.id}}" class="core-course-module-handler addon-mod_assign-handler" (click)="gotoFeedback($event, feedback)" [title]="feedback.title" detail-none>
+
+        <img item-start [src]="icon" [alt]="modnametranslated" class="core-module-icon">
+        <div class="core-module-title">
+            <core-format-text [text]="feedback.title"></core-format-text>
+        </div>
+    </a>
+</core-loading>

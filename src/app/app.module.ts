@@ -108,6 +108,7 @@ import { AddonBlockCalendarMonthModule } from '@addon/block/calendarmonth/calend
 import { AddonBlockCalendarUpcomingModule } from '@addon/block/calendarupcoming/calendarupcoming.module';
 import { AddonBlockCommentsModule } from '@addon/block/comments/comments.module';
 import { AddonBlockCompletionStatusModule } from '@addon/block/completionstatus/completionstatus.module';
+import { AddonBlockFeedbackModule } from '@addon/block/feedback/feedback.module';
 import { AddonBlockGlossaryRandomModule } from '@addon/block/glossaryrandom/glossaryrandom.module';
 import { AddonBlockHtmlModule } from '@addon/block/html/html.module';
 import { AddonBlockMyOverviewModule } from '@addon/block/myoverview/myoverview.module';
@@ -260,6 +261,7 @@ export const WP_PROVIDER: any = null;
         AddonBlockCalendarUpcomingModule,
         AddonBlockCommentsModule,
         AddonBlockCompletionStatusModule,
+        AddonBlockFeedbackModule,
         AddonBlockGlossaryRandomModule,
         AddonBlockHtmlModule,
         AddonBlockLearningPlansModule,

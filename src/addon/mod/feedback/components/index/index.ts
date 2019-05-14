@@ -172,7 +172,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
      * @return Promise resolved when done.
      */
     protected fetchContent(refresh: boolean = false, sync: boolean = false, showErrors: boolean = false): Promise<any> {
-        return this.feedbackProvider.getFeedback(this.courseId, this.module.id).then((feedback) => {
+        return this.feedbackProvider.getFeedback(this.module.course, this.module.id).then((feedback) => {
             this.feedback = feedback;
 
             this.description = feedback.intro || feedback.description;
