@@ -1,0 +1,56 @@
+$core-side-panel-hidden-width: 50px;
+$core-side-panel-disabled-opacity: 0.6;
+
+page-core-course-section {
+    .split-pane {
+        display: block;
+        > [main] {
+            width: calc(100% - #{($core-side-panel-hidden-width)});
+        }
+
+        .core-course-blocks {
+            position: absolute;
+            @include position(null, 0, null, auto);
+            z-index: 30;
+            opacity: $core-side-panel-disabled-opacity;
+            max-width: $menu-width;
+            transform: translateX(calc(100% - #{($core-side-panel-hidden-width)}));
+            @include core-transition(all);
+            border-left: $split-pane-md-border;
+
+            > * {
+                pointer-events: none;
+            }
+        }
+
+        &.split-pane-visible {
+            display: flex;
+            > .core-course-blocks {
+                opacity: 1;
+                @include position(null, null, null, 0);
+                transform: translateX(0);
+                position: relative;
+                > * {
+                    pointer-events: auto;
+                }
+            }
+        }
+    }
+
+    @include media-breakpoint-down(sm) {
+        .split-pane.split-pane-visible {
+            display: block;
+            > [main] {
+                opacity: $core-side-panel-disabled-opacity;
+                > * {
+                    pointer-events: none;
+                }
+            }
+
+            > .core-course-blocks {
+                position: absolute;
+                @include position(null, 0, null, auto);
+            }
+        }
+    }
+}

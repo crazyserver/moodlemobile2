@@ -19,12 +19,14 @@ import { CoreCourseSectionPage } from './section';
 import { CoreComponentsModule } from '@components/components.module';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { CoreCourseComponentsModule } from '../../components/components.module';
+import { CoreBlockComponentsModule } from '@core/block/components/components.module';
 
 @NgModule({
     declarations: [
         CoreCourseSectionPage,
     ],
     imports: [
+    CoreBlockComponentsModule,
         CoreComponentsModule,
         CoreDirectivesModule,
         CoreCourseComponentsModule,

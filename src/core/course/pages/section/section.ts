@@ -20,6 +20,7 @@ import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@providers/app';
 import { CoreCourseProvider } from '../../providers/course';
 import { CoreCourseHelperProvider } from '../../providers/helper';
 import { CoreCourseFormatDelegate } from '../../providers/format-delegate';
@@ -62,6 +63,7 @@ export class CoreCourseSectionPage implements OnDestroy {
     moduleId: number;
     displayEnableDownload: boolean;
     displayRefresher: boolean;
+    showBlocks = false;
 
     protected module: any;
     protected modParams: any;
@@ -78,13 +80,14 @@ export class CoreCourseSectionPage implements OnDestroy {
             private textUtils: CoreTextUtilsProvider, private coursesProvider: CoreCoursesProvider,
             sitesProvider: CoreSitesProvider, private navCtrl: NavController, private injector: Injector,
             private prefetchDelegate: CoreCourseModulePrefetchDelegate, private syncProvider: CoreCourseSyncProvider,
-            private utils: CoreUtilsProvider) {
+            private utils: CoreUtilsProvider, private appProvider: CoreAppProvider) {
         this.course = navParams.get('course');
         this.sectionId = navParams.get('sectionId');
         this.sectionNumber = navParams.get('sectionNumber');
         this.module = navParams.get('module');
         this.firstTabName = navParams.get('selectedTab');
         this.modParams = navParams.get('modParams');
+        this.showBlocks = appProvider.isWide();
 
         // Get the title to display. We dont't have sections yet.
         this.title = courseFormatDelegate.getCourseTitle(this.course);
@@ -182,6 +185,20 @@ export class CoreCourseSectionPage implements OnDestroy {
                 }
             });
         });
+    }
+
+    toggleBlocks(): void {
+       this.showBlocks = !this.showBlocks;
+    }
+
+    hideBlocks(): void {
+        if (!this.appProvider.isWide()) {
+            this.showBlocks = false;
+        }
+    }
+
+    showSide(): void {
+        this.showBlocks = true;
     }
 
     /**

@@ -11,6 +11,10 @@
         <core-tab [title]="'core.course.contents' | translate">
             <ng-template>
                 <core-navbar-buttons>
+                    <button ion-button icon-only (click)="toggleBlocks()">
+                        <core-icon name="fa-caret-square-o-left" *ngIf="!showBlocks"></core-icon>
+                         <core-icon name="fa-caret-square-o-right" *ngIf="showBlocks"></core-icon>
+                    </button>
                     <core-context-menu>
                         <core-context-menu-item *ngIf="displayEnableDownload" [priority]="2000" [content]="'core.settings.showdownloadoptions' | translate" (action)="toggleDownload()" [iconAction]="downloadEnabledIcon"></core-context-menu-item>
                         <core-context-menu-item [hidden]="!downloadCourseEnabled" [priority]="1900" [content]="prefetchCourseData.title | translate" (action)="prefetchCourse()" [iconAction]="prefetchCourseData.prefetchCourseIcon" [closeOnClick]="false"></core-context-menu-item>
@@ -18,15 +22,20 @@
                         <core-context-menu-item *ngFor="let item of courseMenuHandlers" [priority]="item.priority" (action)="openMenuItem(item)" [content]="item.data.title | translate" [iconAction]="item.data.icon" [class]="item.data.class"></core-context-menu-item>
                     </core-context-menu>
                 </core-navbar-buttons>
-                <ion-content #courseSectionContent>
-                    <ion-refresher [enabled]="dataLoaded && displayRefresher" (ionRefresh)="doRefresh($event)">
-                        <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
-                    </ion-refresher>
+                <ion-split-pane [when]="showBlocks">
+                    <ion-content #courseSectionContent main (click)="hideBlocks()">
+                        <ion-refresher [enabled]="dataLoaded && displayRefresher" (ionRefresh)="doRefresh($event)">
+                            <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
+                        </ion-refresher>
 
-                    <core-loading [hideUntil]="dataLoaded">
-                        <core-course-format [course]="course" [sections]="sections" [initialSectionId]="sectionId" [initialSectionNumber]="sectionNumber" [downloadEnabled]="downloadEnabled" [moduleId]="moduleId" (completionChanged)="onCompletionChange($event)"></core-course-format>
-                    </core-loading>
-                </ion-content>
+                        <core-loading [hideUntil]="dataLoaded">
+                            <core-course-format [course]="course" [sections]="sections" [initialSectionId]="sectionId" [initialSectionNumber]="sectionNumber" [downloadEnabled]="downloadEnabled" [moduleId]="moduleId" (completionChanged)="onCompletionChange($event)"></core-course-format>
+                        </core-loading>
+                    </ion-content>
+                    <ion-content class="core-course-blocks" (click)="showSide()">
+                        <core-block-course-blocks [courseId]="course.id"></core-block-course-blocks>
+                    </ion-content>
+                </ion-split-pane>
             </ng-template>
         </core-tab>
         <!-- One tab per handler. -->
