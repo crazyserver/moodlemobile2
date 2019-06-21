@@ -46,7 +46,7 @@ export class CoreBlockCourseBlocksCourseOptionHandler implements CoreCourseOptio
      * @return {boolean} Whether or not the handler is enabled on a site level.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return this.courseProvider.canGetCourseBlocks() && !this.blockDelegate.areBlocksDisabledInCourses();
+        return false;
     }
 
     /**

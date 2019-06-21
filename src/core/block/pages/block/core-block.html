@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-navbar core-back-button>
+        <ion-title><core-format-text [text]="title | translate"></core-format-text></ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <!-- Only render the block if it's supported. -->
+    <div *ngIf="loaded && componentClass" class="{{class}}">
+        <core-dynamic-component [component]="componentClass" [data]="data"></core-dynamic-component>
+    </div>
+</ion-content>

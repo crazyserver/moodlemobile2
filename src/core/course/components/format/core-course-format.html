@@ -8,6 +8,15 @@
 <!-- Default course format. -->
 <core-dynamic-component [component]="courseFormatComponent" [data]="data">
     <core-loading [hideUntil]="loaded">
+        <!-- Blocks. -->
+        <div class="core-horizontal-scroll core-horizontal-blocks">
+            <div class="core-horizontal-block" *ngFor="let block of blocks">
+                <ion-card (click)="blockClicked($event, block)">
+                    <core-block [block]="block" contextLevel="course" [instanceId]="course.id"></core-block>
+                </ion-card>
+            </div>
+        </div>
+
         <!-- Section selector. -->
         <core-dynamic-component [component]="sectionSelectorComponent" [data]="data">
             <div text-wrap *ngIf="displaySectionSelector && sections && sections.length" padding class="clearfix" ion-row justify-content-between class="safe-padding-horizontal" [class.core-section-download]="downloadEnabled">

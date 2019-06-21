@@ -25,6 +25,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreCourseFormatDelegate } from '@core/course/providers/format-delegate';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 import { CoreDynamicComponent } from '@components/dynamic-component/dynamic-component';
+import { CoreBlockDelegate } from '@core/block/providers/delegate';
 
 /**
  * Component to display course contents using a certain format. If the format isn't found, use default one.
@@ -62,6 +63,7 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
     canLoadMore = false;
     showSectionId = 0;
     sectionSelectorExpanded = false;
+    blocks: any;
 
     // Data to pass to the components.
     data: any = {};
@@ -81,7 +83,8 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private cfDelegate: CoreCourseFormatDelegate, translate: TranslateService, private injector: Injector,
             private courseHelper: CoreCourseHelperProvider, private domUtils: CoreDomUtilsProvider,
             eventsProvider: CoreEventsProvider, private sitesProvider: CoreSitesProvider, private content: Content,
-            prefetchDelegate: CoreCourseModulePrefetchDelegate, private modalCtrl: ModalController) {
+            prefetchDelegate: CoreCourseModulePrefetchDelegate, private modalCtrl: ModalController,
+            private courseProvider: CoreCourseProvider, private blockDelegate: CoreBlockDelegate) {
 
         this.selectOptions.title = translate.instant('core.course.sections');
         this.completionChanged = new EventEmitter();
@@ -131,6 +134,9 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
      */
     ngOnInit(): void {
         this.displaySectionSelector = this.cfDelegate.displaySectionSelector(this.course);
+        this.courseProvider.getCourseBlocks(this.course.id).then((blocks) => {
+            this.blocks = this.blockDelegate.filterSupportedBlock(blocks);
+        });
     }
 
     /**
@@ -197,6 +203,23 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
         if (this.downloadEnabled && (changes.downloadEnabled || changes.sections)) {
             this.calculateSectionsStatus(false);
         }
+    }
+
+    blockClicked(e: Event, block: any): void {
+        this.blockDelegate.getBlockDisplayData(this.injector, block, 'course', this.course.id).then((data) => {
+            if (data.component.name == 'CoreBlockOnlyTitleComponent') {
+                return;
+            }
+            e.preventDefault();
+
+            const blockModal = this.modalCtrl.create('CoreBlockPage', {
+                block: block,
+                contextLevel: 'course',
+                instanceId: this.course.id
+            });
+            blockModal.present();
+        });
+
     }
 
     /**

@@ -130,6 +130,18 @@ export class CoreBlockDelegate extends CoreDelegate {
     }
 
     /**
+     * Check if any of the blocks in a list is supported.
+     *
+     * @param {any[]} blocks The list of blocks.
+     * @return {boolean} Whether any of the blocks is supported.
+     */
+    filterSupportedBlock(blocks: any[]): any[] {
+        blocks = blocks || [];
+
+        return blocks.filter((block) => { return this.isBlockSupported(block.name); });
+    }
+
+    /**
      * Check if blocks are disabled in a certain site.
      *
      * @param  {string} [siteId] Site Id. If not defined, use current site.

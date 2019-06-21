@@ -29,3 +29,21 @@ ion-app.app-root core-block {
     color: $black;
   }
 }
+
+.core-horizontal-scroll.core-horizontal-blocks {
+  height: 160px;
+
+  .core-horizontal-block {
+    @include horizontal_scroll_item(80%, 250px, 300px);
+
+    core-block > div, core-block-only-title ion-item-divider {
+      height: 100%;
+    }
+    core-block {
+      pointer-events: none;
+      core-block-only-title {
+        pointer-events: auto;
+      }
+    }
+  }
+}
