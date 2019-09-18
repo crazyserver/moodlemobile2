@@ -35,6 +35,7 @@ import { CoreCoursePickerMenuPopoverComponent } from './course-picker-menu/cours
 import { CoreChartComponent } from './chart/chart';
 import { CoreChronoComponent } from './chrono/chrono';
 import { CoreDownloadRefreshComponent } from './download-refresh/download-refresh';
+import { CoreGroupSelectorComponent } from './group-selector/group-selector';
 import { CoreLocalFileComponent } from './local-file/local-file';
 import { CoreSitePickerComponent } from './site-picker/site-picker';
 import { CoreTabsComponent } from './tabs/tabs';
@@ -93,13 +94,15 @@ import { CoreBSTooltipComponent } from './bs-tooltip/bs-tooltip';
         CoreInfiniteLoadingComponent,
         CoreUserAvatarComponent,
         CoreStyleComponent,
-        CoreBSTooltipComponent
+        CoreBSTooltipComponent,
+        CoreGroupSelectorComponent
     ],
     entryComponents: [
         CoreContextMenuPopoverComponent,
         CoreCoursePickerMenuPopoverComponent,
         CoreRecaptchaModalComponent,
-        CoreBSTooltipComponent
+        CoreBSTooltipComponent,
+        CoreGroupSelectorComponent
     ],
     imports: [
         IonicModule,
@@ -141,7 +144,8 @@ import { CoreBSTooltipComponent } from './bs-tooltip/bs-tooltip';
         CoreInfiniteLoadingComponent,
         CoreUserAvatarComponent,
         CoreStyleComponent,
-        CoreBSTooltipComponent
+        CoreBSTooltipComponent,
+        CoreGroupSelectorComponent
     ]
 })
 export class CoreComponentsModule {}
