@@ -33,13 +33,7 @@
 
     <!-- User can view all submissions (teacher). -->
     <ion-list *ngIf="assign && canViewAllSubmissions" class="core-list-align-detail-right with-borders">
-        <ion-item text-wrap *ngIf="(groupInfo.separateGroups || groupInfo.visibleGroups)">
-            <ion-label id="addon-assign-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
-            <ion-label id="addon-assign-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
-            <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-assign-groupslabel" interface="action-sheet">
-                <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
-            </ion-select>
-        </ion-item>
+        <core-group-selector [cmId]="assign.cmid" [courseId]="courseId" [group]="group" (onChange)="setGroup($event)"></core-group-selector>
 
         <ion-item text-wrap *ngIf="timeRemaining">
             <h2>{{ 'addon.mod_assign.timeremaining' | translate }}</h2>

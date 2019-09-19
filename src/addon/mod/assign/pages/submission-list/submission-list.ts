@@ -18,11 +18,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
+import { CoreGroupInfo } from '@providers/groups';
 import { AddonModAssignProvider } from '../../providers/assign';
 import { AddonModAssignOfflineProvider } from '../../providers/assign-offline';
 import { AddonModAssignHelperProvider } from '../../providers/helper';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
+import { CoreGroupSelectorComponent } from '@components/group-selector/group-selector';
 
 /**
  * Page that displays a list of submissions of an assignment.
@@ -34,6 +35,7 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 })
 export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
     @ViewChild(CoreSplitViewComponent) splitviewCtrl: CoreSplitViewComponent;
+    @ViewChild(CoreGroupSelectorComponent) groupComponent: CoreGroupSelectorComponent;
 
     title: string; // Title to display.
     assign: any; // Assignment.
@@ -42,12 +44,6 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
     haveAllParticipants: boolean; // Whether all participants have been loaded.
     selectedSubmissionId: number; // Selected submission ID.
     groupId = 0; // Group ID to show.
-
-    groupInfo: CoreGroupInfo = {
-        groups: [],
-        separateGroups: false,
-        visibleGroups: false
-    };
 
     protected moduleId: number; // Module ID the submission belongs to.
     protected courseId: number; // Course ID the assignment belongs to.
@@ -58,7 +54,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
     constructor(navParams: NavParams, protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
             protected domUtils: CoreDomUtilsProvider, protected translate: TranslateService,
             protected assignProvider: AddonModAssignProvider, protected assignOfflineProvider: AddonModAssignOfflineProvider,
-            protected assignHelper: AddonModAssignHelperProvider, protected groupsProvider: CoreGroupsProvider) {
+            protected assignHelper: AddonModAssignHelperProvider) {
 
         this.moduleId = navParams.get('moduleId');
         this.courseId = navParams.get('courseId');
@@ -107,7 +103,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
      *
      * @return {Promise<any>} Promise resolved when done.
      */
-    protected fetchAssignment(): Promise<any> {
+    protected fetchAssignment(refresh: boolean = false): Promise<any> {
 
         // Get assignment data.
         return this.assignProvider.getAssignment(this.courseId, this.moduleId).then((assign) => {
@@ -124,11 +120,9 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
 
             this.submissionsData = data;
 
-            // Check if groupmode is enabled to avoid showing wrong numbers.
-            return this.groupsProvider.getActivityGroupInfo(this.assign.cmid, false).then((groupInfo) => {
-                this.groupInfo = groupInfo;
-
-                return this.setGroup(this.groupsProvider.validateGroupId(this.groupId, groupInfo));
+            // Check if groupmode is enabled.
+            return this.groupComponent.onLoad(refresh).then((groups) => {
+                return this.setGroup(groups.selected);
             });
         }).catch((error) => {
             this.domUtils.showErrorModalDefault(error, 'Error getting assigment data.');
@@ -269,6 +263,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
         const promises = [];
 
         promises.push(this.assignProvider.invalidateAssignmentData(this.courseId));
+        this.groupComponent && promises.push(this.groupComponent.invalidate());
         if (this.assign) {
             promises.push(this.assignProvider.invalidateAllSubmissionData(this.assign.id));
             promises.push(this.assignProvider.invalidateAssignmentUserMappingsData(this.assign.id));
@@ -277,7 +272,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
         }
 
         return Promise.all(promises).finally(() => {
-            return this.fetchAssignment();
+            return this.fetchAssignment(true);
         });
     }
 

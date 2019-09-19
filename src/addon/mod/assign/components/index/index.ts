@@ -14,9 +14,10 @@
 
 import { Component, Optional, Injector, ViewChild } from '@angular/core';
 import { Content, NavController } from 'ionic-angular';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
+import { CoreGroupInfo } from '@providers/groups';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
+import { CoreGroupSelectorComponent } from '@components/group-selector/group-selector';
 import { AddonModAssignProvider } from '../../providers/assign';
 import { AddonModAssignHelperProvider } from '../../providers/helper';
 import { AddonModAssignOfflineProvider } from '../../providers/assign-offline';
@@ -32,6 +33,7 @@ import { AddonModAssignSubmissionComponent } from '../submission/submission';
 })
 export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityComponent {
     @ViewChild(AddonModAssignSubmissionComponent) submissionComponent: AddonModAssignSubmissionComponent;
+    @ViewChild(CoreGroupSelectorComponent) groupComponent: CoreGroupSelectorComponent;
 
     component = AddonModAssignProvider.COMPONENT;
     moduleName = 'assign';
@@ -44,12 +46,6 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
     showNumbers = true; // Whether to show number of submissions with each status.
     summary: any; // The summary.
     needsGradingAvalaible: boolean; // Whether we can see the submissions that need grading.
-
-    groupInfo: CoreGroupInfo = {
-        groups: [],
-        separateGroups: false,
-        visibleGroups: false
-    };
 
     // Status.
     submissionStatusSubmitted = AddonModAssignProvider.SUBMISSION_STATUS_SUBMITTED;
@@ -67,7 +63,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
     constructor(injector: Injector, protected assignProvider: AddonModAssignProvider, @Optional() content: Content,
             protected assignHelper: AddonModAssignHelperProvider, protected assignOffline: AddonModAssignOfflineProvider,
             protected syncProvider: AddonModAssignSyncProvider, protected timeUtils: CoreTimeUtilsProvider,
-            protected groupsProvider: CoreGroupsProvider, protected navCtrl: NavController) {
+            protected navCtrl: NavController) {
         super(injector, content);
     }
 
@@ -199,12 +195,11 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
                     }
 
                     // Check if groupmode is enabled to avoid showing wrong numbers.
-                    return this.groupsProvider.getActivityGroupInfo(this.assign.cmid, false).then((groupInfo) => {
-                        this.groupInfo = groupInfo;
-                        this.showNumbers = groupInfo.groups.length == 0 ||
+                    return this.groupComponent.onLoad(refresh).then((groups) => {
+                        this.showNumbers = groups.info.groups.length == 0 ||
                             this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.5');
 
-                        return this.setGroup(this.groupsProvider.validateGroupId(this.group, groupInfo));
+                        return this.setGroup(groups.selected);
                     });
                 }
 
@@ -290,6 +285,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
         const promises = [];
 
         promises.push(this.assignProvider.invalidateAssignmentData(this.courseId));
+        this.groupComponent && promises.push(this.groupComponent.invalidate());
 
         if (this.assign) {
             promises.push(this.assignProvider.invalidateAllSubmissionData(this.assign.id));

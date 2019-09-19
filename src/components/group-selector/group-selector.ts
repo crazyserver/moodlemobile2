@@ -43,7 +43,6 @@ export class CoreGroupSelectorComponent implements OnInit {
 
     constructor(protected groupsProvider: CoreGroupsProvider,
             protected utils: CoreUtilsProvider) {
-        this.loadPromise = Promise.reject();
     }
 
     /**
