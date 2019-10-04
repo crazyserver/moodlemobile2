@@ -1,4 +1,4 @@
-{
+  {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": false,
@@ -6,13 +6,15 @@
     "experimentalDecorators": true,
     "lib": [
       "dom",
-      "es2015"
+      "es2016",
+      "esnext.asynciterable"
     ],
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "es5",
+    "target": "es6",
     "baseUrl": "./src",
+    "outDir": "./e2e/build",
     "paths": {
       "@addon/*": ["addon/*"],
       "@app/*": ["app/*"],
@@ -28,12 +30,12 @@
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "e2e",
+    "src/**/e2e/*"
   ],
   "exclude": [
     "node_modules",
-    "e2e",
-    "src/**/e2e/*"
   ],
   "compileOnSave": false,
   "atom": {

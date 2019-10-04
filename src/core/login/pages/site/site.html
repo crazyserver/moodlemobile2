@@ -33,7 +33,7 @@
                 </ion-select>
             </ion-item>
 
-            <button ion-button block [disabled]="!siteForm.valid">{{ 'core.login.connect' | translate }}</button>
+            <button ion-button block [disabled]="!siteForm.valid" id="connect">{{ 'core.login.connect' | translate }}</button>
         </form>
         <!-- Pick the site from a list of fixed sites. -->
         <ion-list *ngIf="fixedSites && (fixedDisplay == 'list' || fixedDisplay == 'listnourl')">

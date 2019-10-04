@@ -5,6 +5,10 @@ group: edge
 language: node_js
 node_js: 11
 
+
+addons:
+  sauce_connect: true
+
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
 
@@ -16,10 +20,13 @@ cache:
 
 before_script:
   - npm install npm@latest -g
+  - npm install -g appium appium-chromedriver
   - gulp
+  - screen -dm ionic serve -b -a -d --nogulp --address localhost --port 8100 # We use screen here because nohup does not work with ionic serve.
+  - sleep 15  # Wait a lot here, selenium and gulp:before task and ionic must be running.
 
 script:
-  - npm run build
+  - npm run test
 
 after_success:
   - chmod +x scripts/aot.sh
