@@ -1,9 +1,15 @@
-sudo: required
 dist: bionic
 group: edge
 
 language: node_js
 node_js: 11
+
+services:
+  - docker
+
+addons:
+  sauce_connect:
+    tunnel_domains: webserver
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
