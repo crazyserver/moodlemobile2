@@ -141,6 +141,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.2.3",
     "@ionic/cli": "^6.11.7",
+    "@ionic/v4-migration-tslint": "^1.7.1",
     "@types/cordova": "^0.0.34",
     "@types/cordova-plugin-file-transfer": "^0.0.3",
     "@types/cordova-plugin-globalization": "^0.0.3",
