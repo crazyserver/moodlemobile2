@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Input, OnDestroy, ViewChild, Injector, OnChanges, SimpleChange } from '@angular/core';
-import { Searchbar } from 'ionic-angular';
+import { Searchbar } from '@ionic/angular';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 import { CoreSitesProvider } from '@providers/sites';

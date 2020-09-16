@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams } from '@ionic/angular';
 import { CoreDomUtils } from '@providers/utils/dom';
 import { CoreUser } from '@core/user/providers/user';
 import {

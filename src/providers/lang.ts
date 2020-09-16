@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Globalization } from '@ionic-native/globalization';
-import { Platform, Config } from 'ionic-angular';
+import { Platform, Config } from '@ionic/angular';
 import { CoreAppProvider } from '@providers/app';
 import { CoreConfigProvider } from './config';
 import { CoreConfigConstants } from '../configconstants';

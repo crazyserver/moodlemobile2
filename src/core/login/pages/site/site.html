@@ -1,13 +1,13 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.login.connecttomoodle' | translate }}</ion-title>
 
-        <ion-buttons end>
-            <button ion-button icon-only navPush="CoreAppSettingsPage" [attr.aria-label]="'core.settings.appsettings' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only navPush="CoreAppSettingsPage" [attr.aria-label]="'core.settings.appsettings' | translate">
                 <core-icon name="fa-cogs"></core-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content padding>
     <div>
@@ -19,29 +19,29 @@
             <ng-container *ngIf="!fixedSites">
                 <ng-container *ngIf="siteSelector == 'url'">
                     <ion-item>
-                        <ion-label stacked><h2>{{ 'core.login.siteaddress' | translate }}</h2></ion-label>
+                        <ion-label position="stacked"><h2>{{ 'core.login.siteaddress' | translate }}</h2></ion-label>
                         <ion-input name="url" type="url" placeholder="{{ 'core.login.siteaddressplaceholder' | translate }}" formControlName="siteUrl" [core-auto-focus]="showKeyboard && !showScanQR"></ion-input>
                     </ion-item>
                 </ng-container>
                 <ng-container *ngIf="siteSelector != 'url'">
                     <ion-item>
-                        <ion-label stacked><h2>{{ 'core.login.siteaddress' | translate }}</h2></ion-label>
+                        <ion-label position="stacked"><h2>{{ 'core.login.siteaddress' | translate }}</h2></ion-label>
                         <ion-input name="url" placeholder="{{ 'core.login.siteaddressplaceholder' | translate }}" formControlName="siteUrl" [core-auto-focus]="showKeyboard && !showScanQR" (ionChange)="searchSite($event, siteForm.value.siteUrl)"></ion-input>
                     </ion-item>
 
                     <ion-list [class.hidden]="!hasSites && !enteredSiteUrl" class="core-login-site-list">
                         <ion-item no-lines class="core-login-site-list-title"><h2 class="item-heading">{{ 'core.login.selectsite' | translate }}</h2></ion-item>
-                        <button ion-item *ngIf="enteredSiteUrl" (click)="connect($event, enteredSiteUrl.url)" [attr.aria-label]="'core.login.connect' | translate" detail-push class="core-login-entered-site">
+                        <ion-item *ngIf="enteredSiteUrl" (click)="connect($event, enteredSiteUrl.url)" [attr.aria-label]="'core.login.connect' | translate" detail-push class="core-login-entered-site">
                             <ion-thumbnail item-start>
                                 <core-icon name="fa-pencil"></core-icon>
                             </ion-thumbnail>
                             <h2 text-wrap>{{ 'core.login.yourenteredsite' | translate }}</h2>
                             <p>{{enteredSiteUrl.noProtocolUrl}}</p>
-                        </button>
+                        </ion-item>
 
                         <div class="core-login-site-list-found" [class.hidden]="!hasSites" [class.dimmed]="loadingSites">
                             <div *ngIf="loadingSites" class="core-login-site-list-loading"><ion-spinner></ion-spinner></div>
-                            <button ion-item *ngFor="let site of sites" (click)="connect($event, site.url, site)" [attr.aria-label]="site.name" detail-push>
+                            <ion-item *ngFor="let site of sites" (click)="connect($event, site.url, site)" [attr.aria-label]="site.name" detail-push>
                                 <ion-thumbnail item-start>
                                     <img [src]="site.imageurl" *ngIf="site.imageurl" onError="this.src='assets/icon/icon.png'">
                                     <img src="assets/icon/icon.png" *ngIf="!site.imageurl" class="core-login-default-icon">
@@ -49,7 +49,7 @@
                                 <h2 text-wrap>{{site.name}}<ng-container *ngIf="site.alias"> ({{site.alias}})</ng-container></h2>
                                 <p>{{site.noProtocolUrl}}</p>
                                 <p *ngIf="site.country || site.city" text-wrap><ng-container *ngIf="site.city">{{site.city}} - </ng-container>{{site.country}}</p>
-                            </button>
+                            </ion-item>
                         </div>
                     </ion-list>
 
@@ -59,14 +59,14 @@
 
             <!-- Pick the site from a list of fixed sites. -->
             <ion-item *ngIf="fixedSites && siteSelector == 'select'" margin-vertical text-wrap>
-                <ion-label stacked for="siteSelect">{{ 'core.login.selectsite' | translate }}</ion-label>
+                <ion-label position="stacked" for="siteSelect">{{ 'core.login.selectsite' | translate }}</ion-label>
                 <ion-select formControlName="siteUrl" name="url" placeholder="{{ 'core.login.siteaddress' | translate }}" interface="action-sheet">
-                    <ion-option *ngFor="let site of fixedSites" [value]="site.url">{{site.name}}</ion-option>
+                    <ion-select-option *ngFor="let site of fixedSites" [value]="site.url">{{site.name}}</ion-select-option>
                 </ion-select>
             </ion-item>
 
             <ion-item *ngIf="(fixedSites && siteSelector == 'select') || (!fixedSites && siteSelector == 'url')" no-lines>
-                <button ion-button block [disabled]="!siteForm.valid" text-wrap>{{ 'core.login.connect' | translate }}</button>
+                <ion-button block [disabled]="!siteForm.valid" text-wrap>{{ 'core.login.connect' | translate }}</ion-button>
             </ion-item>
         </form>
 
@@ -84,25 +84,25 @@
             <!-- Display them using buttons. -->
             <div *ngIf="siteSelector == 'buttons'">
                 <p class="padding no-padding-bottom">{{ 'core.login.selectsite' | translate }}</p>
-                <a *ngFor="let site of fixedSites" ion-button block (click)="connect($event, site.url)" [title]="site.name" margin-bottom>{{site.name}}</a>
+                <ion-button *ngFor="let site of fixedSites" block (click)="connect($event, site.url)" [title]="site.name" margin-bottom>{{site.name}}</ion-button>
             </div>
         </ng-container>
 
         <ng-container *ngIf="showScanQR && !hasSites && !enteredSiteUrl">
             <div class="core-login-site-qrcode-separator">{{ 'core.login.or' | translate }}</div>
             <ion-item class="core-login-site-qrcode" no-lines>
-                <a ion-button block color="light" margin-top icon-start (click)="showInstructionsAndScanQR()" text-wrap>
+                <ion-button block color="light" margin-top icon-start (click)="showInstructionsAndScanQR()" text-wrap>
                     <core-icon name="fa-qrcode" aria-hidden="true"></core-icon>
                     {{ 'core.scanqr' | translate }}
-                </a>
+                </ion-button>
             </ion-item>
         </ng-container>
 
         <!-- Help. -->
         <ion-list no-lines margin-top>
-            <a ion-item text-center text-wrap class="core-login-need-help" (click)="showHelp()" detail-none>
+            <ion-item text-center text-wrap class="core-login-need-help" (click)="showHelp()" detail-none>
                 {{ 'core.needhelp' | translate }}
-            </a>
+            </ion-item>
         </ion-list>
     </div>
 </ion-content>

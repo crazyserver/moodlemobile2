@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { ActionSheetController, ActionSheet, Platform, Loading } from 'ionic-angular';
+import { ActionSheetController, ActionSheet, Platform, Loading } from '@ionic/angular';
 import { MediaFile } from '@ionic-native/media-capture';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Chooser, ChooserResult } from '@ionic-native/chooser';
@@ -407,7 +407,7 @@ export class CoreFileUploaderHelperProvider {
         });
 
         this.actionSheet = this.actionSheetCtrl.create({
-            title: title ? title : this.translate.instant('core.fileuploader.' + (upload ? 'uploadafile' : 'selectafile')),
+            header: title ? title : this.translate.instant('core.fileuploader.' + (upload ? 'uploadafile' : 'selectafile')),
             buttons: buttons
         });
         this.actionSheet.present();

@@ -15,7 +15,7 @@
 import {
     Component, Input, OnInit, OnChanges, OnDestroy, SimpleChange, Output, EventEmitter, ViewChildren, QueryList, Injector, ViewChild
 } from '@angular/core';
-import { Content, ModalController } from 'ionic-angular';
+import { Content, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';

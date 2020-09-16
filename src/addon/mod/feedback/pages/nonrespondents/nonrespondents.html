@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_feedback.responses' |translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="feedbackLoaded" (ionRefresh)="refreshFeedback($event)">
@@ -13,7 +13,7 @@
                 <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                 <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                 <ion-select [(ngModel)]="selectedGroup" (ionChange)="loadAttempts(selectedGroup)" aria-labelledby="addon-feedback-groupslabel" interface="action-sheet">
-                    <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                    <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
                 </ion-select>
             </ion-item>
             <ion-item-divider>
@@ -35,7 +35,7 @@
             </ng-container>
             <ion-item padding text-center *ngIf="canLoadMore">
                 <!-- Button and spinner to show more attempts. -->
-                <button ion-button block *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</button>
+                <ion-button block *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                 <ion-spinner *ngIf="loadingMore"></ion-spinner>
             </ion-item>
         </ion-list>

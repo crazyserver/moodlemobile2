@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Directive, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content } from '@ionic/angular';
 
 /**
  * Directive to move ion-fab components as direct children of the nearest ion-content.

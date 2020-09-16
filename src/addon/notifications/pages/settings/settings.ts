@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, Optional } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController } from '@ionic/angular';
 import {
     AddonNotificationsProvider, AddonNotificationsNotificationPreferences, AddonNotificationsNotificationPreferencesProcessor,
     AddonNotificationsNotificationPreferencesComponent, AddonNotificationsNotificationPreferencesNotification,

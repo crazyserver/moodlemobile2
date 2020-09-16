@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams, NavController } from 'ionic-angular';
+import { IonicPage, NavParams, NavController } from '@ionic/angular';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreSiteHomeIndexComponent } from '../../components/index/index';

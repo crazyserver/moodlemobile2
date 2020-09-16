@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { SQLite } from '@ionic-native/sqlite';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { SQLiteDBMock } from '@core/emulator/classes/sqlitedb';
 import { makeSingleton } from '@singletons/core.singletons';

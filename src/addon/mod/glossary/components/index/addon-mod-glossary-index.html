@@ -1,11 +1,11 @@
 <!-- Buttons to add to the header. -->
 <core-navbar-buttons end>
-    <button *ngIf="glossary && glossary.browsemodes && glossary.browsemodes.length > 1" ion-button icon-only (click)="openModePicker($event)" [attr.aria-label]="'addon.mod_glossary.browsemode' | translate">
+    <ion-button *ngIf="glossary && glossary.browsemodes && glossary.browsemodes.length > 1" icon-only (click)="openModePicker($event)" [attr.aria-label]="'addon.mod_glossary.browsemode' | translate">
         <core-icon name="fa-sort"></core-icon>
-    </button>
-    <button *ngIf="glossary" ion-button icon-only (click)="toggleSearch()" [attr.aria-label]="'addon.mod_glossary.bysearch' | translate">
+    </ion-button>
+    <ion-button *ngIf="glossary" icon-only (click)="toggleSearch()" [attr.aria-label]="'addon.mod_glossary.bysearch' | translate">
         <ion-icon name="search"></ion-icon>
-    </button>
+    </ion-button>
     <core-context-menu>
         <core-context-menu-item *ngIf="externalUrl" [priority]="900" [content]="'core.openinbrowser' | translate" [href]="externalUrl" [iconAction]="'open'"></core-context-menu-item>
         <core-context-menu-item *ngIf="description" [priority]="800" [content]="'core.moduleintro' | translate" (action)="expandDescription()" [iconAction]="'arrow-forward'"></core-context-menu-item>
@@ -40,9 +40,9 @@
                 <ion-item-divider>
                     {{ 'addon.mod_glossary.entriestobesynced' | translate }}
                 </ion-item-divider>
-                <a ion-item *ngFor="let entry of offlineEntries" (click)="openNewEntry(entry)" detail-none>
+                <ion-item *ngFor="let entry of offlineEntries" (click)="openNewEntry(entry)" detail-none>
                     <p><core-format-text [text]="entry.concept" contextLevel="module" [contextInstanceId]="glossary.coursemodule" [courseId]="courseId"></core-format-text></p>
-                </a>
+                </ion-item>
             </ion-list>
 
             <ion-list *ngIf="entries.length > 0">
@@ -52,9 +52,9 @@
                         {{getDivider(entry)}}
                     </ion-item-divider>
 
-                    <a ion-item (click)="openEntry(entry.id)" [class.core-split-item-selected]="entry.id == selectedEntry" detail-none>
+                    <ion-item (click)="openEntry(entry.id)" [class.core-split-item-selected]="entry.id == selectedEntry" detail-none>
                         <p><core-format-text [text]="entry.concept" contextLevel="module" [contextInstanceId]="glossary.coursemodule" [courseId]="courseId"></core-format-text></p>
-                    </a>
+                    </ion-item>
                 </ng-container>
             </ion-list>
 
@@ -63,10 +63,10 @@
             <core-infinite-loading [enabled]="canLoadMore" (action)="loadMoreEntries($event)" [error]="loadMoreError"></core-infinite-loading>
         </core-loading>
 
-        <ion-fab core-fab bottom end *ngIf="canAdd">
-            <button ion-fab (click)="openNewEntry()" [attr.aria-label]="'addon.mod_glossary.addentry' | translate">
+        <ion-fab slot="fixed" core-fab vertical="bottom" horizontal="end" *ngIf="canAdd">
+            <ion-fab-button (click)="openNewEntry()" [attr.aria-label]="'addon.mod_glossary.addentry' | translate">
                 <ion-icon name="add"></ion-icon>
-            </button>
+            </ion-fab-button>
         </ion-fab>
     </ion-content>
 </core-split-view>

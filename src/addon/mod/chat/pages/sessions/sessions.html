@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_chat.chatreport' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <core-split-view>
     <ion-content>
@@ -13,7 +13,7 @@
                 <ion-label id="addon-chat-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                 <ion-label id="addon-chat-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                 <ion-select [(ngModel)]="groupId" (ionChange)="fetchSessions(true)" aria-labelledby="addon-chat-groupslabel" interface="action-sheet">
-                    <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                    <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
                 </ion-select>
             </ion-item>
             <ion-item>
@@ -33,9 +33,9 @@
                     </ion-item>
                 </ion-card-content>
                 <div *ngIf="session.sessionusers.length < session.allsessionusers.length">
-                    <button ion-button clear (click)="showMoreUsers(session, $event)">
+                    <ion-button clear (click)="showMoreUsers(session, $event)">
                         {{ 'core.showmore' | translate }}
-                    </button>
+                    </ion-button>
                 </div>
             </ion-card>
             <core-empty-box *ngIf="sessions.length == 0" icon="chatbubbles" [message]="'addon.mod_chat.nosessionsfound' | translate">

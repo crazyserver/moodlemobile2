@@ -16,7 +16,7 @@ import {
     Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy, AfterViewInit, ViewChild, ElementRef,
     SimpleChange
 } from '@angular/core';
-import { Content, Slides, Platform } from 'ionic-angular';
+import { Content, Slides, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';

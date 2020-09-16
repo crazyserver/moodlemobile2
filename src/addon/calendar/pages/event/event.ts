@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, Optional, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, Content, NavParams, NavController } from 'ionic-angular';
+import { IonicPage, Content, NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AddonCalendarProvider } from '../../providers/calendar';
 import { AddonCalendarHelperProvider } from '../../providers/helper';

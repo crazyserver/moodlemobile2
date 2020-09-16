@@ -17,7 +17,7 @@ import { JitCompilerFactory } from '@angular/platform-browser-dynamic';
 import {
     Platform, ActionSheetController, AlertController, LoadingController, ModalController, PopoverController, ToastController,
     IonicModule
-} from 'ionic-angular';
+} from '@ionic/angular';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreLoggerProvider } from '@providers/logger';
 

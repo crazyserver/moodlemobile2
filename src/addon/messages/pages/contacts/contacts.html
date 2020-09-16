@@ -1,14 +1,14 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.contacts' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
                 <ion-icon name="search"></ion-icon>
-            </button>
+            </ion-button>
             <!-- Add an empty context menu so discussion page can add items in split view, otherwise the menu disappears in some cases. -->
             <core-context-menu></core-context-menu>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <core-split-view>
     <ion-content>

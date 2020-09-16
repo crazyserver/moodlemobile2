@@ -1,17 +1,17 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.messages' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
                 <ion-icon name="search"></ion-icon>
-            </button>
-            <button ion-button icon-only (click)="gotoSettings($event)" [attr.aria-label]="'addon.messages.messagepreferences' | translate">
+            </ion-button>
+            <ion-button icon-only (click)="gotoSettings($event)" [attr.aria-label]="'addon.messages.messagepreferences' | translate">
                 <ion-icon name="cog"></ion-icon>
-            </button>
+            </ion-button>
             <!-- Add an empty context menu so discussion page can add items in split view, otherwise the menu disappears in some cases. -->
             <core-context-menu></core-context-menu>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <core-split-view>
     <ion-content class="core-expand-max">
@@ -21,11 +21,11 @@
 
         <core-loading [hideUntil]="loaded" [message]="loadingMessage">
             <ion-list>
-                <a ion-item text-wrap (click)="gotoContacts($event)" [attr.aria-label]="'addon.messages.contacts' | translate" class="addon-message-discussion">
+                <ion-item text-wrap (click)="gotoContacts($event)" [attr.aria-label]="'addon.messages.contacts' | translate" class="addon-message-discussion">
                     <ion-icon name="person" item-start></ion-icon>
                     <h2>{{ 'addon.messages.contacts' | translate }}</h2>
                     <ion-badge *ngIf="contactRequestsCount > 0" item-end>{{contactRequestsCount}}</ion-badge>
-                </a>
+                </ion-item>
                 <!-- Favourite conversations. -->
                 <ion-item-divider text-wrap (click)="toggle(favourites)" class="core-expandable">
                     <core-icon *ngIf="!favourites.expanded" name="fa-caret-right" item-start></core-icon>
@@ -89,7 +89,7 @@
 
 <!-- Template to render a list of conversations. -->
 <ng-template #conversationsTemplate let-conversations="conversations">
-    <a ion-item text-wrap *ngFor="let conversation of conversations" [title]="conversation.name" (click)="gotoConversation(conversation.id, conversation.userid)" [class.core-split-item-selected]="(conversation.id && conversation.id == selectedConversationId) || (conversation.userid && conversation.userid == selectedUserId)" class="addon-message-discussion" id="addon-message-conversation-{{ conversation.id ? conversation.id : 'user-' + conversation.userid }}">
+    <ion-item text-wrap *ngFor="let conversation of conversations" [title]="conversation.name" (click)="gotoConversation(conversation.id, conversation.userid)" [class.core-split-item-selected]="(conversation.id && conversation.id == selectedConversationId) || (conversation.userid && conversation.userid == selectedUserId)" class="addon-message-discussion" id="addon-message-conversation-{{ conversation.id ? conversation.id : 'user-' + conversation.userid }}">
         <!-- Group conversation image. -->
         <ion-avatar item-start *ngIf="conversation.type == typeGroup">
             <img [src]="conversation.imageurl" [alt]="conversation.name" core-external-content onError="this.src='assets/img/group-avatar.png'">
@@ -113,5 +113,5 @@
             <span *ngIf="!conversation.sentfromcurrentuser && conversation.type == typeGroup && conversation.members[0]" class="addon-message-last-message-user">{{ conversation.members[0].fullname + ':' }}</span>
             <core-format-text clean="true" singleLine="true" [text]="conversation.lastmessage" class="addon-message-last-message-text" contextLevel="system" [contextInstanceId]="0"></core-format-text>
         </p>
-    </a>
+    </ion-item>
 </ng-template>

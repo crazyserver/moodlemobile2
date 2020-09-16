@@ -1,13 +1,13 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></ion-title>
 
-        <ion-buttons end>
-            <button ion-button clear (click)="save()" [attr.aria-label]="'core.save' | translate">
+        <ion-buttons slot="primary">
+            <ion-button clear (click)="save()" [attr.aria-label]="'core.save' | translate">
                 {{ 'core.save' | translate }}
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="loaded">

@@ -17,10 +17,10 @@
 
     <ion-list *ngIf="contents && contents.length > 0">
         <ng-container *ngFor="let file of contents">
-            <a *ngIf="file.type === 'folder'" ion-item class="item-media" navPush="AddonModFolderIndexPage" [navParams]="{subfolder: file, courseId: courseId, module: module, folderInstance: folderInstance}">
+            <ion-item *ngIf="file.type === 'folder'" class="item-media" navPush="AddonModFolderIndexPage" [navParams]="{subfolder: file, courseId: courseId, module: module, folderInstance: folderInstance}">
                 <ion-icon name="folder" item-start></ion-icon>
                 <h2>{{file.name}}</h2>
-            </a>
+            </ion-item>
             <core-file *ngIf="file.type !== 'folder'" [file]="file" [component]="component" [componentId]="componentId"></core-file>
         </ng-container>
     </ion-list>

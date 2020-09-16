@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, OnInit, Optional } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCoursesProvider } from '../../providers/courses';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';

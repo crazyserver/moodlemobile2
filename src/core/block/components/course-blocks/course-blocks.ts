@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChildren, Input, OnInit, QueryList, ElementRef } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreBlockComponent } from '../block/block';

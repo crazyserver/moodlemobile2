@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, NgZone, ApplicationRef } from '@angular/core';
-import { Platform, App, NavController, MenuController } from 'ionic-angular';
+import { Platform, App, NavController, MenuController } from '@ionic/angular';
 import { Keyboard } from '@ionic-native/keyboard';
 import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';

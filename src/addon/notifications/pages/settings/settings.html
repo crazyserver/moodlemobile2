@@ -1,9 +1,9 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.notifications.notifications' | translate }}</ion-title>
-        <ion-buttons end>
+        <ion-buttons slot="primary">
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <core-navbar-buttons>
     <core-context-menu *ngIf="processorHandlers.length > 0">
@@ -36,7 +36,7 @@
             <!-- Show processor selector. -->
             <div padding class="safe-padding-horizontal">
                 <ion-select *ngIf="preferences && preferences.processors && preferences.processors.length > 0" [ngModel]="currentProcessor.name" (ngModelChange)="changeProcessor($event)" interface="action-sheet" class="core-button-select">
-                    <ion-option *ngFor="let processor of preferences.processors" [value]="processor.name">{{ processor.displayname }}</ion-option>
+                    <ion-select-option *ngFor="let processor of preferences.processors" [value]="processor.name">{{ processor.displayname }}</ion-select-option>
                 </ion-select>
             </div>
 
@@ -44,15 +44,15 @@
                 <ion-item-divider text-wrap>
                     <ion-row no-padding>
                         <ion-col no-padding>{{ component.displayname }}</ion-col>
-                        <ion-col col-2 text-center no-padding class="hidden-phone">{{ 'core.settings.loggedin' | translate }}</ion-col>
-                        <ion-col col-2 text-center no-padding class="hidden-phone">{{ 'core.settings.loggedoff' | translate }}</ion-col>
+                        <ion-col size="2" text-center no-padding class="hidden-phone">{{ 'core.settings.loggedin' | translate }}</ion-col>
+                        <ion-col size="2" text-center no-padding class="hidden-phone">{{ 'core.settings.loggedoff' | translate }}</ion-col>
                     </ion-row>
                 </ion-item-divider>
                 <ng-container *ngFor="let notification of component.notifications">
                     <!-- Tablet view -->
                     <ion-row text-wrap class="hidden-phone" align-items-center>
                         <ion-col margin-horizontal>{{ notification.displayname }}</ion-col>
-                        <ion-col col-2 text-center *ngFor="let state of ['loggedin', 'loggedoff']">
+                        <ion-col size="2" text-center *ngFor="let state of ['loggedin', 'loggedoff']">
                             <!-- If notifications enabled, show toggle. -->
                             <ion-spinner [hidden]="!preferences.enableall || !(notification.currentProcessor[state] && notification.currentProcessor[state].updating)"></ion-spinner>
                             <ion-toggle *ngIf="preferences.enableall && !notification.currentProcessor.locked" [(ngModel)]="notification.currentProcessor[state].checked" (ionChange)="changePreference(notification, state)" [disabled]="notification.currentProcessor[state].updating">

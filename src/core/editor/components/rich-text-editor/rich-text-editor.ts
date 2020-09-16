@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterContentInit, OnDestroy, Optional }
     from '@angular/core';
-import { TextInput, Content, Platform, Slides } from 'ionic-angular';
+import { TextInput, Content, Platform, Slides } from '@ionic/angular';
 import { CoreApp } from '@providers/app';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreFilepoolProvider } from '@providers/filepool';

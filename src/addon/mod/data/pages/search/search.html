@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_data.search' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <div class="fixed-content core-tabs-bar">
@@ -19,39 +19,41 @@
                 <ion-input type="text" placeholder="{{ 'addon.mod_data.search' | translate}}" [(ngModel)]="search.text" name="text" formControlName="text"></ion-input>
             </ion-item>
             <ion-item text-wrap>
-                <ion-label stacked>{{ 'core.sortby' | translate }}</ion-label>
+                <ion-label position="stacked">{{ 'core.sortby' | translate }}</ion-label>
                 <ion-select interface="action-sheet" name="sortBy" formControlName="sortBy" [placeholder]="'core.sortby' | translate">
                     <optgroup *ngIf="fieldsArray.length" label="{{ 'addon.mod_data.fields' | translate }}">
-                        <ion-option *ngFor="let field of fieldsArray" [value]="field.id">{{field.name}}</ion-option>
+                        <ion-select-option *ngFor="let field of fieldsArray" [value]="field.id">{{field.name}}</ion-select-option>
                     </optgroup>
                     <optgroup label="{{ 'addon.mod_data.other' | translate }}">
-                        <ion-option value="0">{{ 'addon.mod_data.timeadded' | translate }}</ion-option>
-                        <ion-option value="-4">{{ 'addon.mod_data.timemodified' | translate }}</ion-option>
-                        <ion-option value="-1">{{ 'addon.mod_data.authorfirstname' | translate }}</ion-option>
-                        <ion-option value="-2">{{ 'addon.mod_data.authorlastname' | translate }}</ion-option>
-                        <ion-option value="-3" *ngIf="data.approval">{{ 'addon.mod_data.approved' | translate }}</ion-option>
+                        <ion-select-option value="0">{{ 'addon.mod_data.timeadded' | translate }}</ion-select-option>
+                        <ion-select-option value="-4">{{ 'addon.mod_data.timemodified' | translate }}</ion-select-option>
+                        <ion-select-option value="-1">{{ 'addon.mod_data.authorfirstname' | translate }}</ion-select-option>
+                        <ion-select-option value="-2">{{ 'addon.mod_data.authorlastname' | translate }}</ion-select-option>
+                        <ion-select-option value="-3" *ngIf="data.approval">{{ 'addon.mod_data.approved' | translate }}</ion-select-option>
                     </optgroup>
                 </ion-select>
             </ion-item>
-            <ion-list radio-group [(ngModel)]="search.sortDirection" name="sortDirection" formControlName="sortDirection">
+            <ion-list [(ngModel)]="search.sortDirection" name="sortDirection" formControlName="sortDirection">
+<ion-radio-group>
                 <ion-item>
                     <ion-label>{{ 'addon.mod_data.ascending' | translate }}</ion-label>
-                    <ion-radio value="ASC"></ion-radio>
+                    <ion-radio slot="start" value="ASC"></ion-radio>
                 </ion-item>
                 <ion-item>
                     <ion-label>{{ 'addon.mod_data.descending' | translate }}</ion-label>
-                    <ion-radio value="DESC"></ion-radio>
+                    <ion-radio slot="start" value="DESC"></ion-radio>
                 </ion-item>
-            </ion-list>
+            </ion-radio-group>
+</ion-list>
             <div padding [hidden]="!advancedSearch || !search.searchingAdvanced" class="addon-data-advanced-search">
                 <core-compile-html [text]="advancedSearch" [jsData]="jsData" [extraImports]="extraImports"></core-compile-html>
             </div>
         </ion-list>
         <div padding>
-            <button ion-button block type="submit" icon-start>
+            <ion-button block type="submit" icon-start>
                 <ion-icon name="search"></ion-icon>
                 {{ 'addon.mod_data.search' | translate }}
-            </button>
+            </ion-button>
         </div>
     </form>
 </ion-content>

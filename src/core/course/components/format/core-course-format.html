@@ -12,11 +12,11 @@
             <!-- Section selector. -->
             <core-dynamic-component [component]="sectionSelectorComponent" [data]="data">
                 <div text-wrap *ngIf="displaySectionSelector && sections && hasSeveralSections" padding class="clearfix" ion-row justify-content-between class="safe-padding-horizontal core-button-selector-row" [class.core-section-download]="downloadEnabled">
-                    <button float-start ion-button icon-start icon-end (click)="showSectionSelector($event)" color="light" class="core-button-select button-no-uppercase" ion-col [attr.aria-label]="('core.course.sections' | translate) + ': ' + (selectedSection && (selectedSection.formattedName || selectedSection.name))" aria-haspopup="true" [attr.aria-expanded]="sectionSelectorExpanded" aria-controls="core-course-section-selector" id="core-course-section-button">
+                    <ion-button float-start icon-start icon-end (click)="showSectionSelector($event)" color="light" class="core-button-select button-no-uppercase" ion-col [attr.aria-label]="('core.course.sections' | translate) + ': ' + (selectedSection && (selectedSection.formattedName || selectedSection.name))" aria-haspopup="true" [attr.aria-expanded]="sectionSelectorExpanded" aria-controls="core-course-section-selector" id="core-course-section-button">
                         <core-icon name="fa-folder"></core-icon>
                         <span class="core-button-select-text">{{selectedSection && (selectedSection.formattedName || selectedSection.name) || 'core.course.sections' | translate }}</span>
                         <ion-icon name="arrow-dropdown" ios="md-arrow-dropdown"></ion-icon>
-                    </button>
+                    </ion-button>
                     <!-- Section download. -->
                     <ng-container *ngTemplateOutlet="sectionDownloadTemplate; context: {section: selectedSection}"></ng-container>
                 </div>
@@ -55,15 +55,15 @@
                 <core-infinite-loading [enabled]="canLoadMore" (action)="showMoreActivities($event)"></core-infinite-loading>
             </div>
 
-            <ion-buttons padding end class="core-course-section-nav-buttons safe-padding-horizontal" *ngIf="displaySectionSelector && sections && sections.length">
-                <button *ngIf="previousSection" ion-button color="light" icon-only (click)="sectionChanged(previousSection)" title="{{ 'core.previous' | translate }}">
+            <ion-buttons padding slot="primary" class="core-course-section-nav-buttons safe-padding-horizontal" *ngIf="displaySectionSelector && sections && sections.length">
+                <ion-button *ngIf="previousSection" color="light" icon-only (click)="sectionChanged(previousSection)" title="{{ 'core.previous' | translate }}">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                     <core-format-text class="accesshide" [text]="previousSection.formattedName || previousSection.name" contextLevel="course" [contextInstanceId]="course.id"></core-format-text>
-                </button>
-                <button *ngIf="nextSection" ion-button icon-only (click)="sectionChanged(nextSection)" title="{{ 'core.next' | translate }}">
+                </ion-button>
+                <ion-button *ngIf="nextSection" icon-only (click)="sectionChanged(nextSection)" title="{{ 'core.next' | translate }}">
                     <core-format-text class="accesshide" [text]="nextSection.formattedName || nextSection.name" contextLevel="course" [contextInstanceId]="course.id"></core-format-text>
                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                </button>
+                </ion-button>
             </ion-buttons>
         </core-loading>
     </core-dynamic-component>

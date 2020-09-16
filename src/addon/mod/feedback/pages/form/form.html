@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="feedbackLoaded">
@@ -15,7 +15,7 @@
                 <ng-container *ngFor="let item of items">
                     <ion-item-divider *ngIf="item.typ == 'pagebreak'"></ion-item-divider>
                     <ion-item text-wrap *ngIf="item.typ != 'pagebreak'" [color]="item.dependitem > 0 ? 'light' : ''" [class.core-danger-item]="item.isEmpty || item.hasError">
-                        <ion-label *ngIf="item.name" [core-mark-required]="item.required" stacked>
+                        <ion-label *ngIf="item.name" [core-mark-required]="item.required" position="stacked">
                             <span *ngIf="feedback.autonumbering && item.itemnumber">{{item.itemnumber}}. </span>
                             <core-format-text [component]="component" [componentId]="componentId" [text]="item.name" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId" [wsNotFiltered]="true"></core-format-text>
                             <span *ngIf="item.postfix" class="addon-mod_feedback-postfix">{{item.postfix}}</span>
@@ -30,18 +30,22 @@
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'numeric'">
                                     <ion-input [required]="item.required" name="{{item.typ}}_{{item.id}}" type="number" [(ngModel)]="item.value"></ion-input>
-                                    <p *ngIf="item.hasError" ion-text color="danger">{{ 'addon.mod_feedback.numberoutofrange' | translate }} [{{item.rangefrom}}<span *ngIf="item.rangefrom && item.rangeto">, </span>{{item.rangeto}}]</p>
+                                    <ion-text>
+<p *ngIf="item.hasError" color="danger">{{ 'addon.mod_feedback.numberoutofrange' | translate }} [{{item.rangefrom}}<span *ngIf="item.rangefrom && item.rangeto">, </span>{{item.rangeto}}]</p>
+</ion-text>
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'textarea'">
                                     <ion-textarea [required]="item.required" name="{{item.typ}}_{{item.id}}" [attr.aria-multiline]="true" [(ngModel)]="item.value"></ion-textarea>
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'multichoice-r'">
-                                    <ion-list radio-group [(ngModel)]="item.value" [required]="item.required" name="{{item.typ}}_{{item.id}}">
+                                    <ion-list [(ngModel)]="item.value" [required]="item.required" name="{{item.typ}}_{{item.id}}">
+<ion-radio-group>
                                         <ion-item *ngFor="let option of item.choices">
                                             <ion-label><core-format-text  [component]="component" [componentId]="componentId" [text]="option.label" contextLevel="module" [contextInstanceId]="module.id" [wsNotFiltered]="true" [courseId]="courseId"></core-format-text></ion-label>
-                                            <ion-radio [value]="option.value"></ion-radio>
+                                            <ion-radio slot="start" [value]="option.value"></ion-radio>
                                         </ion-item>
-                                    </ion-list>
+                                    </ion-radio-group>
+</ion-list>
                                 </ng-container>
                                 <ion-list *ngSwitchCase="'multichoice-c'">
                                     <ion-item *ngFor="let option of item.choices">
@@ -51,7 +55,7 @@
                                 </ion-list>
                                 <ng-container *ngSwitchCase="'multichoice-d'">
                                     <ion-select [required]="item.required" name="{{item.typ}}_{{item.id}}" [(ngModel)]="item.value" interface="action-sheet">
-                                        <ion-option *ngFor="let option of item.choices" [value]="option.value"><core-format-text  [component]="component" [componentId]="componentId" [text]="option.label" contextLevel="module" [contextInstanceId]="module.id" [wsNotFiltered]="true" [courseId]="courseId"></core-format-text></ion-option>
+                                        <ion-select-option *ngFor="let option of item.choices" [value]="option.value"><core-format-text  [component]="component" [componentId]="componentId" [text]="option.label" contextLevel="module" [contextInstanceId]="module.id" [wsNotFiltered]="true" [courseId]="courseId"></core-format-text></ion-select-option>
                                     </ion-select>
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'captcha'">
@@ -67,22 +71,22 @@
                 </ng-container>
                 <ion-grid *ngIf="!preview">
                     <ion-row align-items-center>
-                        <ion-col *ngIf="hasPrevPage" col-12 col-sm-6>
-                            <button ion-button block outline icon-start (click)="gotoPage(true)" text-wrap>
+                        <ion-col *ngIf="hasPrevPage" size="12" size-sm="6">
+                            <ion-button block outline icon-start (click)="gotoPage(true)" text-wrap>
                                 <ion-icon name="arrow-back"></ion-icon>
                                 {{ 'addon.mod_feedback.previous_page' | translate }}
-                            </button>
+                            </ion-button>
                         </ion-col>
-                        <ion-col *ngIf="hasNextPage" col-12 [attr.col-sm-6]="(hasPrevPage) || null">
-                            <button ion-button block icon-end (click)="gotoPage(false)" text-wrap>
+                        <ion-col *ngIf="hasNextPage" size="12" [attr.col-sm-6]="(hasPrevPage) || null">
+                            <ion-button block icon-end (click)="gotoPage(false)" text-wrap>
                                 {{ 'addon.mod_feedback.next_page' | translate }}
                                 <ion-icon name="arrow-forward"></ion-icon>
-                            </button>
+                            </ion-button>
                         </ion-col>
-                        <ion-col *ngIf="!hasNextPage" col-12 [attr.col-sm-6]="(hasPrevPage) || null">
-                            <button ion-button block (click)="gotoPage(false)" text-wrap>
+                        <ion-col *ngIf="!hasNextPage" size="12" [attr.col-sm-6]="(hasPrevPage) || null">
+                            <ion-button block (click)="gotoPage(false)" text-wrap>
                                 {{ 'addon.mod_feedback.save_entries' | translate }}
-                            </button>
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -98,17 +102,17 @@
 
         <ion-grid *ngIf="completed">
             <ion-row align-items-center>
-                <ion-col *ngIf="access.canviewanalysis" col-12 [attr.col-sm-6]="(hasNextPage) || null">
-                    <button ion-button block outline icon-start (click)="showAnalysis()" text-wrap>
+                <ion-col *ngIf="access.canviewanalysis" size="12" [attr.col-sm-6]="(hasNextPage) || null">
+                    <ion-button block outline icon-start (click)="showAnalysis()" text-wrap>
                         <ion-icon name="stats"></ion-icon>
                         {{ 'addon.mod_feedback.completed_feedbacks' | translate }}
-                    </button>
+                    </ion-button>
                 </ion-col>
-                <ion-col *ngIf="hasNextPage" col-12 [attr.col-sm-6]="(access.canviewanalysis) || null">
-                    <button ion-button block icon-end (click)="continue()" text-wrap>
+                <ion-col *ngIf="hasNextPage" size="12" [attr.col-sm-6]="(access.canviewanalysis) || null">
+                    <ion-button block icon-end (click)="continue()" text-wrap>
                         {{ 'core.continue' | translate }}
                         <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
+                    </ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>

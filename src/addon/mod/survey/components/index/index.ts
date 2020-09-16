@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional, Injector } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content } from '@ionic/angular';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { CoreEvents, CoreEventsProvider } from '@providers/events';
 import { AddonModSurveyProvider, AddonModSurveySurvey } from '../../providers/survey';

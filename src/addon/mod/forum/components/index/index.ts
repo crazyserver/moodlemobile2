@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional, Injector, ViewChild } from '@angular/core';
-import { Content, ModalController, PopoverController } from 'ionic-angular';
+import { Content, ModalController, PopoverController } from '@ionic/angular';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';

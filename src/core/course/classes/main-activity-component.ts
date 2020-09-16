@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injector, Input, NgZone } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content } from '@ionic/angular';
 import { Network } from '@ionic-native/network';
 import { CoreCourseModuleMainResourceComponent } from './main-resource-component';
 

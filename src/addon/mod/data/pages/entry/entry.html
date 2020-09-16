@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="entryLoaded && (isPullingToRefresh || !renderingEntry && !loadingRating && !loadingComments)" (ionRefresh)="refreshDatabase($event)">
@@ -18,7 +18,7 @@
             <ion-label id="addon-data-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
             <ion-label id="addon-data-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
             <ion-select [(ngModel)]="selectedGroup" (ionChange)="setGroup(selectedGroup)" aria-labelledby="addon-data-groupslabel" interface="action-sheet">
-                <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
             </ion-select>
         </ion-item>
 
@@ -38,16 +38,16 @@
         <ion-grid *ngIf="previousOffset != null || nextOffset != null">
             <ion-row align-items-center>
                 <ion-col *ngIf="previousOffset != null">
-                    <button ion-button block outline icon-start (click)="gotoEntry(previousOffset)">
+                    <ion-button block outline icon-start (click)="gotoEntry(previousOffset)">
                         <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                         {{ 'core.previous' | translate }}
-                    </button>
+                    </ion-button>
                 </ion-col>
                 <ion-col *ngIf="nextOffset != null">
-                    <button ion-button block icon-end (click)="gotoEntry(nextOffset)">
+                    <ion-button block icon-end (click)="gotoEntry(nextOffset)">
                         {{ 'core.next' | translate }}
                         <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                    </button>
+                    </ion-button>
                 </ion-col>
             </ion-row>
         </ion-grid>

@@ -1,11 +1,11 @@
 <ng-container *ngIf="!loadingMore && position != 'top'">
     <div *ngIf="enabled || error" padding-horizontal #bottombutton>
-        <button *ngIf="!error" ion-button block (click)="loadMore()" color="light">
+        <ion-button *ngIf="!error" block (click)="loadMore()" color="light">
             {{ 'core.loadmore' | translate }}
-        </button>
-        <button *ngIf="error" ion-button block (click)="loadMore()" color="light">
+        </ion-button>
+        <ion-button *ngIf="error" block (click)="loadMore()" color="light">
             {{ 'core.tryagain' | translate }}
-        </button>
+        </ion-button>
     </div>
 </ng-container>
 
@@ -15,12 +15,12 @@
 
 <ng-container *ngIf="!loadingMore && position == 'top'">
     <div *ngIf="enabled || error" padding-horizontal #topbutton>
-        <button *ngIf="!error" ion-button block (click)="loadMore()" color="light">
+        <ion-button *ngIf="!error" block (click)="loadMore()" color="light">
             {{ 'core.loadmore' | translate }}
-        </button>
-        <button *ngIf="error" ion-button block (click)="loadMore()" color="light">
+        </ion-button>
+        <ion-button *ngIf="error" block (click)="loadMore()" color="light">
             {{ 'core.tryagain' | translate }}
-        </button>
+        </ion-button>
     </div>
 </ng-container>
 

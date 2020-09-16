@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';

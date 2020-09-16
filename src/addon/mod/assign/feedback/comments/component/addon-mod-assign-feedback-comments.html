@@ -6,9 +6,9 @@
     </p>
     <div item-end>
         <div text-end>
-            <button ion-button icon-only clear *ngIf="canEdit" (click)="editComment()" color="dark">
+            <ion-button icon-only clear *ngIf="canEdit" (click)="editComment()" color="dark">
                 <ion-icon name="create"></ion-icon>
-            </button>
+            </ion-button>
         </div>
         <ion-note *ngIf="!isSent" color="dark">
             <ion-icon name="time"></ion-icon>

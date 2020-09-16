@@ -14,7 +14,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation';
 import { AddonModDataFieldPluginComponent } from '../../../classes/field-plugin-component';
 import { CoreApp, CoreAppProvider } from '@providers/app';

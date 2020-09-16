@@ -15,7 +15,7 @@
 import {
     Directive, ElementRef, Input, Output, EventEmitter, OnChanges, SimpleChange, Optional, ViewContainerRef
 } from '@angular/core';
-import { Platform, NavController, Content } from 'ionic-angular';
+import { Platform, NavController, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreFilepoolProvider } from '@providers/filepool';

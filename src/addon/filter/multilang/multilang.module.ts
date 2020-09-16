@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 import { CoreFilterDelegate } from '@core/filter/providers/delegate';
 import { AddonFilterMultilangHandler } from './providers/handler';
 

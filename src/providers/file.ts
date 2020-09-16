@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { File, FileEntry, DirectoryEntry, Entry, Metadata } from '@ionic-native/file';
 import { CoreApp, CoreAppProvider } from './app';
 import { CoreLoggerProvider } from './logger';

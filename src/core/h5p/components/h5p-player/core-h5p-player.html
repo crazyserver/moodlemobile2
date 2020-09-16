@@ -1,7 +1,7 @@
 <div *ngIf="!showPackage" class="core-h5p-placeholder">
-    <button class="core-h5p-placeholder-play-button" ion-button icon-only clear (click)="play($event)">
+    <ion-button class="core-h5p-placeholder-play-button" icon-only clear (click)="play($event)">
         <core-icon name="fa-play-circle"></core-icon>
-    </button>
+    </ion-button>
 
     <div class="core-h5p-placeholder-download-container">
         <core-download-refresh [status]="state" [enabled]="canDownload" [loading]="calculating" [canTrustDownload]="true" (action)="download()"></core-download-refresh>

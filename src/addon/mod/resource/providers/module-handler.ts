@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { NavController, NavOptions } from 'ionic-angular';
+import { NavController, NavOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AddonModResourceProvider } from './resource';
 import { AddonModResourceHelperProvider } from './helper';

@@ -33,14 +33,14 @@
             <core-format-text [text]="submission.feedbackauthor" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
         </ion-item>
         <ion-item *ngIf="viewDetails">
-            <button ion-button block (click)="gotoSubmission()">
+            <ion-button block (click)="gotoSubmission()">
                 {{ 'core.showmore' | translate }}
                 <ion-icon name="arrow-forward" item-end></ion-icon>
-            </button>
+            </ion-button>
         </ion-item>
     </div>
 
-    <a ion-item text-wrap *ngIf="summary" [attr.detail-none]="submission.timemodified ? null : true" (click)="gotoSubmission()">
+    <ion-item text-wrap *ngIf="summary" [attr.detail-none]="submission.timemodified ? null : true" (click)="gotoSubmission()">
         <ion-avatar core-user-avatar [user]="profile" item-start [courseId]="courseId" [userId]="profile && profile.id"></ion-avatar>
 
         <h2><core-format-text [text]="submission.title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></h2>
@@ -69,5 +69,5 @@
             <div *ngIf="offline"><ion-icon name="time"></ion-icon> {{ 'core.notsent' | translate }}</div>
             <div *ngIf="submission.deleted"><ion-icon name="trash"></ion-icon> {{ 'core.deletedoffline' | translate }}</div>
         </ion-note>
-    </a>
+    </ion-item>
 </core-loading>

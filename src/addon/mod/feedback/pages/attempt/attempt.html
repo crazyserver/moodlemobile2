@@ -1,19 +1,19 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>
             <ng-container *ngIf="attempt.fullname">{{ attempt.fullname }}</ng-container>
             <ng-container *ngIf="!attempt.fullname">{{ 'addon.mod_feedback.response_nr' |translate }}: {{attempt.number}}</ng-container>
         </ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="feedbackLoaded">
         <ion-list no-margin>
-            <a *ngIf="attempt.fullname" ion-item text-wrap core-user-link [userId]="attempt.userid" [attr.aria-label]=" 'core.user.viewprofile' | translate" [courseId]="attempt.courseid" [title]="attempt.fullname">
+            <ion-item *ngIf="attempt.fullname" text-wrap core-user-link [userId]="attempt.userid" [attr.aria-label]=" 'core.user.viewprofile' | translate" [courseId]="attempt.courseid" [title]="attempt.fullname">
                 <ion-avatar core-user-avatar [user]="attempt" item-start></ion-avatar>
                 <h2>{{attempt.fullname}}</h2>
                 <p *ngIf="attempt.timemodified">{{attempt.timemodified * 1000 | coreFormatDate }}</p>
-            </a>
+            </ion-item>
 
             <ion-item text-wrap *ngIf="!attempt.fullname">
                 <h2>{{ 'addon.mod_feedback.response_nr' |translate }}: {{attempt.number}} ({{ 'addon.mod_feedback.anonymous' |translate }})</h2>

@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_lesson.detailedstats' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="doRefresh($event)">
@@ -11,17 +11,17 @@
     <core-loading [hideUntil]="loaded">
         <ion-list *ngIf="student">
             <!-- Student data. -->
-            <a ion-item text-wrap core-user-link [userId]="student.id" [courseId]="courseId" [title]="student.fullname">
+            <ion-item text-wrap core-user-link [userId]="student.id" [courseId]="courseId" [title]="student.fullname">
                 <ion-avatar core-user-avatar [user]="student" item-start [userId]="student.id" [courseId]="courseId"></ion-avatar>
                 <h2>{{student.fullname}}</h2>
                 <core-progress-bar [progress]="student.bestgrade"></core-progress-bar>
-            </a>
+            </ion-item>
 
             <!-- Retake selector if there is more than one retake. -->
             <ion-item text-wrap *ngIf="student.attempts && student.attempts.length > 1">
                 <ion-label id="addon-mod_lesson-retakeslabel">{{ 'addon.mod_lesson.attemptheader' | translate }}</ion-label>
                 <ion-select [(ngModel)]="selectedRetake" (ionChange)="changeRetake(selectedRetake)" aria-labelledby="addon-mod_lesson-retakeslabel" interface="action-sheet">
-                    <ion-option *ngFor="let retake of student.attempts" [value]="retake.try">{{retake.label}}</ion-option>
+                    <ion-select-option *ngFor="let retake of student.attempts" [value]="retake.try">{{retake.label}}</ion-select-option>
                 </ion-select>
             </ion-item>
 
@@ -78,7 +78,7 @@
                                 <!-- Content page, display a button and the content. -->
                                 <ion-row>
                                     <ion-col>
-                                        <button ion-button block text-wrap color="light" [disabled]="true">{{ answer[0].buttonText }}</button>
+                                        <ion-button block text-wrap color="light" [disabled]="true">{{ answer[0].buttonText }}</ion-button>
                                     </ion-col>
                                     <ion-col>
                                         <p [innerHTML]="answer[0].content"></p>

@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.groupinfo' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="refreshData($event)">
@@ -23,13 +23,13 @@
             <p>{{ 'addon.messages.numparticipants' | translate:{$a: conversation.membercount} }}</p>
         </ion-item>
 
-        <a ion-item text-wrap *ngFor="let member of members" (click)="closeModal(member.id)" class="addon-messages-conversation-item">
+        <ion-item text-wrap *ngFor="let member of members" (click)="closeModal(member.id)" class="addon-messages-conversation-item">
             <ion-avatar core-user-avatar [user]="member" [linkProfile]="false" [checkOnline]="member.showonlinestatus" item-start></ion-avatar>
             <h2>
                 {{ member.fullname }}
                 <core-icon name="fa-ban" *ngIf="member.isblocked" [label]="'addon.messages.contactblocked' | translate"></core-icon>
             </h2>
-        </a>
+        </ion-item>
 
         <core-infinite-loading [enabled]="canLoadMore" (action)="loadMoreMembers($event)" [error]="loadMoreError"></core-infinite-loading>
     </core-loading>

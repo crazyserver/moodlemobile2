@@ -49,16 +49,16 @@
             <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
             <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
             <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-feedback-groupslabel" interface="action-sheet">
-                <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
             </ion-select>
         </ion-item>
-        <a ion-item text-wrap (click)="access.canviewreports && feedback.completedCount > 0 && openFeature('Respondents')" [attr.detail-none]="access.canviewreports && feedback.completedCount > 0 ? null : true">
+        <ion-item text-wrap (click)="access.canviewreports && feedback.completedCount > 0 && openFeature('Respondents')" [attr.detail-none]="access.canviewreports && feedback.completedCount > 0 ? null : true">
             <h2>{{ 'addon.mod_feedback.completed_feedbacks' | translate }}</h2>
             <ion-badge item-end>{{feedback.completedCount}}</ion-badge>
-        </a>
-        <a ion-item text-wrap *ngIf="!access.isanonymous && access.canviewreports" (click)="openFeature('NonRespondents')" detail-push>
+        </ion-item>
+        <ion-item text-wrap *ngIf="!access.isanonymous && access.canviewreports" (click)="openFeature('NonRespondents')" detail-push>
             <h2>{{ 'addon.mod_feedback.show_nonrespondents' | translate }}</h2>
-        </a>
+        </ion-item>
         <ion-item text-wrap>
             <h2>{{ 'addon.mod_feedback.questions' | translate }}</h2>
             <ion-badge item-end>{{feedback.itemsCount}}</ion-badge>
@@ -108,21 +108,21 @@
                 </ion-item>
                 <ion-grid>
                     <ion-row align-items-center>
-                        <ion-col col-12 [attr.col-sm-6]="(access.cancomplete && access.cansubmit && access.isopen) || null">
-                            <button ion-button block outline icon-start (click)="gotoAnswerQuestions(true)" text-wrap>
+                        <ion-col size="12" [attr.col-sm-6]="(access.cancomplete && access.cansubmit && access.isopen) || null">
+                            <ion-button block outline icon-start (click)="gotoAnswerQuestions(true)" text-wrap>
                                 <ion-icon name="search"></ion-icon>
                                 {{ 'addon.mod_feedback.preview' | translate }}
-                            </button>
+                            </ion-button>
                         </ion-col>
-                        <ion-col *ngIf="access.cancomplete && access.cansubmit && access.isopen" col-12 col-sm-6>
-                            <button ion-button block icon-end *ngIf="!goPage" (click)="gotoAnswerQuestions()" text-wrap>
+                        <ion-col *ngIf="access.cancomplete && access.cansubmit && access.isopen" size="12" size-sm="6">
+                            <ion-button block icon-end *ngIf="!goPage" (click)="gotoAnswerQuestions()" text-wrap>
                                 {{ 'addon.mod_feedback.complete_the_form' | translate }}
                                 <ion-icon name="arrow-forward"></ion-icon>
-                            </button>
-                            <button ion-button block icon-end *ngIf="goPage" (click)="gotoAnswerQuestions()" text-wrap>
+                            </ion-button>
+                            <ion-button block icon-end *ngIf="goPage" (click)="gotoAnswerQuestions()" text-wrap>
                                 {{ 'addon.mod_feedback.continue_the_form' | translate }}
                                 <ion-icon name="arrow-forward"></ion-icon>
-                            </button>
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

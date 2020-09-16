@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { CoreContextMenuItemComponent } from './context-menu-item';
 import { CoreLoggerProvider } from '@providers/logger';
 

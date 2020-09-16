@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.messages' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="preferencesLoaded" (ionRefresh)="refreshPreferences($event)">
@@ -15,21 +15,23 @@
               <ion-toggle [(ngModel)]="contactablePrivacy" (ionChange)="saveContactablePrivacy(contactablePrivacy)"></ion-toggle>
             </ion-item>
 
-            <ion-list *ngIf="advancedContactable" text-wrap radio-group [(ngModel)]="contactablePrivacy" (ionChange)="saveContactablePrivacy(contactablePrivacy)">
+            <ion-list *ngIf="advancedContactable" text-wrap [(ngModel)]="contactablePrivacy" (ionChange)="saveContactablePrivacy(contactablePrivacy)">
+<ion-radio-group>
                 <ion-item-divider>{{ 'addon.messages.contactableprivacy' | translate }}</ion-item-divider>
                 <ion-item>
                     <ion-label>{{ 'addon.messages.contactableprivacy_onlycontacts' | translate }}</ion-label>
-                    <ion-radio [value]="onlyContactsValue"></ion-radio>
+                    <ion-radio slot="start" [value]="onlyContactsValue"></ion-radio>
                 </ion-item>
                 <ion-item>
                     <ion-label>{{ 'addon.messages.contactableprivacy_coursemember' | translate }}</ion-label>
-                    <ion-radio [value]="courseMemberValue"></ion-radio>
+                    <ion-radio slot="start" [value]="courseMemberValue"></ion-radio>
                 </ion-item>
                 <ion-item *ngIf="allowSiteMessaging">
                     <ion-label>{{ 'addon.messages.contactableprivacy_site' | translate }}</ion-label>
-                    <ion-radio [value]="siteValue"></ion-radio>
+                    <ion-radio slot="start" [value]="siteValue"></ion-radio>
                 </ion-item>
-            </ion-list>
+            </ion-radio-group>
+</ion-list>
         </ion-card>
 
         <!-- Notifications. -->
@@ -40,8 +42,8 @@
                         <ion-row no-padding>
                             <ng-container *ngIf="!groupMessagingEnabled">
                                 <ion-col no-padding>{{ notification.displayname }}</ion-col>
-                                <ion-col col-2 text-center no-padding class="hidden-phone">{{ 'core.settings.loggedin' | translate }}</ion-col>
-                                <ion-col *ngIf="!groupMessagingEnabled" col-2 text-center no-padding class="hidden-phone">{{ 'core.settings.loggedoff' | translate }}</ion-col>
+                                <ion-col size="2" text-center no-padding class="hidden-phone">{{ 'core.settings.loggedin' | translate }}</ion-col>
+                                <ion-col *ngIf="!groupMessagingEnabled" size="2" text-center no-padding class="hidden-phone">{{ 'core.settings.loggedoff' | translate }}</ion-col>
                             </ng-container>
                             <ng-container *ngIf="groupMessagingEnabled">
                                 <ion-col no-padding>{{ 'addon.notifications.notificationpreferences' | translate }}</ion-col>
@@ -65,7 +67,7 @@
                             <!-- Tablet view -->
                             <ion-row text-wrap class="hidden-phone" align-items-center>
                                 <ion-col margin-horizontal>{{ processor.displayname }}</ion-col>
-                                <ion-col col-2 text-center *ngFor="let state of ['loggedin', 'loggedoff']">
+                                <ion-col size="2" text-center *ngFor="let state of ['loggedin', 'loggedoff']">
                                     <!-- If notifications not disabled, show toggle. -->
                                     <ion-spinner [hidden]="preferences.disableall || !(notification.updating && notification.updating[state])"></ion-spinner>
                                     <ion-toggle *ngIf="!preferences.disableall && !processor.locked" [(ngModel)]="processor[state].checked" (ionChange)="changePreference(notification, state, processor)" [disabled]="notification.updating && notification.updating[state]">

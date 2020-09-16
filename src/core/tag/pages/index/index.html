@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.tag.tag' | translate }}: {{ tagName }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <core-split-view>
     <ion-content>
@@ -14,10 +14,10 @@
                     <ion-icon item-start name="warning" color="warning"></ion-icon>
                     {{ 'core.tag.warningareasnotsupported' | translate }}
                 </ion-item>
-                <a ion-item text-wrap *ngFor="let area of areas" [title]="area.nameKey | translate" (click)="openArea(area)" [class.core-split-item-selected]="area.id == selectedAreaId">
+                <ion-item text-wrap *ngFor="let area of areas" [title]="area.nameKey | translate" (click)="openArea(area)" [class.core-split-item-selected]="area.id == selectedAreaId">
                     <h2>{{ area.nameKey | translate }}</h2>
                     <ion-badge item-end *ngIf="area.badge">{{ area.badge }}</ion-badge>
-                </a>
+                </ion-item>
             </ion-list>
             <core-empty-box icon="fa-tag" *ngIf="!hasUnsupportedAreas && (!areas || !areas.length)" [message]="'core.tag.noresultsfor' | translate: { $a: tagName }"></core-empty-box>
         </core-loading>

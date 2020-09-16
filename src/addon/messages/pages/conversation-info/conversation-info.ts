@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from '@ionic/angular';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMember
 } from '../../providers/messages';

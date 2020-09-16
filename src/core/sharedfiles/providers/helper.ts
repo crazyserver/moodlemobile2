@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { AlertController, ModalController } from 'ionic-angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@providers/app';
 import { CoreFileProvider } from '@providers/file';
@@ -50,7 +50,7 @@ export class CoreSharedFilesHelperProvider {
     askRenameReplace(originalName: string, newName: string): Promise<string> {
         const deferred = this.utils.promiseDefer(),
             alert = this.alertCtrl.create({
-                title: this.translate.instant('core.sharedfiles.sharedfiles'),
+                header: this.translate.instant('core.sharedfiles.sharedfiles'),
                 message: this.translate.instant('core.sharedfiles.chooseactionrepeatedfile', { $a: newName }),
                 buttons: [
                     {

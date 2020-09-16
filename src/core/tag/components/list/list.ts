@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, Optional } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreTagItem } from '@core/tag/providers/tag';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 

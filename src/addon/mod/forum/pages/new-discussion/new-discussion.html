@@ -1,10 +1,10 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_forum.addanewdiscussion' | translate }}</ion-title>
-        <ion-buttons end>
+        <ion-buttons slot="primary">
             <!-- The context menu will be added in here. -->
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="groupsLoaded" (ionRefresh)="refreshGroups($event)">
@@ -14,11 +14,11 @@
     <core-loading [hideUntil]="groupsLoaded">
         <form ion-list *ngIf="showForm" #newDiscFormEl>
             <ion-item>
-                <ion-label stacked>{{ 'addon.mod_forum.subject' | translate }}</ion-label>
+                <ion-label position="stacked">{{ 'addon.mod_forum.subject' | translate }}</ion-label>
                 <ion-input type="text" [placeholder]="'addon.mod_forum.subject' | translate" [(ngModel)]="newDiscussion.subject" name="subject"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>{{ 'addon.mod_forum.message' | translate }}</ion-label>
+                <ion-label position="stacked">{{ 'addon.mod_forum.message' | translate }}</ion-label>
                 <core-rich-text-editor item-content [control]="messageControl" (contentChanged)="onMessageChange($event)" [placeholder]="'addon.mod_forum.message' | translate" name="addon_mod_forum_new_discussion" [component]="component" [componentId]="forum.cmid" [autoSave]="true" contextLevel="module" [contextInstanceId]="forum.cmid" elementId="message"></core-rich-text-editor>
             </ion-item>
             <ion-item-divider text-wrap (click)="toggleAdvanced()" class="core-expandable">
@@ -34,7 +34,7 @@
                 <ion-item *ngIf="showGroups">
                     <ion-label id="addon-mod-forum-groupslabel">{{ 'addon.mod_forum.group' | translate }}</ion-label>
                     <ion-select [(ngModel)]="newDiscussion.groupId" [disabled]="newDiscussion.postToAllGroups" aria-labelledby="addon-mod-forum-groupslabel" interface="action-sheet" name="groupid">
-                        <ion-option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</ion-option>
+                        <ion-select-option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
@@ -50,10 +50,10 @@
             <ion-item>
                 <ion-row>
                     <ion-col>
-                        <button ion-button block (click)="add()" [disabled]="newDiscussion.subject == '' || newDiscussion.message == null">{{ 'addon.mod_forum.posttoforum' | translate }}</button>
+                        <ion-button block (click)="add()" [disabled]="newDiscussion.subject == '' || newDiscussion.message == null">{{ 'addon.mod_forum.posttoforum' | translate }}</ion-button>
                     </ion-col>
                     <ion-col *ngIf="hasOffline">
-                        <button ion-button block color="light" (click)="discard()">{{ 'core.discard' | translate }}</button>
+                        <ion-button block color="light" (click)="discard()">{{ 'core.discard' | translate }}</ion-button>
                     </ion-col>
                 </ion-row>
             </ion-item>

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { PopoverController, Popover } from 'ionic-angular';
+import { PopoverController, Popover } from '@ionic/angular';
 import { CoreLoggerProvider } from '@providers/logger';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 import { AddonModQuizProvider } from '../providers/quiz';

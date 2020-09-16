@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Injector } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import {
     CoreCourseModuleMainResourceComponent, CoreCourseResourceDownloadResult
 } from '@core/course/classes/main-resource-component';

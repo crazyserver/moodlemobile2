@@ -1,11 +1,11 @@
 <core-loading [hideUntil]="loaded" class="core-loading-center">
 
     <!-- User and status of the submission. -->
-    <a ion-item text-wrap *ngIf="!blindMarking && user" core-user-link [userId]="submitId" [courseId]="courseId" [title]="user.fullname">
+    <ion-item text-wrap *ngIf="!blindMarking && user" core-user-link [userId]="submitId" [courseId]="courseId" [title]="user.fullname">
         <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
         <h2>{{ user.fullname }}</h2>
         <ng-container *ngTemplateOutlet="submissionStatus"></ng-container>
-    </a>
+    </ion-item>
 
     <!-- Status of the submission if user is blinded. -->
     <ion-item text-wrap *ngIf="blindMarking && !user">
@@ -68,16 +68,16 @@
                 <ion-item text-wrap *ngIf="canEdit">
                     <div *ngIf="!unsupportedEditPlugins.length && !showErrorStatementEdit">
                         <!-- If has offline data, show edit. -->
-                        <a ion-button block text-wrap color="primary" *ngIf="hasOffline" (click)="goToEdit()">{{ 'addon.mod_assign.editsubmission' | translate }}</a>
+                        <ion-button block text-wrap color="primary" *ngIf="hasOffline" (click)="goToEdit()">{{ 'addon.mod_assign.editsubmission' | translate }}</ion-button>
                         <!-- If no submission or is new, show add submission. -->
-                        <a ion-button block text-wrap color="primary" *ngIf="!hasOffline && (!userSubmission || !userSubmission.status || userSubmission.status == statusNew)" (click)="goToEdit()">{{ 'addon.mod_assign.addsubmission' | translate }}</a>
+                        <ion-button block text-wrap color="primary" *ngIf="!hasOffline && (!userSubmission || !userSubmission.status || userSubmission.status == statusNew)" (click)="goToEdit()">{{ 'addon.mod_assign.addsubmission' | translate }}</ion-button>
                         <!-- If reopened, show addfromprevious and addnewattempt. -->
                         <ng-container *ngIf="!hasOffline && userSubmission && userSubmission.status == statusReopened">
-                            <a *ngIf="!isPreviousAttemptEmpty" ion-button block text-wrap color="primary" (click)="copyPrevious()">{{ 'addon.mod_assign.addnewattemptfromprevious' | translate }}</a>
-                            <a ion-button block text-wrap color="primary" (click)="goToEdit()">{{ 'addon.mod_assign.addnewattempt' | translate }}</a>
+                            <ion-button *ngIf="!isPreviousAttemptEmpty" block text-wrap color="primary" (click)="copyPrevious()">{{ 'addon.mod_assign.addnewattemptfromprevious' | translate }}</ion-button>
+                            <ion-button block text-wrap color="primary" (click)="goToEdit()">{{ 'addon.mod_assign.addnewattempt' | translate }}</ion-button>
                         </ng-container>
                         <!-- Else show editsubmission. -->
-                        <a ion-button block text-wrap color="primary" *ngIf="!hasOffline && userSubmission && userSubmission.status && userSubmission.status != statusNew && userSubmission.status != statusReopened" (click)="goToEdit()">{{ 'addon.mod_assign.editsubmission' | translate }}</a>
+                        <ion-button block text-wrap color="primary" *ngIf="!hasOffline && userSubmission && userSubmission.status && userSubmission.status != statusNew && userSubmission.status != statusReopened" (click)="goToEdit()">{{ 'addon.mod_assign.editsubmission' | translate }}</ion-button>
                     </div>
                     <div *ngIf="unsupportedEditPlugins && unsupportedEditPlugins.length && !showErrorStatementEdit">
                         <p class="core-danger-item">{{ 'addon.mod_assign.erroreditpluginsnotsupported' | translate }}</p>
@@ -97,7 +97,7 @@
                     </ion-item>
                     <!-- Submit button. -->
                     <ion-item text-wrap *ngIf="!showErrorStatementSubmit">
-                        <a ion-button block text-wrap (click)="submitForGrading(submitModel.submissionStatement)">{{ 'addon.mod_assign.submitassignment' | translate }}</a>
+                        <ion-button block text-wrap (click)="submitForGrading(submitModel.submissionStatement)">{{ 'addon.mod_assign.submitassignment' | translate }}</ion-button>
                         <p>{{ 'addon.mod_assign.submitassignment_help' | translate }}</p>
                     </ion-item>
                     <!-- Error because we lack submissions statement. -->
@@ -110,10 +110,10 @@
                 <ion-item text-wrap *ngIf="membersToSubmit && membersToSubmit.length > 0">
                     <h2>{{ 'addon.mod_assign.userswhoneedtosubmit' | translate: {$a: ''} }}</h2>
                     <div *ngFor="let user of membersToSubmit">
-                        <a ion-item text-wrap *ngIf="user.fullname" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
+                        <ion-item text-wrap *ngIf="user.fullname" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
                             <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
                             <h2>{{ user.fullname }}</h2>
-                        </a>
+                        </ion-item>
                         <ion-item text-wrap *ngIf="!user.fullname">
                             {{ 'addon.mod_assign.hiddenuser' | translate }} {{ user }}
                         </ion-item>
@@ -141,14 +141,14 @@
                 <ion-item text-wrap *ngIf="feedback.gradefordisplay && (!isGrading || grade.method != 'simple')" class="core-grading-summary">
                     <h2>{{ 'addon.mod_assign.currentgrade' | translate }}</h2>
                     <p><core-format-text [text]="feedback.gradefordisplay" [filter]="false"></core-format-text></p>
-                    <a ion-button item-end icon-only *ngIf="feedback.advancedgrade" (click)="showAdvancedGrade()">
+                    <ion-button item-end icon-only *ngIf="feedback.advancedgrade" (click)="showAdvancedGrade()">
                         <ion-icon name="search"></ion-icon>
-                    </a>
+                    </ion-button>
                 </ion-item>
 
                 <!-- Numeric grade. Use a text input because otherwise we cannot read the value if it has an invalid character. -->
                 <ion-item text-wrap *ngIf="grade.method == 'simple' && !grade.scale">
-                    <ion-label stacked><h2>{{ 'addon.mod_assign.gradeoutof' | translate: {$a: gradeInfo.grade} }}</h2></ion-label>
+                    <ion-label position="stacked"><h2>{{ 'addon.mod_assign.gradeoutof' | translate: {$a: gradeInfo.grade} }}</h2></ion-label>
                     <ion-input *ngIf="!grade.disabled" type="text" [(ngModel)]="grade.grade" min="0" [max]="gradeInfo.grade" [lang]="grade.lang"></ion-input>
                     <p item-content *ngIf="grade.disabled">{{ 'addon.mod_assign.gradelocked' | translate }}</p>
                 </ion-item>
@@ -157,7 +157,7 @@
                 <ion-item text-wrap *ngIf="grade.method == 'simple' && grade.scale">
                     <ion-label><h2>{{ 'addon.mod_assign.grade' | translate }}</h2></ion-label>
                     <ion-select [(ngModel)]="grade.grade" interface="action-sheet" [disabled]="grade.disabled">
-                        <ion-option *ngFor="let grade of grade.scale" [value]="grade.value">{{grade.label}}</ion-option>
+                        <ion-select-option *ngFor="let grade of grade.scale" [value]="grade.value">{{grade.label}}</ion-select-option>
                     </ion-select>
                 </ion-item>
 
@@ -165,7 +165,7 @@
                 <ion-item text-wrap *ngFor="let outcome of gradeInfo.outcomes">
                     <ion-label><h2>{{ outcome.name }}</h2></ion-label>
                     <ion-select *ngIf="canSaveGrades && outcome.itemNumber" [(ngModel)]="outcome.selectedId" interface="action-sheet" [disabled]="gradeInfo.disabled">
-                        <ion-option *ngFor="let grade of outcome.options" [value]="grade.value">{{grade.label}}</ion-option>
+                        <ion-select-option *ngFor="let grade of outcome.options" [value]="grade.value">{{grade.label}}</ion-select-option>
                     </ion-select>
                     <p item-content *ngIf="!canSaveGrades || !outcome.itemNumber">{{ outcome.selected }}</p>
                 </ion-item>
@@ -208,12 +208,12 @@
                 </ng-container>
 
                 <!-- Data about the grader (teacher who graded). -->
-                <a ion-item text-wrap *ngIf="grader" core-user-link [userId]="grader.id" [courseId]="courseId" [title]="grader.fullname" detail-push>
+                <ion-item text-wrap *ngIf="grader" core-user-link [userId]="grader.id" [courseId]="courseId" [title]="grader.fullname" detail-push>
                     <ion-avatar core-user-avatar [user]="grader" item-start></ion-avatar>
                     <h2>{{ 'addon.mod_assign.gradedby' | translate }}</h2>
                     <h2>{{ grader.fullname }}</h2>
                     <p *ngIf="feedback.gradeddate">{{ feedback.gradeddate * 1000 | coreFormatDate }}</p>
-                </a>
+                </ion-item>
 
                 <!-- Grader is hidden, display only the grade date. -->
                 <ion-item text-wrap *ngIf="!grader && feedback.gradeddate">
@@ -225,10 +225,10 @@
                 <div *ngIf="isGrading && !canSaveGrades" class="core-warning-card" icon-start>
                     <ion-icon name="warning"></ion-icon>
                     <p>{{ 'addon.mod_assign.cannotgradefromapp' | translate:{$a: moduleName} }}</p>
-                    <a ion-button block *ngIf="gradeUrl" [href]="gradeUrl" core-link icon-end>
+                    <ion-button block *ngIf="gradeUrl" [href]="gradeUrl" core-link icon-end>
                         {{ 'core.openinbrowser' | translate }}
                         <ion-icon name="open"></ion-icon>
-                    </a>
+                    </ion-button>
                 </div>
             </ng-template>
         </core-tab>

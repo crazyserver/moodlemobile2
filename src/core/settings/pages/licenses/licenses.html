@@ -1,13 +1,13 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.settings.opensourcelicenses' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="loaded">
-        <a *ngIf="error" ion-item text-wrap [href]="licensesUrl" core-link auto-login="no">
+        <ion-item *ngIf="error" text-wrap [href]="licensesUrl" core-link auto-login="no">
             {{ 'core.settings.opensourcelicenses' | translate }}
-        </a>
+        </ion-item>
 
         <ng-container *ngIf="!error">
             <ion-item *ngFor="let license of licenses" text-wrap>
@@ -19,7 +19,7 @@
                 <p>{{ 'core.settings.license' | translate }}{{ 'core.labelsep' | translate }} {{ license.licenses }}</p>
                 <p><a *ngIf="license.url" [href]="license.url" core-link auto-login="no">{{ license.url }}</a></p>
                 <p><a *ngIf="license.email" [href]="'mailto:' +license.email" core-link auto-login="no">{{ license.email }}</a></p>
-                <a *ngIf="license.licenseUrl" [href]="license.licenseUrl" target="_blank" ion-button ion-button clear item-end core-link auto-login="no">{{ 'core.view' | translate }}</a>
+                <ion-button *ngIf="license.licenseUrl" [href]="license.licenseUrl" target="_blank" ion-button clear item-end core-link auto-login="no">{{ 'core.view' | translate }}</ion-button>
             </ion-item>
         </ng-container>
     </core-loading>

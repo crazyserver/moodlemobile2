@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreContentLinksAction } from '../providers/delegate';
 import { CoreContentLinksHandlerBase } from './base-handler';
 import { CoreSitesProvider } from '@providers/sites';

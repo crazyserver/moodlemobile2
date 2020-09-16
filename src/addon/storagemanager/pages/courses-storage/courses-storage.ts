@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage } from '@ionic/angular';
 import { CoreCourse, CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourses } from '@core/courses/providers/courses';
 import { CoreArray } from '@singletons/array';

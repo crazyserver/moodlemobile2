@@ -16,7 +16,7 @@ import {
     Component, Input, Output, Optional, EventEmitter, OnInit, OnDestroy, ViewChild, ElementRef, OnChanges, SimpleChange
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Content, PopoverController, ModalController } from 'ionic-angular';
+import { Content, PopoverController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreSyncProvider } from '@providers/sync';

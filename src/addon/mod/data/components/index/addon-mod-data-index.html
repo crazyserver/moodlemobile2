@@ -1,8 +1,8 @@
 <!-- Buttons to add to the header. -->
 <core-navbar-buttons end>
-    <button *ngIf="canSearch" ion-button icon-only (click)="showSearch($event)" [attr.aria-label]="'addon.mod_data.search' | translate">
+    <ion-button *ngIf="canSearch" icon-only (click)="showSearch($event)" [attr.aria-label]="'addon.mod_data.search' | translate">
         <ion-icon name="search"></ion-icon>
-    </button>
+    </ion-button>
     <core-context-menu>
         <core-context-menu-item *ngIf="externalUrl" [priority]="900" [content]="'core.openinbrowser' | translate" [href]="externalUrl" [iconAction]="'open'"></core-context-menu-item>
         <core-context-menu-item *ngIf="description" [priority]="800" [content]="'core.moduleintro' | translate" (action)="expandDescription()" [iconAction]="'arrow-forward'"></core-context-menu-item>
@@ -31,7 +31,7 @@
         <ion-label id="addon-data-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
         <ion-label id="addon-data-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
         <ion-select [(ngModel)]="selectedGroup" (ionChange)="setGroup(selectedGroup)" aria-labelledby="addon-data-groupslabel" interface="action-sheet">
-            <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+            <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
         </ion-select>
     </ion-item>
 
@@ -75,16 +75,16 @@
     <ion-grid *ngIf="search.page > 0 || hasNextPage">
         <ion-row align-items-center>
             <ion-col *ngIf="search.page > 0">
-                <button ion-button block outline icon-start (click)="searchEntries(search.page - 1)">
+                <ion-button block outline icon-start (click)="searchEntries(search.page - 1)">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                     {{ 'core.previous' | translate }}
-                </button>
+                </ion-button>
             </ion-col>
             <ion-col *ngIf="hasNextPage">
-                <button ion-button block icon-end (click)="searchEntries(search.page + 1)">
+                <ion-button block icon-end (click)="searchEntries(search.page + 1)">
                     {{ 'core.next' | translate }}
                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                </button>
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -98,8 +98,8 @@
 
 </core-loading>
 
-<ion-fab core-fab bottom end *ngIf="canAdd">
-    <button ion-fab (click)="gotoAddEntries($event)" [attr.aria-label]="'addon.mod_data.addentries' | translate">
+<ion-fab slot="fixed" core-fab vertical="bottom" horizontal="end" *ngIf="canAdd">
+    <ion-fab-button (click)="gotoAddEntries($event)" [attr.aria-label]="'addon.mod_data.addentries' | translate">
         <ion-icon name="add"></ion-icon>
-    </button>
+    </ion-fab-button>
 </ion-fab>

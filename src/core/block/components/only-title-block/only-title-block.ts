@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injector, OnInit, Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreBlockBaseComponent } from '../../classes/base-block-component';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 

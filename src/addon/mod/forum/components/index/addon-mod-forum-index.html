@@ -36,10 +36,10 @@
                 </core-empty-box>
 
                 <div text-wrap *ngIf="discussions.length > 0 && sortingAvailable && selectedSortOrder" ion-row padding-horizontal padding-top margin-bottom>
-                    <button *ngIf="sortingAvailable" ion-button padding-horizontal icon-end ion-col (click)="showSortOrderSelector($event)" color="light" class="core-button-select button-no-uppercase" [attr.aria-label]="('core.sort' | translate)" aria-haspopup="true" [attr.aria-expanded]="sortOrderSelectorExpanded" aria-controls="addon-mod-forum-sort-order-selector" id="addon-mod-forum-sort-order-button">
+                    <ion-button *ngIf="sortingAvailable" padding-horizontal icon-end ion-col (click)="showSortOrderSelector($event)" color="light" class="core-button-select button-no-uppercase" [attr.aria-label]="('core.sort' | translate)" aria-haspopup="true" [attr.aria-expanded]="sortOrderSelectorExpanded" aria-controls="addon-mod-forum-sort-order-selector" id="addon-mod-forum-sort-order-button">
                         <span class="core-button-select-text">{{ selectedSortOrder.label | translate }}</span>
                         <ion-icon name="arrow-dropdown" ios="md-arrow-dropdown"></ion-icon>
-                    </button>
+                    </ion-button>
                 </div>
 
                 <ng-container *ngFor="let discussion of offlineDiscussions">
@@ -67,9 +67,9 @@
                                 <core-icon name="fa-star" class="addon-forum-star" *ngIf="!discussion.pinned && discussion.starred"></core-icon>
                                 <core-format-text [text]="discussion.subject" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
                             </h2>
-                            <button ion-button icon-only clear color="dark" (click)="showOptionsMenu($event, discussion)" *ngIf="canPin || discussion.canlock || discussion.canfavourite" [attr.aria-label]="('core.displayoptions' | translate)">
+                            <ion-button icon-only clear color="dark" (click)="showOptionsMenu($event, discussion)" *ngIf="canPin || discussion.canlock || discussion.canfavourite" [attr.aria-label]="('core.displayoptions' | translate)">
                                 <core-icon name="more"></core-icon>
-                            </button>
+                            </ion-button>
                         </div>
                         <div class="addon-mod-forum-discussion-info">
                             <ion-avatar *ngIf="discussion.userfullname" core-user-avatar [user]="discussion" item-start [courseId]="courseId"></ion-avatar>
@@ -101,10 +101,10 @@
             </ng-container>
         </core-loading>
 
-        <ion-fab core-fab bottom end *ngIf="forum && canAddDiscussion">
-            <button ion-fab (click)="openNewDiscussion()" [attr.aria-label]="addDiscussionText">
+        <ion-fab slot="fixed" core-fab vertical="bottom" horizontal="end" *ngIf="forum && canAddDiscussion">
+            <ion-fab-button (click)="openNewDiscussion()" [attr.aria-label]="addDiscussionText">
                 <ion-icon name="add"></ion-icon>
-            </button>
+            </ion-fab-button>
         </ion-fab>
     </ion-content>
 </core-split-view>

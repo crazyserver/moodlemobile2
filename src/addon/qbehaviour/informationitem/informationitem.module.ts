@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 import { CoreQuestionBehaviourDelegate } from '@core/question/providers/behaviour-delegate';
 import { AddonQbehaviourInformationItemHandler } from './providers/handler';
 import { AddonQbehaviourInformationItemComponent } from './component/informationitem';

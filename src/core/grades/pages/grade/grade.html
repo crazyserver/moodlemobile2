@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.grades.grade' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="gradeLoaded" (ionRefresh)="refreshGrade($event)">
@@ -11,11 +11,11 @@
         <core-empty-box *ngIf="!grade" icon="stats" [message]="'core.grades.nogradesreturned' | translate"></core-empty-box>
 
         <ion-list *ngIf="grade">
-            <a ion-item *ngIf="grade.itemname && grade.link" text-wrap detail-push [href]="grade.link" core-link capture="true">
+            <ion-item *ngIf="grade.itemname && grade.link" text-wrap detail-push [href]="grade.link" core-link capture="true">
                 <ion-icon *ngIf="grade.icon" name="{{grade.icon}}" item-start></ion-icon>
                 <img *ngIf="grade.image" [src]="grade.image" item-start class="core-module-icon"/>
                 <h2><core-format-text [text]="grade.itemname" contextLevel="course" [contextInstanceId]="courseId"></core-format-text></h2>
-            </a>
+            </ion-item>
 
             <ion-item *ngIf="grade.itemname && !grade.link" text-wrap >
                 <ion-icon *ngIf="grade.icon" name="{{grade.icon}}" item-start></ion-icon>

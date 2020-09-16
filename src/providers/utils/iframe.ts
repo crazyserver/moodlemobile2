@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, NgZone } from '@angular/core';
-import { Config, Platform, NavController } from 'ionic-angular';
+import { Config, Platform, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@ionic-native/network';
 import { CoreApp, CoreAppProvider } from '../app';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreLangProvider } from '@providers/lang';
 import { CoreTextUtilsProvider } from '@providers/utils/text';

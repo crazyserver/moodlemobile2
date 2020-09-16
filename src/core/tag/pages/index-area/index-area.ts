@@ -14,7 +14,7 @@
 
 import { Component, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTagProvider } from '@core/tag/providers/tag';
 import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';

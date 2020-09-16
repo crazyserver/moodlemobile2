@@ -1,26 +1,26 @@
-<a *ngIf="action == 'more'" ion-button icon-only clear (click)="viewEntry()" [title]="'addon.mod_data.more' | translate">
+<ion-button *ngIf="action == 'more'" icon-only clear (click)="viewEntry()" [title]="'addon.mod_data.more' | translate">
     <ion-icon name="search"></ion-icon>
-</a>
+</ion-button>
 
-<a *ngIf="action == 'edit'" ion-button icon-only clear (click)="editEntry()"  [title]="'core.edit' | translate">
+<ion-button *ngIf="action == 'edit'" icon-only clear (click)="editEntry()"  [title]="'core.edit' | translate">
     <ion-icon name="cog"></ion-icon>
-</a>
+</ion-button>
 
-<a *ngIf="action == 'delete' && !entry.deleted" ion-button icon-only clear (click)="deleteEntry()" [title]="'core.delete' | translate">
+<ion-button *ngIf="action == 'delete' && !entry.deleted" icon-only clear (click)="deleteEntry()" [title]="'core.delete' | translate">
     <ion-icon name="trash"></ion-icon>
-</a>
+</ion-button>
 
-<a *ngIf="action == 'delete' && entry.deleted" ion-button icon-only clear (click)="undoDelete()" [title]="'core.restore' | translate">
+<ion-button *ngIf="action == 'delete' && entry.deleted" icon-only clear (click)="undoDelete()" [title]="'core.restore' | translate">
     <ion-icon name="undo"></ion-icon>
-</a>
+</ion-button>
 
-<a *ngIf="action == 'approve'" ion-button icon-only clear (click)="approveEntry()" [title]="'addon.mod_data.approve' | translate">
+<ion-button *ngIf="action == 'approve'" icon-only clear (click)="approveEntry()" [title]="'addon.mod_data.approve' | translate">
     <ion-icon name="thumbs-up"></ion-icon>
-</a>
+</ion-button>
 
-<a *ngIf="action == 'disapprove'" ion-button icon-only clear (click)="disapproveEntry()" [title]="'addon.mod_data.disapprove' | translate">
+<ion-button *ngIf="action == 'disapprove'" icon-only clear (click)="disapproveEntry()" [title]="'addon.mod_data.disapprove' | translate">
     <ion-icon name="thumbs-down"></ion-icon>
-</a>
+</ion-button>
 
 <core-comments *ngIf="action == 'comments' && mode == 'list'" contextLevel="module" [instanceId]="database.coursemodule" component="mod_data" [itemId]="entry.id" area="database_entry" [courseId]="database.course"></core-comments>
 

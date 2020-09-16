@@ -9,7 +9,7 @@
     </ng-container>
 
     <ion-item text-wrap ion-grid ngClass="core-{{question.input.correctIconColor}}-item">
-        <ion-label stacked>{{ 'addon.mod_quiz.answercolon' | translate }}</ion-label>
+        <ion-label position="stacked">{{ 'addon.mod_quiz.answercolon' | translate }}</ion-label>
         <ion-grid item-content no-padding>
             <ion-row>
                 <!-- Display unit select before the answer input. -->
@@ -43,7 +43,7 @@
     <ion-col>
         <label *ngIf="question.select.accessibilityLabel" class="accesshide" for="{{question.select.id}}">{{ question.select.accessibilityLabel }}</label>
         <ion-select id="{{question.select.id}}" [name]="question.select.name" [(ngModel)]="question.select.selected" interface="action-sheet" [disabled]="question.select.disabled">
-            <ion-option *ngFor="let option of question.select.options" [value]="option.value">{{option.label}}</ion-option>
+            <ion-select-option *ngFor="let option of question.select.options" [value]="option.value">{{option.label}}</ion-select-option>
         </ion-select>
 
         <!-- ion-select doesn't use a select. Create a hidden input to hold the selected value. -->
@@ -53,13 +53,15 @@
 
 <!-- Template for units entered using radio buttons. -->
 <ng-template #radioUnits>
-    <div radio-group [(ngModel)]="question.unit" [name]="question.optionsName">
+    <div [(ngModel)]="question.unit" [name]="question.optionsName">
+<ion-radio-group>
         <ion-item text-wrap *ngFor="let option of question.options">
             <ion-label>{{ option.text }}</ion-label>
-            <ion-radio [value]="option.value" [disabled]="option.disabled || question.input.readOnly" [color]="question.input.correctIconColor"></ion-radio>
+            <ion-radio slot="start" [value]="option.value" [disabled]="option.disabled || question.input.readOnly" [color]="question.input.correctIconColor"></ion-radio>
         </ion-item>
 
         <!-- ion-radio doesn't use an input. Create a hidden input to hold the selected value. -->
         <input type="hidden" [ngModel]="question.unit" [attr.name]="question.optionsName">
-    </div>
+    </ion-radio-group>
+</div>
 </ng-template>

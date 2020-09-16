@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController } from '@ionic/angular';
 import { AddonModFeedbackProvider } from './feedback';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCourseProvider } from '@core/course/providers/course';

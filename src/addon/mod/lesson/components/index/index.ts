@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional, Injector, Input, ViewChild, ElementRef } from '@angular/core';
-import { Content, NavController } from 'ionic-angular';
+import { Content, NavController } from '@ionic/angular';
 import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 import { CoreUtilsProvider } from '@providers/utils/utils';

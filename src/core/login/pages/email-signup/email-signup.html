@@ -1,13 +1,13 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.login.newaccount' | translate }}</ion-title>
 
-        <ion-buttons end>
-            <button ion-button icon-only *ngIf="authInstructions" (click)="showAuthInstructions()" [attr.aria-label]="'core.login.instructions' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only *ngIf="authInstructions" (click)="showAuthInstructions()" [attr.aria-label]="'core.login.instructions' | translate">
                 <ion-icon name="help-circle"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="settingsLoaded && !isMinor" (ionRefresh)="refreshSettings($event)">
@@ -22,9 +22,9 @@
                 {{ 'core.login.signuprequiredfieldnotsupported' | translate }}
             </ion-item>
             <ion-item>
-                <a ion-button block [href]="signupUrl" core-link [autoLogin]="no">
+                <ion-button block [href]="signupUrl" core-link [autoLogin]="no">
                     {{ 'core.openinbrowser' | translate }}
-                </a>
+                </ion-button>
             </ion-item>
         </ion-list>
 
@@ -35,21 +35,21 @@
             </ion-item-divider>
 
             <ion-item text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.whatisyourage' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.whatisyourage' | translate }}</ion-label>
                 <ion-input type="number" name="age" placeholder="0" formControlName="age" autocapitalize="none" autocorrect="off"></ion-input>
             </ion-item>
 
             <ion-item text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.wheredoyoulive' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.wheredoyoulive' | translate }}</ion-label>
                 <ion-select name="country" formControlName="country" [placeholder]="'core.login.selectacountry' | translate">
-                    <ion-option value="">{{ 'core.login.selectacountry' | translate }}</ion-option>
-                    <ion-option *ngFor="let country of countries" [value]="country.code">{{country.name}}</ion-option>
+                    <ion-select-option value="">{{ 'core.login.selectacountry' | translate }}</ion-select-option>
+                    <ion-select-option *ngFor="let country of countries" [value]="country.code">{{country.name}}</ion-select-option>
                 </ion-select>
             </ion-item>
 
             <!-- Submit button. -->
             <ion-item padding>
-                <button ion-button block type="submit" [disabled]="!ageVerificationForm.valid">{{ 'core.proceed' | translate }}</button>
+                <ion-button block type="submit" [disabled]="!ageVerificationForm.valid">{{ 'core.proceed' | translate }}</ion-button>
             </ion-item>
 
             <ion-item text-wrap>
@@ -73,12 +73,12 @@
                 {{ 'core.login.createuserandpass' | translate }}
             </ion-item-divider>
             <ion-item text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.login.username' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.login.username' | translate }}</ion-label>
                 <ion-input type="text" name="username" placeholder="{{ 'core.login.username' | translate }}" formControlName="username" autocapitalize="none" autocorrect="off"></ion-input>
                 <core-input-errors item-content [control]="signupForm.controls.username" [errorMessages]="usernameErrors"></core-input-errors>
             </ion-item>
             <ion-item text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.login.password' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.login.password' | translate }}</ion-label>
                 <core-show-password item-content [name]="'password'">
                     <ion-input type="password" name="password" placeholder="{{ 'core.login.password' | translate }}" formControlName="password" [clearOnEdit]="false"></ion-input>
                 </core-show-password>
@@ -93,29 +93,29 @@
                 {{ 'core.login.supplyinfo' | translate }}
             </ion-item-divider>
             <ion-item text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.user.email' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.user.email' | translate }}</ion-label>
                 <ion-input type="email" name="email" placeholder="{{ 'core.user.email' | translate }}" formControlName="email" autocapitalize="none" autocorrect="off"></ion-input>
                 <core-input-errors item-content [control]="signupForm.controls.email" [errorMessages]="emailErrors"></core-input-errors>
             </ion-item>
             <ion-item text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.user.emailagain' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.user.emailagain' | translate }}</ion-label>
                 <ion-input type="email" name="email2" placeholder="{{ 'core.user.emailagain' | translate }}" formControlName="email2" autocapitalize="none" autocorrect="off" [pattern]="escapeMail(signupForm.controls.email.value)"></ion-input>
                 <core-input-errors item-content [control]="signupForm.controls.email2" [errorMessages]="email2Errors"></core-input-errors>
             </ion-item>
             <ion-item *ngFor="let nameField of settings.namefields" text-wrap>
-                <ion-label stacked core-mark-required="true">{{ 'core.user.' + nameField | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'core.user.' + nameField | translate }}</ion-label>
                 <ion-input type="text" name="nameField" placeholder="{{ 'core.user.' + nameField | translate }}" formControlName="{{nameField}}" autocorrect="off"></ion-input>
                 <core-input-errors item-content [control]="signupForm.controls[nameField]" [errorMessages]="namefieldsErrors[nameField]"></core-input-errors>
             </ion-item>
             <ion-item text-wrap>
-                <ion-label stacked>{{ 'core.user.city' | translate }}</ion-label>
+                <ion-label position="stacked">{{ 'core.user.city' | translate }}</ion-label>
                 <ion-input type="text" name="city" placeholder="{{ 'core.user.city' | translate }}" formControlName="city" autocorrect="off"></ion-input>
             </ion-item>
             <ion-item text-wrap>
-                <ion-label stacked id="core-login-signup-country">{{ 'core.user.country' | translate }}</ion-label>
+                <ion-label position="stacked" id="core-login-signup-country">{{ 'core.user.country' | translate }}</ion-label>
                 <ion-select name="country" formControlName="country" aria-labelledby="core-login-signup-country" [placeholder]="'core.login.selectacountry' | translate">
-                    <ion-option value="">{{ 'core.login.selectacountry' | translate }}</ion-option>
-                    <ion-option *ngFor="let country of countries" [value]="country.code">{{country.name}}</ion-option>
+                    <ion-select-option value="">{{ 'core.login.selectacountry' | translate }}</ion-select-option>
+                    <ion-select-option *ngFor="let country of countries" [value]="country.code">{{country.name}}</ion-select-option>
                 </ion-select>
             </ion-item>
 
@@ -150,7 +150,7 @@
 
             <!-- Submit button. -->
             <ion-item padding>
-                <button ion-button block color="primary" type="submit">{{ 'core.login.createaccount' | translate }}</button>
+                <ion-button block color="primary" type="submit">{{ 'core.login.createaccount' | translate }}</ion-button>
             </ion-item>
         </form>
     </core-loading>
@@ -165,9 +165,9 @@
             <p *ngIf="supportName">{{ supportName }}</p>
             <p *ngIf="supportEmail">{{ supportEmail }}</p>
             <div padding *ngIf="!supportName && !supportEmail">
-                <button ion-button block (click)="showContactOnSite()">
+                <ion-button block (click)="showContactOnSite()">
                     {{ 'core.openinbrowser' | translate }}
-                </button>
+                </ion-button>
             </div>
         </ion-item>
     </ion-list>

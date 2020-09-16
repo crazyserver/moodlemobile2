@@ -16,7 +16,7 @@ import {
     Component, Input, OnInit, OnChanges, OnDestroy, ViewContainerRef, ViewChild, ComponentRef, SimpleChange, ChangeDetectorRef,
     ElementRef, Optional, Output, EventEmitter, DoCheck, KeyValueDiffers, AfterContentInit, AfterViewInit
 } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreCompileProvider } from '../../providers/compile';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreUtilsProvider } from '@providers/utils/utils';

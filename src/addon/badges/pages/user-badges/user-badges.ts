@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content, NavParams } from 'ionic-angular';
+import { IonicPage, Content, NavParams } from '@ionic/angular';
 import { AddonBadgesProvider, AddonBadgesUserBadge } from '../../providers/badges';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';

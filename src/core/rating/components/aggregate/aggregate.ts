@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, OnChanges, SimpleChange, OnDestroy } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreRatingProvider, CoreRatingInfo, CoreRatingInfoItem } from '@core/rating/providers/rating';
 import { CoreSitesProvider } from '@providers/sites';

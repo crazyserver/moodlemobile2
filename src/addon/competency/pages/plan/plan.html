@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title *ngIf="plan">{{plan.plan.name}}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="planLoaded" (ionRefresh)="refreshLearningPlan($event)">
@@ -44,11 +44,11 @@
                 <ion-item text-wrap *ngIf="plan.competencycount == 0">
                     {{ 'addon.competency.nocompetencies' | translate }}
                 </ion-item>
-                <a ion-item text-wrap *ngFor="let competency of plan.competencies" (click)="openCompetency(competency.competency.id)" [title]="competency.competency.shortname">
+                <ion-item text-wrap *ngFor="let competency of plan.competencies" (click)="openCompetency(competency.competency.id)" [title]="competency.competency.shortname">
                     <h2>{{competency.competency.shortname}} <em>{{competency.competency.idnumber}}</em></h2>
                     <ion-badge *ngIf="competency.usercompetencyplan" item-end [color]="competency.usercompetencyplan.proficiency ? 'success' : 'danger'">{{ competency.usercompetencyplan.gradename }}</ion-badge>
                     <ion-badge *ngIf="!competency.usercompetencyplan" item-end [color]="competency.usercompetency.proficiency ? 'success' : 'danger'">{{ competency.usercompetency.gradename }}</ion-badge>
-                </a>
+                </ion-item>
             </ion-list>
         </ion-card>
     </core-loading>

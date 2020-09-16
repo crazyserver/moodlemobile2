@@ -12,15 +12,15 @@
                 <h2>{{ 'core.searchresults' | translate }}</h2>
                 <ion-note item-end>{{ search.results.length }}</ion-note>
             </ion-item-divider>
-            <a ion-item text-wrap *ngFor="let result of search.results" [title]="result.fullname" (click)="gotoDiscussion(result.userid, result.messageid)" [class.core-split-item-selected]="result.userid == discussionUserId" class="addon-message-discussion">
+            <ion-item text-wrap *ngFor="let result of search.results" [title]="result.fullname" (click)="gotoDiscussion(result.userid, result.messageid)" [class.core-split-item-selected]="result.userid == discussionUserId" class="addon-message-discussion">
                 <ion-avatar core-user-avatar [user]="result" item-start [checkOnline]="result.showonlinestatus"></ion-avatar>
                 <h2>{{ result.fullname }}</h2>
                 <p><core-format-text clean="true" singleLine="true" [text]="result.lastmessage" contextLevel="system" [contextInstanceId]="0"></core-format-text></p>
-            </a>
+            </ion-item>
         </ion-list>
 
         <ion-list *ngIf="!search.showResults" no-margin>
-            <a ion-item text-wrap *ngFor="let discussion of discussions" [title]="discussion.fullname" (click)="gotoDiscussion(discussion.message.user)" [class.core-split-item-selected]="discussion.message.user == discussionUserId" class="addon-message-discussion">
+            <ion-item text-wrap *ngFor="let discussion of discussions" [title]="discussion.fullname" (click)="gotoDiscussion(discussion.message.user)" [class.core-split-item-selected]="discussion.message.user == discussionUserId" class="addon-message-discussion">
                 <ion-avatar core-user-avatar [user]="discussion" item-start [checkOnline]="discussion.showonlinestatus"></ion-avatar>
                 <h2>{{ discussion.fullname }}</h2>
                 <ion-note *ngIf="discussion.message.timecreated > 0 || discussion.unread">
@@ -28,7 +28,7 @@
                     <span *ngIf="discussion.message.timecreated > 0">{{discussion.message.timecreated / 1000 | coreDateDayOrTime}}</span>
                 </ion-note>
                 <p><core-format-text clean="true" singleLine="true" [text]="discussion.message.message" contextLevel="system" [contextInstanceId]="0"></core-format-text></p>
-            </a>
+            </ion-item>
         </ion-list>
 
         <core-empty-box *ngIf="(!discussions || discussions.length <= 0) && !search.showResults" icon="chatbubbles" [message]="'addon.messages.nomessagesfound' | translate"></core-empty-box>

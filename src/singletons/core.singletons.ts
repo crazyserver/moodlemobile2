@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { AlertController, App } from 'ionic-angular';
+import { AlertController, App } from '@ionic/angular';
 import { Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';

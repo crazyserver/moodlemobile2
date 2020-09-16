@@ -15,7 +15,7 @@
 // Code based on https://github.com/martinpritchardelevate/ionic-split-pane-demo
 
 import { Component, ViewChild, Input, ElementRef, OnInit, Optional, OnDestroy } from '@angular/core';
-import { NavController, Nav, ViewController, Platform, Menu } from 'ionic-angular';
+import { NavController, Nav, ViewController, Platform, Menu } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { Subscription } from 'rxjs';

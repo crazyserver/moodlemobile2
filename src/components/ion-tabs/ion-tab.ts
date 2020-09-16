@@ -16,7 +16,7 @@ import {
     Component, Optional, ElementRef, NgZone, Renderer, ComponentFactoryResolver, ChangeDetectorRef, ErrorHandler, OnInit,
     OnDestroy, ViewEncapsulation
 } from '@angular/core';
-import { Tab, App, Config, Platform, GestureController, DeepLinker, DomController, NavOptions } from 'ionic-angular';
+import { Tab, App, Config, Platform, GestureController, DeepLinker, DomController, NavOptions } from '@ionic/angular';
 import { TransitionController } from 'ionic-angular/transitions/transition-controller';
 import { CoreIonTabsComponent } from './ion-tabs';
 import { TransitionDoneFn } from 'ionic-angular/navigation/nav-util';
