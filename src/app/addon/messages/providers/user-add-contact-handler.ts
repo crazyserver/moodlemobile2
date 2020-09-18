@@ -17,7 +17,7 @@ import { CoreUserDelegate, CoreUserProfileHandler, CoreUserProfileHandlerData } 
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from './messages';
 import { AddonMessagesBlockContactUserHandler } from './user-block-contact-handler';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -39,10 +39,9 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
     protected updateObs: any;
 
     constructor(protected sitesProvider: CoreSitesProvider,
-            private messagesProvider: AddonMessagesProvider, protected eventsProvider: CoreEventsProvider,
-            private domUtils: CoreDomUtilsProvider, private translate: TranslateService) {
+            private messagesProvider: AddonMessagesProvider,             private domUtils: CoreDomUtilsProvider, private translate: TranslateService) {
 
-        this.updateObs = eventsProvider.on(AddonMessagesBlockContactUserHandler.UPDATED_EVENT, (data) => {
+        this.updateObs = CoreEvents.on(AddonMessagesBlockContactUserHandler.UPDATED_EVENT, (data) => {
             this.checkButton(data.userId);
         });
     }
@@ -106,7 +105,7 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
                 }).catch((error) => {
                     this.domUtils.showErrorModalDefault(error, 'core.error', true);
                 }).finally(() => {
-                    this.eventsProvider.trigger(AddonMessagesAddContactUserHandler.UPDATED_EVENT, {userId: user.id});
+                    CoreEvents.trigger(AddonMessagesAddContactUserHandler.UPDATED_EVENT, {userId: user.id});
                     this.checkButton(user.id).finally(() => {
                         this.disabled = false;
                     });
@@ -158,7 +157,7 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
      */
     protected updateButton(userId: number, data: any): void {
         // This fails for some reason, let's just hide the button.
-        this.eventsProvider.trigger(CoreUserDelegate.UPDATE_HANDLER_EVENT, { handler: this.name, data: data, userId: userId });
+        CoreEvents.trigger(CoreUserDelegate.UPDATE_HANDLER_EVENT, { handler: this.name, data: data, userId: userId });
     }
 
     /**

@@ -15,7 +15,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { IonicPage, NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -77,7 +77,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
     protected reloadNavigaton = false; // Whether navigation needs to be reloaded because some data was sent to server.
 
     constructor(navParams: NavParams, protected translate: TranslateService,
-            protected eventsProvider: CoreEventsProvider, protected sitesProvider: CoreSitesProvider,
+            protected sitesProvider: CoreSitesProvider,
             protected syncProvider: CoreSyncProvider, protected domUtils: CoreDomUtilsProvider, popoverCtrl: PopoverController,
             protected timeUtils: CoreTimeUtilsProvider, protected quizProvider: AddonModQuizProvider,
             protected quizHelper: AddonModQuizHelperProvider, protected quizSync: AddonModQuizSyncProvider,
@@ -370,13 +370,13 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
 
             return this.processAttempt(userFinish, timeUp).then(() => {
                 // Trigger an event to notify the attempt was finished.
-                this.eventsProvider.trigger(AddonModQuizProvider.ATTEMPT_FINISHED_EVENT, {
+                CoreEvents.trigger(AddonModQuizProvider.ATTEMPT_FINISHED_EVENT, {
                     quizId: this.quizId,
                     attemptId: this.attempt.id,
                     synced: !this.offline
                 }, this.sitesProvider.getCurrentSiteId());
 
-                this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'quiz' });
+                CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'quiz' });
 
                 // Leave the player.
                 this.forceLeave = true;

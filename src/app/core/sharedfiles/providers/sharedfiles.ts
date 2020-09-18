@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreAppProvider, CoreAppSchema } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
@@ -55,7 +55,7 @@ export class CoreSharedFilesProvider {
 
     constructor(private fileProvider: CoreFileProvider, appProvider: CoreAppProvider,
         private textUtils: CoreTextUtilsProvider, private mimeUtils: CoreMimetypeUtilsProvider,
-        private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider) {
+        private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEvents) {
         this.logger = CoreLogger.getInstance('CoreSharedFilesProvider');
 
         this.appDB = appProvider.getDB();
@@ -245,7 +245,7 @@ export class CoreSharedFilesProvider {
         // Create dir if it doesn't exist already.
         return this.fileProvider.createDir(sharedFilesFolder).then(() => {
             return this.fileProvider.moveExternalFile(entry.toURL(), newPath).then((newFile) => {
-                this.eventsProvider.trigger(CoreEventsProvider.FILE_SHARED, { siteId: siteId, name: newName });
+                CoreEvents.trigger(CoreEvents.FILE_SHARED, { siteId: siteId, name: newName });
 
                 return newFile;
             });

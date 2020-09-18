@@ -18,7 +18,7 @@ import { CoreSharedFilesProvider } from './providers/sharedfiles';
 import { CoreSharedFilesHelperProvider } from './providers/helper';
 import { CoreSharedFilesUploadHandler } from './providers/upload-handler';
 import { CoreFileUploaderDelegate } from '@core/fileuploader/providers/delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreAppProvider } from '@services/app';
 
 // List of providers (without handlers).
@@ -44,7 +44,7 @@ export class CoreSharedFilesModule {
             handler: CoreSharedFilesUploadHandler,
             helper: CoreSharedFilesHelperProvider,
             appsProvider: CoreAppProvider,
-            eventsProvider: CoreEventsProvider
+            eventsProvider: CoreEvents
             ) {
         // Register the handler.
         delegate.registerHandler(handler);
@@ -67,7 +67,7 @@ export class CoreSharedFilesModule {
                 }, 200);
             });
 
-            eventsProvider.on(CoreEventsProvider.APP_LAUNCHED_URL, (url) => {
+            CoreEvents.on(CoreEvents.APP_LAUNCHED_URL, (url) => {
                 if (url && url.indexOf('file://') === 0) {
                     // We received a file in iOS, it's probably a shared file. Treat it.
                     lastCheck = Date.now();

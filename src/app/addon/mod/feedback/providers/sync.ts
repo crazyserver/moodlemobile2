@@ -21,7 +21,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModFeedbackOfflineProvider } from './offline';
 import { AddonModFeedbackProvider } from './feedback';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseActivitySyncBaseProvider } from '@core/course/classes/activity-sync';
@@ -41,7 +41,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
 
     constructor(protected sitesProvider: CoreSitesProvider, protected loggerProvider: CoreLoggerProvider,
             protected appProvider: CoreAppProvider, private feedbackOffline: AddonModFeedbackOfflineProvider,
-            private eventsProvider: CoreEventsProvider,  private feedbackProvider: AddonModFeedbackProvider,
+             private feedbackProvider: AddonModFeedbackProvider,
             protected translate: TranslateService, private utils: CoreUtilsProvider, protected textUtils: CoreTextUtilsProvider,
             private courseProvider: CoreCourseProvider, syncProvider: CoreSyncProvider, timeUtils: CoreTimeUtilsProvider,
             private logHelper: CoreCourseLogHelperProvider, prefetchDelegate: CoreCourseModulePrefetchDelegate,
@@ -105,7 +105,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
                 promises[response.feedbackid].then((result) => {
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModFeedbackSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModFeedbackSyncProvider.AUTO_SYNCED, {
                             feedbackId: response.feedbackid,
                             userId: response.userid,
                             warnings: result.warnings

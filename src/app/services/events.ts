@@ -33,7 +33,7 @@ export interface CoreEventObserver {
 @Injectable({
   providedIn: 'root',
 })
-export class CoreEventsProvider {
+export class CoreEvents {
     static SESSION_EXPIRED = 'session_expired';
     static PASSWORD_CHANGE_FORCED = 'password_change_forced';
     static USER_NOT_FULLY_SETUP = 'user_not_fully_setup';
@@ -76,12 +76,12 @@ export class CoreEventsProvider {
     protected uniqueEvents = {};
 
     constructor() {
-        this.logger = CoreLogger.getInstance('CoreEventsProvider');
+        this.logger = CoreLogger.getInstance('CoreEvents');
     }
 
     /**
      * Listen for a certain event. To stop listening to the event:
-     * let observer = eventsProvider.on('something', myCallBack);
+     * let observer = CoreEvents.on('something', myCallBack);
      * ...
      * observer.off();
      *
@@ -128,7 +128,7 @@ export class CoreEventsProvider {
 
     /**
      * Listen for several events. To stop listening to the events:
-     * let observer = eventsProvider.onMultiple(['something', 'another'], myCallBack);
+     * let observer = CoreEvents.onMultiple(['something', 'another'], myCallBack);
      * ...
      * observer.off();
      *
@@ -206,4 +206,4 @@ export class CoreEventsProvider {
     }
 }
 
-export class CoreEvents extends makeSingleton(CoreEventsProvider) {}
+export class CoreEvents extends makeSingleton(CoreEvents) {}

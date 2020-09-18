@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { Content, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
@@ -84,7 +84,7 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private cfDelegate: CoreCourseFormatDelegate, translate: TranslateService, private injector: Injector,
             private courseHelper: CoreCourseHelperProvider, private domUtils: CoreDomUtilsProvider,
-            eventsProvider: CoreEventsProvider, private sitesProvider: CoreSitesProvider, private content: Content,
+            private sitesProvider: CoreSitesProvider, private content: Content,
             prefetchDelegate: CoreCourseModulePrefetchDelegate, private modalCtrl: ModalController,
             private courseProvider: CoreCourseProvider) {
 
@@ -95,7 +95,7 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
         this.data.coreCourseFormatComponent = this;
 
         // Listen for section status changes.
-        this.sectionStatusObserver = eventsProvider.on(CoreEventsProvider.SECTION_STATUS_CHANGED, (data) => {
+        this.sectionStatusObserver = CoreEvents.on(CoreEvents.SECTION_STATUS_CHANGED, (data) => {
             if (this.downloadEnabled && this.sections && this.sections.length && this.course && data.sectionId &&
                     data.courseId == this.course.id) {
                 // Check if the affected section is being downloaded.
@@ -131,7 +131,7 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
         }, this.sitesProvider.getCurrentSiteId());
 
         // Listen for select course tab events to select the right section if needed.
-        this.selectTabObserver = eventsProvider.on(CoreEventsProvider.SELECT_COURSE_TAB, (data) => {
+        this.selectTabObserver = CoreEvents.on(CoreEvents.SELECT_COURSE_TAB, (data) => {
 
             if (!data.name) {
                 let section;

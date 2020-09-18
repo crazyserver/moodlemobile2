@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { IonicPage, NavParams, NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreFileSessionProvider } from '@services/file-session';
@@ -75,7 +75,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
             protected workshopHelper: AddonModWorkshopHelperProvider, protected navCtrl: NavController,
             protected fileSessionprovider: CoreFileSessionProvider, protected syncProvider: CoreSyncProvider,
             protected textUtils: CoreTextUtilsProvider, protected domUtils: CoreDomUtilsProvider, protected fb: FormBuilder,
-            protected translate: TranslateService, protected eventsProvider: CoreEventsProvider) {
+            protected translate: TranslateService, protected eventsProvider: CoreEvents) {
         this.module = navParams.get('module');
         this.courseId = navParams.get('courseId');
         this.access = navParams.get('access');
@@ -388,13 +388,13 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
                 data['submissionId'] = newSubmissionId;
             }
 
-            this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'workshop' });
+            CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'workshop' });
 
             const promise = newSubmissionId ? this.workshopProvider.invalidateSubmissionData(this.workshopId, newSubmissionId) :
                 Promise.resolve();
 
             return promise.finally(() => {
-                this.eventsProvider.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
+                CoreEvents.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
 
                 // Delete the local files from the tmp folder.
                 this.fileUploaderProvider.clearTmpFiles(inputData.attachmentfiles);

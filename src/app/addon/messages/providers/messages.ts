@@ -21,7 +21,7 @@ import { AddonMessagesOfflineProvider } from './messages-offline';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreEmulatorHelperProvider } from '@core/emulator/providers/helper';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreWSExternalWarning } from '@services/ws';
 
@@ -61,7 +61,7 @@ export class AddonMessagesProvider {
     constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private userProvider: CoreUserProvider, private messagesOffline: AddonMessagesOfflineProvider,
             private utils: CoreUtilsProvider, private timeUtils: CoreTimeUtilsProvider,
-            private emulatorHelper: CoreEmulatorHelperProvider, private eventsProvider: CoreEventsProvider) {
+            private emulatorHelper: CoreEmulatorHelperProvider, private eventsProvider: CoreEvents) {
         this.logger = CoreLogger.getInstance('AddonMessagesProvider');
     }
 
@@ -112,7 +112,7 @@ export class AddonMessagesProvider {
             return promise.then(() => {
                 return this.invalidateAllMemberInfo(userId, site).finally(() => {
                     const data = { userId, userBlocked: true };
-                    this.eventsProvider.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
+                    CoreEvents.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
                 });
             });
         });
@@ -141,7 +141,7 @@ export class AddonMessagesProvider {
                     this.refreshContactRequestsCount(site.id),
                 ]).finally(() => {
                     const data = { userId, contactRequestConfirmed: true };
-                    this.eventsProvider.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
+                    CoreEvents.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
                 });
             });
         });
@@ -165,7 +165,7 @@ export class AddonMessagesProvider {
             return site.write('core_message_create_contact_request', params).then(() => {
                 return this.invalidateAllMemberInfo(userId, site).finally(() => {
                     const data = { userId, contactRequestCreated: true };
-                    this.eventsProvider.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
+                    CoreEvents.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
                 });
             });
         });
@@ -192,7 +192,7 @@ export class AddonMessagesProvider {
                     this.refreshContactRequestsCount(site.id),
                 ]).finally(() => {
                     const data = { userId, contactRequestDeclined: true };
-                    this.eventsProvider.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
+                    CoreEvents.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
                 });
             });
         });
@@ -730,7 +730,7 @@ export class AddonMessagesProvider {
 
             return site.read('core_message_get_received_contact_requests_count', data, preSets).then((count: number) => {
                 // Notify the new count so all badges are updated.
-                this.eventsProvider.trigger(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, { count }, site.id);
+                CoreEvents.trigger(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, { count }, site.id);
 
                 return count;
             });
@@ -1554,7 +1554,7 @@ export class AddonMessagesProvider {
 
             return promise.then((counts) => {
                 // Notify the new counts so all views are updated.
-                this.eventsProvider.trigger(AddonMessagesProvider.UNREAD_CONVERSATION_COUNTS_EVENT, counts, site.id);
+                CoreEvents.trigger(AddonMessagesProvider.UNREAD_CONVERSATION_COUNTS_EVENT, counts, site.id);
 
                 return counts;
             });
@@ -2234,7 +2234,7 @@ export class AddonMessagesProvider {
                         this.invalidateAllMemberInfo(userId, site),
                     ]).then(() => {
                         const data = { userId, contactRemoved: true };
-                        this.eventsProvider.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
+                        CoreEvents.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
                     });
                 } else {
                     return this.invalidateContactsCache(site.id);
@@ -2780,7 +2780,7 @@ export class AddonMessagesProvider {
             return promise.then(() => {
                 return this.invalidateAllMemberInfo(userId, site).finally(() => {
                     const data = { userId, userUnblocked: true };
-                    this.eventsProvider.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
+                    CoreEvents.trigger(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, data, site.id);
                 });
             });
         });

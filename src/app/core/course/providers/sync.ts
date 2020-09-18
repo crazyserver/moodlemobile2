@@ -21,7 +21,7 @@ import { CoreAppProvider } from '@services/app';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreCourseOfflineProvider } from './course-offline';
 import { CoreCourseProvider } from './course';
@@ -38,7 +38,7 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
 
     constructor(protected sitesProvider: CoreSitesProvider, loggerProvider: CoreLoggerProvider,
             protected appProvider: CoreAppProvider, private courseOffline: CoreCourseOfflineProvider,
-            private eventsProvider: CoreEventsProvider,  private courseProvider: CoreCourseProvider,
+             private courseProvider: CoreCourseProvider,
             translate: TranslateService, private utils: CoreUtilsProvider, protected textUtils: CoreTextUtilsProvider,
             syncProvider: CoreSyncProvider, timeUtils: CoreTimeUtilsProvider, protected logHelper: CoreCourseLogHelperProvider) {
 
@@ -77,7 +77,7 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
                 return promise.then((result) => {
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(CoreCourseSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(CoreCourseSyncProvider.AUTO_SYNCED, {
                             courseId: completion.courseid,
                             warnings: result.warnings
                         }, siteId);

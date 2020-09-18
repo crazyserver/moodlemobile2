@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreFilepoolProvider, CoreFilepoolComponentFileEventData } from '@services/filepool';
 import { CoreLogger } from '@services/logger';
@@ -268,19 +268,18 @@ export class CoreCourseModulePrefetchDelegate extends CoreDelegate {
             protected filepoolProvider: CoreFilepoolProvider,
             protected timeUtils: CoreTimeUtilsProvider,
             protected fileProvider: CoreFileProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected fileHelper: CoreFileHelperProvider) {
+                        protected fileHelper: CoreFileHelperProvider) {
         super('CoreCourseModulePrefetchDelegate', loggerProvider, sitesProvider, eventsProvider);
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
 
-        eventsProvider.on(CoreEventsProvider.LOGOUT, this.clearStatusCache.bind(this));
-        eventsProvider.on(CoreEventsProvider.PACKAGE_STATUS_CHANGED, (data) => {
+        CoreEvents.on(CoreEvents.LOGOUT, this.clearStatusCache.bind(this));
+        CoreEvents.on(CoreEvents.PACKAGE_STATUS_CHANGED, (data) => {
             this.updateStatusCache(data.status, data.component, data.componentId);
         }, this.sitesProvider.getCurrentSiteId());
 
         // If a file inside a module is downloaded/deleted, clear the corresponding cache.
-        eventsProvider.on(CoreEventsProvider.COMPONENT_FILE_ACTION, (data: CoreFilepoolComponentFileEventData) => {
+        CoreEvents.on(CoreEvents.COMPONENT_FILE_ACTION, (data: CoreFilepoolComponentFileEventData) => {
             if (!this.filepoolProvider.isFileEventDownloadedOrDeleted(data)) {
                 return;
             }
@@ -1489,7 +1488,7 @@ export class CoreCourseModulePrefetchDelegate extends CoreDelegate {
             this.statusCache.setValue(packageId, 'status', status);
 
             if (sectionId) {
-                this.eventsProvider.trigger(CoreEventsProvider.SECTION_STATUS_CHANGED, {
+                CoreEvents.trigger(CoreEvents.SECTION_STATUS_CHANGED, {
                     sectionId: sectionId,
                     courseId: courseId
                 }, this.sitesProvider.getCurrentSiteId());

@@ -20,7 +20,7 @@ import { CoreAppProvider } from '@services/app';
 import { AddonMessagesOfflineProvider } from './messages-offline';
 import { AddonMessagesProvider, AddonMessagesConversationFormatted } from './messages';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -38,8 +38,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
 
     constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             translate: TranslateService, syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider,
-            private messagesOffline: AddonMessagesOfflineProvider, private eventsProvider: CoreEventsProvider,
-            private messagesProvider: AddonMessagesProvider, private userProvider: CoreUserProvider,
+            private messagesOffline: AddonMessagesOfflineProvider,             private messagesProvider: AddonMessagesProvider, private userProvider: CoreUserProvider,
             private utils: CoreUtilsProvider, timeUtils: CoreTimeUtilsProvider) {
         super('AddonMessagesSync', loggerProvider, sitesProvider, appProvider, syncProvider, textUtils, translate, timeUtils);
     }
@@ -106,7 +105,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                 promises.push(this.syncDiscussion(conversationId, undefined, siteId).then((warnings) => {
                     if (typeof warnings != 'undefined') {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonMessagesSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonMessagesSyncProvider.AUTO_SYNCED, {
                             conversationId: conversationId,
                             warnings: warnings
                         }, siteId);
@@ -118,7 +117,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                 promises.push(this.syncDiscussion(undefined, userId, siteId).then((warnings) => {
                     if (typeof warnings != 'undefined') {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonMessagesSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonMessagesSyncProvider.AUTO_SYNCED, {
                             userId: userId,
                             warnings: warnings
                         }, siteId);

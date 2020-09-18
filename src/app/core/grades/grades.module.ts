@@ -25,7 +25,7 @@ import { CoreGradesOverviewLinkHandler } from './providers/overview-link-handler
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 import { CoreGradesUserHandler } from './providers/user-handler';
 import { CoreUserDelegate } from '@core/user/providers/user-delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 
@@ -56,7 +56,7 @@ export class CoreGradesModule {
             courseOptionHandler: CoreGradesCourseOptionHandler, courseOptionsDelegate: CoreCourseOptionsDelegate,
             contentLinksDelegate: CoreContentLinksDelegate, userLinkHandler: CoreGradesUserLinkHandler,
             overviewLinkHandler: CoreGradesOverviewLinkHandler, userHandler: CoreGradesUserHandler,
-            userDelegate: CoreUserDelegate, eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider) {
+            userDelegate: CoreUserDelegate, sitesProvider: CoreSitesProvider) {
 
         // Register handlers.
         mainMenuDelegate.registerHandler(gradesMenuHandler);
@@ -66,11 +66,11 @@ export class CoreGradesModule {
         userDelegate.registerHandler(userHandler);
 
         // Clear user profile handler cache.
-        eventsProvider.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
+        CoreEvents.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
             userHandler.clearViewGradesCache(data.courseId, data.userId);
         }, sitesProvider.getCurrentSiteId());
 
-        eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             userHandler.clearViewGradesCache();
         }, sitesProvider.getCurrentSiteId());
     }

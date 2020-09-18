@@ -16,7 +16,7 @@ import { OnInit, OnDestroy, Input, Output, EventEmitter, Injector } from '@angul
 import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -81,7 +81,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
     protected navCtrl: NavController;
     protected blogProvider: AddonBlogProvider;
     protected sitesProvider: CoreSitesProvider;
-    protected eventsProvider: CoreEventsProvider;
+    protected eventsProvider: CoreEvents;
     protected modulePrefetchDelegate: CoreCourseModulePrefetchDelegate;
     protected courseProvider: CoreCourseProvider;
     protected appProvider: CoreAppProvider;
@@ -99,7 +99,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
         this.navCtrl = injector.get(NavController, null);
         this.blogProvider = injector.get(AddonBlogProvider, null);
         this.sitesProvider = injector.get(CoreSitesProvider);
-        this.eventsProvider = injector.get(CoreEventsProvider);
+        CoreEvents = injector.get(CoreEvents);
         this.modulePrefetchDelegate = injector.get(CoreCourseModulePrefetchDelegate);
         this.courseProvider = injector.get(CoreCourseProvider);
         this.appProvider = injector.get(CoreAppProvider);
@@ -354,7 +354,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
     protected setStatusListener(): Promise<any> {
         if (typeof this.statusObserver == 'undefined') {
             // Listen for changes on this module status.
-            this.statusObserver = this.eventsProvider.on(CoreEventsProvider.PACKAGE_STATUS_CHANGED, (data) => {
+            this.statusObserver = CoreEvents.on(CoreEvents.PACKAGE_STATUS_CHANGED, (data) => {
                 if (data.componentId === this.module.id && data.component === this.component) {
                     // The status has changed, update it.
                     const previousStatus = this.currentStatus;

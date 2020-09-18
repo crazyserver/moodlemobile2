@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreCronDelegate } from '@services/cron';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreLogger } from '@services/logger';
 import { CoreSite } from '@classes/site';
@@ -49,8 +49,7 @@ export class CoreSettingsHelper {
             protected appProvider: CoreAppProvider,
             protected cronDelegate: CoreCronDelegate,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected filePoolProvider: CoreFilepoolProvider,
+                        protected filePoolProvider: CoreFilepoolProvider,
             protected sitesProvider: CoreSitesProvider,
             protected utils: CoreUtilsProvider,
             protected translate: TranslateService,
@@ -72,11 +71,11 @@ export class CoreSettingsHelper {
                 }
             };
 
-            eventsProvider.on(CoreEventsProvider.LOGIN, applySiteScheme.bind(this));
+            CoreEvents.on(CoreEvents.LOGIN, applySiteScheme.bind(this));
 
-            eventsProvider.on(CoreEventsProvider.SITE_UPDATED, applySiteScheme.bind(this));
+            CoreEvents.on(CoreEvents.SITE_UPDATED, applySiteScheme.bind(this));
 
-            eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+            CoreEvents.on(CoreEvents.LOGOUT, () => {
                 // Reset color scheme settings.
                 this.initColorScheme();
             });
@@ -127,7 +126,7 @@ export class CoreSettingsHelper {
                 siteInfo.spaceUsage = await site.getSpaceUsage();
             }
         }).then(async () => {
-            this.eventsProvider.trigger(CoreEventsProvider.SITE_STORAGE_DELETED, {}, site.getId());
+            CoreEvents.trigger(CoreEvents.SITE_STORAGE_DELETED, {}, site.getId());
 
             siteInfo.cacheEntries = await this.calcSiteClearRows(site);
         }));
@@ -318,7 +317,7 @@ export class CoreSettingsHelper {
         }
 
         // Local mobile was added. Throw invalid session to force reconnect and create a new token.
-        this.eventsProvider.trigger(CoreEventsProvider.SESSION_EXPIRED, {}, site.getId());
+        CoreEvents.trigger(CoreEvents.SESSION_EXPIRED, {}, site.getId());
 
         throw this.translate.instant('core.lostconnection');
     }

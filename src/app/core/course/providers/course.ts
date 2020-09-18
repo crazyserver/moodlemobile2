@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -102,8 +102,7 @@ export class CoreCourseProvider {
         'resource', 'scorm', 'survey', 'url', 'wiki', 'workshop', 'h5pactivity'
     ];
 
-    constructor(private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider,
-            private utils: CoreUtilsProvider, private timeUtils: CoreTimeUtilsProvider, private translate: TranslateService,
+    constructor(private sitesProvider: CoreSitesProvider,             private utils: CoreUtilsProvider, private timeUtils: CoreTimeUtilsProvider, private translate: TranslateService,
             private courseOffline: CoreCourseOfflineProvider, private appProvider: CoreAppProvider,
             private courseFormatDelegate: CoreCourseFormatDelegate, private sitePluginsProvider: CoreSitePluginsProvider,
             private domUtils: CoreDomUtilsProvider, protected pushNotificationsProvider: CorePushNotificationsProvider) {
@@ -148,7 +147,7 @@ export class CoreCourseProvider {
     checkModuleCompletion(courseId: number, completion: any): void {
         if (completion && completion.tracking === 2 && completion.state === 0) {
             this.invalidateSections(courseId).finally(() => {
-                this.eventsProvider.trigger(CoreEventsProvider.COMPLETION_MODULE_VIEWED, { courseId: courseId });
+                CoreEvents.trigger(CoreEvents.COMPLETION_MODULE_VIEWED, { courseId: courseId });
             });
         }
     }
@@ -880,7 +879,7 @@ export class CoreCourseProvider {
                 if (!response.status) {
                     return Promise.reject(null);
                 } else {
-                    this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
+                    CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
                         courseId: courseId,
                         action: CoreCoursesProvider.ACTION_VIEW,
                     }, site.getId());
@@ -993,7 +992,7 @@ export class CoreCourseProvider {
                     } else {
                         // Wait for plugins to be loaded.
                         const deferred = this.utils.promiseDefer(),
-                            observer = this.eventsProvider.on(CoreEventsProvider.SITE_PLUGINS_LOADED, () => {
+                            observer = CoreEvents.on(CoreEvents.SITE_PLUGINS_LOADED, () => {
                                 observer && observer.off();
 
                                 this.courseFormatDelegate.openCourse(navCtrl, course, params).then((response) => {
@@ -1033,7 +1032,7 @@ export class CoreCourseProvider {
         params = params || {};
         params.name = name || '';
 
-        this.eventsProvider.trigger(CoreEventsProvider.SELECT_COURSE_TAB, params);
+        CoreEvents.trigger(CoreEvents.SELECT_COURSE_TAB, params);
     }
 
     /**
@@ -1155,7 +1154,7 @@ export class CoreCourseProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     protected triggerCourseStatusChanged(courseId: number, status: string, siteId?: string): void {
-        this.eventsProvider.trigger(CoreEventsProvider.COURSE_STATUS_CHANGED, {
+        CoreEvents.trigger(CoreEvents.COURSE_STATUS_CHANGED, {
             courseId: courseId,
             status: status
         }, siteId);

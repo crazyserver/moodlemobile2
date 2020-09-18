@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreLogger } from '@services/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { AddonModAssignDefaultSubmissionHandler } from './default-submission-handler';
@@ -216,8 +216,7 @@ export class AddonModAssignSubmissionDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';
 
-    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
-            protected defaultHandler: AddonModAssignDefaultSubmissionHandler) {
+    constructor(sitesProvider: CoreSitesProvider,             protected defaultHandler: AddonModAssignDefaultSubmissionHandler) {
         super('AddonModAssignSubmissionDelegate', logger, sitesProvider, eventsProvider);
     }
 

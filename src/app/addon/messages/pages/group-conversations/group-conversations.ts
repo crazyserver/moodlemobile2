@@ -15,7 +15,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, Platform, NavController, NavParams, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMessage
@@ -83,7 +83,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
     protected contactRequestsCountObserver: any;
     protected memberInfoObserver: any;
 
-    constructor(eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider, translate: TranslateService,
+    constructor(sitesProvider: CoreSitesProvider, translate: TranslateService,
             private messagesProvider: AddonMessagesProvider, private domUtils: CoreDomUtilsProvider, navParams: NavParams,
             private navCtrl: NavController, platform: Platform, private utils: CoreUtilsProvider,
             pushNotificationsDelegate: CorePushNotificationsDelegate, private messagesOffline: AddonMessagesOfflineProvider,
@@ -97,7 +97,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         this.discussionUserId = !this.conversationId && (navParams.get('discussionUserId') || false);
 
         // Update conversations when new message is received.
-        this.newMessagesObserver = eventsProvider.on(AddonMessagesProvider.NEW_MESSAGE_EVENT, (data) => {
+        this.newMessagesObserver = CoreEvents.on(AddonMessagesProvider.NEW_MESSAGE_EVENT, (data) => {
             // Check if the new message belongs to the option that is currently expanded.
             const expandedOption = this.getExpandedOption(),
                 messageOption = this.getConversationOption(data);
@@ -134,7 +134,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         }, this.siteId);
 
         // Update conversations when a message is read.
-        this.readChangedObserver = eventsProvider.on(AddonMessagesProvider.READ_CHANGED_EVENT, (data) => {
+        this.readChangedObserver = CoreEvents.on(AddonMessagesProvider.READ_CHANGED_EVENT, (data) => {
             if (data.conversationId) {
                 const conversation = this.findConversation(data.conversationId);
 
@@ -150,7 +150,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         }, this.siteId);
 
         // Load a discussion if we receive an event to do so.
-        this.openConversationObserver = eventsProvider.on(AddonMessagesProvider.OPEN_CONVERSATION_EVENT, (data) => {
+        this.openConversationObserver = CoreEvents.on(AddonMessagesProvider.OPEN_CONVERSATION_EVENT, (data) => {
             if (data.conversationId || data.userId) {
                 this.gotoConversation(data.conversationId, data.userId);
             }
@@ -168,7 +168,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         });
 
         // Update conversations if we receive an event to do so.
-        this.updateConversationListObserver = eventsProvider.on(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, (data) => {
+        this.updateConversationListObserver = CoreEvents.on(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, (data) => {
             if (data && data.action == 'mute') {
                 // If the conversation is displayed, change its muted value.
                 const expandedOption = this.getExpandedOption();
@@ -197,19 +197,19 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         });
 
         // Update unread conversation counts.
-        this.cronObserver = eventsProvider.on(AddonMessagesProvider.UNREAD_CONVERSATION_COUNTS_EVENT, (data) => {
+        this.cronObserver = CoreEvents.on(AddonMessagesProvider.UNREAD_CONVERSATION_COUNTS_EVENT, (data) => {
             this.favourites.unread = data.favourites;
             this.individual.unread = data.individual + data.self; // Self is only returned if it's not favourite.
             this.group.unread = data.group;
          }, this.siteId);
 
         // Update the contact requests badge.
-        this.contactRequestsCountObserver = eventsProvider.on(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, (data) => {
+        this.contactRequestsCountObserver = CoreEvents.on(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, (data) => {
             this.contactRequestsCount = data.count;
         }, this.siteId);
 
         // Update block status of a user.
-        this.memberInfoObserver = eventsProvider.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
+        this.memberInfoObserver = CoreEvents.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
             if (!data.userBlocked && !data.userUnblocked) {
                 // The block status has not changed, ignore.
                 return;

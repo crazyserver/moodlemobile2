@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider, AddonMessagesConversationMember, AddonMessagesMessageAreaContact } from '../../providers/messages';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -63,11 +63,10 @@ export class AddonMessagesSearchPage implements OnDestroy {
 
     @ViewChild(CoreSplitViewComponent) splitviewCtrl: CoreSplitViewComponent;
 
-    constructor(private appProvider: CoreAppProvider, private domUtils: CoreDomUtilsProvider, eventsProvider: CoreEventsProvider,
-            sitesProvider: CoreSitesProvider, private messagesProvider: AddonMessagesProvider) {
+    constructor(private appProvider: CoreAppProvider, private domUtils: CoreDomUtilsProvider,             sitesProvider: CoreSitesProvider, private messagesProvider: AddonMessagesProvider) {
 
         // Update block status of a user.
-        this.memberInfoObserver = eventsProvider.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
+        this.memberInfoObserver = CoreEvents.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
             if (!data.userBlocked && !data.userUnblocked) {
                 // The block status has not changed, ignore.
                 return;

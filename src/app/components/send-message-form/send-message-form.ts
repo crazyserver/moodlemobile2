@@ -15,7 +15,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreConfigProvider } from '@services/config';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -51,8 +51,7 @@ export class CoreSendMessageFormComponent implements OnInit {
     constructor(protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
             configProvider: CoreConfigProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider,
+                        protected sitesProvider: CoreSitesProvider,
             protected appProvider: CoreAppProvider,
             protected domUtils: CoreDomUtilsProvider) {
 
@@ -63,7 +62,7 @@ export class CoreSendMessageFormComponent implements OnInit {
             this.sendOnEnter = !!sendOnEnter;
         });
 
-        eventsProvider.on(CoreEventsProvider.SEND_ON_ENTER_CHANGED, (newValue) => {
+        CoreEvents.on(CoreEvents.SEND_ON_ENTER_CHANGED, (newValue) => {
             this.sendOnEnter = newValue;
         }, sitesProvider.getCurrentSiteId());
     }

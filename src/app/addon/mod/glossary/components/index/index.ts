@@ -83,16 +83,16 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
         super.ngOnInit();
 
         // When an entry is added, we reload the data.
-        this.addEntryObserver = this.eventsProvider.on(AddonModGlossaryProvider.ADD_ENTRY_EVENT, this.eventReceived.bind(this));
+        this.addEntryObserver = CoreEvents.on(AddonModGlossaryProvider.ADD_ENTRY_EVENT, this.eventReceived.bind(this));
 
         // Listen for offline ratings saved and synced.
-        this.ratingOfflineObserver = this.eventsProvider.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
+        this.ratingOfflineObserver = CoreEvents.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
             if (this.glossary && data.component == 'mod_glossary' && data.ratingArea == 'entry' && data.contextLevel == 'module'
                     && data.instanceId == this.glossary.coursemodule) {
                 this.hasOfflineRatings = true;
             }
         });
-        this.ratingSyncObserver = this.eventsProvider.on(CoreRatingSyncProvider.SYNCED_EVENT, (data) => {
+        this.ratingSyncObserver = CoreEvents.on(CoreRatingSyncProvider.SYNCED_EVENT, (data) => {
             if (this.glossary && data.component == 'mod_glossary' && data.ratingArea == 'entry' && data.contextLevel == 'module'
                     && data.instanceId == this.glossary.coursemodule) {
                 this.hasOfflineRatings = false;

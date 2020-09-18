@@ -15,7 +15,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Platform, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from '../../providers/messages';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -51,7 +51,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
         text: ''
     };
 
-    constructor(private eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider, translate: TranslateService,
+    constructor(sitesProvider: CoreSitesProvider, translate: TranslateService,
             private messagesProvider: AddonMessagesProvider, private domUtils: CoreDomUtilsProvider, navParams: NavParams,
             private appProvider: CoreAppProvider, platform: Platform, private utils: CoreUtilsProvider,
             pushNotificationsDelegate: CorePushNotificationsDelegate) {
@@ -61,7 +61,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
         this.siteId = sitesProvider.getCurrentSiteId();
 
         // Update discussions when new message is received.
-        this.newMessagesObserver = eventsProvider.on(AddonMessagesProvider.NEW_MESSAGE_EVENT, (data) => {
+        this.newMessagesObserver = CoreEvents.on(AddonMessagesProvider.NEW_MESSAGE_EVENT, (data) => {
             if (data.userId && this.discussions) {
                 const discussion = this.discussions.find((disc) => {
                     return disc.message.user == data.userId;
@@ -81,7 +81,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
         }, this.siteId);
 
         // Update discussions when a message is read.
-        this.readChangedObserver = eventsProvider.on(AddonMessagesProvider.READ_CHANGED_EVENT, (data) => {
+        this.readChangedObserver = CoreEvents.on(AddonMessagesProvider.READ_CHANGED_EVENT, (data) => {
             if (data.userId && this.discussions) {
                 const discussion = this.discussions.find((disc) => {
                     return disc.message.user == data.userId;
@@ -243,7 +243,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
         if (messageId) {
             params['message'] = messageId;
         }
-        this.eventsProvider.trigger(AddonMessagesProvider.SPLIT_VIEW_LOAD_EVENT, params, this.siteId);
+        CoreEvents.trigger(AddonMessagesProvider.SPLIT_VIEW_LOAD_EVENT, params, this.siteId);
     }
 
     /**

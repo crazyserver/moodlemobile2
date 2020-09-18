@@ -15,7 +15,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Network } from '@ionic-native/network';
 import { CoreAppProvider, CoreAppSchema } from './app';
-import { CoreEventsProvider } from './events';
+import { CoreEvents } from './events';
 import { CoreFileProvider } from './file';
 import { CoreInitDelegate } from './init';
 import { CoreLogger } from './logger';
@@ -485,8 +485,7 @@ export class CoreFilepoolProvider {
             protected mimeUtils: CoreMimetypeUtilsProvider,
             protected urlUtils: CoreUrlUtilsProvider,
             protected timeUtils: CoreTimeUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            initDelegate: CoreInitDelegate,
+                        initDelegate: CoreInitDelegate,
             network: Network,
             protected pluginFileDelegate: CorePluginFileDelegate,
             protected domUtils: CoreDomUtilsProvider,
@@ -1558,7 +1557,7 @@ export class CoreFilepoolProvider {
     }
 
     /**
-     * Get the name of the event used to notify download events (CoreEventsProvider).
+     * Get the name of the event used to notify download events (CoreEvents).
      *
      * @param siteId The site ID.
      * @param fileId The file ID.
@@ -1569,7 +1568,7 @@ export class CoreFilepoolProvider {
     }
 
     /**
-     * Get the name of the event used to notify download events (CoreEventsProvider).
+     * Get the name of the event used to notify download events (CoreEvents).
      *
      * @param siteId The site ID.
      * @param fileUrl The absolute URL to the file.
@@ -2587,7 +2586,7 @@ export class CoreFilepoolProvider {
                 componentId: link.componentId,
             }, eventData);
 
-            this.eventsProvider.trigger(CoreEventsProvider.COMPONENT_FILE_ACTION, data, siteId);
+            CoreEvents.trigger(CoreEvents.COMPONENT_FILE_ACTION, data, siteId);
         });
     }
 
@@ -2604,7 +2603,7 @@ export class CoreFilepoolProvider {
             action: CoreFilepoolFileActions.DELETED,
         };
 
-        this.eventsProvider.trigger(this.getFileEventName(siteId, fileId), data);
+        CoreEvents.trigger(this.getFileEventName(siteId, fileId), data);
         this.notifyFileActionToComponents(siteId, data, links);
     }
 
@@ -2622,7 +2621,7 @@ export class CoreFilepoolProvider {
             success: true,
         };
 
-        this.eventsProvider.trigger(this.getFileEventName(siteId, fileId), data);
+        CoreEvents.trigger(this.getFileEventName(siteId, fileId), data);
         this.notifyFileActionToComponents(siteId, data, links);
     }
 
@@ -2640,7 +2639,7 @@ export class CoreFilepoolProvider {
             success: false,
         };
 
-        this.eventsProvider.trigger(this.getFileEventName(siteId, fileId), data);
+        CoreEvents.trigger(this.getFileEventName(siteId, fileId), data);
         this.notifyFileActionToComponents(siteId, data, links);
     }
 
@@ -2657,7 +2656,7 @@ export class CoreFilepoolProvider {
             action: CoreFilepoolFileActions.DOWNLOADING,
         };
 
-        this.eventsProvider.trigger(this.getFileEventName(siteId, fileId), data);
+        CoreEvents.trigger(this.getFileEventName(siteId, fileId), data);
         this.notifyFileActionToComponents(siteId, data, links);
 
     }
@@ -2675,7 +2674,7 @@ export class CoreFilepoolProvider {
             action: CoreFilepoolFileActions.OUTDATED,
         };
 
-        this.eventsProvider.trigger(this.getFileEventName(siteId, fileId), data);
+        CoreEvents.trigger(this.getFileEventName(siteId, fileId), data);
         this.notifyFileActionToComponents(siteId, data, links);
     }
 
@@ -3242,7 +3241,7 @@ export class CoreFilepoolProvider {
             componentId: this.fixComponentId(componentId),
             status: status
         };
-        this.eventsProvider.trigger(CoreEventsProvider.PACKAGE_STATUS_CHANGED, data, siteId);
+        CoreEvents.trigger(CoreEvents.PACKAGE_STATUS_CHANGED, data, siteId);
     }
 
     /**

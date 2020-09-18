@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreMainMenuHandler, CoreMainMenuHandlerData } from '@core/mainmenu/providers/delegate';
@@ -39,21 +39,21 @@ export class AddonNotificationsMainMenuHandler implements CoreMainMenuHandler {
         loading: true,
     };
 
-    constructor(eventsProvider: CoreEventsProvider, private sitesProvider: CoreSitesProvider,
+    constructor(private sitesProvider: CoreSitesProvider,
             utils: CoreUtilsProvider, private notificationsProvider: AddonNotificationsProvider,
             private pushNotificationsProvider: CorePushNotificationsProvider,
             pushNotificationsDelegate: CorePushNotificationsDelegate) {
 
-        eventsProvider.on(AddonNotificationsProvider.READ_CHANGED_EVENT, (data) => {
+        CoreEvents.on(AddonNotificationsProvider.READ_CHANGED_EVENT, (data) => {
             this.updateBadge(data.siteId);
         });
 
-        eventsProvider.on(AddonNotificationsProvider.READ_CRON_EVENT, (data) => {
+        CoreEvents.on(AddonNotificationsProvider.READ_CRON_EVENT, (data) => {
             this.updateBadge(data.siteId);
         });
 
         // Reset info on logout.
-        eventsProvider.on(CoreEventsProvider.LOGOUT, (data) => {
+        CoreEvents.on(CoreEvents.LOGOUT, (data) => {
             this.handler.badge = '';
             this.handler.loading = true;
         });

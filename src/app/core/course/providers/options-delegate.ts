@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
@@ -218,10 +218,10 @@ export class CoreCourseOptionsDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreCourseOptionsDelegate_';
 
     constructor(loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
-            protected eventsProvider: CoreEventsProvider, private coursesProvider: CoreCoursesProvider) {
+            private coursesProvider: CoreCoursesProvider) {
         super('CoreCourseOptionsDelegate', loggerProvider, sitesProvider, eventsProvider);
 
-        eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             this.clearCoursesHandlers();
         });
     }
@@ -266,7 +266,7 @@ export class CoreCourseOptionsDelegate extends CoreDelegate {
     clearAndInvalidateCoursesOptions(courseId?: number): Promise<any> {
         const promises = [];
 
-        this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
+        CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
 
         // Invalidate course enabled data for the handlers that are enabled at site level.
         if (courseId) {

@@ -21,7 +21,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModSurveyOfflineProvider } from './offline';
 import { AddonModSurveyProvider } from './survey';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
@@ -42,7 +42,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
     constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
             private courseProvider: CoreCourseProvider, private surveyOffline: AddonModSurveyOfflineProvider,
-            private eventsProvider: CoreEventsProvider,  private surveyProvider: AddonModSurveyProvider,
+             private surveyProvider: AddonModSurveyProvider,
             private utils: CoreUtilsProvider, timeUtils: CoreTimeUtilsProvider, private logHelper: CoreCourseLogHelperProvider,
             prefetchDelegate: CoreCourseModulePrefetchDelegate, prefetchHandler: AddonModSurveyPrefetchHandler) {
 
@@ -93,7 +93,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
                 return promise.then((result) => {
                     if (result && result.answersSent) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModSurveySyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModSurveySyncProvider.AUTO_SYNCED, {
                             surveyId: entry.surveyid,
                             userId: entry.userid,
                             warnings: result.warnings

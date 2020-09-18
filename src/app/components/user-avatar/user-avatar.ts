@@ -17,7 +17,7 @@ import { NavController } from '@ionic/angular';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreAppProvider } from '@services/app';
 import { CoreUtilsProvider } from '@services/utils/utils';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
@@ -53,12 +53,11 @@ export class CoreUserAvatarComponent implements OnInit, OnChanges, OnDestroy {
             private sitesProvider: CoreSitesProvider,
             private utils: CoreUtilsProvider,
             private appProvider: CoreAppProvider,
-            eventsProvider: CoreEventsProvider,
-            @Optional() private svComponent: CoreSplitViewComponent) {
+                        @Optional() private svComponent: CoreSplitViewComponent) {
 
         this.currentUserId = this.sitesProvider.getCurrentSiteUserId();
 
-        this.pictureObs = eventsProvider.on(CoreUserProvider.PROFILE_PICTURE_UPDATED, (data) => {
+        this.pictureObs = CoreEvents.on(CoreUserProvider.PROFILE_PICTURE_UPDATED, (data) => {
             if (data.userId == this.userId) {
                 this.avatarUrl = data.picture;
             }

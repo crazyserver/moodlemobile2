@@ -395,7 +395,7 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
             // Detect if anything was sent to server.
             this.dataSentObserver && this.dataSentObserver.off();
 
-            this.dataSentObserver = this.eventsProvider.on(AddonModScormProvider.DATA_SENT_EVENT, (data) => {
+            this.dataSentObserver = CoreEvents.on(AddonModScormProvider.DATA_SENT_EVENT, (data) => {
                 if (data.scormId === this.scorm.id) {
                     this.dataSent = true;
                 }

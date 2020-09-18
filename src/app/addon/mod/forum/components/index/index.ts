@@ -99,16 +99,16 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
         super.ngOnInit();
 
         // Refresh data if this forum discussion is synchronized from discussions list.
-        this.syncManualObserver = this.eventsProvider.on(AddonModForumSyncProvider.MANUAL_SYNCED, (data) => {
+        this.syncManualObserver = CoreEvents.on(AddonModForumSyncProvider.MANUAL_SYNCED, (data) => {
             this.autoSyncEventReceived(data);
         }, this.siteId);
 
         // Listen for discussions added. When a discussion is added, we reload the data.
-        this.newDiscObserver = this.eventsProvider.on(AddonModForumProvider.NEW_DISCUSSION_EVENT,
+        this.newDiscObserver = CoreEvents.on(AddonModForumProvider.NEW_DISCUSSION_EVENT,
                 this.eventReceived.bind(this, true));
-        this.replyObserver = this.eventsProvider.on(AddonModForumProvider.REPLY_DISCUSSION_EVENT,
+        this.replyObserver = CoreEvents.on(AddonModForumProvider.REPLY_DISCUSSION_EVENT,
                 this.eventReceived.bind(this, false));
-        this.changeDiscObserver = this.eventsProvider.on(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, (data) => {
+        this.changeDiscObserver = CoreEvents.on(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, (data) => {
             if ((this.forum && this.forum.id === data.forumId) || data.cmId === this.module.id) {
                 this.forumProvider.invalidateDiscussionsList(this.forum.id).finally(() => {
                     if (data.discussionId) {
@@ -144,7 +144,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
         });
 
         // Select the current opened discussion.
-        this.viewDiscObserver = this.eventsProvider.on(AddonModForumProvider.VIEW_DISCUSSION_EVENT, (data) => {
+        this.viewDiscObserver = CoreEvents.on(AddonModForumProvider.VIEW_DISCUSSION_EVENT, (data) => {
             if (this.forum && this.forum.id == data.forumId) {
                 this.selectedDiscussion = this.splitviewCtrl.isOn() ? data.discussion : 0;
 
@@ -157,13 +157,13 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
         }, this.sitesProvider.getCurrentSiteId());
 
         // Listen for offline ratings saved and synced.
-        this.ratingOfflineObserver = this.eventsProvider.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
+        this.ratingOfflineObserver = CoreEvents.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
             if (this.forum && data.component == 'mod_forum' && data.ratingArea == 'post' &&
                     data.contextLevel == 'module' && data.instanceId == this.forum.cmid) {
                 this.hasOfflineRatings = true;
             }
         });
-        this.ratingSyncObserver = this.eventsProvider.on(CoreRatingSyncProvider.SYNCED_EVENT, (data) => {
+        this.ratingSyncObserver = CoreEvents.on(CoreRatingSyncProvider.SYNCED_EVENT, (data) => {
             if (this.forum && data.component == 'mod_forum' && data.ratingArea == 'post' &&
                     data.contextLevel == 'module' && data.instanceId == this.forum.cmid) {
                this.ratingOffline.hasRatings('mod_forum', 'post', 'module', this.forum.cmid).then((hasRatings) => {
@@ -236,7 +236,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                 return this.syncActivity(showErrors).then((updated) => {
                     if (updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModForumSyncProvider.MANUAL_SYNCED, {
+                        CoreEvents.trigger(AddonModForumSyncProvider.MANUAL_SYNCED, {
                             forumId: forum.id,
                             userId: this.sitesProvider.getCurrentSiteUserId(),
                             source: 'index',

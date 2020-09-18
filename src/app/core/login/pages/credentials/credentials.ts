@@ -17,7 +17,7 @@ import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreUtils } from '@services/utils/utils';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUrlUtils } from '@services/utils/url';
@@ -66,7 +66,7 @@ export class CoreLoginCredentialsPage {
             private loginHelper: CoreLoginHelperProvider,
             private domUtils: CoreDomUtilsProvider,
             private translate: TranslateService,
-            private eventsProvider: CoreEventsProvider) {
+            private eventsProvider: CoreEvents) {
 
         this.siteUrl = navParams.get('siteUrl');
         this.siteName = navParams.get('siteName') || null;
@@ -112,7 +112,7 @@ export class CoreLoginCredentialsPage {
      */
     ionViewWillUnload(): void {
         this.viewLeft = true;
-        this.eventsProvider.trigger(CoreEventsProvider.LOGIN_SITE_UNCHECKED, { config: this.siteConfig }, this.siteId);
+        CoreEvents.trigger(CoreEvents.LOGIN_SITE_UNCHECKED, { config: this.siteConfig }, this.siteId);
     }
 
     /**
@@ -177,7 +177,7 @@ export class CoreLoginCredentialsPage {
 
             if (!this.eventThrown && !this.viewLeft) {
                 this.eventThrown = true;
-                this.eventsProvider.trigger(CoreEventsProvider.LOGIN_SITE_CHECKED, { config: this.siteConfig });
+                CoreEvents.trigger(CoreEvents.LOGIN_SITE_CHECKED, { config: this.siteConfig });
             }
         } else {
             this.authInstructions = null;

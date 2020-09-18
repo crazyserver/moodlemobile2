@@ -16,7 +16,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreInitDelegate } from '@services/init';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
@@ -44,7 +44,7 @@ export class CoreContentLinksHelperProvider {
     constructor(private sitesProvider: CoreSitesProvider, private loginHelper: CoreLoginHelperProvider,
             private contentLinksDelegate: CoreContentLinksDelegate, private appProvider: CoreAppProvider,
             private domUtils: CoreDomUtilsProvider, private urlUtils: CoreUrlUtilsProvider, private translate: TranslateService,
-            private initDelegate: CoreInitDelegate, eventsProvider: CoreEventsProvider, private textUtils: CoreTextUtilsProvider,
+            private initDelegate: CoreInitDelegate, private textUtils: CoreTextUtilsProvider,
             private sitePluginsProvider: CoreSitePluginsProvider, private zone: NgZone, private utils: CoreUtilsProvider,
             private mainMenuProvider: CoreMainMenuProvider) {
         this.logger = CoreLogger.getInstance('CoreContentLinksHelperProvider');

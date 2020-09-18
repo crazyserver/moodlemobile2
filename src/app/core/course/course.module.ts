@@ -15,7 +15,7 @@
 import { NgModule } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { CoreCronDelegate } from '@services/cron';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreCourseProvider } from './providers/course';
 import { CoreCourseHelperProvider } from './providers/helper';
 import { CoreCourseLogHelperProvider } from './providers/log-helper';
@@ -79,7 +79,7 @@ export const CORE_COURSE_PROVIDERS: any[] = [
 })
 export class CoreCourseModule {
     constructor(cronDelegate: CoreCronDelegate, syncHandler: CoreCourseSyncCronHandler, logHandler: CoreCourseLogCronHandler,
-                platform: Platform, eventsProvider: CoreEventsProvider, tagAreaDelegate: CoreTagAreaDelegate,
+                platform: Platform, tagAreaDelegate: CoreTagAreaDelegate,
                 courseTagAreaHandler: CoreCourseTagAreaHandler, modulesTagAreaHandler: CoreCourseModulesTagAreaHandler) {
         cronDelegate.register(syncHandler);
         cronDelegate.register(logHandler);
@@ -93,7 +93,7 @@ export class CoreCourseModule {
             }, 1000);
         });
 
-        eventsProvider.on(CoreEventsProvider.LOGIN, () => {
+        CoreEvents.on(CoreEvents.LOGIN, () => {
             // Log the app is open to keep user in online status.
             setTimeout(() => {
                 cronDelegate.forceCronHandlerExecution(logHandler.name).catch((e) => {

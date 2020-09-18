@@ -14,7 +14,7 @@
 
 import { Component, Input, OnChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreRatingProvider, CoreRatingInfo, CoreRatingInfoItem } from '@core/rating/providers/rating';
 import { CoreSitesProvider } from '@services/sites';
 
@@ -41,13 +41,13 @@ export class CoreRatingAggregateComponent implements OnChanges, OnDestroy {
     protected aggregateObserver;
     protected updateSiteObserver;
 
-    constructor(private eventsProvider: CoreEventsProvider, private modalCtrl: ModalController,
+    constructor(private modalCtrl: ModalController,
             private ratingProvider: CoreRatingProvider, sitesProvider: CoreSitesProvider) {
 
         this.disabled = this.ratingProvider.isRatingDisabledInSite();
 
         // Update visibility if current site info is updated.
-        this.updateSiteObserver = eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.disabled = this.ratingProvider.isRatingDisabledInSite();
         }, sitesProvider.getCurrentSiteId());
     }
@@ -82,7 +82,7 @@ export class CoreRatingAggregateComponent implements OnChanges, OnDestroy {
         this.showCount = (this.aggregateMethod != CoreRatingProvider.AGGREGATE_COUNT);
 
         // Update aggrgate when the user adds or edits a rating.
-        this.aggregateObserver = this.eventsProvider.on(CoreRatingProvider.AGGREGATE_CHANGED_EVENT, (data) => {
+        this.aggregateObserver = CoreEvents.on(CoreRatingProvider.AGGREGATE_CHANGED_EVENT, (data) => {
             if (data.contextLevel == this.contextLevel &&
                     data.instanceId == this.instanceId &&
                     data.component == this.ratingInfo.component &&

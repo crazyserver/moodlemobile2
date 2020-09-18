@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreUserDelegate, CoreUserProfileHandler, CoreUserProfileHandlerData } from '@core/user/providers/user-delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonCourseCompletionProvider } from './coursecompletion';
 
@@ -29,11 +29,11 @@ export class AddonCourseCompletionUserHandler implements CoreUserProfileHandler 
 
     protected enabledCache = {};
 
-    constructor(eventsProvider: CoreEventsProvider, private courseCompletionProvider: AddonCourseCompletionProvider) {
-        eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+    constructor(private courseCompletionProvider: AddonCourseCompletionProvider) {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             this.enabledCache = {};
         });
-        eventsProvider.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
+        CoreEvents.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
             const cacheKey = data.userId + '-' + data.courseId;
 
             delete this.enabledCache[cacheKey];

@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { Platform, NavController, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
@@ -88,8 +88,7 @@ export class CoreFormatTextDirective implements OnChanges {
             @Optional() protected content: Content, @Optional()
             @Optional() protected svComponent: CoreSplitViewComponent,
             protected iframeUtils: CoreIframeUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected filterProvider: CoreFilterProvider,
+                        protected filterProvider: CoreFilterProvider,
             protected filterHelper: CoreFilterHelperProvider,
             protected filterDelegate: CoreFilterDelegate,
             protected viewContainerRef: ViewContainerRef,
@@ -366,7 +365,7 @@ export class CoreFormatTextDirective implements OnChanges {
 
                 if (!this.loadingChangedListener) {
                     // Recalculate the height if a parent core-loading displays the content.
-                    this.loadingChangedListener = this.eventsProvider.on(CoreEventsProvider.CORE_LOADING_CHANGED, (data) => {
+                    this.loadingChangedListener = CoreEvents.on(CoreEvents.CORE_LOADING_CHANGED, (data) => {
                         if (data.loaded && this.domUtils.closest(this.element.parentElement, '#' + data.uniqueId)) {
                             // The format-text is inside the loading, re-calculate the height.
                             this.calculateHeight();

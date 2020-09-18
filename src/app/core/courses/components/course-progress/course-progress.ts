@@ -14,7 +14,7 @@
 
 import { Component, Input, OnInit, OnDestroy, Optional } from '@angular/core';
 import { NavController, PopoverController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUserProvider } from '@core/user/providers/user';
@@ -59,8 +59,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
 
     constructor(@Optional() private navCtrl: NavController, private courseHelper: CoreCourseHelperProvider,
             private domUtils: CoreDomUtilsProvider,
-            private courseProvider: CoreCourseProvider, private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider, private coursesProvider: CoreCoursesProvider,
+            private courseProvider: CoreCourseProvider,             private sitesProvider: CoreSitesProvider, private coursesProvider: CoreCoursesProvider,
             private popoverCtrl: PopoverController, private userProvider: CoreUserProvider) { }
 
     /**
@@ -78,7 +77,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
         this.courseOptionMenuEnabled = this.showAll && typeof this.course.isfavourite != 'undefined';
 
         // Refresh the enabled flag if site is updated.
-        this.siteUpdatedObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.siteUpdatedObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             const wasEnabled = this.downloadCourseEnabled;
 
             this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
@@ -100,7 +99,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
         }
 
         // Listen for status change in course.
-        this.courseStatusObserver = this.eventsProvider.on(CoreEventsProvider.COURSE_STATUS_CHANGED, (data) => {
+        this.courseStatusObserver = CoreEvents.on(CoreEvents.COURSE_STATUS_CHANGED, (data) => {
             if (data.courseId == this.course.id || data.courseId == CoreCourseProvider.ALL_COURSES_CLEARED) {
                 this.updateCourseStatus(data.status);
             }
@@ -256,7 +255,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
         // We should use null to unset the preference.
         this.userProvider.updateUserPreference('block_myoverview_hidden_course_' + this.course.id, hide ? 1 : null).then(() => {
             this.course.hidden = hide;
-            this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
+            CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
                 courseId: this.course.id,
                 course: this.course,
                 action: CoreCoursesProvider.ACTION_STATE_CHANGED,
@@ -282,7 +281,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
 
         this.coursesProvider.setFavouriteCourse(this.course.id, favourite).then(() => {
             this.course.isfavourite = favourite;
-            this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
+            CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
                 courseId: this.course.id,
                 course: this.course,
                 action: CoreCoursesProvider.ACTION_STATE_CHANGED,

@@ -18,7 +18,7 @@ import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreAppProvider } from '@services/app';
 import { CoreLogger } from '@services/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -43,8 +43,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,
             courseProvider: CoreCourseProvider,
-            private eventsProvider: CoreEventsProvider,
-            loggerProvider: CoreLoggerProvider,
+                        loggerProvider: CoreLoggerProvider,
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,
@@ -99,7 +98,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
                 return promise.then((data) => {
                     if (data && data.updated) {
                         // Sync done. Send event.
-                        this.eventsProvider.trigger(AddonModWorkshopSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModWorkshopSyncProvider.AUTO_SYNCED, {
                             workshopId: workshopId,
                             warnings: data.warnings
                         }, siteId);

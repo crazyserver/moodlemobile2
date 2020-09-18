@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -72,7 +72,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
     constructor(navParams: NavParams, fb: FormBuilder, protected navCtrl: NavController, protected sitesProvider: CoreSitesProvider,
             protected syncProvider: CoreSyncProvider, protected domUtils: CoreDomUtilsProvider,
             protected translate: TranslateService, protected courseProvider: CoreCourseProvider,
-            protected eventsProvider: CoreEventsProvider, protected wikiProvider: AddonModWikiProvider,
+            protected wikiProvider: AddonModWikiProvider,
             protected wikiOffline: AddonModWikiOfflineProvider, protected wikiSync: AddonModWikiSyncProvider,
             protected textUtils: CoreTextUtilsProvider, protected courseHelper: CoreCourseHelperProvider) {
 
@@ -465,7 +465,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                     this.domUtils.triggerFormSubmittedEvent(this.formElement, id > 0, this.sitesProvider.getCurrentSiteId());
 
                     if (id > 0) {
-                        this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'wiki' });
+                        CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'wiki' });
 
                         // Page was created, get its data and go to the page.
                         this.pageId = id;
@@ -491,7 +491,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                             });
                         }).finally(() => {
                             // Notify page created.
-                            this.eventsProvider.trigger(AddonModWikiProvider.PAGE_CREATED_EVENT, {
+                            CoreEvents.trigger(AddonModWikiProvider.PAGE_CREATED_EVENT, {
                                 pageId: this.pageId,
                                 subwikiId: this.subwikiId,
                                 pageTitle: title,

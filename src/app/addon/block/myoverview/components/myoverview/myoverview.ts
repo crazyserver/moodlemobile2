@@ -14,7 +14,7 @@
 
 import { Component, OnInit, Input, OnDestroy, ViewChild, Injector, OnChanges, SimpleChange } from '@angular/core';
 import { Searchbar } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCoursesProvider, CoreCoursesMyCoursesUpdatedEventData } from '@core/courses/providers/courses';
@@ -89,8 +89,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
     constructor(injector: Injector,
             protected coursesProvider: CoreCoursesProvider,
             protected courseCompletionProvider: AddonCourseCompletionProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected courseHelper: CoreCourseHelperProvider,
+                        protected courseHelper: CoreCourseHelperProvider,
             protected courseOptionsDelegate: CoreCourseOptionsDelegate,
             protected coursesHelper: CoreCoursesHelperProvider,
             protected sitesProvider: CoreSitesProvider,
@@ -108,13 +107,13 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
         this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
 
         // Refresh the enabled flags if site is updated.
-        this.updateSiteObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
             this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
 
         }, this.sitesProvider.getCurrentSiteId());
 
-        this.coursesObserver = this.eventsProvider.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
+        this.coursesObserver = CoreEvents.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
                 (data: CoreCoursesMyCoursesUpdatedEventData) => {
 
             if (data.action == CoreCoursesProvider.ACTION_ENROL || data.action == CoreCoursesProvider.ACTION_STATE_CHANGED) {
@@ -341,7 +340,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
      * @return Promise resolved when done.
      */
     protected async refreshCourseList(): Promise<void> {
-        this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
+        CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
 
         try {
             await this.coursesProvider.invalidateUserCourses();

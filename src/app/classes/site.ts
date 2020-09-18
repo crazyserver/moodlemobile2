@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SQLiteDB } from './sqlitedb';
 import { CoreAppProvider } from '@services/app';
 import { CoreDbProvider } from '@services/db';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreLogger } from '@services/logger';
 import { CoreWSProvider, CoreWSPreSets, CoreWSFileUploadOptions, CoreWSAjaxPreSets } from '@services/ws';
@@ -198,7 +198,7 @@ export class CoreSite {
     protected appProvider: CoreAppProvider;
     protected dbProvider: CoreDbProvider;
     protected domUtils: CoreDomUtilsProvider;
-    protected eventsProvider: CoreEventsProvider;
+    protected eventsProvider: CoreEvents;
     protected fileProvider: CoreFileProvider;
     protected textUtils: CoreTextUtilsProvider;
     protected timeUtils: CoreTimeUtilsProvider;
@@ -263,7 +263,7 @@ export class CoreSite {
         this.appProvider = injector.get(CoreAppProvider);
         this.dbProvider = injector.get(CoreDbProvider);
         this.domUtils = injector.get(CoreDomUtilsProvider);
-        this.eventsProvider = injector.get(CoreEventsProvider);
+        CoreEvents = injector.get(CoreEvents);
         this.fileProvider = injector.get(CoreFileProvider);
         this.textUtils = injector.get(CoreTextUtilsProvider);
         this.timeUtils = injector.get(CoreTimeUtilsProvider);
@@ -721,28 +721,28 @@ export class CoreSite {
                     }
 
                     // Session expired, trigger event.
-                    this.eventsProvider.trigger(CoreEventsProvider.SESSION_EXPIRED, {}, this.id);
+                    CoreEvents.trigger(CoreEvents.SESSION_EXPIRED, {}, this.id);
                     // Change error message. Try to get data from cache, the event will handle the error.
                     error.message = this.translate.instant('core.lostconnection');
                 } else if (error.errorcode === 'userdeleted') {
                     // User deleted, trigger event.
-                    this.eventsProvider.trigger(CoreEventsProvider.USER_DELETED, { params: data }, this.id);
+                    CoreEvents.trigger(CoreEvents.USER_DELETED, { params: data }, this.id);
                     error.message = this.translate.instant('core.userdeleted');
 
                     return Promise.reject(error);
                 } else if (error.errorcode === 'forcepasswordchangenotice') {
                     // Password Change Forced, trigger event. Try to get data from cache, the event will handle the error.
-                    this.eventsProvider.trigger(CoreEventsProvider.PASSWORD_CHANGE_FORCED, {}, this.id);
+                    CoreEvents.trigger(CoreEvents.PASSWORD_CHANGE_FORCED, {}, this.id);
                     error.message = this.translate.instant('core.forcepasswordchangenotice');
 
                 } else if (error.errorcode === 'usernotfullysetup') {
                     // User not fully setup, trigger event. Try to get data from cache, the event will handle the error.
-                    this.eventsProvider.trigger(CoreEventsProvider.USER_NOT_FULLY_SETUP, {}, this.id);
+                    CoreEvents.trigger(CoreEvents.USER_NOT_FULLY_SETUP, {}, this.id);
                     error.message = this.translate.instant('core.usernotfullysetup');
 
                 } else if (error.errorcode === 'sitepolicynotagreed') {
                     // Site policy not agreed, trigger event.
-                    this.eventsProvider.trigger(CoreEventsProvider.SITE_POLICY_NOT_AGREED, {}, this.id);
+                    CoreEvents.trigger(CoreEvents.SITE_POLICY_NOT_AGREED, {}, this.id);
                     error.message = this.translate.instant('core.login.sitepolicynotagreederror');
 
                     return Promise.reject(error);
@@ -1251,7 +1251,7 @@ export class CoreSite {
         this.logger.debug('Invalidate all the cache for site: ' + this.id);
 
         return this.db.updateRecords(CoreSite.WS_CACHE_TABLE, { expirationTime: 0 }).finally(() => {
-            this.eventsProvider.trigger(CoreEventsProvider.WS_CACHE_INVALIDATED, {}, this.getId());
+            CoreEvents.trigger(CoreEvents.WS_CACHE_INVALIDATED, {}, this.getId());
         });
     }
 

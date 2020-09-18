@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -60,8 +60,7 @@ export class CoreSearchBoxComponent implements OnInit {
     constructor(protected translate: TranslateService,
             protected utils: CoreUtilsProvider,
             protected searchHistoryProvider: CoreSearchHistoryProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider,
+                        protected sitesProvider: CoreSitesProvider,
             protected domUtils: CoreDomUtilsProvider,
     ) {
         this.onSubmit = new EventEmitter<string>();

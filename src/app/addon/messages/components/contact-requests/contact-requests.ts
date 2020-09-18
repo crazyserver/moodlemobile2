@@ -14,7 +14,7 @@
 
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Content } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider, AddonMessagesConversationMember } from '../../providers/messages';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -38,11 +38,11 @@ export class AddonMessagesContactRequestsComponent implements OnInit, OnDestroy 
 
     protected memberInfoObserver;
 
-    constructor(private domUtils: CoreDomUtilsProvider, eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider,
+    constructor(private domUtils: CoreDomUtilsProvider, sitesProvider: CoreSitesProvider,
             private messagesProvider: AddonMessagesProvider) {
 
         // Hide the "Would like to contact you" message when a contact request is confirmed.
-        this.memberInfoObserver = eventsProvider.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
+        this.memberInfoObserver = CoreEvents.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
             if (data.contactRequestConfirmed || data.contactRequestDeclined) {
                 const index = this.requests.findIndex((request) => request.id == data.userId);
                 if (index >= 0) {

@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -95,8 +95,7 @@ export class CoreRatingProvider {
     protected ROOT_CACHE_KEY = 'CoreRating:';
 
     constructor(private appProvider: CoreAppProvider,
-            private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider,
+                        private sitesProvider: CoreSitesProvider,
             private userProvider: CoreUserProvider,
             private utils: CoreUtilsProvider,
             private ratingOffline: CoreRatingOfflineProvider) {}
@@ -138,7 +137,7 @@ export class CoreRatingProvider {
         const storeOffline = (): Promise<any> => {
             return this.ratingOffline.addRating(component, ratingArea, contextLevel, instanceId, itemId, itemSetId, courseId,
                     scaleId, rating, ratedUserId, aggregateMethod, siteId).then(() => {
-                this.eventsProvider.trigger(CoreRatingProvider.RATING_SAVED_EVENT, {
+                CoreEvents.trigger(CoreRatingProvider.RATING_SAVED_EVENT, {
                     component,
                     ratingArea,
                     contextLevel,
@@ -206,7 +205,7 @@ export class CoreRatingProvider {
 
             return site.write('core_rating_add_rating', params).then((response) => {
                 return this.invalidateRatingItems(contextLevel, instanceId, component, ratingArea, itemId, scaleId).then(() => {
-                    this.eventsProvider.trigger(CoreRatingProvider.AGGREGATE_CHANGED_EVENT, {
+                    CoreEvents.trigger(CoreRatingProvider.AGGREGATE_CHANGED_EVENT, {
                         contextLevel,
                         instanceId,
                         component,

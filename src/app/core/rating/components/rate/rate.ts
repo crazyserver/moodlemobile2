@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CoreRatingProvider, CoreRatingInfo, CoreRatingInfoItem, CoreRatingScale } from '@core/rating/providers/rating';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreRatingOfflineProvider } from '@core/rating/providers/offline';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 
 /**
@@ -46,8 +46,7 @@ export class CoreRatingRateComponent implements OnChanges, OnDestroy {
     disabled = false;
     protected updateSiteObserver;
 
-    constructor(private domUtils: CoreDomUtilsProvider, private translate: TranslateService, eventsProvider: CoreEventsProvider,
-            private ratingProvider: CoreRatingProvider, private ratingOffline: CoreRatingOfflineProvider,
+    constructor(private domUtils: CoreDomUtilsProvider, private translate: TranslateService,             private ratingProvider: CoreRatingProvider, private ratingOffline: CoreRatingOfflineProvider,
             sitesProvider: CoreSitesProvider) {
 
         this.onLoading = new EventEmitter<boolean>();
@@ -56,7 +55,7 @@ export class CoreRatingRateComponent implements OnChanges, OnDestroy {
         this.disabled = this.ratingProvider.isRatingDisabledInSite();
 
         // Update visibility if current site info is updated.
-        this.updateSiteObserver = eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.disabled = this.ratingProvider.isRatingDisabledInSite();
         }, sitesProvider.getCurrentSiteId());
     }

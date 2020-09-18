@@ -46,7 +46,7 @@ import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreInitDelegate } from '@services/init';
 import { CoreFileProvider } from '@services/file';
 import { CoreWSProvider } from '@services/ws';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesFactoryProvider } from '@services/sites-factory';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
@@ -182,7 +182,7 @@ export const CORE_PROVIDERS: any[] = [
     CoreInitDelegate,
     CoreFileProvider,
     CoreWSProvider,
-    CoreEventsProvider,
+    CoreEvents,
     CoreSitesFactoryProvider,
     CoreSitesProvider,
     CoreLocalNotificationsProvider,
@@ -329,7 +329,7 @@ export const WP_PROVIDER: any = null;
         CoreInitDelegate,
         CoreFileProvider,
         CoreWSProvider,
-        CoreEventsProvider,
+        CoreEvents,
         CoreSitesFactoryProvider,
         CoreSitesProvider,
         CoreLocalNotificationsProvider,
@@ -362,8 +362,7 @@ export class AppModule {
             config: Config,
             sitesProvider: CoreSitesProvider,
             fileProvider: CoreFileProvider,
-            private eventsProvider: CoreEventsProvider,
-            cronDelegate: CoreCronDelegate,
+                        cronDelegate: CoreCronDelegate,
             siteInfoCronHandler: CoreSiteInfoCronHandler,
             injector: Injector,
             ) {
@@ -575,7 +574,7 @@ export class AppModule {
             this.imgsUpdate();
         };
 
-        const eventsProvider = this.eventsProvider;
+        const eventsProvider = CoreEvents;
 
         // tslint:disable: typedef
         (<any> Content).prototype.ngAfterViewInit = function() {
@@ -607,7 +606,7 @@ export class AppModule {
             };
 
             // Recalculate size when screen rotates.
-            this._orientationObs = eventsProvider.on(CoreEventsProvider.ORIENTATION_CHANGE, this.resize.bind(this));
+            this._orientationObs = CoreEvents.on(CoreEvents.ORIENTATION_CHANGE, this.resize.bind(this));
         };
 
         // tslint:disable: typedef

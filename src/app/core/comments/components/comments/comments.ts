@@ -15,7 +15,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChange, Optional } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreCommentsProvider } from '../../providers/comments';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
@@ -49,15 +49,14 @@ export class CoreCommentsCommentsComponent implements OnChanges, OnDestroy {
     constructor(private navCtrl: NavController,
             private commentsProvider: CoreCommentsProvider,
             sitesProvider: CoreSitesProvider,
-            eventsProvider: CoreEventsProvider,
-            @Optional() private svComponent: CoreSplitViewComponent) {
+                        @Optional() private svComponent: CoreSplitViewComponent) {
 
         this.onLoading = new EventEmitter<boolean>();
 
         this.disabled = this.commentsProvider.areCommentsDisabledInSite();
 
         // Update visibility if current site info is updated.
-        this.updateSiteObserver = eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             const wasDisabled = this.disabled;
 
             this.disabled = this.commentsProvider.areCommentsDisabledInSite();
@@ -68,7 +67,7 @@ export class CoreCommentsCommentsComponent implements OnChanges, OnDestroy {
         }, sitesProvider.getCurrentSiteId());
 
         // Refresh comments if event received.
-        this.refreshCommentsObserver = eventsProvider.on(CoreCommentsProvider.REFRESH_COMMENTS_EVENT, (data) => {
+        this.refreshCommentsObserver = CoreEvents.on(CoreCommentsProvider.REFRESH_COMMENTS_EVENT, (data) => {
             // Verify these comments need to be updated.
             if (this.undefinedOrEqual(data, 'contextLevel') && this.undefinedOrEqual(data, 'instanceId') &&
                     this.undefinedOrEqual(data, 'component') && this.undefinedOrEqual(data, 'itemId') &&
@@ -81,7 +80,7 @@ export class CoreCommentsCommentsComponent implements OnChanges, OnDestroy {
         }, sitesProvider.getCurrentSiteId());
 
         // Refresh comments count if event received.
-        this.commentsCountObserver = eventsProvider.on(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, (data) => {
+        this.commentsCountObserver = CoreEvents.on(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, (data) => {
             // Verify these comments need to be updated.
             if (!this.commentsCount.endsWith('+') && this.undefinedOrEqual(data, 'contextLevel') &&
                     this.undefinedOrEqual(data, 'instanceId') && this.undefinedOrEqual(data, 'component') &&

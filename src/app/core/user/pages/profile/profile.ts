@@ -19,7 +19,7 @@ import { CoreUserHelperProvider } from '../../providers/helper';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreFileUploaderHelperProvider } from '@core/fileuploader/providers/helper';
@@ -53,8 +53,7 @@ export class CoreUserProfilePage {
     communicationHandlers: CoreUserProfileHandlerData[] = [];
 
     constructor(navParams: NavParams, private userProvider: CoreUserProvider, private userHelper: CoreUserHelperProvider,
-            private domUtils: CoreDomUtilsProvider, private translate: TranslateService, private eventsProvider: CoreEventsProvider,
-            private coursesProvider: CoreCoursesProvider, private sitesProvider: CoreSitesProvider,
+            private domUtils: CoreDomUtilsProvider, private translate: TranslateService,             private coursesProvider: CoreCoursesProvider, private sitesProvider: CoreSitesProvider,
             private mimetypeUtils: CoreMimetypeUtilsProvider, private fileUploaderHelper: CoreFileUploaderHelperProvider,
             private userDelegate: CoreUserDelegate, private navCtrl: NavController,
             @Optional() private svComponent: CoreSplitViewComponent) {
@@ -71,7 +70,7 @@ export class CoreUserProfilePage {
             this.site.wsAvailable('core_user_update_picture') &&
             !this.userProvider.isUpdatePictureDisabledInSite(this.site);
 
-        this.obsProfileRefreshed = eventsProvider.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
+        this.obsProfileRefreshed = CoreEvents.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
             if (this.user && typeof data.user != 'undefined') {
                 this.user.email = data.user.email;
                 this.user.address = this.userHelper.formatAddress('', data.user.city, data.user.country);
@@ -139,14 +138,14 @@ export class CoreUserProfilePage {
                         return this.refreshUser();
                     } else {
                         // Now they're the same, send event to use the right avatar in the rest of the app.
-                        this.eventsProvider.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
+                        CoreEvents.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
                             userId: this.userId,
                             picture: user.profileimageurl
                         }, this.site.getId());
                     }
                 }, () => {
                     // Cannot update site info. Assume the profile image is the right one.
-                    this.eventsProvider.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
+                    CoreEvents.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
                         userId: this.userId,
                         picture: user.profileimageurl
                     }, this.site.getId());
@@ -173,7 +172,7 @@ export class CoreUserProfilePage {
             const modal = this.domUtils.showModalLoading('core.sending', true);
 
             return this.userProvider.changeProfilePicture(result.itemid, this.userId).then((profileImageURL) => {
-                this.eventsProvider.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
+                CoreEvents.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
                     userId: this.userId,
                     picture: profileImageURL
                 }, this.site.getId());
@@ -203,7 +202,7 @@ export class CoreUserProfilePage {
 
         Promise.all(promises).finally(() => {
             this.fetchUser().finally(() => {
-                this.eventsProvider.trigger(CoreUserProvider.PROFILE_REFRESHED, {
+                CoreEvents.trigger(CoreUserProvider.PROFILE_REFRESHED, {
                     courseId: this.courseId,
                     userId: this.userId,
                     user: this.user

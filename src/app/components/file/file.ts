@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreFileHelperProvider } from '@services/file-helper';
 import { CoreSitesProvider } from '@services/sites';
@@ -65,8 +65,7 @@ export class CoreFileComponent implements OnInit, OnDestroy {
             protected appProvider: CoreAppProvider,
             protected fileHelper: CoreFileHelperProvider,
             protected mimeUtils: CoreMimetypeUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected textUtils: CoreTextUtilsProvider,
+                        protected textUtils: CoreTextUtilsProvider,
             protected pluginFileDelegate: CorePluginFileDelegate,
             protected urlUtils: CoreUrlUtilsProvider) {
         this.onDelete = new EventEmitter();
@@ -103,7 +102,7 @@ export class CoreFileComponent implements OnInit, OnDestroy {
 
             // Update state when receiving events about this file.
             this.filepoolProvider.getFileEventNameByUrl(this.siteId, this.fileUrl).then((eventName) => {
-                this.observer = this.eventsProvider.on(eventName, () => {
+                this.observer = CoreEvents.on(eventName, () => {
                     this.calculateState();
                 });
             }).catch(() => {

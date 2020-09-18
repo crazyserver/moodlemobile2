@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from '../../providers/messages';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -35,12 +35,12 @@ export class AddonMessagesIndexPage implements OnDestroy {
     protected loadSplitViewObserver: any;
     protected siteId: string;
 
-    constructor(eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider) {
+    constructor(sitesProvider: CoreSitesProvider) {
 
         this.siteId = sitesProvider.getCurrentSiteId();
 
         // Update split view or navigate.
-        this.loadSplitViewObserver = eventsProvider.on(AddonMessagesProvider.SPLIT_VIEW_LOAD_EVENT, (data) => {
+        this.loadSplitViewObserver = CoreEvents.on(AddonMessagesProvider.SPLIT_VIEW_LOAD_EVENT, (data) => {
             if (data.discussion && (this.splitviewCtrl.isOn() || !data.onlyWithSplitView)) {
                 this.gotoDiscussion(data.discussion, data.message);
             }

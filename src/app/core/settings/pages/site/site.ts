@@ -16,7 +16,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSettingsDelegate, CoreSettingsHandlerData } from '../../providers/delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -55,8 +55,7 @@ export class CoreSitePreferencesPage {
             protected settingsHelper: CoreSettingsHelper,
             protected sitesProvider: CoreSitesProvider,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sharedFilesProvider: CoreSharedFilesProvider,
+                        protected sharedFilesProvider: CoreSharedFilesProvider,
             protected translate: TranslateService,
             navParams: NavParams,
     ) {
@@ -65,7 +64,7 @@ export class CoreSitePreferencesPage {
 
         this.selectedPage = navParams.get('page') || false;
 
-        this.sitesObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, (data) => {
+        this.sitesObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, (data) => {
             if (data.siteId == this.siteId) {
                 this.refreshData();
             }

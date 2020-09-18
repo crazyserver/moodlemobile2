@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCustomURLSchemesProvider, CoreCustomURLSchemesHandleError } from '@services/urlschemes';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -55,16 +55,15 @@ export class CoreMainMenuMorePage implements OnDestroy {
             protected sitesProvider: CoreSitesProvider,
             protected navCtrl: NavController,
             protected mainMenuProvider: CoreMainMenuProvider,
-            eventsProvider: CoreEventsProvider,
-            protected loginHelper: CoreLoginHelperProvider,
+                        protected loginHelper: CoreLoginHelperProvider,
             protected utils: CoreUtilsProvider,
             protected linkHelper: CoreContentLinksHelperProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected urlSchemesProvider: CoreCustomURLSchemesProvider,
             protected translate: TranslateService) {
 
-        this.langObserver = eventsProvider.on(CoreEventsProvider.LANGUAGE_CHANGED, this.loadSiteInfo.bind(this));
-        this.updateSiteObserver = eventsProvider.on(CoreEventsProvider.SITE_UPDATED, this.loadSiteInfo.bind(this),
+        this.langObserver = CoreEvents.on(CoreEvents.LANGUAGE_CHANGED, this.loadSiteInfo.bind(this));
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, this.loadSiteInfo.bind(this),
             sitesProvider.getCurrentSiteId());
         this.loadSiteInfo();
         this.showScanQR = this.utils.canScanQR() &&

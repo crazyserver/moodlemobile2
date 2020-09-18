@@ -14,7 +14,7 @@
 
 import { Component, Optional, Injector } from '@angular/core';
 import { Content } from '@ionic/angular';
-import { CoreEvents, CoreEventsProvider } from '@services/events';
+import { CoreEvents, CoreEvents } from '@services/events';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { AddonModChoiceProvider, AddonModChoiceChoice, AddonModChoiceOption, AddonModChoiceResult } from '../../providers/choice';
@@ -366,7 +366,7 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
                 this.domUtils.scrollToTop(this.content);
 
                 if (online) {
-                    CoreEvents.instance.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: this.moduleName });
+                    CoreEvents.instance.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
                 }
 
                 return this.dataUpdated(online);

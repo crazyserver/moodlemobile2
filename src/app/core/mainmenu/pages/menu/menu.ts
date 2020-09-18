@@ -16,7 +16,7 @@ import { Component, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/cor
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { CoreApp } from '@services/app';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreIonTabsComponent } from '@components/ion-tabs/ion-tabs';
 import { CoreMainMenuProvider } from '../../providers/mainmenu';
 import { CoreMainMenuDelegate, CoreMainMenuHandlerToDisplay } from '../../providers/delegate';
@@ -53,8 +53,7 @@ export class CoreMainMenuPage implements OnDestroy {
             protected sitesProvider: CoreSitesProvider,
             navParams: NavParams,
             protected navCtrl: NavController,
-            protected eventsProvider: CoreEventsProvider,
-            protected cdr: ChangeDetectorRef,
+                        protected cdr: ChangeDetectorRef,
             protected mainMenuProvider: CoreMainMenuProvider,
             protected linksDelegate: CoreContentLinksDelegate,
             protected linksHelper: CoreContentLinksHelperProvider,
@@ -86,7 +85,7 @@ export class CoreMainMenuPage implements OnDestroy {
 
         this.showTabs = true;
 
-        this.redirectObs = this.eventsProvider.on(CoreEventsProvider.LOAD_PAGE_MAIN_MENU, (data) => {
+        this.redirectObs = CoreEvents.on(CoreEvents.LOAD_PAGE_MAIN_MENU, (data) => {
             if (!this.loaded) {
                 // View isn't ready yet, wait for it to be ready.
                 this.pendingRedirect = data;
@@ -120,7 +119,7 @@ export class CoreMainMenuPage implements OnDestroy {
         if (CoreApp.instance.isIOS()) {
             // In iOS, the resize event is triggered before the keyboard is opened/closed and not triggered again once done.
             // Init handlers again once keyboard is closed since the resize event doesn't have the updated height.
-            this.keyboardObserver = this.eventsProvider.on(CoreEventsProvider.KEYBOARD_CHANGE, (kbHeight) => {
+            this.keyboardObserver = CoreEvents.on(CoreEvents.KEYBOARD_CHANGE, (kbHeight) => {
                 if (kbHeight === 0) {
                     this.initHandlers();
 

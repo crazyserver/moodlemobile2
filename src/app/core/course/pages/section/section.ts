@@ -15,7 +15,7 @@
 import { Component, ViewChild, OnDestroy, Injector } from '@angular/core';
 import { IonicPage, NavParams, Content, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -74,8 +74,7 @@ export class CoreCourseSectionPage implements OnDestroy {
 
     constructor(navParams: NavParams, private courseProvider: CoreCourseProvider, private domUtils: CoreDomUtilsProvider,
             private courseFormatDelegate: CoreCourseFormatDelegate, private courseOptionsDelegate: CoreCourseOptionsDelegate,
-            private translate: TranslateService, private courseHelper: CoreCourseHelperProvider, eventsProvider: CoreEventsProvider,
-            private coursesProvider: CoreCoursesProvider, private filterHelper: CoreFilterHelperProvider,
+            private translate: TranslateService, private courseHelper: CoreCourseHelperProvider,             private coursesProvider: CoreCoursesProvider, private filterHelper: CoreFilterHelperProvider,
             sitesProvider: CoreSitesProvider, private navCtrl: NavController, private injector: Injector,
             private prefetchDelegate: CoreCourseModulePrefetchDelegate, private syncProvider: CoreCourseSyncProvider,
             private utils: CoreUtilsProvider) {
@@ -95,13 +94,13 @@ export class CoreCourseSectionPage implements OnDestroy {
         // Check if the course format requires the view to be refreshed when completion changes.
         courseFormatDelegate.shouldRefreshWhenCompletionChanges(this.course).then((shouldRefresh) => {
             if (shouldRefresh) {
-                this.completionObserver = eventsProvider.on(CoreEventsProvider.COMPLETION_MODULE_VIEWED, (data) => {
+                this.completionObserver = CoreEvents.on(CoreEvents.COMPLETION_MODULE_VIEWED, (data) => {
                     if (data && data.courseId == this.course.id) {
                         this.refreshAfterCompletionChange(true);
                     }
                 });
 
-                this.syncObserver = eventsProvider.on(CoreCourseSyncProvider.AUTO_SYNCED, (data) => {
+                this.syncObserver = CoreEvents.on(CoreCourseSyncProvider.AUTO_SYNCED, (data) => {
                     if (data && data.courseId == this.course.id) {
                         this.refreshAfterCompletionChange(false);
 
@@ -115,14 +114,14 @@ export class CoreCourseSectionPage implements OnDestroy {
 
         if (this.downloadCourseEnabled) {
             // Listen for changes in course status.
-            this.courseStatusObserver = eventsProvider.on(CoreEventsProvider.COURSE_STATUS_CHANGED, (data) => {
+            this.courseStatusObserver = CoreEvents.on(CoreEvents.COURSE_STATUS_CHANGED, (data) => {
                 if (data.courseId == this.course.id || data.courseId == CoreCourseProvider.ALL_COURSES_CLEARED) {
                     this.updateCourseStatus(data.status);
                 }
             }, sitesProvider.getCurrentSiteId());
         }
 
-        this.selectTabObserver = eventsProvider.on(CoreEventsProvider.SELECT_COURSE_TAB, (data) => {
+        this.selectTabObserver = CoreEvents.on(CoreEvents.SELECT_COURSE_TAB, (data) => {
 
             if (!data.name) {
                 // If needed, set sectionId and sectionNumber. They'll only be used if the content tabs hasn't been loaded yet.

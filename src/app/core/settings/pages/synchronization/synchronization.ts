@@ -16,7 +16,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreConstants } from '@core/constants';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreConfigProvider } from '@services/config';
@@ -40,8 +40,7 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
     protected isDestroyed = false;
 
     constructor(protected configProvider: CoreConfigProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider,
+                        protected sitesProvider: CoreSitesProvider,
             protected domUtils: CoreDomUtilsProvider,
             protected settingsHelper: CoreSettingsHelper,
             protected translate: TranslateService,
@@ -49,7 +48,7 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
 
         this.currentSiteId = this.sitesProvider.getCurrentSiteId();
 
-        this.sitesObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, (data) => {
+        this.sitesObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, (data) => {
             this.sitesProvider.getSite(data.siteId).then((site) => {
                 const siteInfo = site.getInfo();
                 const siteEntry = this.sites.find((siteEntry) => siteEntry.id == site.id);

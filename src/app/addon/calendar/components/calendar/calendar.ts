@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy, OnInit, Input, OnChanges, DoCheck, SimpleChange, Output, EventEmitter,
     KeyValueDiffers } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -65,8 +65,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
     protected undeleteEventObserver: any;
     protected obsDefaultTimeChange: any;
 
-    constructor(eventsProvider: CoreEventsProvider,
-            sitesProvider: CoreSitesProvider,
+    constructor(            sitesProvider: CoreSitesProvider,
             localNotificationsProvider: CoreLocalNotificationsProvider,
             differs: KeyValueDiffers,
             private calendarProvider: AddonCalendarProvider,
@@ -82,7 +81,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
 
         if (localNotificationsProvider.isAvailable()) {
             // Re-schedule events if default time changes.
-            this.obsDefaultTimeChange = eventsProvider.on(AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_CHANGED, () => {
+            this.obsDefaultTimeChange = CoreEvents.on(AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_CHANGED, () => {
                 this.weeks.forEach((week) => {
                     week.days.forEach((day) => {
                         calendarProvider.scheduleEventsNotifications(day.events);
@@ -92,7 +91,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
         }
 
         // Listen for events "undeleted" (offline).
-        this.undeleteEventObserver = eventsProvider.on(AddonCalendarProvider.UNDELETED_EVENT_EVENT, (data) => {
+        this.undeleteEventObserver = CoreEvents.on(AddonCalendarProvider.UNDELETED_EVENT_EVENT, (data) => {
             if (data && data.eventId) {
                 // Mark it as undeleted, no need to refresh.
                 this.undeleteEvent(data.eventId);

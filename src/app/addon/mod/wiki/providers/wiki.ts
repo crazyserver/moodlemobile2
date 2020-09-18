@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -66,12 +66,11 @@ export class AddonModWikiProvider {
 
     constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private filepoolProvider: CoreFilepoolProvider, private utils: CoreUtilsProvider, private translate: TranslateService,
-            private wikiOffline: AddonModWikiOfflineProvider, eventsProvider: CoreEventsProvider,
-            private logHelper: CoreCourseLogHelperProvider) {
+            private wikiOffline: AddonModWikiOfflineProvider,             private logHelper: CoreCourseLogHelperProvider) {
         this.logger = CoreLogger.getInstance('AddonModWikiProvider');
 
         // Clear subwiki lists cache on logout.
-        eventsProvider.on(CoreEventsProvider.LOGIN, () => {
+        CoreEvents.on(CoreEvents.LOGIN, () => {
             this.clearSubwikiList();
         });
     }

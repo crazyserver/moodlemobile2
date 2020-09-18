@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreLogger } from '@services/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { AddonModAssignDefaultFeedbackHandler } from './default-feedback-handler';
@@ -152,8 +152,7 @@ export class AddonModAssignFeedbackDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';
 
-    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
-            protected defaultHandler: AddonModAssignDefaultFeedbackHandler) {
+    constructor(sitesProvider: CoreSitesProvider,             protected defaultHandler: AddonModAssignDefaultFeedbackHandler) {
         super('AddonModAssignFeedbackDelegate', logger, sitesProvider, eventsProvider);
     }
 

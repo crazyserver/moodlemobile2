@@ -20,7 +20,7 @@ import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreAppProvider } from '@services/app';
 import { CoreLogger } from '@services/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -44,8 +44,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,
             courseProvider: CoreCourseProvider,
-            private eventsProvider: CoreEventsProvider,
-            loggerProvider: CoreLoggerProvider,
+                        loggerProvider: CoreLoggerProvider,
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,
@@ -105,7 +104,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
                 promises[entry.glossaryid].then((result) => {
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModGlossarySyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModGlossarySyncProvider.AUTO_SYNCED, {
                             glossaryId: entry.glossaryid,
                             userId: entry.userid,
                             warnings: result.warnings

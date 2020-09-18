@@ -16,7 +16,7 @@ import { Component, OnDestroy, Optional, ViewChild, ElementRef } from '@angular/
 import { FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreGroupsProvider } from '@services/groups';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -81,8 +81,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             private navCtrl: NavController,
             private translate: TranslateService,
             private domUtils: CoreDomUtilsProvider,
-            private eventsProvider: CoreEventsProvider,
-            private groupsProvider: CoreGroupsProvider,
+                        private groupsProvider: CoreGroupsProvider,
             private sitesProvider: CoreSitesProvider,
             private syncProvider: CoreSyncProvider,
             private uploaderProvider: CoreFileUploaderProvider,
@@ -118,7 +117,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
         }
 
         // Refresh data if this discussion is synchronized automatically.
-        this.syncObserver = this.eventsProvider.on(AddonModForumSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonModForumSyncProvider.AUTO_SYNCED, (data) => {
             if (data.forumId == this.forumId && data.userId == this.sitesProvider.getCurrentSiteUserId()) {
                 this.domUtils.showAlertTranslated('core.notice', 'core.contenteditingsynced');
                 this.returnToDiscussions();
@@ -126,7 +125,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
         }, this.sitesProvider.getCurrentSiteId());
 
         // Trigger view event, to highlight the current opened discussion in the split view.
-        this.eventsProvider.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
+        CoreEvents.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
             forumId: this.forumId,
             discussion: -this.timeCreated
         }, this.sitesProvider.getCurrentSiteId());
@@ -401,7 +400,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             discussionIds: discussionIds,
             discTimecreated: discTimecreated
         };
-        this.eventsProvider.trigger(AddonModForumProvider.NEW_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+        CoreEvents.trigger(AddonModForumProvider.NEW_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
 
         // Delete the local files from the tmp folder.
         this.uploaderProvider.clearTmpFiles(this.newDiscussion.files);
@@ -418,7 +417,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             this.forceLeave = true; // Avoid asking for confirmation.
 
             // Trigger view event, to highlight the current opened discussion in the split view.
-            this.eventsProvider.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
+            CoreEvents.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
                 forumId: this.forumId,
                 discussion: 0
             }, this.sitesProvider.getCurrentSiteId());
@@ -479,7 +478,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
                 // Data sent to server, delete stored files (if any).
                 this.forumHelper.deleteNewDiscussionStoredFiles(this.forumId, discTimecreated);
 
-                this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'forum' });
+                CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'forum' });
             }
 
             if (discussionIds && discussionIds.length < groupIds.length) {

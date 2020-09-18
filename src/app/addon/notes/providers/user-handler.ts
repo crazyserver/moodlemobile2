@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreUserDelegate, CoreUserProfileHandler, CoreUserProfileHandlerData } from '@core/user/providers/user-delegate';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
@@ -31,9 +31,9 @@ export class AddonNotesUserHandler implements CoreUserProfileHandler {
     noteEnabledCache = {};
 
     constructor(private linkHelper: CoreContentLinksHelperProvider, private sitesProvider: CoreSitesProvider,
-            private notesProvider: AddonNotesProvider, eventsProvider: CoreEventsProvider) {
-        eventsProvider.on(CoreEventsProvider.LOGOUT, this.clearNoteCache.bind(this));
-        eventsProvider.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
+            private notesProvider: AddonNotesProvider, eventsProvider: CoreEvents) {
+        CoreEvents.on(CoreEvents.LOGOUT, this.clearNoteCache.bind(this));
+        CoreEvents.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
             this.clearNoteCache(data.courseId);
         });
     }

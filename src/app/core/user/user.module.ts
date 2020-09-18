@@ -18,7 +18,7 @@ import { CoreUserProfileFieldDelegate } from './providers/user-profile-field-del
 import { CoreUserProvider } from './providers/user';
 import { CoreUserHelperProvider } from './providers/helper';
 import { CoreUserProfileMailHandler } from './providers/user-handler';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 import { CoreUserProfileLinkHandler } from './providers/user-link-handler';
@@ -66,7 +66,7 @@ export const CORE_USER_PROVIDERS: any[] = [
 })
 export class CoreUserModule {
     constructor(userDelegate: CoreUserDelegate, userProfileMailHandler: CoreUserProfileMailHandler,
-            eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider, userProvider: CoreUserProvider,
+            sitesProvider: CoreSitesProvider, userProvider: CoreUserProvider,
             contentLinksDelegate: CoreContentLinksDelegate, userLinkHandler: CoreUserProfileLinkHandler,
             courseOptionHandler: CoreUserParticipantsCourseOptionHandler, linkHandler: CoreUserParticipantsLinkHandler,
             courseOptionsDelegate: CoreCourseOptionsDelegate, cronDelegate: CoreCronDelegate,
@@ -79,7 +79,7 @@ export class CoreUserModule {
         cronDelegate.register(syncHandler);
         tagAreaDelegate.registerHandler(tagAreaHandler);
 
-        eventsProvider.on(CoreEventsProvider.USER_DELETED, (data) => {
+        CoreEvents.on(CoreEvents.USER_DELETED, (data) => {
             // Search for userid in params.
             const params = data.params;
             let userId = 0;

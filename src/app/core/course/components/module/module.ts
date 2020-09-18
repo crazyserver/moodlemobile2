@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, Optional } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseHelperProvider } from '../../providers/helper';
@@ -64,7 +64,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
 
     constructor(@Optional() protected navCtrl: NavController, protected prefetchDelegate: CoreCourseModulePrefetchDelegate,
             protected domUtils: CoreDomUtilsProvider, protected courseHelper: CoreCourseHelperProvider,
-            protected eventsProvider: CoreEventsProvider, protected sitesProvider: CoreSitesProvider,
+            protected sitesProvider: CoreSitesProvider,
             protected courseProvider: CoreCourseProvider) {
         this.completionChanged = new EventEmitter();
         this.statusChanged = new EventEmitter();
@@ -84,7 +84,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
             this.prefetchHandler = this.prefetchDelegate.getPrefetchHandlerFor(this.module);
             this.canCheckUpdates = this.prefetchDelegate.canCheckUpdates();
 
-            this.statusObserver = this.eventsProvider.on(CoreEventsProvider.PACKAGE_STATUS_CHANGED, (data) => {
+            this.statusObserver = CoreEvents.on(CoreEvents.PACKAGE_STATUS_CHANGED, (data) => {
                 if (data.componentId === this.module.id && this.prefetchHandler &&
                         data.component === this.prefetchHandler.component) {
 

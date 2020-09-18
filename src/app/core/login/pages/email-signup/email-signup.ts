@@ -15,7 +15,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -82,7 +82,7 @@ export class CoreLoginEmailSignupPage {
             protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected userProfileFieldDelegate: CoreUserProfileFieldDelegate,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
 
         this.siteUrl = navParams.get('siteUrl');
 

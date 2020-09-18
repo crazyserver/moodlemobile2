@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { IonicPage, NavParams, NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -77,8 +77,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
             protected workshopProvider: AddonModWorkshopProvider, protected workshopOffline: AddonModWorkshopOfflineProvider,
             protected workshopHelper: AddonModWorkshopHelperProvider, protected navCtrl: NavController,
             protected syncProvider: CoreSyncProvider, protected textUtils: CoreTextUtilsProvider, protected fb: FormBuilder,
-            protected translate: TranslateService, protected eventsProvider: CoreEventsProvider,
-            protected domUtils: CoreDomUtilsProvider, protected gradesHelper: CoreGradesHelperProvider,
+            protected translate: TranslateService,             protected domUtils: CoreDomUtilsProvider, protected gradesHelper: CoreGradesHelperProvider,
             protected userProvider: CoreUserProvider) {
 
         this.assessment = navParams.get('assessment');
@@ -99,7 +98,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
         this.evaluateForm.addControl('text', this.fb.control(''));
 
         // Refresh workshop on sync.
-        this.syncObserver = this.eventsProvider.on(AddonModWorkshopSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonModWorkshopSyncProvider.AUTO_SYNCED, (data) => {
             // Update just when all database is synced.
             if (this.workshopId === data.workshopId) {
                 this.loaded = false;
@@ -295,7 +294,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
         }
 
         return Promise.all(promises).finally(() => {
-            this.eventsProvider.trigger(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED, this.siteId);
+            CoreEvents.trigger(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED, this.siteId);
 
             return this.fetchAssessmentData();
         });
@@ -355,7 +354,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
             };
 
             return this.workshopProvider.invalidateAssessmentData(this.workshopId, this.assessmentId).finally(() => {
-                this.eventsProvider.trigger(AddonModWorkshopProvider.ASSESSMENT_SAVED, data, this.siteId);
+                CoreEvents.trigger(AddonModWorkshopProvider.ASSESSMENT_SAVED, data, this.siteId);
             });
         }).catch((message) => {
             this.domUtils.showErrorModalDefault(message, 'Cannot save assessment evaluation');

@@ -21,7 +21,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModChoiceOfflineProvider } from './offline';
 import { AddonModChoiceProvider } from './choice';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
@@ -41,7 +41,7 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
 
     constructor(protected sitesProvider: CoreSitesProvider, loggerProvider: CoreLoggerProvider,
             protected appProvider: CoreAppProvider, private choiceOffline: AddonModChoiceOfflineProvider,
-            private eventsProvider: CoreEventsProvider,  private choiceProvider: AddonModChoiceProvider,
+             private choiceProvider: AddonModChoiceProvider,
             translate: TranslateService, private utils: CoreUtilsProvider, protected textUtils: CoreTextUtilsProvider,
             private courseProvider: CoreCourseProvider, syncProvider: CoreSyncProvider, timeUtils: CoreTimeUtilsProvider,
             private logHelper: CoreCourseLogHelperProvider, prefetchHandler: AddonModChoicePrefetchHandler,
@@ -92,7 +92,7 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
                 return promise.then((result) => {
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModChoiceSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModChoiceSyncProvider.AUTO_SYNCED, {
                             choiceId: response.choiceid,
                             userId: response.userid,
                             warnings: result.warnings

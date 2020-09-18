@@ -17,7 +17,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -80,7 +80,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
     protected lessonPages: any[]; // Lesson pages (for the lesson menu).
 
     constructor(protected navParams: NavParams, protected translate: TranslateService,
-            protected eventsProvider: CoreEventsProvider, protected sitesProvider: CoreSitesProvider,
+            protected sitesProvider: CoreSitesProvider,
             protected syncProvider: CoreSyncProvider, protected domUtils: CoreDomUtilsProvider, popoverCtrl: PopoverController,
             protected timeUtils: CoreTimeUtilsProvider, protected lessonProvider: AddonModLessonProvider,
             protected lessonHelper: AddonModLessonHelperProvider, protected lessonSync: AddonModLessonSyncProvider,
@@ -368,7 +368,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
             this.messages = this.messages.concat(data.messages);
             this.processData = undefined;
 
-            this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'lesson' });
+            CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'lesson' });
 
             // Format activity link if present.
             if (this.eolData && this.eolData.activitylink) {

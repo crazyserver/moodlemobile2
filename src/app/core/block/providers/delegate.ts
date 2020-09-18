@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreLogger } from '@services/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreBlockDefaultHandler } from './default-block-handler';
@@ -92,8 +92,7 @@ export class CoreBlockDelegate extends CoreDelegate {
 
     blocksUpdateObservable: Subject<void>;
 
-    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
-            protected defaultHandler: CoreBlockDefaultHandler, protected sitePluginsProvider: CoreSitePluginsProvider) {
+    constructor(sitesProvider: CoreSitesProvider,             protected defaultHandler: CoreBlockDefaultHandler, protected sitePluginsProvider: CoreSitePluginsProvider) {
         super('CoreBlockDelegate', logger, sitesProvider, eventsProvider);
         this.blocksUpdateObservable = new Subject<void>();
     }

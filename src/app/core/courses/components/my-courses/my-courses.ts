@@ -14,7 +14,7 @@
 
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Searchbar } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCoursesProvider, CoreCoursesMyCoursesUpdatedEventData } from '../../providers/courses';
@@ -48,8 +48,7 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
     protected courseIds = '';
 
     constructor(private coursesProvider: CoreCoursesProvider,
-            private domUtils: CoreDomUtilsProvider, private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider, private courseHelper: CoreCourseHelperProvider,
+            private domUtils: CoreDomUtilsProvider,             private sitesProvider: CoreSitesProvider, private courseHelper: CoreCourseHelperProvider,
             private courseOptionsDelegate: CoreCourseOptionsDelegate, private coursesHelper: CoreCoursesHelperProvider) { }
 
     /**
@@ -64,7 +63,7 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
         });
 
         // Update list if user enrols in a course.
-        this.myCoursesObserver = this.eventsProvider.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
+        this.myCoursesObserver = CoreEvents.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
                 (data: CoreCoursesMyCoursesUpdatedEventData) => {
 
             if (data.action == CoreCoursesProvider.ACTION_ENROL) {
@@ -73,7 +72,7 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
         }, this.sitesProvider.getCurrentSiteId());
 
         // Refresh the enabled flags if site is updated.
-        this.siteUpdatedObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.siteUpdatedObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             const wasEnabled = this.downloadAllCoursesEnabled;
 
             this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();

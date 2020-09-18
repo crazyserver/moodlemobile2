@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -184,7 +184,7 @@ export class AddonModLessonProvider {
     constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
             private translate: TranslateService, private textUtils: CoreTextUtilsProvider, private domUtils: CoreDomUtilsProvider,
             private lessonOfflineProvider: AddonModLessonOfflineProvider, private logHelper: CoreCourseLogHelperProvider,
-            private eventsProvider: CoreEventsProvider) {
+            private eventsProvider: CoreEvents) {
         this.logger = CoreLogger.getInstance('AddonModLessonProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
@@ -1122,7 +1122,7 @@ export class AddonModLessonProvider {
         }
 
         return this.finishRetakeOnline(lesson.id, password, outOfTime, review, siteId).then((response) => {
-            this.eventsProvider.trigger(AddonModLessonProvider.DATA_SENT_EVENT, {
+            CoreEvents.trigger(AddonModLessonProvider.DATA_SENT_EVENT, {
                 lessonId: lesson.id,
                 type: 'finish',
                 courseId: courseId,
@@ -2817,7 +2817,7 @@ export class AddonModLessonProvider {
             }
 
             return site.write('mod_lesson_launch_attempt', params).then((response) => {
-                this.eventsProvider.trigger(AddonModLessonProvider.DATA_SENT_EVENT, {
+                CoreEvents.trigger(AddonModLessonProvider.DATA_SENT_EVENT, {
                     lessonId: id,
                     type: 'launch'
                 }, this.sitesProvider.getCurrentSiteId());
@@ -3097,7 +3097,7 @@ export class AddonModLessonProvider {
         }
 
         return this.processPageOnline(lesson.id, pageId, data, password, review, siteId).then((response) => {
-            this.eventsProvider.trigger(AddonModLessonProvider.DATA_SENT_EVENT, {
+            CoreEvents.trigger(AddonModLessonProvider.DATA_SENT_EVENT, {
                 lessonId: lesson.id,
                 type: 'process',
                 courseId: courseId,

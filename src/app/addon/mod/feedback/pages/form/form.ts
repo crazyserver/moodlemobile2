@@ -22,7 +22,7 @@ import { AddonModFeedbackSyncProvider } from '../../providers/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';
@@ -67,7 +67,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
     constructor(navParams: NavParams, protected feedbackProvider: AddonModFeedbackProvider, protected appProvider: CoreAppProvider,
             protected utils: CoreUtilsProvider, protected domUtils: CoreDomUtilsProvider, protected navCtrl: NavController,
             protected feedbackHelper: AddonModFeedbackHelperProvider, protected courseProvider: CoreCourseProvider,
-            protected eventsProvider: CoreEventsProvider, protected feedbackSync: AddonModFeedbackSyncProvider, network: Network,
+            protected feedbackSync: AddonModFeedbackSyncProvider, network: Network,
             protected translate: TranslateService, protected loginHelper: CoreLoginHelperProvider,
             protected linkHelper: CoreContentLinksHelperProvider, sitesProvider: CoreSitesProvider,
             @Optional() private content: Content, zone: NgZone, protected courseHelper: CoreCourseHelperProvider) {
@@ -280,7 +280,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
                     promises.push(this.feedbackProvider.invalidateFeedbackAccessInformationData(this.feedback.id));
                     promises.push(this.feedbackProvider.invalidateResumePageData(this.feedback.id));
 
-                    this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'feedback' });
+                    CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'feedback' });
 
                     return Promise.all(promises).then(() => {
                         return this.fetchAccessData();
@@ -340,7 +340,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
             const tab = this.submitted == 'analysis' ? 'analysis' : 'overview';
 
             // If form has been submitted, the info has been already invalidated but we should update index view.
-            this.eventsProvider.trigger(AddonModFeedbackProvider.FORM_SUBMITTED, {
+            CoreEvents.trigger(AddonModFeedbackProvider.FORM_SUBMITTED, {
                 feedbackId: this.feedback.id,
                 tab: tab,
                 offline: this.completedOffline

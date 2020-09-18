@@ -22,7 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CoreTextUtilsProvider } from './text';
 import { CoreApp } from '../app';
 import { CoreConfigProvider } from '../config';
-import { CoreEventsProvider } from '../events';
+import { CoreEvents } from '../events';
 import { CoreLogger } from '../logger';
 import { CoreUrlUtilsProvider } from './url';
 import { CoreFileProvider } from '@services/file';
@@ -80,7 +80,7 @@ export class CoreDomUtilsProvider {
             protected popoverCtrl: PopoverController,
             protected fileProvider: CoreFileProvider,
             loggerProvider: CoreLoggerProvider,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
 
         this.logger = loggerProvider.getInstance('CoreDomUtilsProvider');
 
@@ -1658,7 +1658,7 @@ export class CoreDomUtilsProvider {
             return;
         }
 
-        this.eventsProvider.trigger(CoreEventsProvider.FORM_ACTION, {
+        CoreEvents.trigger(CoreEvents.FORM_ACTION, {
             action: 'cancel',
             form: formRef.nativeElement,
         }, siteId);
@@ -1676,7 +1676,7 @@ export class CoreDomUtilsProvider {
             return;
         }
 
-        this.eventsProvider.trigger(CoreEventsProvider.FORM_ACTION, {
+        CoreEvents.trigger(CoreEvents.FORM_ACTION, {
             action: 'submit',
             form: formRef.nativeElement,
             online: !!online,

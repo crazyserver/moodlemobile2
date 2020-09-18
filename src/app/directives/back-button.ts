@@ -15,7 +15,7 @@
 import { Directive, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Navbar } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreApp } from '@services/app';
 
 /**
@@ -33,7 +33,7 @@ export class CoreBackButtonDirective implements OnInit, OnDestroy {
 
     constructor(private host: Navbar,
         private translate: TranslateService,
-        private eventsProvider: CoreEventsProvider
+        private eventsProvider: CoreEvents
         ) {}
 
     /**
@@ -41,7 +41,7 @@ export class CoreBackButtonDirective implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.setTranslatedBackButtonText();
-        this.languageObserver = this.eventsProvider.on(CoreEventsProvider.LANGUAGE_CHANGED, () => {
+        this.languageObserver = CoreEvents.on(CoreEvents.LANGUAGE_CHANGED, () => {
             this.setTranslatedBackButtonText();
         });
     }

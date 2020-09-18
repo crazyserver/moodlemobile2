@@ -16,7 +16,7 @@ import { Component, Input, OnInit, OnDestroy, ViewChild, Optional, ViewChildren,
 import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider, CoreEventObserver } from '@services/events';
+import { CoreEvents, CoreEventObserver } from '@services/events';
 import { CoreGroupsProvider } from '@services/groups';
 import { CoreLangProvider } from '@services/lang';
 import { CoreSitesProvider } from '@services/sites';
@@ -114,7 +114,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
     constructor(protected navCtrl: NavController, protected appProvider: CoreAppProvider, protected domUtils: CoreDomUtilsProvider,
             sitesProvider: CoreSitesProvider, protected syncProvider: CoreSyncProvider, protected timeUtils: CoreTimeUtilsProvider,
             protected textUtils: CoreTextUtilsProvider, protected translate: TranslateService, protected utils: CoreUtilsProvider,
-            protected eventsProvider: CoreEventsProvider, protected courseProvider: CoreCourseProvider,
+            protected courseProvider: CoreCourseProvider,
             protected fileUploaderHelper: CoreFileUploaderHelperProvider, protected gradesHelper: CoreGradesHelperProvider,
             protected userProvider: CoreUserProvider, protected groupsProvider: CoreGroupsProvider,
             protected langProvider: CoreLangProvider, protected assignProvider: AddonModAssignProvider,
@@ -137,7 +137,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
         // Refresh data if this assign is synchronized and it's grading.
         const events = [AddonModAssignSyncProvider.AUTO_SYNCED, AddonModAssignSyncProvider.MANUAL_SYNCED];
 
-        this.syncObserver = this.eventsProvider.onMultiple(events, async (data) => {
+        this.syncObserver = CoreEvents.onMultiple(events, async (data) => {
             // Check that user is grading and this grade wasn't blocked when sync was performed.
             if (!this.loaded || !this.isGrading || data.gradesBlocked.indexOf(this.submitId) != -1) {
                 return;
@@ -259,7 +259,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
 
                 if (!this.assign.submissiondrafts) {
                     // No drafts allowed, so it was submitted. Trigger event.
-                    this.eventsProvider.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, {
+                    CoreEvents.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, {
                         assignmentId: this.assign.id,
                         submissionId: this.userSubmission.id,
                         userId: this.currentUserId
@@ -418,7 +418,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
                     const result = await AddonModAssignSync.instance.syncAssign(this.assign.id);
 
                     if (result && result.updated) {
-                        this.eventsProvider.trigger(AddonModAssignSyncProvider.MANUAL_SYNCED, {
+                        CoreEvents.trigger(AddonModAssignSyncProvider.MANUAL_SYNCED, {
                             assignId: this.assign.id,
                             warnings: result.warnings,
                             gradesBlocked: result.gradesBlocked,
@@ -770,7 +770,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
                     this.hasOffline).then(() => {
 
                 // Submitted, trigger event.
-                this.eventsProvider.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, {
+                CoreEvents.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, {
                     assignmentId: this.assign.id,
                     submissionId: this.userSubmission.id,
                     userId: this.currentUserId
@@ -831,7 +831,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
                     // Invalidate and refresh data.
                     this.invalidateAndRefresh(true);
 
-                    this.eventsProvider.trigger(AddonModAssignProvider.GRADED_EVENT, {
+                    CoreEvents.trigger(AddonModAssignProvider.GRADED_EVENT, {
                         assignmentId: this.assign.id,
                         submissionId: this.submitId,
                         userId: this.currentUserId

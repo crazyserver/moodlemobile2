@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { IonicPage, NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTabsComponent } from '@components/tabs/tabs';
@@ -61,7 +61,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
 
     constructor(private navCtrl: NavController, private coursesProvider: CoreCoursesProvider,
             private sitesProvider: CoreSitesProvider, private siteHomeProvider: CoreSiteHomeProvider,
-            private eventsProvider: CoreEventsProvider, private dashboardProvider: CoreCoursesDashboardProvider,
+            private dashboardProvider: CoreCoursesDashboardProvider,
             private domUtils: CoreDomUtilsProvider, private blockDelegate: CoreBlockDelegate) {
         this.loadSiteName();
     }
@@ -75,7 +75,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
         this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
 
         // Refresh the enabled flags if site is updated.
-        this.updateSiteObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();
             this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
             this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
@@ -234,7 +234,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
     protected switchDownload(enable: boolean): void {
         this.downloadEnabled = (this.downloadCourseEnabled || this.downloadCoursesEnabled) && enable;
         this.downloadEnabledIcon = this.downloadEnabled ? 'checkbox-outline' : 'square-outline';
-        this.eventsProvider.trigger(CoreCoursesProvider.EVENT_DASHBOARD_DOWNLOAD_ENABLED_CHANGED, {enabled: this.downloadEnabled});
+        CoreEvents.trigger(CoreCoursesProvider.EVENT_DASHBOARD_DOWNLOAD_ENABLED_CHANGED, {enabled: this.downloadEnabled});
     }
 
     /**

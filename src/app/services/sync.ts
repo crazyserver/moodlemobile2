@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from './events';
+import { CoreEvents } from './events';
 import { CoreSitesProvider, CoreSiteSchema } from './sites';
 import { makeSingleton } from '@singletons/core.singletons';
 
@@ -61,11 +61,11 @@ export class CoreSyncProvider {
     // Store blocked sync objects.
     protected blockedItems: { [siteId: string]: { [blockId: string]: { [operation: string]: boolean } } } = {};
 
-    constructor(eventsProvider: CoreEventsProvider, private sitesProvider: CoreSitesProvider) {
+    constructor(private sitesProvider: CoreSitesProvider) {
         this.sitesProvider.registerSiteSchema(this.siteSchema);
 
         // Unblock all blocks on logout.
-        eventsProvider.on(CoreEventsProvider.LOGOUT, (data) => {
+        CoreEvents.on(CoreEvents.LOGOUT, (data) => {
             this.clearAllBlocks(data.siteId);
         });
     }

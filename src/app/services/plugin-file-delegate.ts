@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from './events';
+import { CoreEvents } from './events';
 import { CoreLogger } from './logger';
 import { CoreSitesProvider } from './sites';
 import { CoreWSExternalFile } from '@services/ws';
@@ -142,7 +142,7 @@ export class CorePluginFileDelegate extends CoreDelegate {
 
     constructor(loggerProvider: CoreLoggerProvider,
             sitesProvider: CoreSitesProvider,
-            eventsProvider: CoreEventsProvider) {
+            eventsProvider: CoreEvents) {
         super('CorePluginFileDelegate', loggerProvider, sitesProvider, eventsProvider);
     }
 

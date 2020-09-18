@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from '@core/course/providers/module-delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';
@@ -46,8 +46,7 @@ export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
     };
 
     constructor(private courseProvider: CoreCourseProvider, private forumProvider: AddonModForumProvider,
-            private translate: TranslateService, private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider) {}
+            private translate: TranslateService,             private sitesProvider: CoreSitesProvider) {}
 
     /**
      * Check if the handler is enabled on a site level.
@@ -89,7 +88,7 @@ export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
             this.updateExtraBadge(data, courseId, module.id);
         }
 
-        const event = this.eventsProvider.on(AddonModForumProvider.MARK_READ_EVENT, (eventData) => {
+        const event = CoreEvents.on(AddonModForumProvider.MARK_READ_EVENT, (eventData) => {
             if (eventData.courseId == courseId && eventData.moduleId == module.id) {
                 this.updateExtraBadge(data, eventData.courseId, eventData.moduleId, eventData.siteId);
             }

@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -36,7 +36,7 @@ export class AddonModDataHelperProvider {
     constructor(private sitesProvider: CoreSitesProvider, protected dataProvider: AddonModDataProvider,
         private translate: TranslateService, private fieldsDelegate: AddonModDataFieldsDelegate,
         private dataOffline: AddonModDataOfflineProvider, private fileUploaderProvider: CoreFileUploaderProvider,
-        private textUtils: CoreTextUtilsProvider, private eventsProvider: CoreEventsProvider, private utils: CoreUtilsProvider,
+        private textUtils: CoreTextUtilsProvider, private utils: CoreUtilsProvider,
         private domUtils: CoreDomUtilsProvider, private courseProvider: CoreCourseProvider,
         private ratingOffline: CoreRatingOfflineProvider) {}
 
@@ -140,7 +140,7 @@ export class AddonModDataHelperProvider {
                 // Ignore errors.
             });
         }).then(() => {
-            this.eventsProvider.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId: dataId, entryId: entryId}, siteId);
+            CoreEvents.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId: dataId, entryId: entryId}, siteId);
 
             this.domUtils.showToast(approve ? 'addon.mod_data.recordapproved' : 'addon.mod_data.recorddisapproved', true, 3000);
         }).catch(() => {
@@ -664,7 +664,7 @@ export class AddonModDataHelperProvider {
                     // Ignore errors.
                 });
             }).then(() => {
-                this.eventsProvider.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId, entryId,  deleted: true}, siteId);
+                CoreEvents.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId, entryId,  deleted: true}, siteId);
 
                 this.domUtils.showToast('addon.mod_data.recorddeleted', true, 3000);
             }).finally(() => {

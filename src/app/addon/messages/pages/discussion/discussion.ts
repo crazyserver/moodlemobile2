@@ -15,7 +15,7 @@
 import { Component, OnDestroy, ViewChild, Optional } from '@angular/core';
 import { IonicPage, NavParams, NavController, Content, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMember, AddonMessagesConversationMessage,
@@ -98,7 +98,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
     muteIcon = 'volume-off';
     newMessages = 0;
 
-    constructor(private eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider, navParams: NavParams,
+    constructor(sitesProvider: CoreSitesProvider, navParams: NavParams,
             private userProvider: CoreUserProvider, private navCtrl: NavController, private messagesSync: AddonMessagesSyncProvider,
             private domUtils: CoreDomUtilsProvider, private messagesProvider: AddonMessagesProvider,             private utils: CoreUtilsProvider, private appProvider: CoreAppProvider, private translate: TranslateService,
             @Optional() private svComponent: CoreSplitViewComponent, private messagesOffline: AddonMessagesOfflineProvider,
@@ -116,7 +116,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         this.showKeyboard = navParams.get('showKeyboard');
 
         // Refresh data if this discussion is synchronized automatically.
-        this.syncObserver = eventsProvider.on(AddonMessagesSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonMessagesSyncProvider.AUTO_SYNCED, (data) => {
             if ((data.userId && data.userId == this.userId) ||
                     (data.conversationId && data.conversationId == this.conversationId)) {
                 // Fetch messages.
@@ -130,7 +130,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         }, this.siteId);
 
         // Refresh data if info of a mamber of the conversation have changed.
-        this.memberInfoObserver = eventsProvider.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
+        this.memberInfoObserver = CoreEvents.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
             if (data.userId && (this.members[data.userId] || this.otherMember && data.userId == this.otherMember.id)) {
                 this.fetchData();
             }
@@ -200,7 +200,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         this.showInfo = !backViewPage || backViewPage !== 'CoreUserProfilePage';
 
         // Recalculate footer position when keyboard is shown or hidden.
-        this.keyboardObserver = this.eventsProvider.on(CoreEventsProvider.KEYBOARD_CHANGE, (kbHeight) => {
+        this.keyboardObserver = CoreEvents.on(CoreEvents.KEYBOARD_CHANGE, (kbHeight) => {
             this.content.resize();
         });
 
@@ -732,7 +732,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
         Promise.all(promises).finally(() => {
             if (readChanged) {
-                this.eventsProvider.trigger(AddonMessagesProvider.READ_CHANGED_EVENT, {
+                CoreEvents.trigger(AddonMessagesProvider.READ_CHANGED_EVENT, {
                     conversationId: this.conversationId,
                     userId: this.userId
                 }, this.siteId);
@@ -758,7 +758,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
         if (trigger) {
             // Update discussions last message.
-            this.eventsProvider.trigger(AddonMessagesProvider.NEW_MESSAGE_EVENT, {
+            CoreEvents.trigger(AddonMessagesProvider.NEW_MESSAGE_EVENT, {
                 conversationId: this.conversationId,
                 userId: this.userId,
                 message: this.lastMessage.text,
@@ -1223,7 +1223,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                     // Open user conversation.
                     if (this.svComponent) {
                         // Notify the left pane to load it, this way the right conversation will be highlighted.
-                        this.eventsProvider.trigger(AddonMessagesProvider.OPEN_CONVERSATION_EVENT, {userId: userId}, this.siteId);
+                        CoreEvents.trigger(AddonMessagesProvider.OPEN_CONVERSATION_EVENT, {userId: userId}, this.siteId);
                     } else {
                         // Open the discussion in a new view.
                         this.navCtrl.push('AddonMessagesDiscussionPage', {userId: userId});
@@ -1251,7 +1251,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             // Get the conversation data so it's cached. Don't block the user for this.
             this.messagesProvider.getConversation(this.conversation.id, undefined, true);
 
-            this.eventsProvider.trigger(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, {
+            CoreEvents.trigger(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, {
                 conversationId: this.conversation.id,
                 action: 'favourite',
                 value: this.conversation.isfavourite
@@ -1279,7 +1279,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             // Get the conversation data so it's cached. Don't block the user for this.
             this.messagesProvider.getConversation(this.conversation.id, undefined, true);
 
-            this.eventsProvider.trigger(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, {
+            CoreEvents.trigger(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, {
                 conversationId: this.conversation.id,
                 action: 'mute',
                 value: this.conversation.ismuted
@@ -1373,7 +1373,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             this.deleteIcon = 'spinner';
 
             return this.messagesProvider.deleteConversation(this.conversation.id).then(() => {
-                this.eventsProvider.trigger(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, {
+                CoreEvents.trigger(AddonMessagesProvider.UPDATE_CONVERSATION_LIST_EVENT, {
                     conversationId: this.conversation.id,
                     action: 'delete'
                 }, this.siteId);

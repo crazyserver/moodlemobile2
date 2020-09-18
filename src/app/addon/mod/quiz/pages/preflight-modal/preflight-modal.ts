@@ -16,7 +16,7 @@ import { Component, OnInit, Injector, ViewChild, ElementRef } from '@angular/cor
 import { IonicPage, ViewController, NavParams, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModQuizAccessRuleDelegate } from '../../providers/access-rules-delegate';
@@ -53,7 +53,7 @@ export class AddonModQuizPreflightModalPage implements OnInit {
             protected accessRuleDelegate: AddonModQuizAccessRuleDelegate,
             protected injector: Injector,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
 
         this.title = params.get('title') || translate.instant('addon.mod_quiz.startattempt');
         this.quiz = params.get('quiz');

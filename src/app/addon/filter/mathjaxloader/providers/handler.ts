@@ -15,7 +15,7 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { CoreFilterDefaultHandler } from '@core/filter/providers/default-filter';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from '@core/filter/providers/filter';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLangProvider } from '@services/lang';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -73,8 +73,7 @@ export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
 
     protected window: any = window; // Convert the window to <any> to be able to use non-standard properties like MathJax.
 
-    constructor(eventsProvider: CoreEventsProvider,
-            private langProvider: CoreLangProvider,
+    constructor(            private langProvider: CoreLangProvider,
             private sitesProvider: CoreSitesProvider,
             private textUtils: CoreTextUtilsProvider,
             private utils: CoreUtilsProvider) {
@@ -95,7 +94,7 @@ export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
         });
 
         // Update MathJax locale if app language changes.
-        eventsProvider.on(CoreEventsProvider.LANGUAGE_CHANGED, (lang) => {
+        CoreEvents.on(CoreEvents.LANGUAGE_CHANGED, (lang) => {
             if (typeof this.window.MathJax != 'undefined') {
                 lang = this.mapLanguageCode(lang);
 

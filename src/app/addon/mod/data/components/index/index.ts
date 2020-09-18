@@ -92,7 +92,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         super(injector, content);
 
         // Refresh entries on change.
-        this.entryChangedObserver = this.eventsProvider.on(AddonModDataProvider.ENTRY_CHANGED, (eventData) => {
+        this.entryChangedObserver = CoreEvents.on(AddonModDataProvider.ENTRY_CHANGED, (eventData) => {
             if (this.data.id == eventData.dataId) {
                 this.loaded = false;
 
@@ -101,13 +101,13 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         }, this.siteId);
 
         // Listen for offline ratings saved and synced.
-        this.ratingOfflineObserver = this.eventsProvider.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
+        this.ratingOfflineObserver = CoreEvents.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
             if (this.data && data.component == 'mod_data' && data.ratingArea == 'entry' && data.contextLevel == 'module'
                     && data.instanceId == this.data.coursemodule) {
                 this.hasOfflineRatings = true;
             }
         });
-        this.ratingSyncObserver = this.eventsProvider.on(CoreRatingSyncProvider.SYNCED_EVENT, (data) => {
+        this.ratingSyncObserver = CoreEvents.on(CoreRatingSyncProvider.SYNCED_EVENT, (data) => {
             if (this.data && data.component == 'mod_data' && data.ratingArea == 'entry' && data.contextLevel == 'module'
                     && data.instanceId == this.data.coursemodule) {
                 this.hasOfflineRatings = false;
@@ -144,7 +144,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             promises.push(this.dataProvider.invalidateFieldsData(this.data.id));
 
             if (this.hasComments) {
-                this.eventsProvider.trigger(CoreCommentsProvider.REFRESH_COMMENTS_EVENT, {
+                CoreEvents.trigger(CoreCommentsProvider.REFRESH_COMMENTS_EVENT, {
                     contextLevel: 'module',
                     instanceId: this.data.coursemodule
                 }, this.sitesProvider.getCurrentSiteId());

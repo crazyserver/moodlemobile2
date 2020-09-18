@@ -15,7 +15,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, ViewController, NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -46,7 +46,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
 
     constructor(private viewCtrl: ViewController, navParams: NavParams, private sharedFilesProvider: CoreSharedFilesProvider,
             private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider, private translate: TranslateService,
-            private fileProvider: CoreFileProvider, private eventsProvider: CoreEventsProvider, private navCtrl: NavController) {
+            private fileProvider: CoreFileProvider, private navCtrl: NavController) {
         this.siteId = navParams.get('siteId') || this.sitesProvider.getCurrentSiteId();
         this.mimetypes = navParams.get('mimetypes');
         this.isModal = !!navParams.get('isModal');
@@ -63,7 +63,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
         this.loadFiles();
 
         // Listen for new files shared with the app.
-        this.shareObserver = this.eventsProvider.on(CoreEventsProvider.FILE_SHARED, (data) => {
+        this.shareObserver = CoreEvents.on(CoreEvents.FILE_SHARED, (data) => {
             if (data.siteId == this.siteId) {
                 // File was stored in current site, refresh the list.
                 this.filesLoaded = false;

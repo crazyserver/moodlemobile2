@@ -94,7 +94,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
         });
 
         // Listen for attempt finished events.
-        this.finishedObserver = this.eventsProvider.on(AddonModQuizProvider.ATTEMPT_FINISHED_EVENT, (data) => {
+        this.finishedObserver = CoreEvents.on(AddonModQuizProvider.ATTEMPT_FINISHED_EVENT, (data) => {
             // Go to review attempt if an attempt in this quiz was finished and synced.
             if (this.quizData && data.quizId == this.quizData.id) {
                 this.autoReview = data;

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSite } from '@classes/site';
@@ -55,7 +55,7 @@ export class CoreCoursesProvider {
     protected logger: CoreLogger;
     protected userCoursesIds: {[id: number]: boolean}; // Use an object to make it faster to search.
 
-    constructor(private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider) {
+    constructor(private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEvents) {
         this.logger = CoreLogger.getInstance('CoreCoursesProvider');
     }
 
@@ -845,7 +845,7 @@ export class CoreCoursesProvider {
 
                     if (added.length || removed.length) {
                         // At least 1 course was added or removed, trigger the event.
-                        this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_CHANGED, {
+                        CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_CHANGED, {
                             added: added,
                             removed: removed
                         }, site.getId());

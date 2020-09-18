@@ -15,7 +15,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreLoginHelperProvider } from '../../providers/helper';
@@ -60,7 +60,7 @@ export class CoreLoginReconnectPage {
             protected sitesProvider: CoreSitesProvider,
             protected loginHelper: CoreLoginHelperProvider,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
 
         const currentSite = this.sitesProvider.getCurrentSite();
 
@@ -128,7 +128,7 @@ export class CoreLoginReconnectPage {
      */
     ionViewWillUnload(): void {
         this.viewLeft = true;
-        this.eventsProvider.trigger(CoreEventsProvider.LOGIN_SITE_UNCHECKED, { config: this.siteConfig }, this.siteId);
+        CoreEvents.trigger(CoreEvents.LOGIN_SITE_UNCHECKED, { config: this.siteConfig }, this.siteId);
     }
 
     /**
@@ -144,7 +144,7 @@ export class CoreLoginReconnectPage {
 
         if (!this.eventThrown && !this.viewLeft) {
             this.eventThrown = true;
-            this.eventsProvider.trigger(CoreEventsProvider.LOGIN_SITE_CHECKED, { config: config });
+            CoreEvents.trigger(CoreEvents.LOGIN_SITE_CHECKED, { config: config });
         }
     }
 

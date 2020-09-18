@@ -15,7 +15,7 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { Content, IonicPage, ModalController, NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -63,7 +63,7 @@ export class AddonModChatChatPage {
     constructor(navParams: NavParams, network: Network,  zone: NgZone, private navCtrl: NavController,
             private chatProvider: AddonModChatProvider, private appProvider: CoreAppProvider, sitesProvider: CoreSitesProvider,
             private modalCtrl: ModalController, private domUtils: CoreDomUtilsProvider,
-            private eventsProvider: CoreEventsProvider, private chatHelper: AddonModChatHelperProvider) {
+            private chatHelper: AddonModChatHelperProvider) {
 
         this.chatId = navParams.get('chatId');
         this.courseId = navParams.get('courseId');
@@ -100,7 +100,7 @@ export class AddonModChatChatPage {
         });
 
         // Recalculate footer position when keyboard is shown or hidden.
-        this.keyboardObserver = this.eventsProvider.on(CoreEventsProvider.KEYBOARD_CHANGE, (kbHeight) => {
+        this.keyboardObserver = CoreEvents.on(CoreEvents.KEYBOARD_CHANGE, (kbHeight) => {
             this.content.resize();
         });
     }
@@ -117,7 +117,7 @@ export class AddonModChatChatPage {
      * Runs when the page is about to leave and no longer be the active page.
      */
     ionViewWillLeave(): void {
-        this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'chat' });
+        CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'chat' });
         this.stopPolling();
     }
 

@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy, Optional, ViewChild, ElementRef } from '@
 import { Content, IonicPage, NavParams, NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -89,8 +89,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
             protected workshopOffline: AddonModWorkshopOfflineProvider, protected syncProvider: CoreSyncProvider,
             protected workshopHelper: AddonModWorkshopHelperProvider, protected navCtrl: NavController,
             protected textUtils: CoreTextUtilsProvider, protected domUtils: CoreDomUtilsProvider, protected fb: FormBuilder,
-            protected translate: TranslateService, protected eventsProvider: CoreEventsProvider,
-            protected courseProvider: CoreCourseProvider, @Optional() protected content: Content,
+            protected translate: TranslateService,             protected courseProvider: CoreCourseProvider, @Optional() protected content: Content,
             protected gradesHelper: CoreGradesHelperProvider, protected userProvider: CoreUserProvider) {
         this.module = navParams.get('module');
         this.workshop = navParams.get('workshop');
@@ -115,12 +114,12 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
         this.feedbackForm.addControl('grade', this.fb.control(''));
         this.feedbackForm.addControl('text', this.fb.control(''));
 
-        this.obsAssessmentSaved = this.eventsProvider.on(AddonModWorkshopProvider.ASSESSMENT_SAVED, (data) => {
+        this.obsAssessmentSaved = CoreEvents.on(AddonModWorkshopProvider.ASSESSMENT_SAVED, (data) => {
             this.eventReceived(data);
         }, this.siteId);
 
         // Refresh workshop on sync.
-        this.syncObserver = this.eventsProvider.on(AddonModWorkshopSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonModWorkshopSyncProvider.AUTO_SYNCED, (data) => {
             // Update just when all database is synced.
             this.eventReceived(data);
         }, this.siteId);
@@ -399,7 +398,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
         }
 
         return Promise.all(promises).finally(() => {
-            this.eventsProvider.trigger(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED, this.siteId);
+            CoreEvents.trigger(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED, this.siteId);
 
             return this.fetchSubmissionData();
         });
@@ -476,7 +475,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
             };
 
             return this.workshopProvider.invalidateSubmissionData(this.workshopId, this.submissionId).finally(() => {
-                this.eventsProvider.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
+                CoreEvents.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
             });
         }).catch((message) => {
             this.domUtils.showErrorModalDefault(message, 'Cannot save submission evaluation');
@@ -507,7 +506,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
                         submissionId: this.submissionId
                     };
 
-                    this.eventsProvider.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
+                    CoreEvents.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
 
                     this.forceLeavePage();
                 }
@@ -529,7 +528,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
                 submissionId: this.submissionId
             };
 
-            this.eventsProvider.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
+            CoreEvents.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
 
             return this.refreshAllData();
         });

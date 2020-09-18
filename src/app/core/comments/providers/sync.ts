@@ -19,7 +19,7 @@ import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreAppProvider } from '@services/app';
 import { CoreCommentsOfflineProvider } from './offline';
 import { CoreCommentsProvider } from './comments';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -37,7 +37,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
     constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
             private commentsOffline: CoreCommentsOfflineProvider, private utils: CoreUtilsProvider,
-            private eventsProvider: CoreEventsProvider,  private commentsProvider: CoreCommentsProvider,
+             private commentsProvider: CoreCommentsProvider,
             timeUtils: CoreTimeUtilsProvider) {
 
         super('CoreCommentsSync', loggerProvider, sitesProvider, appProvider, syncProvider, textUtils, translate, timeUtils);
@@ -81,7 +81,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
                 return promise.then((warnings) => {
                     if (typeof warnings != 'undefined') {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(CoreCommentsSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(CoreCommentsSyncProvider.AUTO_SYNCED, {
                             contextLevel: comment.contextlevel,
                             instanceId: comment.instanceid,
                             componentName: comment.component,
@@ -186,7 +186,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
 
             // Send the comments.
             return Promise.all(promises).then(() => {
-                this.eventsProvider.trigger(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, {
+                CoreEvents.trigger(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, {
                         contextLevel: contextLevel,
                         instanceId: instanceId,
                         component: component,

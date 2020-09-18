@@ -16,7 +16,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Config, Platform, IonicApp } from '@ionic/angular';
 import { Network } from '@ionic-native/network';
 import { CoreApp, CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLangProvider } from '@services/lang';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
@@ -47,8 +47,7 @@ export class MoodleMobileApp implements OnInit {
             config: Config,
             device: Device,
             private app: IonicApp,
-            private eventsProvider: CoreEventsProvider,
-            private loginHelper: CoreLoginHelperProvider,
+                        private loginHelper: CoreLoginHelperProvider,
             private zone: NgZone,
             private appProvider: CoreAppProvider,
             private langProvider: CoreLangProvider,
@@ -129,7 +128,7 @@ export class MoodleMobileApp implements OnInit {
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             // Go to sites page when user is logged out.
             // Due to DeepLinker, we need to use the ViewCtrl instead of name.
             // Otherwise some pages are re-created when they shouldn't.
@@ -143,20 +142,20 @@ export class MoodleMobileApp implements OnInit {
         });
 
         // Listen for session expired events.
-        this.eventsProvider.on(CoreEventsProvider.SESSION_EXPIRED, (data) => {
+        CoreEvents.on(CoreEvents.SESSION_EXPIRED, (data) => {
             this.loginHelper.sessionExpired(data);
         });
 
         // Listen for passwordchange and usernotfullysetup events to open InAppBrowser.
-        this.eventsProvider.on(CoreEventsProvider.PASSWORD_CHANGE_FORCED, (data) => {
+        CoreEvents.on(CoreEvents.PASSWORD_CHANGE_FORCED, (data) => {
             this.loginHelper.passwordChangeForced(data.siteId);
         });
-        this.eventsProvider.on(CoreEventsProvider.USER_NOT_FULLY_SETUP, (data) => {
+        CoreEvents.on(CoreEvents.USER_NOT_FULLY_SETUP, (data) => {
             this.loginHelper.openInAppForEdit(data.siteId, '/user/edit.php', 'core.usernotfullysetup');
         });
 
         // Listen for sitepolicynotagreed event to accept the site policy.
-        this.eventsProvider.on(CoreEventsProvider.SITE_POLICY_NOT_AGREED, (data) => {
+        CoreEvents.on(CoreEvents.SITE_POLICY_NOT_AGREED, (data) => {
             this.loginHelper.sitePolicyNotAgreed(data.siteId);
         });
 
@@ -184,7 +183,7 @@ export class MoodleMobileApp implements OnInit {
         });
 
         // Check URLs loaded in any InAppBrowser.
-        this.eventsProvider.on(CoreEventsProvider.IAB_LOAD_START, (event) => {
+        CoreEvents.on(CoreEvents.IAB_LOAD_START, (event) => {
             // URLs with a custom scheme can be prefixed with "http://" or "https://", we need to remove this.
             const url = event.url.replace(/^https?:\/\//, '');
 
@@ -217,7 +216,7 @@ export class MoodleMobileApp implements OnInit {
         });
 
         // Check InAppBrowser closed.
-        this.eventsProvider.on(CoreEventsProvider.IAB_EXIT, () => {
+        CoreEvents.on(CoreEvents.IAB_EXIT, () => {
             this.loginHelper.waitingForBrowser = false;
             this.lastInAppUrl = '';
             this.loginHelper.checkLogout();
@@ -250,7 +249,7 @@ export class MoodleMobileApp implements OnInit {
 
                 this.lastUrls[url] = Date.now();
 
-                this.eventsProvider.trigger(CoreEventsProvider.APP_LAUNCHED_URL, url);
+                CoreEvents.trigger(CoreEvents.APP_LAUNCHED_URL, url);
                 this.urlSchemesProvider.handleCustomURL(url).catch((error: CoreCustomURLSchemesHandleError) => {
                     this.urlSchemesProvider.treatHandleCustomURLError(error);
                 });
@@ -272,7 +271,7 @@ export class MoodleMobileApp implements OnInit {
             }
         };
 
-        this.eventsProvider.on(CoreEventsProvider.LOGIN, (data) => {
+        CoreEvents.on(CoreEvents.LOGIN, (data) => {
             if (data.siteId) {
                 this.sitesProvider.getSite(data.siteId).then((site) => {
                     const info = site.getInfo();
@@ -287,7 +286,7 @@ export class MoodleMobileApp implements OnInit {
             loadCustomStrings();
         });
 
-        this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, (data) => {
+        CoreEvents.on(CoreEvents.SITE_UPDATED, (data) => {
             if (data.siteId == this.sitesProvider.getCurrentSiteId()) {
                 loadCustomStrings();
 
@@ -297,7 +296,7 @@ export class MoodleMobileApp implements OnInit {
             }
         });
 
-        this.eventsProvider.on(CoreEventsProvider.SITE_ADDED, (data) => {
+        CoreEvents.on(CoreEvents.SITE_ADDED, (data) => {
             if (data.siteId == this.sitesProvider.getCurrentSiteId()) {
                 loadCustomStrings();
 
@@ -346,7 +345,7 @@ export class MoodleMobileApp implements OnInit {
                     });
                 }
 
-                this.eventsProvider.trigger(CoreEventsProvider.ORIENTATION_CHANGE);
+                CoreEvents.trigger(CoreEvents.ORIENTATION_CHANGE);
             }
         );
     }

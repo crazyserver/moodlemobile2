@@ -16,7 +16,7 @@ import { Component, Input, OnInit, Injector, ViewChild, OnDestroy, DoCheck, KeyV
 import { CoreBlockDelegate } from '../../providers/delegate';
 import { CoreDynamicComponent } from '@components/dynamic-component/dynamic-component';
 import { Subscription } from 'rxjs';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 
 /**
  * Component to render a block.
@@ -43,7 +43,7 @@ export class CoreBlockComponent implements OnInit, OnDestroy, DoCheck {
     protected differ: any; // To detect changes in the data input.
 
     constructor(protected injector: Injector, protected blockDelegate: CoreBlockDelegate, differs: KeyValueDiffers,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
         this.differ = differs.find([]).create();
     }
 

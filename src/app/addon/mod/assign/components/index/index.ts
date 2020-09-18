@@ -100,14 +100,14 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
         });
 
         // Listen to events.
-        this.savedObserver = this.eventsProvider.on(AddonModAssignProvider.SUBMISSION_SAVED_EVENT, (data) => {
+        this.savedObserver = CoreEvents.on(AddonModAssignProvider.SUBMISSION_SAVED_EVENT, (data) => {
             if (this.assign && data.assignmentId == this.assign.id && data.userId == this.userId) {
                 // Assignment submission saved, refresh data.
                 this.showLoadingAndRefresh(true, false);
             }
         }, this.siteId);
 
-        this.submittedObserver = this.eventsProvider.on(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, (data) => {
+        this.submittedObserver = CoreEvents.on(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, (data) => {
             if (this.assign && data.assignmentId == this.assign.id && data.userId == this.userId) {
                 // Assignment submitted, check completion.
                 this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
@@ -117,7 +117,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
             }
         }, this.siteId);
 
-        this.gradedObserver = this.eventsProvider.on(AddonModAssignProvider.GRADED_EVENT, (data) => {
+        this.gradedObserver = CoreEvents.on(AddonModAssignProvider.GRADED_EVENT, (data) => {
             if (this.assign && data.assignmentId == this.assign.id && data.userId == this.userId) {
                 // Assignment graded, refresh data.
                 this.showLoadingAndRefresh(true, false);

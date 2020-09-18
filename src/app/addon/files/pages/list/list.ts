@@ -16,7 +16,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -49,7 +49,7 @@ export class AddonFilesListPage implements OnDestroy {
 
     protected updateSiteObserver;
 
-    constructor(navParams: NavParams, eventsProvider: CoreEventsProvider, private sitesProvider: CoreSitesProvider,
+    constructor(navParams: NavParams, private sitesProvider: CoreSitesProvider,
             private domUtils: CoreDomUtilsProvider, private translate: TranslateService, private appProvider: CoreAppProvider,
             private filesProvider: AddonFilesProvider, private filesHelper: AddonFilesHelperProvider,
             private textUtils: CoreTextUtilsProvider) {
@@ -58,7 +58,7 @@ export class AddonFilesListPage implements OnDestroy {
         this.path = navParams.get('path');
 
         // Update visibility if current site info is updated.
-        this.updateSiteObserver = eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.setVisibility();
         }, sitesProvider.getCurrentSiteId());
     }

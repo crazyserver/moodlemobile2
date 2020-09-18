@@ -18,7 +18,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreGroupsProvider } from '@services/groups';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreRatingInfo } from '@core/rating/providers/rating';
 import { AddonModDataProvider } from '../../providers/data';
@@ -77,8 +77,7 @@ export class AddonModDataEntryPage implements OnDestroy {
             protected domUtils: CoreDomUtilsProvider, protected fieldsDelegate: AddonModDataFieldsDelegate,
             protected courseProvider: CoreCourseProvider, protected dataProvider: AddonModDataProvider,
             protected dataHelper: AddonModDataHelperProvider,
-            sitesProvider: CoreSitesProvider, protected navCtrl: NavController, protected eventsProvider: CoreEventsProvider,
-            private cdr: ChangeDetectorRef, protected commentsProvider: CoreCommentsProvider) {
+            sitesProvider: CoreSitesProvider, protected navCtrl: NavController,             private cdr: ChangeDetectorRef, protected commentsProvider: CoreCommentsProvider) {
         this.module = params.get('module') || {};
         this.entryId = params.get('entryId') || null;
         this.courseId = params.get('courseId');
@@ -101,7 +100,7 @@ export class AddonModDataEntryPage implements OnDestroy {
         });
 
         // Refresh data if this discussion is synchronized automatically.
-        this.syncObserver = this.eventsProvider.on(AddonModDataSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonModDataSyncProvider.AUTO_SYNCED, (data) => {
             if ((data.entryId == this.entryId || data.offlineEntryId == this.entryId) && this.data.id == data.dataId) {
                 if (data.deleted) {
                     // If deleted, go back.
@@ -115,7 +114,7 @@ export class AddonModDataEntryPage implements OnDestroy {
         }, this.siteId);
 
         // Refresh entry on change.
-        this.entryChangedObserver = this.eventsProvider.on(AddonModDataProvider.ENTRY_CHANGED, (data) => {
+        this.entryChangedObserver = CoreEvents.on(AddonModDataProvider.ENTRY_CHANGED, (data) => {
             if (data.entryId == this.entryId && this.data.id == data.dataId) {
                 if (data.deleted) {
                     // If deleted, go back.

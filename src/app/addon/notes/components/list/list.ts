@@ -15,7 +15,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Content, ModalController } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUserProvider } from '@core/user/providers/user';
@@ -52,11 +52,11 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
     currentUserId: number;
 
     constructor(private domUtils: CoreDomUtilsProvider, private textUtils: CoreTextUtilsProvider,
-            sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider, private modalCtrl: ModalController,
+            sitesProvider: CoreSitesProvider, private modalCtrl: ModalController,
             private notesProvider: AddonNotesProvider, private notesSync: AddonNotesSyncProvider,
             private userProvider: CoreUserProvider, private notesOffline: AddonNotesOfflineProvider) {
         // Refresh data if notes are synchronized automatically.
-        this.syncObserver = eventsProvider.on(AddonNotesSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonNotesSyncProvider.AUTO_SYNCED, (data) => {
             if (data.courseId == this.courseId) {
                 // Show the sync warnings.
                 this.showSyncWarnings(data.warnings);

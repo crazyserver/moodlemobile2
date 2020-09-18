@@ -16,7 +16,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -68,8 +68,7 @@ export class AddonModGlossaryEditPage implements OnInit {
             private navCtrl: NavController,
             private translate: TranslateService,
             private domUtils: CoreDomUtilsProvider,
-            private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider,
+                        private sitesProvider: CoreSitesProvider,
             private uploaderProvider: CoreFileUploaderProvider,
             private textUtils: CoreTextUtilsProvider,
             private glossaryProvider: AddonModGlossaryProvider,
@@ -246,13 +245,13 @@ export class AddonModGlossaryEditPage implements OnInit {
             if (entryId) {
                 // Data sent to server, delete stored files (if any).
                 this.glossaryHelper.deleteStoredFiles(this.glossary.id, this.entry.concept, timecreated);
-                this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'glossary' });
+                CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'glossary' });
             }
 
             const data = {
                 glossaryId: this.glossary.id,
             };
-            this.eventsProvider.trigger(AddonModGlossaryProvider.ADD_ENTRY_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModGlossaryProvider.ADD_ENTRY_EVENT, data, this.sitesProvider.getCurrentSiteId());
 
             this.domUtils.triggerFormSubmittedEvent(this.formElement, !!entryId, this.sitesProvider.getCurrentSiteId());
 

@@ -15,7 +15,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider, CoreEventObserver } from '@services/events';
+import { CoreEvents, CoreEventObserver } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreGroupsProvider, CoreGroupInfo } from '@services/groups';
@@ -59,8 +59,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
     protected syncObserver: CoreEventObserver; // OObserver to refresh data when the async is synchronized.
     protected submissionsData: {canviewsubmissions: boolean, submissions?: AddonModAssignSubmission[]};
 
-    constructor(navParams: NavParams, protected sitesProvider: CoreSitesProvider, protected eventsProvider: CoreEventsProvider,
-            protected domUtils: CoreDomUtilsProvider, protected translate: TranslateService,
+    constructor(navParams: NavParams, protected sitesProvider: CoreSitesProvider,             protected domUtils: CoreDomUtilsProvider, protected translate: TranslateService,
             protected assignProvider: AddonModAssignProvider, protected assignOfflineProvider: AddonModAssignOfflineProvider,
             protected assignHelper: AddonModAssignHelperProvider, protected groupsProvider: CoreGroupsProvider) {
 
@@ -80,7 +79,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
         }
 
         // Update data if some grade changes.
-        this.gradedObserver = eventsProvider.on(AddonModAssignProvider.GRADED_EVENT, (data) => {
+        this.gradedObserver = CoreEvents.on(AddonModAssignProvider.GRADED_EVENT, (data) => {
             if (this.loaded && this.assign && data.assignmentId == this.assign.id &&
                     data.userId == sitesProvider.getCurrentSiteUserId()) {
                 // Grade changed, refresh the data.
@@ -94,7 +93,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
 
         // Refresh data if this assign is synchronized.
         const events = [AddonModAssignSyncProvider.AUTO_SYNCED, AddonModAssignSyncProvider.MANUAL_SYNCED];
-        this.syncObserver = eventsProvider.onMultiple(events, (data) => {
+        this.syncObserver = CoreEvents.onMultiple(events, (data) => {
             if (!this.loaded || data.context == 'submission-list') {
                 return;
             }
@@ -140,7 +139,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
                     const result = await AddonModAssignSync.instance.syncAssign(this.assign.id);
 
                     if (result && result.updated) {
-                        this.eventsProvider.trigger(AddonModAssignSyncProvider.MANUAL_SYNCED, {
+                        CoreEvents.trigger(AddonModAssignSyncProvider.MANUAL_SYNCED, {
                             assignId: this.assign.id,
                             warnings: result.warnings,
                             gradesBlocked: result.gradesBlocked,

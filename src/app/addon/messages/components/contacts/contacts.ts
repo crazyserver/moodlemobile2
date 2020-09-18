@@ -21,7 +21,7 @@ import {
 } from '../../providers/messages';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 
 /**
  * Component that displays the list of contacts.
@@ -56,7 +56,7 @@ export class AddonMessagesContactsComponent {
 
     constructor(sitesProvider: CoreSitesProvider, translate: TranslateService, private appProvider: CoreAppProvider,
             private messagesProvider: AddonMessagesProvider, private domUtils: CoreDomUtilsProvider, navParams: NavParams,
-            private eventsProvider: CoreEventsProvider) {
+            private eventsProvider: CoreEvents) {
 
         this.currentUserId = sitesProvider.getCurrentSiteUserId();
         this.siteId = sitesProvider.getCurrentSiteId();
@@ -67,7 +67,7 @@ export class AddonMessagesContactsComponent {
         this.discussionUserId = navParams.get('discussionUserId') || false;
 
         // Refresh the list when a contact request is confirmed.
-        this.memberInfoObserver = eventsProvider.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
+        this.memberInfoObserver = CoreEvents.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
             if (data.contactRequestConfirmed) {
                 this.refreshData();
             }
@@ -229,7 +229,7 @@ export class AddonMessagesContactsComponent {
             discussion: discussionUserId,
             onlyWithSplitView: onlyWithSplitView
         };
-        this.eventsProvider.trigger(AddonMessagesProvider.SPLIT_VIEW_LOAD_EVENT, params, this.siteId);
+        CoreEvents.trigger(AddonMessagesProvider.SPLIT_VIEW_LOAD_EVENT, params, this.siteId);
     }
 
     /**

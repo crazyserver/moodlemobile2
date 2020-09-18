@@ -21,7 +21,7 @@ import {
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreAppProvider } from '@services/app';
 import { CoreConfigProvider } from '@services/config';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreConstants } from '@core/constants';
@@ -54,7 +54,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
 
     constructor(private messagesProvider: AddonMessagesProvider, private domUtils: CoreDomUtilsProvider,
             private userProvider: CoreUserProvider, private sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
-            private configProvider: CoreConfigProvider, private eventsProvider: CoreEventsProvider) {
+            private configProvider: CoreConfigProvider, private eventsProvider: CoreEvents) {
 
         const currentSite = sitesProvider.getCurrentSite();
         this.advancedContactable = currentSite && currentSite.isVersionGreaterEqualThan('3.6');
@@ -259,7 +259,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
         this.configProvider.set(CoreConstants.SETTINGS_SEND_ON_ENTER, this.sendOnEnter ? 1 : 0);
 
         // Notify the app.
-        this.eventsProvider.trigger(CoreEventsProvider.SEND_ON_ENTER_CHANGED, {sendOnEnter: !!this.sendOnEnter},
+        CoreEvents.trigger(CoreEvents.SEND_ON_ENTER_CHANGED, {sendOnEnter: !!this.sendOnEnter},
                 this.sitesProvider.getCurrentSiteId());
     }
 

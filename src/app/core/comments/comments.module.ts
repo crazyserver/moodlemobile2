@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreCronDelegate } from '@services/cron';
 import { CoreCommentsProvider } from './providers/comments';
 import { CoreCommentsOfflineProvider } from './providers/offline';
@@ -33,9 +33,9 @@ import { CoreCommentsSyncProvider } from './providers/sync';
     ]
 })
 export class CoreCommentsModule {
-    constructor(eventsProvider: CoreEventsProvider, cronDelegate: CoreCronDelegate, syncHandler: CoreCommentsSyncCronHandler) {
+    constructor(cronDelegate: CoreCronDelegate, syncHandler: CoreCommentsSyncCronHandler) {
         // Reset comments page size.
-        eventsProvider.on(CoreEventsProvider.LOGIN, () => {
+        CoreEvents.on(CoreEvents.LOGIN, () => {
             CoreCommentsProvider.pageSize = 1;
             CoreCommentsProvider.pageSizeOK = false;
         });

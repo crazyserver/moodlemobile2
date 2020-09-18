@@ -17,7 +17,7 @@ import { CoreUserDelegate, CoreUserProfileHandler, CoreUserProfileHandlerData } 
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from './messages';
 import { AddonMessagesAddContactUserHandler } from './user-add-contact-handler';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -39,10 +39,10 @@ export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHand
     protected updateObs: any;
 
     constructor(protected sitesProvider: CoreSitesProvider, private messagesProvider: AddonMessagesProvider,
-            protected eventsProvider: CoreEventsProvider, private domUtils: CoreDomUtilsProvider,
+            private domUtils: CoreDomUtilsProvider,
             private translate: TranslateService) {
 
-        this.updateObs = eventsProvider.on(AddonMessagesAddContactUserHandler.UPDATED_EVENT, (data) => {
+        this.updateObs = CoreEvents.on(AddonMessagesAddContactUserHandler.UPDATED_EVENT, (data) => {
             this.checkButton(data.userId);
         });
     }
@@ -112,7 +112,7 @@ export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHand
                 }).catch((error) => {
                     this.domUtils.showErrorModalDefault(error, 'core.error', true);
                 }).finally(() => {
-                    this.eventsProvider.trigger(AddonMessagesBlockContactUserHandler.UPDATED_EVENT, {userId: user.id});
+                    CoreEvents.trigger(AddonMessagesBlockContactUserHandler.UPDATED_EVENT, {userId: user.id});
                     this.checkButton(user.id).finally(() => {
                         this.disabled = false;
                     });
@@ -162,7 +162,7 @@ export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHand
      */
     protected updateButton(userId: number, data: any): void {
         // This fails for some reason, let's just hide the button.
-        this.eventsProvider.trigger(CoreUserDelegate.UPDATE_HANDLER_EVENT, { handler: this.name, data: data, userId: userId });
+        CoreEvents.trigger(CoreUserDelegate.UPDATE_HANDLER_EVENT, { handler: this.name, data: data, userId: userId });
     }
 
     /**

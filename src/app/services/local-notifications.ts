@@ -19,7 +19,7 @@ import { Push } from '@ionic-native/push';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreApp, CoreAppProvider, CoreAppSchema } from './app';
 import { CoreConfigProvider } from './config';
-import { CoreEventsProvider } from './events';
+import { CoreEvents } from './events';
 import { CoreLogger } from './logger';
 import { CoreTextUtilsProvider } from './utils/text';
 import { CoreUtilsProvider } from './utils/utils';
@@ -125,8 +125,7 @@ export class CoreLocalNotificationsProvider {
             private textUtils: CoreTextUtilsProvider,
             private translate: TranslateService,
             private alertCtrl: AlertController,
-            eventsProvider: CoreEventsProvider,
-            appProvider: CoreAppProvider,
+                        appProvider: CoreAppProvider,
             private push: Push,
             private zone: NgZone) {
 
@@ -174,7 +173,7 @@ export class CoreLocalNotificationsProvider {
             });
         });
 
-        eventsProvider.on(CoreEventsProvider.SITE_DELETED, (site) => {
+        CoreEvents.on(CoreEvents.SITE_DELETED, (site) => {
             if (site) {
                 this.cancelSiteNotifications(site.id);
             }

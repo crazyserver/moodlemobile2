@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { AddonModScormProvider } from '../providers/scorm';
 
 /**
@@ -95,7 +95,7 @@ export class AddonModScormDataModel12 {
      * @param mode Mode being played. By default, MODENORMAL.
      * @param offline Whether the attempt is offline.
      */
-    constructor(protected eventsProvider: CoreEventsProvider, protected scormProvider: AddonModScormProvider,
+    constructor(protected scormProvider: AddonModScormProvider,
             protected siteId: string, protected scorm: any, protected scoId: number, protected attempt: number,
             userData: any, protected mode?: string, protected offline?: boolean) {
 
@@ -896,7 +896,7 @@ export class AddonModScormDataModel12 {
      * @param name Name of the event to trigger.
      */
     protected triggerEvent(name: string): void {
-        this.eventsProvider.trigger(name, {
+        CoreEvents.trigger(name, {
             scormId: this.scorm.id,
             scoId: this.scoId,
             attempt: this.attempt

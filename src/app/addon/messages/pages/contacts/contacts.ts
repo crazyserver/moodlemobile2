@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage, NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from '../../providers/messages';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -44,13 +44,13 @@ export class AddonMessagesContactsPage implements OnDestroy {
         requests: null, // User id of the selected user in the contact requests tab.
     };
 
-    constructor(eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider,
+    constructor(sitesProvider: CoreSitesProvider,
             private navCtrl: NavController, private messagesProvider: AddonMessagesProvider) {
 
         this.siteId = sitesProvider.getCurrentSiteId();
 
         // Update the contact requests badge.
-        this.contactRequestsCountObserver = eventsProvider.on(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, (data) => {
+        this.contactRequestsCountObserver = CoreEvents.on(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, (data) => {
             this.contactRequestsCount = data.count;
         }, this.siteId);
     }

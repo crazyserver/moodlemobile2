@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 
@@ -75,7 +75,7 @@ export interface AddonMessageOutputHandlerData {
      protected handlerNameProperty = 'processorName';
 
      constructor(protected loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
-             protected eventsProvider: CoreEventsProvider) {
+             protected eventsProvider: CoreEvents) {
          super('AddonMessageOutputDelegate', loggerProvider, sitesProvider, eventsProvider);
      }
 

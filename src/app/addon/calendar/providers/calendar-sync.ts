@@ -18,7 +18,7 @@ import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreAppProvider } from '@services/app';
 import { CoreLogger } from '@services/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -41,8 +41,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,
             courseProvider: CoreCourseProvider,
-            private eventsProvider: CoreEventsProvider,
-            loggerProvider: CoreLoggerProvider,
+                        loggerProvider: CoreLoggerProvider,
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,
@@ -81,7 +80,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
         return promise.then((result) => {
             if (result && result.updated) {
                 // Sync successful, send event.
-                this.eventsProvider.trigger(AddonCalendarSyncProvider.AUTO_SYNCED, {
+                CoreEvents.trigger(AddonCalendarSyncProvider.AUTO_SYNCED, {
                     warnings: result.warnings,
                     events: result.events,
                     deleted: result.deleted

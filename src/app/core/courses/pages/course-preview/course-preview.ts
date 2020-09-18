@@ -16,7 +16,7 @@ import { Component, OnDestroy, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -68,8 +68,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
     constructor(private navCtrl: NavController, navParams: NavParams, private sitesProvider: CoreSitesProvider,
             private domUtils: CoreDomUtilsProvider, private textUtils: CoreTextUtilsProvider, appProvider: CoreAppProvider,
             private coursesProvider: CoreCoursesProvider, private platform: Platform, private modalCtrl: ModalController,
-            private translate: TranslateService, private eventsProvider: CoreEventsProvider,
-            private courseOptionsDelegate: CoreCourseOptionsDelegate, private courseHelper: CoreCourseHelperProvider,
+            private translate: TranslateService,             private courseOptionsDelegate: CoreCourseOptionsDelegate, private courseHelper: CoreCourseHelperProvider,
             private courseProvider: CoreCourseProvider, private courseFormatDelegate: CoreCourseFormatDelegate,
             private zone: NgZone) {
 
@@ -81,7 +80,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
 
         if (this.downloadCourseEnabled) {
             // Listen for status change in course.
-            this.courseStatusObserver = this.eventsProvider.on(CoreEventsProvider.COURSE_STATUS_CHANGED, (data) => {
+            this.courseStatusObserver = CoreEvents.on(CoreEvents.COURSE_STATUS_CHANGED, (data) => {
                 if (data.courseId == this.course.id || data.courseId == CoreCourseProvider.ALL_COURSES_CLEARED) {
                     this.updateCourseStatus(data.status);
                 }
@@ -365,7 +364,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
             this.waitForEnrolled(true).then(() => {
                 this.refreshData().finally(() => {
                     // My courses have been updated, trigger event.
-                    this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
+                    CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
                         courseId: this.course.id,
                         course: this.course,
                         action: CoreCoursesProvider.ACTION_ENROL,

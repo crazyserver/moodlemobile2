@@ -15,7 +15,7 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModAssignFeedbackDelegate } from '../../providers/feedback-delegate';
@@ -47,8 +47,7 @@ export class AddonModAssignEditFeedbackModalPage {
             protected domUtils: CoreDomUtilsProvider,
             protected translate: TranslateService,
             protected feedbackDelegate: AddonModAssignFeedbackDelegate,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider) {
+                        protected sitesProvider: CoreSitesProvider) {
 
         this.assign = params.get('assign');
         this.submission = params.get('submission');

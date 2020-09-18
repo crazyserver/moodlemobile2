@@ -20,7 +20,7 @@ import { CoreAppProvider } from '@services/app';
 import { AddonNotesOfflineProvider } from './notes-offline';
 import { AddonNotesProvider } from './notes';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -38,7 +38,7 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
     constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
             private notesOffline: AddonNotesOfflineProvider, private utils: CoreUtilsProvider,
-            private eventsProvider: CoreEventsProvider,  private notesProvider: AddonNotesProvider,
+             private notesProvider: AddonNotesProvider,
             private coursesProvider: CoreCoursesProvider, timeUtils: CoreTimeUtilsProvider) {
 
         super('AddonNotesSync', loggerProvider, sitesProvider, appProvider, syncProvider, textUtils, translate, timeUtils);
@@ -85,7 +85,7 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
                 return promise.then((warnings) => {
                     if (typeof warnings != 'undefined') {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonNotesSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonNotesSyncProvider.AUTO_SYNCED, {
                             courseId: courseId,
                             warnings: warnings
                         }, siteId);

@@ -15,7 +15,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCommentsProvider } from '../../providers/comments';
@@ -45,8 +45,7 @@ export class CoreCommentsAddPage {
             protected appProvider: CoreAppProvider,
             protected domUtils: CoreDomUtilsProvider,
             protected commentsProvider: CoreCommentsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider) {
+                        protected sitesProvider: CoreSitesProvider) {
         this.contextLevel = params.get('contextLevel');
         this.instanceId = params.get('instanceId');
         this.componentName = params.get('componentName');

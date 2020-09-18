@@ -14,7 +14,7 @@
 
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Content } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider, AddonMessagesConversationMember } from '../../providers/messages';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -38,13 +38,13 @@ export class AddonMessagesConfirmedContactsComponent implements OnInit, OnDestro
 
     protected memberInfoObserver;
 
-    constructor(private domUtils: CoreDomUtilsProvider, eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider,
+    constructor(private domUtils: CoreDomUtilsProvider, sitesProvider: CoreSitesProvider,
             private messagesProvider: AddonMessagesProvider) {
 
         this.onUserSelected = new EventEmitter();
 
         // Update block status of a user.
-        this.memberInfoObserver = eventsProvider.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
+        this.memberInfoObserver = CoreEvents.on(AddonMessagesProvider.MEMBER_INFO_CHANGED_EVENT, (data) => {
             if (data.userBlocked || data.userUnblocked) {
                 const user = this.contacts.find((user) => user.id == data.userId);
                 if (user) {

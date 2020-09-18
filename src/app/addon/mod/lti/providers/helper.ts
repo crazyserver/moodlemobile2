@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { CoreEvents, CoreEventsProvider } from '@services/events';
+import { CoreEvents, CoreEvents } from '@services/events';
 import { CoreSites } from '@services/sites';
 import { CoreDomUtils } from '@services/utils/dom';
 import { CoreCourse } from '@core/course/providers/course';
@@ -42,7 +42,7 @@ export class AddonModLtiHelperProvider {
         });
 
         // Clear pending completion on logout.
-        CoreEvents.instance.on(CoreEventsProvider.LOGOUT, () => {
+        CoreEvents.instance.on(CoreEvents.LOGOUT, () => {
             this.pendingCheckCompletion = {};
         });
     }

@@ -16,7 +16,7 @@ import { Injectable, Injector } from '@angular/core';
 import { NavController, Loading } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreFilepoolProvider, CoreFilepoolComponentFileEventData } from '@services/filepool';
 import { CoreFileHelperProvider } from '@services/file-helper';
@@ -125,8 +125,7 @@ export class CoreCourseHelperProvider {
             private loginHelper: CoreLoginHelperProvider,
             private courseOptionsDelegate: CoreCourseOptionsDelegate,
             private siteHomeProvider: CoreSiteHomeProvider,
-            private eventsProvider: CoreEventsProvider,
-            private fileHelper: CoreFileHelperProvider,
+                        private fileHelper: CoreFileHelperProvider,
             private appProvider: CoreAppProvider,
             private fileProvider: CoreFileProvider,
             private injector: Injector,
@@ -282,7 +281,7 @@ export class CoreCourseHelperProvider {
     /**
      * Show a confirm and prefetch a course. It will retrieve the sections and the course options if not provided.
      * This function will set the icon to "spinner" when starting and it will also set it back to the initial icon if the
-     * user cancels. All the other updates of the icon should be made when CoreEventsProvider.COURSE_STATUS_CHANGED is received.
+     * user cancels. All the other updates of the icon should be made when CoreEvents.COURSE_STATUS_CHANGED is received.
      *
      * @param data An object where to store the course icon and title: "prefetchCourseIcon", "title" and "downloadSucceeded".
      * @param course Course to prefetch.
@@ -845,7 +844,7 @@ export class CoreCourseHelperProvider {
             }
 
             if (typeof instance.contextMenuStatusObserver == 'undefined' && component) {
-                instance.contextMenuStatusObserver = this.eventsProvider.on(CoreEventsProvider.PACKAGE_STATUS_CHANGED, (data) => {
+                instance.contextMenuStatusObserver = CoreEvents.on(CoreEvents.PACKAGE_STATUS_CHANGED, (data) => {
                     if (data.componentId == module.id && data.component == component) {
                         this.fillContextMenu(instance, module, courseId, false, component);
                     }
@@ -860,7 +859,7 @@ export class CoreCourseHelperProvider {
                     });
                 }, 1000);
 
-                instance.contextFileStatusObserver = this.eventsProvider.on(CoreEventsProvider.COMPONENT_FILE_ACTION,
+                instance.contextFileStatusObserver = CoreEvents.on(CoreEvents.COMPONENT_FILE_ACTION,
                         (data: CoreFilepoolComponentFileEventData) => {
 
                     if (data.component != component || data.componentId != module.id) {

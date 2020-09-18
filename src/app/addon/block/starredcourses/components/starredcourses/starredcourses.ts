@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, Input, OnChanges, SimpleChange } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCoursesProvider, CoreCoursesMyCoursesUpdatedEventData } from '@core/courses/providers/courses';
 import { CoreCoursesHelperProvider } from '@core/courses/providers/helper';
@@ -48,8 +48,7 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
     protected fetchContentDefaultError = 'Error getting starred courses data.';
 
     constructor(injector: Injector, private coursesProvider: CoreCoursesProvider,
-            private courseCompletionProvider: AddonCourseCompletionProvider, private eventsProvider: CoreEventsProvider,
-            private courseHelper: CoreCourseHelperProvider,
+            private courseCompletionProvider: AddonCourseCompletionProvider,             private courseHelper: CoreCourseHelperProvider,
             private courseOptionsDelegate: CoreCourseOptionsDelegate, private coursesHelper: CoreCoursesHelperProvider,
             private sitesProvider: CoreSitesProvider) {
 
@@ -66,13 +65,13 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
         this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
 
         // Refresh the enabled flags if site is updated.
-        this.updateSiteObserver = this.eventsProvider.on(CoreEventsProvider.SITE_UPDATED, () => {
+        this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
             this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
 
         }, this.sitesProvider.getCurrentSiteId());
 
-        this.coursesObserver = this.eventsProvider.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
+        this.coursesObserver = CoreEvents.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
                 (data: CoreCoursesMyCoursesUpdatedEventData) => {
 
             if (this.shouldRefreshOnUpdatedEvent(data)) {
@@ -141,7 +140,7 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
      * @return Promise resolved when done.
      */
     protected async refreshCourseList(): Promise<void> {
-        this.eventsProvider.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
+        CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
 
         try {
             await this.coursesProvider.invalidateUserCourses();

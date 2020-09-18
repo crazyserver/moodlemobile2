@@ -17,7 +17,7 @@ import { AddonMessagesProvider } from './messages';
 import { CoreMainMenuHandler, CoreMainMenuHandlerToDisplay } from '@core/mainmenu/providers/delegate';
 import { CoreCronHandler } from '@services/cron';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreAppProvider } from '@services/app';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
@@ -48,24 +48,24 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
     protected orMore = false;
 
     constructor(private messagesProvider: AddonMessagesProvider, private sitesProvider: CoreSitesProvider,
-            eventsProvider: CoreEventsProvider, private appProvider: CoreAppProvider,
+            private appProvider: CoreAppProvider,
             private localNotificationsProvider: CoreLocalNotificationsProvider, private filterHelper: CoreFilterHelperProvider,
             private pushNotificationsProvider: CorePushNotificationsProvider, utils: CoreUtilsProvider,
             pushNotificationsDelegate: CorePushNotificationsDelegate, private emulatorHelper: CoreEmulatorHelperProvider) {
 
-        eventsProvider.on(AddonMessagesProvider.UNREAD_CONVERSATION_COUNTS_EVENT, (data) => {
+        CoreEvents.on(AddonMessagesProvider.UNREAD_CONVERSATION_COUNTS_EVENT, (data) => {
             this.unreadCount = data.favourites + data.individual + data.group + data.self;
             this.orMore = data.orMore;
             this.updateBadge(data.siteId);
         });
 
-        eventsProvider.on(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, (data) => {
+        CoreEvents.on(AddonMessagesProvider.CONTACT_REQUESTS_COUNT_EVENT, (data) => {
             this.contactRequestsCount = data.count;
             this.updateBadge(data.siteId);
         });
 
         // Reset info on logout.
-        eventsProvider.on(CoreEventsProvider.LOGOUT, (data) => {
+        CoreEvents.on(CoreEvents.LOGOUT, (data) => {
             this.unreadCount = 0;
             this.contactRequestsCount = 0;
             this.orMore = false;

@@ -15,7 +15,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams, ViewController } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonModForumProvider } from '../../providers/forum';
 
@@ -36,8 +36,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
             protected viewCtrl: ViewController,
             protected forumProvider: AddonModForumProvider,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider) {
+                        protected sitesProvider: CoreSitesProvider) {
         this.discussion = navParams.get('discussion');
         this.forumId = navParams.get('forumId');
         this.cmId = navParams.get('cmId');
@@ -76,7 +75,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
                 cmId: this.cmId,
                 locked: response.locked
             };
-            this.eventsProvider.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
 
             this.domUtils.showToast('addon.mod_forum.lockupdated', true);
         }).catch((error) => {
@@ -104,7 +103,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
                 cmId: this.cmId,
                 pinned: pinned
             };
-            this.eventsProvider.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
 
             this.domUtils.showToast('addon.mod_forum.pinupdated', true);
         }).catch((error) => {
@@ -132,7 +131,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
                 cmId: this.cmId,
                 starred: starred
             };
-            this.eventsProvider.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
 
             this.domUtils.showToast('addon.mod_forum.favouriteupdated', true);
         }).catch((error) => {

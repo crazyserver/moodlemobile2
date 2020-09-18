@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, Output, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -58,7 +58,7 @@ export class CoreLocalFileComponent implements OnInit {
             protected domUtils: CoreDomUtilsProvider,
             protected timeUtils: CoreTimeUtilsProvider,
             protected sitesProvider: CoreSitesProvider,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
         this.onDelete = new EventEmitter();
         this.onRename = new EventEmitter();
         this.onClick = new EventEmitter();

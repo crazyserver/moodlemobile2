@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -72,8 +72,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
             translate: TranslateService,
             timeUtils: CoreTimeUtilsProvider,
             protected courseProvider: CoreCourseProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected assignProvider: AddonModAssignProvider,
+                        protected assignProvider: AddonModAssignProvider,
             protected assignOfflineProvider: AddonModAssignOfflineProvider,
             protected utils: CoreUtilsProvider,
             protected submissionDelegate: AddonModAssignSubmissionDelegate,
@@ -164,7 +163,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
                 return;
             }
 
-            this.eventsProvider.trigger(AddonModAssignSyncProvider.AUTO_SYNCED, {
+            CoreEvents.trigger(AddonModAssignSyncProvider.AUTO_SYNCED, {
                 assignId: assignId,
                 warnings: data.warnings,
                 gradesBlocked: data.gradesBlocked,

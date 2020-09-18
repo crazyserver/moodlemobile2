@@ -118,7 +118,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
         });
 
         // Listen for manual sync events.
-        this.manualSyncObserver = this.eventsProvider.on(AddonModWikiSyncProvider.MANUAL_SYNCED, (data) => {
+        this.manualSyncObserver = CoreEvents.on(AddonModWikiSyncProvider.MANUAL_SYNCED, (data) => {
             if (data && this.wiki && data.wikiId == this.wiki.id) {
                 if (this.ignoreManualSyncEvent) {
                     // Event needs to be ignored.
@@ -275,7 +275,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                 this.pageIsOffline = true;
                 if (!this.newPageObserver) {
                     // It's an offline page, listen for new pages event to detect if the user goes to Edit and submits the page.
-                    this.newPageObserver = this.eventsProvider.on(AddonModWikiProvider.PAGE_CREATED_EVENT, (data) => {
+                    this.newPageObserver = CoreEvents.on(AddonModWikiProvider.PAGE_CREATED_EVENT, (data) => {
                         if (data.subwikiId == this.currentSubwiki.id && data.pageTitle == title) {
                             // The page has been submitted. Get the page from the server.
                             this.currentPage = data.pageId;
@@ -677,7 +677,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
         if (result.updated) {
             // Trigger event.
             this.ignoreManualSyncEvent = true;
-            this.eventsProvider.trigger(AddonModWikiSyncProvider.MANUAL_SYNCED, result);
+            CoreEvents.trigger(AddonModWikiSyncProvider.MANUAL_SYNCED, result);
         }
 
         if (this.currentSubwiki) {

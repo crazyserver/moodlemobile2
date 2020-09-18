@@ -23,7 +23,7 @@ import { CoreApp } from '../app';
 import { CoreDomUtilsProvider } from './dom';
 import { CoreMimetypeUtilsProvider } from './mimetype';
 import { CoreTextUtilsProvider } from './text';
-import { CoreEventsProvider } from '../events';
+import { CoreEvents } from '../events';
 import { CoreLogger } from '../logger';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreLangProvider } from '../lang';
@@ -75,8 +75,7 @@ export class CoreUtilsProvider {
                         protected translate: TranslateService,
             protected platform: Platform,
             protected langProvider: CoreLangProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected fileOpener: FileOpener,
+                        protected fileOpener: FileOpener,
             protected mimetypeUtils: CoreMimetypeUtilsProvider,
             protected webIntent: WebIntent,
             protected wsProvider: CoreWSProvider,
@@ -981,7 +980,7 @@ export class CoreUtilsProvider {
                         loadStartUrls.shift();
                     }
 
-                    this.eventsProvider.trigger(CoreEventsProvider.IAB_LOAD_START, event);
+                    CoreEvents.trigger(CoreEvents.IAB_LOAD_START, event);
                 });
             });
 
@@ -992,7 +991,7 @@ export class CoreUtilsProvider {
                     this.zone.run(() => {
                         if (loadStartUrls.indexOf(event.url) == -1) {
                             // The URL was stopped but not started, probably a custom URL scheme.
-                            this.eventsProvider.trigger(CoreEventsProvider.IAB_LOAD_START, event);
+                            CoreEvents.trigger(CoreEvents.IAB_LOAD_START, event);
                         }
                     });
                 });
@@ -1004,7 +1003,7 @@ export class CoreUtilsProvider {
                     loadStartSubscription.unsubscribe();
                     loadStopSubscription && loadStopSubscription.unsubscribe();
                     exitSubscription.unsubscribe();
-                    this.eventsProvider.trigger(CoreEventsProvider.IAB_EXIT, event);
+                    CoreEvents.trigger(CoreEvents.IAB_EXIT, event);
                 });
             });
         }

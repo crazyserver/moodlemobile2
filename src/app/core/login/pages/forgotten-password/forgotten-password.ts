@@ -15,7 +15,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreLoginHelperProvider } from '../../providers/helper';
@@ -44,8 +44,7 @@ export class CoreLoginForgottenPasswordPage {
             protected translate: TranslateService,
             protected loginHelper: CoreLoginHelperProvider,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider) {
+                        protected sitesProvider: CoreSitesProvider) {
 
         this.siteUrl = navParams.get('siteUrl');
         this.autoFocus = platform.is('tablet');

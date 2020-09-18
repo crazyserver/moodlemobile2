@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreCronHandler } from '@services/cron';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -30,8 +30,7 @@ import { AddonNotificationsHelperProvider } from './helper';
 export class AddonNotificationsCronHandler implements CoreCronHandler {
     name = 'AddonNotificationsCronHandler';
 
-    constructor(private appProvider: CoreAppProvider, private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider, private localNotifications: CoreLocalNotificationsProvider,
+    constructor(private appProvider: CoreAppProvider,             private sitesProvider: CoreSitesProvider, private localNotifications: CoreLocalNotificationsProvider,
             private notificationsProvider: AddonNotificationsProvider, private textUtils: CoreTextUtilsProvider,
             private emulatorHelper: CoreEmulatorHelperProvider, private notificationsHelper: AddonNotificationsHelperProvider) {}
 
@@ -75,7 +74,7 @@ export class AddonNotificationsCronHandler implements CoreCronHandler {
      */
     execute(siteId?: string, force?: boolean): Promise<any> {
         if (this.sitesProvider.isCurrentSite(siteId)) {
-            this.eventsProvider.trigger(AddonNotificationsProvider.READ_CRON_EVENT, {}, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonNotificationsProvider.READ_CRON_EVENT, {}, this.sitesProvider.getCurrentSiteId());
         }
 
         if (this.appProvider.isDesktop() && this.localNotifications.isAvailable()) {

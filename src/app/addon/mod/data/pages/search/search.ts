@@ -15,7 +15,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from '@ionic/angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -54,8 +54,7 @@ export class AddonModDataSearchPage {
             protected textUtils: CoreTextUtilsProvider,
             protected dataHelper: AddonModDataHelperProvider,
             protected tagProvider: CoreTagProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider) {
+                        protected sitesProvider: CoreSitesProvider) {
         this.search = params.get('search');
         this.fields = params.get('fields');
         this.data = params.get('data');

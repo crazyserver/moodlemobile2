@@ -16,7 +16,7 @@ import { Injectable, Injector } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 
 export interface CoreUserProfileFieldHandler extends CoreDelegateHandler {
     /**
@@ -70,7 +70,7 @@ export class CoreUserProfileFieldDelegate extends CoreDelegate {
     protected handlerNameProperty = 'type';
 
     constructor(protected loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEvents) {
         super('CoreUserProfileFieldDelegate', loggerProvider, sitesProvider, eventsProvider);
     }
 

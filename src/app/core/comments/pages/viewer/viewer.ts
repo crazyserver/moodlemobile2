@@ -20,7 +20,7 @@ import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCommentsProvider } from '../../providers/comments';
 import { CoreCommentsOfflineProvider } from '../../providers/offline';
@@ -71,8 +71,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
             protected modalCtrl: ModalController,
             protected commentsProvider: CoreCommentsProvider,
             protected offlineComments: CoreCommentsOfflineProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected commentsSync: CoreCommentsSyncProvider,
+                        protected commentsSync: CoreCommentsSyncProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected timeUtils: CoreTimeUtilsProvider) {
 
@@ -86,7 +85,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
         this.page = 0;
 
         // Refresh data if comments are synchronized automatically.
-        this.syncObserver = eventsProvider.on(CoreCommentsSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(CoreCommentsSyncProvider.AUTO_SYNCED, (data) => {
             if (data.contextLevel == this.contextLevel && data.instanceId == this.instanceId &&
                     data.componentName == this.componentName && data.itemId == this.itemId && data.area == this.area) {
                 // Show the sync warnings.
@@ -268,7 +267,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
                     this.comments = addedComments.concat(this.comments);
                     this.canDeleteComments = this.addDeleteCommentsAvailable;
 
-                    this.eventsProvider.trigger(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, {
+                    CoreEvents.trigger(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, {
                             contextLevel: this.contextLevel,
                             instanceId: this.instanceId,
                             component: this.componentName,
@@ -314,7 +313,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
                     if (index >= 0) {
                         this.comments.splice(index, 1);
 
-                        this.eventsProvider.trigger(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, {
+                        CoreEvents.trigger(CoreCommentsProvider.COMMENTS_COUNT_CHANGED_EVENT, {
                             contextLevel: this.contextLevel,
                             instanceId: this.instanceId,
                             component: this.componentName,

@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreLogger } from '@services/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -62,7 +62,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
 
     constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
-            private eventsProvider: CoreEventsProvider, timeUtils: CoreTimeUtilsProvider,
+            timeUtils: CoreTimeUtilsProvider,
             private scormProvider: AddonModScormProvider, private scormOfflineProvider: AddonModScormOfflineProvider,
             prefetchHandler: AddonModScormPrefetchHandler, private utils: CoreUtilsProvider,
             prefetchDelegate: CoreCourseModulePrefetchDelegate, private courseProvider: CoreCourseProvider,
@@ -485,7 +485,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
                         return promise.then((data) => {
                             if (typeof data != 'undefined') {
                                 // We tried to sync. Send event.
-                                this.eventsProvider.trigger(AddonModScormSyncProvider.AUTO_SYNCED, {
+                                CoreEvents.trigger(AddonModScormSyncProvider.AUTO_SYNCED, {
                                     scormId: scorm.id,
                                     attemptFinished: data.attemptFinished,
                                     warnings: data.warnings,

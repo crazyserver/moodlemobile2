@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy, Optional, ViewChild, ElementRef } from '@
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreGroupsProvider } from '@services/groups';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -83,8 +83,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             private translate: TranslateService,
             private domUtils: CoreDomUtilsProvider,
             private timeUtils: CoreTimeUtilsProvider,
-            private eventsProvider: CoreEventsProvider,
-            private groupsProvider: CoreGroupsProvider,
+                        private groupsProvider: CoreGroupsProvider,
             sitesProvider: CoreSitesProvider,
             private coursesProvider: CoreCoursesProvider,
             private utils: CoreUtilsProvider,
@@ -531,15 +530,15 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             const data: any = {
                 event: event
             };
-            this.eventsProvider.trigger(AddonCalendarProvider.EDIT_EVENT_EVENT, data, this.currentSite.getId());
+            CoreEvents.trigger(AddonCalendarProvider.EDIT_EVENT_EVENT, data, this.currentSite.getId());
         } else {
             if (event) {
                 const data: any = {
                     event: event
                 };
-                this.eventsProvider.trigger(AddonCalendarProvider.NEW_EVENT_EVENT, data, this.currentSite.getId());
+                CoreEvents.trigger(AddonCalendarProvider.NEW_EVENT_EVENT, data, this.currentSite.getId());
             } else {
-                this.eventsProvider.trigger(AddonCalendarProvider.NEW_EVENT_DISCARDED_EVENT, {}, this.currentSite.getId());
+                CoreEvents.trigger(AddonCalendarProvider.NEW_EVENT_DISCARDED_EVENT, {}, this.currentSite.getId());
             }
         }
 

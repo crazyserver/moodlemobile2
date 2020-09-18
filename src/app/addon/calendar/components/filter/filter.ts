@@ -14,7 +14,7 @@
 
 import { Component } from '@angular/core';
 import { NavParams } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { AddonCalendarProvider } from '../../providers/calendar';
 import { AddonCalendarHelperProvider, AddonCalendarFilter } from '../../providers/helper';
 
@@ -33,7 +33,7 @@ export class AddonCalendarFilterPopoverComponent {
     typeIcons = {};
     typeKeys = [];
 
-    constructor(navParams: NavParams, protected eventsProvider: CoreEventsProvider) {
+    constructor(navParams: NavParams, protected eventsProvider: CoreEvents) {
         this.courses = navParams.get('courses') || [];
         const filter: AddonCalendarFilter = navParams.get('filter') || {
             filtered: false,
@@ -73,6 +73,6 @@ export class AddonCalendarFilterPopoverComponent {
 
         filter['filtered'] = filter['courseId'] || AddonCalendarProvider.ALL_TYPES.some((name) => !this.types[name]);
 
-        this.eventsProvider.trigger(AddonCalendarProvider.FILTER_CHANGED_EVENT, filter);
+        CoreEvents.trigger(AddonCalendarProvider.FILTER_CHANGED_EVENT, filter);
     }
 }

@@ -15,7 +15,7 @@
 import { Component, Optional, Injector } from '@angular/core';
 import { Content } from '@ionic/angular';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
-import { CoreEvents, CoreEventsProvider } from '@services/events';
+import { CoreEvents, CoreEvents } from '@services/events';
 import { AddonModSurveyProvider, AddonModSurveySurvey } from '../../providers/survey';
 import { AddonModSurveyHelperProvider, AddonModSurveyQuestionFormatted } from '../../providers/helper';
 import { AddonModSurveyOfflineProvider } from '../../providers/offline';
@@ -191,7 +191,7 @@ export class AddonModSurveyIndexComponent extends CoreCourseModuleMainActivityCo
             }
 
             return this.surveyProvider.submitAnswers(this.survey.id, this.survey.name, this.courseId, answers).then((online) => {
-                CoreEvents.instance.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: this.moduleName });
+                CoreEvents.instance.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
 
                 if (online && this.isPrefetched()) {
                     // The survey is downloaded, update the data.

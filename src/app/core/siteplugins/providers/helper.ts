@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreLangProvider } from '@services/lang';
 import { CoreLogger } from '@services/logger';
@@ -100,8 +100,7 @@ export class CoreSitePluginsHelperProvider {
             private utils: CoreUtilsProvider,
             private urlUtils: CoreUrlUtilsProvider,
             private courseOptionsDelegate: CoreCourseOptionsDelegate,
-            private eventsProvider: CoreEventsProvider,
-            private courseFormatDelegate: CoreCourseFormatDelegate,
+                        private courseFormatDelegate: CoreCourseFormatDelegate,
             private profileFieldDelegate: CoreUserProfileFieldDelegate,
             private textUtils: CoreTextUtilsProvider,
             private filepoolProvider: CoreFilepoolProvider,
@@ -124,7 +123,7 @@ export class CoreSitePluginsHelperProvider {
         this.logger = loggerProvider.getInstance('CoreSitePluginsHelperProvider');
 
         // Fetch the plugins on login.
-        eventsProvider.on(CoreEventsProvider.LOGIN, (data) => {
+        CoreEvents.on(CoreEvents.LOGIN, (data) => {
             this.fetchSitePlugins(data.siteId).then((plugins) => {
                 // Plugins fetched, check that site hasn't changed.
                 if (data.siteId == this.sitesProvider.getCurrentSiteId() && plugins.length) {
@@ -132,7 +131,7 @@ export class CoreSitePluginsHelperProvider {
                     this.loadSitePlugins(plugins).catch((error) => {
                         this.logger.error(error);
                     }).finally(() => {
-                        eventsProvider.trigger(CoreEventsProvider.SITE_PLUGINS_LOADED, {}, data.siteId);
+                        CoreEvents.trigger(CoreEvents.SITE_PLUGINS_LOADED, {}, data.siteId);
                     });
                 }
             }).catch((e) => {
@@ -143,7 +142,7 @@ export class CoreSitePluginsHelperProvider {
         });
 
         // Unload plugins on logout if any.
-        eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             if (this.sitePluginsProvider.hasSitePluginsLoaded) {
                 // Temporary fix. Reload the page to unload all plugins.
                 window.location.reload();
@@ -151,7 +150,7 @@ export class CoreSitePluginsHelperProvider {
         });
 
         // Re-load plugins restricted for courses when the list of user courses changes.
-        eventsProvider.on(CoreCoursesProvider.EVENT_MY_COURSES_CHANGED, (data) => {
+        CoreEvents.on(CoreCoursesProvider.EVENT_MY_COURSES_CHANGED, (data) => {
             if (data && data.siteId && data.siteId == this.sitesProvider.getCurrentSiteId() && data.added && data.added.length) {
                 this.reloadCourseRestrictHandlers();
             }
@@ -1035,7 +1034,7 @@ export class CoreSitePluginsHelperProvider {
         }
 
         return Promise.all(promises).then(() => {
-            this.eventsProvider.trigger(CoreEventsProvider.SITE_PLUGINS_COURSE_RESTRICT_UPDATED, {});
+            CoreEvents.trigger(CoreEvents.SITE_PLUGINS_COURSE_RESTRICT_UPDATED, {});
         });
     }
 }

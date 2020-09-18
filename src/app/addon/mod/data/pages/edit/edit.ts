@@ -20,7 +20,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreGroupsProvider } from '@services/groups';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { AddonModDataProvider } from '../../providers/data';
@@ -70,7 +70,7 @@ export class AddonModDataEditPage {
             protected courseProvider: CoreCourseProvider, protected dataProvider: AddonModDataProvider,
             protected dataOffline: AddonModDataOfflineProvider, protected dataHelper: AddonModDataHelperProvider,
             sitesProvider: CoreSitesProvider, protected navCtrl: NavController, protected translate: TranslateService,
-            protected eventsProvider: CoreEventsProvider, protected fileUploaderProvider: CoreFileUploaderProvider,
+            protected fileUploaderProvider: CoreFileUploaderProvider,
             private tagProvider: CoreTagProvider) {
         this.module = params.get('module') || {};
         this.entryId = params.get('entryId') || null;
@@ -218,7 +218,7 @@ export class AddonModDataEditPage {
                     this.domUtils.triggerFormSubmittedEvent(this.formElement, result.sent, this.siteId);
 
                     if (result.sent) {
-                        this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'data' });
+                        CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'data' });
                     }
 
                     const promises = [];
@@ -229,7 +229,7 @@ export class AddonModDataEditPage {
                     promises.push(this.dataProvider.invalidateEntriesData(this.data.id, this.siteId));
 
                     return Promise.all(promises).then(() => {
-                        this.eventsProvider.trigger(AddonModDataProvider.ENTRY_CHANGED,
+                        CoreEvents.trigger(AddonModDataProvider.ENTRY_CHANGED,
                             { dataId: this.data.id, entryId: this.entryId } , this.siteId);
                     }).finally(() => {
                         return this.returnToEntryList();

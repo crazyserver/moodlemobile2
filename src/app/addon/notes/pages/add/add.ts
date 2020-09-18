@@ -15,7 +15,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonNotesProvider } from '../../providers/notes';
@@ -43,8 +43,7 @@ export class AddonNotesAddPage {
             protected appProvider: CoreAppProvider,
             protected domUtils: CoreDomUtilsProvider,
             protected notesProvider: AddonNotesProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected sitesProvider: CoreSitesProvider) {
+                        protected sitesProvider: CoreSitesProvider) {
         this.userId = params.get('userId');
         this.courseId = params.get('courseId');
         this.type = params.get('type') || 'personal';

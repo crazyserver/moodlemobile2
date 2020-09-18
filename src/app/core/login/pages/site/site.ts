@@ -16,7 +16,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, ModalController, AlertController, NavParams } from '@ionic/angular';
 import { CoreSite } from '@classes/site';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider, CoreSiteCheckResponse, CoreLoginSiteInfo } from '@services/sites';
 import { CoreCustomURLSchemesProvider, CoreCustomURLSchemesHandleError } from '@services/urlschemes';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -73,8 +73,7 @@ export class CoreLoginSitePage {
             protected alertCtrl: AlertController,
             protected urlUtils: CoreUrlUtilsProvider,
             protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected translate: TranslateService,
+                        protected translate: TranslateService,
             protected utils: CoreUtilsProvider,
             protected urlSchemesProvider: CoreCustomURLSchemesProvider,
             protected textUtils: CoreTextUtilsProvider) {

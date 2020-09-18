@@ -17,7 +17,7 @@ import { IonicPage, NavParams } from '@ionic/angular';
 import { CoreUserProvider } from '../../providers/user';
 import { CoreUserHelperProvider } from '../../providers/helper';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 
@@ -41,8 +41,7 @@ export class CoreUserAboutPage {
     title: string;
 
     constructor(navParams: NavParams, private userProvider: CoreUserProvider, private userHelper: CoreUserHelperProvider,
-            private domUtils: CoreDomUtilsProvider, private eventsProvider: CoreEventsProvider,
-            private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider) {
+            private domUtils: CoreDomUtilsProvider,             private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider) {
 
         this.userId = navParams.get('userId');
         this.courseId = navParams.get('courseId');
@@ -88,7 +87,7 @@ export class CoreUserAboutPage {
     refreshUser(refresher?: any): void {
         this.userProvider.invalidateUserCache(this.userId).finally(() => {
             this.fetchUser().finally(() => {
-                this.eventsProvider.trigger(CoreUserProvider.PROFILE_REFRESHED, {
+                CoreEvents.trigger(CoreUserProvider.PROFILE_REFRESHED, {
                     courseId: this.courseId, userId: this.userId,
                     user: this.user
                 }, this.siteId);

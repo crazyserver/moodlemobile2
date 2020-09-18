@@ -15,7 +15,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -58,7 +58,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
     constructor(navParams: NavParams, protected navCtrl: NavController, protected sitesProvider: CoreSitesProvider,
             protected syncProvider: CoreSyncProvider, protected domUtils: CoreDomUtilsProvider,
             protected translate: TranslateService, protected fileUploaderHelper: CoreFileUploaderHelperProvider,
-            protected eventsProvider: CoreEventsProvider, protected assignProvider: AddonModAssignProvider,
+            protected assignProvider: AddonModAssignProvider,
             protected assignOfflineProvider: AddonModAssignOfflineProvider, protected assignHelper: AddonModAssignHelperProvider,
             protected assignSyncProvider: AddonModAssignSyncProvider) {
 
@@ -318,7 +318,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
             await this.assignHelper.clearSubmissionPluginTmpData(this.assign, this.userSubmission, inputData);
 
             if (sent) {
-                this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'assign' });
+                CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'assign' });
             }
 
             // Submission saved, trigger events.
@@ -330,12 +330,12 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
                 userId: this.userId,
             };
 
-            this.eventsProvider.trigger(AddonModAssignProvider.SUBMISSION_SAVED_EVENT, params,
+            CoreEvents.trigger(AddonModAssignProvider.SUBMISSION_SAVED_EVENT, params,
                     this.sitesProvider.getCurrentSiteId());
 
             if (!this.assign.submissiondrafts) {
                 // No drafts allowed, so it was submitted. Trigger event.
-                this.eventsProvider.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, params,
+                CoreEvents.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, params,
                         this.sitesProvider.getCurrentSiteId());
             }
         } finally {

@@ -283,7 +283,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
             // Detect if anything was sent to server.
             this.dataSentObserver && this.dataSentObserver.off();
 
-            this.dataSentObserver = this.eventsProvider.on(AddonModLessonProvider.DATA_SENT_EVENT, (data) => {
+            this.dataSentObserver = CoreEvents.on(AddonModLessonProvider.DATA_SENT_EVENT, (data) => {
                 // Ignore launch sending because it only affects timers.
                 if (data.lessonId === this.lesson.id && data.type != 'launch') {
                     this.dataSent = true;
