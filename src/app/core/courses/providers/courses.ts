@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSitesReadingStrategy } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSite } from '@classes/site';
 import { makeSingleton } from '@singletons/core.singletons';
 

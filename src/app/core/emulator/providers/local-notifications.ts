@@ -14,9 +14,9 @@
 
 import { Injectable } from '@angular/core';
 import { LocalNotifications, ILocalNotification, ILocalNotificationAction } from '@ionic-native/local-notifications';
-import { CoreAppProvider, CoreAppSchema } from '@providers/app';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider, CoreAppSchema } from '@services/app';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { CoreConstants } from '@core/constants';
 import { CoreConfigConstants } from '../../../configconstants';

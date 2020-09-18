@@ -14,7 +14,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreDomUtils } from '@providers/utils/dom';
+import { CoreDomUtils } from '@services/utils/dom';
 import { AddonModH5PActivityIndexComponent } from '../../components/index/index';
 import { AddonModH5PActivityData } from '../../providers/h5pactivity';
 

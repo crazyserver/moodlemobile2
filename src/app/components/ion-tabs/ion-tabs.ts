@@ -18,9 +18,9 @@ import {
     Tabs, Tab, NavController, ViewController, App, Config, Platform, DeepLinker, Keyboard, RootNode, NavOptions
 } from '@ionic/angular';
 import { CoreIonTabComponent } from './ion-tab';
-import { CoreUtilsProvider, PromiseDefer } from '@providers/utils/utils';
-import { CoreAppProvider } from '@providers/app';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { TranslateService } from '@ngx-translate/core';
 
 /**

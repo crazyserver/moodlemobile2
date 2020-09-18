@@ -14,12 +14,12 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 import { AddonModChatMessageForView, AddonModChatSessionMessageForView } from './helper';
 
 /**

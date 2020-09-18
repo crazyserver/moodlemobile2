@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreSites } from '@providers/sites';
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreSites } from '@services/sites';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreH5P } from '../providers/h5p';
 import { CoreH5PFileStorage } from './file-storage';
 import { CoreH5PFramework } from './framework';

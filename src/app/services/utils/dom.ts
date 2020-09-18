@@ -25,7 +25,7 @@ import { CoreConfigProvider } from '../config';
 import { CoreEventsProvider } from '../events';
 import { CoreLogger } from '../logger';
 import { CoreUrlUtilsProvider } from './url';
-import { CoreFileProvider } from '@providers/file';
+import { CoreFileProvider } from '@services/file';
 import { CoreConstants } from '@core/constants';
 import { CoreBSTooltipComponent } from '@components/bs-tooltip/bs-tooltip';
 import { Md5 } from 'ts-md5/dist/md5';

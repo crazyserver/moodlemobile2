@@ -14,15 +14,15 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFileProvider } from '@providers/file';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
+import { CoreAppProvider } from '@services/app';
+import { CoreFileProvider } from '@services/file';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreSite } from '@classes/site';
-import { CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 
 import { makeSingleton } from '@singletons/core.singletons';
 

@@ -16,10 +16,10 @@ import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreEventsProvider } from '@services/events';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 /**

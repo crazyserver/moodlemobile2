@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injector, OnInit, Input } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreLogger } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Template class to easily create components for blocks.

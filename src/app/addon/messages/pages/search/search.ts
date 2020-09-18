@@ -14,12 +14,12 @@
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider, AddonMessagesConversationMember, AddonMessagesMessageAreaContact } from '../../providers/messages';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreAppProvider } from '@providers/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Page for searching users.

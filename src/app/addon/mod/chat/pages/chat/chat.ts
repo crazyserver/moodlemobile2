@@ -14,11 +14,11 @@
 
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { Content, IonicPage, ModalController, NavController, NavParams } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModChatProvider } from '../../providers/chat';
 import { AddonModChatHelperProvider, AddonModChatMessageForView } from '../../providers/helper';
 import { Network } from '@ionic-native/network';

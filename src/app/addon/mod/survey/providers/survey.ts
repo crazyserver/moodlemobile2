@@ -13,15 +13,15 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { AddonModSurveyOfflineProvider } from './offline';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 
 /**
  * Service that provides some features for surveys.

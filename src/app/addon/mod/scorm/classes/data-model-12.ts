@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { AddonModScormProvider } from '../providers/scorm';
 
 /**

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreLogger } from '@services/logger';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreConstants } from '@core/constants';
 
 /**

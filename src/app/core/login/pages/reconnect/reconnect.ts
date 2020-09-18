@@ -14,10 +14,10 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

@@ -14,14 +14,14 @@
 
 import { Directive, Input, AfterViewInit, ElementRef, OnChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { CoreApp } from '@providers/app';
-import { CoreLogger } from '@providers/logger';
-import { CoreFile } from '@providers/file';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreApp } from '@services/app';
+import { CoreLogger } from '@services/logger';
+import { CoreFile } from '@services/file';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Directive to handle external content.

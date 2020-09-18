@@ -14,10 +14,10 @@
 
 import { Injectable } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Interface that all settings handlers must implement.

@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModUrlIndexComponent } from '../components/index/index';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from '@core/course/providers/module-delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';

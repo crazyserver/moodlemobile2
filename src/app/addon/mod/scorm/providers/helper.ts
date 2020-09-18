@@ -14,9 +14,9 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonModScormProvider, AddonModScormAttemptCountResult } from './scorm';
 import { AddonModScormOfflineProvider } from './scorm-offline';
 

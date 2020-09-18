@@ -13,17 +13,17 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreAppProvider } from '@providers/app';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreAppProvider } from '@services/app';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonMessagesOfflineProvider } from './messages-offline';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreEmulatorHelperProvider } from '@core/emulator/providers/helper';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreWSExternalWarning } from '@providers/ws';
+import { CoreWSExternalWarning } from '@services/ws';
 
 /**
  * Service to handle messages.

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreSites } from '@providers/sites';
-import { CoreTextUtils } from '@providers/utils/text';
+import { CoreSites } from '@services/sites';
+import { CoreTextUtils } from '@services/utils/text';
 import { CoreH5P, CoreH5PProvider } from '../providers/h5p';
 import {
     CoreH5PCore, CoreH5PDisplayOptionBehaviour, CoreH5PContentDependencyData, CoreH5PLibraryData, CoreH5PLibraryAddonData,

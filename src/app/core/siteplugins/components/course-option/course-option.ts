@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreSitePluginsProvider } from '../../providers/siteplugins';
 import { CoreSitePluginsPluginContentComponent } from '../plugin-content/plugin-content';
 

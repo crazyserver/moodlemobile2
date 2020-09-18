@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreWSProvider } from '@providers/ws';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFileProvider } from '@providers/file';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreWSProvider } from '@services/ws';
+import { CoreAppProvider } from '@services/app';
+import { CoreFileProvider } from '@services/file';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreConstants } from '@core/constants';
 import { Md5 } from 'ts-md5/dist/md5';
 

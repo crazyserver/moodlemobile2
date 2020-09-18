@@ -14,9 +14,9 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreFileSessionProvider } from '@providers/file-session';
-import { CoreFileHelperProvider } from '@providers/file-helper';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreFileSessionProvider } from '@services/file-session';
+import { CoreFileHelperProvider } from '@services/file-helper';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import {
     AddonModAssignProvider, AddonModAssignAssign, AddonModAssignSubmission, AddonModAssignPlugin

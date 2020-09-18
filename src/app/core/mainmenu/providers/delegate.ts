@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 /**

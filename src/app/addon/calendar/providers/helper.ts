@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { AddonCalendarProvider } from './calendar';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigProvider } from '@providers/config';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreConfigProvider } from '@services/config';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import * as moment from 'moment';
 
 /**

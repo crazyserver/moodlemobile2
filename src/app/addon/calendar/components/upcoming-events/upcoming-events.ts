@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Component, OnDestroy, OnInit, Input, DoCheck, Output, EventEmitter, KeyValueDiffers } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonCalendarProvider, AddonCalendarCalendarEvent } from '../../providers/calendar';
 import { AddonCalendarHelperProvider, AddonCalendarFilter } from '../../providers/helper';
 import { AddonCalendarOfflineProvider } from '../../providers/calendar-offline';

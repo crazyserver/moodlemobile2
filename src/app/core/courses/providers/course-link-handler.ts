@@ -14,16 +14,16 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreContentLinksHandlerBase } from '@core/contentlinks/classes/base-handler';
 import { CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreCoursesProvider } from './courses';
 import { NavController } from '@ionic/angular';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 
 /**
  * Handler to treat links to course view or enrol (except site home).

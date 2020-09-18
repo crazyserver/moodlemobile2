@@ -14,10 +14,10 @@
 
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Interface that all handlers must implement.

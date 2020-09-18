@@ -14,7 +14,7 @@
 
 import { Component, Optional, Injector } from '@angular/core';
 import { Content, NavController } from '@ionic/angular';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 import { AddonModScormProvider, AddonModScormAttemptCountResult } from '../../providers/scorm';

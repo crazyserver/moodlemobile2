@@ -13,17 +13,17 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreApp } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLangProvider } from '@providers/lang';
-import { CoreLogger } from '@providers/logger';
+import { CoreApp } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLangProvider } from '@services/lang';
+import { CoreLogger } from '@services/logger';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider, PromiseDefer } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
 import { CoreConfigConstants } from '../../../configconstants';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 
 /**
  * Handler of a site plugin.

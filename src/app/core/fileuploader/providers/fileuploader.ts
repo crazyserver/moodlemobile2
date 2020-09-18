@@ -17,17 +17,17 @@ import { ModalController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions, CaptureVideoOptions } from '@ionic-native/media-capture';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreFileProvider } from '@providers/file';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreWSFileUploadOptions } from '@providers/ws';
+import { CoreFileProvider } from '@services/file';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreWSFileUploadOptions } from '@services/ws';
 import { Subject } from 'rxjs';
-import { CoreApp } from '@providers/app';
+import { CoreApp } from '@services/app';
 
 /**
  * File upload options.

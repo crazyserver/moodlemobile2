@@ -13,15 +13,15 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreFilepoolProvider } from '@providers/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreCourseOptionsHandler, CoreCourseOptionsHandlerData } from '@core/course/providers/options-delegate';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { AddonBlogEntriesComponent } from '../components/entries/entries';
 import { AddonBlogProvider } from './blog';
-import { CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalFile } from '@services/ws';
 
 /**
  * Course nav handler.

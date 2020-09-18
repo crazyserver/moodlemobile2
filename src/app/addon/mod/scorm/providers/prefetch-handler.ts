@@ -14,19 +14,19 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from '@core/course/providers/course';
-import { CoreFileProvider } from '@providers/file';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreFileProvider } from '@services/file';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreCourseActivityPrefetchHandlerBase } from '@core/course/classes/activity-prefetch-handler';
 import { AddonModScormProvider } from './scorm';
 import { AddonModScormSyncProvider } from './scorm-sync';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 /**
  * Progress event used when downloading a SCORM.

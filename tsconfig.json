@@ -14,15 +14,15 @@
     "target": "es5",
     "baseUrl": "./src",
     "paths": {
-      "@addon/*": ["addon/*"],
+      "@addon/*": ["app/addon/*"],
       "@app/*": ["app/*"],
-      "@classes/*": ["classes/*"],
-      "@core/*": ["core/*"],
-      "@providers/*": ["providers/*"],
-      "@components/*": ["components/*"],
-      "@directives/*": ["directives/*"],
-      "@pipes/*": ["pipes/*"],
-      "@singletons/*": ["singletons/*"]
+      "@classes/*": ["app/classes/*"],
+      "@core/*": ["app/core/*"],
+      "@services/*": ["app/services/*"],
+      "@components/*": ["app/components/*"],
+      "@directives/*": ["app/directives/*"],
+      "@pipes/*": ["app/pipes/*"],
+      "@singletons/*": ["app/singletons/*"]
     },
     "typeRoots": [
       "node_modules/@types"

@@ -16,13 +16,13 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSettingsDelegate, CoreSettingsHandlerData } from '../../providers/delegate';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider, CoreSiteBasicInfo } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreSharedFilesProvider } from '@core/sharedfiles/providers/sharedfiles';
 import { CoreSettingsHelper, CoreSiteSpaceUsage } from '../../providers/helper';
-import { CoreApp } from '@providers/app';
+import { CoreApp } from '@services/app';
 
 /**
  * Page that displays the list of site settings pages.

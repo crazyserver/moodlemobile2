@@ -14,11 +14,11 @@
 
 import { Component, Input, Output, OnChanges, EventEmitter, SimpleChange, Optional } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import * as moment from 'moment';

@@ -25,8 +25,8 @@ import { CoreGradesOverviewLinkHandler } from './providers/overview-link-handler
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 import { CoreGradesUserHandler } from './providers/user-handler';
 import { CoreUserDelegate } from '@core/user/providers/user-delegate';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 
 // List of providers (without handlers).

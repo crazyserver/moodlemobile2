@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreConfigConstants } from '../../../../configconstants';
 import { CoreSite } from '@classes/site';
-import { CoreWSExternalWarning } from '@providers/ws';
+import { CoreWSExternalWarning } from '@services/ws';
 
 /**
  * Service to handle Airnotifier message output.

@@ -19,15 +19,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { AddonModFeedbackProvider } from '../../providers/feedback';
 import { AddonModFeedbackHelperProvider } from '../../providers/helper';
 import { AddonModFeedbackSyncProvider } from '../../providers/sync';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Page that displays feedback form.

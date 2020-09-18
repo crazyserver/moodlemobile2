@@ -14,10 +14,10 @@
 
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSearchHistoryProvider, CoreSearchHistoryItem } from '../../providers/search-history';
 
 /**

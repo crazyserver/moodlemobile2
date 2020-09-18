@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterDelegate } from './delegate';
 import { CoreFilterProvider, CoreFilterFilter, CoreFilterFormatTextOptions, CoreFilterClassifiedFilters } from './filter';
 import { CoreCourseProvider } from '@core/course/providers/course';

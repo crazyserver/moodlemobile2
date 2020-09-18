@@ -14,8 +14,8 @@
 
 import { Component, Optional } from '@angular/core';
 import { IonicPage, NavController } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreConfigConstants } from '../../../../configconstants';
 

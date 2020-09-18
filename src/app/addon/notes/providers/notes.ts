@@ -13,16 +13,16 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreLogger } from '@providers/logger';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreLogger } from '@services/logger';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonNotesOfflineProvider } from './notes-offline';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
-import { CoreWSExternalWarning } from '@providers/ws';
+import { CoreWSExternalWarning } from '@services/ws';
 
 /**
  * Service to handle notes.

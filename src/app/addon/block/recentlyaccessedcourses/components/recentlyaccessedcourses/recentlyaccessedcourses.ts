@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, Input, OnChanges, SimpleChange } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCoursesProvider, CoreCoursesMyCoursesUpdatedEventData } from '@core/courses/providers/courses';
 import { CoreCoursesHelperProvider } from '@core/courses/providers/helper';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';

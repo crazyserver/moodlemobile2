@@ -16,8 +16,8 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams, NavController } from '@ionic/angular';
 import { AddonModFeedbackProvider } from '../../providers/feedback';
 import { AddonModFeedbackHelperProvider } from '../../providers/helper';
-import { CoreGroupInfo, CoreGroupsProvider } from '@providers/groups';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreGroupInfo, CoreGroupsProvider } from '@services/groups';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
 /**

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreBlockHandlerData } from '@core/block/providers/delegate';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { AddonBlockMyOverviewComponent } from '../components/myoverview/myoverview';

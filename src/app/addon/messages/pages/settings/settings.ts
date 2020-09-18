@@ -19,11 +19,11 @@ import {
     AddonMessagesMessagePreferencesNotificationProcessor
 } from '../../providers/messages';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreAppProvider } from '@providers/app';
-import { CoreConfigProvider } from '@providers/config';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreConfigProvider } from '@services/config';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreConstants } from '@core/constants';
 
 /**

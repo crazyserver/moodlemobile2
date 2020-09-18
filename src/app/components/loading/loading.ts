@@ -15,8 +15,8 @@
 import { Component, Input, OnInit, OnChanges, SimpleChange, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { coreShowHideAnimation } from '@classes/animations';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Component to show a loading spinner and message while data is being loaded.

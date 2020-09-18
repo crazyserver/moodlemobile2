@@ -18,8 +18,8 @@ import {
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreCompileProvider } from '../../providers/compile';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * This component has a behaviour similar to $compile for AngularJS. Given an HTML code, it will compile it so all its

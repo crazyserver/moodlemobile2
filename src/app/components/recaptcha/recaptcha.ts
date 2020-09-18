@@ -14,9 +14,9 @@
 
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreLangProvider } from '@providers/lang';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreLangProvider } from '@services/lang';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreRecaptchaModalComponent } from './recaptchamodal';
 
 /**

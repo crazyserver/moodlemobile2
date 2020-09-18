@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreEventsProvider } from '@services/events';
 import { CoreSite } from '@classes/site';
 
 export interface CoreDelegateHandler {

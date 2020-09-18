@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import { Component, Input, Output, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreFileProvider } from '@providers/file';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreFileProvider } from '@services/file';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Component to handle a local file. Only files inside the app folder can be managed.

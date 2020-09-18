@@ -16,8 +16,8 @@ import { NgModule } from '@angular/core';
 import { CoreH5PComponentsModule } from './components/components.module';
 import { CoreH5P, CoreH5PProvider } from './providers/h5p';
 import { CoreH5PPluginFileHandler } from './providers/pluginfile-handler';
-import { CoreEventsProvider } from '@providers/events';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CoreEventsProvider } from '@services/events';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 // List of providers (without handlers).
 export const CORE_H5P_PROVIDERS: any[] = [

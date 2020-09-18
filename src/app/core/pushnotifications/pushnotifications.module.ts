@@ -18,10 +18,10 @@ import { CorePushNotificationsProvider } from './providers/pushnotifications';
 import { CorePushNotificationsDelegate } from './providers/delegate';
 import { CorePushNotificationsRegisterCronHandler } from './providers/register-cron-handler';
 import { CorePushNotificationsUnregisterCronHandler } from './providers/unregister-cron-handler';
-import { CoreCronDelegate } from '@providers/cron';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
+import { CoreCronDelegate } from '@services/cron';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 
 // List of providers (without handlers).
 export const CORE_PUSHNOTIFICATIONS_PROVIDERS: any[] = [

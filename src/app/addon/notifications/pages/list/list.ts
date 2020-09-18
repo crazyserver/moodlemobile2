@@ -15,11 +15,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreEventsProvider, CoreEventObserver } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreEventsProvider, CoreEventObserver } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonNotificationsProvider, AddonNotificationsAnyNotification } from '../../providers/notifications';
 import { AddonNotificationsHelperProvider } from '../../providers/helper';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';

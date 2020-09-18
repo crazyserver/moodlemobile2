@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { AddonModWorkshopOfflineProvider } from './offline';
 import { CoreSite } from '@classes/site';

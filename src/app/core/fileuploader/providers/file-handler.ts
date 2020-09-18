@@ -14,9 +14,9 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { CoreApp } from '@providers/app';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreApp } from '@services/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreFileUploaderHandler, CoreFileUploaderHandlerData } from './delegate';
 import { CoreFileUploaderHelperProvider } from './helper';
 import { CoreFileUploaderProvider } from './fileuploader';

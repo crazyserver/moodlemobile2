@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreFilepoolProvider } from '@providers/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 
 /**
  * Service that provides some features for labels.

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Injector } from '@angular/core';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import {
     CoreCourseModuleMainResourceComponent, CoreCourseResourceDownloadResult
 } from '@core/course/classes/main-resource-component';

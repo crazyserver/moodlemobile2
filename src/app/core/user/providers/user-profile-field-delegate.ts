@@ -14,9 +14,9 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreEventsProvider } from '@services/events';
 
 export interface CoreUserProfileFieldHandler extends CoreDelegateHandler {
     /**

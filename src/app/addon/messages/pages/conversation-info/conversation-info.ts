@@ -17,8 +17,8 @@ import { IonicPage, NavParams, ViewController } from '@ionic/angular';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMember
 } from '../../providers/messages';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Page that displays the list of conversations, including group conversations.

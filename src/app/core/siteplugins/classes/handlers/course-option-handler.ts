@@ -19,7 +19,7 @@ import {
 } from '@core/course/providers/options-delegate';
 import { CoreSitePluginsBaseHandler } from './base-handler';
 import { CoreSitePluginsCourseOptionComponent } from '../../components/course-option/course-option';
-import { CoreUtilsProvider, PromiseDefer } from '@providers/utils/utils';
+import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
 
 /**
  * Handler to display a site plugin in course options.

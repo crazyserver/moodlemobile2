@@ -15,9 +15,9 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreFileHelperProvider } from '@providers/file-helper';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreFileHelperProvider } from '@services/file-helper';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import {
     AddonModAssignProvider, AddonModAssignAssign, AddonModAssignSubmission, AddonModAssignPlugin
 } from '../../../providers/assign';

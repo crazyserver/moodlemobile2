@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreFilepoolProvider } from '@providers/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreFilepoolProvider } from '@services/filepool';
 import { AddonModPageProvider } from './page';
-import { CoreFileProvider } from '@providers/file';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreWSProvider } from '@providers/ws';
+import { CoreFileProvider } from '@services/file';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreWSProvider } from '@services/ws';
 
 /**
  * Service that provides some features for page.

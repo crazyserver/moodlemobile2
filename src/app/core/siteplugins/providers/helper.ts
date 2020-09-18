@@ -14,25 +14,25 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLangProvider } from '@providers/lang';
-import { CoreLogger } from '@providers/logger';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLangProvider } from '@services/lang';
+import { CoreLogger } from '@services/logger';
 import { CoreSite } from '@classes/site';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSitePluginsProvider } from './siteplugins';
 import { CoreCompileProvider } from '@core/compile/providers/compile';
 import { CoreQuestionProvider } from '@core/question/providers/question';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
-import { CoreWSProvider } from '@providers/ws';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
+import { CoreWSProvider } from '@services/ws';
 
 // Delegates
 import { CoreMainMenuDelegate } from '@core/mainmenu/providers/delegate';

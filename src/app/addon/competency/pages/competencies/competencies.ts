@@ -15,7 +15,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import {
     AddonCompetencyProvider, AddonCompetencyDataForCourseCompetenciesPageResult, AddonCompetencyDataForPlanPageResult,

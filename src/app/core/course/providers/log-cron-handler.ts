@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreCronHandler } from '@providers/cron';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreCronHandler } from '@services/cron';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseProvider } from '@core/course/providers/course';
 
 /**

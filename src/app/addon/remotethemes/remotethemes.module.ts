@@ -14,10 +14,10 @@
 
 import { NgModule } from '@angular/core';
 import { AddonRemoteThemesProvider } from './providers/remotethemes';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreInitDelegate } from '@providers/init';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreInitDelegate } from '@services/init';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 
 // List of providers (without handlers).
 export const ADDON_REMOTETHEMES_PROVIDERS: any[] = [

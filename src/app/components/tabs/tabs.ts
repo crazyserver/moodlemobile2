@@ -19,10 +19,10 @@ import {
 import { Content, Slides, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreAppProvider } from '@providers/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreAppProvider } from '@services/app';
 import { CoreTabComponent } from './tab';
-import { CoreConfigProvider } from '@providers/config';
+import { CoreConfigProvider } from '@services/config';
 import { CoreConstants } from '@core/constants';
 import { CoreConfigConstants } from '../../configconstants';
 

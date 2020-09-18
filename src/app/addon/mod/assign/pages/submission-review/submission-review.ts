@@ -14,8 +14,8 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { AddonModAssignProvider, AddonModAssignAssign } from '../../providers/assign';
 import { AddonModAssignSubmissionComponent } from '../../components/submission/submission';

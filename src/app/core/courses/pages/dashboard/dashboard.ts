@@ -14,9 +14,9 @@
 
 import { Component, OnDestroy, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { IonicPage, NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTabsComponent } from '@components/tabs/tabs';
 import { CoreBlockDelegate } from '@core/block/providers/delegate';
 import { CoreBlockComponent } from '@core/block/components/block/block';

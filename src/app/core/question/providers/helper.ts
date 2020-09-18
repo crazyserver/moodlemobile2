@@ -14,12 +14,12 @@
 
 import { Injectable, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreQuestionProvider } from './question';
 import { CoreQuestionDelegate } from './delegate';
 

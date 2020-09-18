@@ -15,9 +15,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicPage, NavParams, Content, ModalController, Modal } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 import { AddonModQuizProvider } from '../../providers/quiz';
 import { AddonModQuizHelperProvider } from '../../providers/helper';

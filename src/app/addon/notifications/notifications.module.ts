@@ -19,12 +19,12 @@ import { AddonNotificationsMainMenuHandler } from './providers/mainmenu-handler'
 import { AddonNotificationsSettingsHandler } from './providers/settings-handler';
 import { AddonNotificationsCronHandler } from './providers/cron-handler';
 import { AddonNotificationsPushClickHandler } from './providers/push-click-handler';
-import { CoreAppProvider } from '@providers/app';
-import { CoreInitDelegate } from '@providers/init';
+import { CoreAppProvider } from '@services/app';
+import { CoreInitDelegate } from '@services/init';
 import { CoreMainMenuDelegate } from '@core/mainmenu/providers/delegate';
 import { CoreSettingsDelegate } from '@core/settings/providers/delegate';
-import { CoreCronDelegate } from '@providers/cron';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
+import { CoreCronDelegate } from '@services/cron';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 
 // List of providers (without handlers).

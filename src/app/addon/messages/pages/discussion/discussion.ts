@@ -15,8 +15,8 @@
 import { Component, OnDestroy, ViewChild, Optional } from '@angular/core';
 import { IonicPage, NavParams, NavController, Content, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMember, AddonMessagesConversationMessage,
     AddonMessagesGetMessagesMessage
@@ -24,11 +24,11 @@ import {
 import { AddonMessagesOfflineProvider } from '../../providers/messages-offline';
 import { AddonMessagesSyncProvider } from '../../providers/sync';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreLogger } from '@providers/logger';
-import { CoreAppProvider } from '@providers/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreLogger } from '@services/logger';
+import { CoreAppProvider } from '@services/app';
 import { coreSlideInOut } from '@classes/animations';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreInfiniteLoadingComponent } from '@components/infinite-loading/infinite-loading';

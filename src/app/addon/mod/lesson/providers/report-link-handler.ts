@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreContentLinksHandlerBase } from '@core/contentlinks/classes/base-handler';
 import { CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';

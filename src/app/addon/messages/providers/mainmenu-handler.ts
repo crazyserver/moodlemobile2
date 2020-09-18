@@ -15,12 +15,12 @@
 import { Injectable } from '@angular/core';
 import { AddonMessagesProvider } from './messages';
 import { CoreMainMenuHandler, CoreMainMenuHandlerToDisplay } from '@core/mainmenu/providers/delegate';
-import { CoreCronHandler } from '@providers/cron';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreAppProvider } from '@providers/app';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
+import { CoreCronHandler } from '@services/cron';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreAppProvider } from '@services/app';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 import { CoreEmulatorHelperProvider } from '@core/emulator/providers/helper';

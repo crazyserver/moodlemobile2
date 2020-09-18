@@ -14,9 +14,9 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Page that displays a form to enter a password to self enrol in a course.

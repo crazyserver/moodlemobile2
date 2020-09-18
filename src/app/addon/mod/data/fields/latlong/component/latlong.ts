@@ -17,8 +17,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Platform } from '@ionic/angular';
 import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation';
 import { AddonModDataFieldPluginComponent } from '../../../classes/field-plugin-component';
-import { CoreApp, CoreAppProvider } from '@providers/app';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreApp, CoreAppProvider } from '@services/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Component to render data latlong field.

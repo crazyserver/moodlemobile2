@@ -14,10 +14,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterDefaultHandler } from '@core/filter/providers/default-filter';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from '@core/filter/providers/filter';
-import { CoreLangProvider } from '@providers/lang';
+import { CoreLangProvider } from '@services/lang';
 import { CoreSite } from '@classes/site';
 
 /**

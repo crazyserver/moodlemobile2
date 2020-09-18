@@ -15,10 +15,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreSyncProvider } from '@providers/sync';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreSyncProvider } from '@services/sync';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreFileUploaderHelperProvider } from '@core/fileuploader/providers/helper';
 import { AddonModAssignProvider, AddonModAssignAssign, AddonModAssignSubmission } from '../../providers/assign';
 import { AddonModAssignOfflineProvider } from '../../providers/assign-offline';

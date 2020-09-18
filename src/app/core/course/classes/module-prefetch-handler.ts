@@ -13,16 +13,16 @@
 // limitations under the License.
 
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from '../providers/course';
-import { CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalFile } from '@services/ws';
 import { CoreCourseModulePrefetchHandler } from '../providers/module-prefetch-delegate';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 /**
  * Base prefetch handler to be registered in CoreCourseModulePrefetchDelegate. Prefetch handlers should inherit either

@@ -15,11 +15,11 @@
 import { Component, OnDestroy, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreCoursesProvider } from '../../providers/courses';
 import { CoreCourseOptionsDelegate } from '@core/course/providers/options-delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';

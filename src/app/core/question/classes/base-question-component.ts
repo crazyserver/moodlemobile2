@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Input, Output, EventEmitter, Injector, ElementRef } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreLogger } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 
 /**

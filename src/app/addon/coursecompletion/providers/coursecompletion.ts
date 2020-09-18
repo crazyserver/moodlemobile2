@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreSite } from '@classes/site';
-import { CoreWSExternalWarning } from '@providers/ws';
+import { CoreWSExternalWarning } from '@services/ws';
 
 /**
  * Service to handle course completion.

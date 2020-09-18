@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Globalization, GlobalizationOptions } from '@ionic-native/globalization';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Mock the Globalization Error.

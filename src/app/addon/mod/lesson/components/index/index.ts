@@ -14,9 +14,9 @@
 
 import { Component, Optional, Injector, Input, ViewChild, ElementRef } from '@angular/core';
 import { Content, NavController } from '@ionic/angular';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreGroupsProvider, CoreGroupInfo } from '@services/groups';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonModLessonProvider } from '../../providers/lesson';

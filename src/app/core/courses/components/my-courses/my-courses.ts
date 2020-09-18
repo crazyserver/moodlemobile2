@@ -14,9 +14,9 @@
 
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Searchbar } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCoursesProvider, CoreCoursesMyCoursesUpdatedEventData } from '../../providers/courses';
 import { CoreCoursesHelperProvider } from '../../providers/helper';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';

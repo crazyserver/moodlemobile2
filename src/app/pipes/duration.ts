@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreLogger } from '@services/logger';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
  * Filter to turn a number of seconds to a duration. E.g. 60 -> 1 minute.

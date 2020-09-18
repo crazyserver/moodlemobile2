@@ -17,7 +17,7 @@ import { CoreContentLinksHandlerBase } from '@core/contentlinks/classes/base-han
 import { CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { AddonMessagesProvider } from './messages';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Content links handler for a discussion.

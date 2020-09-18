@@ -14,7 +14,7 @@
 
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from '@ionic/angular';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Page that displays the phase info modal.

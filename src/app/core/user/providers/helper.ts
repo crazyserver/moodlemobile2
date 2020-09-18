@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 import { TranslateService } from '@ngx-translate/core';
 
 /**

@@ -14,8 +14,8 @@
 
 import { NgModule } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { CoreCronDelegate } from '@providers/cron';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreCronDelegate } from '@services/cron';
+import { CoreEventsProvider } from '@services/events';
 import { CoreCourseProvider } from './providers/course';
 import { CoreCourseHelperProvider } from './providers/helper';
 import { CoreCourseLogHelperProvider } from './providers/log-helper';

@@ -14,7 +14,7 @@
 
 import { Injector } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from '@core/course/providers/module-delegate';
 import { CoreSitePluginsBaseHandler } from './base-handler';
 import { CoreSitePluginsModuleIndexComponent } from '../../components/module-index/module-index';

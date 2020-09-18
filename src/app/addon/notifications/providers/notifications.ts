@@ -13,16 +13,16 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreAppProvider } from '@services/app';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreEmulatorHelperProvider } from '@core/emulator/providers/helper';
 import { AddonMessagesProvider, AddonMessagesMarkMessageReadResult } from '@addon/messages/providers/messages';
 import { CoreSite } from '@classes/site';
-import { CoreWSExternalWarning } from '@providers/ws';
+import { CoreWSExternalWarning } from '@services/ws';
 
 /**
  * Service to handle notifications.

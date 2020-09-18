@@ -14,8 +14,8 @@
 
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSitePluginsProvider } from '../../providers/siteplugins';
 import { CoreCourseModuleDelegate, CoreCourseModuleMainComponent } from '@core/course/providers/module-delegate';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';

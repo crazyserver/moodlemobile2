@@ -14,7 +14,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 import * as moment from 'moment';
 
 /**

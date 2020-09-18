@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import {
     AddonModAssignProvider, AddonModAssignAssign, AddonModAssignSubmission, AddonModAssignPlugin
 } from '../../../providers/assign';

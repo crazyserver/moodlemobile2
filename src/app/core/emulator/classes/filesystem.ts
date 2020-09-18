@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 
 /**
  * This file includes all the classes needed to emulate file system in NodeJS (desktop apps).

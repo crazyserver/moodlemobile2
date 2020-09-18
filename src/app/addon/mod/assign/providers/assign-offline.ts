@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreFileProvider } from '@providers/file';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreFileProvider } from '@services/file';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
  * Service to handle offline assign.

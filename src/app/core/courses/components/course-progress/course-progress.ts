@@ -14,9 +14,9 @@
 
 import { Component, Input, OnInit, OnDestroy, Optional } from '@angular/core';
 import { NavController, PopoverController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreCourseProvider } from '@core/course/providers/course';

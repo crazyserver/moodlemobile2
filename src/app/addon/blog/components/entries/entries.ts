@@ -14,10 +14,10 @@
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Content } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonBlogProvider, AddonBlogPost } from '../../providers/blog';
 import { CoreCommentsProvider } from '@core/comments/providers/comments';

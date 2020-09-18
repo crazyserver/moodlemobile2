@@ -14,9 +14,9 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseFormatDefaultHandler } from './default-format';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 

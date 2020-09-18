@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injector, Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreLogger } from '@services/logger';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { AddonModDataDefaultFieldHandler } from './default-field-handler';
 

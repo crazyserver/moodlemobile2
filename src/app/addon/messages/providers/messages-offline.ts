@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreAppProvider } from '@providers/app';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Service to handle Offline messages.

@@ -15,12 +15,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { IonicPage, NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreSyncProvider } from '@providers/sync';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreSyncProvider } from '@services/sync';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 import { CoreQuestionComponent } from '@core/question/components/question/question';
 import { MoodleMobileApp } from '../../../../../app/app.component';

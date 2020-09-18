@@ -14,11 +14,11 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, NavParams, ModalController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreSyncProvider } from '@providers/sync';
-import { CoreDomUtils } from '@providers/utils/dom';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreSyncProvider } from '@services/sync';
+import { CoreDomUtils } from '@services/utils/dom';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreIonTabsComponent } from '@components/ion-tabs/ion-tabs';
 import { AddonModScormProvider, AddonModScormAttemptCountResult } from '../../providers/scorm';
 import { AddonModScormHelperProvider } from '../../providers/helper';

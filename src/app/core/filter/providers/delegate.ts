@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Injectable, ViewContainerRef } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from './filter';
 import { CoreFilterDefaultHandler } from './default-filter';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Service to handle Offline survey.

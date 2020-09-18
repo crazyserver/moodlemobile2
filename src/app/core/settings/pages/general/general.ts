@@ -15,11 +15,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Segment } from '@ionic/angular';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigProvider } from '@providers/config';
-import { CoreFileProvider } from '@providers/file';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLangProvider } from '@providers/lang';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreConfigProvider } from '@services/config';
+import { CoreFileProvider } from '@services/file';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLangProvider } from '@services/lang';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 import { CoreConfigConstants } from '../../../../configconstants';
 import { CoreSettingsHelper } from '../../providers/helper';

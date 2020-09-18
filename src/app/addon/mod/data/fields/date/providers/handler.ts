@@ -15,7 +15,7 @@ import { Injector, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AddonModDataFieldHandler } from '../../../providers/fields-delegate';
 import { AddonModDataFieldDateComponent } from '../component/date';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
  * Handler for date data field plugin.

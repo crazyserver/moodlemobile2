@@ -14,13 +14,13 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreGroupsProvider } from '@providers/groups';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreGroupsProvider } from '@services/groups';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreCommentsProvider } from '@core/comments/providers/comments';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseActivityPrefetchHandlerBase } from '@core/course/classes/activity-prefetch-handler';
@@ -28,7 +28,7 @@ import { AddonModDataProvider, AddonModDataEntry } from './data';
 import { AddonModDataSyncProvider } from './sync';
 import { AddonModDataHelperProvider } from './helper';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 /**
  * Handler to prefetch databases.

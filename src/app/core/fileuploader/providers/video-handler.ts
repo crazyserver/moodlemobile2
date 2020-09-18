@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreApp } from '@providers/app';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreApp } from '@services/app';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreFileUploaderHandler, CoreFileUploaderHandlerData } from './delegate';
 import { CoreFileUploaderHelperProvider } from './helper';
 /**

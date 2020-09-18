@@ -13,11 +13,11 @@
 // limitations under the License.
 import { Component, Input, OnInit, Injector } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { AddonModDataProvider } from '../../providers/data';
 import { AddonModDataHelperProvider } from '../../providers/helper';
 import { AddonModDataOfflineProvider } from '../../providers/offline';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreTagProvider } from '@core/tag/providers/tag';

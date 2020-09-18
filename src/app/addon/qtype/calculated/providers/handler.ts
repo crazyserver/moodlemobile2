@@ -14,8 +14,8 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreQuestionHandler } from '@core/question/providers/delegate';
 import { AddonQtypeCalculatedComponent } from '../component/calculated';
 

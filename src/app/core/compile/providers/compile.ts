@@ -19,7 +19,7 @@ import {
     IonicModule
 } from '@ionic/angular';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 
 // Import core providers.
 import { CORE_PROVIDERS } from '@app/app.module';

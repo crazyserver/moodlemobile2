@@ -14,9 +14,9 @@
 
 import { Component, Input, Output, OnInit, Injector, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreLogger } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreQuestionProvider } from '../../providers/question';
 import { CoreQuestionDelegate } from '../../providers/delegate';
 import { CoreQuestionBehaviourDelegate } from '../../providers/behaviour-delegate';

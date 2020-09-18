@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { Observable } from 'rxjs';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 
 /**
  * Emulates the Cordova QR Scanner plugin in desktop apps and in browser.

@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreFileProvider } from '@providers/file';
-import { CoreGroupsProvider } from '@providers/groups';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreFileProvider } from '@services/file';
+import { CoreGroupsProvider } from '@services/groups';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { AddonModAssignFeedbackDelegate } from './feedback-delegate';
 import { AddonModAssignSubmissionDelegate } from './submission-delegate';

@@ -15,7 +15,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { CoreUserProfileFieldHandler, CoreUserProfileFieldHandlerData } from '@core/user/providers/user-profile-field-delegate';
 import { AddonUserProfileFieldTextComponent } from '../component/text';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Text user profile field handlers.

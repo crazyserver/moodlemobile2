@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { Globalization } from '@ionic-native/globalization';
 import { Platform, Config } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 import { CoreConfigProvider } from './config';
 import { CoreConfigConstants } from '../configconstants';
 import { makeSingleton } from '@singletons/core.singletons';

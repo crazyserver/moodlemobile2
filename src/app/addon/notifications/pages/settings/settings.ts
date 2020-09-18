@@ -20,15 +20,15 @@ import {
     AddonNotificationsNotificationPreferencesNotificationProcessorState
 } from '../../providers/notifications';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSettingsHelper } from '@core/settings/providers/helper';
 import { AddonMessageOutputDelegate, AddonMessageOutputHandlerData } from '@addon/messageoutput/providers/delegate';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
-import { CoreConfigProvider } from '@providers/config';
-import { CoreAppProvider } from '@providers/app';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
+import { CoreConfigProvider } from '@services/config';
+import { CoreAppProvider } from '@services/app';
 import { CoreConstants } from '@core/constants';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
 /**

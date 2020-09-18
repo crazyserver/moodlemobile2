@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreSyncProvider } from '@providers/sync';
-import { CoreLogger } from '@providers/logger';
-import { CoreAppProvider } from '@providers/app';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreSyncProvider } from '@services/sync';
+import { CoreLogger } from '@services/logger';
+import { CoreAppProvider } from '@services/app';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
  * Blocked sync error.

@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreAppProvider } from '@providers/app';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreAppProvider } from '@services/app';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 
 import { makeSingleton } from '@singletons/core.singletons';

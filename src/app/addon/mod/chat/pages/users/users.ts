@@ -14,9 +14,9 @@
 
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModChatProvider, AddonModChatUser } from '../../providers/chat';
 import { Network } from '@ionic-native/network';
 

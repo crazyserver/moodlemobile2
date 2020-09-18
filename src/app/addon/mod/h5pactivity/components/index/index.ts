@@ -15,11 +15,11 @@
 import { Component, Optional, Injector } from '@angular/core';
 import { Content } from '@ionic/angular';
 
-import { CoreApp } from '@providers/app';
-import { CoreEvents } from '@providers/events';
-import { CoreFilepool } from '@providers/filepool';
-import { CoreWSExternalFile } from '@providers/ws';
-import { CoreDomUtils } from '@providers/utils/dom';
+import { CoreApp } from '@services/app';
+import { CoreEvents } from '@services/events';
+import { CoreFilepool } from '@services/filepool';
+import { CoreWSExternalFile } from '@services/ws';
+import { CoreDomUtils } from '@services/utils/dom';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { CoreH5P } from '@core/h5p/providers/h5p';
 import { CoreH5PDisplayOptions } from '@core/h5p/classes/core';

@@ -15,13 +15,13 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterContentInit, OnDestroy, Optional }
     from '@angular/core';
 import { TextInput, Content, Platform, Slides } from '@ionic/angular';
-import { CoreApp } from '@providers/app';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreApp } from '@services/app';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreEventsProvider } from '@services/events';
 import { CoreEditorOfflineProvider } from '../../providers/editor-offline';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';

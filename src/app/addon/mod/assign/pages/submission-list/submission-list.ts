@@ -15,10 +15,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider, CoreEventObserver } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
+import { CoreEventsProvider, CoreEventObserver } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreGroupsProvider, CoreGroupInfo } from '@services/groups';
 import {
     AddonModAssignProvider, AddonModAssignAssign, AddonModAssignGrade, AddonModAssignSubmission
 } from '../../providers/assign';

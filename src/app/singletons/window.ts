@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { NavController } from '@ionic/angular';
-import { CoreSites } from '@providers/sites';
-import { CoreUrlUtils } from '@providers/utils/url';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreSites } from '@services/sites';
+import { CoreUrlUtils } from '@services/utils/url';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreContentLinksHelper } from '@core/contentlinks/providers/helper';
 
 /**

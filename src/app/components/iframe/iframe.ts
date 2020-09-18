@@ -17,15 +17,15 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
-import { CoreFile } from '@providers/file';
-import { CoreLogger } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreIframeUtilsProvider } from '@providers/utils/iframe';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreFile } from '@services/file';
+import { CoreLogger } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreIframeUtilsProvider } from '@services/utils/iframe';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreUrl } from '@singletons/url';
-import { CoreApp } from '@providers/app';
+import { CoreApp } from '@services/app';
 import { WKWebViewCookiesWindow } from 'cordova-plugin-wkwebview-cookies';
 
 @Component({

@@ -14,11 +14,11 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavParams, NavController, PopoverController } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonCalendarProvider } from '../../providers/calendar';
 import { AddonCalendarOfflineProvider } from '../../providers/calendar-offline';
 import { AddonCalendarHelperProvider, AddonCalendarFilter } from '../../providers/helper';

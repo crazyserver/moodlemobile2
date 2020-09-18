@@ -14,8 +14,8 @@
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from '../../providers/messages';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreTabsComponent } from '@components/tabs/tabs';

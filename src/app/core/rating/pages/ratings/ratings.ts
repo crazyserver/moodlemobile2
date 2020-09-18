@@ -14,7 +14,7 @@
 
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreRatingProvider, CoreRatingItemRating } from '@core/rating/providers/rating';
 
 /**

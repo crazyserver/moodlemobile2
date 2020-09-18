@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CorePushNotificationsClickHandler } from '@core/pushnotifications/providers/delegate';
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 import { AddonCompetencyProvider } from './competency';

@@ -17,7 +17,7 @@ import { CoreTagAreaHandler } from '@core/tag/providers/area-delegate';
 import { CoreTagHelperProvider } from '@core/tag/providers/helper';
 import { CoreTagFeedComponent } from '@core/tag/components/feed/feed';
 import { CoreCourseProvider } from '@core/course/providers/course';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { AddonModBookProvider } from './book';
 
 /**

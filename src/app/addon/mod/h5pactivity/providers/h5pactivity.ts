@@ -14,10 +14,10 @@
 
 import { Injectable } from '@angular/core';
 
-import { CoreSites } from '@providers/sites';
-import { CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
-import { CoreTimeUtils } from '@providers/utils/time';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreSites } from '@services/sites';
+import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
+import { CoreTimeUtils } from '@services/utils/time';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreCourseLogHelper } from '@core/course/providers/log-helper';
 import { CoreH5P } from '@core/h5p/providers/h5p';

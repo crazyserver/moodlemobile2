@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
  * Service to handle offline comments.

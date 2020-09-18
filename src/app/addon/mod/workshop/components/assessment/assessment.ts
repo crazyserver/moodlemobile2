@@ -14,9 +14,9 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModWorkshopHelperProvider } from '../../providers/helper';
 import { AddonModWorkshopOfflineProvider } from '../../providers/offline';
 

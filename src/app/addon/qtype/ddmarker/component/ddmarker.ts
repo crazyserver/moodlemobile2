@@ -13,11 +13,11 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, ElementRef, ViewChild } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { AddonQtypeDdMarkerQuestion } from '../classes/ddmarker';
 
 /**

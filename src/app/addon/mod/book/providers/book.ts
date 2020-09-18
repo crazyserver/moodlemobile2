@@ -13,18 +13,18 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreFileProvider } from '@providers/file';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreFileProvider } from '@services/file';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreSite } from '@classes/site';
 import { CoreTagItem } from '@core/tag/providers/tag';
-import { CoreWSProvider, CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
+import { CoreWSProvider, CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 
 /**
  * Constants to define how the chapters and subchapters of a book should be displayed in that table of contents.

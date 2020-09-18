@@ -14,8 +14,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NavParams, ViewController } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSite } from '@classes/site';
 import { AddonModForumProvider } from '../../providers/forum';
 

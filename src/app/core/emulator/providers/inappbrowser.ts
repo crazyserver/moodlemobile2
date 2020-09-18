@@ -14,9 +14,9 @@
 
 import { Injectable } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFileProvider } from '@providers/file';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
+import { CoreAppProvider } from '@services/app';
+import { CoreFileProvider } from '@services/file';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { InAppBrowserObjectMock } from '../classes/inappbrowserobject';
 
 /**

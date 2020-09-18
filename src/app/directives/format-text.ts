@@ -17,15 +17,15 @@ import {
 } from '@angular/core';
 import { Platform, NavController, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreIframeUtilsProvider } from '@providers/utils/iframe';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreIframeUtilsProvider } from '@services/utils/iframe';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSite } from '@classes/site';
 import { CoreLinkDirective } from '../directives/link';
 import { CoreExternalContentDirective } from '../directives/external-content';
@@ -34,7 +34,7 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreFilterProvider, CoreFilterFilter, CoreFilterFormatTextOptions } from '@core/filter/providers/filter';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
 import { CoreFilterDelegate } from '@core/filter/providers/delegate';
-import { CoreCustomURLSchemesProvider } from '@providers/urlschemes';
+import { CoreCustomURLSchemesProvider } from '@services/urlschemes';
 
 /**
  * Directive to format text rendered. It renders the HTML and treats all links and media, using CoreLinkDirective

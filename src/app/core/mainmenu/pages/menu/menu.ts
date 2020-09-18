@@ -14,9 +14,9 @@
 
 import { Component, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
-import { CoreApp } from '@providers/app';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreApp } from '@services/app';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreEventsProvider } from '@services/events';
 import { CoreIonTabsComponent } from '@components/ion-tabs/ion-tabs';
 import { CoreMainMenuProvider } from '../../providers/mainmenu';
 import { CoreMainMenuDelegate, CoreMainMenuHandlerToDisplay } from '../../providers/delegate';

@@ -16,10 +16,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { CoreUserProvider } from '../../providers/user';
 import { CoreUserHelperProvider } from '../../providers/helper';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Page that displays an user about page.

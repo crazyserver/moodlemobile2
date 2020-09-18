@@ -15,8 +15,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreContentLinksDelegate, CoreContentLinksAction } from '../../providers/delegate';
 import { CoreContentLinksHelperProvider } from '../../providers/helper';
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';

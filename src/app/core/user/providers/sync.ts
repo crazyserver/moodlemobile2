@@ -13,17 +13,17 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncBaseProvider } from '@classes/base-sync';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 import { CoreUserOfflineProvider } from './offline';
 import { CoreUserProvider } from './user';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSyncProvider } from '@providers/sync';
+import { CoreSyncProvider } from '@services/sync';
 
 /**
  * Service to sync user preferences.

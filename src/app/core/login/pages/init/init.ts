@@ -15,9 +15,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { CoreAppProvider } from '@providers/app';
-import { CoreInitDelegate } from '@providers/init';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreInitDelegate } from '@services/init';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreConstants } from '../../../constants';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 

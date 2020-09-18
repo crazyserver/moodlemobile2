@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from './module-delegate';
 import { CoreCourseProvider } from './course';
 

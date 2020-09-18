@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreFile, CoreFileProvider } from '@providers/file';
-import { CoreTextUtils } from '@providers/utils/text';
+import { CoreFile, CoreFileProvider } from '@services/file';
+import { CoreTextUtils } from '@services/utils/text';
 import { CoreH5PCore } from './core';
 
 /**

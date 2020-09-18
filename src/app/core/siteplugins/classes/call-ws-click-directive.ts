@@ -14,8 +14,8 @@
 
 import { Input, OnInit, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSitePluginsProvider } from '../providers/siteplugins';
 import { CoreSitePluginsPluginContentComponent } from '../components/plugin-content/plugin-content';
 import { CoreSitePluginsCallWSBaseDirective } from './call-ws-directive';

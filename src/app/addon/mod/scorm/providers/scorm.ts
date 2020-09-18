@@ -14,16 +14,16 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreSyncProvider } from '@providers/sync';
-import { CoreWSProvider } from '@providers/ws';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUrlUtils } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreSyncProvider } from '@services/sync';
+import { CoreWSProvider } from '@services/ws';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUrlUtils } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonModScormOfflineProvider } from './scorm-offline';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreConstants } from '@core/constants';

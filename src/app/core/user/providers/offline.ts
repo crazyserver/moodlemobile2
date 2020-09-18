@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 
 /**
  * Structure of offline user preferences.

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreFile, CoreFileProvider } from '@providers/file';
-import { CoreSites } from '@providers/sites';
-import { CoreMimetypeUtils } from '@providers/utils/mimetype';
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreFile, CoreFileProvider } from '@services/file';
+import { CoreSites } from '@services/sites';
+import { CoreMimetypeUtils } from '@services/utils/mimetype';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreUser } from '@core/user/providers/user';
 import { CoreH5P } from '../providers/h5p';
 import { CoreH5PCore, CoreH5PDisplayOptions } from './core';

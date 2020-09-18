@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSite } from '@classes/site';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { AddonModForumProvider } from '@addon/mod/forum/providers/forum';

@@ -13,21 +13,21 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreAppProvider } from '@providers/app';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModFeedbackOfflineProvider } from './offline';
 import { AddonModFeedbackProvider } from './feedback';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseActivitySyncBaseProvider } from '@core/course/classes/activity-sync';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
-import { CoreSyncProvider } from '@providers/sync';
+import { CoreSyncProvider } from '@services/sync';
 import { AddonModFeedbackPrefetchHandler } from './prefetch-handler';
 
 /**

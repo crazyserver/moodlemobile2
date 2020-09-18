@@ -14,9 +14,9 @@
 
 import { Component } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteBasicInfo } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 import { CoreFilterProvider } from '@core/filter/providers/filter';

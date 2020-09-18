@@ -15,8 +15,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChange, Optional } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreCommentsProvider } from '../../providers/comments';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
 /**

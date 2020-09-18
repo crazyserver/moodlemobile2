@@ -14,7 +14,7 @@
 
 import { Component } from '@angular/core';
 import { NavParams } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { AddonCalendarProvider } from '../../providers/calendar';
 import { AddonCalendarHelperProvider, AddonCalendarFilter } from '../../providers/helper';
 

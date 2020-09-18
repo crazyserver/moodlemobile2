@@ -14,11 +14,11 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreFileProvider } from '@providers/file';
+import { CoreFileProvider } from '@services/file';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonModWorkshopProvider } from './workshop';
 import { AddonModWorkshopOfflineProvider } from './offline';
 import { AddonWorkshopAssessmentStrategyDelegate } from './assessment-strategy-delegate';

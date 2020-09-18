@@ -16,11 +16,11 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { IonicPage, NavParams, NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreSyncProvider } from '@providers/sync';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreSyncProvider } from '@services/sync';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreGradesHelperProvider } from '@core/grades/providers/helper';

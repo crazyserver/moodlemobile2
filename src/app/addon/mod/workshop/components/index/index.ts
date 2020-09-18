@@ -14,8 +14,8 @@
 
 import { Component, Input, Optional, Injector } from '@angular/core';
 import { Content, ModalController, NavController, Platform } from '@ionic/angular';
-import { CoreGroupInfo, CoreGroupsProvider } from '@providers/groups';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreGroupInfo, CoreGroupsProvider } from '@services/groups';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { AddonModWorkshopProvider } from '../../providers/workshop';
 import { AddonModWorkshopHelperProvider } from '../../providers/helper';

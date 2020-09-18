@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCourseProvider } from '../../providers/course';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';

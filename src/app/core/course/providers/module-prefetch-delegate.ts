@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreFileProvider } from '@providers/file';
-import { CoreFilepoolProvider, CoreFilepoolComponentFileEventData } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreFileProvider } from '@services/file';
+import { CoreFilepoolProvider, CoreFilepoolComponentFileEventData } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from './course';
 import { CoreCache } from '@classes/cache';
 import { CoreSiteWSPreSets } from '@classes/site';
@@ -27,7 +27,7 @@ import { CoreConstants } from '../../constants';
 import { Md5 } from 'ts-md5/dist/md5';
 import { Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreFileHelperProvider } from '@providers/file-helper';
+import { CoreFileHelperProvider } from '@services/file-helper';
 import { makeSingleton } from '@singletons/core.singletons';
 
 /**

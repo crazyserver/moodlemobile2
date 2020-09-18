@@ -15,11 +15,11 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSite } from '@classes/site';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreRatingInfo } from '@core/rating/providers/rating';
 import { AddonModGlossaryOfflineProvider } from './offline';

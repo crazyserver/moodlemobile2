@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, Input, OnInit, DoCheck, KeyValueDiffers } from '@angular/core';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Component to render a file list.

@@ -59,14 +59,14 @@ import { ZipMock } from './providers/zip';
 
 import { CoreEmulatorHelperProvider } from './providers/helper';
 import { CoreEmulatorCaptureHelperProvider } from './providers/capture-helper';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFileProvider } from '@providers/file';
-import { CoreLogger } from '@providers/logger';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreInitDelegate } from '@providers/init';
+import { CoreAppProvider } from '@services/app';
+import { CoreFileProvider } from '@services/file';
+import { CoreLogger } from '@services/logger';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreInitDelegate } from '@services/init';
 
 // List of Ionic Native providers.
 export const IONIC_NATIVE_PROVIDERS = [

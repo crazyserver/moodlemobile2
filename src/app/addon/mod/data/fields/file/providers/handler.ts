@@ -13,7 +13,7 @@
 // limitations under the License.
 import { Injector, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreFileSessionProvider } from '@providers/file-session';
+import { CoreFileSessionProvider } from '@services/file-session';
 import { AddonModDataFieldHandler } from '../../../providers/fields-delegate';
 import { AddonModDataProvider } from '../../../providers/data';
 import { AddonModDataFieldFileComponent } from '../component/file';

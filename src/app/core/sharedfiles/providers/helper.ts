@@ -15,13 +15,13 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFileProvider } from '@providers/file';
-import { CoreLogger } from '@providers/logger';
-import { CoreInitDelegate } from '@providers/init';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFileProvider } from '@services/file';
+import { CoreLogger } from '@services/logger';
+import { CoreInitDelegate } from '@services/init';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSharedFilesProvider } from './sharedfiles';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 

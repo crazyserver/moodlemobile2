@@ -15,7 +15,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { CoreUserProfileFieldHandler, CoreUserProfileFieldHandlerData } from '@core/user/providers/user-profile-field-delegate';
 import { AddonUserProfileFieldTextareaComponent } from '../component/textarea';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Textarea user profile field handlers.

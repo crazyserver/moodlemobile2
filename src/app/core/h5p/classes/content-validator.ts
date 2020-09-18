@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreH5P } from '../providers/h5p';
 import { Translate } from '@singletons/core.singletons';
 import { CoreH5PCore, CoreH5PLibraryData, CoreH5PLibraryAddonData, CoreH5PContentDepsTreeDependency } from './core';

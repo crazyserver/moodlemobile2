@@ -14,10 +14,10 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider, PromiseDefer } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreCourseProvider } from './course';
 

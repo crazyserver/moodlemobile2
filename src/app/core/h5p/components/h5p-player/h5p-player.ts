@@ -13,15 +13,15 @@
 // limitations under the License.
 
 import { Component, Input, ElementRef, OnInit, OnDestroy, OnChanges, SimpleChange } from '@angular/core';
-import { CoreApp } from '@providers/app';
-import { CoreEvents } from '@providers/events';
-import { CoreFilepool } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
-import { CoreSites } from '@providers/sites';
-import { CoreDomUtils } from '@providers/utils/dom';
-import { CoreUrlUtils } from '@providers/utils/url';
+import { CoreApp } from '@services/app';
+import { CoreEvents } from '@services/events';
+import { CoreFilepool } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
+import { CoreSites } from '@services/sites';
+import { CoreDomUtils } from '@services/utils/dom';
+import { CoreUrlUtils } from '@services/utils/url';
 import { CoreH5P } from '@core/h5p/providers/h5p';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 import { CoreConstants } from '@core/constants';
 import { CoreSite } from '@classes/site';
 import { CoreH5PDisplayOptions } from '../../classes/core';

@@ -14,13 +14,13 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreWSExternalFile } from '@providers/ws';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreWSExternalFile } from '@services/ws';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseActivityPrefetchHandlerBase } from '@core/course/classes/activity-prefetch-handler';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';

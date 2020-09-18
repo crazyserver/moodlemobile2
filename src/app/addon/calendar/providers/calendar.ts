@@ -13,25 +13,25 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreAppProvider } from '@providers/app';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreGroupsProvider } from '@providers/groups';
+import { CoreAppProvider } from '@services/app';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreGroupsProvider } from '@services/groups';
 import { CoreConstants } from '@core/constants';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
-import { CoreConfigProvider } from '@providers/config';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
+import { CoreConfigProvider } from '@services/config';
 import { ILocalNotification } from '@ionic-native/local-notifications';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { AddonCalendarOfflineProvider } from './calendar-offline';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreWSExternalWarning, CoreWSDate } from '@providers/ws';
+import { CoreWSExternalWarning, CoreWSDate } from '@services/ws';
 import * as moment from 'moment';
 
 /**

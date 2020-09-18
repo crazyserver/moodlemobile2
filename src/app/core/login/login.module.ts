@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { CoreCronDelegate } from '@providers/cron';
+import { CoreCronDelegate } from '@services/cron';
 import { CoreLoginHelperProvider } from './providers/helper';
 import { CoreLoginCronHandler } from './providers/cron-handler';
 import { CoreLoginSitesPageModule } from './pages/sites/sites.module';

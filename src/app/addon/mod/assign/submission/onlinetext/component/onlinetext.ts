@@ -14,9 +14,9 @@
 
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { AddonModAssignProvider } from '../../../providers/assign';
 import { AddonModAssignOfflineProvider } from '../../../providers/assign-offline';
 import { AddonModAssignSubmissionPluginComponent } from '../../../classes/submission-plugin-component';

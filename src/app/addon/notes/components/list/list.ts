@@ -14,10 +14,10 @@
 
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Content, ModalController } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { coreSlideInOut } from '@classes/animations';
 import { AddonNotesProvider, AddonNotesNoteFormatted } from '../../providers/notes';

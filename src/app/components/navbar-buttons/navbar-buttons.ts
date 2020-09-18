@@ -14,8 +14,8 @@
 
 import { Component, Input, OnInit, OnDestroy, ContentChildren, ElementRef, QueryList } from '@angular/core';
 import { Button } from '@ionic/angular';
-import { CoreLogger } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreLogger } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreContextMenuComponent } from '../context-menu/context-menu';
 
 /**

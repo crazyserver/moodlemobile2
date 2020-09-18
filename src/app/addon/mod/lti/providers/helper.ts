@@ -14,9 +14,9 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { CoreEvents, CoreEventsProvider } from '@providers/events';
-import { CoreSites } from '@providers/sites';
-import { CoreDomUtils } from '@providers/utils/dom';
+import { CoreEvents, CoreEventsProvider } from '@services/events';
+import { CoreSites } from '@services/sites';
+import { CoreDomUtils } from '@services/utils/dom';
 import { CoreCourse } from '@core/course/providers/course';
 import { AddonModLti, AddonModLtiLti } from './lti';
 

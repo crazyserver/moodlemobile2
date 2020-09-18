@@ -14,15 +14,15 @@
 
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreLogger } from '@providers/logger';
-import { CoreSitesProvider, CoreSitesReadingStrategy } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreGradesProvider } from './grades';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 

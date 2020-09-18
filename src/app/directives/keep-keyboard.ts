@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Directive, AfterViewInit, Input, ElementRef, OnDestroy } from '@angular/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * IMPORTANT: This directive is deprecated because it causes a weird effect (the keyboard closes and opens again).

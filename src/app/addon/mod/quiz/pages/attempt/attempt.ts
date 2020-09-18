@@ -14,7 +14,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModQuizProvider } from '../../providers/quiz';
 import { AddonModQuizHelperProvider } from '../../providers/helper';
 

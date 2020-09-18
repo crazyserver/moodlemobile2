@@ -14,8 +14,8 @@
 
 import { Injectable } from '@angular/core';
 import { AddonNotificationsProvider } from './notifications';
-import { CoreAppProvider } from '@providers/app';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
+import { CoreAppProvider } from '@services/app';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreSettingsHandler, CoreSettingsHandlerData } from '@core/settings/providers/delegate';
 
 /**

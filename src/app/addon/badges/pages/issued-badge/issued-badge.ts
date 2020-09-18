@@ -14,9 +14,9 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Content, NavParams } from '@ionic/angular';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { AddonBadgesProvider, AddonBadgesUserBadge } from '../../providers/badges';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
  * This directive shows a timer in format HH:MM:SS. When the countdown reaches 0, a function is called.

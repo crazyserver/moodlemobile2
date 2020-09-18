@@ -15,16 +15,16 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreUtils } from '@providers/utils/utils';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUrlUtils } from '@providers/utils/url';
+import { CoreAppProvider } from '@services/app';
+import { CoreUtils } from '@services/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUrlUtils } from '@services/utils/url';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CoreConfigConstants } from '../../../../configconstants';
-import { CoreCustomURLSchemes } from '@providers/urlschemes';
+import { CoreCustomURLSchemes } from '@services/urlschemes';
 
 /**
  * Page to enter the user credentials.

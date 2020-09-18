@@ -15,9 +15,9 @@
 import { Component } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreLoginHelperProvider } from '../../providers/helper';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Page that shows instructions to change the password.

@@ -18,7 +18,7 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreGroupsProvider } from '@providers/groups';
+import { CoreGroupsProvider } from '@services/groups';
 import { CoreRatingProvider } from '@core/rating/providers/rating';
 import { CoreRatingOfflineProvider } from '@core/rating/providers/offline';
 import { CoreRatingSyncProvider } from '@core/rating/providers/sync';

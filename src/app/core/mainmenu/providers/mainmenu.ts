@@ -14,10 +14,10 @@
 
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreApp } from '@providers/app';
-import { CoreLangProvider } from '@providers/lang';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreApp } from '@services/app';
+import { CoreLangProvider } from '@services/lang';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreConfigConstants } from '../../../configconstants';
 import { CoreMainMenuDelegate, CoreMainMenuHandlerToDisplay } from './delegate';
 

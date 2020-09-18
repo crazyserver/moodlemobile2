@@ -15,9 +15,9 @@
 import { Injectable } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonModQuizProvider } from './quiz';
 import { AddonModQuizOfflineProvider } from './quiz-offline';
 import { AddonModQuizAccessRuleDelegate } from './access-rules-delegate';

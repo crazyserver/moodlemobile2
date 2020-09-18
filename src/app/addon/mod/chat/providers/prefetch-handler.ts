@@ -14,18 +14,18 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreAppProvider } from '@services/app';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreGroupsProvider, CoreGroupInfo } from '@services/groups';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseActivityPrefetchHandlerBase } from '@core/course/classes/activity-prefetch-handler';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonModChatProvider, AddonModChatChat } from './chat';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 /**
  * Handler to prefetch chats.

@@ -17,10 +17,10 @@ import { IonicPage, Content, NavParams } from '@ionic/angular';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreConstants } from '@core/constants';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Page that displays the amount of file storage used by each activity on the course, and allows

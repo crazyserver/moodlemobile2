@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreAppProvider } from '@providers/app';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreAppProvider } from '@services/app';
 import { CoreUserOfflineProvider } from './offline';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 

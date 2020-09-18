@@ -14,8 +14,8 @@
 
 import { Component, Optional } from '@angular/core';
 import { IonicPage, NavController, NavParams } from '@ionic/angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { AddonCompetencyProvider, AddonCompetencyDataForPlanPageResult } from '../../providers/competency';
 import { AddonCompetencyHelperProvider } from '../../providers/helper';

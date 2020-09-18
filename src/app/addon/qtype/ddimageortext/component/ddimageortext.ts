@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, ElementRef } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 import { AddonQtypeDdImageOrTextQuestion } from '../classes/ddimageortext';
 

@@ -13,18 +13,18 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreCronDelegate } from '@providers/cron';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLogger } from '@providers/logger';
+import { CoreAppProvider } from '@services/app';
+import { CoreCronDelegate } from '@services/cron';
+import { CoreEventsProvider } from '@services/events';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreLogger } from '@services/logger';
 import { CoreSite } from '@classes/site';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigProvider } from '@providers/config';
+import { CoreConfigProvider } from '@services/config';
 import { CoreFilterProvider } from '@core/filter/providers/filter';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreConfigConstants } from '../../../configconstants';
 import { TranslateService } from '@ngx-translate/core';

@@ -16,10 +16,10 @@ import { Component, OnDestroy } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreConstants } from '@core/constants';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider, CoreSiteBasicInfo } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreConfigProvider } from '@providers/config';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreConfigProvider } from '@services/config';
 import { CoreSettingsHelper } from '@core/settings/providers/helper';
 
 /**

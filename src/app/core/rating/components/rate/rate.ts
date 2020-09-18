@@ -15,10 +15,10 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreRatingProvider, CoreRatingInfo, CoreRatingInfoItem, CoreRatingScale } from '@core/rating/providers/rating';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreRatingOfflineProvider } from '@core/rating/providers/offline';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Component that displays the user rating select.

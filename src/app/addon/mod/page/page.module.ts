@@ -24,7 +24,7 @@ import { AddonModPageHelperProvider } from './providers/helper';
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 import { CoreCourseModuleDelegate } from '@core/course/providers/module-delegate';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
-import { CorePluginFileDelegate } from '@providers/plugin-file-delegate';
+import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 // List of providers (without handlers).
 export const ADDON_MOD_PAGE_PROVIDERS: any[] = [

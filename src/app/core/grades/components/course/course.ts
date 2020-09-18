@@ -15,10 +15,10 @@
 import { Component, ViewChild, Input, Optional } from '@angular/core';
 import { Content, NavParams, NavController } from '@ionic/angular';
 import { CoreGradesProvider } from '../../providers/grades';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreGradesHelperProvider } from '../../providers/helper';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Component that displays a course grades.
