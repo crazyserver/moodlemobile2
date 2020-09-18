@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreFileProvider } from '@providers/file';
 import { CoreFilepoolProvider, CoreFilepoolComponentFileEventData } from '@providers/filepool';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 import { CoreUtilsProvider } from '@providers/utils/utils';

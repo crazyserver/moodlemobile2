@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Injector } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 import { FormControl, FormBuilder } from '@angular/forms';
 
@@ -28,7 +28,7 @@ export class AddonQtypeEssayComponent extends CoreQuestionBaseComponent implemen
 
     protected formControl: FormControl;
 
-    constructor(logger: CoreLoggerProvider, injector: Injector, protected fb: FormBuilder) {
+    constructor(injector: Injector, protected fb: FormBuilder) {
         super(logger, 'AddonQtypeEssayComponent', injector);
     }
 

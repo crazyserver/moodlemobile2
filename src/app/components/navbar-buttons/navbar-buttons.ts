@@ -14,7 +14,7 @@
 
 import { Component, Input, OnInit, OnDestroy, ContentChildren, ElementRef, QueryList } from '@angular/core';
 import { Button } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreContextMenuComponent } from '../context-menu/context-menu';
 
@@ -63,14 +63,14 @@ export class CoreNavBarButtonsComponent implements OnInit, OnDestroy {
     protected element: HTMLElement;
     protected _hidden: boolean;
     protected forceHidden = false;
-    protected logger: any;
+    protected logger: CoreLogger;
     protected movedChildren: Node[];
     protected instanceId: string;
     protected mergedContextMenu: CoreContextMenuComponent;
 
-    constructor(element: ElementRef, logger: CoreLoggerProvider, private domUtils: CoreDomUtilsProvider) {
+    constructor(element: ElementRef, private domUtils: CoreDomUtilsProvider) {
         this.element = element.nativeElement;
-        this.logger = logger.getInstance('CoreNavBarButtonsComponent');
+        this.logger = CoreLogger.getInstance('CoreNavBarButtonsComponent');
         this.instanceId = this.domUtils.storeInstanceByElement(this.element, this);
     }
 

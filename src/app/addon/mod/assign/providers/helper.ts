@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreFileProvider } from '@providers/file';
 import { CoreGroupsProvider } from '@providers/groups';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
@@ -32,14 +32,14 @@ import { AddonModAssignOfflineProvider } from './assign-offline';
  */
 @Injectable()
 export class AddonModAssignHelperProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private fileProvider: CoreFileProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private fileProvider: CoreFileProvider,
             private assignProvider: AddonModAssignProvider, private utils: CoreUtilsProvider,
             private assignOffline: AddonModAssignOfflineProvider, private feedbackDelegate: AddonModAssignFeedbackDelegate,
             private submissionDelegate: AddonModAssignSubmissionDelegate, private fileUploaderProvider: CoreFileUploaderProvider,
             private groupsProvider: CoreGroupsProvider) {
-        this.logger = logger.getInstance('AddonModAssignHelperProvider');
+        this.logger = CoreLogger.getInstance('AddonModAssignHelperProvider');
     }
 
     /**

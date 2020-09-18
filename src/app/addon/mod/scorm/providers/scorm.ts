@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreSyncProvider } from '@providers/sync';
 import { CoreWSProvider } from '@providers/ws';
@@ -125,14 +125,14 @@ export class AddonModScormProvider {
     };
 
     protected ROOT_CACHE_KEY = 'mmaModScorm:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private translate: TranslateService, private sitesProvider: CoreSitesProvider,
+    constructor(private translate: TranslateService, private sitesProvider: CoreSitesProvider,
             private wsProvider: CoreWSProvider, private textUtils: CoreTextUtilsProvider, private utils: CoreUtilsProvider,
             private filepoolProvider: CoreFilepoolProvider, private scormOfflineProvider: AddonModScormOfflineProvider,
             private timeUtils: CoreTimeUtilsProvider, private syncProvider: CoreSyncProvider,
             private eventsProvider: CoreEventsProvider, private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModScormProvider');
+        this.logger = CoreLogger.getInstance('AddonModScormProvider');
     }
 
     /**

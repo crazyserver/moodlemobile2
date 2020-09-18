@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
@@ -27,13 +27,12 @@ import { CoreWSExternalWarning } from '@providers/ws';
 export class AddonCourseCompletionProvider {
 
     protected ROOT_CACHE_KEY = 'mmaCourseCompletion:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
-            private sitesProvider: CoreSitesProvider,
+    constructor(            private sitesProvider: CoreSitesProvider,
             private coursesProvider: CoreCoursesProvider,
             private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('AddonCourseCompletionProvider');
+        this.logger = CoreLogger.getInstance('AddonCourseCompletionProvider');
     }
 
     /**

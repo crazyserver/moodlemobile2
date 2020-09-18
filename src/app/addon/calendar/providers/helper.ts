@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { AddonCalendarProvider } from './calendar';
@@ -27,7 +27,7 @@ import * as moment from 'moment';
  */
 @Injectable()
 export class AddonCalendarHelperProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
     static EVENTICONS = {
         course: 'fa-graduation-cap',
@@ -37,13 +37,12 @@ export class AddonCalendarHelperProvider {
         category: 'fa-cubes'
     };
 
-    constructor(logger: CoreLoggerProvider,
-            private courseProvider: CoreCourseProvider,
+    constructor(            private courseProvider: CoreCourseProvider,
             private sitesProvider: CoreSitesProvider,
             private calendarProvider: AddonCalendarProvider,
             private configProvider: CoreConfigProvider,
             private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('AddonCalendarHelperProvider');
+        this.logger = CoreLogger.getInstance('AddonCalendarHelperProvider');
     }
 
     /**

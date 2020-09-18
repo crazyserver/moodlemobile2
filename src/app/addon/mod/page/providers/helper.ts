@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreFilepoolProvider } from '@providers/filepool';
@@ -28,16 +28,15 @@ import { CoreWSProvider } from '@providers/ws';
 @Injectable()
 export class AddonModPageHelperProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
-            protected domUtils: CoreDomUtilsProvider,
+    constructor(            protected domUtils: CoreDomUtilsProvider,
             protected filepoolProvider: CoreFilepoolProvider,
             protected fileProvider: CoreFileProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected wsProvider: CoreWSProvider,
             protected sitesProvider: CoreSitesProvider) {
-        this.logger = logger.getInstance('AddonModPageHelperProvider');
+        this.logger = CoreLogger.getInstance('AddonModPageHelperProvider');
     }
 
     /**

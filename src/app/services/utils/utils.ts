@@ -24,7 +24,7 @@ import { CoreDomUtilsProvider } from './dom';
 import { CoreMimetypeUtilsProvider } from './mimetype';
 import { CoreTextUtilsProvider } from './text';
 import { CoreEventsProvider } from '../events';
-import { CoreLoggerProvider } from '../logger';
+import { CoreLogger } from '../logger';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreLangProvider } from '../lang';
 import { CoreWSProvider, CoreWSError } from '../ws';
@@ -64,7 +64,7 @@ export interface PromiseDefer {
 })
 export class CoreUtilsProvider {
     protected DONT_CLONE = ['[object FileEntry]', '[object DirectoryEntry]', '[object DOMFileSystem]'];
-    protected logger;
+    protected logger: CoreLogger;
     protected iabInstance: InAppBrowserObject;
     protected uniqueIds: {[name: string]: number} = {};
     protected qrScanData: {deferred: PromiseDefer, observable: Subscription};
@@ -72,8 +72,7 @@ export class CoreUtilsProvider {
     constructor(protected iab: InAppBrowser,
             protected clipboard: Clipboard,
             protected domUtils: CoreDomUtilsProvider,
-            logger: CoreLoggerProvider,
-            protected translate: TranslateService,
+                        protected translate: TranslateService,
             protected platform: Platform,
             protected langProvider: CoreLangProvider,
             protected eventsProvider: CoreEventsProvider,
@@ -85,7 +84,7 @@ export class CoreUtilsProvider {
             protected textUtils: CoreTextUtilsProvider,
             protected modalCtrl: ModalController,
             protected qrScanner: QRScanner) {
-        this.logger = logger.getInstance('CoreUtilsProvider');
+        this.logger = CoreLogger.getInstance('CoreUtilsProvider');
 
         this.platform.ready().then(() => {
             const win = <any> window;

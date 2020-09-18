@@ -25,7 +25,7 @@ import { CoreSitePluginsOnlyTitleBlockComponent } from '@core/siteplugins/compon
  */
 export class CoreSitePluginsBlockHandler extends CoreSitePluginsBaseHandler implements CoreBlockHandler {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(name: string, public title: string, public blockName: string, protected handlerSchema: any,
             protected initResult: any, protected blockDelegate: CoreBlockDelegate) {

@@ -20,7 +20,7 @@ import { CorePushNotificationsRegisterCronHandler } from './providers/register-c
 import { CorePushNotificationsUnregisterCronHandler } from './providers/unregister-cron-handler';
 import { CoreCronDelegate } from '@providers/cron';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
 
 // List of providers (without handlers).

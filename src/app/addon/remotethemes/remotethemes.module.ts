@@ -16,7 +16,7 @@ import { NgModule } from '@angular/core';
 import { AddonRemoteThemesProvider } from './providers/remotethemes';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreInitDelegate } from '@providers/init';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 
 // List of providers (without handlers).

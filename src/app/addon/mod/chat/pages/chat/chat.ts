@@ -16,7 +16,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { Content, IonicPage, ModalController, NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { AddonModChatProvider } from '../../providers/chat';
@@ -48,7 +48,7 @@ export class AddonModChatChatPage {
     sending: boolean;
     cmId: number;
 
-    protected logger;
+    protected logger: CoreLogger;
     protected courseId: number;
     protected chatId: number;
     protected sessionId: string;
@@ -60,7 +60,7 @@ export class AddonModChatChatPage {
     protected pollingRunning = false;
     protected users = [];
 
-    constructor(navParams: NavParams, logger: CoreLoggerProvider, network: Network,  zone: NgZone, private navCtrl: NavController,
+    constructor(navParams: NavParams, network: Network,  zone: NgZone, private navCtrl: NavController,
             private chatProvider: AddonModChatProvider, private appProvider: CoreAppProvider, sitesProvider: CoreSitesProvider,
             private modalCtrl: ModalController, private domUtils: CoreDomUtilsProvider,
             private eventsProvider: CoreEventsProvider, private chatHelper: AddonModChatHelperProvider) {
@@ -70,7 +70,7 @@ export class AddonModChatChatPage {
         this.title = navParams.get('title');
         this.cmId = navParams.get('cmId');
 
-        this.logger = logger.getInstance('AddonModChoiceChoicePage');
+        this.logger = CoreLogger.getInstance('AddonModChoiceChoicePage');
         this.currentUserId = sitesProvider.getCurrentSiteUserId();
         this.isOnline = this.appProvider.isOnline();
         this.onlineObserver = network.onchange().subscribe(() => {

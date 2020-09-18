@@ -15,19 +15,19 @@
 import { Injectable } from '@angular/core';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { Observable } from 'rxjs';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 
 /**
  * Emulates the Cordova QR Scanner plugin in desktop apps and in browser.
  */
 @Injectable()
 export class QRScannerMock extends QRScanner {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider) {
+    constructor() {
         super();
 
-        this.logger = logger.getInstance('QRScannerMock');
+        this.logger = CoreLogger.getInstance('QRScannerMock');
     }
 
     /**

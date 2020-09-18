@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@ionic-native/network';
 import { CoreApp, CoreAppProvider } from '../app';
 import { CoreFileProvider } from '../file';
-import { CoreLoggerProvider } from '../logger';
+import { CoreLogger } from '../logger';
 import { CoreSitesProvider } from '../sites';
 import { CoreDomUtilsProvider } from './dom';
 import { CoreTextUtilsProvider } from './text';
@@ -39,10 +39,9 @@ import { WKUserScriptWindow, WKUserScriptInjectionTime } from 'cordova-plugin-wk
 export class CoreIframeUtilsProvider {
     static FRAME_TAGS = ['iframe', 'frame', 'object', 'embed'];
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
-            private fileProvider: CoreFileProvider,
+    constructor(            private fileProvider: CoreFileProvider,
             private sitesProvider: CoreSitesProvider,
             private urlUtils: CoreUrlUtilsProvider,
             private textUtils: CoreTextUtilsProvider,
@@ -55,7 +54,7 @@ export class CoreIframeUtilsProvider {
             private config: Config,
             private contentLinksHelper: CoreContentLinksHelperProvider
             ) {
-        this.logger = logger.getInstance('CoreUtilsProvider');
+        this.logger = CoreLogger.getInstance('CoreUtilsProvider');
 
         const win = <WKUserScriptWindow> window;
 

@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
@@ -179,13 +179,13 @@ export class AddonModLessonProvider {
     };
 
     protected ROOT_CACHE_KEY = 'mmaModLesson:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
             private translate: TranslateService, private textUtils: CoreTextUtilsProvider, private domUtils: CoreDomUtilsProvider,
             private lessonOfflineProvider: AddonModLessonOfflineProvider, private logHelper: CoreCourseLogHelperProvider,
             private eventsProvider: CoreEventsProvider) {
-        this.logger = logger.getInstance('AddonModLessonProvider');
+        this.logger = CoreLogger.getInstance('AddonModLessonProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }

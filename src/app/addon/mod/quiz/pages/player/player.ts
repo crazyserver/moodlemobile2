@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ViewChildre
 import { IonicPage, NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreSyncProvider } from '@providers/sync';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
@@ -76,7 +76,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
     protected forceLeave = false; // If true, don't perform any check when leaving the view.
     protected reloadNavigaton = false; // Whether navigation needs to be reloaded because some data was sent to server.
 
-    constructor(navParams: NavParams, logger: CoreLoggerProvider, protected translate: TranslateService,
+    constructor(navParams: NavParams, protected translate: TranslateService,
             protected eventsProvider: CoreEventsProvider, protected sitesProvider: CoreSitesProvider,
             protected syncProvider: CoreSyncProvider, protected domUtils: CoreDomUtilsProvider, popoverCtrl: PopoverController,
             protected timeUtils: CoreTimeUtilsProvider, protected quizProvider: AddonModQuizProvider,

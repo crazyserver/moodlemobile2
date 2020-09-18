@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreConfigProvider } from './config';
 import { CoreInitHandler, CoreInitDelegate } from './init';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreConfigConstants } from '../configconstants';
 import { CoreH5P } from '@core/h5p/providers/h5p';
 import { makeSingleton } from '@singletons/core.singletons';
@@ -35,11 +35,10 @@ export class CoreUpdateManagerProvider implements CoreInitHandler {
     blocking = true;
 
     protected VERSION_APPLIED = 'version_applied';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
-            protected configProvider: CoreConfigProvider) {
-        this.logger = logger.getInstance('CoreUpdateManagerProvider');
+    constructor(            protected configProvider: CoreConfigProvider) {
+        this.logger = CoreLogger.getInstance('CoreUpdateManagerProvider');
     }
 
     /**

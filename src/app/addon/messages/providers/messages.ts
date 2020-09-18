@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreAppProvider } from '@providers/app';
 import { CoreUserProvider } from '@core/user/providers/user';
@@ -56,13 +56,13 @@ export class AddonMessagesProvider {
 
     static NOTIFICATION_PREFERENCES_KEY = 'message_provider_moodle_instantmessage';
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private userProvider: CoreUserProvider, private messagesOffline: AddonMessagesOfflineProvider,
             private utils: CoreUtilsProvider, private timeUtils: CoreTimeUtilsProvider,
             private emulatorHelper: CoreEmulatorHelperProvider, private eventsProvider: CoreEventsProvider) {
-        this.logger = logger.getInstance('AddonMessagesProvider');
+        this.logger = CoreLogger.getInstance('AddonMessagesProvider');
     }
 
     /**

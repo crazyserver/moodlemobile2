@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { CoreApp } from '@providers/app';
 import { CoreFilepoolProvider } from '@providers/filepool';
 import { CoreLangProvider } from '@providers/lang';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -59,15 +59,14 @@ export class CoreSitePluginsProvider {
 
     protected ROOT_CACHE_KEY = 'CoreSitePlugins:';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected sitePlugins: {[name: string]: CoreSitePluginsHandler} = {}; // Site plugins registered.
     protected sitePluginPromises: {[name: string]: Promise<any>} = {}; // Promises of loading plugins.
     protected fetchPluginsDeferred: PromiseDefer;
     hasSitePluginsLoaded = false;
     sitePluginsFinishedLoading = false;
 
-    constructor(logger: CoreLoggerProvider,
-            private sitesProvider: CoreSitesProvider,
+    constructor(            private sitesProvider: CoreSitesProvider,
             private utils: CoreUtilsProvider,
             private langProvider: CoreLangProvider,
             private filepoolProvider: CoreFilepoolProvider,
@@ -75,7 +74,7 @@ export class CoreSitePluginsProvider {
             private textUtils: CoreTextUtilsProvider,
             private eventsProvider: CoreEventsProvider
             ) {
-        this.logger = logger.getInstance('CoreUserProvider');
+        this.logger = CoreLogger.getInstance('CoreUserProvider');
 
         const observer = this.eventsProvider.on(CoreEventsProvider.SITE_PLUGINS_LOADED, () => {
             this.sitePluginsFinishedLoading = true;

@@ -15,7 +15,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreSyncProvider } from '@providers/sync';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreAppProvider } from '@providers/app';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
@@ -40,7 +40,7 @@ export class CoreSyncBaseProvider {
     /**
      * Logger instance get from CoreLoggerProvider.
      */
-    protected logger;
+    protected logger: CoreLogger;
 
     /**
      * Component of the sync provider.

@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreFilterDelegate } from './delegate';
 import { CoreFilterProvider, CoreFilterFilter, CoreFilterFormatTextOptions, CoreFilterClassifiedFilters } from './filter';
@@ -29,7 +29,7 @@ import { CoreSite } from '@classes/site';
 @Injectable()
 export class CoreFilterHelperProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     /**
      * When a module context is requested, we request all the modules in a course to decrease WS calls. If there are a lot of
@@ -46,8 +46,7 @@ export class CoreFilterHelperProvider {
         },
     } = {};
 
-    constructor(logger: CoreLoggerProvider,
-            eventsProvider: CoreEventsProvider,
+    constructor(            eventsProvider: CoreEventsProvider,
             protected appProvider: CoreAppProvider,
             protected sitesProvider: CoreSitesProvider,
             protected filterDelegate: CoreFilterDelegate,
@@ -55,7 +54,7 @@ export class CoreFilterHelperProvider {
             protected filterProvider: CoreFilterProvider,
             protected coursesProvider: CoreCoursesProvider) {
 
-        this.logger = logger.getInstance('CoreFilterHelperProvider');
+        this.logger = CoreLogger.getInstance('CoreFilterHelperProvider');
 
         eventsProvider.on(CoreEventsProvider.WS_CACHE_INVALIDATED, (data) => {
             delete this.moduleContextsCache[data.siteId];

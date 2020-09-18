@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
@@ -152,7 +152,7 @@ export class AddonModAssignFeedbackDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';
 
-    constructor(logger: CoreLoggerProvider, sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
             protected defaultHandler: AddonModAssignDefaultFeedbackHandler) {
         super('AddonModAssignFeedbackDelegate', logger, sitesProvider, eventsProvider);
     }

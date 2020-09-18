@@ -15,7 +15,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from '@ionic/angular';
 import { CoreContextMenuItemComponent } from './context-menu-item';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 
 /**
  * Component to display a list of items received by param in a popover.
@@ -28,13 +28,13 @@ export class CoreContextMenuPopoverComponent {
     title: string;
     uniqueId: string;
     items: CoreContextMenuItemComponent[];
-    protected logger: any;
+    protected logger: CoreLogger;
 
-    constructor(navParams: NavParams, private viewCtrl: ViewController, logger: CoreLoggerProvider) {
+    constructor(navParams: NavParams, private viewCtrl: ViewController) {
         this.title = navParams.get('title');
         this.items = navParams.get('items') || [];
         this.uniqueId = navParams.get('id');
-        this.logger = logger.getInstance('CoreContextMenuPopoverComponent');
+        this.logger = CoreLogger.getInstance('CoreContextMenuPopoverComponent');
     }
 
     /**

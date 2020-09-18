@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { Subject } from 'rxjs';
@@ -61,7 +61,7 @@ export interface CorePushNotificationsClickHandler {
 @Injectable()
 export class CorePushNotificationsDelegate {
 
-    protected logger;
+    protected logger: CoreLogger;
     protected observables: { [s: string]: Subject<any> } = {};
     protected clickHandlers: { [s: string]: CorePushNotificationsClickHandler } = {};
     protected counterHandlers: { [s: string]: string } = {};

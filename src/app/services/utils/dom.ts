@@ -23,7 +23,7 @@ import { CoreTextUtilsProvider } from './text';
 import { CoreApp } from '../app';
 import { CoreConfigProvider } from '../config';
 import { CoreEventsProvider } from '../events';
-import { CoreLoggerProvider } from '../logger';
+import { CoreLogger } from '../logger';
 import { CoreUrlUtilsProvider } from './url';
 import { CoreFileProvider } from '@providers/file';
 import { CoreConstants } from '@core/constants';
@@ -66,7 +66,7 @@ export class CoreDomUtilsProvider {
     protected lastInstanceId = 0;
     protected debugDisplay = false; // Whether to display debug messages. Store it in a variable to make it synchronous.
     protected displayedAlerts = {}; // To prevent duplicated alerts.
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(protected translate: TranslateService,
             protected loadingCtrl: LoadingController,

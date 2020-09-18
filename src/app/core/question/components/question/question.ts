@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, OnInit, Injector, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreQuestionProvider } from '../../providers/question';
@@ -48,14 +48,14 @@ export class CoreQuestionComponent implements OnInit {
     behaviourComponents: any[] = []; // Components to render the question behaviour.
     loaded = false;
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, protected injector: Injector, protected questionDelegate: CoreQuestionDelegate,
+    constructor(protected injector: Injector, protected questionDelegate: CoreQuestionDelegate,
             protected utils: CoreUtilsProvider, protected behaviourDelegate: CoreQuestionBehaviourDelegate,
             protected questionHelper: CoreQuestionHelperProvider, protected translate: TranslateService,
             protected questionProvider: CoreQuestionProvider, protected domUtils: CoreDomUtilsProvider,
             protected cdr: ChangeDetectorRef) {
-        logger = logger.getInstance('CoreQuestionComponent');
+        logger = CoreLogger.getInstance('CoreQuestionComponent');
 
         this.buttonClicked = new EventEmitter();
         this.onAbort = new EventEmitter();

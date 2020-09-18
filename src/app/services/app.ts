@@ -19,7 +19,7 @@ import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { CoreDbProvider } from './db';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreEventsProvider } from './events';
 import { SQLiteDB, SQLiteDBTableSchema } from '@classes/sqlitedb';
 import { CoreConfigConstants } from '../configconstants';
@@ -142,7 +142,7 @@ export interface CoreAppSchema {
 export class CoreAppProvider {
     protected DBNAME = 'MoodleMobile';
     protected db: SQLiteDB;
-    protected logger;
+    protected logger: CoreLogger;
     protected ssoAuthenticationPromise: Promise<any>;
     protected isKeyboardShown = false;
     protected _isKeyboardOpening = false;
@@ -175,14 +175,13 @@ export class CoreAppProvider {
             private keyboard: Keyboard,
             private appCtrl: App,
             private network: Network,
-            logger: CoreLoggerProvider,
-            private events: CoreEventsProvider,
+                        private events: CoreEventsProvider,
             zone: NgZone,
             private menuCtrl: MenuController,
             private statusBar: StatusBar,
             appRef: ApplicationRef) {
 
-        this.logger = logger.getInstance('CoreAppProvider');
+        this.logger = CoreLogger.getInstance('CoreAppProvider');
         this.db = dbProvider.getDB(this.DBNAME);
 
         // Create the schema versions table.

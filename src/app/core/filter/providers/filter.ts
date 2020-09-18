@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreSite } from '@classes/site';
 import { CoreWSExternalWarning } from '@providers/ws';
@@ -30,7 +30,7 @@ export class CoreFilterProvider {
 
     protected ROOT_CACHE_KEY = 'mmFilter:';
 
-    protected logger;
+    protected logger: CoreLogger;
 
     /**
      * Store the contexts in memory to speed up the process, it can take a lot of time otherwise.
@@ -46,14 +46,13 @@ export class CoreFilterProvider {
         }
     } = {};
 
-    constructor(logger: CoreLoggerProvider,
-            eventsProvider: CoreEventsProvider,
+    constructor(            eventsProvider: CoreEventsProvider,
             private sitesProvider: CoreSitesProvider,
             private textUtils: CoreTextUtilsProvider,
             private filterDelegate: CoreFilterDelegate,
             private appProvider: CoreAppProvider) {
 
-        this.logger = logger.getInstance('CoreFilterProvider');
+        this.logger = CoreLogger.getInstance('CoreFilterProvider');
 
         eventsProvider.on(CoreEventsProvider.WS_CACHE_INVALIDATED, (data) => {
             delete this.contextsCache[data.siteId];

@@ -20,7 +20,7 @@ import { Chooser, ChooserResult } from '@ionic-native/chooser';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreApp, CoreAppProvider } from '@providers/app';
 import { CoreFileProvider, CoreFileProgressEvent } from '@providers/file';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreMimetypeUtils } from '@providers/utils/mimetype';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -34,12 +34,11 @@ import { CoreFileUploaderDelegate } from './delegate';
 @Injectable()
 export class CoreFileUploaderHelperProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
     protected filePickerDeferred: PromiseDefer;
     protected actionSheet: ActionSheet;
 
-    constructor(logger: CoreLoggerProvider,
-            protected appProvider: CoreAppProvider,
+    constructor(            protected appProvider: CoreAppProvider,
             protected translate: TranslateService,
             protected fileUploaderProvider: CoreFileUploaderProvider,
             protected domUtils: CoreDomUtilsProvider,
@@ -51,7 +50,7 @@ export class CoreFileUploaderHelperProvider {
             protected camera: Camera,
             protected platform: Platform,
             protected fileChooser: Chooser) {
-        this.logger = logger.getInstance('CoreFileUploaderProvider');
+        this.logger = CoreLogger.getInstance('CoreFileUploaderProvider');
     }
 
     /**

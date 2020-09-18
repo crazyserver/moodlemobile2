@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@providers/sites';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreCourseProvider } from '@core/course/providers/course';
@@ -31,14 +31,14 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
  */
 @Injectable()
 export class CoreGradesHelperProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private coursesProvider: CoreCoursesProvider,
+    constructor(private coursesProvider: CoreCoursesProvider,
             private gradesProvider: CoreGradesProvider, private sitesProvider: CoreSitesProvider,
             private textUtils: CoreTextUtilsProvider, private courseProvider: CoreCourseProvider,
             private domUtils: CoreDomUtilsProvider, private urlUtils: CoreUrlUtilsProvider, private utils: CoreUtilsProvider,
             private linkHelper: CoreContentLinksHelperProvider, private courseHelper: CoreCourseHelperProvider) {
-        this.logger = logger.getInstance('CoreGradesHelperProvider');
+        this.logger = CoreLogger.getInstance('CoreGradesHelperProvider');
     }
 
     /**

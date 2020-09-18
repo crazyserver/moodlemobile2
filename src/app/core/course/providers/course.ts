@@ -17,7 +17,7 @@ import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
@@ -95,19 +95,19 @@ export class CoreCourseProvider {
         ]
     };
 
-    protected logger;
+    protected logger: CoreLogger;
     protected CORE_MODULES = [
         'assign', 'assignment', 'book', 'chat', 'choice', 'data', 'database', 'date', 'external-tool',
         'feedback', 'file', 'folder', 'forum', 'glossary', 'ims', 'imscp', 'label', 'lesson', 'lti', 'page', 'quiz',
         'resource', 'scorm', 'survey', 'url', 'wiki', 'workshop', 'h5pactivity'
     ];
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider,
             private utils: CoreUtilsProvider, private timeUtils: CoreTimeUtilsProvider, private translate: TranslateService,
             private courseOffline: CoreCourseOfflineProvider, private appProvider: CoreAppProvider,
             private courseFormatDelegate: CoreCourseFormatDelegate, private sitePluginsProvider: CoreSitePluginsProvider,
             private domUtils: CoreDomUtilsProvider, protected pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('CoreCourseProvider');
+        this.logger = CoreLogger.getInstance('CoreCourseProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }

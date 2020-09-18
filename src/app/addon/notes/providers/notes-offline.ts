@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 
@@ -22,7 +22,7 @@ import { CoreTimeUtilsProvider } from '@providers/utils/time';
  */
 @Injectable()
 export class AddonNotesOfflineProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static NOTES_TABLE = 'addon_notes_offline_notes';
@@ -86,8 +86,8 @@ export class AddonNotesOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider,  private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider) {
-        this.logger = logger.getInstance('AddonNotesOfflineProvider');
+    constructor( private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider) {
+        this.logger = CoreLogger.getInstance('AddonNotesOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { File, FileEntry, DirectoryEntry, Entry, Metadata } from '@ionic-native/file';
 import { CoreApp, CoreAppProvider } from './app';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreMimetypeUtilsProvider } from './utils/mimetype';
 import { CoreTextUtilsProvider } from './utils/text';
 import { CoreConfigConstants } from '../configconstants';
@@ -68,20 +68,19 @@ export class CoreFileProvider {
 
     static CHUNK_SIZE = 1048576; // 1 MB. Same chunk size as Ionic Native.
 
-    protected logger;
+    protected logger: CoreLogger;
     protected initialized = false;
     protected basePath = '';
     protected isHTMLAPI = false;
 
-    constructor(logger: CoreLoggerProvider,
-            appProvider: CoreAppProvider,
+    constructor(            appProvider: CoreAppProvider,
             protected platform: Platform,
             protected file: File,
             protected textUtils: CoreTextUtilsProvider,
             protected zip: Zip,
             protected mimeUtils: CoreMimetypeUtilsProvider) {
 
-        this.logger = logger.getInstance('CoreFileProvider');
+        this.logger = CoreLogger.getInstance('CoreFileProvider');
 
         if (appProvider.isAndroid() && !Object.getOwnPropertyDescriptor(FileReader.prototype, 'onloadend')) {
             // Cordova File plugin creates some getters and setter for FileReader, but Ionic's polyfills override them in Android.

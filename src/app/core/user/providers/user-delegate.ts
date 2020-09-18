@@ -17,7 +17,7 @@ import { NavController } from '@ionic/angular';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreEventsProvider } from '@providers/events';
 import { Subject, BehaviorSubject } from 'rxjs';

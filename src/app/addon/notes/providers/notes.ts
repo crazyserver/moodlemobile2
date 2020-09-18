@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@providers/app';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
@@ -31,12 +31,12 @@ import { CoreWSExternalWarning } from '@providers/ws';
 export class AddonNotesProvider {
 
     protected ROOT_CACHE_KEY = 'mmaNotes:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private utils: CoreUtilsProvider, private translate: TranslateService, private userProvider: CoreUserProvider,
             private notesOffline: AddonNotesOfflineProvider, protected pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('AddonNotesProvider');
+        this.logger = CoreLogger.getInstance('AddonNotesProvider');
     }
 
     /**

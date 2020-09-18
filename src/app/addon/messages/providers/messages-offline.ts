@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreAppProvider } from '@providers/app';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -24,7 +24,7 @@ import { CoreTextUtilsProvider } from '@providers/utils/text';
 @Injectable()
 export class AddonMessagesOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static MESSAGES_TABLE = 'addon_messages_offline_messages'; // When group messaging isn't available or a new conversation starts.
@@ -88,9 +88,9 @@ export class AddonMessagesOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('AddonMessagesOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonMessagesOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

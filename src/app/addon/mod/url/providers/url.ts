@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -31,12 +31,12 @@ export class AddonModUrlProvider {
     static COMPONENT = 'mmaModUrl';
 
     protected ROOT_CACHE_KEY = 'mmaModUrl:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private courseProvider: CoreCourseProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private courseProvider: CoreCourseProvider,
             private utils: CoreUtilsProvider, private mimeUtils: CoreMimetypeUtilsProvider,
             private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModUrlProvider');
+        this.logger = CoreLogger.getInstance('AddonModUrlProvider');
     }
 
     /**

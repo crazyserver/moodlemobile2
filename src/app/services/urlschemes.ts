@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from './app';
 import { CoreInitDelegate } from './init';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreSitesProvider, CoreSiteCheckResponse } from './sites';
 import { CoreDomUtilsProvider } from './utils/dom';
 import { CoreTextUtilsProvider } from './utils/text';
@@ -63,11 +63,10 @@ export interface CoreCustomURLSchemesParams extends CoreLoginSSOData {
   providedIn: 'root',
 })
 export class CoreCustomURLSchemesProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected lastUrls = {};
 
-    constructor(logger: CoreLoggerProvider,
-            protected appProvider: CoreAppProvider,
+    constructor(            protected appProvider: CoreAppProvider,
             protected utils: CoreUtilsProvider,
             protected loginHelper: CoreLoginHelperProvider,
             protected linksHelper: CoreContentLinksHelperProvider,
@@ -79,7 +78,7 @@ export class CoreCustomURLSchemesProvider {
             protected linksDelegate: CoreContentLinksDelegate,
             protected translate: TranslateService,
             protected sitePluginsProvider: CoreSitePluginsProvider) {
-        this.logger = logger.getInstance('CoreCustomURLSchemesProvider');
+        this.logger = CoreLogger.getInstance('CoreCustomURLSchemesProvider');
     }
 
     /**

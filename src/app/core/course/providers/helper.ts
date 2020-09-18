@@ -37,7 +37,7 @@ import { CoreCourseModulePrefetchDelegate } from './module-prefetch-delegate';
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 import { CoreConstants } from '@core/constants';
 import { CoreSite } from '@classes/site';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import * as moment from 'moment';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
 import { CoreArray } from '@singletons/array';
@@ -110,7 +110,7 @@ export type CoreCourseCoursesProgress = {
 export class CoreCourseHelperProvider {
 
     protected courseDwnPromises: { [s: string]: { [id: number]: Promise<any> } } = {};
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(private courseProvider: CoreCourseProvider,
             private domUtils: CoreDomUtilsProvider,

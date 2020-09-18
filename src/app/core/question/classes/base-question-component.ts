@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Input, Output, EventEmitter, Injector, ElementRef } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
@@ -33,14 +33,14 @@ export class CoreQuestionBaseComponent {
     @Output() buttonClicked: EventEmitter<any>; // Should emit an event when a behaviour button is clicked.
     @Output() onAbort: EventEmitter<void>; // Should emit an event if the question should be aborted.
 
-    protected logger;
+    protected logger: CoreLogger;
     protected questionHelper: CoreQuestionHelperProvider;
     protected domUtils: CoreDomUtilsProvider;
     protected textUtils: CoreTextUtilsProvider;
     protected realElement: HTMLElement;
 
-    constructor(logger: CoreLoggerProvider, logName: string, protected injector: Injector) {
-        this.logger = logger.getInstance(logName);
+    constructor(logName: string, protected injector: Injector) {
+        this.logger = CoreLogger.getInstance(logName);
 
         // Use an injector to get the providers to prevent having to modify all subclasses if a new provider is needed.
         this.questionHelper = injector.get(CoreQuestionHelperProvider);

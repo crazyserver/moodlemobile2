@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreConstants } from '@core/constants';
 
@@ -26,10 +26,10 @@ import { CoreConstants } from '@core/constants';
     name: 'coreSecondsToHMS',
 })
 export class CoreSecondsToHMSPipe implements PipeTransform {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('CoreSecondsToHMSPipe');
+    constructor(private textUtils: CoreTextUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CoreSecondsToHMSPipe');
     }
 
     /**

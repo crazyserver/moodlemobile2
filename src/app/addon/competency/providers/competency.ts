@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 import { CoreSite } from '@classes/site';
@@ -41,7 +41,7 @@ export class AddonCompetencyProvider {
 
     protected ROOT_CACHE_KEY = 'mmaCompetency:';
 
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(loggerProvider: CoreLoggerProvider, private sitesProvider: CoreSitesProvider,
             protected pushNotificationsProvider: CorePushNotificationsProvider) {

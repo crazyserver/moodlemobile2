@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Injector } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 
 /**
@@ -25,7 +25,7 @@ import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-
 })
 export class AddonQtypeMultichoiceComponent extends CoreQuestionBaseComponent implements OnInit {
 
-    constructor(logger: CoreLoggerProvider, injector: Injector) {
+    constructor(injector: Injector) {
         super(logger, 'AddonQtypeMultichoiceComponent', injector);
     }
 

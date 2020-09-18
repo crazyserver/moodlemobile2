@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -21,10 +21,10 @@ import { TranslateService } from '@ngx-translate/core';
  */
 @Injectable()
 export class CoreUserHelperProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private translate: TranslateService) {
-        this.logger = logger.getInstance('CoreUserHelperProvider');
+    constructor(private translate: TranslateService) {
+        this.logger = CoreLogger.getInstance('CoreUserHelperProvider');
     }
 
     /**

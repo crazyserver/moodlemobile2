@@ -18,7 +18,7 @@ import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreFilepoolProvider } from '@providers/filepool';
 import { CoreLangProvider } from '@providers/lang';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSite } from '@classes/site';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
@@ -83,7 +83,7 @@ import { CoreSitePluginsBlockHandler } from '@core/siteplugins/classes/handlers/
 export class CoreSitePluginsHelperProvider {
     protected HANDLER_DISABLED = 'core_site_plugins_helper_handler_disabled';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected courseRestrictHandlers = {};
 
     constructor(protected loggerProvider: CoreLoggerProvider,

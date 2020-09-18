@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
@@ -31,11 +31,11 @@ export class CoreGradesProvider {
 
     protected ROOT_CACHE_KEY = 'mmGrades:';
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider,
+    constructor(private sitesProvider: CoreSitesProvider,
             private coursesProvider: CoreCoursesProvider, protected pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('CoreGradesProvider');
+        this.logger = CoreLogger.getInstance('CoreGradesProvider');
     }
 
     /**

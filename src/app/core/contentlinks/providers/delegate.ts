@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUrlUtilsProvider } from '@providers/utils/url';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -135,12 +135,12 @@ export interface CoreContentLinksHandlerActions {
  */
 @Injectable()
 export class CoreContentLinksDelegate {
-    protected logger;
+    protected logger: CoreLogger;
     protected handlers: { [s: string]: CoreContentLinksHandler } = {}; // All registered handlers.
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private urlUtils: CoreUrlUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private urlUtils: CoreUrlUtilsProvider,
             private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('CoreContentLinksDelegate');
+        this.logger = CoreLogger.getInstance('CoreContentLinksDelegate');
     }
 
     /**

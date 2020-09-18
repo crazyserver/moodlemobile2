@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Injector, ElementRef } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 
 /**
@@ -27,7 +27,7 @@ export class AddonQtypeMultiAnswerComponent extends CoreQuestionBaseComponent im
 
     protected element: HTMLElement;
 
-    constructor(logger: CoreLoggerProvider, injector: Injector, element: ElementRef) {
+    constructor(injector: Injector, element: ElementRef) {
         super(logger, 'AddonQtypeMultiAnswerComponent', injector);
 
         this.element = element.nativeElement;

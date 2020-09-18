@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from './events';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreSitesProvider } from './sites';
 import { CoreWSExternalFile } from '@providers/ws';
 import { FileEntry } from '@ionic-native/file';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injector, Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -104,7 +104,7 @@ export class AddonModDataFieldsDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';
 
-    constructor(logger: CoreLoggerProvider, sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
             protected utils: CoreUtilsProvider, protected defaultHandler: AddonModDataDefaultFieldHandler) {
         super('AddonModDataFieldsDelegate', logger, sitesProvider, eventsProvider);
     }

@@ -23,7 +23,7 @@ import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreCoursesProvider } from './courses';
 import { NavController } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 
 /**
  * Handler to treat links to course view or enrol (except site home).
@@ -34,7 +34,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
     pattern = /((\/enrol\/index\.php)|(\/course\/enrol\.php)|(\/course\/view\.php)).*([\?\&]id=\d+)/;
 
     protected waitStart = 0;
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(private sitesProvider: CoreSitesProvider, private coursesProvider: CoreCoursesProvider,
             private domUtils: CoreDomUtilsProvider,

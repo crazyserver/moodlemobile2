@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { Subject, BehaviorSubject } from 'rxjs';
 

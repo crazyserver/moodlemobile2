@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 
@@ -42,7 +42,7 @@ export interface AddonQtypeDdwtosQuestionCSSSelectors {
  */
 export class AddonQtypeDdwtosQuestion {
 
-    protected logger: any;
+    protected logger: CoreLogger;
     protected nextDragItemNo = 1;
     protected selectors: AddonQtypeDdwtosQuestionCSSSelectors; // Result of cssSelectors.
     protected placed: {[no: number]: number}; // Map that relates drag elements numbers with drop zones numbers.
@@ -59,10 +59,10 @@ export class AddonQtypeDdwtosQuestion {
      * @param readOnly Whether it's read only.
      * @param inputIds Ids of the inputs of the question (where the answers will be stored).
      */
-    constructor(logger: CoreLoggerProvider, protected domUtils: CoreDomUtilsProvider, protected container: HTMLElement,
+    constructor(protected domUtils: CoreDomUtilsProvider, protected container: HTMLElement,
             protected question: any, protected readOnly: boolean, protected inputIds: string[],
             protected textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('AddonQtypeDdwtosQuestion');
+        this.logger = CoreLogger.getInstance('AddonQtypeDdwtosQuestion');
 
         this.initializer(question);
     }

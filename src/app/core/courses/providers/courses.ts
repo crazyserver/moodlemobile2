@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@providers/sites';
 import { CoreSite } from '@classes/site';
 import { makeSingleton } from '@singletons/core.singletons';
@@ -52,11 +52,11 @@ export class CoreCoursesProvider {
     static STATE_FAVOURITE = 'favourite';
 
     protected ROOT_CACHE_KEY = 'mmCourses:';
-    protected logger;
+    protected logger: CoreLogger;
     protected userCoursesIds: {[id: number]: boolean}; // Use an object to make it faster to search.
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider) {
-        this.logger = logger.getInstance('CoreCoursesProvider');
+    constructor(private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider) {
+        this.logger = CoreLogger.getInstance('CoreCoursesProvider');
     }
 
     /**

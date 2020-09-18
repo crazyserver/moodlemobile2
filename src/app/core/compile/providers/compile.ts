@@ -19,7 +19,7 @@ import {
     IonicModule
 } from '@ionic/angular';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 
 // Import core providers.
 import { CORE_PROVIDERS } from '@app/app.module';
@@ -138,7 +138,7 @@ import { AddonModWorkshopComponentsModule } from '@addon/mod/workshop/components
 @Injectable()
 export class CoreCompileProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
     protected compiler: Compiler;
 
     // Other Ionic/Angular providers that don't depend on where they are injected.
@@ -155,8 +155,8 @@ export class CoreCompileProvider {
         AddonModWorkshopComponentsModule, CoreBlockComponentsModule, CoreEditorComponentsModule, CoreSearchComponentsModule
     ];
 
-    constructor(protected injector: Injector, logger: CoreLoggerProvider, compilerFactory: JitCompilerFactory) {
-        this.logger = logger.getInstance('CoreCompileProvider');
+    constructor(protected injector: Injector, compilerFactory: JitCompilerFactory) {
+        this.logger = CoreLogger.getInstance('CoreCompileProvider');
 
         this.compiler = compilerFactory.createCompiler();
     }

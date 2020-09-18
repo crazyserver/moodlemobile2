@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { makeSingleton } from '@singletons/core.singletons';
 
 /**
@@ -71,12 +71,12 @@ export class CoreEventsProvider {
     static FORM_ACTION = 'form_action';
     static ACTIVITY_DATA_SENT = 'activity_data_sent';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected observables: { [s: string]: Subject<any> } = {};
     protected uniqueEvents = {};
 
-    constructor(logger: CoreLoggerProvider) {
-        this.logger = logger.getInstance('CoreEventsProvider');
+    constructor() {
+        this.logger = CoreLogger.getInstance('CoreEventsProvider');
     }
 
     /**

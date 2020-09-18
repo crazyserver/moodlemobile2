@@ -17,7 +17,7 @@ import { CoreAppProvider } from '@providers/app';
 import { CoreCronDelegate } from '@providers/cron';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSite } from '@classes/site';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -42,7 +42,7 @@ export interface CoreSiteSpaceUsage {
  */
 @Injectable()
 export class CoreSettingsHelper {
-    protected logger;
+    protected logger: CoreLogger;
     protected syncPromises = {};
 
     constructor(loggerProvider: CoreLoggerProvider,

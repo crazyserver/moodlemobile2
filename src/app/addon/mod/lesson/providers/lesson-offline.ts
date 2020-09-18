@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
@@ -26,7 +26,7 @@ import { AddonModLessonProvider } from './lesson';
 @Injectable()
 export class AddonModLessonOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database. We use lowercase in the names to match the WS responses.
     static RETAKES_TABLE = 'addon_mod_lesson_retakes';
@@ -128,9 +128,9 @@ export class AddonModLessonOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
             private textUtils: CoreTextUtilsProvider, private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('AddonModLessonOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonModLessonOfflineProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSite } from '@classes/site';
@@ -39,7 +39,7 @@ export class CoreDelegate {
     /**
      * Logger instance get from CoreLoggerProvider.
      */
-    protected logger;
+    protected logger: CoreLogger;
 
     /**
      * List of registered handlers.

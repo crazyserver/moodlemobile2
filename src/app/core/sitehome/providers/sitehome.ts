@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreSite } from '@classes/site';
 import { CoreCourseProvider } from '@core/course/providers/course';
@@ -24,11 +24,11 @@ import { AddonModForumProvider } from '@addon/mod/forum/providers/forum';
  */
 @Injectable()
 export class CoreSiteHomeProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private courseProvider: CoreCourseProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private courseProvider: CoreCourseProvider,
             private forumProvider: AddonModForumProvider) {
-        this.logger = logger.getInstance('CoreSiteHomeProvider');
+        this.logger = CoreLogger.getInstance('CoreSiteHomeProvider');
     }
 
     /**

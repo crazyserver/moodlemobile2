@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreSyncProvider } from '@providers/sync';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -29,7 +29,7 @@ import { SQLiteDB } from '@classes/sqlitedb';
 @Injectable()
 export class AddonModScormOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static ATTEMPTS_TABLE = 'addon_mod_scorm_offline_attempts';
@@ -121,10 +121,10 @@ export class AddonModScormOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
             private syncProvider: CoreSyncProvider, private utils: CoreUtilsProvider, private textUtils: CoreTextUtilsProvider,
             private userProvider: CoreUserProvider) {
-        this.logger = logger.getInstance('AddonModScormOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonModScormOfflineProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }

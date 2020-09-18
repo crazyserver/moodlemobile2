@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CoreApp, CoreAppProvider, CoreAppSchema } from './app';
 import { CoreConfigProvider } from './config';
 import { CoreEventsProvider } from './events';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreTextUtilsProvider } from './utils/text';
 import { CoreUtilsProvider } from './utils/utils';
 import { SQLiteDB } from '@classes/sqlitedb';
@@ -96,7 +96,7 @@ export class CoreLocalNotificationsProvider {
         ],
     };
 
-    protected logger;
+    protected logger: CoreLogger;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
     protected codes: { [s: string]: number } = {};
@@ -118,8 +118,7 @@ export class CoreLocalNotificationsProvider {
     protected queueRunner: CoreQueueRunner; // Queue to decrease the number of concurrent calls to the plugin (see MOBILE-3477).
 
     constructor(
-            logger: CoreLoggerProvider,
-            private localNotifications: LocalNotifications,
+                        private localNotifications: LocalNotifications,
             private platform: Platform,
             private utils: CoreUtilsProvider,
             private configProvider: CoreConfigProvider,
@@ -131,7 +130,7 @@ export class CoreLocalNotificationsProvider {
             private push: Push,
             private zone: NgZone) {
 
-        this.logger = logger.getInstance('CoreLocalNotificationsProvider');
+        this.logger = CoreLogger.getInstance('CoreLocalNotificationsProvider');
         this.queueRunner = new CoreQueueRunner(10);
         this.appDB = appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.tablesSchema).catch(() => {

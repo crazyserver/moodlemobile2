@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
@@ -29,11 +29,11 @@ export class AddonBlogProvider {
     static ENTRIES_PER_PAGE = 10;
     static COMPONENT = 'blog';
     protected ROOT_CACHE_KEY = 'addonBlog:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider, protected utils: CoreUtilsProvider,
+    constructor(protected sitesProvider: CoreSitesProvider, protected utils: CoreUtilsProvider,
             protected pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('AddonBlogProvider');
+        this.logger = CoreLogger.getInstance('AddonBlogProvider');
     }
 
     /**

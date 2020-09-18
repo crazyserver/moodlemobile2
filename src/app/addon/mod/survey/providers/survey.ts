@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreAppProvider } from '@providers/app';
@@ -31,12 +31,12 @@ export class AddonModSurveyProvider {
     static COMPONENT = 'mmaModSurvey';
 
     protected ROOT_CACHE_KEY = 'mmaModSurvey:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private filepoolProvider: CoreFilepoolProvider, private utils: CoreUtilsProvider,
             private surveyOffline: AddonModSurveyOfflineProvider, private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModSurveyProvider');
+        this.logger = CoreLogger.getInstance('AddonModSurveyProvider');
     }
 
     /**

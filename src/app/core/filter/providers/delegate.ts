@@ -14,7 +14,7 @@
 
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from './filter';
 import { CoreFilterDefaultHandler } from './default-filter';

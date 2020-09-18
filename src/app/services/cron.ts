@@ -16,7 +16,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Network } from '@ionic-native/network';
 import { CoreAppProvider, CoreAppSchema } from './app';
 import { CoreConfigProvider } from './config';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreUtilsProvider } from './utils/utils';
 import { CoreConstants } from '@core/constants';
 import { SQLiteDB } from '@classes/sqlitedb';
@@ -116,15 +116,15 @@ export class CoreCronDelegate {
         ],
     };
 
-    protected logger;
+    protected logger: CoreLogger;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
     protected handlers: { [s: string]: CoreCronHandler } = {};
     protected queuePromise = Promise.resolve();
 
-    constructor(logger: CoreLoggerProvider, private appProvider: CoreAppProvider, private configProvider: CoreConfigProvider,
+    constructor(private appProvider: CoreAppProvider, private configProvider: CoreConfigProvider,
             private utils: CoreUtilsProvider, network: Network, zone: NgZone) {
-        this.logger = logger.getInstance('CoreCronDelegate');
+        this.logger = CoreLogger.getInstance('CoreCronDelegate');
 
         this.appDB = this.appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.tableSchema).catch(() => {

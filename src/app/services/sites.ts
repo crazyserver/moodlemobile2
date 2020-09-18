@@ -17,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider, CoreAppSchema, CoreStoreConfig } from './app';
 import { CoreEventsProvider } from './events';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreSitesFactoryProvider } from './sites-factory';
 import { CoreDomUtilsProvider } from './utils/dom';
 import { CoreTextUtilsProvider } from './utils/text';
@@ -331,7 +331,7 @@ export class CoreSitesProvider {
 
     protected isWPApp: boolean;
 
-    protected logger;
+    protected logger: CoreLogger;
     protected services = {};
     protected sessionRestored = false;
     protected currentSite: CoreSite;
@@ -436,8 +436,7 @@ export class CoreSitesProvider {
         }
     };
 
-    constructor(logger: CoreLoggerProvider,
-            protected http: HttpClient,
+    constructor(            protected http: HttpClient,
             protected sitesFactory: CoreSitesFactoryProvider,
             protected appProvider: CoreAppProvider,
             protected translate: TranslateService,
@@ -448,7 +447,7 @@ export class CoreSitesProvider {
             protected injector: Injector,
             protected wsProvider: CoreWSProvider,
             protected domUtils: CoreDomUtilsProvider) {
-        this.logger = logger.getInstance('CoreSitesProvider');
+        this.logger = CoreLogger.getInstance('CoreSitesProvider');
 
         this.appDB = appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.appTablesSchema).catch(() => {

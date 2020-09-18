@@ -14,7 +14,7 @@
 
 import { Injector } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from '@core/course/providers/module-delegate';
 import { CoreSitePluginsBaseHandler } from './base-handler';
 import { CoreSitePluginsModuleIndexComponent } from '../../components/module-index/module-index';
@@ -28,7 +28,7 @@ export class CoreSitePluginsModuleHandler extends CoreSitePluginsBaseHandler imp
     supportedFeatures: {[name: string]: any};
     supportsFeature: (feature: string) => any;
 
-    protected logger: any;
+    protected logger: CoreLogger;
 
     constructor(name: string,
             public modName: string,

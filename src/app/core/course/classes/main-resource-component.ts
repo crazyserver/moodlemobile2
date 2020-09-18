@@ -17,7 +17,7 @@ import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider, CoreTextErrorObject } from '@providers/utils/text';
@@ -86,7 +86,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
     protected courseProvider: CoreCourseProvider;
     protected appProvider: CoreAppProvider;
 
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(injector: Injector, loggerName: string = 'CoreCourseModuleMainResourceComponent') {
         this.textUtils = injector.get(CoreTextUtilsProvider);

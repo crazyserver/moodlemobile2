@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreAppProvider } from '@providers/app';
@@ -61,14 +61,14 @@ export class AddonModWikiProvider {
     static RENEW_LOCK_TIME = 30000; // Milliseconds.
 
     protected ROOT_CACHE_KEY = 'mmaModWiki:';
-    protected logger;
+    protected logger: CoreLogger;
     protected subwikiListsCache: {[wikiId: number]: AddonModWikiSubwikiListData} = {};
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private filepoolProvider: CoreFilepoolProvider, private utils: CoreUtilsProvider, private translate: TranslateService,
             private wikiOffline: AddonModWikiOfflineProvider, eventsProvider: CoreEventsProvider,
             private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModWikiProvider');
+        this.logger = CoreLogger.getInstance('AddonModWikiProvider');
 
         // Clear subwiki lists cache on logout.
         eventsProvider.on(CoreEventsProvider.LOGIN, () => {

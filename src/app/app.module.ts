@@ -31,7 +31,7 @@ import { MoodleMobileApp } from './app.component';
 import { CoreInterceptor } from '@classes/interceptor';
 import { CorePageTransition } from '@classes/page-transition';
 import { CoreModalLateralTransition } from '@classes/modal-lateral-transition';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDbProvider } from '@providers/db';
 import { CoreAppProvider } from '@providers/app';
 import { CoreConfigProvider } from '@providers/config';

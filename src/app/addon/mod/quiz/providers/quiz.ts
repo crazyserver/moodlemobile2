@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -57,16 +57,16 @@ export class AddonModQuizProvider {
     static QUIZ_SHOW_TIME_BEFORE_DEADLINE = 3600;
 
     protected ROOT_CACHE_KEY = 'mmaModQuiz:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
             private translate: TranslateService, private textUtils: CoreTextUtilsProvider,
             private gradesHelper: CoreGradesHelperProvider, private questionDelegate: CoreQuestionDelegate,
             private filepoolProvider: CoreFilepoolProvider, private timeUtils: CoreTimeUtilsProvider,
             private accessRulesDelegate: AddonModQuizAccessRuleDelegate, private quizOfflineProvider: AddonModQuizOfflineProvider,
             private domUtils: CoreDomUtilsProvider, private logHelper: CoreCourseLogHelperProvider,
             protected pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('AddonModQuizProvider');
+        this.logger = CoreLogger.getInstance('AddonModQuizProvider');
     }
 
     /**

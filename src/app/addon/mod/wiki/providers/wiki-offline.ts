@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 
 /**
@@ -22,7 +22,7 @@ import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 @Injectable()
 export class AddonModWikiOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static NEW_PAGES_TABLE = 'addon_mod_wiki_new_pages_store';
@@ -83,8 +83,8 @@ export class AddonModWikiOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider) {
-        this.logger = logger.getInstance('AddonModWikiOfflineProvider');
+    constructor(private sitesProvider: CoreSitesProvider) {
+        this.logger = CoreLogger.getInstance('AddonModWikiOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

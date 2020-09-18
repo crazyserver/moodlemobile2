@@ -19,7 +19,7 @@ import { CoreAppProvider } from '@providers/app';
 import { CoreDbProvider } from '@providers/db';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreFileProvider } from '@providers/file';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreWSProvider, CoreWSPreSets, CoreWSFileUploadOptions, CoreWSAjaxPreSets } from '@providers/ws';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -232,7 +232,7 @@ export class CoreSite {
     ];
 
     // Rest of variables.
-    protected logger;
+    protected logger: CoreLogger;
     protected db: SQLiteDB;
     protected cleanUnicode = false;
     protected lastAutoLogin = 0;
@@ -272,7 +272,7 @@ export class CoreSite {
         this.urlUtils = injector.get(CoreUrlUtilsProvider);
         this.wsProvider = injector.get(CoreWSProvider);
 
-        this.logger = logger.getInstance('CoreWSProvider');
+        this.logger = CoreLogger.getInstance('CoreWSProvider');
         this.setInfo(infos);
         this.calculateOfflineDisabled();
 

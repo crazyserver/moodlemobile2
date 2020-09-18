@@ -18,7 +18,7 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
 import { CoreFile } from '@providers/file';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreUrlUtilsProvider } from '@providers/utils/url';
 import { CoreIframeUtilsProvider } from '@providers/utils/iframe';
@@ -43,12 +43,11 @@ export class CoreIframeComponent implements OnChanges {
     loading: boolean;
     safeUrl: SafeResourceUrl;
 
-    protected logger;
+    protected logger: CoreLogger;
     protected IFRAME_TIMEOUT = 15000;
     protected initialized = false;
 
-    constructor(logger: CoreLoggerProvider,
-            protected iframeUtils: CoreIframeUtilsProvider,
+    constructor(            protected iframeUtils: CoreIframeUtilsProvider,
             protected domUtils: CoreDomUtilsProvider,
             protected sanitizer: DomSanitizer,
             protected navCtrl: NavController,
@@ -57,7 +56,7 @@ export class CoreIframeComponent implements OnChanges {
             @Optional() protected svComponent: CoreSplitViewComponent,
             ) {
 
-        this.logger = logger.getInstance('CoreIframe');
+        this.logger = CoreLogger.getInstance('CoreIframe');
         this.loaded = new EventEmitter<HTMLIFrameElement>();
     }
 

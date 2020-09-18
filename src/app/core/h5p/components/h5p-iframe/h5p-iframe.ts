@@ -48,7 +48,7 @@ export class CoreH5PIframeComponent implements OnChanges {
     protected site: CoreSite;
     protected siteId: string;
     protected siteCanDownload: boolean;
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(public elementRef: ElementRef,
             protected pluginFileDelegate: CorePluginFileDelegate) {

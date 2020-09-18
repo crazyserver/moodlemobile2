@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -62,12 +62,12 @@ export class CoreUserProvider {
         ]
     };
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
             private filepoolProvider: CoreFilepoolProvider, private appProvider: CoreAppProvider,
             private userOffline: CoreUserOfflineProvider, private pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('CoreUserProvider');
+        this.logger = CoreLogger.getInstance('CoreUserProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

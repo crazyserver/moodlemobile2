@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreUtilsProvider } from './utils/utils';
 import { makeSingleton } from '@singletons/core.singletons';
 
@@ -56,11 +56,11 @@ export class CoreInitDelegate {
     static MAX_RECOMMENDED_PRIORITY = 600;
 
     protected initProcesses = {};
-    protected logger;
+    protected logger: CoreLogger;
     protected readiness;
 
-    constructor(logger: CoreLoggerProvider, platform: Platform, private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('CoreInitDelegate');
+    constructor(platform: Platform, private utils: CoreUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CoreInitDelegate');
     }
 
     /**

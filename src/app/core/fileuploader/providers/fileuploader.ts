@@ -19,7 +19,7 @@ import { MediaCapture, MediaFile, CaptureError, CaptureAudioOptions, CaptureVide
 import { TranslateService } from '@ngx-translate/core';
 import { CoreFileProvider } from '@providers/file';
 import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
@@ -47,15 +47,14 @@ export class CoreFileUploaderProvider {
     static LIMITED_SIZE_WARNING = 1048576; // 1 MB.
     static WIFI_SIZE_WARNING = 10485760; // 10 MB.
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Observers to notify when a media file starts/stops being recorded/selected.
     onGetPicture: Subject<boolean> = new Subject<boolean>();
     onAudioCapture: Subject<boolean> = new Subject<boolean>();
     onVideoCapture: Subject<boolean> = new Subject<boolean>();
 
-    constructor(logger: CoreLoggerProvider,
-            protected fileProvider: CoreFileProvider,
+    constructor(            protected fileProvider: CoreFileProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected utils: CoreUtilsProvider,
             protected sitesProvider: CoreSitesProvider,
@@ -66,7 +65,7 @@ export class CoreFileUploaderProvider {
             protected mediaCapture: MediaCapture,
             protected camera: Camera,
             protected modalCtrl: ModalController) {
-        this.logger = logger.getInstance('CoreFileUploaderProvider');
+        this.logger = CoreLogger.getInstance('CoreFileUploaderProvider');
     }
 
     /**

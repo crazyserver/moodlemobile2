@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
@@ -24,7 +24,7 @@ import { CoreTimeUtilsProvider } from '@providers/utils/time';
 @Injectable()
 export class AddonModFeedbackOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static FEEDBACK_TABLE = 'addon_mod_feedback_answers';
@@ -61,9 +61,9 @@ export class AddonModFeedbackOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider,
+    constructor(private sitesProvider: CoreSitesProvider,
         private textUtils: CoreTextUtilsProvider, private timeUtils: CoreTimeUtilsProvider) {
-        this.logger = logger.getInstance('AddonModFeedbackOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonModFeedbackOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

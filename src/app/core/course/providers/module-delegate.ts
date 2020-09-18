@@ -16,7 +16,7 @@ import { Injectable, Injector } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
 import { SafeUrl } from '@angular/platform-browser';
 import { CoreEventsProvider } from '@providers/events';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreCourseProvider } from './course';
 import { CoreSite } from '@classes/site';

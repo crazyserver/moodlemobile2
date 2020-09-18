@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileTransfer, FileUploadOptions } from '@ionic-native/file-transfer';
 import { CoreAppProvider } from './app';
 import { CoreFileProvider } from './file';
-import { CoreLoggerProvider } from './logger';
+import { CoreLogger } from './logger';
 import { CoreMimetypeUtilsProvider } from './utils/mimetype';
 import { CoreTextUtilsProvider } from './utils/text';
 import { CoreConstants } from '@core/constants';
@@ -146,7 +146,7 @@ export type HttpRequestOptions = {
   providedIn: 'root',
 })
 export class CoreWSProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected mimeTypeCache = {}; // A "cache" to store file mimetypes to prevent performing too many HEAD requests.
     protected ongoingCalls = {};
     protected retryCalls = [];
@@ -159,9 +159,8 @@ export class CoreWSProvider {
             protected fileProvider: CoreFileProvider,
             protected fileTransfer: FileTransfer,
             protected mimeUtils: CoreMimetypeUtilsProvider,
-            logger: CoreLoggerProvider,
-            platform: Platform) {
-        this.logger = logger.getInstance('CoreWSProvider');
+                        platform: Platform) {
+        this.logger = CoreLogger.getInstance('CoreWSProvider');
 
         platform.ready().then(() => {
             if (this.appProvider.isIOS()) {

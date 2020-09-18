@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTimeUtilsProvider } from '@providers/utils/time';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -238,11 +238,11 @@ export class CoreQuestionProvider {
         }
     };
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
             private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('CoreQuestionProvider');
+        this.logger = CoreLogger.getInstance('CoreQuestionProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

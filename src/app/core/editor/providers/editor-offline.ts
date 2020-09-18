@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLogger } from '@providers/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
 import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreUtilsProvider } from '@providers/utils/utils';
@@ -26,7 +26,7 @@ export class CoreEditorOfflineProvider {
 
     protected DRAFT_TABLE = 'editor_draft';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreEditorProvider',
         version: 1,
@@ -81,11 +81,10 @@ export class CoreEditorOfflineProvider {
     };
 
     constructor(
-            logger: CoreLoggerProvider,
-            protected sitesProvider: CoreSitesProvider,
+                        protected sitesProvider: CoreSitesProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('CoreEditorProvider');
+        this.logger = CoreLogger.getInstance('CoreEditorProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
