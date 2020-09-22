@@ -15,7 +15,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
-import { Globalization } from '@ionic-native/globalization';
 import { Platform, Config } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreConfigProvider } from './config';
@@ -37,7 +36,7 @@ export class CoreLangProvider {
     protected sitePluginsStrings = {}; // Strings defined by site plugins.
 
     constructor(private translate: TranslateService, private configProvider: CoreConfigProvider, platform: Platform,
-            private globalization: Globalization, private config: Config) {
+            private config: Config) {
         // Set fallback language and language to use until the app determines the right language to use.
         translate.setDefaultLang(this.fallbackLanguage);
         translate.use(this.defaultLanguage);
@@ -56,10 +55,10 @@ export class CoreLangProvider {
         });
 
         translate.onLangChange.subscribe((event: any) => {
-            platform.setLang(event.lang, true);
+            document.documentElement.setAttribute('lang', event.lang);
 
             const dir = this.translate.instant('core.thisdirection');
-            platform.setDir(dir.indexOf('rtl') != -1 ? 'rtl' : 'ltr', true);
+            document.documentElement.setAttribute('dir', dir.indexOf('rtl') != -1 ? 'rtl' : 'ltr');
         });
     }
 
@@ -241,7 +240,7 @@ export class CoreLangProvider {
 
             try {
                 // No forced language, try to get current language from cordova globalization.
-                return this.globalization.getPreferredLanguage().then((result) => {
+                return navigator.globalization.getPreferredLanguage((result) => {
                     let language = result.value.toLowerCase();
                     if (language.indexOf('-') > -1) {
                         // Language code defined by locale has a dash, like en-US or es-ES. Check if it's supported.
@@ -258,7 +257,7 @@ export class CoreLangProvider {
                     }
 
                     return language;
-                }).catch(() => {
+                }, () => {
                     // Error getting locale. Use default language.
                     return this.defaultLanguage;
                 });

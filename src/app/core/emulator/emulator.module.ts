@@ -25,7 +25,6 @@ import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Globalization } from '@ionic-native/globalization';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Keyboard } from '@ionic-native/keyboard';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -48,7 +47,6 @@ import { FileMock } from './providers/file';
 import { FileOpenerMock } from './providers/file-opener';
 import { FileTransferMock } from './providers/file-transfer';
 import { GeolocationMock } from './providers/geolocation';
-import { GlobalizationMock } from './providers/globalization';
 import { InAppBrowserMock } from './providers/inappbrowser';
 import { LocalNotificationsMock } from './providers/local-notifications';
 import { MediaCaptureMock } from './providers/media-capture';
@@ -78,7 +76,6 @@ export const IONIC_NATIVE_PROVIDERS = [
     FileOpener,
     FileTransfer,
     Geolocation,
-    Globalization,
     InAppBrowser,
     Keyboard,
     LocalNotifications,
@@ -163,13 +160,6 @@ export const IONIC_NATIVE_PROVIDERS = [
             deps: [CoreAppProvider],
             useFactory: (appProvider: CoreAppProvider): Geolocation => {
                 return appProvider.isMobile() ? new Geolocation() : new GeolocationMock();
-            }
-        },
-        {
-            provide: Globalization,
-            deps: [CoreAppProvider],
-            useFactory: (appProvider: CoreAppProvider): Globalization => {
-                return appProvider.isMobile() ? new Globalization() : new GlobalizationMock(appProvider);
             }
         },
         {
