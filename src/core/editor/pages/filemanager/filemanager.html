@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar core-back-button>
+        <ion-title>{{ title }}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <!-- List of files. -->
+    <core-attachments *ngIf="files && files.length > 0" [files]="files" [maxSize]="options.maxBytes" [maxSubmissions]="options.maxFiles" [component]="component" [componentId]="componentId" [allowOffline]="true" [acceptedTypes]="options.acceptedTypes"></core-attachments>
+
+    <!-- Message telling there are no files. -->
+    <core-empty-box *ngIf="!files || !files.length" icon="folder" [message]="'addon.files.emptyfilelist' | translate"></core-empty-box>
+</ion-content>

@@ -66,6 +66,11 @@
                 <core-icon name="fa-list-ol"></core-icon>
             </button>
         </ion-slide>
+        <ion-slide *ngIf="showFileUploader">
+            <button [disabled]="!rteEnabled" (click)="openFileManager()" [title]=" 'core.editor.managefiles' | translate">
+                <core-icon name="fa-files-o"></core-icon>
+            </button>
+        </ion-slide>
         <ion-slide>
             <button [disabled]="!rteEnabled" (click)="buttonAction($event, 'removeFormat')" (mousedown)="mouseDownAction($event)" [title]=" 'core.editor.clear' | translate">
                 <core-icon name="fa-eraser"></core-icon>

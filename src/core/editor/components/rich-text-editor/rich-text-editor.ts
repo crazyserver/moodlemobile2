@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterContentInit, OnDestroy, Optional }
     from '@angular/core';
-import { TextInput, Content, Platform, Slides } from 'ionic-angular';
+import { TextInput, Content, Platform, Slides, ModalController } from 'ionic-angular';
 import { CoreApp } from '@providers/app';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreFilepoolProvider } from '@providers/filepool';
@@ -25,6 +25,29 @@ import { CoreEventsProvider } from '@providers/events';
 import { CoreEditorOfflineProvider } from '../../providers/editor-offline';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
+/**
+ * RTE File options.
+ */
+export interface CoreEditorRichTextEditorFileOptions {
+    // Number of files supported. Use EDITOR_UNLIMITED_FILES to unlimited files and 0 to disable file uploading.
+    maxFiles?: number;
+
+    // Max bytes accepted to be uploaded. Unlimited (0) by default.
+    maxBytes?: number;
+
+    // If subdirectories are accepted. False by default.
+    subdirs?: boolean;
+
+    // Accepted file types. All (*) by default.
+    acceptedTypes?: string;
+
+    // Files component. Mandatory if maxFiles != 0.
+    component?: string;
+
+    // Files filearea. Mandatory if maxFiles != 0.
+    fileArea?: string;
+}
 
 /**
  * Component to display a rich text editor if enabled.
@@ -39,6 +62,9 @@ import { Subscription } from 'rxjs';
     templateUrl: 'core-editor-rich-text-editor.html'
 })
 export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDestroy {
+
+    static EDITOR_UNLIMITED_FILES = -1; // Unlimited maxFiles value.
+
     // Based on: https://github.com/judgewest2000/Ionic3RichText/
     // @todo: Anchor button, fullscreen...
     // @todo: Textarea height is not being updated when editor is resized. Height is calculated if any css is changed.
@@ -52,6 +78,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
     @Input() contextLevel?: string; // The context level of the text.
     @Input() contextInstanceId?: number; // The instance ID related to the context.
     @Input() elementId?: string; // An ID to set to the element.
+    @Input() fileSupport?: CoreEditorRichTextEditorFileOptions;
     @Input() draftExtraParams: {[name: string]: any}; // Extra params to identify the draft.
     @Output() contentChanged: EventEmitter<string>;
 
@@ -61,6 +88,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
     protected DRAFT_AUTOSAVE_FREQUENCY = 30000;
     protected RESTORE_MESSAGE_CLEAR_TIME = 6000;
     protected SAVE_MESSAGE_CLEAR_TIME = 2000;
+
     protected element: HTMLDivElement;
     protected editorElement: HTMLDivElement;
     protected kbHeight = 0; // Last known keyboard height.
@@ -107,6 +135,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
     protected lastDraft = '';
     protected draftWasRestored = false;
     protected originalContent: string;
+    protected showFileUploader = false;
 
     constructor(
             protected domUtils: CoreDomUtilsProvider,
@@ -118,7 +147,9 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
             protected events: CoreEventsProvider,
             protected utils: CoreUtilsProvider,
             protected platform: Platform,
-            protected editorOffline: CoreEditorOfflineProvider) {
+            protected editorOffline: CoreEditorOfflineProvider,
+            protected modalCtrl: ModalController,
+            ) {
         this.contentChanged = new EventEmitter<string>();
         this.element = elementRef.nativeElement as HTMLDivElement;
         this.pageInstance = 'app_' + Date.now(); // Generate a "unique" ID based on timestamp.
@@ -129,6 +160,15 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
      * Init editor.
      */
     ngAfterContentInit(): void {
+        this.fileSupport = Object.assign({
+            maxFiles: 0,
+            maxBytes: 0,
+            subdirs: false,
+            acceptedTypes: '*',
+        }, this.fileSupport);
+
+        this.showFileUploader = this.fileSupport.maxFiles != 0;
+
         this.domUtils.isRichTextEditorEnabled().then((enabled) => {
             this.rteEnabled = !!enabled;
         });
@@ -490,18 +530,23 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
      * We only search for images because the editor should receive unfiltered text, so the multimedia filter won't be applied.
      * Treating videos and audios in here is complex, so if a user manually adds one he won't be able to play it in the editor.
      */
-    protected treatExternalContent(): void {
+    protected async treatExternalContent(): Promise<HTMLElement[]> {
         if (!this.sitesProvider.isLoggedIn()) {
             // Only treat external content if the user is logged in.
             return;
         }
 
-        const elements = Array.from(this.editorElement.querySelectorAll('img')),
-            siteId = this.sitesProvider.getCurrentSiteId(),
-            canDownloadFiles = this.sitesProvider.getCurrentSite().canDownloadFiles();
-        elements.forEach((el) => {
+        const elements = Array.from(this.editorElement.querySelectorAll('img'));
+        const siteId = this.sitesProvider.getCurrentSiteId();
+        const canDownloadFiles = this.sitesProvider.getCurrentSite().canDownloadFiles();
+
+        const fileElements = [];
+
+        await elements.map(async (el) => {
             if (el.getAttribute('data-original-src')) {
                 // Already treated.
+                fileElements.push(el);
+
                 return;
             }
 
@@ -513,14 +558,41 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
             }
 
             // Check if it's downloaded.
-            return this.filepoolProvider.getSrcByUrl(siteId, url, this.component, this.componentId).then((finalUrl) => {
-                // Check again if it's already treated, this function can be called concurrently more than once.
-                if (!el.getAttribute('data-original-src')) {
-                    el.setAttribute('data-original-src', el.src);
-                    el.setAttribute('src', finalUrl);
-                }
-            });
+            const finalUrl = await this.filepoolProvider.getSrcByUrl(siteId, url, this.component, this.componentId);
+
+            // Check again if it's already treated, this function can be called concurrently more than once.
+            if (!el.getAttribute('data-original-src')) {
+                el.setAttribute('data-original-src', el.src);
+                el.setAttribute('src', finalUrl);
+            }
+
+            fileElements.push(fileElements);
         });
+
+        return fileElements;
+    }
+
+    async openFileManager(e?: Event): Promise<void> {
+        // Create the toc modal.
+        const modal =  this.modalCtrl.create('CoreEditorFileManagerPage', {
+            editorElement: this.editorElement,
+            options: this.fileSupport,
+        }, {
+            showBackdrop: true,
+            enableBackdropDismiss: true,
+            });
+
+        modal.onDidDismiss((files) => {
+            // Update files.
+            if (files) {
+                console.error(files);
+            }
+        });
+
+        modal.present({
+            ev: event
+        });
+
     }
 
     /**

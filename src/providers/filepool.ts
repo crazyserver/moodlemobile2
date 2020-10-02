@@ -26,7 +26,7 @@ import { CoreDomUtilsProvider } from './utils/dom';
 import { CoreMimetypeUtilsProvider } from './utils/mimetype';
 import { CoreTextUtilsProvider } from './utils/text';
 import { CoreTimeUtilsProvider } from './utils/time';
-import { CoreUrlUtilsProvider } from './utils/url';
+import { CoreUrlUtilsProvider, CoreUrlUtils } from './utils/url';
 import { CoreUtilsProvider } from './utils/utils';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { CoreConstants } from '@core/constants';
@@ -2145,8 +2145,8 @@ export class CoreFilepoolProvider {
      * @param url URL to get the args.
      * @return The args found, undefined if not a pluginfile.
      */
-    protected getPluginFileArgs(url: string): string[] {
-        if (!this.urlUtils.isPluginFileUrl(url)) {
+    static getPluginFileArgs(url: string): string[] {
+        if (!CoreUrlUtils.instance.isPluginFileUrl(url)) {
             // Not pluginfile, return.
             return;
         }
@@ -2248,7 +2248,7 @@ export class CoreFilepoolProvider {
      * @return Revision number.
      */
     protected getRevisionFromUrl(url: string): number {
-        const args = this.getPluginFileArgs(url);
+        const args = CoreFilepoolProvider.getPluginFileArgs(url);
         if (!args) {
             // Not a pluginfile, no revision will be found.
             return 0;
@@ -2997,7 +2997,7 @@ export class CoreFilepoolProvider {
      * The revision is used to know if a file has changed. We remove it from the URL to prevent storing a file per revision.
      */
     protected removeRevisionFromUrl(url: string): string {
-        const args = this.getPluginFileArgs(url);
+        const args = CoreFilepoolProvider.getPluginFileArgs(url);
         if (!args) {
             // Not a pluginfile, no revision will be found.
             return url;
