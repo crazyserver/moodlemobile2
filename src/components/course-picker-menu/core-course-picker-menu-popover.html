@@ -1,6 +1,8 @@
-<ion-list radio-group [(ngModel)]="courseId">
+<ion-list [(ngModel)]="courseId">
+<ion-radio-group>
     <ion-item text-wrap *ngFor="let course of courses" >
         <ion-label><core-format-text [text]="course.fullname" contextLevel="course" [contextInstanceId]="courseId"></core-format-text></ion-label>
-        <ion-radio value="{{course.id}}" (ionSelect)="coursePicked($event, course)" ></ion-radio>
+        <ion-radio slot="start" value="{{course.id}}" (ionSelect)="coursePicked($event, course)" ></ion-radio>
     </ion-item>
+</ion-radio-group>
 </ion-list>

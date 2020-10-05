@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Segment } from 'ionic-angular';
+import { IonicPage, Segment } from '@ionic/angular';
 import { CoreConstants } from '@core/constants';
 import { CoreConfigProvider } from '@providers/config';
 import { CoreFileProvider } from '@providers/file';

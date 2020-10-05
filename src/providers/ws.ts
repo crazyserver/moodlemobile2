@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { FileTransfer, FileUploadOptions } from '@ionic-native/file-transfer';

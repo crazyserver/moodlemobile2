@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, NavParams, NavController, PopoverController } from 'ionic-angular';
+import { IonicPage, NavParams, NavController, PopoverController } from '@ionic/angular';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreLocalNotificationsProvider } from '@providers/local-notifications';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content } from '@ionic/angular';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';
 import { AddonMessagesProvider, AddonMessagesConversationMember } from '../../providers/messages';

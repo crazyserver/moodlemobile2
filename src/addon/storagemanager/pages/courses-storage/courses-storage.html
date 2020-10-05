@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.storagemanager.managestorage' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="loaded">
@@ -15,9 +15,9 @@
                     <div item-end>
                         <p text-end>{{ totalSize | coreBytesToSize }}</p>
                     </div>
-                    <button ion-button icon-only item-end no-padding (click)="deleteCompletelyDownloadedCourses()" [disabled]="completelyDownloadedCourses.length === 0">
+                    <ion-button icon-only item-end no-padding (click)="deleteCompletelyDownloadedCourses()" [disabled]="completelyDownloadedCourses.length === 0">
                         <core-icon name="trash" label="{{ 'addon.storagemanager.deletecourses' | translate }}"></core-icon>
-                    </button>
+                    </ion-button>
                 </ion-item>
             </ion-card-header>
         </ion-card>
@@ -30,9 +30,9 @@
                         <ion-icon name="cube" item-start></ion-icon>
                         {{ course.totalSize | coreBytesToSize }}
                     </p>
-                    <button ion-button icon-only item-end (click)="deleteCourse(course)" [disabled]="course.isDownloading">
+                    <ion-button icon-only item-end (click)="deleteCourse(course)" [disabled]="course.isDownloading">
                         <core-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: course.name } }}"></core-icon>
-                    </button>
+                    </ion-button>
                 </ion-item>
             </ion-list>
         </ion-card>

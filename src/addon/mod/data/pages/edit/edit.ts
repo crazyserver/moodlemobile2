@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Content, IonicPage, NavParams, NavController } from 'ionic-angular';
+import { Content, IonicPage, NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
 import { CoreUtilsProvider } from '@providers/utils/utils';

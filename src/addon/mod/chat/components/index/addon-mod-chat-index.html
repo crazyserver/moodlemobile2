@@ -19,7 +19,7 @@
     </ion-card>
 
     <div padding *ngIf="chat">
-        <a ion-button block color="primary" (click)="enterChat()">{{ 'addon.mod_chat.enterchat' | translate }}</a>
-        <a ion-button block color="light" margin-top *ngIf="sessionsAvailable" (click)="viewSessions()">{{ 'addon.mod_chat.viewreport' | translate }}</a>
+        <ion-button block color="primary" (click)="enterChat()">{{ 'addon.mod_chat.enterchat' | translate }}</ion-button>
+        <ion-button block color="light" margin-top *ngIf="sessionsAvailable" (click)="viewSessions()">{{ 'addon.mod_chat.viewreport' | translate }}</ion-button>
     </div>
 </core-loading>

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams } from '@ionic/angular';
 
 /**
  * Component to display a the recaptcha in a modal.

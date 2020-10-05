@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { CoreCronDelegate } from '@providers/cron';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreCourseProvider } from './providers/course';

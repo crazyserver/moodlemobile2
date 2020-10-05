@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { CoreEvents, CoreEventsProvider } from '@providers/events';
 import { CoreSites } from '@providers/sites';
 import { CoreDomUtils } from '@providers/utils/dom';

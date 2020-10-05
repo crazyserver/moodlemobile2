@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, OnInit, OnDestroy, ContentChildren, ElementRef, QueryList } from '@angular/core';
-import { Button } from 'ionic-angular';
+import { Button } from '@ionic/angular';
 import { CoreLoggerProvider } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreContextMenuComponent } from '../context-menu/context-menu';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, Optional, Injector } from '@angular/core';
-import { Content, ModalController, NavController, Platform } from 'ionic-angular';
+import { Content, ModalController, NavController, Platform } from '@ionic/angular';
 import { CoreGroupInfo, CoreGroupsProvider } from '@providers/groups';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';

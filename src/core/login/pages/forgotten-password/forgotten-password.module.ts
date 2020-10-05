@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule } from '@ionic/angular';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { CoreLoginForgottenPasswordPage } from './forgotten-password';
 import { TranslateModule } from '@ngx-translate/core';

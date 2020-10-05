@@ -1,11 +1,11 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.searchcombined' | translate }}</ion-title>
-        <ion-buttons end>
+        <ion-buttons slot="primary">
             <!-- Add an empty context menu so discussion page can add items in split view, otherwise the menu disappears in some cases. -->
             <core-context-menu></core-context-menu>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <core-split-view>
     <ion-content>
@@ -30,7 +30,7 @@
         <ion-item-divider text-wrap>{{ item.titleString | translate }}</ion-item-divider>
 
         <!-- List of results -->
-        <a ion-item text-wrap *ngFor="let result of item.results" [title]="result.fullname" (click)="openConversation(result)" [class.core-split-item-selected]="result == selectedResult" class="addon-message-discussion">
+        <ion-item text-wrap *ngFor="let result of item.results" [title]="result.fullname" (click)="openConversation(result)" [class.core-split-item-selected]="result == selectedResult" class="addon-message-discussion">
             <ion-avatar item-start core-user-avatar [user]="result" [checkOnline]="true" [linkProfile]="false"></ion-avatar>
             <h2>
                 <core-format-text [text]="result.fullname" [highlight]="result.highlightName" [filter]="false"></core-format-text>
@@ -43,14 +43,14 @@
                 <span *ngIf="result.sentfromcurrentuser" class="addon-message-last-message-user">{{ 'addon.messages.you' | translate }}</span>
                 <core-format-text clean="true" singleLine="true" [text]="result.lastmessage" [highlight]="result.highlightMessage" contextLevel="system" [contextInstanceId]="0" class="addon-message-last-message-text"></core-format-text>
             </p>
-        </a>
+        </ion-item>
 
         <!-- Load more button for contacts and non-contacts -->
         <ng-container *ngIf="item.type != 'messages'">
             <div padding-horizontal *ngIf="item.canLoadMore && !item.loadingMore">
-                <button ion-button block color="light" (click)="search(query, item.type)">
+                <ion-button block color="light" (click)="search(query, item.type)">
                     {{ 'core.loadmore' | translate }}
-                </button>
+                </ion-button>
             </div>
             <div *ngIf="item.loadingMore" padding text-center>
                 <ion-spinner></ion-spinner>

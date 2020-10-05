@@ -1,14 +1,14 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="module" [contextInstanceId]="moduleId" [courseId]="courseId"></core-format-text></ion-title>
 
-        <ion-buttons end></ion-buttons>
-    </ion-navbar>
+        <ion-buttons slot="primary"></ion-buttons>
+    </ion-toolbar>
 
     <core-navbar-buttons end>
-        <button [hidden]="!canSaveGrades" ion-button button-clear (click)="submitGrade()" [attr.aria-label]="'core.done' | translate">
+        <ion-button [hidden]="!canSaveGrades" button-clear (click)="submitGrade()" [attr.aria-label]="'core.done' | translate">
             {{ 'core.done' | translate }}
-        </button>
+        </ion-button>
     </core-navbar-buttons>
 </ion-header>
 <ion-content>

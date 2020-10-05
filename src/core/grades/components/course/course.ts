@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, Input, Optional } from '@angular/core';
-import { Content, NavParams, NavController } from 'ionic-angular';
+import { Content, NavParams, NavController } from '@ionic/angular';
 import { CoreGradesProvider } from '../../providers/grades';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreGradesHelperProvider } from '../../providers/helper';

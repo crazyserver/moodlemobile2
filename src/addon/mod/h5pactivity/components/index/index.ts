@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional, Injector } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content } from '@ionic/angular';
 
 import { CoreApp } from '@providers/app';
 import { CoreEvents } from '@providers/events';

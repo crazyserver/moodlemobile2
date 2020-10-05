@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.notifications.notifications' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="notificationsLoaded" (ionRefresh)="refreshNotifications($event)">
@@ -9,13 +9,13 @@
     </ion-refresher>
     <core-loading [hideUntil]="notificationsLoaded">
         <div padding *ngIf="canMarkAllNotificationsAsRead">
-            <button ion-button block (click)="markAllNotificationsAsRead()" color="light" icon-start *ngIf="!loadingMarkAllNotificationsAsRead">
+            <ion-button block (click)="markAllNotificationsAsRead()" color="light" icon-start *ngIf="!loadingMarkAllNotificationsAsRead">
                 <core-icon name="fa-check"></core-icon>
                 {{ 'addon.notifications.markallread' | translate }}
-            </button>
-            <button ion-button block color="light" icon-start *ngIf="loadingMarkAllNotificationsAsRead">
+            </ion-button>
+            <ion-button block color="light" icon-start *ngIf="loadingMarkAllNotificationsAsRead">
                 <ion-spinner></ion-spinner>
-            </button>
+            </ion-button>
         </div>
         <ion-card *ngFor="let notification of notifications">
             <ion-item text-wrap>

@@ -14,9 +14,9 @@
     <core-course-module-description *ngIf="lti && lti.showdescriptionlaunch" [description]="description" [component]="component" [componentId]="componentId" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
     <div padding>
-        <button ion-button block icon-left (click)="launch()">
+        <ion-button block icon-left (click)="launch()">
             <ion-icon name="link"></ion-icon>
             {{ 'addon.mod_lti.launchactivity' | translate }}
-        </button>
+        </ion-button>
     </div>
 </core-loading>

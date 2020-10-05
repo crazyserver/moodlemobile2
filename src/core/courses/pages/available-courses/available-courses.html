@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.courses.availablecourses' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="coursesLoaded" (ionRefresh)="refreshCourses($event)">

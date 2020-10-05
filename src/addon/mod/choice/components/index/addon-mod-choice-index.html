@@ -50,18 +50,20 @@
             </ion-item>
         </ng-container>
         <ng-container *ngIf="!choice.allowmultiple">
-            <ion-item text-wrap *ngFor="let option of options" radio-group [(ngModel)]="selectedOption.id">
+            <ion-item text-wrap *ngFor="let option of options" [(ngModel)]="selectedOption.id">
+<ion-radio-group>
                 <ion-label>
                     <ng-container *ngTemplateOutlet="optionLabelTemplate; context: {option: option}"></ng-container>
                 </ion-label>
-                <ion-radio color="primary" [value]="option.id" [disabled]="option.disabled || !canEdit"></ion-radio>
-            </ion-item>
+                <ion-radio slot="start" color="primary" [value]="option.id" [disabled]="option.disabled || !canEdit"></ion-radio>
+            </ion-radio-group>
+</ion-item>
         </ng-container>
         <ion-item *ngIf="canEdit">
-            <button ion-button block (click)="save()" [disabled]="!canSave()">{{ 'addon.mod_choice.savemychoice' | translate }}</button>
+            <ion-button block (click)="save()" [disabled]="!canSave()">{{ 'addon.mod_choice.savemychoice' | translate }}</ion-button>
         </ion-item>
         <ion-item *ngIf="canDelete">
-            <button ion-button block color="light" (click)="delete()">{{ 'addon.mod_choice.removemychoice' | translate }}</button>
+            <ion-button block color="light" (click)="delete()">{{ 'addon.mod_choice.removemychoice' | translate }}</ion-button>
         </ion-item>
     </ion-card>
 
@@ -72,7 +74,7 @@
         </ion-item-divider>
         <ion-grid no-padding>
             <ion-row>
-                <ion-col col-12 col-lg-5>
+                <ion-col size="12" size-lg="5">
                     <ion-item text-wrap class="core-warning-item" *ngIf="hasOffline">
                         <ion-icon item-start name="warning" color="warning"></ion-icon> {{ 'addon.mod_choice.resultsnotsynced' | translate }}
                     </ion-item>
@@ -80,17 +82,17 @@
                         <core-chart type="pie" [data]="data" [labels]="labels" height="300" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-chart>
                     </ion-item>
                 </ion-col>
-                <ion-col *ngIf="choice.publish && results" col-12 col-lg-7>
+                <ion-col *ngIf="choice.publish && results" size="12" size-lg="7">
                     <ion-item-group *ngFor="let result of results">
                         <ion-item-divider text-wrap>
                             <h2><core-format-text [text]="result.text" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></h2>
                             <p>{{ 'addon.mod_choice.numberofuser' | translate }}: {{ result.numberofuser }} ({{ 'core.percentagenumber' | translate: {$a: result.percentageamountfixed} }})</p>
                             <p *ngIf="choice.limitanswers && choice.showavailable">{{ 'addon.mod_choice.limita' | translate:{$a: result.maxanswer} }}</p>
                         </ion-item-divider>
-                        <a ion-item *ngFor="let user of result.userresponses" core-user-link [courseId]="courseid" [userId]="user.userid" [title]="user.fullname" text-wrap>
+                        <ion-item *ngFor="let user of result.userresponses" core-user-link [courseId]="courseid" [userId]="user.userid" [title]="user.fullname" text-wrap>
                             <ion-avatar core-user-avatar [user]="user" item-start [courseId]="courseid"></ion-avatar>
                             <p>{{user.fullname}}</p>
-                        </a>
+                        </ion-item>
                     </ion-item-group>
                 </ion-col>
             </ion-row>

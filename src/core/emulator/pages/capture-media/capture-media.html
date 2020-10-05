@@ -1,15 +1,15 @@
 <ion-header>
-    <ion-navbar core-back-button>
-        <ion-buttons start>
-            <button ion-button (click)="cancel()">{{ 'core.cancel' | translate }}</button>
+    <ion-toolbar core-back-button>
+        <ion-buttons slot="secondary">
+            <ion-button (click)="cancel()">{{ 'core.cancel' | translate }}</ion-button>
         </ion-buttons>
 
         <ion-title>{{ title | translate }}</ion-title>
 
-        <ion-buttons end>
-            <button ion-button *ngIf="hasCaptured" (click)="done()">{{ 'core.done' | translate }}</button>
+        <ion-buttons slot="primary">
+            <ion-button *ngIf="hasCaptured" (click)="done()">{{ 'core.done' | translate }}</ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content  class="has-footer">
     <core-loading [hideUntil]="readyToCapture">
@@ -30,10 +30,10 @@
                 <canvas [hidden]="hasCaptured || isCordovaAudioCapture" class="core-audio-canvas" #streamAudio></canvas>
 
                 <!-- Button to start/stop in mobile devices. -->
-                <button ion-button icon-only clear *ngIf="!hasCaptured && isCordovaAudioCapture" (click)="actionClicked()" [attr.aria-label]="title">
+                <ion-button icon-only clear *ngIf="!hasCaptured && isCordovaAudioCapture" (click)="actionClicked()" [attr.aria-label]="title">
                     <ion-icon *ngIf="!isCapturing" name="microphone"></ion-icon>
                     <ion-icon *ngIf="isCapturing" name="square"></ion-icon>
-                </button>
+                </ion-button>
 
                 <!-- Audio player to listen to the result. -->
                 <audio [hidden]="!hasCaptured" class="core-audio-captured" controls #previewAudio></audio>
@@ -46,15 +46,15 @@
     <ion-row *ngIf="readyToCapture">
         <ion-col></ion-col>
         <ion-col text-center>
-            <button ion-button icon-only clear *ngIf="!hasCaptured && !isCordovaAudioCapture" (click)="actionClicked()" [attr.aria-label]="title">
+            <ion-button icon-only clear *ngIf="!hasCaptured && !isCordovaAudioCapture" (click)="actionClicked()" [attr.aria-label]="title">
                 <ion-icon *ngIf="!isCapturing && isAudio" name="microphone"></ion-icon>
                 <ion-icon *ngIf="!isCapturing && isVideo" name="videocam"></ion-icon>
                 <ion-icon *ngIf="isImage" name="camera"></ion-icon>
                 <ion-icon *ngIf="isCapturing" name="square"></ion-icon>
-            </button>
-            <button ion-button icon-only clear *ngIf="hasCaptured" (click)="discard()" [attr.aria-label]="'core.discard' | translate">
+            </ion-button>
+            <ion-button icon-only clear *ngIf="hasCaptured" (click)="discard()" [attr.aria-label]="'core.discard' | translate">
                 <ion-icon name="trash"></ion-icon>
-            </button>
+            </ion-button>
         </ion-col>
         <ion-col padding text-end class="chrono-container">
             <core-chrono *ngIf="!isImage" [hidden]="hasCaptured" [running]="isCapturing" [reset]="resetChrono" [endTime]="maxTime" (onEnd)="stopCapturing()"></core-chrono>

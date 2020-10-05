@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { PopoverController } from 'ionic-angular';
+import { PopoverController } from '@ionic/angular';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreCoursesProvider } from './courses';

@@ -5,9 +5,9 @@
             <core-format-text [text]="field.description" contextLevel="module" [contextInstanceId]="moduleId" [courseId]="courseId"></core-format-text>
         </ion-item>
         <ion-item *ngIf="edit && field.grades">
-            <ion-label [core-mark-required]="true" stacked>{{ 'addon.mod_workshop_assessment_accumulative.dimensiongradefor' | translate : {'$a': field.dimtitle } }}</ion-label>
+            <ion-label [core-mark-required]="true" position="stacked">{{ 'addon.mod_workshop_assessment_accumulative.dimensiongradefor' | translate : {'$a': field.dimtitle } }}</ion-label>
             <ion-select [(ngModel)]="selectedValues[n].grade" interface="action-sheet">
-                <ion-option *ngFor="let grade of field.grades" [value]="grade.value">{{grade.label}}</ion-option>
+                <ion-select-option *ngFor="let grade of field.grades" [value]="grade.value">{{grade.label}}</ion-select-option>
             </ion-select>
             <core-input-errors item-content *ngIf="fieldErrors['grade_' + n]" [errorText]="fieldErrors['grade_' + n]"></core-input-errors>
         </ion-item>
@@ -18,7 +18,7 @@
             </ng-container>
         </ion-item>
         <ion-item *ngIf="edit">
-            <ion-label stacked>{{ 'addon.mod_workshop_assessment_accumulative.dimensioncommentfor' | translate : {'$a': field.dimtitle } }}</ion-label>
+            <ion-label position="stacked">{{ 'addon.mod_workshop_assessment_accumulative.dimensioncommentfor' | translate : {'$a': field.dimtitle } }}</ion-label>
             <ion-textarea aria-multiline="true" [(ngModel)]="selectedValues[n].peercomment" core-auto-rows></ion-textarea>
         </ion-item>
         <ion-item *ngIf="!edit" text-wrap>

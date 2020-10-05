@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddonUserProfileFieldTextHandler } from './providers/handler';
 import { CoreUserProfileFieldDelegate } from '@core/user/providers/user-profile-field-delegate';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';

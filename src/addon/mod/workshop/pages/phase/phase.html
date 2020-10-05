@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_workshop.userplan' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-list>
@@ -15,12 +15,12 @@
                 <h2>{{ phase.title }}</h2>
                 <p text-wrap *ngIf="workshopPhase == phase.code">{{ 'addon.mod_workshop.userplancurrentphase' | translate }}</p>
             </ion-item-divider>
-            <a ion-item text-wrap *ngIf="phase.switchUrl" [href]="phase.switchUrl" detail-none>
+            <ion-item text-wrap *ngIf="phase.switchUrl" [href]="phase.switchUrl" detail-none>
                 <ion-icon item-start name="swap"></ion-icon>
                 {{ 'addon.mod_workshop.switchphase' + phase.code | translate }}
                 <ion-icon item-end name="open"></ion-icon>
-            </a>
-            <a ion-item text-wrap *ngFor="let task of phase.tasks" [class.item-dimmed]="phase.code != workshopPhase || (task.code == 'submit' && !showSubmit)" (click)="runTask(task)" detail-none>
+            </ion-item>
+            <ion-item text-wrap *ngFor="let task of phase.tasks" [class.item-dimmed]="phase.code != workshopPhase || (task.code == 'submit' && !showSubmit)" (click)="runTask(task)" detail-none>
                 <ion-icon item-start name="radio-button-off" *ngIf="task.completed == null"></ion-icon>
                 <ion-icon item-start name="close-circle" color="danger" *ngIf="task.completed == ''"></ion-icon>
                 <ion-icon item-start name="information-circle" color="info" *ngIf="task.completed == 'info'"></ion-icon>
@@ -29,7 +29,7 @@
                 <h2 text-wrap>{{task.title}}</h2>
                 <p *ngIf="task.details" [innerHTML]="task.details"></p>
                 <ion-icon item-end *ngIf="task.link && task.code != 'submit'" name="open"></ion-icon>
-            </a>
+            </ion-item>
         </ng-container>
     </ion-list>
 </ion-content>

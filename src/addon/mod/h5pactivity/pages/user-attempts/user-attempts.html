@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text *ngIf="h5pActivity" [text]="h5pActivity.name" contextLevel="module" [contextInstanceId]="h5pActivity.coursemodule" [courseId]="courseId"></core-format-text></ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="doRefresh($event)">
@@ -9,10 +9,10 @@
     </ion-refresher>
     <core-loading [hideUntil]="loaded">
         <!-- User viewed. -->
-        <a ion-item text-wrap *ngIf="user && !isCurrentUser" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
+        <ion-item text-wrap *ngIf="user && !isCurrentUser" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
             <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
             <h2>{{ user.fullname }}</h2>
-        </a>
+        </ion-item>
         <ion-item text-wrap *ngIf="user && isCurrentUser">
             <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
             <h2>{{ 'addon.mod_h5pactivity.myattempts' | translate }}</h2>
@@ -48,7 +48,7 @@
     <ion-item text-wrap class="addon-mod_h5pactivity-table-header" detail-push>
         <ion-row align-items-center>
             <ion-col text-center>#</ion-col>
-            <ion-col text-center col-5 col-md-2>{{ 'core.date' | translate }}</ion-col>
+            <ion-col text-center size="5" size-md="2">{{ 'core.date' | translate }}</ion-col>
             <ion-col text-center>{{ 'addon.mod_h5pactivity.score' | translate }}</ion-col>
             <ion-col text-center class="hidden-phone">{{ 'addon.mod_h5pactivity.maxscore' | translate }}</ion-col>
             <ion-col text-center class="hidden-phone">{{ 'addon.mod_h5pactivity.duration' | translate }}</ion-col>
@@ -58,10 +58,10 @@
     </ion-item>
 
     <!-- List of attempts. -->
-    <a ion-item text-wrap *ngFor="let attempt of attempts" [attr.aria-label]="'addon.mod_h5pactivity.viewattempt' | translate:{$a: attempt.attempt}" class="addon-mod_h5pactivity-table-row" navPush="AddonModH5PActivityAttemptResultsPage" [navParams]="{courseId: courseId, h5pActivityId: h5pActivityId, attemptId: attempt.id}">
+    <ion-item text-wrap *ngFor="let attempt of attempts" [attr.aria-label]="'addon.mod_h5pactivity.viewattempt' | translate:{$a: attempt.attempt}" class="addon-mod_h5pactivity-table-row" navPush="AddonModH5PActivityAttemptResultsPage" [navParams]="{courseId: courseId, h5pActivityId: h5pActivityId, attemptId: attempt.id}">
         <ion-row align-items-center>
             <ion-col text-center>{{ attempt.attempt }}</ion-col>
-            <ion-col text-center col-5 col-md-2>{{ attempt.timemodified | coreFormatDate:'strftimedatetimeshort' }}</ion-col>
+            <ion-col text-center size="5" size-md="2">{{ attempt.timemodified | coreFormatDate:'strftimedatetimeshort' }}</ion-col>
             <ion-col text-center>
                 {{ attempt.rawscore }}<span class="hidden-tablet"> / {{ attempt.maxscore }}</span>
             </ion-col>
@@ -77,5 +77,5 @@
                 <img *ngIf="attempt.success === null" src="assets/img/icons/empty.svg" [alt]="'addon.mod_h5pactivity.attempt_success_unknown' | translate">
             </ion-col>
         </ion-row>
-    </a>
+    </ion-item>
 </ng-template>

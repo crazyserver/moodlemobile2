@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="coursecat" [contextInstanceId]="currentCategory && currentCategory.id"></core-format-text></ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="categoriesLoaded" (ionRefresh)="refreshCategories($event)">
@@ -19,11 +19,11 @@
         <div *ngIf="categories.length > 0">
             <ion-item-divider>{{ 'core.courses.categories' | translate }}</ion-item-divider>
             <section *ngFor="let category of categories">
-                <a ion-item text-wrap (click)="openCategory(category.id)" [title]="category.name">
+                <ion-item text-wrap (click)="openCategory(category.id)" [title]="category.name">
                     <ion-icon name="folder" item-start></ion-icon>
                     <h2><core-format-text [text]="category.name" contextLevel="coursecat" [contextInstanceId]="category.id"></core-format-text></h2>
                     <ion-badge item-end *ngIf="category.coursecount > 0" color="light">{{category.coursecount}}</ion-badge>
-                </a>
+                </ion-item>
             </section>
         </div>
 

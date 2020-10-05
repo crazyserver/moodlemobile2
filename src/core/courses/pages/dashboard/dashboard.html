@@ -1,14 +1,14 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>
             <core-format-text [text]="siteName" contextLevel="system" [contextInstanceId]="0"></core-format-text>
             <img src="assets/img/login_logo.png" class="core-header-logo" [alt]="siteName">
         </ion-title>
 
-        <ion-buttons end>
-            <button *ngIf="searchEnabled" ion-button icon-only (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
+        <ion-buttons slot="primary">
+            <ion-button *ngIf="searchEnabled" icon-only (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
                 <ion-icon name="search"></ion-icon>
-            </button>
+            </ion-button>
             <core-context-menu>
                 <core-context-menu-item *ngIf="(downloadCourseEnabled || downloadCoursesEnabled)" [priority]="500" [content]="'addon.storagemanager.managestorage' | translate" (action)="manageCoursesStorage()" iconAction="cube"></core-context-menu-item>
 
@@ -20,7 +20,7 @@
                 <core-context-menu-item *ngIf="!siteHomeEnabled && !dashboardEnabled && mcComponent && mcComponent.courses && mcComponent.courses.length > 5" [priority]="700" [content]="'core.courses.filtermycourses' | translate" (action)="mcComponent.switchFilter()" [iconAction]="'funnel'"></core-context-menu-item>
             </core-context-menu>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-tabs [selectedIndex]="firstSelectedTab" [hideUntil]="tabsReady">

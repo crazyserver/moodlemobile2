@@ -1,9 +1,9 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="course" [contextInstanceId]="course.id"></core-format-text></ion-title>
 
-        <ion-buttons end></ion-buttons>
-    </ion-navbar>
+        <ion-buttons slot="primary"></ion-buttons>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-tabs>

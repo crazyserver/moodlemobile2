@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.rating.ratings' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="refreshRatings($event)">

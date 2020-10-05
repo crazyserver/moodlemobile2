@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CoreAppProvider } from '@providers/app';
 import { CoreInitDelegate } from '@providers/init';

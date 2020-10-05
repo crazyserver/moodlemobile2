@@ -14,7 +14,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreQuestionComponent } from './question/question';
 import { CoreComponentsModule } from '@components/components.module';

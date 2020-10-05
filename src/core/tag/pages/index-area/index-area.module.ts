@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreTagIndexAreaPage } from './index-area';
 import { CoreComponentsModule } from '@components/components.module';

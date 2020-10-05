@@ -5,7 +5,7 @@
             <core-format-text [text]="field.description" contextLevel="module" [contextInstanceId]="moduleId" [courseId]="courseId"></core-format-text>
         </ion-item>
         <ion-item *ngIf="edit">
-            <ion-label stacked [core-mark-required]="true">{{ 'addon.mod_workshop_assessment_comments.dimensioncommentfor' | translate : {'$a': field.dimtitle } }}</ion-label>
+            <ion-label position="stacked" [core-mark-required]="true">{{ 'addon.mod_workshop_assessment_comments.dimensioncommentfor' | translate : {'$a': field.dimtitle } }}</ion-label>
             <ion-textarea aria-multiline="true" [(ngModel)]="selectedValues[n].peercomment" core-auto-rows></ion-textarea>
             <core-input-errors item-content *ngIf="fieldErrors['peercomment_' + n]" [errorText]="fieldErrors['peercomment_' + n]"></core-input-errors>
         </ion-item>

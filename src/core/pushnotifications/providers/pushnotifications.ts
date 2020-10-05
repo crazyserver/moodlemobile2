@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, NgZone } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { Badge } from '@ionic-native/badge';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Device } from '@ionic-native/device';

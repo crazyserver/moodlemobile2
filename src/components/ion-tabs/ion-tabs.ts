@@ -16,7 +16,7 @@ import { Component, Optional, ElementRef, Renderer, ViewEncapsulation, forwardRe
     OnDestroy } from '@angular/core';
 import {
     Tabs, Tab, NavController, ViewController, App, Config, Platform, DeepLinker, Keyboard, RootNode, NavOptions
-} from 'ionic-angular';
+} from '@ionic/angular';
 import { CoreIonTabComponent } from './ion-tab';
 import { CoreUtilsProvider, PromiseDefer } from '@providers/utils/utils';
 import { CoreAppProvider } from '@providers/app';

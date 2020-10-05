@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange, Optional, ViewChild, ElementRef } from '@angular/core';
-import { InfiniteScroll, Content } from 'ionic-angular';
+import { InfiniteScroll, Content } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 
 /**

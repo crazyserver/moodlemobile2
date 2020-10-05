@@ -1,11 +1,11 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ title }}</ion-title>
 
-        <ion-buttons end>
+        <ion-buttons slot="primary">
             <!-- If the site plugin defines some buttons using core-nav-buttons, they will be added here. -->
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="content && content.ptrEnabled && content.content && content.content.dataLoaded" (ionRefresh)="refreshData($event)">

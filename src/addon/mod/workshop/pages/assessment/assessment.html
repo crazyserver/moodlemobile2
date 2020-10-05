@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="title" contextLevel="module" [contextInstanceId]="workshop && workshop.coursemodule" [courseId]="courseId"></core-format-text></ion-title>
-        <ion-buttons end [hidden]="!evaluating">
-            <button ion-button clear (click)="saveEvaluation()" [attr.aria-label]="'core.save' | translate">
+        <ion-buttons slot="primary" [hidden]="!evaluating">
+            <ion-button clear (click)="saveEvaluation()" [attr.aria-label]="'core.save' | translate">
                 {{ 'core.save' | translate }}
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="refreshAssessment($event)" *ngIf="!evaluating">
@@ -43,9 +43,9 @@
                 <h2>{{ 'addon.mod_workshop.assessmentsettings' | translate }}</h2>
             </ion-item>
             <ion-item text-wrap *ngIf="access.canallocate">
-                <ion-label stacked core-mark-required="true">{{ 'addon.mod_workshop.assessmentweight' | translate }}</ion-label>
+                <ion-label position="stacked" core-mark-required="true">{{ 'addon.mod_workshop.assessmentweight' | translate }}</ion-label>
                 <ion-select formControlName="weight" required="true" interface="action-sheet">
-                    <ion-option *ngFor="let w of weights" [value]="w">{{ w }}</ion-option>
+                    <ion-select-option *ngFor="let w of weights" [value]="w">{{ w }}</ion-select-option>
                 </ion-select>
             </ion-item>
             <ion-item text-wrap>
@@ -53,13 +53,13 @@
                 <p>{{ assessment.gradinggrade }}</p>
             </ion-item>
             <ion-item text-wrap *ngIf="access.canoverridegrades">
-                <ion-label stacked>{{ 'addon.mod_workshop.gradinggradeover' | translate }}</ion-label>
+                <ion-label position="stacked">{{ 'addon.mod_workshop.gradinggradeover' | translate }}</ion-label>
                 <ion-select formControlName="grade" interface="action-sheet">
-                    <ion-option *ngFor="let grade of evaluationGrades" [value]="grade.value">{{grade.label}}</ion-option>
+                    <ion-select-option *ngFor="let grade of evaluationGrades" [value]="grade.value">{{grade.label}}</ion-select-option>
                 </ion-select>
             </ion-item>
             <ion-item *ngIf="access.canoverridegrades">
-                <ion-label stacked>{{ 'addon.mod_workshop.feedbackreviewer' | translate }}</ion-label>
+                <ion-label position="stacked">{{ 'addon.mod_workshop.feedbackreviewer' | translate }}</ion-label>
                 <core-rich-text-editor item-content [control]="evaluateForm.controls['text']" formControlName="text" [autoSave]="true" contextLevel="module" [contextInstanceId]="workshop.coursemodule" elementId="feedbackreviewer_editor" [draftExtraParams]="{asid: assessmentId}"></core-rich-text-editor>
             </ion-item>
         </form>

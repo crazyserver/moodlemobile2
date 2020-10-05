@@ -37,7 +37,7 @@
             <ion-label id="addon-assign-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
             <ion-label id="addon-assign-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
             <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-assign-groupslabel" interface="action-sheet">
-                <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
             </ion-select>
         </ion-item>
 
@@ -51,37 +51,37 @@
         </ion-item>
 
         <!-- Summary of all submissions. -->
-        <a ion-item text-wrap *ngIf="summary && summary.participantcount" (click)="goToSubmissionList()">
+        <ion-item text-wrap *ngIf="summary && summary.participantcount" (click)="goToSubmissionList()">
             <h2 *ngIf="assign.teamsubmission">{{ 'addon.mod_assign.numberofteams' | translate }}</h2>
             <h2 *ngIf="!assign.teamsubmission">{{ 'addon.mod_assign.numberofparticipants' | translate }}</h2>
             <ion-badge item-end *ngIf="showNumbers" color="primary">
                 {{ summary.participantcount }}
             </ion-badge>
-        </a>
+        </ion-item>
 
         <!-- Summary of submissions with draft status. -->
-        <a ion-item text-wrap *ngIf="assign.submissiondrafts && summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissiondraftscount) ? true : null" (click)="goToSubmissionList(submissionStatusDraft, summary.submissiondraftscount)">
+        <ion-item text-wrap *ngIf="assign.submissiondrafts && summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissiondraftscount) ? true : null" (click)="goToSubmissionList(submissionStatusDraft, summary.submissiondraftscount)">
             <h2>{{ 'addon.mod_assign.numberofdraftsubmissions' | translate }}</h2>
             <ion-badge item-end *ngIf="showNumbers" color="primary">
                 {{ summary.submissiondraftscount }}
             </ion-badge>
-        </a>
+        </ion-item>
 
         <!-- Summary of submissions with submitted status. -->
-        <a ion-item text-wrap *ngIf="summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissionssubmittedcount) ? true : null" (click)="goToSubmissionList(submissionStatusSubmitted, summary.submissionssubmittedcount)">
+        <ion-item text-wrap *ngIf="summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissionssubmittedcount) ? true : null" (click)="goToSubmissionList(submissionStatusSubmitted, summary.submissionssubmittedcount)">
             <h2>{{ 'addon.mod_assign.numberofsubmittedassignments' | translate }}</h2>
             <ion-badge item-end *ngIf="showNumbers" color="primary">
                 {{ summary.submissionssubmittedcount }}
             </ion-badge>
-        </a>
+        </ion-item>
 
         <!-- Summary of submissions that need grading. -->
-        <a ion-item text-wrap *ngIf="summary && summary.submissionsenabled && !assign.teamsubmission && showNumbers" [attr.detail-none]="needsGradingAvalaible ? null : true" (click)="goToSubmissionList(needGrading, needsGradingAvalaible)">
+        <ion-item text-wrap *ngIf="summary && summary.submissionsenabled && !assign.teamsubmission && showNumbers" [attr.detail-none]="needsGradingAvalaible ? null : true" (click)="goToSubmissionList(needGrading, needsGradingAvalaible)">
             <h2>{{ 'addon.mod_assign.numberofsubmissionsneedgrading' | translate }}</h2>
             <ion-badge item-end color="primary">
                 {{ summary.submissionsneedgradingcount }}
             </ion-badge>
-        </a>
+        </ion-item>
 
         <!-- Ungrouped users. -->
         <div *ngIf="assign.teamsubmission && summary && summary.warnofungroupedusers" class="core-info-card" icon-start>

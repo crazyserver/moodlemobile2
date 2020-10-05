@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, Platform } from 'ionic-angular';
+import { IonicPage, Platform } from '@ionic/angular';
 import { Device } from '@ionic-native/device';
 import { Network } from '@ionic-native/network';
 import { TranslateService } from '@ngx-translate/core';

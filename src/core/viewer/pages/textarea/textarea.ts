@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams, AlertButton } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, AlertButton } from '@ionic/angular';
 
 /**
  * Page to render a textarea prompt.

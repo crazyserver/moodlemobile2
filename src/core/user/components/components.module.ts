@@ -14,7 +14,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreUserParticipantsComponent } from './participants/participants';
 import { CoreUserProfileFieldComponent } from './user-profile-field/user-profile-field';

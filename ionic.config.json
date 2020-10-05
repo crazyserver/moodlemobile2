@@ -4,7 +4,7 @@
     "cordova": {},
     "gulp": {}
   },
-  "type": "ionic-angular",
+  "type": "angular",
   "watchPatterns": [],
   "id": "com.moodle.moodlemobile"
 }

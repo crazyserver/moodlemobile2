@@ -46,23 +46,23 @@
                 <ion-row align-items-center>
                     <ion-col text-center class="hidden-phone" *ngIf="quiz.showAttemptColumn"><b>{{ 'addon.mod_quiz.attemptnumber' | translate }}</b></ion-col>
                     <ion-col text-center class="hidden-tablet" *ngIf="quiz.showAttemptColumn"><b>#</b></ion-col>
-                    <ion-col col-7><b>{{ 'addon.mod_quiz.attemptstate' | translate }}</b></ion-col>
+                    <ion-col size="7"><b>{{ 'addon.mod_quiz.attemptstate' | translate }}</b></ion-col>
                     <ion-col text-center class="hidden-phone" *ngIf="quiz.showMarkColumn"><b>{{ 'addon.mod_quiz.marks' | translate }} / {{ quiz.sumGradesFormatted }}</b></ion-col>
                     <ion-col text-center *ngIf="quiz.showGradeColumn"><b>{{ 'addon.mod_quiz.grade' | translate }} / {{ quiz.gradeFormatted }}</b></ion-col>
                 </ion-row>
             </ion-item>
             <!-- List of attempts. -->
-            <a ion-item text-wrap *ngFor="let attempt of attempts" [ngClass]='{"addon-mod_quiz-highlighted core-white-push-arrow": attempt.highlightGrade}' navPush="AddonModQuizAttemptPage" [navParams]="{courseId: courseId, quizId: quiz.id, attemptId: attempt.id}" [attr.aria-label]="'core.seemoredetail' | translate">
+            <ion-item text-wrap *ngFor="let attempt of attempts" [ngClass]='{"addon-mod_quiz-highlighted core-white-push-arrow": attempt.highlightGrade}' navPush="AddonModQuizAttemptPage" [navParams]="{courseId: courseId, quizId: quiz.id, attemptId: attempt.id}" [attr.aria-label]="'core.seemoredetail' | translate">
                 <ion-row align-items-center>
                     <ion-col text-center *ngIf="quiz.showAttemptColumn && attempt.preview">{{ 'addon.mod_quiz.preview' | translate }}</ion-col>
                     <ion-col text-center *ngIf="quiz.showAttemptColumn && !attempt.preview">{{ attempt.attempt }}</ion-col>
-                    <ion-col col-7>
+                    <ion-col size="7">
                         <p *ngFor="let sentence of attempt.readableState">{{ sentence }}</p>
                     </ion-col>
                     <ion-col text-center class="hidden-phone" *ngIf="quiz.showMarkColumn"><p>{{ attempt.readableMark }}</p></ion-col>
                     <ion-col text-center *ngIf="quiz.showGradeColumn"><p>{{ attempt.readableGrade }}</p></ion-col>
                 </ion-row>
-            </a>
+            </ion-item>
         </ion-list>
     </ion-card>
 
@@ -120,17 +120,17 @@
 
             <!-- Button to start/continue. -->
             <ion-item *ngIf="buttonText && !showStatusSpinner">
-                <button ion-button block (click)="attemptQuiz()">
+                <ion-button block (click)="attemptQuiz()">
                     {{ buttonText | translate }}
-                </button>
+                </ion-button>
             </ion-item>
 
             <!-- Button to open in browser if it cannot be attempted in the app. -->
             <ion-item *ngIf="!buttonText && ((!hasSupportedQuestions && unsupportedQuestions && unsupportedQuestions.length) || (unsupportedRules && unsupportedRules.length) || behaviourSupported === false)">
-                <a ion-button block [href]="externalUrl" core-link icon-end>
+                <ion-button block [href]="externalUrl" core-link icon-end>
                     {{ 'core.openinbrowser' | translate }}
                     <ion-icon name="open"></ion-icon>
-                </a>
+                </ion-button>
             </ion-item>
 
             <!-- Spinner shown while downloading or calculating. -->

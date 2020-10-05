@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_chat.currentusers' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="usersLoaded">
@@ -14,14 +14,14 @@
             <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
             <h2>{{ user.fullname }}</h2>
             <ng-container *ngIf="currentUserId != user.id && isOnline">
-                <button ion-button clear icon-left (click)="talkTo(user)">
+                <ion-button clear icon-left (click)="talkTo(user)">
                     <ion-icon name="chatboxes"></ion-icon>
                     {{ 'addon.mod_chat.talk' | translate }}
-                </button>
-                <button ion-button clear icon-left (click)="beepTo(user)">
+                </ion-button>
+                <ion-button clear icon-left (click)="beepTo(user)">
                     <ion-icon name="notifications"></ion-icon>
                     {{ 'addon.mod_chat.beep' | translate }}
-                </button>
+                </ion-button>
             </ng-container>
         </ion-item>
     </core-loading>

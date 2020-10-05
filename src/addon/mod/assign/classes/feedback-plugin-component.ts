@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Input } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import { AddonModAssignAssign, AddonModAssignSubmission, AddonModAssignPlugin } from '../providers/assign';
 
 /**

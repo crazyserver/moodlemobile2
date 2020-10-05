@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
 import { CoreBlockDelegate } from '@core/block/providers/delegate';
 import { AddonBlockHtmlHandler } from './providers/block-handler';
 

@@ -16,7 +16,7 @@ import {
     Component, Input, Output, ViewChild, ElementRef, EventEmitter, OnChanges, SimpleChange, Optional
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreFile } from '@providers/file';
 import { CoreLoggerProvider } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';

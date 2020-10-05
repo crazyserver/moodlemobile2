@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { CoreConfigConstants } from '../../../../configconstants';
 

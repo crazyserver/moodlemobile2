@@ -14,11 +14,11 @@
 <!-- Content. -->
 <core-loading [hideUntil]="loaded" class="core-loading-center">
     <ion-card class="with-borders" *ngIf="phases">
-        <a ion-item (click)="viewPhaseInfo()">
+        <ion-item (click)="viewPhaseInfo()">
             <h2 stacked text-wrap>{{ phases[workshop.phase].title }}</h2>
-        </a>
+        </ion-item>
         <ng-container *ngIf="phases && phases[workshop.phase] && phases[workshop.phase].tasks && phases[workshop.phase].tasks.length">
-            <a ion-item text-wrap *ngFor="let task of phases[workshop.phase].tasks" [class.item-dimmed]="task.code == 'submit' && !showSubmit" (click)="runTask(task)" detail-none>
+            <ion-item text-wrap *ngFor="let task of phases[workshop.phase].tasks" [class.item-dimmed]="task.code == 'submit' && !showSubmit" (click)="runTask(task)" detail-none>
                 <ion-icon item-start name="radio-button-off" *ngIf="task.completed == null"></ion-icon>
                 <ion-icon item-start name="close-circle" color="danger" *ngIf="task.completed == ''"></ion-icon>
                 <ion-icon item-start name="information-circle" color="info" *ngIf="task.completed == 'info'"></ion-icon>
@@ -27,7 +27,7 @@
                 <h2>{{task.title}}</h2>
                 <p *ngIf="task.details" [innerHTML]="task.details"></p>
                 <ion-icon item-end *ngIf="task.link && task.code != 'submit'" name="open"></ion-icon>
-            </a>
+            </ion-item>
         </ng-container>
     </ion-card>
 
@@ -95,14 +95,14 @@
         <!-- Show only on current phase -->
         <ng-container *ngIf="workshop.phase == workshopPhases.PHASE_SUBMISSION">
             <ion-item text-wrap *ngIf="showSubmit">
-                <button ion-button icon-start block *ngIf="access.creatingsubmissionallowed && !submission" (click)="gotoSubmit()">
+                <ion-button icon-start block *ngIf="access.creatingsubmissionallowed && !submission" (click)="gotoSubmit()">
                     <ion-icon name="add"></ion-icon>
                     {{ 'addon.mod_workshop.createsubmission' | translate }}
-                </button>
-                <button ion-button icon-start block *ngIf="access.modifyingsubmissionallowed && submission" (click)="gotoSubmit()">
+                </ion-button>
+                <ion-button icon-start block *ngIf="access.modifyingsubmissionallowed && submission" (click)="gotoSubmit()">
                     <ion-icon name="create"></ion-icon>
                     {{ 'addon.mod_workshop.editsubmission' | translate }}
-                </button>
+                </ion-button>
             </ion-item>
         </ng-container>
 
@@ -151,7 +151,7 @@
                 <ion-label id="addon-workshop-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                 <ion-label id="addon-workshop-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                 <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-workshop-groupslabel" interface="action-sheet">
-                    <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                    <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
                 </ion-select>
             </ion-item>
 
@@ -162,16 +162,16 @@
             <ion-grid *ngIf="page > 0 || hasNextPage">
                 <ion-row align-items-center>
                     <ion-col *ngIf="page > 0">
-                        <button ion-button block outline icon-start (click)="gotoSubmissionsPage(page - 1)">
+                        <ion-button block outline icon-start (click)="gotoSubmissionsPage(page - 1)">
                             <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                             {{ 'core.previous' | translate }}
-                        </button>
+                        </ion-button>
                     </ion-col>
                     <ion-col *ngIf="hasNextPage">
-                        <button ion-button block icon-end (click)="gotoSubmissionsPage(page + 1)">
+                        <ion-button block icon-end (click)="gotoSubmissionsPage(page + 1)">
                             {{ 'core.next' | translate }}
                             <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                        </button>
+                        </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>

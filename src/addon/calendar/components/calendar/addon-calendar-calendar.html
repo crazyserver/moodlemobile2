@@ -11,17 +11,17 @@
     <ion-grid no-padding class="addon-calendar-navigation">
         <ion-row align-items-center>
             <ion-col text-start *ngIf="canNavigate">
-                <a ion-button icon-only clear (click)="loadPrevious()" [title]="'core.previous' | translate">
+                <ion-button icon-only clear (click)="loadPrevious()" [title]="'core.previous' | translate">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
-                </a>
+                </ion-button>
             </ion-col>
             <ion-col text-center class="addon-calendar-period">
                 <h3>{{ periodName }}</h3>
             </ion-col>
             <ion-col text-end *ngIf="canNavigate">
-                <a ion-button icon-only clear (click)="loadNext()" [title]="'core.next' | translate">
+                <ion-button icon-only clear (click)="loadNext()" [title]="'core.next' | translate">
                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                </a>
+                </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>

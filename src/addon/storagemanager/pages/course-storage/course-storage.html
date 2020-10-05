@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.storagemanager.managestorage' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="loaded">
@@ -15,9 +15,9 @@
                     <div item-end>
                         <p text-end>{{ totalSize | coreBytesToSize }}</p>
                     </div>
-                    <button ion-button icon-only item-end no-padding (click)="deleteForCourse()" [disabled]="totalSize == 0">
+                    <ion-button icon-only item-end no-padding (click)="deleteForCourse()" [disabled]="totalSize == 0">
                         <core-icon name="trash" label="{{ 'addon.storagemanager.deletecourse' | translate }}"></core-icon>
-                    </button>
+                    </ion-button>
                 </ion-item>
             </ion-card-header>
         </ion-card>
@@ -30,9 +30,9 @@
                             <ion-icon name="cube" item-start></ion-icon>
                             {{ section.totalSize | coreBytesToSize }}
                         </p>
-                        <button ion-button icon-only item-end no-padding (click)="deleteForSection(section)">
+                        <ion-button icon-only item-end no-padding (click)="deleteForSection(section)">
                             <core-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: section.name } }}"></core-icon>
-                        </button>
+                        </ion-button>
                     </ion-item>
                 </ion-card-header>
                 <ion-card-content>
@@ -47,9 +47,9 @@
                             <ion-icon name="cube" item-start></ion-icon>
                                 {{ module.totalSize | coreBytesToSize }}
                             </p>
-                            <button ion-button icon-only outline item-end (click)="deleteForModule(module)">
+                            <ion-button icon-only outline item-end (click)="deleteForModule(module)">
                                 <core-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: module.name } }}"></core-icon>
-                            </button>
+                            </ion-button>
                         </ion-item>
                     </ng-container>
                 </ion-card-content>

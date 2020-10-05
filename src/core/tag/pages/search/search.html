@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.tag.searchtags' | translate }}</ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="refreshData($event)">
@@ -9,13 +9,13 @@
     </ion-refresher>
     <ion-grid class="safe-area-page">
         <ion-row>
-            <ion-col col-12 [attr.col-sm-6]="collections && collections.length > 1 ? '' : null">
+            <ion-col size="12" [attr.col-sm-6]="collections && collections.length > 1 ? '' : null">
                 <core-search-box (onSubmit)="searchTags($event)" (onClear)="searchTags('')" [initialSearch]="query" [disabled]="searching" autocorrect="off" [spellcheck]="false" [autoFocus]="false" [lengthCheck]="0" searchArea="CoreTag"></core-search-box>
             </ion-col>
-            <ion-col col-12 col-sm-6 *ngIf="collections && collections.length > 1">
+            <ion-col size="12" size-sm="6" *ngIf="collections && collections.length > 1">
                 <ion-select text-start [(ngModel)]="collectionId" (ngModelChange)="searchTags(query)" [disabled]="searching" interface="popover" class="core-button-select">
-                    <ion-option [value]="0">{{ 'core.tag.inalltagcoll' | translate }}</ion-option>
-                    <ion-option *ngFor="let collection of collections" [value]="collection.id">{{ collection.name }}</ion-option>
+                    <ion-select-option [value]="0">{{ 'core.tag.inalltagcoll' | translate }}</ion-select-option>
+                    <ion-select-option *ngFor="let collection of collections" [value]="collection.id">{{ collection.name }}</ion-select-option>
                 </ion-select>
             </ion-col>
         </ion-row>

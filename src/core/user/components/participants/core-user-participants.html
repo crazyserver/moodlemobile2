@@ -1,7 +1,7 @@
 <core-navbar-buttons>
-    <button [hidden]="!canSearch" ion-button icon-only (click)="toggleSearch()" [attr.aria-label]="'core.search' | translate">
+    <ion-button [hidden]="!canSearch" icon-only (click)="toggleSearch()" [attr.aria-label]="'core.search' | translate">
         <ion-icon name="search"></ion-icon>
-    </button>
+    </ion-button>
 </core-navbar-buttons>
 
 <core-split-view>
@@ -19,7 +19,7 @@
             <core-empty-box *ngIf="displaySearchResults && !participants.length" icon="search" [message]="'core.noresults' | translate"></core-empty-box>
 
             <ion-list *ngIf="participants && participants.length > 0" no-margin>
-                <a ion-item text-wrap *ngFor="let participant of participants" [title]="participant.fullname" (click)="gotoParticipant(participant.id)" [class.core-split-item-selected]="participant.id == participantId">
+                <ion-item text-wrap *ngFor="let participant of participants" [title]="participant.fullname" (click)="gotoParticipant(participant.id)" [class.core-split-item-selected]="participant.id == participantId">
                     <ion-avatar core-user-avatar [user]="participant" item-start [userId]="participant.id" [checkOnline]="true"></ion-avatar>
                     <ng-container *ngIf="!displaySearchResults">
                         <h2>{{ participant.fullname }}</h2>
@@ -29,7 +29,7 @@
                     <ng-container *ngIf="displaySearchResults">
                         <h2><core-format-text [text]="participant.fullname" [highlight]="searchQuery" [filter]="false"></core-format-text></h2>
                     </ng-container>
-                </a>
+                </ion-item>
             </ion-list>
             <core-infinite-loading [enabled]="canLoadMore && participantsLoaded" (action)="loadMoreData($event)" [error]="loadMoreError"></core-infinite-loading>
         </core-loading>

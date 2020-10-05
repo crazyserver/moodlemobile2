@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { ModalController, Modal } from 'ionic-angular';
+import { ModalController, Modal } from '@ionic/angular';
 import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams } from '@ionic/angular';
 import { AddonModWikiIndexComponent } from '../../components/index/index';
 
 /**

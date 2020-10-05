@@ -1,12 +1,12 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title>{{ 'core.settings.deviceinfo' | translate }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="copyInfo()" [attr.aria-label]="'core.settings.copyinfo' | translate">
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="copyInfo()" [attr.aria-label]="'core.settings.copyinfo' | translate">
                 <ion-icon name="copy"></ion-icon>
-            </button>
+            </ion-button>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-item text-wrap (longPress)="copyItemInfo($event)">

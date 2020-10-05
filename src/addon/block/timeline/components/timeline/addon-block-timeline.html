@@ -8,13 +8,13 @@
 <core-loading [hideUntil]="loaded" class="core-loading-center">
     <div padding class="safe-padding-horizontal">
         <ion-select text-start [(ngModel)]="filter" (ngModelChange)="switchFilter()" interface="popover" class="core-button-select">
-            <ion-option value="all">{{ 'core.all' | translate }}</ion-option>
-            <ion-option value="overdue">{{ 'addon.block_timeline.overdue' | translate }}</ion-option>
-            <ion-option disabled value="disabled">{{ 'addon.block_timeline.duedate' | translate }}</ion-option>
-            <ion-option value="next7days">{{ 'addon.block_timeline.next7days' | translate }}</ion-option>
-            <ion-option value="next30days">{{ 'addon.block_timeline.next30days' | translate }}</ion-option>
-            <ion-option value="next3months">{{ 'addon.block_timeline.next3months' | translate }}</ion-option>
-            <ion-option value="next6months">{{ 'addon.block_timeline.next6months' | translate }}</ion-option>
+            <ion-select-option value="all">{{ 'core.all' | translate }}</ion-select-option>
+            <ion-select-option value="overdue">{{ 'addon.block_timeline.overdue' | translate }}</ion-select-option>
+            <ion-select-option disabled value="disabled">{{ 'addon.block_timeline.duedate' | translate }}</ion-select-option>
+            <ion-select-option value="next7days">{{ 'addon.block_timeline.next7days' | translate }}</ion-select-option>
+            <ion-select-option value="next30days">{{ 'addon.block_timeline.next30days' | translate }}</ion-select-option>
+            <ion-select-option value="next3months">{{ 'addon.block_timeline.next3months' | translate }}</ion-select-option>
+            <ion-select-option value="next6months">{{ 'addon.block_timeline.next6months' | translate }}</ion-select-option>
         </ion-select>
     </div>
     <core-loading [hideUntil]="timeline.loaded" [hidden]="sort != 'sortbydates'" class="core-loading-center">
@@ -23,7 +23,7 @@
     <core-loading [hideUntil]="timelineCourses.loaded" [hidden]="sort != 'sortbycourses'" class="core-loading-center safe-area-page">
         <ion-grid no-padding>
             <ion-row no-padding>
-                <ion-col *ngFor="let course of timelineCourses.courses" no-padding col-12 col-md-6>
+                <ion-col *ngFor="let course of timelineCourses.courses" no-padding size="12" size-md="6">
                     <core-courses-course-progress [course]="course">
                         <addon-block-timeline-events [events]="course.events" [canLoadMore]="course.canLoadMore" (loadMore)="loadMoreCourse(course)" [from]="dataFrom" [to]="dataTo"></addon-block-timeline-events>
                     </core-courses-course-progress>

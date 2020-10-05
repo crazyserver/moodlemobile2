@@ -19,8 +19,8 @@
 </div>
 <!-- Button to add more files. -->
 <ion-item text-wrap *ngIf="unlimitedFiles || (maxSubmissions >= 0 && files && files.length < maxSubmissions)">
-    <a ion-button block icon-start (click)="add()">
+    <ion-button block icon-start (click)="add()">
         <ion-icon name="add"></ion-icon>
         {{ 'core.fileuploader.addfiletext' | translate }}
-    </a>
+    </ion-button>
 </ion-item>

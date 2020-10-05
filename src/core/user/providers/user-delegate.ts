@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreUtilsProvider } from '@providers/utils/utils';

@@ -10,9 +10,9 @@
 
     <div *ngIf="module && module.url">
         <p><strong>{{ 'core.course.useactivityonbrowser' | translate }}</strong></p>
-        <a ion-button block icon-end [href]="module.url" core-link>
+        <ion-button block icon-end [href]="module.url" core-link>
             {{ 'core.openinbrowser' | translate }}
             <ion-icon name="open"></ion-icon>
-        </a>
+        </ion-button>
     </div>
 </div>

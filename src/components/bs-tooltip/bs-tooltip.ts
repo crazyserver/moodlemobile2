@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import { NavParams } from '@ionic/angular';
 
 /**
  * Component to display a Bootstrap Tooltip in a popover.

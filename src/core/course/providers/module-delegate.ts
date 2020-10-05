@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { NavController, NavOptions } from 'ionic-angular';
+import { NavController, NavOptions } from '@ionic/angular';
 import { SafeUrl } from '@angular/platform-browser';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreLoggerProvider } from '@providers/logger';

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { CorePushNotificationsProvider } from './providers/pushnotifications';
 import { CorePushNotificationsDelegate } from './providers/delegate';
 import { CorePushNotificationsRegisterCronHandler } from './providers/register-cron-handler';

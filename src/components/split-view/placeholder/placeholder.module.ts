@@ -15,7 +15,7 @@
 // Code based on https://github.com/martinpritchardelevate/ionic-split-pane-demo
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule } from '@ionic/angular';
 import { CoreSplitViewPlaceholderPage } from './placeholder';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreComponentsModule } from '../../components.module';

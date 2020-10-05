@@ -1,14 +1,14 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text [text]="module.name" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></ion-title>
 
-        <ion-buttons end>
+        <ion-buttons slot="primary">
             <core-context-menu>
                 <core-context-menu-item [priority]="900" *ngIf="module.url" [href]="module.url" [content]="'core.openinbrowser' | translate" [iconAction]="'open'"></core-context-menu-item>
                 <core-context-menu-item [priority]="800" *ngIf="module.description" [content]="'core.moduleintro' | translate" (action)="expandDescription()" [iconAction]="'arrow-forward'"></core-context-menu-item>
             </core-context-menu>
         </ion-buttons>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <core-course-unsupported-module [module]="module" [courseId]="courseId"></core-course-unsupported-module>

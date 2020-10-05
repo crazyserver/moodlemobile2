@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-import { NavController, NavOptions } from 'ionic-angular';
+import { NavController, NavOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreApp, CoreStoreConfig } from '@providers/app';
 import { CoreConfigProvider } from '@providers/config';

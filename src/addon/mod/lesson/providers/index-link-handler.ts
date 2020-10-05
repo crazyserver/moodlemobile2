@@ -19,7 +19,7 @@ import { CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { AddonModLessonProvider } from './lesson';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 
 /**
  * Handler to treat links to lesson index.

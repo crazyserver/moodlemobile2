@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Content, IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { Content, IonicPage, ModalController, NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreLoggerProvider } from '@providers/logger';

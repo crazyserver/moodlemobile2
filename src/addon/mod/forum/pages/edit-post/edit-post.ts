@@ -14,7 +14,7 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreSitesProvider } from '@providers/sites';

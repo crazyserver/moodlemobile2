@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Alert, AlertController } from 'ionic-angular';
+import { Platform, Alert, AlertController } from '@ionic/angular';
 import { LocalNotifications, ILocalNotification } from '@ionic-native/local-notifications';
 import { Push } from '@ionic-native/push';
 import { TranslateService } from '@ngx-translate/core';
@@ -749,7 +749,7 @@ export class CoreLocalNotificationsProvider {
             this.alertNotification.setMessage(text);
         } else {
             this.alertNotification = this.alertCtrl.create({
-                title: this.currentNotification.title,
+                header: this.currentNotification.title,
                 message: text,
                 cssClass: 'core-inapp-notification',
                 enableBackdropDismiss: false,

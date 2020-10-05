@@ -16,7 +16,7 @@ import {
     Component, Input, ViewChild, OnInit, OnChanges, DoCheck, ViewContainerRef, ComponentFactoryResolver, ComponentRef,
     KeyValueDiffers, SimpleChange, ChangeDetectorRef, Optional, ElementRef
 } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreLoggerProvider } from '@providers/logger';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 

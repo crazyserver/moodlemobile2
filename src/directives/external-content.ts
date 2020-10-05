@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Directive, Input, AfterViewInit, ElementRef, OnChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { CoreApp } from '@providers/app';
 import { CoreLoggerProvider } from '@providers/logger';
 import { CoreFile } from '@providers/file';

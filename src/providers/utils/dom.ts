@@ -16,7 +16,7 @@ import { Injectable, SimpleChange, ElementRef } from '@angular/core';
 import {
     LoadingController, Loading, ToastController, Toast, AlertController, Alert, Content, PopoverController,
     ModalController, AlertButton, AlertOptions
-} from 'ionic-angular';
+} from '@ionic/angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreTextUtilsProvider } from './text';
@@ -1372,7 +1372,7 @@ export class CoreDomUtilsProvider {
         }
 
         const loader = this.loadingCtrl.create({
-                content: text
+                message: text
             }),
             dismiss = loader.dismiss.bind(loader);
         let isPresented = false,

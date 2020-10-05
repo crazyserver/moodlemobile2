@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, ModalController } from 'ionic-angular';
+import { Platform, ModalController } from '@ionic/angular';
 import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser';
 import { Clipboard } from '@ionic-native/clipboard';
 import { FileOpener } from '@ionic-native/file-opener';

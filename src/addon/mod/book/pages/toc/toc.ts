@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from '@ionic/angular';
 import { AddonModBookTocChapter, AddonModBookBook, AddonModBookNumbering } from '../../providers/book';
 
 /**

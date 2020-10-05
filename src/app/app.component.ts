@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, NgZone } from '@angular/core';
-import { Config, Platform, IonicApp } from 'ionic-angular';
+import { Config, Platform, IonicApp } from '@ionic/angular';
 import { Network } from '@ionic-native/network';
 import { CoreApp, CoreAppProvider } from '@providers/app';
 import { CoreEventsProvider } from '@providers/events';

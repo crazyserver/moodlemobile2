@@ -15,7 +15,7 @@
 import {
     Component, OnInit, Input, Output, EventEmitter, Optional, DoCheck, KeyValueDiffers, ViewChild, ElementRef
 } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreSitePluginsProvider } from '../../providers/siteplugins';
 import { Subject } from 'rxjs';

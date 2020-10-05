@@ -14,7 +14,7 @@
 
 import { Directive, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Navbar } from 'ionic-angular';
+import { Navbar } from '@ionic/angular';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreApp } from '@providers/app';
 

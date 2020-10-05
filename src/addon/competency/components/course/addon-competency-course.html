@@ -67,19 +67,19 @@
                         <p *ngIf="competency.coursemodules.length == 0">
                             {{ 'addon.competency.noactivities' | translate }}
                         </p>
-                        <a ion-item text-wrap *ngFor="let activity of competency.coursemodules" [href]="activity.url" [title]="activity.name" core-link capture="true" class="core-course-module-handler item-media">
+                        <ion-item text-wrap *ngFor="let activity of competency.coursemodules" [href]="activity.url" [title]="activity.name" core-link capture="true" class="core-course-module-handler item-media">
                             <img item-start [src]="activity.iconurl" core-external-content alt="" role="presentation" *ngIf="activity.iconurl" class="core-module-icon">
                             <core-format-text [text]="activity.name" contextLevel="module" [contextInstanceId]="activity.id" [courseId]="courseId"></core-format-text>
-                        </a>
+                        </ion-item>
                     </div>
                     <div *ngIf="competency.plans">
                         <strong>{{ 'addon.competency.userplans' | translate }}</strong>
                         <p *ngIf="competency.plans.length == 0">
                             {{ 'addon.competency.nouserplanswithcompetency' | translate }}
                         </p>
-                        <a ion-item text-wrap *ngFor="let plan of competency.plans" [href]="plan.url" [title]="plan.name" core-link capture="true">
+                        <ion-item text-wrap *ngFor="let plan of competency.plans" [href]="plan.url" [title]="plan.name" core-link capture="true">
                             <core-format-text [text]="plan.name" contextLevel="user" [contextInstanceId]="plan.userid"></core-format-text>
-                        </a>
+                        </ion-item>
                     </div>
                 </ion-item>
             </ion-card>

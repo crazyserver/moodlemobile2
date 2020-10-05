@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChange, Optional } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreCommentsProvider } from '../../providers/comments';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';

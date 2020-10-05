@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { Platform, NavParams } from 'ionic-angular';
+import { Platform, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';

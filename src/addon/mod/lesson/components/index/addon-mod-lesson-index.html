@@ -36,16 +36,16 @@
                 <ion-card *ngIf="askPassword">
                     <form ion-list (ngSubmit)="submitPassword($event, passwordinput)" #passwordForm>
                         <ion-item text-wrap>
-                            <ion-label stacked>{{ 'addon.mod_lesson.enterpassword' | translate }}</ion-label>
+                            <ion-label position="stacked">{{ 'addon.mod_lesson.enterpassword' | translate }}</ion-label>
                             <core-show-password item-content [name]="'password'">
                                 <ion-input name="password" type="password" placeholder="{{ 'core.login.password' | translate }}" [core-auto-focus] #passwordinput [clearOnEdit]="false"></ion-input>
                             </core-show-password>
                         </ion-item>
                         <ion-item>
-                            <button ion-button block type="submit" icon-end>
+                            <ion-button block type="submit" icon-end>
                                 {{ 'addon.mod_lesson.continue' | translate }}
                                 <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                            </button>
+                            </ion-button>
                         </ion-item>
                     </form>
                 </ion-card>
@@ -56,7 +56,7 @@
                         <ion-item text-wrap *ngIf="retakeToReview">
                             <!-- A retake was finished in a synchronization, allow reviewing it. -->
                             <p padding-bottom>{{ 'addon.mod_lesson.retakefinishedinsync' | translate }}</p>
-                            <a ion-button block (click)="review()">{{ 'addon.mod_lesson.review' | translate }}</a>
+                            <ion-button block (click)="review()">{{ 'addon.mod_lesson.review' | translate }}</ion-button>
                         </ion-item>
 
                         <ng-container *ngIf="lesson && (!preventMessages || !preventMessages.length)">
@@ -66,10 +66,10 @@
                                 <ion-grid>
                                     <ion-row>
                                         <ion-col>
-                                            <a ion-button block color="light" (click)="start(false)">{{ 'core.no' | translate }}</a>
+                                            <ion-button block color="light" (click)="start(false)">{{ 'core.no' | translate }}</ion-button>
                                         </ion-col>
                                         <ion-col>
-                                            <a ion-button block (click)="start(true)">{{ 'core.yes' | translate }}</a>
+                                            <ion-button block (click)="start(true)">{{ 'core.yes' | translate }}</ion-button>
                                         </ion-col>
                                     </ion-row>
                                 </ion-grid>
@@ -78,10 +78,10 @@
                             <ion-item text-wrap *ngIf="leftDuringTimed && lesson.timelimit && lesson.retake && !finishedOffline">
                                 <!-- User left during the session with time limit and retakes allowed, ask to continue. -->
                                 <p [innerHTML]="'addon.mod_lesson.leftduringtimed' | translate"></p>
-                                <a ion-button block icon-end (click)="start(false)">
+                                <ion-button block icon-end (click)="start(false)">
                                     {{ 'addon.mod_lesson.continue' | translate }}
                                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                                </a>
+                                </ion-button>
                             </ion-item>
 
                             <ion-item text-wrap *ngIf="leftDuringTimed && lesson.timelimit && !lesson.retake">
@@ -91,22 +91,22 @@
 
                             <ion-item text-wrap *ngIf="!leftDuringTimed && !finishedOffline">
                                 <!-- User hasn't left during the session, show a start button. -->
-                                <a ion-button block *ngIf="!canManage" icon-end (click)="start(false)">
+                                <ion-button block *ngIf="!canManage" icon-end (click)="start(false)">
                                     {{ 'core.start' | translate }}
                                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                                </a>
-                                <a ion-button block *ngIf="canManage" icon-end (click)="start(false)">
+                                </ion-button>
+                                <ion-button block *ngIf="canManage" icon-end (click)="start(false)">
                                     {{ 'addon.mod_lesson.preview' | translate }}
                                     <ion-icon name="search"></ion-icon>
-                                </a>
+                                </ion-button>
                             </ion-item>
 
                             <ion-item text-wrap *ngIf="finishedOffline">
                                 <!-- There's an attempt finished in offline. Let the user continue, showing the end of lesson. -->
-                                <a ion-button block icon-end (click)="start(true)">
+                                <ion-button block icon-end (click)="start(true)">
                                     {{ 'addon.mod_lesson.continue' | translate }}
                                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
-                                </a>
+                                </ion-button>
                             </ion-item>
                         </ng-container>
                     </ion-list>
@@ -123,7 +123,7 @@
                         <ion-label id="addon-mod_lesson-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                         <ion-label id="addon-mod_lesson-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                         <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-mod_lesson-groupslabel" interface="action-sheet">
-                            <ion-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-option>
+                            <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 
@@ -244,11 +244,11 @@
                             {{ 'addon.mod_lesson.overview' | translate }}
                         </ion-card-header>
 
-                        <a ion-item text-wrap *ngFor="let student of overview.students" navPush="AddonModLessonUserRetakePage" [navParams]="{courseId: courseId, lessonId: lesson.id, userId: student.id}">
+                        <ion-item text-wrap *ngFor="let student of overview.students" navPush="AddonModLessonUserRetakePage" [navParams]="{courseId: courseId, lessonId: lesson.id, userId: student.id}">
                             <ion-avatar core-user-avatar [user]="student" item-start [userId]="student.id" [courseId]="courseId"></ion-avatar>
                             <h2>{{ student.fullname }}</h2>
                             <core-progress-bar [progress]="student.bestgrade"></core-progress-bar>
-                        </a>
+                        </ion-item>
                     </ion-card>
                 </core-loading>
             </ng-template>

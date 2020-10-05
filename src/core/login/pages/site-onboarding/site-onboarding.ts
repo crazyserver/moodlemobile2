@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController } from 'ionic-angular';
+import { IonicPage, ViewController } from '@ionic/angular';
 import { CoreUtils } from '@providers/utils/utils';
 import { CoreConfig } from '@providers/config';
 import { CoreLoginHelperProvider } from '../../providers/helper';

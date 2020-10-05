@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ChangeDetectorRef, Component, ViewChild, OnDestroy } from '@angular/core';
-import { Content, IonicPage, NavParams, NavController } from 'ionic-angular';
+import { Content, IonicPage, NavParams, NavController } from '@ionic/angular';
 import { CoreUtilsProvider } from '@providers/utils/utils';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreSitesProvider } from '@providers/sites';

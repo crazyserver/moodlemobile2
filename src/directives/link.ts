@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Directive, Input, OnInit, ElementRef, Optional } from '@angular/core';
-import { NavController, Content } from 'ionic-angular';
+import { NavController, Content } from '@ionic/angular';
 import { CoreFileHelper } from '@providers/file-helper';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';

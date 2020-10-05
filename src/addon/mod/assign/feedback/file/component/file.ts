@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import { AddonModAssignProvider } from '../../../providers/assign';
 import { AddonModAssignFeedbackPluginComponentBase } from '../../../classes/feedback-plugin-component';
 

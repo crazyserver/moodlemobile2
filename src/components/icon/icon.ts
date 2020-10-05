@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, OnChanges, OnDestroy, ElementRef, SimpleChange } from '@angular/core';
-import { Config } from 'ionic-angular';
+import { Config } from '@ionic/angular';
 
 /**
  * Core Icon is a component that enabled a posibility to add fontawesome icon to the html. It's recommended if both fontawesome

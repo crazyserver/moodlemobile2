@@ -85,7 +85,7 @@
                 <ion-item text-wrap *ngIf="organizations.length > 1">
                     <ion-label>{{ 'addon.mod_scorm.organizations' | translate }}</ion-label>
                     <ion-select [(ngModel)]="currentOrganization.identifier" (ionChange)="loadOrganization()" interface="action-sheet">
-                        <ion-option *ngFor="let org of organizations" [value]="org.identifier">{{ org.title }}</ion-option>
+                        <ion-select-option *ngFor="let org of organizations" [value]="org.identifier">{{ org.title }}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item text-center *ngIf="scorm.displaycoursestructure && loadingToc">
@@ -113,10 +113,10 @@
                 <p class="text-danger">{{ errorMessage | translate }}</p>
             </ion-item>
             <ion-item text-wrap>
-                <a ion-button block icon-end [href]="externalUrl" core-link>
+                <ion-button block icon-end [href]="externalUrl" core-link>
                     {{ 'core.openinbrowser' | translate }}
                     <ion-icon name="open"></ion-icon>
-                </a>
+                </ion-button>
             </ion-item>
         </ion-card>
 
@@ -145,17 +145,17 @@
                     <!-- Open mode (Preview or Normal) -->
                     <ion-grid>
                         <ion-row align-items-center>
-                            <ion-col col-12 col-sm-6 *ngIf="!scorm.hidebrowse">
-                                <button ion-button block outline icon-end (click)="open($event, true)" text-wrap>
+                            <ion-col size="12" size-sm="6" *ngIf="!scorm.hidebrowse">
+                                <ion-button block outline icon-end (click)="open($event, true)" text-wrap>
                                     {{ 'addon.mod_scorm.browse' | translate }}
                                     <ion-icon name="search"></ion-icon>
-                                </button>
+                                </ion-button>
                             </ion-col>
-                            <ion-col col-12 [attr.col-sm-6]="!scorm.hidebrowse || null">
-                                <button ion-button block icon-end (click)="open($event)" text-wrap>
+                            <ion-col size="12" [attr.col-sm-6]="!scorm.hidebrowse || null">
+                                <ion-button block icon-end (click)="open($event)" text-wrap>
                                     {{ 'addon.mod_scorm.enter' | translate }}
                                     <ion-icon name="arrow-forward"></ion-icon>
-                                </button>
+                                </ion-button>
                             </ion-col>
                         </ion-row>
                     </ion-grid>

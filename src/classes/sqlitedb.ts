@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 
 /**
  * Schema of a table.

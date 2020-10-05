@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar core-back-button>
+    <ion-toolbar core-back-button>
         <ion-title><core-format-text *ngIf="h5pActivity" [text]="h5pActivity.name" contextLevel="module" [contextInstanceId]="h5pActivity.coursemodule" [courseId]="courseId"></core-format-text></ion-title>
-    </ion-navbar>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-refresher [enabled]="loaded" (ionRefresh)="doRefresh($event)">
@@ -10,10 +10,10 @@
     <core-loading [hideUntil]="loaded">
         <ng-container *ngIf="attempt">
             <!-- Attempt number and user that did the attempt. -->
-            <a ion-item text-wrap *ngIf="user" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
+            <ion-item text-wrap *ngIf="user" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
                 <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
                 <h2>{{ 'addon.mod_h5pactivity.attempt' | translate }} #{{attempt.attempt}}: {{user.fullname}}</h2>
-            </a>
+            </ion-item>
             <!-- Attempt number (if user not known). -->
             <ion-item text-wrap *ngIf="!user">
                 <h2>{{ 'addon.mod_h5pactivity.attempt' | translate }} #{{attempt.attempt}}</h2>

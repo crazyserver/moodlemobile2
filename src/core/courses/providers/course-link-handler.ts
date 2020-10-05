@@ -22,7 +22,7 @@ import { CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreCoursesProvider } from './courses';
-import { NavController } from 'ionic-angular';
+import { NavController } from '@ionic/angular';
 import { CoreLoggerProvider } from '@providers/logger';
 
 /**
