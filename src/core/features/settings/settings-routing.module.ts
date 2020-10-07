@@ -15,7 +15,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
     {
         path: 'about',
         loadChildren: () => import('./pages/about/about.module').then(m => m.CoreSettingsAboutPageModule),
@@ -32,14 +32,17 @@ const routes: Routes = [
     },
     {
         path: 'sync',
-        loadChildren: () =>
-            import('@features/settings/pages/synchronization/synchronization.module')
-                .then(m => m.CoreSettingsSynchronizationPageModule),
+        loadChildren: () => import('@features/settings/pages/synchronization/synchronization.module')
+            .then(m => m.CoreSettingsSynchronizationPageModule),
     },
+];
+
+const routes: Routes = [
     {
         path: '',
         loadChildren: () => import('./pages/app/app.module').then(m => m.CoreSettingsAppPageModule),
     },
+    ...appRoutes,
 ];
 
 @NgModule({

@@ -13,8 +13,9 @@
 // limitations under the License.
 
 import { CoreApp } from '@services/app';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
 /**
  * App settings menu page.
@@ -23,9 +24,9 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     selector: 'page-core-app-settings',
     templateUrl: 'app.html',
 })
-export class CoreSettingsAppPage implements OnInit {
+export class CoreSettingsAppPage implements AfterViewInit {
 
-    // @ViewChild(CoreSplitViewComponent) splitviewCtrl?: CoreSplitViewComponent;
+    @ViewChild(CoreSplitViewComponent) splitviewCtrl?: CoreSplitViewComponent;
 
     isIOS: boolean;
     selectedPage?: string;
@@ -45,12 +46,12 @@ export class CoreSettingsAppPage implements OnInit {
     /**
      * View loaded.
      */
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         if (this.selectedPage) {
             this.openSettings(this.selectedPage);
-        } /* else if (this.splitviewCtrl!.isOn()) {
+        } else if (this.splitviewCtrl!.isOn()) {
             this.openSettings('general');
-        }*/
+        }
     }
 
     /**
@@ -61,8 +62,7 @@ export class CoreSettingsAppPage implements OnInit {
      */
     openSettings(page: string, params?: Params): void {
         this.selectedPage = page;
-        // this.splitviewCtrl!.push(page, params);
-        this.router.navigate([page], { relativeTo: this.route, queryParams: params });
+        this.splitviewCtrl!.push(page, params);
     }
 
 }

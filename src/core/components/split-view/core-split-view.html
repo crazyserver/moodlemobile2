@@ -1,0 +1,7 @@
+<ion-split-pane [when]="when" content-id="main" (ionSplitPaneVisible)="onSplitPaneChanged($event.detail.visible);">
+    <ion-menu content-id="main" type="push" class="core-avoid-header">
+        <ng-content></ng-content>
+    </ion-menu>
+    <ion-router-outlet id="main" name="main">
+    </ion-router-outlet>
+</ion-split-pane>

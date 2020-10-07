@@ -39,6 +39,7 @@ import { CoreContextMenuPopoverComponent } from './context-menu/context-menu-pop
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { CorePipesModule } from '@pipes/pipes.module';
 import { CoreNavBarButtonsComponent } from './navbar-buttons/navbar-buttons';
+import { CoreSplitViewComponent } from './split-view/split-view';
 
 @NgModule({
     declarations: [
@@ -61,6 +62,7 @@ import { CoreNavBarButtonsComponent } from './navbar-buttons/navbar-buttons';
         CoreContextMenuItemComponent,
         CoreContextMenuPopoverComponent,
         CoreNavBarButtonsComponent,
+        CoreSplitViewComponent,
     ],
     imports: [
         CommonModule,
@@ -89,6 +91,7 @@ import { CoreNavBarButtonsComponent } from './navbar-buttons/navbar-buttons';
         CoreContextMenuItemComponent,
         CoreContextMenuPopoverComponent,
         CoreNavBarButtonsComponent,
+        CoreSplitViewComponent,
     ],
 })
 export class CoreComponentsModule {}

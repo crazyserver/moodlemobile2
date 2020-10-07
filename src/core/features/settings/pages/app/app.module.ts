@@ -17,16 +17,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { addSplitViewRoutes } from '@components/split-view/placeholder/placeholder.module';
 
 import { CoreComponentsModule } from '@components/components.module';
 import { CoreDirectivesModule } from '@directives/directives.module';
 
 import { CoreSettingsAppPage } from './app';
+import { appRoutes } from '@features/settings/settings-routing.module';
 
 const routes: Routes = [
     {
         path: '',
         component: CoreSettingsAppPage,
+        children: addSplitViewRoutes(appRoutes),
     },
 ];
 
