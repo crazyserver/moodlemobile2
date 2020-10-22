@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'core.comments.addcomment' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -13,8 +13,8 @@
         <ion-item>
             <ion-textarea placeholder="{{ 'core.comments.addcomment' | translate }}" rows="5" [(ngModel)]="content" name="content" required="required"></ion-textarea>
         </ion-item>
-        <div padding>
-            <ion-button block type="submit" [disabled]="processing || content.length < 1">
+        <div class="ion-padding">
+            <ion-button expand="block" type="submit" [disabled]="processing || content.length < 1">
                 {{ 'core.comments.savecomment' | translate }}
             </ion-button>
         </div>

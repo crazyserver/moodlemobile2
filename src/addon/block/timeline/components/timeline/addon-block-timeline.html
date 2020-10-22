@@ -1,13 +1,13 @@
 <ion-item-divider>
     <h2>{{ 'addon.block_timeline.pluginname' | translate }}</h2>
-    <core-context-menu item-end>
+    <core-context-menu slot="end">
         <core-context-menu-item *ngIf="loaded" [priority]="900" [content]="'addon.block_timeline.sortbydates' | translate" (action)="switchSort('sortbydates')" [iconAction]="sort == 'sortbydates' ? 'radio-button-on' : 'radio-button-off'"></core-context-menu-item>
         <core-context-menu-item *ngIf="loaded" [priority]="800" [content]="'addon.block_timeline.sortbycourses' | translate" (action)="switchSort('sortbycourses')" [iconAction]="sort == 'sortbycourses' ? 'radio-button-on' : 'radio-button-off'"></core-context-menu-item>
     </core-context-menu>
 </ion-item-divider>
 <core-loading [hideUntil]="loaded" class="core-loading-center">
-    <div padding class="safe-padding-horizontal">
-        <ion-select text-start [(ngModel)]="filter" (ngModelChange)="switchFilter()" interface="popover" class="core-button-select">
+    <div class="ion-padding" class="safe-padding-horizontal">
+        <ion-select class="ion-text-start" [(ngModel)]="filter" (ngModelChange)="switchFilter()" interface="popover" class="core-button-select">
             <ion-select-option value="all">{{ 'core.all' | translate }}</ion-select-option>
             <ion-select-option value="overdue">{{ 'addon.block_timeline.overdue' | translate }}</ion-select-option>
             <ion-select-option disabled value="disabled">{{ 'addon.block_timeline.duedate' | translate }}</ion-select-option>
@@ -21,9 +21,9 @@
         <addon-block-timeline-events [events]="timeline.events" showCourse="true" [canLoadMore]="timeline.canLoadMore" (loadMore)="loadMoreTimeline()" [from]="dataFrom" [to]="dataTo"></addon-block-timeline-events>
     </core-loading>
     <core-loading [hideUntil]="timelineCourses.loaded" [hidden]="sort != 'sortbycourses'" class="core-loading-center safe-area-page">
-        <ion-grid no-padding>
-            <ion-row no-padding>
-                <ion-col *ngFor="let course of timelineCourses.courses" no-padding size="12" size-md="6">
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-no-padding">
+                <ion-col *ngFor="let course of timelineCourses.courses" class="ion-no-padding" size="12" size-md="6">
                     <core-courses-course-progress [course]="course">
                         <addon-block-timeline-events [events]="course.events" [canLoadMore]="course.canLoadMore" (loadMore)="loadMoreCourse(course)" [from]="dataFrom" [to]="dataTo"></addon-block-timeline-events>
                     </core-courses-course-progress>

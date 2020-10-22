@@ -10,23 +10,23 @@
     <core-loading [hideUntil]="loaded">
         <ng-container *ngIf="attempt">
             <!-- Attempt number and user that did the attempt. -->
-            <ion-item text-wrap *ngIf="user" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
-                <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
+            <ion-item class="ion-text-wrap" *ngIf="user" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
+                <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
                 <h2>{{ 'addon.mod_h5pactivity.attempt' | translate }} #{{attempt.attempt}}: {{user.fullname}}</h2>
             </ion-item>
             <!-- Attempt number (if user not known). -->
-            <ion-item text-wrap *ngIf="!user">
+            <ion-item class="ion-text-wrap" *ngIf="!user">
                 <h2>{{ 'addon.mod_h5pactivity.attempt' | translate }} #{{attempt.attempt}}</h2>
             </ion-item>
 
             <!-- Attempt summary. -->
             <ion-card class="addon-mod_h5pactivity-attempt-result-summary">
                 <ion-list>
-                    <ion-item text-wrap no-lines>
+                    <ion-item class="ion-text-wrap" lines="none">
                         <h2>{{ 'addon.mod_h5pactivity.startdate' | translate }}</h2>
                         <p>{{ attempt.timecreated | coreFormatDate:'strftimedatetime' }}</p>
                     </ion-item>
-                    <ion-item text-wrap no-lines>
+                    <ion-item class="ion-text-wrap" lines="none">
                         <h2>{{ 'addon.mod_h5pactivity.completion' | translate }}</h2>
                         <p *ngIf="attempt.completion">
                             <img src="assets/img/completion/completion-auto-y.svg" role="presentation" alt="">
@@ -37,11 +37,11 @@
                             {{ 'addon.mod_h5pactivity.attempt_completion_no' | translate }}
                         </p>
                     </ion-item>
-                    <ion-item text-wrap no-lines>
+                    <ion-item class="ion-text-wrap" lines="none">
                         <h2>{{ 'addon.mod_h5pactivity.duration' | translate }}</h2>
                         <p>{{ attempt.durationReadable }}</p>
                     </ion-item>
-                    <ion-item text-wrap no-lines>
+                    <ion-item class="ion-text-wrap" lines="none">
                         <h2>{{ 'addon.mod_h5pactivity.outcome' | translate }}</h2>
                         <p *ngIf="attempt.success !== null && attempt.success" >
                             <core-icon name="fa-check-circle"></core-icon>
@@ -55,7 +55,7 @@
                             {{ 'addon.mod_h5pactivity.attempt_success_unknown' | translate }}
                         </p>
                     </ion-item>
-                    <ion-item *ngIf="attempt.maxscore" text-wrap no-lines>
+                    <ion-item *ngIf="attempt.maxscore" class="ion-text-wrap" lines="none">
                         <h2>{{ 'addon.mod_h5pactivity.totalscore' | translate }}</h2>
                         <p>{{ 'addon.mod_h5pactivity.score_out_of' | translate:{$a: attempt} }}</p>
                     </ion-item>
@@ -65,33 +65,33 @@
             <!-- Results. -->
             <ng-container *ngIf="attempt.results">
                 <ion-card *ngFor="let result of attempt.results">
-                    <ion-card-header text-wrap>
+                    <ion-card-header class="ion-text-wrap">
                         <core-format-text [text]="result.description" [component]="component" [componentId]="h5pActivity.cmid" contextLevel="module" [contextInstanceId]="h5pActivity.cmid" [courseId]="courseId"></core-format-text>
                     </ion-card-header>
-                    <ion-item *ngIf="result.content" text-wrap>
+                    <ion-item *ngIf="result.content" class="ion-text-wrap">
                         <core-format-text [text]="result.content" [component]="component" [componentId]="h5pActivity.cmid" contextLevel="module" [contextInstanceId]="h5pActivity.cmid" [courseId]="courseId"></core-format-text>
                     </ion-item>
 
                     <!-- Options. -->
                     <ng-container *ngIf="result.options && result.options.length">
-                        <ion-item text-wrap class="addon-mod_h5pactivity-result-table-header">
-                            <ion-row align-items-center>
-                                <ion-col text-center>{{ result.optionslabel }}</ion-col>
-                                <ion-col text-center>{{ result.correctlabel }}</ion-col>
-                                <ion-col text-center>{{ result.answerlabel }}</ion-col>
+                        <ion-item class="ion-text-wrap" class="addon-mod_h5pactivity-result-table-header">
+                            <ion-row class="ion-align-items-center">
+                                <ion-col class="ion-text-center">{{ result.optionslabel }}</ion-col>
+                                <ion-col class="ion-text-center">{{ result.correctlabel }}</ion-col>
+                                <ion-col class="ion-text-center">{{ result.answerlabel }}</ion-col>
                             </ion-row>
                         </ion-item>
-                        <ion-item text-wrap *ngFor="let option of result.options" class="addon-mod_h5pactivity-result-table-row">
-                            <ion-row align-items-center>
-                                <ion-col text-center>
+                        <ion-item class="ion-text-wrap" *ngFor="let option of result.options" class="addon-mod_h5pactivity-result-table-row">
+                            <ion-row class="ion-align-items-center">
+                                <ion-col class="ion-text-center">
                                     <core-format-text [text]="option.description" [component]="component" [componentId]="h5pActivity.cmid" contextLevel="module" [contextInstanceId]="h5pActivity.cmid" [courseId]="courseId"></core-format-text>
                                 </ion-col>
-                                <ion-col text-center>
+                                <ion-col class="ion-text-center">
                                     <ng-container *ngIf="option.correctanswer">
                                         <ng-container *ngTemplateOutlet="answerTemplate; context: {answer: option.correctanswer}"></ng-container>
                                     </ng-container>
                                 </ion-col>
-                                <ion-col text-center>
+                                <ion-col class="ion-text-center">
                                     <ng-container *ngIf="option.useranswer">
                                         <ng-container *ngTemplateOutlet="answerTemplate; context: {answer: option.useranswer}"></ng-container>
                                     </ng-container>
@@ -100,14 +100,14 @@
                         </ion-item>
 
                         <!-- Result score. -->
-                        <ion-item *ngIf="result.maxscore" text-wrap text-end class="addon-mod_h5pactivity-result-score">
+                        <ion-item *ngIf="result.maxscore" class="ion-text-wrap" class="ion-text-end" class="addon-mod_h5pactivity-result-score">
                             <p><strong>{{ 'addon.mod_h5pactivity.score' | translate }}: {{ 'addon.mod_h5pactivity.score_out_of' | translate:{$a: result} }}</strong></p>
                         </ion-item>
                     </ng-container>
 
                     <!-- Result doesn't support tracking. -->
-                    <ion-item text-wrap class="core-warning-item" *ngIf="!result.track">
-                        <ion-icon item-start name="warning" color="warning"></ion-icon> {{ 'addon.mod_h5pactivity.no_compatible_track' | translate:{$a: result.interactiontype} }}
+                    <ion-item class="ion-text-wrap" class="core-warning-item" *ngIf="!result.track">
+                        <ion-icon slot=”start” name="warning" color="warning"></ion-icon> {{ 'addon.mod_h5pactivity.no_compatible_track' | translate:{$a: result.interactiontype} }}
                     </ion-item>
                 </ion-card>
             </ng-container>

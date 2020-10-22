@@ -1,4 +1,4 @@
-<ion-button [hidden]="hideMenu" clear icon-only [attr.aria-label]="ariaLabel" (click)="showContextMenu($event)" class="bar-button" aria-haspopup="true" [attr.aria-expanded]="expanded" [attr.aria-controls]="uniqueId">
+<ion-button [hidden]="hideMenu" fill="clear" slot="icon-only //TODO: mode to icon" [attr.aria-label]="ariaLabel" (click)="showContextMenu($event)" class="bar-button" aria-haspopup="true" [attr.aria-expanded]="expanded" [attr.aria-controls]="uniqueId">
     <core-icon [name]="icon"></core-icon>
 </ion-button>
 <ng-content></ng-content>

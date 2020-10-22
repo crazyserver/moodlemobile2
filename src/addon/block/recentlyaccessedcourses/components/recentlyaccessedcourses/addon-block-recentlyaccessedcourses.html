@@ -1,7 +1,7 @@
 <ion-item-divider>
     <h2>{{ 'addon.block_recentlyaccessedcourses.pluginname' | translate }}</h2>
-    <div *ngIf="downloadCoursesEnabled && downloadEnabled && courses && courses.length > 1" class="core-button-spinner" item-end>
-        <ion-button *ngIf="prefetchCoursesData.icon && prefetchCoursesData.icon != 'spinner'" icon-only clear color="dark" (click)="prefetchCourses()">
+    <div *ngIf="downloadCoursesEnabled && downloadEnabled && courses && courses.length > 1" class="core-button-spinner" slot="end">
+        <ion-button *ngIf="prefetchCoursesData.icon && prefetchCoursesData.icon != 'spinner'" slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="prefetchCourses()">
             <core-icon [name]="prefetchCoursesData.icon"></core-icon>
         </ion-button>
         <ion-badge class="core-course-download-courses-progress" *ngIf="prefetchCoursesData.badge">{{prefetchCoursesData.badge}}</ion-badge>

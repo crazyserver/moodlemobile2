@@ -4,11 +4,11 @@
     </ion-refresher>
     <core-loading [hideUntil]="completionLoaded">
         <ion-card *ngIf="completion && tracked">
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <h2>{{ 'addon.coursecompletion.status' | translate }}</h2>
                 <p>{{ statusText | translate }}</p>
             </ion-item>
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <h2>{{ 'addon.coursecompletion.required' | translate }}</h2>
                 <p *ngIf="completion.aggregation === 1">{{ 'addon.coursecompletion.criteriarequiredall' | translate }}</p>
                 <p *ngIf="completion.aggregation === 2">{{ 'addon.coursecompletion.criteriarequiredany' | translate }}</p>
@@ -16,12 +16,12 @@
         </ion-card>
         <ion-card *ngIf="completion && tracked">
             <ion-item-divider>{{ 'addon.coursecompletion.requiredcriteria' | translate }}</ion-item-divider>
-            <ion-item class="hidden-tablet" text-wrap *ngFor="let criteria of completion.completions">
+            <ion-item class="hidden-tablet" class="ion-text-wrap" *ngFor="let criteria of completion.completions">
                 <h2><core-format-text clean="true" [text]="criteria.details.criteria" [filter]="false"></core-format-text></h2>
                 <p><core-format-text clean="true" [text]="criteria.details.requirement" [filter]="false"></core-format-text></p>
-                <strong item-end>{{ criteria.status }}</strong>
+                <strong slot="end">{{ criteria.status }}</strong>
             </ion-item>
-            <ion-item class="hidden-phone" text-wrap>
+            <ion-item class="hidden-phone" class="ion-text-wrap">
                 <ion-row>
                     <ion-col><strong>{{ 'addon.coursecompletion.criteriagroup' | translate }}</strong></ion-col>
                     <ion-col><strong>{{ 'addon.coursecompletion.criteria' | translate }}</strong></ion-col>
@@ -44,11 +44,11 @@
         <ion-card *ngIf="showSelfComplete && tracked">
             <ion-item-divider>{{ 'addon.coursecompletion.manualselfcompletion' | translate }}</ion-item-divider>
             <ion-item>
-                <ion-button block (click)="completeCourse()">{{ 'addon.coursecompletion.completecourse' | translate }}</ion-button>
+                <ion-button expand="block" (click)="completeCourse()">{{ 'addon.coursecompletion.completecourse' | translate }}</ion-button>
             </ion-item>
         </ion-card>
 
-        <div *ngIf="!tracked" class="core-warning-card" icon-start>
+        <div *ngIf="!tracked" class="core-warning-card" slot="start //TODO: mode to icon">
             <ion-icon name="warning"></ion-icon>
             {{ 'addon.coursecompletion.nottracked' | translate }}
         </div>

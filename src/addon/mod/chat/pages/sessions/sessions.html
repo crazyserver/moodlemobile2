@@ -9,7 +9,7 @@
             <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
         </ion-refresher>
         <core-loading [hideUntil]="loaded">
-            <ion-item text-wrap *ngIf="groupInfo && (groupInfo.separateGroups || groupInfo.visibleGroups)">
+            <ion-item class="ion-text-wrap" *ngIf="groupInfo && (groupInfo.separateGroups || groupInfo.visibleGroups)">
                 <ion-label id="addon-chat-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                 <ion-label id="addon-chat-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                 <ion-select [(ngModel)]="groupId" (ionChange)="fetchSessions(true)" aria-labelledby="addon-chat-groupslabel" interface="action-sheet">
@@ -23,7 +23,7 @@
             <ion-card *ngFor="let session of sessions" (click)="openSession(session)" class="core-clickable"
                     [class.addon-mod-chat-session-selected]="session.sessionstart == selectedSessionStart && groupId == selectedSessionGroupId"
                     [class.addon-mod-chat-session-show-more]="session.sessionusers.length < session.allsessionusers.length">
-                <ion-item text-wrap>
+                <ion-item class="ion-text-wrap">
                     <h2>{{ session.sessionstart * 1000 | coreFormatDate }}</h2>
                     <p *ngIf="session.duration">{{ session.duration | coreDuration }}</p>
                 </ion-item>
@@ -33,7 +33,7 @@
                     </ion-item>
                 </ion-card-content>
                 <div *ngIf="session.sessionusers.length < session.allsessionusers.length">
-                    <ion-button clear (click)="showMoreUsers(session, $event)">
+                    <ion-button fill="clear" (click)="showMoreUsers(session, $event)">
                         {{ 'core.showmore' | translate }}
                     </ion-button>
                 </div>

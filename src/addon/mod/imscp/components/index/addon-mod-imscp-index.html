@@ -1,6 +1,6 @@
 <!-- Buttons to add to the header. -->
 <core-navbar-buttons end>
-    <ion-button icon-only (click)="showToc($event)">
+    <ion-button slot="icon-only //TODO: mode to icon" (click)="showToc($event)">
         <ion-icon name="bookmark" *ngIf="items.length"></ion-icon>
     </ion-button>
     <core-context-menu>
@@ -16,7 +16,7 @@
 <!-- Content. -->
 <core-loading [hideUntil]="loaded" class="core-loading-center safe-area-page">
 
-    <ion-card class="core-warning-card" icon-start *ngIf="warning">
+    <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="warning">
         <ion-icon name="warning"></ion-icon> <span [innerHTML]="warning"></span>
     </ion-card>
 

@@ -2,8 +2,8 @@
     <h2>{{ 'addon.block_activitymodules.pluginname' | translate }}</h2>
 </ion-item-divider>
 <core-loading [hideUntil]="loaded" class="core-loading-center">
-    <ion-item text-wrap *ngFor="let entry of entries" class="item-media" detail-none navPush="CoreCourseListModTypePage" [navParams]="{title: entry.name, courseId: instanceId, modName: entry.modName}">
-        <img item-start [src]="entry.icon" alt="" role="presentation" class="core-module-icon">
+    <ion-item class="ion-text-wrap" *ngFor="let entry of entries" class="item-media" detail="false" navPush="CoreCourseListModTypePage" [navParams]="{title: entry.name, courseId: instanceId, modName: entry.modName}">
+        <img slot=”start” [src]="entry.icon" alt="" role="presentation" class="core-module-icon">
         {{ entry.name }}
     </ion-item>
 </core-loading>

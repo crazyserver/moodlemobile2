@@ -27,11 +27,11 @@
 <!-- Template to render a list of results -->
 <ng-template #resultsTemplate let-item="item">
     <ng-container *ngIf="item.results.length > 0">
-        <ion-item-divider text-wrap>{{ item.titleString | translate }}</ion-item-divider>
+        <ion-item-divider class="ion-text-wrap">{{ item.titleString | translate }}</ion-item-divider>
 
         <!-- List of results -->
-        <ion-item text-wrap *ngFor="let result of item.results" [title]="result.fullname" (click)="openConversation(result)" [class.core-split-item-selected]="result == selectedResult" class="addon-message-discussion">
-            <ion-avatar item-start core-user-avatar [user]="result" [checkOnline]="true" [linkProfile]="false"></ion-avatar>
+        <ion-item class="ion-text-wrap" *ngFor="let result of item.results" [title]="result.fullname" (click)="openConversation(result)" [class.core-split-item-selected]="result == selectedResult" class="addon-message-discussion">
+            <ion-avatar slot=”start” core-user-avatar [user]="result" [checkOnline]="true" [linkProfile]="false"></ion-avatar>
             <h2>
                 <core-format-text [text]="result.fullname" [highlight]="result.highlightName" [filter]="false"></core-format-text>
                 <core-icon name="fa-ban" *ngIf="result.isblocked" [label]="'addon.messages.contactblocked' | translate"></core-icon>
@@ -47,12 +47,12 @@
 
         <!-- Load more button for contacts and non-contacts -->
         <ng-container *ngIf="item.type != 'messages'">
-            <div padding-horizontal *ngIf="item.canLoadMore && !item.loadingMore">
-                <ion-button block color="light" (click)="search(query, item.type)">
+            <div class="ion-padding-horizontal" *ngIf="item.canLoadMore && !item.loadingMore">
+                <ion-button expand="block" color="light" (click)="search(query, item.type)">
                     {{ 'core.loadmore' | translate }}
                 </ion-button>
             </div>
-            <div *ngIf="item.loadingMore" padding text-center>
+            <div *ngIf="item.loadingMore" class="ion-padding" class="ion-text-center">
                 <ion-spinner></ion-spinner>
             </div>
         </ng-container>

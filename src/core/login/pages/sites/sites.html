@@ -3,10 +3,10 @@
         <ion-title>{{ 'core.settings.sites' | translate }}</ion-title>
 
         <ion-buttons slot="primary">
-            <ion-button icon-only navPush="CoreAppSettingsPage" [attr.aria-label]="'core.settings.appsettings' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" navPush="CoreAppSettingsPage" [attr.aria-label]="'core.settings.appsettings' | translate">
                 <core-icon name="fa-cogs"></core-icon>
             </ion-button>
-            <ion-button *ngIf="sites && sites.length > 0" icon-only (click)="toggleDelete()" [attr.aria-label]="'core.delete' | translate">
+            <ion-button *ngIf="sites && sites.length > 0" slot="icon-only //TODO: mode to icon" (click)="toggleDelete()" [attr.aria-label]="'core.delete' | translate">
                 <ion-icon name="create" ios="md-create"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -14,15 +14,15 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <ion-item (click)="login(site.id)" *ngFor="let site of sites; let idx = index" detail-none>
-            <ion-avatar item-start>
+        <ion-item (click)="login(site.id)" *ngFor="let site of sites; let idx = index" detail="false">
+            <ion-avatar slot=”start”>
                 <img [src]="site.avatar" core-external-content [siteId]="site.id" alt="{{ 'core.pictureof' | translate:{$a: site.fullname} }}" role="presentation" onError="this.src='assets/img/user-avatar.png'">
             </ion-avatar>
             <h2>{{site.fullName}}</h2>
             <p><core-format-text [text]="site.siteName" clean="true" [siteId]="site.id"></core-format-text></p>
             <p>{{site.siteUrl}}</p>
-            <ion-badge item-end *ngIf="!showDelete && site.badge">{{site.badge}}</ion-badge>
-            <ion-button *ngIf="showDelete" item-end icon-only clear color="danger" (click)="deleteSite($event, idx)" [attr.aria-label]="'core.delete' | translate">
+            <ion-badge slot="end" *ngIf="!showDelete && site.badge">{{site.badge}}</ion-badge>
+            <ion-button *ngIf="showDelete" slot="end" slot="icon-only //TODO: mode to icon" fill="clear" color="danger" (click)="deleteSite($event, idx)" [attr.aria-label]="'core.delete' | translate">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
         </ion-item>

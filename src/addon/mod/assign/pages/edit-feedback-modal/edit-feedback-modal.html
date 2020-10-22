@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ plugin.name }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -11,6 +11,6 @@
 <ion-content>
     <form name="addon-mod_assign-edit-feedback-form" *ngIf="userId && plugin" #editFeedbackForm>
         <addon-mod-assign-feedback-plugin [assign]="assign" [submission]="submission" [userId]="userId" [plugin]="plugin" [edit]="true"></addon-mod-assign-feedback-plugin>
-        <ion-button block (click)="done($event)">{{ 'core.done' | translate }}</ion-button>
+        <ion-button expand="block" (click)="done($event)">{{ 'core.done' | translate }}</ion-button>
     </form>
 </ion-content>

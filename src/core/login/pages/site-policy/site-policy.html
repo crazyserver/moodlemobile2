@@ -6,18 +6,18 @@
 <ion-content>
     <core-loading [hideUntil]="policyLoaded">
         <ion-list>
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 {{ 'core.login.policyagree' | translate }}
             </ion-item>
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <p><a [href]="sitePolicy" core-link [capture]="false">{{ 'core.login.policyagreementclick' | translate }}</a></p>
             </ion-item>
             <ion-card *ngIf="showInline">
                 <core-iframe [src]="sitePolicy"></core-iframe>
             </ion-card>
-            <ion-item text-wrap padding>
-                <ion-button block color="primary" (click)="accept()">{{ 'core.login.policyaccept' | translate }}</ion-button>
-                <ion-button block (click)="cancel()">{{ 'core.login.cancel' | translate }}</ion-button>
+            <ion-item class="ion-text-wrap" class="ion-padding">
+                <ion-button expand="block" color="primary" (click)="accept()">{{ 'core.login.policyaccept' | translate }}</ion-button>
+                <ion-button expand="block" (click)="cancel()">{{ 'core.login.cancel' | translate }}</ion-button>
             </ion-item>
         </ion-list>
     </core-loading>

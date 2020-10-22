@@ -45,23 +45,23 @@
 
 <ng-template #basicInfo>
     <ion-list *ngIf="access.canviewanalysis && !access.isempty">
-        <ion-item text-wrap *ngIf="groupInfo && (groupInfo.separateGroups || groupInfo.visibleGroups)">
+        <ion-item class="ion-text-wrap" *ngIf="groupInfo && (groupInfo.separateGroups || groupInfo.visibleGroups)">
             <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
             <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
             <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-feedback-groupslabel" interface="action-sheet">
                 <ion-select-option *ngFor="let groupOpt of groupInfo.groups" [value]="groupOpt.id">{{groupOpt.name}}</ion-select-option>
             </ion-select>
         </ion-item>
-        <ion-item text-wrap (click)="access.canviewreports && feedback.completedCount > 0 && openFeature('Respondents')" [attr.detail-none]="access.canviewreports && feedback.completedCount > 0 ? null : true">
+        <ion-item class="ion-text-wrap" (click)="access.canviewreports && feedback.completedCount > 0 && openFeature('Respondents')" [attr.detail-none]="access.canviewreports && feedback.completedCount > 0 ? null : true">
             <h2>{{ 'addon.mod_feedback.completed_feedbacks' | translate }}</h2>
-            <ion-badge item-end>{{feedback.completedCount}}</ion-badge>
+            <ion-badge slot="end">{{feedback.completedCount}}</ion-badge>
         </ion-item>
-        <ion-item text-wrap *ngIf="!access.isanonymous && access.canviewreports" (click)="openFeature('NonRespondents')" detail-push>
+        <ion-item class="ion-text-wrap" *ngIf="!access.isanonymous && access.canviewreports" (click)="openFeature('NonRespondents')" detail="true">
             <h2>{{ 'addon.mod_feedback.show_nonrespondents' | translate }}</h2>
         </ion-item>
-        <ion-item text-wrap>
+        <ion-item class="ion-text-wrap">
             <h2>{{ 'addon.mod_feedback.questions' | translate }}</h2>
-            <ion-badge item-end>{{feedback.itemsCount}}</ion-badge>
+            <ion-badge slot="end">{{feedback.itemsCount}}</ion-badge>
         </ion-item>
     </ion-list>
 </ng-template>
@@ -72,12 +72,12 @@
         <ng-container *ngTemplateOutlet="basicInfo"></ng-container>
 
         <!-- Feedback done in offline but not synchronized -->
-        <div class="core-warning-card" icon-start *ngIf="hasOffline">
+        <div class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="hasOffline">
             <ion-icon name="warning"></ion-icon>
             {{ 'core.hasdatatosync' | translate: {$a: moduleName} }}
         </div>
 
-        <div class="core-info-card" icon-start *ngIf="access.cancomplete && !access.isopen">
+        <div class="core-info-card" slot="start //TODO: mode to icon" *ngIf="access.cancomplete && !access.isopen">
             <ion-icon name="information-circle"></ion-icon>
             {{ 'addon.mod_feedback.feedback_is_not_open' | translate }}
         </div>
@@ -88,38 +88,38 @@
         </div>
 
         <ion-list *ngIf="access.canedititems || access.canviewreports || !access.isempty">
-            <ion-item text-wrap *ngIf="access.canedititems && overview.timeopen">
+            <ion-item class="ion-text-wrap" *ngIf="access.canedititems && overview.timeopen">
                 <h2>{{ 'addon.mod_feedback.feedbackopen' | translate }}</h2>
                 <p>{{overview.openTimeReadable}}</p>
             </ion-item>
-            <ion-item text-wrap *ngIf="access.canedititems && overview.timeclose">
+            <ion-item class="ion-text-wrap" *ngIf="access.canedititems && overview.timeclose">
                 <h2>{{ 'addon.mod_feedback.feedbackclose' | translate }}</h2>
                 <p>{{overview.closeTimeReadable}}</p>
             </ion-item>
-            <ion-item text-wrap *ngIf="access.canedititems && feedback.page_after_submit">
+            <ion-item class="ion-text-wrap" *ngIf="access.canedititems && feedback.page_after_submit">
                 <h2>{{ 'addon.mod_feedback.page_after_submit' | translate }}</h2>
                 <core-format-text [component]="component" [componentId]="componentId" [text]="feedback.page_after_submit" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
             </ion-item>
             <ng-container *ngIf="!access.isempty">
-                <ion-item text-wrap>
+                <ion-item class="ion-text-wrap">
                     <h2>{{ 'addon.mod_feedback.mode' | translate }}</h2>
                     <p *ngIf="access.isanonymous">{{ 'addon.mod_feedback.anonymous' | translate }}</p>
                     <p *ngIf="!access.isanonymous">{{ 'addon.mod_feedback.non_anonymous' | translate }}</p>
                 </ion-item>
                 <ion-grid>
-                    <ion-row align-items-center>
+                    <ion-row class="ion-align-items-center">
                         <ion-col size="12" [attr.col-sm-6]="(access.cancomplete && access.cansubmit && access.isopen) || null">
-                            <ion-button block outline icon-start (click)="gotoAnswerQuestions(true)" text-wrap>
+                            <ion-button expand="block" fill="outline" slot="start //TODO: mode to icon" (click)="gotoAnswerQuestions(true)" class="ion-text-wrap">
                                 <ion-icon name="search"></ion-icon>
                                 {{ 'addon.mod_feedback.preview' | translate }}
                             </ion-button>
                         </ion-col>
                         <ion-col *ngIf="access.cancomplete && access.cansubmit && access.isopen" size="12" size-sm="6">
-                            <ion-button block icon-end *ngIf="!goPage" (click)="gotoAnswerQuestions()" text-wrap>
+                            <ion-button expand="block" slot="end //TODO: mode to icon" *ngIf="!goPage" (click)="gotoAnswerQuestions()" class="ion-text-wrap">
                                 {{ 'addon.mod_feedback.complete_the_form' | translate }}
                                 <ion-icon name="arrow-forward"></ion-icon>
                             </ion-button>
-                            <ion-button block icon-end *ngIf="goPage" (click)="gotoAnswerQuestions()" text-wrap>
+                            <ion-button expand="block" slot="end //TODO: mode to icon" *ngIf="goPage" (click)="gotoAnswerQuestions()" class="ion-text-wrap">
                                 {{ 'addon.mod_feedback.continue_the_form' | translate }}
                                 <ion-icon name="arrow-forward"></ion-icon>
                             </ion-button>
@@ -138,13 +138,13 @@
         <ng-container *ngTemplateOutlet="basicInfo"></ng-container>
 
         <ng-container *ngIf="access.canedititems || !access.isempty">
-            <div class="core-info-card" icon-start *ngIf="warning">
+            <div class="core-info-card" slot="start //TODO: mode to icon" *ngIf="warning">
                 <ion-icon name="information-circle"></ion-icon>
                 {{ warning }}
             </div>
 
             <ion-list *ngIf="items && items.length">
-                <ion-item text-wrap *ngFor="let item of items" class="core-analysis">
+                <ion-item class="ion-text-wrap" *ngFor="let item of items" class="core-analysis">
                     <h2>{{item.number}}. <core-format-text [component]="component" [componentId]="componentId" [text]="item.name" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></h2>
                     <p><core-format-text [component]="component" [componentId]="componentId" [text]="item.label" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></p>
                     <ng-container [ngSwitch]="item.template">

@@ -11,11 +11,11 @@
         <core-loading [hideUntil]="plansLoaded">
             <core-empty-box *ngIf="plans.length == 0" icon="map" [message]="'addon.competency.noplanswerecreated' | translate">
             </core-empty-box>
-            <ion-list *ngIf="plans.length > 0" no-margin>
-                <ion-item text-wrap *ngFor="let plan of plans" [title]="plan.name" (click)="openPlan(plan.id)" [class.core-split-item-selected]="plan.id == planId">
+            <ion-list *ngIf="plans.length > 0"  class="ion-no-margin">
+                <ion-item class="ion-text-wrap" *ngFor="let plan of plans" [title]="plan.name" (click)="openPlan(plan.id)" [class.core-split-item-selected]="plan.id == planId">
                     <h2>{{ plan.name }}</h2>
                     <p *ngIf="plan.duedate > 0">{{ 'addon.competency.duedate' | translate }}: {{ plan.duedate * 1000 | coreFormatDate :'strftimedatetimeshort' }}</p>
-                    <ion-badge item-end text-wrap [color]="plan.statuscolor">{{ plan.statusname }}</ion-badge>
+                    <ion-badge slot="end" class="ion-text-wrap" [color]="plan.statuscolor">{{ plan.statusname }}</ion-badge>
                 </ion-item>
             </ion-list>
         </core-loading>

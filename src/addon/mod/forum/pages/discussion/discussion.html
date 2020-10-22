@@ -33,15 +33,15 @@
         </ion-card>
 
         <!-- Cut-off date or due date message -->
-        <ion-card class="core-info-card" icon-start *ngIf="availabilityMessage">
+        <ion-card class="core-info-card" slot="start //TODO: mode to icon" *ngIf="availabilityMessage">
             <ion-icon name="information-circle"></ion-icon> {{ availabilityMessage }}
         </ion-card>
 
-        <ion-card class="core-info-card" icon-start *ngIf="discussion && discussion.locked">
+        <ion-card class="core-info-card" slot="start //TODO: mode to icon" *ngIf="discussion && discussion.locked">
             <core-icon name="fa-lock"></core-icon> {{ 'addon.mod_forum.discussionlocked' | translate }}
         </ion-card>
 
-        <div *ngIf="startingPost" margin-bottom class="highlight">
+        <div *ngIf="startingPost"  class="ion-margin-bottom" class="highlight">
             <addon-mod-forum-post [post]="startingPost" [discussion]="discussion" [courseId]="courseId" [discussionId]="discussionId" [component]="component" [componentId]="cmId" [replyData]="replyData" [originalData]="originalData" [forum]="forum" [accessInfo]="accessInfo" [trackPosts]="trackPosts" [ratingInfo]="ratingInfo" [leavingPage]="leavingPage" (onPostChange)="postListChanged()"></addon-mod-forum-post>
         </div>
 
@@ -62,7 +62,7 @@
             <ion-card>
                 <addon-mod-forum-post [post]="post" [courseId]="courseId" [discussionId]="discussionId" [component]="component" [componentId]="cmId" [replyData]="replyData" [originalData]="originalData" [parentSubject]="postSubjects[post.parentid]" [forum]="forum" [accessInfo]="accessInfo" [trackPosts]="trackPosts" [ratingInfo]="ratingInfo" [leavingPage]="leavingPage" (onPostChange)="postListChanged()"></addon-mod-forum-post>
             </ion-card>
-            <div padding-left *ngIf="post.children.length && post.children[0].subject">
+            <div class="ion-padding-left" *ngIf="post.children.length && post.children[0].subject">
                 <ng-container *ngFor="let child of post.children">
                     <ng-container *ngTemplateOutlet="nestedPosts; context: {post: child}"></ng-container>
                 </ng-container>

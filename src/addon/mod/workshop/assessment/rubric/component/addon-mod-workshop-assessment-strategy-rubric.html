@@ -1,6 +1,6 @@
 <ng-container *ngFor="let field of assessment.form.fields; let n = index">
     <ion-card *ngIf="n < assessment.form.dimenssionscount">
-        <ion-item text-wrap>
+        <ion-item class="ion-text-wrap">
             <h2 [core-mark-required]="edit">{{ field.dimtitle }}</h2>
             <core-format-text [text]="field.description" contextLevel="module" [contextInstanceId]="moduleId" [courseId]="courseId"></core-format-text>
             <core-input-errors *ngIf="edit && fieldErrors['chosenlevelid_' + n]" [errorText]="fieldErrors['chosenlevelid_' + n]"></core-input-errors>

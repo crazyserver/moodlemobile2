@@ -1,24 +1,24 @@
-<ion-button *ngIf="action == 'more'" icon-only clear (click)="viewEntry()" [title]="'addon.mod_data.more' | translate">
+<ion-button *ngIf="action == 'more'" slot="icon-only //TODO: mode to icon" fill="clear" (click)="viewEntry()" [title]="'addon.mod_data.more' | translate">
     <ion-icon name="search"></ion-icon>
 </ion-button>
 
-<ion-button *ngIf="action == 'edit'" icon-only clear (click)="editEntry()"  [title]="'core.edit' | translate">
+<ion-button *ngIf="action == 'edit'" slot="icon-only //TODO: mode to icon" fill="clear" (click)="editEntry()"  [title]="'core.edit' | translate">
     <ion-icon name="cog"></ion-icon>
 </ion-button>
 
-<ion-button *ngIf="action == 'delete' && !entry.deleted" icon-only clear (click)="deleteEntry()" [title]="'core.delete' | translate">
+<ion-button *ngIf="action == 'delete' && !entry.deleted" slot="icon-only //TODO: mode to icon" fill="clear" (click)="deleteEntry()" [title]="'core.delete' | translate">
     <ion-icon name="trash"></ion-icon>
 </ion-button>
 
-<ion-button *ngIf="action == 'delete' && entry.deleted" icon-only clear (click)="undoDelete()" [title]="'core.restore' | translate">
+<ion-button *ngIf="action == 'delete' && entry.deleted" slot="icon-only //TODO: mode to icon" fill="clear" (click)="undoDelete()" [title]="'core.restore' | translate">
     <ion-icon name="undo"></ion-icon>
 </ion-button>
 
-<ion-button *ngIf="action == 'approve'" icon-only clear (click)="approveEntry()" [title]="'addon.mod_data.approve' | translate">
+<ion-button *ngIf="action == 'approve'" slot="icon-only //TODO: mode to icon" fill="clear" (click)="approveEntry()" [title]="'addon.mod_data.approve' | translate">
     <ion-icon name="thumbs-up"></ion-icon>
 </ion-button>
 
-<ion-button *ngIf="action == 'disapprove'" icon-only clear (click)="disapproveEntry()" [title]="'addon.mod_data.disapprove' | translate">
+<ion-button *ngIf="action == 'disapprove'" slot="icon-only //TODO: mode to icon" fill="clear" (click)="disapproveEntry()" [title]="'addon.mod_data.disapprove' | translate">
     <ion-icon name="thumbs-down"></ion-icon>
 </ion-button>
 

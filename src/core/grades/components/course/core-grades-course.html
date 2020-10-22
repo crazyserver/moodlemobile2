@@ -10,7 +10,7 @@
             <table cellspacing="0" cellpadding="0" class="core-grades-table">
                 <thead>
                     <tr>
-                        <th *ngFor="let column of gradesTable.columns" id="{{column.name}}" [class.hidden-phone]="column.hiddenPhone" [attr.colspan]="column.colspan" text-start>
+                        <th *ngFor="let column of gradesTable.columns" id="{{column.name}}" [class.hidden-phone]="column.hiddenPhone" [attr.colspan]="column.colspan" class="ion-text-start">
                             {{ 'core.grades.' + column.name | translate }}
                         </th>
                     </tr>
@@ -20,13 +20,13 @@
                         <ng-container *ngIf="row.itemtype">
                             <td *ngIf="row.itemtype == 'category'" class="core-grades-table-category" [attr.rowspan]="row.rowspan">
                             </td>
-                            <th class="core-grades-table-gradeitem" [class.column-itemname]="row.itemtype == 'category'" [attr.colspan]="row.colspan" [class.core-split-item-selected]="gradeId == row.id" text-start>
-                                <core-icon *ngIf="row.icon" name="{{row.icon}}" item-start></core-icon>
-                                <img *ngIf="row.image" [src]="row.image" item-start/>
+                            <th class="core-grades-table-gradeitem" [class.column-itemname]="row.itemtype == 'category'" [attr.colspan]="row.colspan" [class.core-split-item-selected]="gradeId == row.id" class="ion-text-start">
+                                <core-icon *ngIf="row.icon" name="{{row.icon}}" slot=”start”></core-icon>
+                                <img *ngIf="row.image" [src]="row.image" slot=”start”/>
                                 <span [innerHTML]="row.gradeitem"></span>
                             </th>
                             <ng-container *ngFor="let column of gradesTable.columns">
-                                <td *ngIf="column.name != 'gradeitem' && row[column.name] != undefined" [class]="'core-grades-table-' + column.name" [innerHTML]="row[column.name]" [class.hidden-phone]="column.hiddenPhone" text-start>
+                                <td *ngIf="column.name != 'gradeitem' && row[column.name] != undefined" [class]="'core-grades-table-' + column.name" [innerHTML]="row[column.name]" [class.hidden-phone]="column.hiddenPhone" class="ion-text-start">
                                 </td>
                             </ng-container>
                         </ng-container>

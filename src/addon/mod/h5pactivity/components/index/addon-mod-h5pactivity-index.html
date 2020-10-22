@@ -18,32 +18,32 @@
     <core-course-module-description [description]="description" [component]="component" [componentId]="componentId" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
     <!-- Offline data stored. -->
-    <ion-card class="core-warning-card" icon-start *ngIf="hasOffline">
+    <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="hasOffline">
         <ion-icon name="warning"></ion-icon> {{ 'core.hasdatatosync' | translate:{$a: moduleName} }}
     </ion-card>
 
     <!-- Offline disabled. -->
-    <ion-card class="core-warning-card" icon-start *ngIf="!siteCanDownload && playing">
+    <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="!siteCanDownload && playing">
         <ion-icon name="warning"></ion-icon> {{ 'core.h5p.offlinedisabled' | translate }} {{ 'addon.mod_h5pactivity.offlinedisabledwarning' | translate }}
     </ion-card>
 
     <!-- Preview mode. -->
-    <ion-card class="core-warning-card" icon-start *ngIf="accessInfo && !trackComponent">
+    <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="accessInfo && !trackComponent">
         <ion-icon name="warning"></ion-icon> {{ 'addon.mod_h5pactivity.previewmode' | translate }}
     </ion-card>
 
     <ion-list *ngIf="deployedFile && !playing">
-        <ion-item text-wrap *ngIf="stateMessage">
+        <ion-item class="ion-text-wrap" *ngIf="stateMessage">
             <p >{{ stateMessage | translate }}</p>
         </ion-item>
 
         <!-- Button to download the package. -->
-        <ion-item *ngIf="!downloading && needsDownload" text-wrap>
-            <ion-button block (click)="downloadAndPlay($event)">{{ 'addon.mod_h5pactivity.downloadh5pfile' | translate }}</ion-button>
+        <ion-item *ngIf="!downloading && needsDownload" class="ion-text-wrap">
+            <ion-button expand="block" (click)="downloadAndPlay($event)">{{ 'addon.mod_h5pactivity.downloadh5pfile' | translate }}</ion-button>
         </ion-item>
 
         <!-- Download progress. -->
-        <ion-item text-center *ngIf="downloading">
+        <ion-item class="ion-text-center" *ngIf="downloading">
             <ion-spinner></ion-spinner>
             <h2 *ngIf="progressMessage">{{ progressMessage | translate }}</h2>
             <core-progress-bar *ngIf="percentage <= 100" [progress]="percentage"></core-progress-bar>

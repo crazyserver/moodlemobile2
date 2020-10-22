@@ -3,13 +3,13 @@
         <ion-title>{{ title }}</ion-title>
 
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content padding>
+<ion-content class="ion-padding">
     <core-format-text [text]="content" [component]="component" [componentId]="componentId" [filter]="filter" [contextLevel]="contextLevel" [contextInstanceId]="instanceId" [courseId]="courseId"></core-format-text>
 
     <ion-card *ngIf="files && files.length">
@@ -17,7 +17,7 @@
     </ion-card>
 </ion-content>
 <ion-footer color="light" *ngIf="displayCopyButton">
-    <ion-button block color="light" icon-start (click)="copyText()">
+    <ion-button expand="block" color="light" slot="start //TODO: mode to icon" (click)="copyText()">
         <ion-icon name="copy" aria-hidden="true"></ion-icon>
         {{ 'core.copytoclipboard' | translate }}
     </ion-button>

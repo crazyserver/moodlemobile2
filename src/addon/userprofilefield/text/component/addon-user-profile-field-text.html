@@ -4,7 +4,7 @@
     <p><core-format-text [text]="field.value" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text></p>
 </ion-item>
 <!-- Edit. -->
-<ion-item *ngIf="edit && field && field.shortname" text-wrap [formGroup]="form">
+<ion-item *ngIf="edit && field && field.shortname" class="ion-text-wrap" [formGroup]="form">
     <ion-label position="stacked" [core-mark-required]="field.required">{{ field.name }}</ion-label>
     <ion-input [type]="field.inputType" [formControlName]="field.modelName" [placeholder]="field.name" maxlength="{{field.maxlength}}"></ion-input>
     <core-input-errors item-content [control]="form.controls[field.modelName]"></core-input-errors>

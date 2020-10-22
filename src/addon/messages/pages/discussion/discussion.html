@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>
             <img *ngIf="loaded && !otherMember && conversationImage" class="core-bar-button-image" [src]="conversationImage" [alt]="title" onError="this.src='assets/img/group-avatar.png'" core-external-content role="presentation" [siteId]="siteId || null">
-            <ion-avatar *ngIf="loaded && otherMember" class="core-bar-button-image" core-user-avatar [user]="otherMember" [linkProfile]="false" [checkOnline]="otherMember.showonlinestatus" item-start (click)="showInfo && viewInfo()"></ion-avatar>
+            <ion-avatar *ngIf="loaded && otherMember" class="core-bar-button-image" core-user-avatar [user]="otherMember" [linkProfile]="false" [checkOnline]="otherMember.showonlinestatus" slot=”start” (click)="showInfo && viewInfo()"></ion-avatar>
             <core-format-text [text]="title" contextLevel="system" [contextInstanceId]="0" (click)="showInfo && !isGroup && viewInfo()"></core-format-text>
             <core-icon *ngIf="conversation && conversation.isfavourite" name="fa-star" [label]="'core.favourites' | translate"></core-icon>
             <core-icon *ngIf="conversation && conversation.ismuted" name="volume-off" [label]="'addon.messages.mutedconversation' | translate"></core-icon>
@@ -30,13 +30,13 @@
         <core-infinite-loading [enabled]="canLoadMore" (action)="loadPrevious($event)" position="top" [error]="loadMoreError"></core-infinite-loading>
 
         <ng-container *ngIf="isSelf && !canLoadMore">
-            <p text-center>{{ 'addon.messages.selfconversation' | translate }}</p>
-            <p text-center><i>{{ 'addon.messages.selfconversationdefaultmessage' | translate }}</i></p>
+            <p class="ion-text-center">{{ 'addon.messages.selfconversation' | translate }}</p>
+            <p class="ion-text-center"><i>{{ 'addon.messages.selfconversationdefaultmessage' | translate }}</i></p>
         </ng-container>
 
         <ion-list class="addon-messages-discussion-container" [class.addon-messages-discussion-group]="isGroup" [attr.aria-live]="'polite'">
             <ng-container *ngFor="let message of messages; index as index; last as last">
-                <h6 text-center *ngIf="message.showDate" class="addon-messages-date">
+                <h6 class="ion-text-center" *ngIf="message.showDate" class="addon-messages-date">
                     {{ message.timecreated | coreFormatDate: "strftimedayshort" }}
                 </h6>
 
@@ -45,10 +45,10 @@
                     <ion-icon name="arrow-round-down"></ion-icon>
                 </ion-chip>
 
-                <ion-item text-wrap (longPress)="copyMessage(message)" class="addon-message" [class.addon-message-mine]="message.useridfrom == currentUserId" [class.addon-message-not-mine]="message.useridfrom != currentUserId" [class.addon-message-no-user]="!message.showUserData" [@coreSlideInOut]="message.useridfrom == currentUserId ? '' : 'fromLeft'">
+                <ion-item class="ion-text-wrap" (longPress)="copyMessage(message)" class="addon-message" [class.addon-message-mine]="message.useridfrom == currentUserId" [class.addon-message-not-mine]="message.useridfrom != currentUserId" [class.addon-message-no-user]="!message.showUserData" [@coreSlideInOut]="message.useridfrom == currentUserId ? '' : 'fromLeft'">
                     <!-- User data. -->
                     <h2 class="addon-message-user">
-                        <ion-avatar item-start core-user-avatar [user]="members[message.useridfrom]" [linkProfile]="false" *ngIf="message.showUserData"></ion-avatar>
+                        <ion-avatar slot=”start” core-user-avatar [user]="members[message.useridfrom]" [linkProfile]="false" *ngIf="message.showUserData"></ion-avatar>
 
                         <div *ngIf="message.showUserData">{{ members[message.useridfrom].fullname }}</div>
 
@@ -61,7 +61,7 @@
                         <core-format-text (afterRender)="last && scrollToBottom()" [text]="message.text" contextLevel="system" [contextInstanceId]="0"></core-format-text>
                     </p>
 
-                    <ion-button icon-only clear="true" *ngIf="!message.sending && showDelete" (click)="deleteMessage(message, index)" class="addon-messages-delete-button" [@coreSlideInOut]="'fromRight'" [attr.aria-label]=" 'addon.messages.deletemessage' | translate">
+                    <ion-button slot="icon-only //TODO: mode to icon" fill="clear"="true" *ngIf="!message.sending && showDelete" (click)="deleteMessage(message, index)" class="addon-messages-delete-button" [@coreSlideInOut]="'fromRight'" [attr.aria-label]=" 'addon.messages.deletemessage' | translate">
                         <ion-icon name="trash" color="danger"></ion-icon>
                     </ion-button>
                     <div class="tail" *ngIf="message.showTail"></div>
@@ -70,7 +70,7 @@
         </ion-list>
         <!-- Scroll bottom. -->
         <ion-fab slot="fixed" core-fab vertical="bottom" horizontal="end" *ngIf="newMessages > 0">
-            <ion-fab-button mini (click)="scrollToFirstUnreadMessage(true)" color="light" [attr.aria-label]="'addon.messages.newmessages' | translate">
+            <ion-fab-button size="small" (click)="scrollToFirstUnreadMessage(true)" color="light" [attr.aria-label]="'addon.messages.newmessages' | translate">
                 <ion-icon name="arrow-round-down"></ion-icon>
                 <span class="core-discussion-messages-badge">{{ newMessages }}</span>
             </ion-fab-button>
@@ -80,24 +80,24 @@
 </ion-content>
 <ion-footer color="light" class="footer-adjustable" *ngIf="loaded && (!conversationId || conversation)">
     <ion-toolbar color="light" position="bottom">
-        <p *ngIf="footerType == 'unable'" text-center margin-horizontal>{{ 'addon.messages.unabletomessage' | translate }}</p>
-        <div *ngIf="footerType == 'blocked'" padding-horizontal>
-            <p text-center>{{ 'addon.messages.youhaveblockeduser' | translate }}</p>
-            <ion-button block text-wrap margin-bottom (click)="unblockUser()">{{ 'addon.messages.unblockuser' | translate }}</ion-button>
+        <p *ngIf="footerType == 'unable'" class="ion-text-center"  class="ion-margin-horizontal">{{ 'addon.messages.unabletomessage' | translate }}</p>
+        <div *ngIf="footerType == 'blocked'" class="ion-padding-horizontal">
+            <p class="ion-text-center">{{ 'addon.messages.youhaveblockeduser' | translate }}</p>
+            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" (click)="unblockUser()">{{ 'addon.messages.unblockuser' | translate }}</ion-button>
         </div>
-        <div *ngIf="footerType == 'requiresContact'" padding-horizontal>
-            <p text-center><strong>{{ 'addon.messages.isnotinyourcontacts' | translate: {$a: otherMember.fullname} }}</strong></p>
-            <p text-center>{{ 'addon.messages.requirecontacttomessage' | translate: {$a: otherMember.fullname} }}</p>
-            <ion-button block text-wrap margin-bottom (click)="createContactRequest()">{{ 'addon.messages.sendcontactrequest' | translate }}</ion-button>
+        <div *ngIf="footerType == 'requiresContact'" class="ion-padding-horizontal">
+            <p class="ion-text-center"><strong>{{ 'addon.messages.isnotinyourcontacts' | translate: {$a: otherMember.fullname} }}</strong></p>
+            <p class="ion-text-center">{{ 'addon.messages.requirecontacttomessage' | translate: {$a: otherMember.fullname} }}</p>
+            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" (click)="createContactRequest()">{{ 'addon.messages.sendcontactrequest' | translate }}</ion-button>
         </div>
-        <div *ngIf="footerType == 'requestReceived'" padding-horizontal>
-            <p text-center>{{ 'addon.messages.userwouldliketocontactyou' | translate: {$a: otherMember.fullname} }}</p>
-            <ion-button block text-wrap margin-bottom (click)="confirmContactRequest()">{{ 'addon.messages.acceptandaddcontact' | translate }}</ion-button>
-            <ion-button block text-wrap margin-bottom color="light" (click)="declineContactRequest()">{{ 'addon.messages.decline' | translate }}</ion-button>
+        <div *ngIf="footerType == 'requestReceived'" class="ion-padding-horizontal">
+            <p class="ion-text-center">{{ 'addon.messages.userwouldliketocontactyou' | translate: {$a: otherMember.fullname} }}</p>
+            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" (click)="confirmContactRequest()">{{ 'addon.messages.acceptandaddcontact' | translate }}</ion-button>
+            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" color="light" (click)="declineContactRequest()">{{ 'addon.messages.decline' | translate }}</ion-button>
         </div>
-        <div *ngIf="footerType == 'requestSent' || (footerType == 'message' && requestContactSent)" padding-horizontal>
-            <p text-center><strong>{{ 'addon.messages.contactrequestsent' | translate }}</strong></p>
-            <p text-center>{{ 'addon.messages.yourcontactrequestpending' | translate: {$a: otherMember.fullname} }}</p>
+        <div *ngIf="footerType == 'requestSent' || (footerType == 'message' && requestContactSent)" class="ion-padding-horizontal">
+            <p class="ion-text-center"><strong>{{ 'addon.messages.contactrequestsent' | translate }}</strong></p>
+            <p class="ion-text-center">{{ 'addon.messages.yourcontactrequestpending' | translate: {$a: otherMember.fullname} }}</p>
         </div>
         <core-send-message-form *ngIf="footerType == 'message'" (onSubmit)="sendMessage($event)" [showKeyboard]="showKeyboard" [placeholder]="'addon.messages.newmessage' | translate" (onResize)="resizeContent()"></core-send-message-form>
     </ion-toolbar>

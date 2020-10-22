@@ -5,18 +5,18 @@
     <core-loading [hideUntil]="competenciesLoaded">
         <ion-card *ngIf="!user && competencies && competencies.statistics.competencycount > 0">
             <ng-container *ngIf="competencies.cangradecompetencies">
-                <ion-item text-wrap *ngIf="competencies.settings.pushratingstouserplans">
+                <ion-item class="ion-text-wrap" *ngIf="competencies.settings.pushratingstouserplans">
                     {{ 'addon.competency.coursecompetencyratingsarepushedtouserplans' | translate }}
                 </ion-item>
-                <ion-item text-wrap *ngIf="!competencies.settings.pushratingstouserplans" color="danger">
+                <ion-item class="ion-text-wrap" *ngIf="!competencies.settings.pushratingstouserplans" color="danger">
                     {{ 'addon.competency.coursecompetencyratingsarenotpushedtouserplans' | translate }}
                 </ion-item>
             </ng-container>
-            <ion-item text-wrap *ngIf="competencies.statistics.canbegradedincourse">
+            <ion-item class="ion-text-wrap" *ngIf="competencies.statistics.canbegradedincourse">
                 {{ 'addon.competency.xcompetenciesproficientoutofyincourse' | translate:{$a: {x: competencies.statistics.proficientcompetencycount, y: competencies.statistics.competencycount} } }}
                 <core-progress-bar [progress]="competencies.statistics.proficientcompetencypercentage"></core-progress-bar>
             </ion-item>
-            <ion-item text-wrap *ngIf="competencies.statistics.canmanagecoursecompetencies && competencies.statistics.leastproficientcount > 0">
+            <ion-item class="ion-text-wrap" *ngIf="competencies.statistics.canmanagecoursecompetencies && competencies.statistics.leastproficientcount > 0">
                 <strong>{{ 'addon.competency.competenciesmostoftennotproficientincourse' | translate }}</strong>:
                 <p *ngFor="let comp of competencies.statistics.leastproficient">
                     <a (click)="openCompetencySummary(comp.id)">
@@ -26,10 +26,10 @@
             </ion-item>
         </ion-card>
 
-        <h3 margin-horizontal *ngIf="competencies && competencies.statistics.competencycount > 0">{{ 'addon.competency.coursecompetencies' | translate }}</h3>
+        <h3  class="ion-margin-horizontal" *ngIf="competencies && competencies.statistics.competencycount > 0">{{ 'addon.competency.coursecompetencies' | translate }}</h3>
         <ion-card *ngIf="user">
-             <ion-item text-wrap>
-                <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
+             <ion-item class="ion-text-wrap">
+                <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
                 <h2>{{ user.fullname }}</h2>
             </ion-item>
         </ion-card>
@@ -37,11 +37,11 @@
 
         <div *ngIf="competencies">
             <ion-card *ngFor="let competency of competencies.competencies">
-                <ion-item text-wrap (click)="openCompetency(competency.competency.id)" [title]="competency.competency.shortname" detail-push>
+                <ion-item class="ion-text-wrap" (click)="openCompetency(competency.competency.id)" [title]="competency.competency.shortname" detail="true">
                     <h2><strong>{{competency.competency.shortname}} <em>{{competency.competency.idnumber}}</em></strong></h2>
-                    <ion-badge item-end *ngIf="competency.usercompetencycourse && competency.usercompetencycourse.gradename" [color]="competency.usercompetencycourse.proficiency ? 'success' : 'danger'">{{ competency.usercompetencycourse.gradename }}</ion-badge>
+                    <ion-badge slot="end" *ngIf="competency.usercompetencycourse && competency.usercompetencycourse.gradename" [color]="competency.usercompetencycourse.proficiency ? 'success' : 'danger'">{{ competency.usercompetencycourse.gradename }}</ion-badge>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item class="ion-text-wrap">
                     <p *ngIf="competency.competency.description">
                         <core-format-text [text]="competency.competency.description" contextLevel="course" [contextInstanceId]="courseId"></core-format-text>
                     </p>
@@ -67,8 +67,8 @@
                         <p *ngIf="competency.coursemodules.length == 0">
                             {{ 'addon.competency.noactivities' | translate }}
                         </p>
-                        <ion-item text-wrap *ngFor="let activity of competency.coursemodules" [href]="activity.url" [title]="activity.name" core-link capture="true" class="core-course-module-handler item-media">
-                            <img item-start [src]="activity.iconurl" core-external-content alt="" role="presentation" *ngIf="activity.iconurl" class="core-module-icon">
+                        <ion-item class="ion-text-wrap" *ngFor="let activity of competency.coursemodules" [href]="activity.url" [title]="activity.name" core-link capture="true" class="core-course-module-handler item-media">
+                            <img slot=”start” [src]="activity.iconurl" core-external-content alt="" role="presentation" *ngIf="activity.iconurl" class="core-module-icon">
                             <core-format-text [text]="activity.name" contextLevel="module" [contextInstanceId]="activity.id" [courseId]="courseId"></core-format-text>
                         </ion-item>
                     </div>
@@ -77,7 +77,7 @@
                         <p *ngIf="competency.plans.length == 0">
                             {{ 'addon.competency.nouserplanswithcompetency' | translate }}
                         </p>
-                        <ion-item text-wrap *ngFor="let plan of competency.plans" [href]="plan.url" [title]="plan.name" core-link capture="true">
+                        <ion-item class="ion-text-wrap" *ngFor="let plan of competency.plans" [href]="plan.url" [title]="plan.name" core-link capture="true">
                             <core-format-text [text]="plan.name" contextLevel="user" [contextInstanceId]="plan.userid"></core-format-text>
                         </ion-item>
                     </div>

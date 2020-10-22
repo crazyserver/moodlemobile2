@@ -3,7 +3,7 @@
         <ion-title>{{ 'core.courses.mycourses' | translate }}</ion-title>
 
         <ion-buttons slot="primary">
-            <ion-button *ngIf="mcComponent && mcComponent.searchEnabled" icon-only (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
+            <ion-button *ngIf="mcComponent && mcComponent.searchEnabled" slot="icon-only //TODO: mode to icon" (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
                 <ion-icon name="search"></ion-icon>
             </ion-button>
             <core-context-menu *ngIf="mcComponent">

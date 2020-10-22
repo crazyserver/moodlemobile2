@@ -1,6 +1,6 @@
-<ion-row *ngIf="actions && actions.length > 0" justify-content-around>
+<ion-row *ngIf="actions && actions.length > 0" class="justify-content-around">
     <ion-col *ngFor="let action of actions">
-        <ion-button icon-left clear small block (click)="action.action(undefined, navCtrl)">
+        <ion-button slot="start //TODO: mode to icon" fill="clear" small expand="block" (click)="action.action(undefined, navCtrl)">
             <ion-icon name="{{action.icon}}"></ion-icon>
             {{ action.message | translate }}
         </ion-button>

@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.notes.addnewnote' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -21,8 +21,8 @@
         <ion-item>
             <ion-textarea placeholder="{{ 'addon.notes.note' | translate }}" rows="5" [(ngModel)]="text" name="text" required="required"></ion-textarea>
         </ion-item>
-        <div padding>
-            <ion-button block type="submit" [disabled]="processing || text.length < 2">
+        <div class="ion-padding">
+            <ion-button expand="block" type="submit" [disabled]="processing || text.length < 2">
                 {{ 'addon.notes.addnewnote' | translate }}
             </ion-button>
         </div>

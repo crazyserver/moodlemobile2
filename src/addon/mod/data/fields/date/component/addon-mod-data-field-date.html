@@ -5,7 +5,7 @@
 
     <ion-item *ngIf="mode == 'search'">
         <ion-label>{{ 'addon.mod_data.usedate' | translate }}</ion-label>
-        <ion-checkbox item-end [formControlName]="'f_'+field.id+'_z'" [(ngModel)]="search['f_'+field.id+'_z']">
+        <ion-checkbox slot="end" [formControlName]="'f_'+field.id+'_z'" [(ngModel)]="search['f_'+field.id+'_z']">
         </ion-checkbox>
     </ion-item>
 </span>

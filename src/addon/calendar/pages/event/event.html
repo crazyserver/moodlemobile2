@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>
             <img *ngIf="event && event.moduleIcon" src="{{event.moduleIcon}}" alt="" role="presentation" class="core-module-icon">
-            <core-icon *ngIf="event && event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" item-start></core-icon>
+            <core-icon *ngIf="event && event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”></core-icon>
             <core-format-text *ngIf="event" [text]="event.name" [contextLevel]="event.contextLevel" [contextInstanceId]="event.contextInstanceId"></core-format-text>
         </ion-title>
         <ion-buttons slot="primary">
@@ -24,25 +24,25 @@
     </ion-refresher>
     <core-loading [hideUntil]="eventLoaded">
         <!-- There is data to be synchronized -->
-        <ion-card class="core-warning-card" icon-start *ngIf="hasOffline || event.deleted">
+        <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="hasOffline || event.deleted">
             <ion-icon name="warning"></ion-icon> {{ 'core.hasdatatosync' | translate:{$a: 'addon.calendar.calendarevent' | translate} }}
         </ion-card>
 
         <ion-card>
             <ion-card-content *ngIf="event">
-                <ion-item text-wrap *ngIf="isSplitViewOn">
-                    <img *ngIf="event.moduleIcon" src="{{event.moduleIcon}}" item-start alt="" role="presentation" class="core-module-icon">
-                    <core-icon *ngIf="event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" item-start></core-icon>
+                <ion-item class="ion-text-wrap" *ngIf="isSplitViewOn">
+                    <img *ngIf="event.moduleIcon" src="{{event.moduleIcon}}" slot=”start” alt="" role="presentation" class="core-module-icon">
+                    <core-icon *ngIf="event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”></core-icon>
                     <h2>{{ 'addon.calendar.eventname' | translate }}</h2>
                     <p><core-format-text [text]="event.name" [contextLevel]="event.contextLevel" [contextInstanceId]="event.contextInstanceId"></core-format-text></p>
-                    <ion-note item-end *ngIf="event.deleted">
+                    <ion-note slot="end" *ngIf="event.deleted">
                         <ion-icon name="trash"></ion-icon> {{ 'core.deletedoffline' | translate }}
                     </ion-note>
                 </ion-item>
                 <ion-item>
                     <h2>{{ 'addon.calendar.when' | translate }}</h2>
                     <p [innerHTML]="event.formattedtime"></p>
-                    <ion-note item-end *ngIf="!isSplitViewOn && event.deleted">
+                    <ion-note slot="end" *ngIf="!isSplitViewOn && event.deleted">
                         <ion-icon name="trash"></ion-icon> {{ 'core.deletedoffline' | translate }}
                     </ion-note>
                 </ion-item>
@@ -50,25 +50,25 @@
                     <h2>{{ 'addon.calendar.eventtype' | translate }}</h2>
                     <p>{{ 'addon.calendar.type' + event.formattedType | translate }}</p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="courseName" [href]="courseUrl" core-link capture="true">
+                <ion-item class="ion-text-wrap" *ngIf="courseName" [href]="courseUrl" core-link capture="true">
                     <h2>{{ 'core.course' | translate}}</h2>
                     <p><core-format-text [text]="courseName" contextLevel="course" [contextInstanceId]="courseId"></core-format-text></p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="groupName">
+                <ion-item class="ion-text-wrap" *ngIf="groupName">
                     <h2>{{ 'core.group' | translate}}</h2>
                     <p>{{ groupName }}</p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="categoryPath">
+                <ion-item class="ion-text-wrap" *ngIf="categoryPath">
                     <h2>{{ 'core.category' | translate}}</h2>
                     <p><core-format-text [text]="categoryPath" contextLevel="coursecat" [contextInstanceId]="event.category.id"></core-format-text></p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="event.description">
+                <ion-item class="ion-text-wrap" *ngIf="event.description">
                     <h2>{{ 'core.description' | translate}}</h2>
                     <p>
                         <core-format-text [text]="event.description" [contextLevel]="event.contextLevel" [contextInstanceId]="event.contextInstanceId"></core-format-text>
                     </p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="event.location">
+                <ion-item class="ion-text-wrap" *ngIf="event.location">
                     <h2>{{ 'core.location' | translate}}</h2>
                     <p>
                         <a [href]="event.encodedLocation" core-link auto-login="no">
@@ -77,7 +77,7 @@
                     </p>
                 </ion-item>
                 <ion-item *ngIf="moduleUrl">
-                    <ion-button block color="primary" [href]="moduleUrl" core-link capture="true">{{ 'addon.calendar.gotoactivity' | translate }}</ion-button>
+                    <ion-button expand="block" color="primary" [href]="moduleUrl" core-link capture="true">{{ 'addon.calendar.gotoactivity' | translate }}</ion-button>
                 </ion-item>
             </ion-card-content>
         </ion-card>
@@ -87,10 +87,10 @@
                 <h2>{{ 'addon.calendar.reminders' | translate }}</h2>
             </ion-item>
             <ng-container *ngFor="let reminder of reminders">
-                <ion-item  text-wrap *ngIf="reminder.time > 0 || defaultTime > 0" [class.item-dimmed]="(reminder.time == -1 ? (event.timestart - defaultTime) : reminder.time) <= currentTime" >
+                <ion-item  class="ion-text-wrap" *ngIf="reminder.time > 0 || defaultTime > 0" [class.item-dimmed]="(reminder.time == -1 ? (event.timestart - defaultTime) : reminder.time) <= currentTime" >
                     <p *ngIf="reminder.time == -1">{{ 'core.defaultvalue' | translate :{$a: ((event.timestart - defaultTime) * 1000) | coreFormatDate } }}</p>
                     <p *ngIf="reminder.time > 0">{{ reminder.time * 1000 | coreFormatDate }}</p>
-                    <ion-button icon-only clear="true" (click)="cancelNotification(reminder.id, $event)" [attr.aria-label]=" 'core.delete' | translate" item-end *ngIf="(reminder.time == -1 ? (event.timestart - defaultTime) : reminder.time) > currentTime">
+                    <ion-button slot="icon-only //TODO: mode to icon" fill="clear"="true" (click)="cancelNotification(reminder.id, $event)" [attr.aria-label]=" 'core.delete' | translate" slot="end" *ngIf="(reminder.time == -1 ? (event.timestart - defaultTime) : reminder.time) > currentTime">
                         <ion-icon name="trash" color="danger"></ion-icon>
                     </ion-button>
                 </ion-item>
@@ -98,7 +98,7 @@
 
             <ng-container *ngIf="event.timestart + event.timeduration > currentTime">
                 <ion-item>
-                    <ion-button block color="primary" (click)="notificationPicker.open()">
+                    <ion-button expand="block" color="primary" (click)="notificationPicker.open()">
                         {{ 'addon.calendar.setnewreminder' | translate }}
                     </ion-button>
                 </ion-item>

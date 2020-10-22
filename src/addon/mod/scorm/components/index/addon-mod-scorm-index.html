@@ -17,7 +17,7 @@
     <core-course-module-description [description]="description" [component]="component" [componentId]="componentId" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
     <!-- Warning message. -->
-    <div *ngIf="scorm && scorm.warningMessage" class="core-info-card" icon-start>
+    <div *ngIf="scorm && scorm.warningMessage" class="core-info-card" slot="start //TODO: mode to icon">
         <ion-icon name="information-circle"></ion-icon>
         {{ scorm.warningMessage }}
     </div>
@@ -25,45 +25,45 @@
     <div *ngIf="scorm && loaded && !scorm.warningMessage">
         <!-- Attempts status. -->
         <ion-card *ngIf="(scorm.displayattemptstatus || (scorm.offlineAttempts && scorm.offlineAttempts.length)) && !skip">
-            <ion-card-header text-wrap>
+            <ion-card-header class="ion-text-wrap">
                 <div class="safe-padding-horizontal">
                     <h2>{{ 'addon.mod_scorm.attempts' | translate }}</h2>
                 </div>
             </ion-card-header>
             <ion-list>
                 <ng-container *ngIf="scorm.displayattemptstatus">
-                    <ion-item text-wrap *ngIf="scorm.maxattempt >= 0">
+                    <ion-item class="ion-text-wrap" *ngIf="scorm.maxattempt >= 0">
                         <h3>{{ 'addon.mod_scorm.noattemptsallowed' | translate }}</h3>
                         <p item-content *ngIf="scorm.maxattempt == 0">{{ 'core.unlimited' | translate }}</p>
                         <p item-content *ngIf="scorm.maxattempt > 0">{{ scorm.maxattempt }}</p>
                     </ion-item>
-                    <ion-item text-wrap *ngIf="scorm.numAttempts >= 0">
+                    <ion-item class="ion-text-wrap" *ngIf="scorm.numAttempts >= 0">
                         <h3>{{ 'addon.mod_scorm.noattemptsmade' | translate }}</h3>
                         <p item-content>{{ scorm.numAttempts }}</p>
                     </ion-item>
-                    <ion-item text-wrap *ngFor="let attempt of scorm.onlineAttempts">
+                    <ion-item class="ion-text-wrap" *ngFor="let attempt of scorm.onlineAttempts">
                         <h3>{{ 'addon.mod_scorm.gradeforattempt' | translate }} {{attempt.number}}</h3>
                         <p item-content *ngIf="attempt.grade != -1">{{ attempt.grade }}</p>
                         <p item-content *ngIf="attempt.grade == -1">{{ 'addon.mod_scorm.cannotcalculategrade' | translate }}</p>
                     </ion-item>
                 </ng-container>
-                <ion-item text-wrap *ngFor="let attempt of scorm.offlineAttempts">
+                <ion-item class="ion-text-wrap" *ngFor="let attempt of scorm.offlineAttempts">
                     <h3>{{ 'addon.mod_scorm.gradeforattempt' | translate }} {{attempt.number}}</h3>
                     <p item-content *ngIf="attempt.grade != -1">{{ attempt.grade }}</p>
                     <p item-content *ngIf="attempt.grade == -1">{{ 'addon.mod_scorm.cannotcalculategrade' | translate }}</p>
                     <p *ngIf="scorm.maxattempt == 0 || attempt.number <= scorm.maxattempt">{{ 'addon.mod_scorm.offlineattemptnote' | translate }}</p>
                     <p *ngIf="scorm.maxattempt != 0 && attempt.number > scorm.maxattempt">{{ 'addon.mod_scorm.offlineattemptovermax' | translate }}</p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="scorm.displayattemptstatus && scorm.gradeMethodReadable">
+                <ion-item class="ion-text-wrap" *ngIf="scorm.displayattemptstatus && scorm.gradeMethodReadable">
                     <h3>{{ 'addon.mod_scorm.grademethod' | translate }}</h3>
                     <p item-content>{{ scorm.gradeMethodReadable }}</p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="scorm.displayattemptstatus && scorm.grade">
+                <ion-item class="ion-text-wrap" *ngIf="scorm.displayattemptstatus && scorm.grade">
                     <h3>{{ 'addon.mod_scorm.gradereported' | translate }}</h3>
                     <p item-content *ngIf="scorm.grade != -1">{{ scorm.grade }}</p>
                     <p item-content *ngIf="scorm.grade == -1">{{ 'addon.mod_scorm.cannotcalculategrade' | translate }}</p>
                 </ion-item>
-                <ion-item text-wrap *ngIf="syncTime">
+                <ion-item class="ion-text-wrap" *ngIf="syncTime">
                     <h3>{{ 'core.lastsync' | translate }}</h3>
                     <p>{{ syncTime }}</p>
                 </ion-item>
@@ -71,33 +71,33 @@
         </ion-card>
 
         <!-- Synchronization warning. -->
-        <div class="core-warning-card" icon-start *ngIf="!errorMessage && hasOffline">
+        <div class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="!errorMessage && hasOffline">
             <ion-icon name="warning"></ion-icon>
             {{ 'core.hasdatatosync' | translate: {$a: moduleName} }}
         </div>
 
         <!-- TOC. -->
         <ion-card *ngIf="scorm && organizations && ((scorm.displaycoursestructure && organizations.length) || organizations.length > 1) && !skip" class="addon-mod_scorm-toc">
-            <ion-card-header text-wrap>
+            <ion-card-header class="ion-text-wrap">
                 <h2>{{ 'addon.mod_scorm.contents' | translate }}</h2>
             </ion-card-header>
             <ion-list>
-                <ion-item text-wrap *ngIf="organizations.length > 1">
+                <ion-item class="ion-text-wrap" *ngIf="organizations.length > 1">
                     <ion-label>{{ 'addon.mod_scorm.organizations' | translate }}</ion-label>
                     <ion-select [(ngModel)]="currentOrganization.identifier" (ionChange)="loadOrganization()" interface="action-sheet">
                         <ion-select-option *ngFor="let org of organizations" [value]="org.identifier">{{ org.title }}</ion-select-option>
                     </ion-select>
                 </ion-item>
-                <ion-item text-center *ngIf="scorm.displaycoursestructure && loadingToc">
+                <ion-item class="ion-text-center" *ngIf="scorm.displaycoursestructure && loadingToc">
                     <ion-spinner></ion-spinner>
                 </ion-item>
-                <ion-item text-wrap *ngIf="scorm.displaycoursestructure && !loadingToc">
+                <ion-item class="ion-text-wrap" *ngIf="scorm.displaycoursestructure && !loadingToc">
                     <!-- If data shown doesn't belong to last attempt, show a warning. -->
                     <p *ngIf="attemptToContinue">{{ 'addon.mod_scorm.dataattemptshown' | translate:{number: attemptToContinue} }}</p>
                     <p>{{ currentOrganization.title }}</p>
                     <div *ngFor="let sco of toc" class="core-padding-{{sco.level}} addon-mod_scorm-type-{{sco.scormtype}}">
                         <p *ngIf="sco.isvisible">
-                            <core-icon [name]="sco.image.icon" [label]="sco.image.description" item-start></core-icon>
+                            <core-icon [name]="sco.image.icon" [label]="sco.image.description" slot=”start”></core-icon>
                             <a *ngIf="sco.prereq && sco.launch" (click)="open($event, false, sco.id)" class="core-clickable"><core-format-text [text]="sco.title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></a>
                             <span *ngIf="!sco.prereq || !sco.launch"><core-format-text [text]="sco.title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></span>
                             <span *ngIf="accessInfo && accessInfo.canviewscores && sco.score_raw">({{ 'addon.mod_scorm.score' | translate }}: {{sco.score_raw}})</span>
@@ -109,11 +109,11 @@
 
         <!-- Open in browser button. -->
         <ion-card *ngIf="errorMessage">
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <p class="text-danger">{{ errorMessage | translate }}</p>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-button block icon-end [href]="externalUrl" core-link>
+            <ion-item class="ion-text-wrap">
+                <ion-button expand="block" slot="end //TODO: mode to icon" [href]="externalUrl" core-link>
                     {{ 'core.openinbrowser' | translate }}
                     <ion-icon name="open"></ion-icon>
                 </ion-button>
@@ -122,7 +122,7 @@
 
         <!-- Warning that user doesn't have any more attempts. -->
         <ion-card *ngIf="!errorMessage && scorm && scorm.attemptsLeft <= 0">
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <p class="text-danger">{{ 'addon.mod_scorm.exceededmaxattempts' | translate }}</p>
             </ion-item>
         </ion-card>
@@ -132,27 +132,27 @@
             <ion-list>
                 <ng-container *ngIf="!downloading && !skip">
                     <!-- Create new attempt -->
-                    <ion-item text-wrap *ngIf="!scorm.forcenewattempt && scorm.numAttempts > 0 && !scorm.incomplete && scorm.attemptsLeft > 0">
+                    <ion-item class="ion-text-wrap" *ngIf="!scorm.forcenewattempt && scorm.numAttempts > 0 && !scorm.incomplete && scorm.attemptsLeft > 0">
                         <ion-label>{{ 'addon.mod_scorm.newattempt' | translate }}</ion-label>
-                        <ion-checkbox item-end name="newAttempt" [(ngModel)]="startNewAttempt">
+                        <ion-checkbox slot="end" name="newAttempt" [(ngModel)]="startNewAttempt">
                         </ion-checkbox>
                     </ion-item>
 
-                    <ion-item text-wrap *ngIf="statusMessage">
+                    <ion-item class="ion-text-wrap" *ngIf="statusMessage">
                         <p>{{ statusMessage | translate }}</p>
                     </ion-item>
 
                     <!-- Open mode (Preview or Normal) -->
                     <ion-grid>
-                        <ion-row align-items-center>
+                        <ion-row class="ion-align-items-center">
                             <ion-col size="12" size-sm="6" *ngIf="!scorm.hidebrowse">
-                                <ion-button block outline icon-end (click)="open($event, true)" text-wrap>
+                                <ion-button expand="block" fill="outline" slot="end //TODO: mode to icon" (click)="open($event, true)" class="ion-text-wrap">
                                     {{ 'addon.mod_scorm.browse' | translate }}
                                     <ion-icon name="search"></ion-icon>
                                 </ion-button>
                             </ion-col>
                             <ion-col size="12" [attr.col-sm-6]="!scorm.hidebrowse || null">
-                                <ion-button block icon-end (click)="open($event)" text-wrap>
+                                <ion-button expand="block" slot="end //TODO: mode to icon" (click)="open($event)" class="ion-text-wrap">
                                     {{ 'addon.mod_scorm.enter' | translate }}
                                     <ion-icon name="arrow-forward"></ion-icon>
                                 </ion-button>
@@ -162,7 +162,7 @@
                 </ng-container>
 
                 <!-- Download progress. -->
-                <ion-item text-center *ngIf="downloading">
+                <ion-item class="ion-text-center" *ngIf="downloading">
                     <ion-spinner></ion-spinner>
                     <h2 *ngIf="progressMessage">{{ progressMessage | translate }}</h2>
                     <core-progress-bar *ngIf="percentage <= 100" [progress]="percentage"></core-progress-bar>

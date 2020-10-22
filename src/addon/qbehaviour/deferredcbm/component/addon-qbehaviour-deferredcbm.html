@@ -1,10 +1,10 @@
 <div *ngIf="question.behaviourCertaintyOptions && question.behaviourCertaintyOptions.length">
-    <ion-item text-wrap class="addon-qbehaviour-deferredcbm-certainty-title" >
+    <ion-item class="ion-text-wrap" class="addon-qbehaviour-deferredcbm-certainty-title" >
         <p>{{ 'core.question.certainty' | translate }}</p>
     </ion-item>
     <div [(ngModel)]="question.behaviourCertaintySelected" [name]="question.behaviourCertaintyOptions[0].name">
 <ion-radio-group>
-        <ion-item text-wrap *ngFor="let option of question.behaviourCertaintyOptions">
+        <ion-item class="ion-text-wrap" *ngFor="let option of question.behaviourCertaintyOptions">
             <ion-label>{{ option.text }}</ion-label>
             <ion-radio slot="start" id="{{option.id}}" [value]="option.value" [disabled]="option.disabled"></ion-radio>
         </ion-item>

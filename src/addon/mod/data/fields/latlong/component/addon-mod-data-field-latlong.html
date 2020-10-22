@@ -11,7 +11,7 @@
         <span class="placeholder-icon" item-right>°E</span>
     </div>
     <div *ngIf="mode == 'edit' && showGeolocation" class="addon-data-lantlong">
-        <ion-button icon-left (click)="getLocation($event)">
+        <ion-button slot="start //TODO: mode to icon" (click)="getLocation($event)">
             <ion-icon name="locate"></ion-icon>
             {{ 'addon.mod_data.mylocation' | translate }}
         </ion-button>

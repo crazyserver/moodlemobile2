@@ -18,7 +18,7 @@
     <ion-list *ngIf="contents && contents.length > 0">
         <ng-container *ngFor="let file of contents">
             <ion-item *ngIf="file.type === 'folder'" class="item-media" navPush="AddonModFolderIndexPage" [navParams]="{subfolder: file, courseId: courseId, module: module, folderInstance: folderInstance}">
-                <ion-icon name="folder" item-start></ion-icon>
+                <ion-icon name="folder" slot=”start”></ion-icon>
                 <h2>{{file.name}}</h2>
             </ion-item>
             <core-file *ngIf="file.type !== 'folder'" [file]="file" [component]="component" [componentId]="componentId"></core-file>

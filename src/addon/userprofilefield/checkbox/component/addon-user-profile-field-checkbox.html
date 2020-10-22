@@ -14,6 +14,6 @@
         <span [core-mark-required]="field.required">{{ field.name }}</span>
         <core-input-errors [control]="form.controls[field.modelName]"></core-input-errors>
     </ion-label>
-    <ion-checkbox item-end [formControlName]="field.modelName">
+    <ion-checkbox slot="end" [formControlName]="field.modelName">
     </ion-checkbox>
 </ion-item>

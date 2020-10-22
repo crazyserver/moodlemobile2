@@ -3,9 +3,9 @@
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="loaded" class="core-loading-center">
-        <ion-list no-margin>
-            <ion-item text-wrap *ngFor="let request of requests" [title]="request.fullname" (click)="selectUser(request.id)" [class.core-split-item-selected]="request.id == selectedUserId" class="addon-messages-conversation-item">
-                <ion-avatar item-start core-user-avatar [user]="request" [linkProfile]="false"></ion-avatar>
+        <ion-list  class="ion-no-margin">
+            <ion-item class="ion-text-wrap" *ngFor="let request of requests" [title]="request.fullname" (click)="selectUser(request.id)" [class.core-split-item-selected]="request.id == selectedUserId" class="addon-messages-conversation-item">
+                <ion-avatar slot=”start” core-user-avatar [user]="request" [linkProfile]="false"></ion-avatar>
                 <h2>{{ request.fullname }}</h2>
                 <p *ngIf="!request.iscontact && !request.confirmedOrDeclined">{{ 'addon.messages.wouldliketocontactyou' | translate }}</p>
             </ion-item>

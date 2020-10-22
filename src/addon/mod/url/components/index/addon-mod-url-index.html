@@ -27,12 +27,12 @@
                 <source [src]="url" [type]="mimetype">
             </audio>
         </ion-item>
-        <ion-item text-wrap>
+        <ion-item class="ion-text-wrap">
             <h2>{{ 'addon.mod_url.pointingtourl' | translate }}</h2>
             <p>{{ url }}</p>
         </ion-item>
-        <ion-item text-wrap>
-            <ion-button block (click)="go()" icon-start>
+        <ion-item class="ion-text-wrap">
+            <ion-button expand="block" (click)="go()" slot="start //TODO: mode to icon">
                 <ion-icon name="link" start></ion-icon>
                 {{ 'addon.mod_url.accessurl' | translate }}
             </ion-button>

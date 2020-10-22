@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_data.search' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -14,11 +14,11 @@
         <a class="tab-slide" [attr.aria-selected]="search.searchingAdvanced" (click)="changeAdvanced(true)">{{ 'addon.mod_data.advancedsearch' | translate }}</a>
     </div>
     <form (ngSubmit)="searchEntries($event)" [formGroup]="searchForm" #searchFormEl>
-        <ion-list no-margin>
+        <ion-list  class="ion-no-margin">
             <ion-item [hidden]="search.searchingAdvanced">
                 <ion-input type="text" placeholder="{{ 'addon.mod_data.search' | translate}}" [(ngModel)]="search.text" name="text" formControlName="text"></ion-input>
             </ion-item>
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <ion-label position="stacked">{{ 'core.sortby' | translate }}</ion-label>
                 <ion-select interface="action-sheet" name="sortBy" formControlName="sortBy" [placeholder]="'core.sortby' | translate">
                     <optgroup *ngIf="fieldsArray.length" label="{{ 'addon.mod_data.fields' | translate }}">
@@ -45,12 +45,12 @@
                 </ion-item>
             </ion-radio-group>
 </ion-list>
-            <div padding [hidden]="!advancedSearch || !search.searchingAdvanced" class="addon-data-advanced-search">
+            <div class="ion-padding" [hidden]="!advancedSearch || !search.searchingAdvanced" class="addon-data-advanced-search">
                 <core-compile-html [text]="advancedSearch" [jsData]="jsData" [extraImports]="extraImports"></core-compile-html>
             </div>
         </ion-list>
-        <div padding>
-            <ion-button block type="submit" icon-start>
+        <div class="ion-padding">
+            <ion-button expand="block" type="submit" slot="start //TODO: mode to icon">
                 <ion-icon name="search"></ion-icon>
                 {{ 'addon.mod_data.search' | translate }}
             </ion-button>

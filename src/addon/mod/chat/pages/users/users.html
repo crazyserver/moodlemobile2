@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_chat.currentusers' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -10,15 +10,15 @@
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="usersLoaded">
-        <ion-item text-wrap *ngFor="let user of users" [class.addon-mod-chat-user]="currentUserId != user.id && isOnline">
-            <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
+        <ion-item class="ion-text-wrap" *ngFor="let user of users" [class.addon-mod-chat-user]="currentUserId != user.id && isOnline">
+            <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
             <h2>{{ user.fullname }}</h2>
             <ng-container *ngIf="currentUserId != user.id && isOnline">
-                <ion-button clear icon-left (click)="talkTo(user)">
+                <ion-button fill="clear" slot="start //TODO: mode to icon" (click)="talkTo(user)">
                     <ion-icon name="chatboxes"></ion-icon>
                     {{ 'addon.mod_chat.talk' | translate }}
                 </ion-button>
-                <ion-button clear icon-left (click)="beepTo(user)">
+                <ion-button fill="clear" slot="start //TODO: mode to icon" (click)="beepTo(user)">
                     <ion-icon name="notifications"></ion-icon>
                     {{ 'addon.mod_chat.beep' | translate }}
                 </ion-button>

@@ -6,7 +6,7 @@
     </ion-toolbar>
 </ion-header>
 <core-navbar-buttons>
-    <ion-button icon-only (click)="showInfo()" [attr.aria-label]="'core.info' | translate">
+    <ion-button slot="icon-only //TODO: mode to icon" (click)="showInfo()" [attr.aria-label]="'core.info' | translate">
         <ion-icon name="information-circle"></ion-icon>
     </ion-button>
 </core-navbar-buttons>
@@ -16,18 +16,18 @@
     </ion-refresher>
     <core-loading [hideUntil]="loaded">
         <ion-item *ngFor="let site of sites" [class.core-primary-selected-item]="site.id == currentSiteId">
-            <h2 text-wrap><core-format-text [text]="site.siteName" clean="true" [siteId]="site.id"></core-format-text></h2>
-            <p text-wrap>{{ site.fullName }}</p>
-            <div item-end>
-                <p *ngIf="site.spaceUsage != null" text-end>{{ site.spaceUsage | coreBytesToSize }}</p>
+            <h2 class="ion-text-wrap"><core-format-text [text]="site.siteName" clean="true" [siteId]="site.id"></core-format-text></h2>
+            <p class="ion-text-wrap">{{ site.fullName }}</p>
+            <div slot="end">
+                <p *ngIf="site.spaceUsage != null" class="ion-text-end">{{ site.spaceUsage | coreBytesToSize }}</p>
             </div>
-            <ion-button icon-only clear color="danger" item-end (click)="deleteSiteStorage(site)" [hidden]="!site.spaceUsage > '0' && !site.cacheEntries > '0'" [attr.aria-label]="'core.settings.deletesitefilestitle' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" fill="clear" color="danger" slot="end" (click)="deleteSiteStorage(site)" [hidden]="!site.spaceUsage > '0' && !site.cacheEntries > '0'" [attr.aria-label]="'core.settings.deletesitefilestitle' | translate">
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
         </ion-item>
         <ion-item-divider *ngIf="totals">
             <h2>{{ 'core.settings.total' | translate }}</h2>
-            <div item-end>
+            <div slot="end">
                 <p>{{ totals.spaceUsage | coreBytesToSize }}</p>
             </div>
         </ion-item-divider>

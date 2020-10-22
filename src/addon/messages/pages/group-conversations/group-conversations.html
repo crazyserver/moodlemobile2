@@ -2,10 +2,10 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.messages' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
                 <ion-icon name="search"></ion-icon>
             </ion-button>
-            <ion-button icon-only (click)="gotoSettings($event)" [attr.aria-label]="'addon.messages.messagepreferences' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="gotoSettings($event)" [attr.aria-label]="'addon.messages.messagepreferences' | translate">
                 <ion-icon name="cog"></ion-icon>
             </ion-button>
             <!-- Add an empty context menu so discussion page can add items in split view, otherwise the menu disappears in some cases. -->
@@ -21,64 +21,64 @@
 
         <core-loading [hideUntil]="loaded" [message]="loadingMessage">
             <ion-list>
-                <ion-item text-wrap (click)="gotoContacts($event)" [attr.aria-label]="'addon.messages.contacts' | translate" class="addon-message-discussion">
-                    <ion-icon name="person" item-start></ion-icon>
+                <ion-item class="ion-text-wrap" (click)="gotoContacts($event)" [attr.aria-label]="'addon.messages.contacts' | translate" class="addon-message-discussion">
+                    <ion-icon name="person" slot=”start”></ion-icon>
                     <h2>{{ 'addon.messages.contacts' | translate }}</h2>
-                    <ion-badge *ngIf="contactRequestsCount > 0" item-end>{{contactRequestsCount}}</ion-badge>
+                    <ion-badge *ngIf="contactRequestsCount > 0" slot="end">{{contactRequestsCount}}</ion-badge>
                 </ion-item>
                 <!-- Favourite conversations. -->
-                <ion-item-divider text-wrap (click)="toggle(favourites)" class="core-expandable">
-                    <core-icon *ngIf="!favourites.expanded" name="fa-caret-right" item-start></core-icon>
-                    <core-icon *ngIf="favourites.expanded" name="fa-caret-down" item-start></core-icon>
+                <ion-item-divider class="ion-text-wrap" (click)="toggle(favourites)" class="core-expandable">
+                    <core-icon *ngIf="!favourites.expanded" name="fa-caret-right" slot=”start”></core-icon>
+                    <core-icon *ngIf="favourites.expanded" name="fa-caret-down" slot=”start”></core-icon>
                     {{ 'core.favourites' | translate }} ({{ favourites.count }})
-                    <ion-badge item-end *ngIf="favourites.unread">{{ favourites.unread }}</ion-badge>
+                    <ion-badge slot="end" *ngIf="favourites.unread">{{ favourites.unread }}</ion-badge>
                 </ion-item-divider>
                 <div [hidden]="!favourites.conversations || !favourites.expanded || favourites.loading" #favlist>
                     <ng-container *ngTemplateOutlet="conversationsTemplate; context: {conversations: favourites.conversations}"></ng-container>
                     <!-- The infinite loading cannot be inside the ng-template, it fails because it doesn't find ion-content. -->
                     <core-infinite-loading [enabled]="favourites.canLoadMore" (action)="loadMoreConversations(favourites, $event)" [error]="favourites.loadMoreError"></core-infinite-loading>
-                    <ion-item text-wrap *ngIf="favourites.conversations && favourites.conversations.length == 0">
+                    <ion-item class="ion-text-wrap" *ngIf="favourites.conversations && favourites.conversations.length == 0">
                         <p>{{ 'addon.messages.nofavourites' | translate }}</p>
                     </ion-item>
                 </div>
-                <ion-item text-center *ngIf="favourites.loading">
+                <ion-item class="ion-text-center" *ngIf="favourites.loading">
                     <ion-spinner></ion-spinner>
                 </ion-item>
 
                 <!-- Group conversations. -->
-                <ion-item-divider text-wrap (click)="toggle(group)" class="core-expandable">
-                    <core-icon *ngIf="!group.expanded" name="fa-caret-right" item-start></core-icon>
-                    <core-icon *ngIf="group.expanded" name="fa-caret-down" item-start></core-icon>
+                <ion-item-divider class="ion-text-wrap" (click)="toggle(group)" class="core-expandable">
+                    <core-icon *ngIf="!group.expanded" name="fa-caret-right" slot=”start”></core-icon>
+                    <core-icon *ngIf="group.expanded" name="fa-caret-down" slot=”start”></core-icon>
                     {{ 'addon.messages.groupconversations' | translate }} ({{ group.count }})
-                    <ion-badge item-end *ngIf="group.unread">{{ group.unread }}</ion-badge>
+                    <ion-badge slot="end" *ngIf="group.unread">{{ group.unread }}</ion-badge>
                 </ion-item-divider>
                 <div [hidden]="!group.conversations || !group.expanded || group.loading" #grouplist>
                     <ng-container *ngTemplateOutlet="conversationsTemplate; context: {conversations: group.conversations}"></ng-container>
                     <!-- The infinite loading cannot be inside the ng-template, it fails because it doesn't find ion-content. -->
                     <core-infinite-loading [enabled]="group.canLoadMore" (action)="loadMoreConversations(group, $event)" [error]="group.loadMoreError"></core-infinite-loading>
-                    <ion-item text-wrap *ngIf="group.conversations && group.conversations.length == 0">
+                    <ion-item class="ion-text-wrap" *ngIf="group.conversations && group.conversations.length == 0">
                         <p>{{ 'addon.messages.nogroupconversations' | translate }}</p>
                     </ion-item>
                 </div>
-                <ion-item text-center *ngIf="group.loading">
+                <ion-item class="ion-text-center" *ngIf="group.loading">
                     <ion-spinner></ion-spinner>
                 </ion-item>
 
-                <ion-item-divider text-wrap (click)="toggle(individual)" class="core-expandable">
-                    <core-icon *ngIf="!individual.expanded" name="fa-caret-right" item-start></core-icon>
-                    <core-icon *ngIf="individual.expanded" name="fa-caret-down" item-start></core-icon>
+                <ion-item-divider class="ion-text-wrap" (click)="toggle(individual)" class="core-expandable">
+                    <core-icon *ngIf="!individual.expanded" name="fa-caret-right" slot=”start”></core-icon>
+                    <core-icon *ngIf="individual.expanded" name="fa-caret-down" slot=”start”></core-icon>
                     {{ 'addon.messages.individualconversations' | translate }} ({{ individual.count }})
-                    <ion-badge item-end *ngIf="individual.unread">{{ individual.unread }}</ion-badge>
+                    <ion-badge slot="end" *ngIf="individual.unread">{{ individual.unread }}</ion-badge>
                 </ion-item-divider>
                 <div [hidden]="!individual.conversations || !individual.expanded || individual.loading" #indlist>
                     <ng-container *ngTemplateOutlet="conversationsTemplate; context: {conversations: individual.conversations}"></ng-container>
                     <!-- The infinite loading cannot be inside the ng-template, it fails because it doesn't find ion-content. -->
                     <core-infinite-loading [enabled]="individual.canLoadMore" (action)="loadMoreConversations(individual, $event)" [error]="individual.loadMoreError"></core-infinite-loading>
-                    <ion-item text-wrap *ngIf="individual.conversations && individual.conversations.length == 0">
+                    <ion-item class="ion-text-wrap" *ngIf="individual.conversations && individual.conversations.length == 0">
                         <p>{{ 'addon.messages.noindividualconversations' | translate }}</p>
                     </ion-item>
                 </div>
-                <ion-item text-center *ngIf="individual.loading">
+                <ion-item class="ion-text-center" *ngIf="individual.loading">
                     <ion-spinner></ion-spinner>
                 </ion-item>
 
@@ -89,14 +89,14 @@
 
 <!-- Template to render a list of conversations. -->
 <ng-template #conversationsTemplate let-conversations="conversations">
-    <ion-item text-wrap *ngFor="let conversation of conversations" [title]="conversation.name" (click)="gotoConversation(conversation.id, conversation.userid)" [class.core-split-item-selected]="(conversation.id && conversation.id == selectedConversationId) || (conversation.userid && conversation.userid == selectedUserId)" class="addon-message-discussion" id="addon-message-conversation-{{ conversation.id ? conversation.id : 'user-' + conversation.userid }}">
+    <ion-item class="ion-text-wrap" *ngFor="let conversation of conversations" [title]="conversation.name" (click)="gotoConversation(conversation.id, conversation.userid)" [class.core-split-item-selected]="(conversation.id && conversation.id == selectedConversationId) || (conversation.userid && conversation.userid == selectedUserId)" class="addon-message-discussion" id="addon-message-conversation-{{ conversation.id ? conversation.id : 'user-' + conversation.userid }}">
         <!-- Group conversation image. -->
-        <ion-avatar item-start *ngIf="conversation.type == typeGroup">
+        <ion-avatar slot=”start” *ngIf="conversation.type == typeGroup">
             <img [src]="conversation.imageurl" [alt]="conversation.name" core-external-content onError="this.src='assets/img/group-avatar.png'">
         </ion-avatar>
 
         <!-- Avatar for individual conversations. -->
-        <ion-avatar *ngIf="conversation.type != typeGroup" core-user-avatar [user]="conversation.otherUser" [linkProfile]="false" [checkOnline]="conversation.showonlinestatus" item-start></ion-avatar>
+        <ion-avatar *ngIf="conversation.type != typeGroup" core-user-avatar [user]="conversation.otherUser" [linkProfile]="false" [checkOnline]="conversation.showonlinestatus" slot=”start”></ion-avatar>
 
         <h2>
             <core-format-text [text]="conversation.name" contextLevel="system" [contextInstanceId]="0"></core-format-text>

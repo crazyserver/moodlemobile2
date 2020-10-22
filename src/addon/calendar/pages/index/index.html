@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ (showCalendar ? 'addon.calendar.calendarevents' : 'addon.calendar.upcomingevents') | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="openFilter($event)" [attr.aria-label]="'core.filter' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="openFilter($event)" [attr.aria-label]="'core.filter' | translate">
                 <ion-icon name="funnel" *ngIf="filter.filtered"></ion-icon>
                 <ion-icon name="ios-funnel-outline" *ngIf="!filter.filtered"></ion-icon>
             </ion-button>
@@ -21,7 +21,7 @@
     </ion-refresher>
 
     <!-- There is data to be synchronized -->
-    <ion-card class="core-warning-card" icon-start *ngIf="hasOffline">
+    <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="hasOffline">
         <ion-icon name="warning"></ion-icon> {{ 'core.hasdatatosync' | translate:{$a: 'addon.calendar.calendar' | translate} }}
     </ion-card>
 

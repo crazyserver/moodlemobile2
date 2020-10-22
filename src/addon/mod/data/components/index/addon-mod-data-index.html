@@ -1,6 +1,6 @@
 <!-- Buttons to add to the header. -->
 <core-navbar-buttons end>
-    <ion-button *ngIf="canSearch" icon-only (click)="showSearch($event)" [attr.aria-label]="'addon.mod_data.search' | translate">
+    <ion-button *ngIf="canSearch" slot="icon-only //TODO: mode to icon" (click)="showSearch($event)" [attr.aria-label]="'addon.mod_data.search' | translate">
         <ion-icon name="search"></ion-icon>
     </ion-button>
     <core-context-menu>
@@ -22,12 +22,12 @@
     <core-course-module-description [description]="description" [component]="component" [componentId]="componentId" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
     <!-- Data done in offline but not synchronized -->
-    <div class="core-warning-card" icon-start *ngIf="hasOffline || hasOfflineRatings">
+    <div class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="hasOffline || hasOfflineRatings">
         <ion-icon name="warning"></ion-icon>
         {{ 'core.hasdatatosync' | translate: {$a: moduleName} }}
     </div>
 
-    <ion-item text-wrap *ngIf="groupInfo && (groupInfo.separateGroups || groupInfo.visibleGroups)">
+    <ion-item class="ion-text-wrap" *ngIf="groupInfo && (groupInfo.separateGroups || groupInfo.visibleGroups)">
         <ion-label id="addon-data-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
         <ion-label id="addon-data-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
         <ion-select [(ngModel)]="selectedGroup" (ionChange)="setGroup(selectedGroup)" aria-labelledby="addon-data-groupslabel" interface="action-sheet">
@@ -35,22 +35,22 @@
         </ion-select>
     </ion-item>
 
-    <div class="core-info-card" icon-start  *ngIf="!access.timeavailable && timeAvailableFrom">
+    <div class="core-info-card" slot="start //TODO: mode to icon"  *ngIf="!access.timeavailable && timeAvailableFrom">
         <ion-icon name="information-circle"></ion-icon>
         {{ 'addon.mod_data.notopenyet' | translate:{$a: timeAvailableFromReadable} }}
     </div>
 
-    <div class="core-info-card" icon-start *ngIf="!access.timeavailable && timeAvailableTo">
+    <div class="core-info-card" slot="start //TODO: mode to icon" *ngIf="!access.timeavailable && timeAvailableTo">
         <ion-icon name="information-circle"></ion-icon>
         {{ 'addon.mod_data.expired' | translate:{$a: timeAvailableToReadable} }}
     </div>
 
-    <div class="core-info-card" icon-start *ngIf="access.entrieslefttoview">
+    <div class="core-info-card" slot="start //TODO: mode to icon" *ngIf="access.entrieslefttoview">
         <ion-icon name="information-circle"></ion-icon>
         {{ 'addon.mod_data.entrieslefttoaddtoview' | translate:{$a: {entrieslefttoview: access.entrieslefttoview} } }}
     </div>
 
-    <div class="core-info-card" icon-start *ngIf="access.entrieslefttoadd">
+    <div class="core-info-card" slot="start //TODO: mode to icon" *ngIf="access.entrieslefttoadd">
         <ion-icon name="information-circle"></ion-icon>
         {{ 'addon.mod_data.entrieslefttoadd' | translate:{$a: {entriesleft: access.entrieslefttoadd} } }}
     </div>
@@ -66,22 +66,22 @@
         </div>
     </ng-container>
 
-    <div class="addon-data-contents addon-data-entries-{{data.id}} safe-padding-horizontal" *ngIf="!isEmpty">
+    <div class="addon-data-contents addon-data-entries-{{data.id}} safe-class="ion-padding-horizontal"" *ngIf="!isEmpty">
         <core-style [css]="data.csstemplate" prefix=".addon-data-entries-{{data.id}}"></core-style>
 
         <core-compile-html [text]="entriesRendered" [jsData]="jsData" [extraImports]="extraImports"></core-compile-html>
     </div>
 
     <ion-grid *ngIf="search.page > 0 || hasNextPage">
-        <ion-row align-items-center>
+        <ion-row class="ion-align-items-center">
             <ion-col *ngIf="search.page > 0">
-                <ion-button block outline icon-start (click)="searchEntries(search.page - 1)">
+                <ion-button expand="block" fill="outline" slot="start //TODO: mode to icon" (click)="searchEntries(search.page - 1)">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                     {{ 'core.previous' | translate }}
                 </ion-button>
             </ion-col>
             <ion-col *ngIf="hasNextPage">
-                <ion-button block icon-end (click)="searchEntries(search.page + 1)">
+                <ion-button expand="block" slot="end //TODO: mode to icon" (click)="searchEntries(search.page + 1)">
                     {{ 'core.next' | translate }}
                     <ion-icon name="arrow-forward" md="ios-arrow-forward"></ion-icon>
                 </ion-button>

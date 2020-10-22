@@ -1,8 +1,8 @@
-<ion-item text-wrap>
+<ion-item class="ion-text-wrap">
     {{ 'core.maxsizeandattachments' | translate:{$a: {size: maxSizeReadable, attachments: maxSubmissionsReadable} } }}
     <span [core-mark-required]="required" class="core-mark-required"></span>
 </ion-item>
-<ion-item text-wrap *ngIf="fileTypes && fileTypes.mimetypes && fileTypes.mimetypes.length">
+<ion-item class="ion-text-wrap" *ngIf="fileTypes && fileTypes.mimetypes && fileTypes.mimetypes.length">
     <p>{{ 'core.fileuploader.filesofthesetypes' | translate }}</p>
     <ul class="list-with-style">
         <li *ngFor="let typeInfo of fileTypes.info">
@@ -18,8 +18,8 @@
     <core-local-file *ngIf="file.name && !file.offline" [file]="file" [manage]="true" (onDelete)="delete(index, false)" (onRename)="renamed(index, $event)"></core-local-file>
 </div>
 <!-- Button to add more files. -->
-<ion-item text-wrap *ngIf="unlimitedFiles || (maxSubmissions >= 0 && files && files.length < maxSubmissions)">
-    <ion-button block icon-start (click)="add()">
+<ion-item class="ion-text-wrap" *ngIf="unlimitedFiles || (maxSubmissions >= 0 && files && files.length < maxSubmissions)">
+    <ion-button expand="block" slot="start //TODO: mode to icon" (click)="add()">
         <ion-icon name="add"></ion-icon>
         {{ 'core.fileuploader.addfiletext' | translate }}
     </ion-button>

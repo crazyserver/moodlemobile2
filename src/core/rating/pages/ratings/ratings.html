@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'core.rating.ratings' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -14,9 +14,9 @@
     </ion-refresher>
     <core-loading [hideUntil]="loaded">
         <ion-list *ngIf="ratings.length > 0">
-            <ion-item text-wrap *ngFor="let rating of ratings">
-                <ion-avatar core-user-avatar [user]="rating" [courseId]="courseId" item-start></ion-avatar>
-                <ion-note item-end padding-left *ngIf="rating.timemodified">
+            <ion-item class="ion-text-wrap" *ngFor="let rating of ratings">
+                <ion-avatar core-user-avatar [user]="rating" [courseId]="courseId" slot=”start”></ion-avatar>
+                <ion-note slot="end" class="ion-padding-left" *ngIf="rating.timemodified">
                     {{ rating.timemodified | coreDateDayOrTime }}
                 </ion-note>
                 <h2>{{ rating.userfullname }}</h2>

@@ -16,7 +16,7 @@
 
     <!-- Description and intro attachments. -->
     <ion-card *ngIf="description" (click)="expandDescription($event)" class="core-clickable">
-        <ion-item text-wrap>
+        <ion-item class="ion-text-wrap">
             <core-format-text [text]="description" [component]="component" [componentId]="componentId" maxHeight="120" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId" (click)="expandDescription($event)"></core-format-text>
         </ion-item>
     </ion-card>
@@ -26,14 +26,14 @@
     </ion-card>
 
     <!-- Assign has something offline. -->
-    <div *ngIf="hasOffline" class="core-warning-card" icon-start>
+    <div *ngIf="hasOffline" class="core-warning-card" slot="start //TODO: mode to icon">
         <ion-icon name="warning"></ion-icon>
         {{ 'core.hasdatatosync' | translate:{$a: moduleName} }}
     </div>
 
     <!-- User can view all submissions (teacher). -->
     <ion-list *ngIf="assign && canViewAllSubmissions" class="core-list-align-detail-right with-borders">
-        <ion-item text-wrap *ngIf="(groupInfo.separateGroups || groupInfo.visibleGroups)">
+        <ion-item class="ion-text-wrap" *ngIf="(groupInfo.separateGroups || groupInfo.visibleGroups)">
             <ion-label id="addon-assign-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
             <ion-label id="addon-assign-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
             <ion-select [(ngModel)]="group" (ionChange)="setGroup(group)" aria-labelledby="addon-assign-groupslabel" interface="action-sheet">
@@ -41,50 +41,50 @@
             </ion-select>
         </ion-item>
 
-        <ion-item text-wrap *ngIf="timeRemaining">
+        <ion-item class="ion-text-wrap" *ngIf="timeRemaining">
             <h2>{{ 'addon.mod_assign.timeremaining' | translate }}</h2>
             <p>{{ timeRemaining }}</p>
         </ion-item>
-        <ion-item text-wrap *ngIf="lateSubmissions">
+        <ion-item class="ion-text-wrap" *ngIf="lateSubmissions">
             <h2>{{ 'addon.mod_assign.latesubmissions' | translate }}</h2>
             <p>{{ lateSubmissions }}</p>
         </ion-item>
 
         <!-- Summary of all submissions. -->
-        <ion-item text-wrap *ngIf="summary && summary.participantcount" (click)="goToSubmissionList()">
+        <ion-item class="ion-text-wrap" *ngIf="summary && summary.participantcount" (click)="goToSubmissionList()">
             <h2 *ngIf="assign.teamsubmission">{{ 'addon.mod_assign.numberofteams' | translate }}</h2>
             <h2 *ngIf="!assign.teamsubmission">{{ 'addon.mod_assign.numberofparticipants' | translate }}</h2>
-            <ion-badge item-end *ngIf="showNumbers" color="primary">
+            <ion-badge slot="end" *ngIf="showNumbers" color="primary">
                 {{ summary.participantcount }}
             </ion-badge>
         </ion-item>
 
         <!-- Summary of submissions with draft status. -->
-        <ion-item text-wrap *ngIf="assign.submissiondrafts && summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissiondraftscount) ? true : null" (click)="goToSubmissionList(submissionStatusDraft, summary.submissiondraftscount)">
+        <ion-item class="ion-text-wrap" *ngIf="assign.submissiondrafts && summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissiondraftscount) ? true : null" (click)="goToSubmissionList(submissionStatusDraft, summary.submissiondraftscount)">
             <h2>{{ 'addon.mod_assign.numberofdraftsubmissions' | translate }}</h2>
-            <ion-badge item-end *ngIf="showNumbers" color="primary">
+            <ion-badge slot="end" *ngIf="showNumbers" color="primary">
                 {{ summary.submissiondraftscount }}
             </ion-badge>
         </ion-item>
 
         <!-- Summary of submissions with submitted status. -->
-        <ion-item text-wrap *ngIf="summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissionssubmittedcount) ? true : null" (click)="goToSubmissionList(submissionStatusSubmitted, summary.submissionssubmittedcount)">
+        <ion-item class="ion-text-wrap" *ngIf="summary && summary.submissionsenabled" [attr.detail-none]="(showNumbers && !summary.submissionssubmittedcount) ? true : null" (click)="goToSubmissionList(submissionStatusSubmitted, summary.submissionssubmittedcount)">
             <h2>{{ 'addon.mod_assign.numberofsubmittedassignments' | translate }}</h2>
-            <ion-badge item-end *ngIf="showNumbers" color="primary">
+            <ion-badge slot="end" *ngIf="showNumbers" color="primary">
                 {{ summary.submissionssubmittedcount }}
             </ion-badge>
         </ion-item>
 
         <!-- Summary of submissions that need grading. -->
-        <ion-item text-wrap *ngIf="summary && summary.submissionsenabled && !assign.teamsubmission && showNumbers" [attr.detail-none]="needsGradingAvalaible ? null : true" (click)="goToSubmissionList(needGrading, needsGradingAvalaible)">
+        <ion-item class="ion-text-wrap" *ngIf="summary && summary.submissionsenabled && !assign.teamsubmission && showNumbers" [attr.detail-none]="needsGradingAvalaible ? null : true" (click)="goToSubmissionList(needGrading, needsGradingAvalaible)">
             <h2>{{ 'addon.mod_assign.numberofsubmissionsneedgrading' | translate }}</h2>
-            <ion-badge item-end color="primary">
+            <ion-badge slot="end" color="primary">
                 {{ summary.submissionsneedgradingcount }}
             </ion-badge>
         </ion-item>
 
         <!-- Ungrouped users. -->
-        <div *ngIf="assign.teamsubmission && summary && summary.warnofungroupedusers" class="core-info-card" icon-start>
+        <div *ngIf="assign.teamsubmission && summary && summary.warnofungroupedusers" class="core-info-card" slot="start //TODO: mode to icon">
             <ion-icon name="information-circle"></ion-icon>
             {{ 'addon.mod_assign.'+summary.warnofungroupedusers | translate }}
         </div>

@@ -12,37 +12,37 @@
         </ion-refresher>
         <core-loading [hideUntil]="loaded">
             <ion-list>
-                <ion-item *ngIf="siteInfo" text-wrap>
+                <ion-item *ngIf="siteInfo" class="ion-text-wrap">
                     <h2>{{siteInfo.fullname}}</h2>
                     <ion-note class="core-note-block"><core-format-text [text]="siteName" contextLevel="system" [contextInstanceId]="0" [wsNotFiltered]="true"></core-format-text></ion-note>
                     <ion-note class="core-note-block">{{ siteUrl }}</ion-note>
                 </ion-item>
                 <ion-item-divider></ion-item-divider>
-                <ion-item *ngIf="isIOS" (click)="openHandler('CoreSharedFilesListPage', {manage: true, siteId: siteId, hideSitePicker: true})" [title]="'core.sharedfiles.sharedfiles' | translate" [class.core-split-item-selected]="'CoreSharedFilesListPage' == selectedPage" detail-push>
-                    <ion-icon name="folder" item-start></ion-icon>
+                <ion-item *ngIf="isIOS" (click)="openHandler('CoreSharedFilesListPage', {manage: true, siteId: siteId, hideSitePicker: true})" [title]="'core.sharedfiles.sharedfiles' | translate" [class.core-split-item-selected]="'CoreSharedFilesListPage' == selectedPage" detail="true">
+                    <ion-icon name="folder" slot=”start”></ion-icon>
                     <h2>{{ 'core.sharedfiles.sharedfiles' | translate }}</h2>
-                    <ion-badge item-end>{{ iosSharedFiles }}</ion-badge>
+                    <ion-badge slot="end">{{ iosSharedFiles }}</ion-badge>
                 </ion-item>
 
-                <ion-item *ngFor="let handler of handlers" [ngClass]="['core-settings-handler', handler.class]" (click)="openHandler(handler.page, handler.params)" [title]="handler.title | translate" detail-push [class.core-split-item-selected]="handler.page == selectedPage">
-                    <core-icon [name]="handler.icon" item-start *ngIf="handler.icon"></core-icon>
+                <ion-item *ngFor="let handler of handlers" [ngClass]="['core-settings-handler', handler.class]" (click)="openHandler(handler.page, handler.params)" [title]="handler.title | translate" detail="true" [class.core-split-item-selected]="handler.page == selectedPage">
+                    <core-icon [name]="handler.icon" slot=”start” *ngIf="handler.icon"></core-icon>
                     <h2>{{ handler.title | translate}}</h2>
                 </ion-item>
 
                 <ion-card class="with-borders">
-                    <ion-item text-wrap *ngIf="spaceUsage">
-                        <h2 text-wrap>{{ 'core.settings.spaceusage' | translate }} <ion-icon name="information-circle" color="info" [attr.aria-label]="'core.info' | translate" (click)="showSpaceInfo()"></ion-icon></h2>
+                    <ion-item class="ion-text-wrap" *ngIf="spaceUsage">
+                        <h2 class="ion-text-wrap">{{ 'core.settings.spaceusage' | translate }} <ion-icon name="information-circle" color="info" [attr.aria-label]="'core.info' | translate" (click)="showSpaceInfo()"></ion-icon></h2>
                         <p *ngIf="spaceUsage.spaceUsage != null">{{ spaceUsage.spaceUsage | coreBytesToSize }}</p>
-                        <ion-button icon-only clear color="danger" item-end (click)="deleteSiteStorage()" [hidden]="!spaceUsage.spaceUsage > '0' && !spaceUsage.cacheEntries > '0'" [attr.aria-label]="'core.settings.deletesitefilestitle' | translate">
+                        <ion-button slot="icon-only //TODO: mode to icon" fill="clear" color="danger" slot="end" (click)="deleteSiteStorage()" [hidden]="!spaceUsage.spaceUsage > '0' && !spaceUsage.cacheEntries > '0'" [attr.aria-label]="'core.settings.deletesitefilestitle' | translate">
                             <ion-icon name="trash"></ion-icon>
                         </ion-button>
                     </ion-item>
-                    <ion-item text-wrap>
+                    <ion-item class="ion-text-wrap">
                         <h2>{{ 'core.settings.synchronizenow' | translate }} <ion-icon name="information-circle" color="info" [attr.aria-label]="'core.info' | translate" (click)="showSyncInfo()"></ion-icon></h2>
-                        <ion-button icon-only clear item-end *ngIf="!isSynchronizing()" (click)="synchronize()" [title]="siteName" [attr.aria-label]="'core.settings.synchronizenow' | translate">
+                        <ion-button slot="icon-only //TODO: mode to icon" fill="clear" slot="end" *ngIf="!isSynchronizing()" (click)="synchronize()" [title]="siteName" [attr.aria-label]="'core.settings.synchronizenow' | translate">
                             <ion-icon name="sync"></ion-icon>
                         </ion-button>
-                        <ion-spinner item-end *ngIf="isSynchronizing()"></ion-spinner>
+                        <ion-spinner slot="end" *ngIf="isSynchronizing()"></ion-spinner>
                     </ion-item>
                 </ion-card>
             </ion-list>

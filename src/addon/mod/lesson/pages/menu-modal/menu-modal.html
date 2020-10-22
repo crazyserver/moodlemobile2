@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ pageInstance.lesson.name }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -20,12 +20,12 @@
             <!-- Lesson menu. -->
             <ng-container *ngIf="pageInstance.displayMenu">
                 <ion-item-divider><h2>{{ 'addon.mod_lesson.lessonmenu' | translate }}</h2></ion-item-divider>
-                <ion-item text-center *ngIf="pageInstance.loadingMenu">
+                <ion-item class="ion-text-center" *ngIf="pageInstance.loadingMenu">
                     <ion-spinner></ion-spinner>
                 </ion-item>
                 <div *ngIf="!pageInstance.loadingMenu">
                     <ng-container *ngFor="let page of pageInstance.lessonPages">
-                        <ion-item text-wrap *ngIf="page.display && page.displayinmenublock" (click)="loadPage(page.id)" [ngClass]='{"addon-mod_lesson-selected core-white-push-arrow": !pageInstance.eolData && pageInstance.currentPage == page.id}'>
+                        <ion-item class="ion-text-wrap" *ngIf="page.display && page.displayinmenublock" (click)="loadPage(page.id)" [ngClass]='{"addon-mod_lesson-selected core-white-push-arrow": !pageInstance.eolData && pageInstance.currentPage == page.id}'>
                             <p><core-format-text [text]="page.title" contextLevel="module" [contextInstanceId]="pageInstance && pageInstance.lesson && pageInstance.lesson.coursemodule" [courseId]="pageInstance && pageInstance.courseId"></core-format-text></p>
                         </ion-item>
                     </ng-container>

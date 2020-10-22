@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.messages.contacts' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="gotoSearch()" [attr.aria-label]="'addon.messages.search' | translate">
                 <ion-icon name="search"></ion-icon>
             </ion-button>
             <!-- Add an empty context menu so discussion page can add items in split view, otherwise the menu disappears in some cases. -->

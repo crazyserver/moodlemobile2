@@ -14,12 +14,12 @@
 
     <core-course-module-description [description]="description" [component]="component" [componentId]="componentId" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
-    <ion-card icon-start class="core-info-card" *ngIf="chatInfo">
+    <ion-card slot="start //TODO: mode to icon" class="core-info-card" *ngIf="chatInfo">
         <ion-icon name="time"></ion-icon> {{ 'addon.mod_chat.sessionstart' | translate:{$a: chatInfo} }}
     </ion-card>
 
-    <div padding *ngIf="chat">
-        <ion-button block color="primary" (click)="enterChat()">{{ 'addon.mod_chat.enterchat' | translate }}</ion-button>
-        <ion-button block color="light" margin-top *ngIf="sessionsAvailable" (click)="viewSessions()">{{ 'addon.mod_chat.viewreport' | translate }}</ion-button>
+    <div class="ion-padding" *ngIf="chat">
+        <ion-button expand="block" color="primary" (click)="enterChat()">{{ 'addon.mod_chat.enterchat' | translate }}</ion-button>
+        <ion-button expand="block" color="light"  class="ion-margin-top" *ngIf="sessionsAvailable" (click)="viewSessions()">{{ 'addon.mod_chat.viewreport' | translate }}</ion-button>
     </div>
 </core-loading>

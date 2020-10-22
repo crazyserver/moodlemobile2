@@ -1,14 +1,14 @@
 <ion-list>
 <ion-radio-group>
     <ion-item *ngFor="let type of typeKeys" class="addon-calendar-event" [ngClass]="['addon-calendar-eventtype-'+type]">
-        <core-icon [name]="typeIcons[type]" item-start></core-icon>
+        <core-icon [name]="typeIcons[type]" slot=”start”></core-icon>
         <ion-label>{{ 'addon.calendar.' + type + 'events' | translate}}</ion-label>
         <ion-toggle [(ngModel)]="types[type]" (ionChange)="onChange($event)"></ion-toggle>
     </ion-item>
     <ion-item-divider *ngIf="types.course || types.category || types.group"></ion-item-divider>
     <ion-list [(ngModel)]="courseId" *ngIf="types.course || types.category || types.group">
 <ion-radio-group>
-        <ion-item text-wrap *ngFor="let course of courses" >
+        <ion-item class="ion-text-wrap" *ngFor="let course of courses" >
             <ion-label><core-format-text [text]="course.fullname"></core-format-text></ion-label>
             <ion-radio slot="start" value="{{course.id}}" (ionSelect)="onChange($event)" ></ion-radio>
         </ion-item>

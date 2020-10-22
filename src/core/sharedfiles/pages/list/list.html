@@ -3,7 +3,7 @@
         <ion-title>{{ title }}</ion-title>
 
         <ion-buttons slot="primary" *ngIf="isModal">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -19,8 +19,8 @@
         <ion-list *ngIf="files && files.length > 0">
             <ng-container *ngFor="let file of files; let idx = index">
                 <core-local-file *ngIf="file.isFile" [file]="file" [manage]="manage" [overrideClick]="pick" (onClick)="filePicked(file)" (onDelete)="fileDeleted(idx)" (onRename)="fileRenamed(idx, $event)"></core-local-file>
-                <ion-item text-wrap class="item-media" *ngIf="!file.isFile" (click)="openFolder(file)">
-                    <img src="assets/img/files/folder-64.png" alt="{{ 'core.folder' | translate }}" role="presentation" item-start>
+                <ion-item class="ion-text-wrap" class="item-media" *ngIf="!file.isFile" (click)="openFolder(file)">
+                    <img src="assets/img/files/folder-64.png" alt="{{ 'core.folder' | translate }}" role="presentation" slot=”start”>
                     <p>{{ file.name }}</p>
                 </ion-item>
             </ng-container>

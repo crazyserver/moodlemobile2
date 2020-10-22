@@ -22,12 +22,12 @@
             <core-course-module-description *ngIf="forum && forum.type != 'single'" [description]="description" [component]="component" [componentId]="componentId" [note]="descriptionNote" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
             <!-- Forum discussions found to be synchronized -->
-            <ion-card class="core-warning-card" icon-start *ngIf="hasOffline || hasOfflineRatings">
+            <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="hasOffline || hasOfflineRatings">
                 <ion-icon name="warning"></ion-icon> {{ 'core.hasdatatosync' | translate:{$a: moduleName} }}
             </ion-card>
 
             <!-- Cut-off date or due date message -->
-            <ion-card class="core-info-card" icon-start *ngIf="availabilityMessage">
+            <ion-card class="core-info-card" slot="start //TODO: mode to icon" *ngIf="availabilityMessage">
                 <ion-icon name="information-circle"></ion-icon> {{ availabilityMessage }}
             </ion-card>
 
@@ -35,22 +35,22 @@
                 <core-empty-box *ngIf="discussions.length == 0 && offlineDiscussions.length == 0" icon="chatbubbles" [message]="'addon.mod_forum.forumnodiscussionsyet' | translate">
                 </core-empty-box>
 
-                <div text-wrap *ngIf="discussions.length > 0 && sortingAvailable && selectedSortOrder" ion-row padding-horizontal padding-top margin-bottom>
-                    <ion-button *ngIf="sortingAvailable" padding-horizontal icon-end ion-col (click)="showSortOrderSelector($event)" color="light" class="core-button-select button-no-uppercase" [attr.aria-label]="('core.sort' | translate)" aria-haspopup="true" [attr.aria-expanded]="sortOrderSelectorExpanded" aria-controls="addon-mod-forum-sort-order-selector" id="addon-mod-forum-sort-order-button">
+                <div class="ion-text-wrap" *ngIf="discussions.length > 0 && sortingAvailable && selectedSortOrder" ion-row class="ion-padding-horizontal" class="ion-padding-top"  class="ion-margin-bottom">
+                    <ion-button *ngIf="sortingAvailable" class="ion-padding-horizontal" slot="end //TODO: mode to icon" ion-col (click)="showSortOrderSelector($event)" color="light" class="core-button-select button-no-uppercase" [attr.aria-label]="('core.sort' | translate)" aria-haspopup="true" [attr.aria-expanded]="sortOrderSelectorExpanded" aria-controls="addon-mod-forum-sort-order-selector" id="addon-mod-forum-sort-order-button">
                         <span class="core-button-select-text">{{ selectedSortOrder.label | translate }}</span>
                         <ion-icon name="arrow-dropdown" ios="md-arrow-dropdown"></ion-icon>
                     </ion-button>
                 </div>
 
                 <ng-container *ngFor="let discussion of offlineDiscussions">
-                    <ion-item text-wrap (click)="openNewDiscussion(discussion.timecreated)" [attr.no-lines]="discussion.groupname" [class.core-split-item-selected]="discussion.timecreated == -selectedDiscussion" class="addon-mod-forum-discussion" detail-push>
+                    <ion-item class="ion-text-wrap" (click)="openNewDiscussion(discussion.timecreated)" [attr.lines="none"]="discussion.groupname" [class.core-split-item-selected]="discussion.timecreated == -selectedDiscussion" class="addon-mod-forum-discussion" detail="true">
                         <div class="addon-mod-forum-discussion-title">
                             <h2>
                                 <core-format-text [text]="discussion.subject" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
                             </h2>
                         </div>
                         <div class="addon-mod-forum-discussion-info">
-                            <ion-avatar core-user-avatar [user]="discussion" item-start [courseId]="courseId" *ngIf="discussion.userfullname"></ion-avatar>
+                            <ion-avatar core-user-avatar [user]="discussion" slot=”start” [courseId]="courseId" *ngIf="discussion.userfullname"></ion-avatar>
                             <div class="addon-mod-forum-discussion-author">
                                 <h3 *ngIf="discussion.userfullname">{{discussion.userfullname}}</h3>
                                 <p *ngIf="discussion.groupname"><ion-icon name="people"></ion-icon> {{ discussion.groupname }}</p>
@@ -60,37 +60,37 @@
                     </ion-item>
                 </ng-container>
                 <ng-container *ngFor="let discussion of discussions">
-                    <ion-item (click)="openDiscussion(discussion)" [class.core-split-item-selected]="discussion.discussion == selectedDiscussion" class="addon-mod-forum-discussion" detail-push>
+                    <ion-item (click)="openDiscussion(discussion)" [class.core-split-item-selected]="discussion.discussion == selectedDiscussion" class="addon-mod-forum-discussion" detail="true">
                         <div class="addon-mod-forum-discussion-title">
-                            <h2 text-wrap>
+                            <h2 class="ion-text-wrap">
                                 <core-icon name="fa-map-pin" *ngIf="discussion.pinned"></core-icon>
                                 <core-icon name="fa-star" class="addon-forum-star" *ngIf="!discussion.pinned && discussion.starred"></core-icon>
                                 <core-format-text [text]="discussion.subject" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
                             </h2>
-                            <ion-button icon-only clear color="dark" (click)="showOptionsMenu($event, discussion)" *ngIf="canPin || discussion.canlock || discussion.canfavourite" [attr.aria-label]="('core.displayoptions' | translate)">
+                            <ion-button slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="showOptionsMenu($event, discussion)" *ngIf="canPin || discussion.canlock || discussion.canfavourite" [attr.aria-label]="('core.displayoptions' | translate)">
                                 <core-icon name="more"></core-icon>
                             </ion-button>
                         </div>
                         <div class="addon-mod-forum-discussion-info">
-                            <ion-avatar *ngIf="discussion.userfullname" core-user-avatar [user]="discussion" item-start [courseId]="courseId"></ion-avatar>
+                            <ion-avatar *ngIf="discussion.userfullname" core-user-avatar [user]="discussion" slot=”start” [courseId]="courseId"></ion-avatar>
                             <div class="addon-mod-forum-discussion-author">
                                 <h3 *ngIf="discussion.userfullname">{{discussion.userfullname}}</h3>
                                 <p *ngIf="discussion.groupname"><ion-icon name="people"></ion-icon> {{ discussion.groupname }}</p>
                                 <p>{{discussion.created * 1000 | coreFormatDate: "strftimerecentfull"}}</p>
                             </div>
                         </div>
-                        <ion-row text-center class="addon-mod-forum-discussion-more-info">
-                            <ion-col text-start>
+                        <ion-row class="ion-text-center" class="addon-mod-forum-discussion-more-info">
+                            <ion-col class="ion-text-start">
                                 <ion-note>
                                     <ion-icon name="time"></ion-icon> {{ 'addon.mod_forum.lastpost' | translate }}
                                     <ng-container *ngIf="discussion.timemodified > discussion.created">{{discussion.timemodified | coreTimeAgo}}</ng-container>
                                     <ng-container *ngIf="discussion.timemodified <= discussion.created">{{discussion.created | coreTimeAgo}}</ng-container>
                                 </ion-note>
                             </ion-col>
-                            <ion-col text-end>
+                            <ion-col class="ion-text-end">
                                 <ion-note>
                                     <ion-icon name="chatboxes"></ion-icon> {{ 'addon.mod_forum.numreplies' | translate:{numreplies: discussion.numreplies} }}
-                                    <ion-badge text-center *ngIf="discussion.numunread" [attr.aria-label]="'addon.mod_forum.unreadpostsnumber' | translate:{ '$a' : discussion.numunread}">{{ discussion.numunread }}</ion-badge>
+                                    <ion-badge class="ion-text-center" *ngIf="discussion.numunread" [attr.aria-label]="'addon.mod_forum.unreadpostsnumber' | translate:{ '$a' : discussion.numunread}">{{ discussion.numunread }}</ion-badge>
                                 </ion-note>
                             </ion-col>
                         </ion-row>

@@ -1,4 +1,4 @@
-<h3 padding>{{ 'addon.mod_workshop.assessmentform' | translate }}</h3>
+<h3 class="ion-padding">{{ 'addon.mod_workshop.assessmentform' | translate }}</h3>
 
 <form name="mma-mod_workshop-assessment-form" #assessmentForm>
     <core-loading [hideUntil]="assessmentStrategyLoaded">
@@ -11,7 +11,7 @@
         </div>
 
         <ion-card *ngIf="assessmentStrategyLoaded && overallFeedkback && (edit || data.assessment.feedbackauthor || data.assessment.feedbackattachmentfiles && data.assessment.feedbackattachmentfiles.length) ">
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <h2>{{ 'addon.mod_workshop.overallfeedback' | translate }}</h2>
             </ion-item>
             <ion-item stacked *ngIf="edit">
@@ -27,11 +27,11 @@
                     <ion-select-option *ngFor="let w of weights" [value]="w">{{w}}</ion-select-option>
                 </ion-select>
             </ion-item>
-            <ion-item text-wrap *ngIf="!edit && data.assessment.feedbackauthor">
+            <ion-item class="ion-text-wrap" *ngIf="!edit && data.assessment.feedbackauthor">
                 <core-format-text [component]="component" [componentId]="componentId" [text]="data.assessment.feedbackauthor" contextLevel="module" [contextInstanceId]="workshop.coursemodule" [courseId]="workshop.course"></core-format-text>
             </ion-item>
             <ion-item *ngIf="!edit && workshop.overallfeedbackfiles && data.assessment.feedbackattachmentfiles && data.assessment.feedbackattachmentfiles.length">
-                <div no-lines>
+                <div lines="none">
                     <ng-container *ngFor="let attachment of data.assessment.feedbackattachmentfiles">
                         <!-- Files already attached to the submission. -->
                         <core-file *ngIf="!attachment.name" [file]="attachment" [component]="component" [componentId]="componentId"></core-file>

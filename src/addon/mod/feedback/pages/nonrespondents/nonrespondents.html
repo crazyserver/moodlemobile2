@@ -8,8 +8,8 @@
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="feedbackLoaded">
-        <ion-list no-margin>
-            <ion-item text-wrap *ngIf="groupInfo.separateGroups || groupInfo.visibleGroups">
+        <ion-list  class="ion-no-margin">
+            <ion-item class="ion-text-wrap" *ngIf="groupInfo.separateGroups || groupInfo.visibleGroups">
                 <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                 <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                 <ion-select [(ngModel)]="selectedGroup" (ionChange)="loadAttempts(selectedGroup)" aria-labelledby="addon-feedback-groupslabel" interface="action-sheet">
@@ -20,8 +20,8 @@
                 {{ 'addon.mod_feedback.non_respondents_students' | translate : {$a: total } }}
             </ion-item-divider>
             <ng-container *ngIf="total > 0">
-                <ion-item *ngFor="let user of users" text-wrap>
-                    <ion-avatar core-user-avatar [user]="user" item-start></ion-avatar>
+                <ion-item *ngFor="let user of users" class="ion-text-wrap">
+                    <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
                     <h2>{{ user.fullname }}</h2>
                     <p>
                         <ion-badge color="success" *ngIf="user.started">
@@ -33,9 +33,9 @@
                     </p>
                 </ion-item>
             </ng-container>
-            <ion-item padding text-center *ngIf="canLoadMore">
+            <ion-item class="ion-padding" class="ion-text-center" *ngIf="canLoadMore">
                 <!-- Button and spinner to show more attempts. -->
-                <ion-button block *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
+                <ion-button expand="block" *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                 <ion-spinner *ngIf="loadingMore"></ion-spinner>
             </ion-item>
         </ion-list>

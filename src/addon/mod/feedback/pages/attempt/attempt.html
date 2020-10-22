@@ -8,21 +8,21 @@
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="feedbackLoaded">
-        <ion-list no-margin>
-            <ion-item *ngIf="attempt.fullname" text-wrap core-user-link [userId]="attempt.userid" [attr.aria-label]=" 'core.user.viewprofile' | translate" [courseId]="attempt.courseid" [title]="attempt.fullname">
-                <ion-avatar core-user-avatar [user]="attempt" item-start></ion-avatar>
+        <ion-list  class="ion-no-margin">
+            <ion-item *ngIf="attempt.fullname" class="ion-text-wrap" core-user-link [userId]="attempt.userid" [attr.aria-label]=" 'core.user.viewprofile' | translate" [courseId]="attempt.courseid" [title]="attempt.fullname">
+                <ion-avatar core-user-avatar [user]="attempt" slot=”start”></ion-avatar>
                 <h2>{{attempt.fullname}}</h2>
                 <p *ngIf="attempt.timemodified">{{attempt.timemodified * 1000 | coreFormatDate }}</p>
             </ion-item>
 
-            <ion-item text-wrap *ngIf="!attempt.fullname">
+            <ion-item class="ion-text-wrap" *ngIf="!attempt.fullname">
                 <h2>{{ 'addon.mod_feedback.response_nr' |translate }}: {{attempt.number}} ({{ 'addon.mod_feedback.anonymous' |translate }})</h2>
                 <p *ngIf="attempt.timemodified">{{attempt.timemodified * 1000 | coreFormatDate }}</p>
             </ion-item >
             <ng-container *ngIf="items && items.length">
                 <ng-container *ngFor="let item of items">
                     <ion-item-divider *ngIf="item.typ == 'pagebreak'"></ion-item-divider>
-                    <ion-item text-wrap *ngIf="item.typ != 'pagebreak'" [color]="item.dependitem > 0 ? 'light' : ''">
+                    <ion-item class="ion-text-wrap" *ngIf="item.typ != 'pagebreak'" [color]="item.dependitem > 0 ? 'light' : ''">
                         <h2 *ngIf="item.name" [core-mark-required]="item.required">
                             <span *ngIf="feedback.autonumbering && item.itemnumber">{{item.itemnumber}}. </span><core-format-text  [component]="component" [componentId]="componentId" [text]="item.name" contextLevel="module" [contextInstanceId]="feedback.coursemodule" [courseId]="courseId"></core-format-text>
                         </h2>

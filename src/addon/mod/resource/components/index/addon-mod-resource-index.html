@@ -15,7 +15,7 @@
 
     <core-course-module-description *ngIf="mode != 'iframe' && (mode != 'embedded' || displayDescription)" [description]="description" [component]="component" [componentId]="componentId" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-course-module-description>
 
-    <ion-card class="core-warning-card" icon-start *ngIf="warning">
+    <ion-card class="core-warning-card" slot="start //TODO: mode to icon" *ngIf="warning">
         <ion-icon name="warning"></ion-icon> <span [innerHTML]="warning"></span>
     </ion-card>
 
@@ -27,8 +27,8 @@
         <core-format-text [text]="contentText" [filter]="false"></core-format-text>
     </div>
 
-    <div padding *ngIf="mode == 'external'">
-        <ion-button block (click)="open()" icon-start>
+    <div class="ion-padding" *ngIf="mode == 'external'">
+        <ion-button expand="block" (click)="open()" slot="start //TODO: mode to icon">
             <ion-icon name="document" start></ion-icon>
             {{ 'addon.mod_resource.openthefile' | translate }}
         </ion-button>

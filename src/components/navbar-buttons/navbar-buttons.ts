@@ -34,7 +34,7 @@ import { CoreContextMenuComponent } from '../context-menu/context-menu';
  * Example usage:
  *
  * <core-navbar-buttons end>
- *     <button ion-button icon-only [hidden]="!buttonShown" [attr.aria-label]="Do something" (click)="action()">
+ *     <button ion-button slot="icon-only //TODO: mode to icon" [hidden]="!buttonShown" [attr.aria-label]="Do something" (click)="action()">
  *         <ion-icon name="funnel"></ion-icon>
  *     </button>
  * </core-navbar-buttons>

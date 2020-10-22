@@ -1,5 +1,5 @@
 <core-navbar-buttons>
-    <ion-button [hidden]="!canSearch" icon-only (click)="toggleSearch()" [attr.aria-label]="'core.search' | translate">
+    <ion-button [hidden]="!canSearch" slot="icon-only //TODO: mode to icon" (click)="toggleSearch()" [attr.aria-label]="'core.search' | translate">
         <ion-icon name="search"></ion-icon>
     </ion-button>
 </core-navbar-buttons>
@@ -18,9 +18,9 @@
 
             <core-empty-box *ngIf="displaySearchResults && !participants.length" icon="search" [message]="'core.noresults' | translate"></core-empty-box>
 
-            <ion-list *ngIf="participants && participants.length > 0" no-margin>
-                <ion-item text-wrap *ngFor="let participant of participants" [title]="participant.fullname" (click)="gotoParticipant(participant.id)" [class.core-split-item-selected]="participant.id == participantId">
-                    <ion-avatar core-user-avatar [user]="participant" item-start [userId]="participant.id" [checkOnline]="true"></ion-avatar>
+            <ion-list *ngIf="participants && participants.length > 0"  class="ion-no-margin">
+                <ion-item class="ion-text-wrap" *ngFor="let participant of participants" [title]="participant.fullname" (click)="gotoParticipant(participant.id)" [class.core-split-item-selected]="participant.id == participantId">
+                    <ion-avatar core-user-avatar [user]="participant" slot=”start” [userId]="participant.id" [checkOnline]="true"></ion-avatar>
                     <ng-container *ngIf="!displaySearchResults">
                         <h2>{{ participant.fullname }}</h2>
                         <p *ngIf="participant.lastcourseaccess"><strong>{{ 'core.lastaccess' | translate }}: </strong>{{ participant.lastcourseaccess | coreTimeAgo }}</p>

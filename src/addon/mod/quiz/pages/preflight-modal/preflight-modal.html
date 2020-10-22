@@ -2,24 +2,24 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ title | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button icon-only (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+            <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content padding class="addon-mod_quiz-preflight-modal">
+<ion-content class="ion-padding" class="addon-mod_quiz-preflight-modal">
     <core-loading [hideUntil]="loaded">
         <form ion-list [formGroup]="preflightForm" (ngSubmit)="sendData($event)" #preflightFormEl>
             <!-- Access rules. -->
             <ng-container *ngFor="let data of accessRulesData; let last = last">
                 <core-dynamic-component [component]="data.component" [data]="data.data">
-                    <p padding>Couldn't find the directive to render this access rule.</p>
+                    <p class="ion-padding">Couldn't find the directive to render this access rule.</p>
                 </core-dynamic-component>
                 <ion-item-divider *ngIf="!last"></ion-item-divider>
             </ng-container>
 
-            <ion-button block type="submit">
+            <ion-button expand="block" type="submit">
                 {{ title | translate }}
             </ion-button>
         </form>

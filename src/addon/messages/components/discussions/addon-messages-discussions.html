@@ -7,21 +7,21 @@
 
     <core-loading [hideUntil]="loaded" [message]="loadingMessage">
 
-        <ion-list *ngIf="search.showResults" no-margin>
+        <ion-list *ngIf="search.showResults"  class="ion-no-margin">
             <ion-item-divider>
                 <h2>{{ 'core.searchresults' | translate }}</h2>
-                <ion-note item-end>{{ search.results.length }}</ion-note>
+                <ion-note slot="end">{{ search.results.length }}</ion-note>
             </ion-item-divider>
-            <ion-item text-wrap *ngFor="let result of search.results" [title]="result.fullname" (click)="gotoDiscussion(result.userid, result.messageid)" [class.core-split-item-selected]="result.userid == discussionUserId" class="addon-message-discussion">
-                <ion-avatar core-user-avatar [user]="result" item-start [checkOnline]="result.showonlinestatus"></ion-avatar>
+            <ion-item class="ion-text-wrap" *ngFor="let result of search.results" [title]="result.fullname" (click)="gotoDiscussion(result.userid, result.messageid)" [class.core-split-item-selected]="result.userid == discussionUserId" class="addon-message-discussion">
+                <ion-avatar core-user-avatar [user]="result" slot=”start” [checkOnline]="result.showonlinestatus"></ion-avatar>
                 <h2>{{ result.fullname }}</h2>
                 <p><core-format-text clean="true" singleLine="true" [text]="result.lastmessage" contextLevel="system" [contextInstanceId]="0"></core-format-text></p>
             </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="!search.showResults" no-margin>
-            <ion-item text-wrap *ngFor="let discussion of discussions" [title]="discussion.fullname" (click)="gotoDiscussion(discussion.message.user)" [class.core-split-item-selected]="discussion.message.user == discussionUserId" class="addon-message-discussion">
-                <ion-avatar core-user-avatar [user]="discussion" item-start [checkOnline]="discussion.showonlinestatus"></ion-avatar>
+        <ion-list *ngIf="!search.showResults"  class="ion-no-margin">
+            <ion-item class="ion-text-wrap" *ngFor="let discussion of discussions" [title]="discussion.fullname" (click)="gotoDiscussion(discussion.message.user)" [class.core-split-item-selected]="discussion.message.user == discussionUserId" class="addon-message-discussion">
+                <ion-avatar core-user-avatar [user]="discussion" slot=”start” [checkOnline]="discussion.showonlinestatus"></ion-avatar>
                 <h2>{{ discussion.fullname }}</h2>
                 <ion-note *ngIf="discussion.message.timecreated > 0 || discussion.unread">
                     <span *ngIf="discussion.unread" class="core-primary-circle"></span>

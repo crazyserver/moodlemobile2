@@ -1,6 +1,6 @@
 <ion-list [(ngModel)]="selectedMode">
 <ion-radio-group>
-    <ion-item text-wrap *ngFor="let mode of modes" >
+    <ion-item class="ion-text-wrap" *ngFor="let mode of modes" >
         <ion-label>{{mode.langkey | translate}}</ion-label>
         <ion-radio slot="start" [value]="mode.key" (ionSelect)="modePicked($event, mode.key)" ></ion-radio>
     </ion-item>

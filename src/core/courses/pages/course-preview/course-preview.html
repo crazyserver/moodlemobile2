@@ -13,27 +13,27 @@
             <div *ngIf="course.courseImage" (click)="openCourse()" class="core-course-thumb">
                 <img [src]="course.courseImage" core-external-content alt=""/>
             </div>
-            <ion-item text-wrap (click)="openCourse()" [title]="course.fullname" [attr.detail-none]=" avoidOpenCourse || !canAccessCourse">
-                <core-icon name="fa-graduation-cap" fixed-width item-start></core-icon>
+            <ion-item class="ion-text-wrap" (click)="openCourse()" [title]="course.fullname" [attr.detail-none]=" avoidOpenCourse || !canAccessCourse">
+                <core-icon name="fa-graduation-cap" fixed-width slot=”start”></core-icon>
                 <h2><core-format-text [text]="course.fullname" contextLevel="course" [contextInstanceId]="course.id"></core-format-text></h2>
                 <p *ngIf="course.categoryname"><core-format-text [text]="course.categoryname" contextLevel="coursecat" [contextInstanceId]="course.categoryid"></core-format-text></p>
                 <p *ngIf="course.startdate">{{course.startdate * 1000 | coreFormatDate:"strftimedatefullshort" }} <span *ngIf="course.enddate"> - {{course.enddate * 1000 | coreFormatDate:"strftimedatefullshort" }}</span></p>
             </ion-item>
 
-            <ion-item text-wrap *ngIf="course.summary" detail-none>
+            <ion-item class="ion-text-wrap" *ngIf="course.summary" detail="false">
                 <core-format-text [text]="course.summary" maxHeight="120" contextLevel="course" [contextInstanceId]="course.id"></core-format-text>
             </ion-item>
 
-            <ng-container text-wrap *ngIf="course.contacts && course.contacts.length">
+            <ng-container class="ion-text-wrap" *ngIf="course.contacts && course.contacts.length">
                 <ion-item-divider>{{ 'core.teachers' | translate }}</ion-item-divider>
-                <ion-item text-wrap *ngFor="let contact of course.contacts" core-user-link [userId]="contact.id" [courseId]="isEnrolled ? course.id : null" [attr.aria-label]="'core.viewprofile' | translate">
-                    <ion-avatar core-user-avatar [user]="contact" item-start [userId]="contact.id" [courseId]="isEnrolled ? course.id : null"></ion-avatar>
+                <ion-item class="ion-text-wrap" *ngFor="let contact of course.contacts" core-user-link [userId]="contact.id" [courseId]="isEnrolled ? course.id : null" [attr.aria-label]="'core.viewprofile' | translate">
+                    <ion-avatar core-user-avatar [user]="contact" slot=”start” [userId]="contact.id" [courseId]="isEnrolled ? course.id : null"></ion-avatar>
                     <h2>{{contact.fullname}}</h2>
                 </ion-item>
                 <ion-item-divider></ion-item-divider>
             </ng-container>
 
-            <ion-item text-wrap *ngIf="course.customfields" detail-none>
+            <ion-item class="ion-text-wrap" *ngIf="course.customfields" detail="false">
                 <ng-container *ngFor="let field of course.customfields">
                     <div *ngIf="field.value" class="core-customfield core-customfield_{{field.type}} core-customfield_{{field.shortname}}">
                         <span class="core-customfieldname"><core-format-text [text]="field.name" contextLevel="course" [contextInstanceId]="course.id"></core-format-text></span><span class="core-customfieldseparator">: </span>
@@ -42,32 +42,32 @@
                 </ng-container>
             </ion-item>
 
-            <div *ngIf="!isEnrolled" detail-none>
-                <ion-item text-wrap *ngFor="let instance of selfEnrolInstances">
+            <div *ngIf="!isEnrolled" detail="false">
+                <ion-item class="ion-text-wrap" *ngFor="let instance of selfEnrolInstances">
                     <h2>{{ instance.name }}</h2>
-                    <ion-button block margin-top (click)="selfEnrolClicked(instance.id)">{{ 'core.courses.enrolme' | translate }}</ion-button>
+                    <ion-button expand="block"  class="ion-margin-top" (click)="selfEnrolClicked(instance.id)">{{ 'core.courses.enrolme' | translate }}</ion-button>
                 </ion-item>
             </div>
-            <ion-item text-wrap *ngIf="!isEnrolled && paypalEnabled" detail-none>
+            <ion-item class="ion-text-wrap" *ngIf="!isEnrolled && paypalEnabled" detail="false">
                 <h2>{{ 'core.courses.paypalaccepted' | translate }}</h2>
                 <p>{{ 'core.paymentinstant' | translate }}</p>
-                <ion-button block margin-top (click)="paypalEnrol()">{{ 'core.courses.sendpaymentbutton' | translate }}</ion-button>
+                <ion-button expand="block"  class="ion-margin-top" (click)="paypalEnrol()">{{ 'core.courses.sendpaymentbutton' | translate }}</ion-button>
             </ion-item>
             <ion-item *ngIf="!isEnrolled && !selfEnrolInstances.length && !paypalEnabled">
                 <p>{{ 'core.courses.notenrollable' | translate }}</p>
             </ion-item>
-            <ion-item *ngIf="canAccessCourse && downloadCourseEnabled" (click)="prefetchCourse()" detail-none [attr.aria-label]="prefetchCourseData.title | translate">
-                <core-icon *ngIf="!prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'" [name]="prefetchCourseData.prefetchCourseIcon" item-start></core-icon>
-                <ion-icon *ngIf="prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'" item-start name="cloud-done" color="success" [attr.aria-label]="'core.downloaded' | translate" role="status"></ion-icon>
-                <ion-spinner *ngIf="prefetchCourseData.prefetchCourseIcon == 'spinner'" item-start></ion-spinner>
+            <ion-item *ngIf="canAccessCourse && downloadCourseEnabled" (click)="prefetchCourse()" detail="false" [attr.aria-label]="prefetchCourseData.title | translate">
+                <core-icon *ngIf="!prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'" [name]="prefetchCourseData.prefetchCourseIcon" slot=”start”></core-icon>
+                <ion-icon *ngIf="prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'" slot=”start” name="cloud-done" color="success" [attr.aria-label]="'core.downloaded' | translate" role="status"></ion-icon>
+                <ion-spinner *ngIf="prefetchCourseData.prefetchCourseIcon == 'spinner'" slot=”start”></ion-spinner>
                 <h2>{{ 'core.course.downloadcourse' | translate }}</h2>
             </ion-item>
             <ion-item (click)="openCourse()" [title]="course.fullname" *ngIf="!avoidOpenCourse && canAccessCourse">
-                <ion-icon name="briefcase" item-start></ion-icon>
+                <ion-icon name="briefcase" slot=”start”></ion-icon>
                 <h2>{{ 'core.course.contents' | translate }}</h2>
             </ion-item>
             <ion-item [href]="courseUrl" core-link [title]="course.fullname">
-                <ion-icon name="open" item-start></ion-icon>
+                <ion-icon name="open" slot=”start”></ion-icon>
                 <h2>{{ 'core.openinbrowser' | translate }}</h2>
             </ion-item>
         </ion-list>

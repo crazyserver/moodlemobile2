@@ -3,7 +3,7 @@
 </ion-item-divider>
 <core-loading [hideUntil]="loaded" class="core-loading-center">
     <ng-container *ngIf="mainMenuBlock">
-        <ion-item text-wrap *ngIf="mainMenuBlock.summary">
+        <ion-item class="ion-text-wrap" *ngIf="mainMenuBlock.summary">
             <core-format-text [text]="mainMenuBlock.summary" [component]="component" [componentId]="siteHomeId" contextLevel="course" [contextInstanceId]="siteHomeId"></core-format-text>
         </ion-item>
 

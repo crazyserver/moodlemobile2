@@ -2,7 +2,7 @@
     <ion-toolbar core-back-button>
         <ion-title>{{ 'addon.mod_workshop.editsubmission' | translate }}</ion-title>
         <ion-buttons slot="primary">
-            <ion-button clear (click)="save()" [attr.aria-label]="'core.save' | translate">
+            <ion-button fill="clear" (click)="save()" [attr.aria-label]="'core.save' | translate">
                 {{ 'core.save' | translate }}
             </ion-button>
         </ion-buttons>
@@ -11,7 +11,7 @@
 <ion-content>
     <core-loading [hideUntil]="loaded">
         <form ion-list [formGroup]="editForm" *ngIf="workshop" #editFormEl>
-            <ion-item text-wrap>
+            <ion-item class="ion-text-wrap">
                 <ion-label position="stacked" core-mark-required="true">{{ 'addon.mod_workshop.submissiontitle' | translate }}</ion-label>
                 <ion-input name="title" type="text" [placeholder]="'addon.mod_workshop.submissiontitle' | translate" formControlName="title"></ion-input>
             </ion-item>

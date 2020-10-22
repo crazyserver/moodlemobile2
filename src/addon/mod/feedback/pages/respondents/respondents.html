@@ -9,8 +9,8 @@
             <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
         </ion-refresher>
         <core-loading [hideUntil]="feedbackLoaded">
-            <ion-list no-margin>
-                <ion-item text-wrap *ngIf="groupInfo.separateGroups || groupInfo.visibleGroups">
+            <ion-list  class="ion-no-margin">
+                <ion-item class="ion-text-wrap" *ngIf="groupInfo.separateGroups || groupInfo.visibleGroups">
                     <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.separateGroups">{{ 'core.groupsseparate' | translate }}</ion-label>
                     <ion-label id="addon-feedback-groupslabel" *ngIf="groupInfo.visibleGroups">{{ 'core.groupsvisible' | translate }}</ion-label>
                     <ion-select [(ngModel)]="selectedGroup" (ionChange)="loadAttempts(selectedGroup)" aria-labelledby="addon-feedback-groupslabel" interface="action-sheet">
@@ -21,14 +21,14 @@
                     <ion-item-divider>
                         {{ 'addon.mod_feedback.non_anonymous_entries' | translate : {$a: responses.total } }}
                     </ion-item-divider>
-                    <ion-item *ngFor="let attempt of responses.attempts" text-wrap (click)="gotoAttempt(attempt)" [class.core-split-item-selected]="attempt.id == attemptId">
-                        <ion-avatar core-user-avatar [user]="attempt" item-start></ion-avatar>
+                    <ion-item *ngFor="let attempt of responses.attempts" class="ion-text-wrap" (click)="gotoAttempt(attempt)" [class.core-split-item-selected]="attempt.id == attemptId">
+                        <ion-avatar core-user-avatar [user]="attempt" slot=”start”></ion-avatar>
                         <h2>{{ attempt.fullname }}</h2>
                         <p *ngIf="attempt.timemodified">{{attempt.timemodified * 1000 | coreFormatDate }}</p>
                     </ion-item>
-                    <ion-item padding text-center *ngIf="responses.canLoadMore">
+                    <ion-item class="ion-padding" class="ion-text-center" *ngIf="responses.canLoadMore">
                         <!-- Button and spinner to show more attempts. -->
-                        <ion-button block *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
+                        <ion-button expand="block" *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                         <ion-spinner *ngIf="loadingMore"></ion-spinner>
                     </ion-item>
                 </ng-container>
@@ -36,12 +36,12 @@
                     <ion-item-divider>
                         {{ 'addon.mod_feedback.anonymous_entries' |translate : {$a: anonResponses.total } }}
                     </ion-item-divider>
-                    <ion-item *ngFor="let attempt of anonResponses.attempts" text-wrap (click)="gotoAttempt(attempt)" [class.core-split-item-selected]="attempt.id == attemptId">
+                    <ion-item *ngFor="let attempt of anonResponses.attempts" class="ion-text-wrap" (click)="gotoAttempt(attempt)" [class.core-split-item-selected]="attempt.id == attemptId">
                         <h2>{{ 'addon.mod_feedback.response_nr' |translate }}: {{attempt.number}}</h2>
                     </ion-item>
-                    <ion-item padding text-center *ngIf="anonResponses.canLoadMore">
+                    <ion-item class="ion-padding" class="ion-text-center" *ngIf="anonResponses.canLoadMore">
                         <!-- Button and spinner to show more attempts. -->
-                        <ion-button block *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
+                        <ion-button expand="block" *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                         <ion-spinner *ngIf="loadingMore"></ion-spinner>
                     </ion-item>
                 </ng-container>
