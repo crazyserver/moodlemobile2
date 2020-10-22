@@ -1,4 +1,4 @@
-<ion-item class="ion-text-wrap" class="item-media" (click)="download($event, true)" detail="false">
+<ion-item class="ion-text-wrap item-media" (click)="download($event, true)" detail="false">
     <img [src]="fileIcon" alt="" role="presentation" slot=”start” />
     <h2>{{fileName}}</h2>
     <p *ngIf="fileSizeReadable">{{ fileSizeReadable }}</p>

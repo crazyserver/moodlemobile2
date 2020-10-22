@@ -15,7 +15,7 @@
             <ion-card *ngIf="showInline">
                 <core-iframe [src]="sitePolicy"></core-iframe>
             </ion-card>
-            <ion-item class="ion-text-wrap" class="ion-padding">
+            <ion-item class="ion-text-wrap ion-padding">
                 <ion-button expand="block" color="primary" (click)="accept()">{{ 'core.login.policyaccept' | translate }}</ion-button>
                 <ion-button expand="block" (click)="cancel()">{{ 'core.login.cancel' | translate }}</ion-button>
             </ion-item>

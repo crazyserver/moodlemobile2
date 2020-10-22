@@ -74,7 +74,7 @@
 
                     <!-- Options. -->
                     <ng-container *ngIf="result.options && result.options.length">
-                        <ion-item class="ion-text-wrap" class="addon-mod_h5pactivity-result-table-header">
+                        <ion-item class="ion-text-wrap addon-mod_h5pactivity-result-table-header">
                             <ion-row class="ion-align-items-center">
                                 <ion-col class="ion-text-center">{{ result.optionslabel }}</ion-col>
                                 <ion-col class="ion-text-center">{{ result.correctlabel }}</ion-col>
@@ -100,13 +100,13 @@
                         </ion-item>
 
                         <!-- Result score. -->
-                        <ion-item *ngIf="result.maxscore" class="ion-text-wrap" class="ion-text-end" class="addon-mod_h5pactivity-result-score">
+                        <ion-item *ngIf="result.maxscore" class="ion-text-wrap ion-text-end addon-mod_h5pactivity-result-score">
                             <p><strong>{{ 'addon.mod_h5pactivity.score' | translate }}: {{ 'addon.mod_h5pactivity.score_out_of' | translate:{$a: result} }}</strong></p>
                         </ion-item>
                     </ng-container>
 
                     <!-- Result doesn't support tracking. -->
-                    <ion-item class="ion-text-wrap" class="core-warning-item" *ngIf="!result.track">
+                    <ion-item class="ion-text-wrap core-warning-item" *ngIf="!result.track">
                         <ion-icon slot=”start” name="warning" color="warning"></ion-icon> {{ 'addon.mod_h5pactivity.no_compatible_track' | translate:{$a: result.interactiontype} }}
                     </ion-item>
                 </ion-card>

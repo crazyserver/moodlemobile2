@@ -34,16 +34,16 @@
                             <span *ngIf="assign.preventsubmissionnotingroup && !submission.groupname && submission.manyGroups && !submission.blindid" class="text-danger">{{ 'addon.mod_assign.multipleteams' | translate }}</span>
                             <span *ngIf="!assign.preventsubmissionnotingroup && !submission.groupname">{{ 'addon.mod_assign.defaultteam' | translate }}</span>
                         </p>
-                        <ion-badge class="ion-text-center" class="ion-text-wrap" [color]="submission.statusColor" *ngIf="submission.statusTranslated">
+                        <ion-badge class="ion-text-center ion-text-wrap" [color]="submission.statusColor" *ngIf="submission.statusTranslated">
                             {{ submission.statusTranslated }}
                         </ion-badge>
-                        <ion-badge class="ion-text-center" class="ion-text-wrap" [color]="submission.gradingColor" *ngIf="submission.gradingStatusTranslationId">
+                        <ion-badge class="ion-text-center ion-text-wrap" [color]="submission.gradingColor" *ngIf="submission.gradingStatusTranslationId">
                             {{ submission.gradingStatusTranslationId | translate }}
                         </ion-badge>
                     </ion-item>
                 </ng-container>
 
-                <ion-item class="ion-text-wrap" class="core-warning-card" *ngIf="!haveAllParticipants" slot="start //TODO: mode to icon">
+                <ion-item class="ion-text-wrap core-warning-card" *ngIf="!haveAllParticipants" slot="start //TODO: mode to icon">
                     <ion-icon name="warning"></ion-icon>
                     {{ 'addon.mod_assign.notallparticipantsareshown' | translate }}
                 </ion-item>

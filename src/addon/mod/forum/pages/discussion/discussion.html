@@ -41,7 +41,7 @@
             <core-icon name="fa-lock"></core-icon> {{ 'addon.mod_forum.discussionlocked' | translate }}
         </ion-card>
 
-        <div *ngIf="startingPost"  class="ion-margin-bottom" class="highlight">
+        <div *ngIf="startingPost"  class="ion-margin-bottom highlight">
             <addon-mod-forum-post [post]="startingPost" [discussion]="discussion" [courseId]="courseId" [discussionId]="discussionId" [component]="component" [componentId]="cmId" [replyData]="replyData" [originalData]="originalData" [forum]="forum" [accessInfo]="accessInfo" [trackPosts]="trackPosts" [ratingInfo]="ratingInfo" [leavingPage]="leavingPage" (onPostChange)="postListChanged()"></addon-mod-forum-post>
         </div>
 

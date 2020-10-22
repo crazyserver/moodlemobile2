@@ -22,7 +22,7 @@
             </ion-item>
 
             <ion-grid class="core-user-communication-handlers" *ngIf="(communicationHandlers && communicationHandlers.length) || isLoadingHandlers">
-                <ion-row class="ion-no-padding" class="justify-content-between" *ngIf="communicationHandlers && communicationHandlers.length">
+                <ion-row class="ion-no-padding justify-content-between" *ngIf="communicationHandlers && communicationHandlers.length">
                     <ion-col class="ion-align-self-center" *ngFor="let comHandler of communicationHandlers" class="ion-text-center">
                         <a (click)="handlerClicked($event, comHandler)" [ngClass]="['core-user-profile-handler', comHandler.class]" title="{{comHandler.title | translate}}" button>
                             <core-icon [name]="comHandler.icon"></core-icon>
@@ -31,17 +31,17 @@
                     </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
-                    <ion-col class="ion-text-center" class="core-loading-handlers" *ngIf="isLoadingHandlers">
+                    <ion-col class="ion-text-center core-loading-handlers" *ngIf="isLoadingHandlers">
                         <ion-spinner></ion-spinner>
                     </ion-col>
                 </ion-row>
             </ion-grid>
 
-            <ion-item class="ion-text-wrap" class="core-user-profile-handler" (click)="openUserDetails()" title="{{ 'core.user.details' | translate }}">
+            <ion-item class="ion-text-wrap core-user-profile-handler" (click)="openUserDetails()" title="{{ 'core.user.details' | translate }}">
                 <ion-icon name="person" slot=”start”></ion-icon>
                 <h2>{{ 'core.user.details' | translate }}</h2>
             </ion-item>
-            <ion-item class="ion-text-center" class="core-loading-handlers" *ngIf="isLoadingHandlers">
+            <ion-item class="ion-text-center core-loading-handlers" *ngIf="isLoadingHandlers">
                 <ion-spinner></ion-spinner>
             </ion-item>
 

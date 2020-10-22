@@ -42,12 +42,12 @@
         </ion-card-header>
         <ion-list>
             <!-- "Header" of the table -->
-            <ion-item class="ion-text-wrap" class="addon-mod_quiz-table-header" detail="true">
+            <ion-item class="ion-text-wrap addon-mod_quiz-table-header" detail="true">
                 <ion-row class="ion-align-items-center">
-                    <ion-col class="ion-text-center" class="hidden-phone" *ngIf="quiz.showAttemptColumn"><b>{{ 'addon.mod_quiz.attemptnumber' | translate }}</b></ion-col>
-                    <ion-col class="ion-text-center" class="hidden-tablet" *ngIf="quiz.showAttemptColumn"><b>#</b></ion-col>
+                    <ion-col class="ion-text-center hidden-phone" *ngIf="quiz.showAttemptColumn"><b>{{ 'addon.mod_quiz.attemptnumber' | translate }}</b></ion-col>
+                    <ion-col class="ion-text-center hidden-tablet" *ngIf="quiz.showAttemptColumn"><b>#</b></ion-col>
                     <ion-col size="7"><b>{{ 'addon.mod_quiz.attemptstate' | translate }}</b></ion-col>
-                    <ion-col class="ion-text-center" class="hidden-phone" *ngIf="quiz.showMarkColumn"><b>{{ 'addon.mod_quiz.marks' | translate }} / {{ quiz.sumGradesFormatted }}</b></ion-col>
+                    <ion-col class="ion-text-center hidden-phone" *ngIf="quiz.showMarkColumn"><b>{{ 'addon.mod_quiz.marks' | translate }} / {{ quiz.sumGradesFormatted }}</b></ion-col>
                     <ion-col class="ion-text-center" *ngIf="quiz.showGradeColumn"><b>{{ 'addon.mod_quiz.grade' | translate }} / {{ quiz.gradeFormatted }}</b></ion-col>
                 </ion-row>
             </ion-item>
@@ -59,7 +59,7 @@
                     <ion-col size="7">
                         <p *ngFor="let sentence of attempt.readableState">{{ sentence }}</p>
                     </ion-col>
-                    <ion-col class="ion-text-center" class="hidden-phone" *ngIf="quiz.showMarkColumn"><p>{{ attempt.readableMark }}</p></ion-col>
+                    <ion-col class="ion-text-center hidden-phone" *ngIf="quiz.showMarkColumn"><p>{{ attempt.readableMark }}</p></ion-col>
                     <ion-col class="ion-text-center" *ngIf="quiz.showGradeColumn"><p>{{ attempt.readableGrade }}</p></ion-col>
                 </ion-row>
             </ion-item>
@@ -86,21 +86,21 @@
     <ion-card *ngIf="quiz">
         <ion-list>
             <!-- Error messages. -->
-            <ion-item class="ion-text-wrap" class="core-danger-item" *ngFor="let message of preventMessages">
+            <ion-item class="ion-text-wrap core-danger-item" *ngFor="let message of preventMessages">
                 <p>{{ message }}</p>
             </ion-item>
-            <ion-item class="ion-text-wrap" class="core-danger-item" *ngIf="quiz.hasquestions === 0">
+            <ion-item class="ion-text-wrap core-danger-item" *ngIf="quiz.hasquestions === 0">
                 <p>{{ 'addon.mod_quiz.noquestions' | translate }}</p>
             </ion-item>
-            <ion-item class="ion-text-wrap" class="core-danger-item" *ngIf="!hasSupportedQuestions && unsupportedQuestions && unsupportedQuestions.length">
+            <ion-item class="ion-text-wrap core-danger-item" *ngIf="!hasSupportedQuestions && unsupportedQuestions && unsupportedQuestions.length">
                 <p>{{ 'addon.mod_quiz.errorquestionsnotsupported' | translate }}</p>
                 <p *ngFor="let type of unsupportedQuestions">{{ type }}</p>
             </ion-item>
-            <ion-item class="ion-text-wrap" class="core-danger-item" *ngIf="unsupportedRules && unsupportedRules.length">
+            <ion-item class="ion-text-wrap core-danger-item" *ngIf="unsupportedRules && unsupportedRules.length">
                 <p>{{ 'addon.mod_quiz.errorrulesnotsupported' | translate }}</p>
                 <p *ngFor="let name of unsupportedRules">{{ name }}</p>
             </ion-item>
-            <ion-item class="ion-text-wrap" class="core-danger-item" *ngIf="behaviourSupported === false">
+            <ion-item class="ion-text-wrap core-danger-item" *ngIf="behaviourSupported === false">
                 <p>{{ 'addon.mod_quiz.errorbehaviournotsupported' | translate }}</p>
                 <p>{{ quiz.preferredbehaviour }}</p>
             </ion-item>
@@ -112,7 +112,7 @@
             </div>
 
             <!-- Other warnings. -->
-            <ion-item class="ion-text-wrap" class="core-warning-item" *ngIf="hasSupportedQuestions && unsupportedQuestions && unsupportedQuestions.length">
+            <ion-item class="ion-text-wrap core-warning-item" *ngIf="hasSupportedQuestions && unsupportedQuestions && unsupportedQuestions.length">
                 <p>{{ 'addon.mod_quiz.canattemptbutnotsubmit' | translate }}</p>
                 <p>{{ 'addon.mod_quiz.warningquestionsnotsupported' | translate }}</p>
                 <p *ngFor="let type of unsupportedQuestions">{{ type }}</p>

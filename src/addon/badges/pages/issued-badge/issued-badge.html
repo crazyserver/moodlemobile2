@@ -10,7 +10,7 @@
     <core-loading [hideUntil]="badgeLoaded">
 
         <ion-item-group *ngIf="badge">
-            <ion-item class="ion-text-wrap" class="item-avatar-center">
+            <ion-item class="ion-text-wrap item-avatar-center">
                 <img *ngIf="badge.badgeurl" class="avatar" [src]="badge.badgeurl" core-external-content [alt]="badge.name">
                 <ion-badge color="danger" *ngIf="badge.dateexpire && currentTime >= badge.dateexpire">
                     {{ 'addon.badges.expired' | translate }}

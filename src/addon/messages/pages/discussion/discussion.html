@@ -80,20 +80,20 @@
 </ion-content>
 <ion-footer color="light" class="footer-adjustable" *ngIf="loaded && (!conversationId || conversation)">
     <ion-toolbar color="light" position="bottom">
-        <p *ngIf="footerType == 'unable'" class="ion-text-center"  class="ion-margin-horizontal">{{ 'addon.messages.unabletomessage' | translate }}</p>
+        <p *ngIf="footerType == 'unable'" class="ion-text-center ion-margin-horizontal">{{ 'addon.messages.unabletomessage' | translate }}</p>
         <div *ngIf="footerType == 'blocked'" class="ion-padding-horizontal">
             <p class="ion-text-center">{{ 'addon.messages.youhaveblockeduser' | translate }}</p>
-            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" (click)="unblockUser()">{{ 'addon.messages.unblockuser' | translate }}</ion-button>
+            <ion-button expand="block" class="ion-text-wrap ion-margin-bottom" (click)="unblockUser()">{{ 'addon.messages.unblockuser' | translate }}</ion-button>
         </div>
         <div *ngIf="footerType == 'requiresContact'" class="ion-padding-horizontal">
             <p class="ion-text-center"><strong>{{ 'addon.messages.isnotinyourcontacts' | translate: {$a: otherMember.fullname} }}</strong></p>
             <p class="ion-text-center">{{ 'addon.messages.requirecontacttomessage' | translate: {$a: otherMember.fullname} }}</p>
-            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" (click)="createContactRequest()">{{ 'addon.messages.sendcontactrequest' | translate }}</ion-button>
+            <ion-button expand="block" class="ion-text-wrap ion-margin-bottom" (click)="createContactRequest()">{{ 'addon.messages.sendcontactrequest' | translate }}</ion-button>
         </div>
         <div *ngIf="footerType == 'requestReceived'" class="ion-padding-horizontal">
             <p class="ion-text-center">{{ 'addon.messages.userwouldliketocontactyou' | translate: {$a: otherMember.fullname} }}</p>
-            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" (click)="confirmContactRequest()">{{ 'addon.messages.acceptandaddcontact' | translate }}</ion-button>
-            <ion-button expand="block" class="ion-text-wrap"  class="ion-margin-bottom" color="light" (click)="declineContactRequest()">{{ 'addon.messages.decline' | translate }}</ion-button>
+            <ion-button expand="block" class="ion-text-wrap ion-margin-bottom" (click)="confirmContactRequest()">{{ 'addon.messages.acceptandaddcontact' | translate }}</ion-button>
+            <ion-button expand="block" class="ion-text-wrap ion-margin-bottom" color="light" (click)="declineContactRequest()">{{ 'addon.messages.decline' | translate }}</ion-button>
         </div>
         <div *ngIf="footerType == 'requestSent' || (footerType == 'message' && requestContactSent)" class="ion-padding-horizontal">
             <p class="ion-text-center"><strong>{{ 'addon.messages.contactrequestsent' | translate }}</strong></p>

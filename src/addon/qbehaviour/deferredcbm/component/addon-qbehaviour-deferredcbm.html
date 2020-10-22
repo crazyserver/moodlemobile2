@@ -1,5 +1,5 @@
 <div *ngIf="question.behaviourCertaintyOptions && question.behaviourCertaintyOptions.length">
-    <ion-item class="ion-text-wrap" class="addon-qbehaviour-deferredcbm-certainty-title" >
+    <ion-item class="ion-text-wrap addon-qbehaviour-deferredcbm-certainty-title" >
         <p>{{ 'core.question.certainty' | translate }}</p>
     </ion-item>
     <div [(ngModel)]="question.behaviourCertaintySelected" [name]="question.behaviourCertaintyOptions[0].name">

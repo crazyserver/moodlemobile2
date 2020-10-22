@@ -1,6 +1,6 @@
 <core-loading [hideUntil]="loaded">
     <div *ngIf="!summary">
-        <ion-item class="ion-text-wrap" class="addon-workshop-submission-title">
+        <ion-item class="ion-text-wrap addon-workshop-submission-title">
             <ion-avatar core-user-avatar [user]="profile" [courseId]="courseId" [userId]="profile && profile.id" slot=”start”></ion-avatar>
             <h2><core-format-text [text]="submission.title" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text></h2>
             <p *ngIf="profile && profile.fullname">{{profile.fullname}}</p>

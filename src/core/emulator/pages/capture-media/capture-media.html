@@ -56,7 +56,7 @@
                 <ion-icon name="trash"></ion-icon>
             </ion-button>
         </ion-col>
-        <ion-col class="ion-padding" class="ion-text-end" class="chrono-container">
+        <ion-col class="ion-padding ion-text-end chrono-container">
             <core-chrono *ngIf="!isImage" [hidden]="hasCaptured" [running]="isCapturing" [reset]="resetChrono" [endTime]="maxTime" (onEnd)="stopCapturing()"></core-chrono>
         </ion-col>
     </ion-row>

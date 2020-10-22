@@ -33,7 +33,7 @@
                     </p>
                 </ion-item>
             </ng-container>
-            <ion-item class="ion-padding" class="ion-text-center" *ngIf="canLoadMore">
+            <ion-item class="ion-padding ion-text-center" *ngIf="canLoadMore">
                 <!-- Button and spinner to show more attempts. -->
                 <ion-button expand="block" *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                 <ion-spinner *ngIf="loadingMore"></ion-spinner>

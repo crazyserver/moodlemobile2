@@ -6,7 +6,7 @@
     </core-context-menu>
 </ion-item-divider>
 <core-loading [hideUntil]="loaded" class="core-loading-center">
-    <div class="ion-padding" class="safe-padding-horizontal">
+    <div class="ion-padding safe-padding-horizontal">
         <ion-select class="ion-text-start" [(ngModel)]="filter" (ngModelChange)="switchFilter()" interface="popover" class="core-button-select">
             <ion-select-option value="all">{{ 'core.all' | translate }}</ion-select-option>
             <ion-select-option value="overdue">{{ 'addon.block_timeline.overdue' | translate }}</ion-select-option>

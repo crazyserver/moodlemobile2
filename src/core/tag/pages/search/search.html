@@ -24,7 +24,7 @@
         <core-empty-box *ngIf="!cloud || !cloud.tags || !cloud.tags.length" icon="pricetags" [message]="'core.tag.notagsfound' | translate: {$a: query}"></core-empty-box>
 
         <ng-container *ngIf="cloud && cloud.tags && cloud.tags.length > 0">
-            <div class="ion-text-center" class="core-tag-cloud">
+            <div class="ion-text-center core-tag-cloud">
                 <ion-badge *ngFor="let tag of cloud.tags" (click)="openTag(tag)" class="ion-text-wrap">
                    <span [class]="'size' + tag.size" >{{ tag.name }}</span>
                 </ion-badge>

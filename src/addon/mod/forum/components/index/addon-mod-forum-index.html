@@ -35,7 +35,7 @@
                 <core-empty-box *ngIf="discussions.length == 0 && offlineDiscussions.length == 0" icon="chatbubbles" [message]="'addon.mod_forum.forumnodiscussionsyet' | translate">
                 </core-empty-box>
 
-                <div class="ion-text-wrap" *ngIf="discussions.length > 0 && sortingAvailable && selectedSortOrder" ion-row class="ion-padding-horizontal" class="ion-padding-top"  class="ion-margin-bottom">
+                <div class="ion-text-wrap" *ngIf="discussions.length > 0 && sortingAvailable && selectedSortOrder" ion-row class="ion-padding-horizontal ion-padding-top ion-margin-bottom">
                     <ion-button *ngIf="sortingAvailable" class="ion-padding-horizontal" slot="end //TODO: mode to icon" ion-col (click)="showSortOrderSelector($event)" color="light" class="core-button-select button-no-uppercase" [attr.aria-label]="('core.sort' | translate)" aria-haspopup="true" [attr.aria-expanded]="sortOrderSelectorExpanded" aria-controls="addon-mod-forum-sort-order-selector" id="addon-mod-forum-sort-order-button">
                         <span class="core-button-select-text">{{ selectedSortOrder.label | translate }}</span>
                         <ion-icon name="arrow-dropdown" ios="md-arrow-dropdown"></ion-icon>
@@ -79,7 +79,7 @@
                                 <p>{{discussion.created * 1000 | coreFormatDate: "strftimerecentfull"}}</p>
                             </div>
                         </div>
-                        <ion-row class="ion-text-center" class="addon-mod-forum-discussion-more-info">
+                        <ion-row class="ion-text-center addon-mod-forum-discussion-more-info">
                             <ion-col class="ion-text-start">
                                 <ion-note>
                                     <ion-icon name="time"></ion-icon> {{ 'addon.mod_forum.lastpost' | translate }}

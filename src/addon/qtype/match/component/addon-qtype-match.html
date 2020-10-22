@@ -3,7 +3,7 @@
         <core-format-text [component]="component" [componentId]="componentId" [text]="question.text" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text>
     </ion-item>
     <ion-item class="ion-text-wrap" *ngFor="let row of question.rows">
-        <ion-grid item-content  class="ion-no-margin" class="ion-no-padding">
+        <ion-grid item-content  class="ion-no-margin ion-no-padding">
             <ion-row  class="ion-no-margin">
                 <ion-col>
                     <p><core-format-text id="addon-qtype-match-question-{{row.id}}" [component]="component" [componentId]="componentId" [text]="row.text" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text></p>

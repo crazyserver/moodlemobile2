@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="core-module-more-info">
-        <ion-badge slot="end" *ngIf="module.handlerData.extraBadge" [color]="module.handlerData.extraBadgeColor" class="ion-text-wrap" class="ion-text-start">
+        <ion-badge slot="end" *ngIf="module.handlerData.extraBadge" [color]="module.handlerData.extraBadgeColor" class="ion-text-wrap ion-text-start">
             <span [innerHTML]="module.handlerData.extraBadge"></span>
         </ion-badge>
         <ion-badge slot="end" *ngIf="module.visible === 0 && (!section || section.visible)" class="ion-text-wrap">{{ 'core.course.hiddenfromstudents' | translate }}</ion-badge>

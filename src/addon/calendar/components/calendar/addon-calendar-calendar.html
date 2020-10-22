@@ -8,14 +8,14 @@
 
 <core-loading [hideUntil]="loaded" class="core-loading-center safe-area-page">
     <!-- Period name and arrows to navigate. -->
-    <ion-grid class="ion-no-padding" class="addon-calendar-navigation">
+    <ion-grid class="ion-no-padding addon-calendar-navigation">
         <ion-row class="ion-align-items-center">
             <ion-col class="ion-text-start" *ngIf="canNavigate">
                 <ion-button slot="icon-only //TODO: mode to icon" fill="clear" (click)="loadPrevious()" [title]="'core.previous' | translate">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                 </ion-button>
             </ion-col>
-            <ion-col class="ion-text-center" class="addon-calendar-period">
+            <ion-col class="ion-text-center addon-calendar-period">
                 <h3>{{ periodName }}</h3>
             </ion-col>
             <ion-col class="ion-text-end" *ngIf="canNavigate">

@@ -4,7 +4,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-    <div *ngIf="site" class="ion-text-wrap" class="ion-text-center"  class="ion-margin-bottom" [ngClass]="{'item-avatar-center': showSiteAvatar}">
+    <div *ngIf="site" class="ion-text-wrap ion-text-center ion-margin-bottom" [ngClass]="{'item-avatar-center': showSiteAvatar}">
         <ng-container *ngIf="showSiteAvatar">
             <ion-avatar>
                 <!-- Show user avatar. -->
@@ -18,7 +18,7 @@
             <img *ngIf="!logoUrl" src="assets/img/login_logo.png" role="presentation">
         </div>
 
-        <h3 *ngIf="siteName" class="ion-padding" class="core-sitename"><core-format-text [text]="siteName" [filter]="false"></core-format-text></h3>
+        <h3 *ngIf="siteName" class="ion-padding core-sitename"><core-format-text [text]="siteName" [filter]="false"></core-format-text></h3>
         <p class="core-siteurl">{{siteUrl}}</p>
 
         <p *ngIf="!isLoggedOut" class="core-login-reconnect-warning">
@@ -26,7 +26,7 @@
         </p>
     </div>
     <form ion-list *ngIf="!isOAuth" [formGroup]="credForm" (ngSubmit)="login($event)" class="core-login-form" #reconnectForm>
-        <ion-item class="ion-text-wrap" class="core-username">
+        <ion-item class="ion-text-wrap core-username">
             <p>{{username}}</p>
         </ion-item>
         <ion-item  class="ion-margin-bottom">
@@ -48,15 +48,15 @@
 
     <!-- Forgotten password button. -->
     <ion-list lines="none" *ngIf="showForgottenPassword && !isOAuth" class="core-login-forgotten-password">
-        <ion-item class="ion-text-center" class="ion-text-wrap" (click)="forgottenPassword()" detail="false">
+        <ion-item class="ion-text-center ion-text-wrap" (click)="forgottenPassword()" detail="false">
             {{ 'core.login.forgotten' | translate }}
         </ion-item>
     </ion-list>
 
     <!-- Identity providers. -->
-    <ion-list *ngIf="identityProviders && identityProviders.length" class="ion-padding-top" class="core-login-identity-providers">
+    <ion-list *ngIf="identityProviders && identityProviders.length" class="ion-padding-top core-login-identity-providers">
         <ion-item class="ion-text-wrap"><h3 class="item-heading">{{ 'core.login.potentialidps' | translate }}</h3></ion-item>
-        <ion-item *ngFor="let provider of identityProviders" class="ion-text-wrap" class="core-oauth-icon" (click)="oauthClicked(provider)" title="{{provider.name}}">
+        <ion-item *ngFor="let provider of identityProviders" class="ion-text-wrap core-oauth-icon" (click)="oauthClicked(provider)" title="{{provider.name}}">
             <img [src]="provider.iconurl" alt="" width="32" height="32" slot=”start”>
             {{provider.name}}
         </ion-item>

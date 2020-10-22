@@ -12,7 +12,7 @@
 <core-dynamic-component *ngFor="let componentClass of behaviourComponents" [component]="componentClass" [data]="data"></core-dynamic-component>
 
 <!-- Question validation error. -->
-<ion-item class="ion-text-wrap" class="core-danger-item" *ngIf="question.validationError">
+<ion-item class="ion-text-wrap core-danger-item" *ngIf="question.validationError">
     <p>{{ question.validationError }}</p>
 </ion-item>
 
@@ -22,11 +22,11 @@
 </ion-item>
 
 <!-- Question feedback. -->
-<ion-item class="ion-text-wrap" class="core-question-feedback-container" *ngIf="question.feedbackHtml">
+<ion-item class="ion-text-wrap core-question-feedback-container" *ngIf="question.feedbackHtml">
     <p><core-format-text [component]="component" [componentId]="componentId" [text]="question.feedbackHtml" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text></p>
 </ion-item>
 
 <!-- Question comment. -->
-<ion-item class="ion-text-wrap" class="core-question-comment" *ngIf="question.commentHtml">
+<ion-item class="ion-text-wrap core-question-comment" *ngIf="question.commentHtml">
     <p><core-format-text [component]="component" [componentId]="componentId" [text]="question.commentHtml" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text></p>
 </ion-item>

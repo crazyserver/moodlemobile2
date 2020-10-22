@@ -26,7 +26,7 @@
                         <h2>{{ attempt.fullname }}</h2>
                         <p *ngIf="attempt.timemodified">{{attempt.timemodified * 1000 | coreFormatDate }}</p>
                     </ion-item>
-                    <ion-item class="ion-padding" class="ion-text-center" *ngIf="responses.canLoadMore">
+                    <ion-item class="ion-padding ion-text-center" *ngIf="responses.canLoadMore">
                         <!-- Button and spinner to show more attempts. -->
                         <ion-button expand="block" *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                         <ion-spinner *ngIf="loadingMore"></ion-spinner>
@@ -39,7 +39,7 @@
                     <ion-item *ngFor="let attempt of anonResponses.attempts" class="ion-text-wrap" (click)="gotoAttempt(attempt)" [class.core-split-item-selected]="attempt.id == attemptId">
                         <h2>{{ 'addon.mod_feedback.response_nr' |translate }}: {{attempt.number}}</h2>
                     </ion-item>
-                    <ion-item class="ion-padding" class="ion-text-center" *ngIf="anonResponses.canLoadMore">
+                    <ion-item class="ion-padding ion-text-center" *ngIf="anonResponses.canLoadMore">
                         <!-- Button and spinner to show more attempts. -->
                         <ion-button expand="block" *ngIf="!loadingMore" (click)="loadAttempts()">{{ 'core.loadmore' | translate }}</ion-button>
                         <ion-spinner *ngIf="loadingMore"></ion-spinner>

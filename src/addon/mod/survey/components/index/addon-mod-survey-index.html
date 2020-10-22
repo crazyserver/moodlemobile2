@@ -39,7 +39,7 @@
             <div *ngIf="question.multiArray && question.multiArray.length" [attr.class="ion-padding-top"]="index == 1">
                 <h3 class="ion-padding-horizontal">{{ question.text }}</h3>
                 <ion-grid class="ion-no-padding">
-                    <ion-row class="ion-no-padding" nowrap class="ion-align-items-center" class="hidden-phone">
+                    <ion-row class="ion-no-padding" nowrap class="ion-align-items-center hidden-phone">
                         <ion-col size="6">
                             <div class="ion-padding">{{ 'addon.mod_survey.responses' | translate }}</div>
                         </ion-col>
@@ -62,7 +62,7 @@
                     </ion-col>
 
                     <!-- Tablet view: radio buttons -->
-                    <ion-col class="hidden-phone" class="ion-text-center" *ngFor="let option of question.optionsArray; let value=index;">
+                    <ion-col class="hidden-phone ion-text-center" *ngFor="let option of question.optionsArray; let value=index;">
                         <ion-radio slot="start" [value]="value + 1" [attr.aria-labelledby]="'addon-mod_survey-'+question.name"></ion-radio>
                     </ion-col>
                     <ion-col class="hidden-tablet">
@@ -77,8 +77,8 @@
 
             <!-- Single question (don't belong to a category) -->
             <ng-container *ngIf="(!question.multiArray || question.multiArray.length == 0) && question.parent === 0">
-                <ion-grid class="ion-no-padding" class="ion-text-wrap" *ngIf="question.type > 0" [class.even]="isEven">
-                    <ion-row class="ion-no-padding" class="ion-align-items-center">
+                <ion-grid class="ion-no-padding ion-text-wrap" *ngIf="question.type > 0" [class.even]="isEven">
+                    <ion-row class="ion-no-padding ion-align-items-center">
                         <ion-col size="6">
                             <ion-label [core-mark-required]="question.required" class="ion-padding-horizontal" id="addon-mod_survey-{{question.name}}"><strong>{{question.num}}.</strong> {{ question.text }}</ion-label>
                         </ion-col>

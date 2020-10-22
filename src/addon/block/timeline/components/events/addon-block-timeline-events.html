@@ -25,7 +25,7 @@
     </ng-container>
 </ion-item-group>
 
-<div class="ion-padding" class="ion-text-center" *ngIf="canLoadMore && !empty">
+<div class="ion-padding ion-text-center" *ngIf="canLoadMore && !empty">
     <!-- Button and spinner to show more attempts. -->
     <ion-button expand="block" (click)="loadMoreEvents()" color="light" *ngIf="!loadingMore">
         {{ 'core.loadmore' | translate }}

@@ -1,5 +1,5 @@
 <section ion-list *ngIf="question.text || question.text === ''">
-    <ion-item class="ion-text-wrap" class="addon-qtype-shortanswer-text">
+    <ion-item class="ion-text-wrap addon-qtype-shortanswer-text">
         <core-format-text [component]="component" [componentId]="componentId" [text]="question.text" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text>
     </ion-item>
     <ion-item *ngIf="!question.input.isInline" class="ion-text-wrap" ngClass="core-{{question.input.correctIconColor}}-item">

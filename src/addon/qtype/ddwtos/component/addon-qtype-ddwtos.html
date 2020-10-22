@@ -2,7 +2,7 @@
     <!-- Content is outside the core-loading to let the script calculate drag items position -->
     <core-loading [hideUntil]="question.loaded"></core-loading>
 
-    <ion-item class="ion-text-wrap" class="addon-qtype-ddwtos-container" [ngClass]="{invisible: !question.loaded}">
+    <ion-item class="ion-text-wrap addon-qtype-ddwtos-container" [ngClass]="{invisible: !question.loaded}">
         <p *ngIf="!question.readOnly" class="core-info-card" slot="start //TODO: mode to icon">
             <ion-icon name="information-circle"></ion-icon>
             {{ 'core.question.howtodraganddrop' | translate }}

@@ -25,7 +25,7 @@
             </ion-item>
 
             <!-- Type. -->
-            <ion-item class="ion-text-wrap" class="addon-calendar-eventtype-container">
+            <ion-item class="ion-text-wrap addon-calendar-eventtype-container">
                 <ion-label id="addon-calendar-eventtype-label"><h2 [core-mark-required]="true">{{ 'addon.calendar.eventkind' | translate }}</h2></ion-label>
                 <ion-select [formControlName]="'eventtype'" aria-labelledby="addon-calendar-eventtype-label" interface="action-sheet" [disabled]="eventTypes.length == 1">
                     <ion-select-option *ngFor="let type of eventTypes" [value]="type.value">{{ type.name | translate }}</ion-select-option>

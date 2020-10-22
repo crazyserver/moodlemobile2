@@ -11,7 +11,7 @@
 </ion-header>
 <ion-content class="ion-padding">
     <div>
-        <div class="ion-text-center" class="ion-padding"  class="ion-margin-bottom" [class.hidden]="hasSites || enteredSiteUrl" class="core-login-site-logo">
+        <div class="ion-text-center ion-padding ion-margin-bottom" [class.hidden]="hasSites || enteredSiteUrl" class="core-login-site-logo">
             <img src="assets/img/login_logo.png" class="avatar-full login-logo" role="presentation">
         </div>
         <form ion-list [formGroup]="siteForm" (ngSubmit)="connect($event, siteForm.value.siteUrl)" *ngIf="!fixedSites" #siteFormEl>
@@ -95,7 +95,7 @@
 
         <!-- Help. -->
         <ion-list lines="none"  class="ion-margin-top">
-            <ion-item class="ion-text-center" class="ion-text-wrap" class="core-login-need-help" (click)="showHelp()" detail="false">
+            <ion-item class="ion-text-center ion-text-wrap core-login-need-help" (click)="showHelp()" detail="false">
                 {{ 'core.needhelp' | translate }}
             </ion-item>
         </ion-list>

@@ -22,7 +22,7 @@
         <ion-icon name="warning"></ion-icon> <span [innerHTML]="warning"></span>
     </ion-card>
 
-    <div class="ion-padding" class="safe-padding-horizontal">
+    <div class="ion-padding safe-padding-horizontal">
         <core-navigation-bar *ngIf="displayNavBar" [previous]="previousChapter && previousChapter.id" [previousTitle]="previousNavBarTitle" [next]="nextChapter && nextChapter.id" [nextTitle]="nextNavBarTitle" (action)="changeChapter($event)"></core-navigation-bar>
         <core-format-text [component]="component" [componentId]="componentId" [text]="chapterContent" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
         <div  class="ion-margin-top" *ngIf="tagsEnabled && contentsMap && contentsMap[currentChapter] && contentsMap[currentChapter].tags && contentsMap[currentChapter].tags.length > 0">

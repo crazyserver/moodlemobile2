@@ -19,14 +19,14 @@
     </ion-refresher>
 
     <!-- Period name and arrows to navigate. -->
-    <ion-grid class="ion-padding-top" class="safe-area-page">
+    <ion-grid class="ion-padding-top safe-area-page">
         <ion-row>
             <ion-col class="ion-text-start" *ngIf="currentMoment">
                 <ion-button slot="icon-only //TODO: mode to icon" fill="clear" (click)="loadPrevious()" [title]="'addon.calendar.dayprev' | translate">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                 </ion-button>
             </ion-col>
-            <ion-col class="ion-text-center" class="addon-calendar-period">
+            <ion-col class="ion-text-center addon-calendar-period">
                 <h3>{{ periodName }}</h3>
             </ion-col>
             <ion-col class="ion-text-end" *ngIf="currentMoment">
