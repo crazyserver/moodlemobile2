@@ -78,7 +78,7 @@
 
             <!-- Display them using buttons. -->
             <div *ngIf="siteSelector == 'buttons'">
-                <p class="class="ion-padding" no-class="ion-padding-bottom"">{{ 'core.login.selectsite' | translate }}</p>
+                <p class="ion-padding-no ion-padding-bottom">{{ 'core.login.selectsite' | translate }}</p>
                 <ion-button *ngFor="let site of fixedSites" class="ion-text-wrap" expand="block" (click)="connect($event, site.url)" [title]="site.name"  class="ion-margin-bottom">{{site.title}}</ion-button>
             </div>
         </ng-container>

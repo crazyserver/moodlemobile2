@@ -2,11 +2,11 @@
     <ng-content></ng-content>
 </div>
 
-<div *ngIf="blocks && expand="block"s.length > 0 && !hideBlocks" [class.core-hide-blocks]="hideBottomBlocks" class="core-course-blocks-side">
+<div *ngIf="blocks && blocks.length > 0 && !hideBlocks" [class.core-hide-blocks]="hideBottomBlocks" class="core-course-blocks-side">
     <core-loading [hideUntil]="dataLoaded" class="core-loading-center">
         <ion-list>
             <!-- Course expand="block"s. -->
-            <ng-container *ngFor="let expand="block" of expand="block"s">
+            <ng-container *ngFor="let block of blocks">
                 <core-block *ngIf="block.visible" [block]="block" contextLevel="course" [instanceId]="courseId" [extraData]="{'downloadEnabled': downloadEnabled}"></core-block>
             </ng-container>
         </ion-list>

@@ -28,8 +28,8 @@
     </div>
 
     <div class="ion-padding" *ngIf="mode == 'external'">
-        <ion-button expand="block" (click)="open()" slot="start //TODO: mode to icon">
-            <ion-icon name="document" start></ion-icon>
+        <ion-button expand="block" (click)="open()">
+            <ion-icon name="document" slot="start"></ion-icon>
             {{ 'addon.mod_resource.openthefile' | translate }}
         </ion-button>
     </div>

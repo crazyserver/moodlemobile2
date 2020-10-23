@@ -19,8 +19,8 @@
     <!-- Survey already done -->
     <ion-card class="ion-padding" *ngIf="survey && survey.surveydone">
         <p class="ion-padding">{{ 'addon.mod_survey.surveycompletednograph' | translate }}</p>
-        <ion-button expand="block" slot="start //TODO: mode to icon" [href]="externalUrl" core-link>
-            <ion-icon name="open" start></ion-icon>
+        <ion-button expand="block" [href]="externalUrl" core-link>
+            <ion-icon name="open" slot="start"></ion-icon>
             {{ 'addon.mod_survey.results' | translate }}
         </ion-button>
     </ion-card>
@@ -39,7 +39,7 @@
             <div *ngIf="question.multiArray && question.multiArray.length" [attr.class="ion-padding-top"]="index == 1">
                 <h3 class="ion-padding-horizontal">{{ question.text }}</h3>
                 <ion-grid class="ion-no-padding">
-                    <ion-row class="ion-no-padding" nowrap class="ion-align-items-center hidden-phone">
+                    <ion-row class="ion-no-padding ion-text-nowrap ion-align-items-center hidden-phone">
                         <ion-col size="6">
                             <div class="ion-padding">{{ 'addon.mod_survey.responses' | translate }}</div>
                         </ion-col>
@@ -55,7 +55,7 @@
 
             <!-- Subquestion -->
             <ion-grid class="ion-no-padding" *ngIf="question.parent !== 0" class="ion-text-wrap" [class.even]="isEven">
-                <ion-row class="ion-no-padding" nowrap class="ion-align-items-center" [(ngModel)]="answers[question.name]" [required]="question.required">
+                <ion-row class="ion-no-padding ion-text-nowrap ion-align-items-center" [(ngModel)]="answers[question.name]" [required]="question.required">
 <ion-radio-group>
                     <ion-col size="6">
                         <ion-label class="ion-padding-horizontal" [core-mark-required]="question.required" id="addon-mod_survey-{{question.name}}"><strong>{{question.num}}.</strong> {{ question.text }}</ion-label>

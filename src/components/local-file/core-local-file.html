@@ -1,5 +1,5 @@
 <form (ngSubmit)="changeName(newFileName, $event)" #nameForm>
-    <ion-item class="ion-text-wrap" stacked class="item-media" [class.item-input]="editMode" (click)="fileClicked($event)" detail="false">
+    <ion-item class="ion-text-wrap item-media" position="stacked" [class.item-input]="editMode" (click)="fileClicked($event)" detail="false">
         <img [src]="fileIcon" alt="{{fileExtension}}" role="presentation" slot=”start” />
 
         <!-- File name and edit button (if editable). -->
