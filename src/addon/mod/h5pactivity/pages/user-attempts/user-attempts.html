@@ -72,8 +72,12 @@
                 <img *ngIf="!attempt.completion" src="assets/img/completion/completion-auto-n.svg" [alt]="'addon.mod_h5pactivity.attempt_completion_no' | translate">
             </ion-col>
             <ion-col class="ion-text-center addon-mod_h5pactivity-table-success-col">
-                <core-icon *ngIf="attempt.success !== null && attempt.success" name="fa-check-circle" [label]="'addon.mod_h5pactivity.attempt_success_pass' | translate"></core-icon>
-                <core-icon *ngIf="attempt.success !== null && !attempt.success" name="fa-circle-o" [label]="'addon.mod_h5pactivity.attempt_success_fail' | translate"></core-icon>
+                <ion-icon *ngIf="attempt.success !== null && attempt.success" name="fa-check-circle"
+                    [label]="'addon.mod_h5pactivity.attempt_success_pass' | translate">
+                </ion-icon>
+                <ion-icon *ngIf="attempt.success !== null && !attempt.success" name="fa-circle-o"
+                    [label]="'addon.mod_h5pactivity.attempt_success_fail' | translate">
+                </ion-icon>
                 <img *ngIf="attempt.success === null" src="assets/img/icons/empty.svg" [alt]="'addon.mod_h5pactivity.attempt_success_unknown' | translate">
             </ion-col>
         </ion-row>

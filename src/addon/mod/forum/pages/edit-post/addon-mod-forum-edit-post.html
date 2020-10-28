@@ -19,8 +19,10 @@
             <core-rich-text-editor item-content [control]="messageControl" (contentChanged)="onMessageChange($event)" [placeholder]="'addon.mod_forum.replyplaceholder' | translate" [name]="'mod_forum_reply_' + replyData.id" [component]="component" [componentId]="componentId" [autoSave]="true" contextLevel="module" [contextInstanceId]="forum.cmid" elementId="message" [draftExtraParams]="{edit: replyData.id}"></core-rich-text-editor>
         </ion-item>
         <ion-item-divider class="ion-text-wrap" (click)="toggleAdvanced()" class="core-expandable">
-            <core-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”></core-icon>
-            <core-icon *ngIf="advanced" name="fa-caret-down" slot=”start”></core-icon>
+            <ion-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”>
+            </ion-icon>
+            <ion-icon *ngIf="advanced" name="fa-caret-down" slot=”start”>
+            </ion-icon>
             {{ 'addon.mod_forum.advanced' | translate }}
         </ion-item-divider>
         <ng-container *ngIf="advanced">

@@ -13,7 +13,8 @@
             <core-dynamic-component [component]="sectionSelectorComponent" [data]="data">
                 <div class="ion-text-wrap" *ngIf="displaySectionSelector && sections && hasSeveralSections" class="ion-padding clearfix" ion-row class="justify-content-between safe-padding-horizontal core-button-selector-row" [class.core-section-download]="downloadEnabled">
                     <ion-button class="ion-float-start" slot="start //TODO: mode to icon" slot="end //TODO: mode to icon" (click)="showSectionSelector($event)" color="light" class="core-button-select button-no-uppercase" ion-col [attr.aria-label]="('core.course.sections' | translate) + ': ' + (selectedSection && (selectedSection.formattedName || selectedSection.name))" aria-haspopup="true" [attr.aria-expanded]="sectionSelectorExpanded" aria-controls="core-course-section-selector" id="core-course-section-button">
-                        <core-icon name="fa-folder"></core-icon>
+                        <ion-icon name="fa-folder">
+                        </ion-icon>
                         <span class="core-button-select-text">{{selectedSection && (selectedSection.formattedName || selectedSection.name) || 'core.course.sections' | translate }}</span>
                         <ion-icon name="arrow-dropdown" ios="md-arrow-dropdown"></ion-icon>
                     </ion-button>

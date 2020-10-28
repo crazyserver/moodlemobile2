@@ -16,7 +16,8 @@
                         <p class="ion-text-end">{{ totalSize | coreBytesToSize }}</p>
                     </div>
                     <ion-button slot="icon-only //TODO: mode to icon" slot="end" class="ion-no-padding" (click)="deleteForCourse()" [disabled]="totalSize == 0">
-                        <core-icon name="trash" label="{{ 'addon.storagemanager.deletecourse' | translate }}"></core-icon>
+                        <ion-icon name="trash" label="{{ 'addon.storagemanager.deletecourse' | translate }}">
+                        </ion-icon>
                     </ion-button>
                 </ion-item>
             </ion-card-header>
@@ -31,7 +32,8 @@
                             {{ section.totalSize | coreBytesToSize }}
                         </p>
                         <ion-button slot="icon-only //TODO: mode to icon" slot="end" class="ion-no-padding" (click)="deleteForSection(section)">
-                            <core-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: section.name } }}"></core-icon>
+                            <ion-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: section.name } }}">
+                            </ion-icon>
                         </ion-button>
                     </ion-item>
                 </ion-card-header>
@@ -48,7 +50,8 @@
                                 {{ module.totalSize | coreBytesToSize }}
                             </p>
                             <ion-button slot="icon-only //TODO: mode to icon" fill="outline" slot="end" (click)="deleteForModule(module)">
-                                <core-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: module.name } }}"></core-icon>
+                                <ion-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: module.name } }}">
+                                </ion-icon>
                             </ion-button>
                         </ion-item>
                     </ng-container>

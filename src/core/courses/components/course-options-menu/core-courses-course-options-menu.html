@@ -8,19 +8,23 @@
     <h2>{{ 'addon.storagemanager.deletecourse' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('hide')" *ngIf="!course.hidden">
-    <core-icon name="fa-eye" slot=”start”></core-icon>
+    <ion-icon name="fa-eye" slot=”start”>
+    </ion-icon>
     <h2>{{ 'core.courses.hidecourse' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('show')" *ngIf="course.hidden">
-    <core-icon name="fa-eye-slash" slot=”start”></core-icon>
+    <ion-icon name="fa-eye-slash" slot=”start”>
+    </ion-icon>
     <h2>{{ 'core.courses.show' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('favourite')" *ngIf="!course.isfavourite">
-    <core-icon name="fa-star" slot=”start”></core-icon>
+    <ion-icon name="fa-star" slot=”start”>
+    </ion-icon>
     <h2>{{ 'core.courses.addtofavourites' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('unfavourite')" *ngIf="course.isfavourite">
-    <core-icon name="fa-star" [slash]="true" slot=”start”></core-icon>
+    <ion-icon name="fa-star" [slash]="true" slot=”start”>
+    </ion-icon>
     <h2>{{ 'core.courses.removefromfavourites' | translate }}</h2>
 </ion-item>
 

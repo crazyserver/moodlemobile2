@@ -4,7 +4,8 @@
 
         <ion-buttons slot="primary">
             <ion-button slot="icon-only //TODO: mode to icon" navPush="CoreAppSettingsPage" [attr.aria-label]="'core.settings.appsettings' | translate">
-                <core-icon name="fa-cogs"></core-icon>
+                <ion-icon name="fa-cogs">
+                </ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -32,7 +33,8 @@
                     <ion-item lines="none" class="core-login-site-list-title"><h2 class="item-heading">{{ 'core.login.selectsite' | translate }}</h2></ion-item>
                     <ion-item *ngIf="enteredSiteUrl" (click)="connect($event, enteredSiteUrl.url)" [attr.aria-label]="'core.login.connect' | translate" detail="true" class="core-login-entered-site">
                         <ion-thumbnail slot=”start”>
-                            <core-icon name="fa-pencil"></core-icon>
+                            <ion-icon name="fa-pencil">
+                            </ion-icon>
                         </ion-thumbnail>
                         <h2 class="ion-text-wrap">{{ 'core.login.yourenteredsite' | translate }}</h2>
                         <p>{{enteredSiteUrl.noProtocolUrl}}</p>
@@ -87,7 +89,8 @@
             <div class="core-login-site-qrcode-separator">{{ 'core.login.or' | translate }}</div>
             <ion-item class="core-login-site-qrcode" lines="none">
                 <ion-button expand="block" color="light"  class="ion-margin-top" slot="start //TODO: mode to icon" (click)="showInstructionsAndScanQR()" class="ion-text-wrap">
-                    <core-icon name="fa-qrcode" aria-hidden="true"></core-icon>
+                    <ion-icon name="fa-qrcode" aria-hidden="true">
+                    </ion-icon>
                     {{ 'core.scanqr' | translate }}
                 </ion-button>
             </ion-item>

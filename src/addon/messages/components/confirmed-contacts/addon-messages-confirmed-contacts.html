@@ -8,7 +8,8 @@
                 <ion-avatar slot=”start” core-user-avatar [user]="contact" [checkOnline]="contact.showonlinestatus" [linkProfile]="false"></ion-avatar>
                 <h2>
                     {{ contact.fullname }}
-                    <core-icon *ngIf="contact.isblocked" name="fa-ban" slot="end"></core-icon>
+                    <ion-icon *ngIf="contact.isblocked" name="fa-ban" slot="end">
+                    </ion-icon>
                 </h2>
             </ion-item>
         </ion-list>

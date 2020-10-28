@@ -8,11 +8,13 @@
         <h2>{{ appName }} {{ versionName }}</h2>
     </ion-item>
     <ion-item class="ion-text-wrap" (click)="openPage('CoreSettingsLicensesPage')" [title]="'core.settings.opensourcelicenses' | translate">
-        <core-icon name="fa-copyright" slot=”start”></core-icon>
+        <ion-icon name="fa-copyright" slot=”start”>
+        </ion-icon>
         {{ 'core.settings.opensourcelicenses' | translate }}
     </ion-item>
     <ion-item class="ion-text-wrap" *ngIf="privacyPolicy" [href]="privacyPolicy" core-link auto-login="no">
-        <core-icon name="fa-user-secret" slot=”start”></core-icon>
+        <ion-icon name="fa-user-secret" slot=”start”>
+        </ion-icon>
         {{ 'core.settings.privacypolicy' | translate }}
     </ion-item>
     <ion-item class="ion-text-wrap" (click)="openPage('CoreSettingsDeviceInfoPage')" [title]="'core.settings.deviceinfo' | translate">

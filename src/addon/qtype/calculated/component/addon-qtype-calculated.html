@@ -28,7 +28,9 @@
                     <ng-container *ngTemplateOutlet="selectUnits"></ng-container>
                 </ng-container>
             </ion-row>
-            <core-icon *ngIf="question.input.correctIcon" class="core-correct-icon" item-content slot="end" [name]="question.input.correctIcon" [color]="[question.input.correctIconColor]"></core-icon>
+            <ion-icon *ngIf="question.input.correctIcon" class="core-correct-icon" item-content slot="end"
+                [name]="question.input.correctIcon" [color]="[question.input.correctIconColor]">
+            </ion-icon>
         </ion-grid>
     </ion-item>
 

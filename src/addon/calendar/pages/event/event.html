@@ -2,7 +2,8 @@
     <ion-toolbar core-back-button>
         <ion-title>
             <img *ngIf="event && event.moduleIcon" src="{{event.moduleIcon}}" alt="" role="presentation" class="core-module-icon">
-            <core-icon *ngIf="event && event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”></core-icon>
+            <ion-icon *ngIf="event && event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”>
+            </ion-icon>
             <core-format-text *ngIf="event" [text]="event.name" [contextLevel]="event.contextLevel" [contextInstanceId]="event.contextInstanceId"></core-format-text>
         </ion-title>
         <ion-buttons slot="primary">
@@ -32,7 +33,8 @@
             <ion-card-content *ngIf="event">
                 <ion-item class="ion-text-wrap" *ngIf="isSplitViewOn">
                     <img *ngIf="event.moduleIcon" src="{{event.moduleIcon}}" slot=”start” alt="" role="presentation" class="core-module-icon">
-                    <core-icon *ngIf="event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”></core-icon>
+                    <ion-icon *ngIf="event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”>
+                    </ion-icon>
                     <h2>{{ 'addon.calendar.eventname' | translate }}</h2>
                     <p><core-format-text [text]="event.name" [contextLevel]="event.contextLevel" [contextInstanceId]="event.contextInstanceId"></core-format-text></p>
                     <ion-note slot="end" *ngIf="event.deleted">

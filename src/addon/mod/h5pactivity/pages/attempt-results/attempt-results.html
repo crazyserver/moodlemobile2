@@ -44,11 +44,13 @@
                     <ion-item class="ion-text-wrap" lines="none">
                         <h2>{{ 'addon.mod_h5pactivity.outcome' | translate }}</h2>
                         <p *ngIf="attempt.success !== null && attempt.success" >
-                            <core-icon name="fa-check-circle"></core-icon>
+                            <ion-icon name="fa-check-circle">
+                            </ion-icon>
                             {{ 'addon.mod_h5pactivity.attempt_success_pass' | translate }}
                         </p>
                         <p *ngIf="attempt.success !== null && !attempt.success" >
-                            <core-icon name="fa-circle-o"></core-icon>
+                            <ion-icon name="fa-circle-o">
+                            </ion-icon>
                             {{ 'addon.mod_h5pactivity.attempt_success_fail' | translate }}
                         </p>
                         <p *ngIf="attempt.success === null" >
@@ -118,23 +120,28 @@
 <!-- Template to render an answer. -->
 <ng-template #answerTemplate let-answer="answer">
     <p *ngIf="answer.correct">
-        <core-icon name="fa-check" [label]="'addon.mod_h5pactivity.answer_correct' | translate" color="success"></core-icon>
+        <ion-icon name="fa-check" [label]="'addon.mod_h5pactivity.answer_correct' | translate" color="success">
+        </ion-icon>
         {{ answer.answer }}
     </p>
     <p *ngIf="answer.incorrect">
-        <core-icon name="fa-remove" [label]="'addon.mod_h5pactivity.answer_incorrect' | translate" color="danger"></core-icon>
+        <ion-icon name="fa-remove" [label]="'addon.mod_h5pactivity.answer_incorrect' | translate" color="danger">
+        </ion-icon>
         {{ answer.answer }}
     </p>
     <p *ngIf="answer.text">
         {{ answer.answer }}
     </p>
     <p *ngIf="answer.checked">
-        <core-icon name="fa-check-circle" [label]="'addon.mod_h5pactivity.answer_checked' | translate"></core-icon>
+        <ion-icon name="fa-check-circle" [label]="'addon.mod_h5pactivity.answer_checked' | translate">
+        </ion-icon>
     </p>
     <p *ngIf="answer.pass">
-        <core-icon name="fa-check" [label]="'addon.mod_h5pactivity.answer_pass' | translate" color="success"></core-icon>
+        <ion-icon name="fa-check" [label]="'addon.mod_h5pactivity.answer_pass' | translate" color="success">
+        </ion-icon>
     </p>
     <p *ngIf="answer.fail">
-        <core-icon name="fa-remove" [label]="'addon.mod_h5pactivity.answer_fail' | translate" color="danger"></core-icon>
+        <ion-icon name="fa-remove" [label]="'addon.mod_h5pactivity.answer_fail' | translate" color="danger">
+        </ion-icon>
     </p>
 </ng-template>

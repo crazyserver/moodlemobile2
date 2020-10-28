@@ -13,8 +13,10 @@
                 <div *ngIf="option.feedback" class="specificfeedback"><core-format-text [component]="component" [componentId]="componentId" [text]="option.feedback" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text></div>
             </ion-label>
             <ion-checkbox [attr.name]="option.name" [(ngModel)]="option.checked" [disabled]="option.disabled" slot="end" [color]='(option.isCorrect === 1 ? "success": "") +  (option.isCorrect === 0 ? "danger": "")'></ion-checkbox>
-            <core-icon item-content *ngIf="option.isCorrect === 1" class="core-correct-icon" name="fa-check" color="success"></core-icon>
-            <core-icon item-content *ngIf="option.isCorrect === 0" class="core-correct-icon" name="fa-remove" color="danger"></core-icon>
+            <ion-icon item-content *ngIf="option.isCorrect === 1" class="core-correct-icon" name="fa-check" color="success">
+            </ion-icon>
+            <ion-icon item-content *ngIf="option.isCorrect === 0" class="core-correct-icon" name="fa-remove" color="danger">
+            </ion-icon>
 
             <!-- ion-checkbox doesn't use an input. Create a hidden input to hold the value. -->
             <input item-content type="hidden" [ngModel]="option.checked" [attr.name]="option.name">
@@ -30,8 +32,10 @@
                 <div *ngIf="option.feedback" class="specificfeedback"><core-format-text [component]="component" [componentId]="componentId" [text]="option.feedback" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId" [courseId]="courseId"></core-format-text></div>
             </ion-label>
             <ion-radio slot="start" [value]="option.value" [disabled]="option.disabled" [color]='(option.isCorrect === 1 ? "success": "") +  (option.isCorrect === 0 ? "danger": "")'></ion-radio>
-            <core-icon item-content *ngIf="option.isCorrect === 1" class="core-correct-icon" name="fa-check" color="success"></core-icon>
-            <core-icon item-content *ngIf="option.isCorrect === 0" class="core-correct-icon" name="fa-remove" color="danger"></core-icon>
+            <ion-icon item-content *ngIf="option.isCorrect === 1" class="core-correct-icon" name="fa-check" color="success">
+            </ion-icon>
+            <ion-icon item-content *ngIf="option.isCorrect === 0" class="core-correct-icon" name="fa-remove" color="danger">
+            </ion-icon>
         </ion-item>
         <div *ngIf="!question.disabled" class="ion-padding-horizontal">
             <ion-button class="ion-text-wrap" [disabled]="!question.singleChoiceModel" full color="light" (click)="clear()" type="reset">{{ 'addon.mod_quiz.clearchoice' | translate }}</ion-button>

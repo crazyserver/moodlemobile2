@@ -10,7 +10,8 @@
                 <span *ngIf="course.displayname && course.shortname && course.fullname != course.displayname" class="core-course-shortname"><core-format-text [text]="course.shortname" contextLevel="course" [contextInstanceId]="course.id"></core-format-text></span>
             </p>
             <h2>
-                <core-icon name="fa-star" *ngIf="course.isfavourite"></core-icon>
+                <ion-icon name="fa-star" *ngIf="course.isfavourite">
+                </ion-icon>
                 <core-format-text [text]="course.fullname" contextLevel="course" [contextInstanceId]="course.id"></core-format-text>
             </h2>
         </div>
@@ -18,7 +19,8 @@
         <div class="core-button-spinner" *ngIf="downloadCourseEnabled && !courseOptionMenuEnabled && showDownload">
             <!-- Download course. -->
             <ion-button *ngIf="prefetchCourseData.prefetchCourseIcon != 'spinner'" slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="prefetchCourse($event)" [attr.aria-label]="prefetchCourseData.title | translate">
-                <core-icon *ngIf="!prefetchCourseData.downloadSucceeded" [name]="prefetchCourseData.prefetchCourseIcon"></core-icon>
+                <ion-icon *ngIf="!prefetchCourseData.downloadSucceeded" [name]="prefetchCourseData.prefetchCourseIcon">
+                </ion-icon>
                 <ion-icon *ngIf="prefetchCourseData.downloadSucceeded" name="cloud-done" color="success" [attr.aria-label]="'core.downloaded' | translate" role="status"></ion-icon>
             </ion-button>
             <!-- Download course spinner. -->
@@ -34,7 +36,8 @@
 
             <!-- Options menu. -->
             <ion-button slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="showCourseOptionsMenu($event)" *ngIf="!showSpinner" [attr.aria-label]="('core.displayoptions' | translate)">
-                <core-icon name="more"></core-icon>
+                <ion-icon name="more">
+                </ion-icon>
             </ion-button>
         </div>
     </ion-item>

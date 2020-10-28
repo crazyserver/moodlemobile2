@@ -76,9 +76,11 @@
 
             <!-- Advanced options. -->
             <ion-item-divider class="ion-text-wrap" (click)="toggleAdvanced()" class="core-expandable">
-                <core-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”></core-icon>
+                <ion-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”>
+                </ion-icon>
                 <span *ngIf="!advanced">{{ 'core.showmore' | translate }}</span>
-                <core-icon *ngIf="advanced" name="fa-caret-down" slot=”start”></core-icon>
+                <ion-icon *ngIf="advanced" name="fa-caret-down" slot=”start”>
+                </ion-icon>
                 <span *ngIf="advanced">{{ 'core.showless' | translate }}</span>
             </ion-item-divider>
 

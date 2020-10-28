@@ -14,8 +14,10 @@
                         <ion-select-option *ngFor="let option of row.options" [value]="option.value">{{option.label}}</ion-select-option>
                     </ion-select>
 
-                    <core-icon *ngIf="row.isCorrect === 1" class="core-correct-icon" name="fa-check" color="success"></core-icon>
-                    <core-icon *ngIf="row.isCorrect === 0" class="core-correct-icon" name="fa-remove" color="danger"></core-icon>
+                    <ion-icon *ngIf="row.isCorrect === 1" class="core-correct-icon" name="fa-check" color="success">
+                    </ion-icon>
+                    <ion-icon *ngIf="row.isCorrect === 0" class="core-correct-icon" name="fa-remove" color="danger">
+                    </ion-icon>
 
                     <!-- ion-select doesn't use a select. Create a hidden input to hold the selected value. -->
                     <input type="hidden" [ngModel]="row.selected" [attr.name]="row.name">

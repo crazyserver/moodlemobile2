@@ -37,9 +37,18 @@
 
         <div *ngIf="step == 2" class="core-login-onboarding-step">
             <ul class="core-login-onboarding-text">
-                <li><core-icon name="fa-check-circle-o"></core-icon> {{ 'core.login.onboardingcreatemanagecourses' | translate }}</li>
-                <li><core-icon name="fa-check-circle-o"></core-icon> {{ 'core.login.onboardingenrolmanagestudents' | translate }}</li>
-                <li><core-icon name="fa-check-circle-o"></core-icon> {{ 'core.login.onboardingprovidefeedback' | translate }}</li>
+                <li>
+                    <ion-icon name="fa-check-circle-o">
+                    </ion-icon> {{ 'core.login.onboardingcreatemanagecourses' | translate }}
+                </li>
+                <li>
+                    <ion-icon name="fa-check-circle-o">
+                    </ion-icon> {{ 'core.login.onboardingenrolmanagestudents' | translate }}
+                </li>
+                <li>
+                    <ion-icon name="fa-check-circle-o">
+                    </ion-icon> {{ 'core.login.onboardingprovidefeedback' | translate }}
+                </li>
             </ul>
 
             <ion-button expand="block" (click)="gotoWeb($event)"  class="ion-margin-bottom">{{ 'core.login.onboardinggetstarted' | translate }}</ion-button>

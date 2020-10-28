@@ -28,8 +28,10 @@
                 </ion-item>
                 <!-- Favourite conversations. -->
                 <ion-item-divider class="ion-text-wrap" (click)="toggle(favourites)" class="core-expandable">
-                    <core-icon *ngIf="!favourites.expanded" name="fa-caret-right" slot=”start”></core-icon>
-                    <core-icon *ngIf="favourites.expanded" name="fa-caret-down" slot=”start”></core-icon>
+                    <ion-icon *ngIf="!favourites.expanded" name="fa-caret-right" slot=”start”>
+                    </ion-icon>
+                    <ion-icon *ngIf="favourites.expanded" name="fa-caret-down" slot=”start”>
+                    </ion-icon>
                     {{ 'core.favourites' | translate }} ({{ favourites.count }})
                     <ion-badge slot="end" *ngIf="favourites.unread">{{ favourites.unread }}</ion-badge>
                 </ion-item-divider>
@@ -47,8 +49,10 @@
 
                 <!-- Group conversations. -->
                 <ion-item-divider class="ion-text-wrap" (click)="toggle(group)" class="core-expandable">
-                    <core-icon *ngIf="!group.expanded" name="fa-caret-right" slot=”start”></core-icon>
-                    <core-icon *ngIf="group.expanded" name="fa-caret-down" slot=”start”></core-icon>
+                    <ion-icon *ngIf="!group.expanded" name="fa-caret-right" slot=”start”>
+                    </ion-icon>
+                    <ion-icon *ngIf="group.expanded" name="fa-caret-down" slot=”start”>
+                    </ion-icon>
                     {{ 'addon.messages.groupconversations' | translate }} ({{ group.count }})
                     <ion-badge slot="end" *ngIf="group.unread">{{ group.unread }}</ion-badge>
                 </ion-item-divider>
@@ -65,8 +69,10 @@
                 </ion-item>
 
                 <ion-item-divider class="ion-text-wrap" (click)="toggle(individual)" class="core-expandable">
-                    <core-icon *ngIf="!individual.expanded" name="fa-caret-right" slot=”start”></core-icon>
-                    <core-icon *ngIf="individual.expanded" name="fa-caret-down" slot=”start”></core-icon>
+                    <ion-icon *ngIf="!individual.expanded" name="fa-caret-right" slot=”start”>
+                    </ion-icon>
+                    <ion-icon *ngIf="individual.expanded" name="fa-caret-down" slot=”start”>
+                    </ion-icon>
                     {{ 'addon.messages.individualconversations' | translate }} ({{ individual.count }})
                     <ion-badge slot="end" *ngIf="individual.unread">{{ individual.unread }}</ion-badge>
                 </ion-item-divider>
@@ -100,8 +106,10 @@
 
         <h2>
             <core-format-text [text]="conversation.name" contextLevel="system" [contextInstanceId]="0"></core-format-text>
-            <core-icon name="fa-ban" *ngIf="conversation.isblocked" [label]="'addon.messages.contactblocked' | translate"></core-icon>
-            <core-icon *ngIf="conversation.ismuted" name="volume-off" [label]="'addon.messages.mutedconversation' | translate"></core-icon>
+            <ion-icon name="fa-ban" *ngIf="conversation.isblocked" [label]="'addon.messages.contactblocked' | translate">
+            </ion-icon>
+            <ion-icon *ngIf="conversation.ismuted" name="volume-off" [label]="'addon.messages.mutedconversation' | translate">
+            </ion-icon>
         </h2>
         <ion-note *ngIf="conversation.lastmessagedate > 0 || conversation.unreadcount">
             <ion-badge *ngIf="conversation.unreadcount > 0">{{ conversation.unreadcount }}</ion-badge>

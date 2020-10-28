@@ -21,7 +21,8 @@
                             <td *ngIf="row.itemtype == 'category'" class="core-grades-table-category" [attr.rowspan]="row.rowspan">
                             </td>
                             <th class="core-grades-table-gradeitem" [class.column-itemname]="row.itemtype == 'category'" [attr.colspan]="row.colspan" [class.core-split-item-selected]="gradeId == row.id" class="ion-text-start">
-                                <core-icon *ngIf="row.icon" name="{{row.icon}}" slot=”start”></core-icon>
+                                <ion-icon *ngIf="row.icon" name="{{row.icon}}" slot=”start”>
+                                </ion-icon>
                                 <img *ngIf="row.image" [src]="row.image" slot=”start”/>
                                 <span [innerHTML]="row.gradeitem"></span>
                             </th>

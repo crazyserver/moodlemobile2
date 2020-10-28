@@ -38,7 +38,8 @@
         </ion-card>
 
         <ion-card class="core-info-card" slot="start //TODO: mode to icon" *ngIf="discussion && discussion.locked">
-            <core-icon name="fa-lock"></core-icon> {{ 'addon.mod_forum.discussionlocked' | translate }}
+            <ion-icon name="fa-lock">
+            </ion-icon> {{ 'addon.mod_forum.discussionlocked' | translate }}
         </ion-card>
 
         <div *ngIf="startingPost"  class="ion-margin-bottom highlight">

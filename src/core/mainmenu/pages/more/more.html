@@ -16,23 +16,27 @@
             <ion-spinner></ion-spinner>
         </ion-item>
         <ion-item *ngFor="let handler of handlers" [ngClass]="['core-moremenu-handler', handler.class || '']" (click)="openHandler(handler)" title="{{ handler.title | translate }}" detail="true">
-            <core-icon [name]="handler.icon" slot=”start”></core-icon>
+            <ion-icon [name]="handler.icon" slot=”start”>
+            </ion-icon>
             <h2>{{ handler.title | translate}}</h2>
             <ion-badge slot="end" *ngIf="handler.showBadge" [hidden]="handler.loading || !handler.badge">{{handler.badge}}</ion-badge>
             <ion-spinner slot="end" *ngIf="handler.showBadge && handler.loading"></ion-spinner>
         </ion-item>
         <div *ngFor="let item of customItems" class="core-moremenu-customitem">
             <ion-item *ngIf="item.type != 'embedded'" [href]="item.url" core-link [capture]="item.type == 'app'" [inApp]="item.type == 'inappbrowser'" title="{{item.label}}">
-                <core-icon [name]="item.icon" slot=”start”></core-icon>
+                <ion-icon [name]="item.icon" slot=”start”>
+                </ion-icon>
                 <h2>{{item.label}}</h2>
             </ion-item>
             <ion-item *ngIf="item.type == 'embedded'" (click)="openItem(item)" title="{{item.label}}">
-                <core-icon [name]="item.icon" slot=”start”></core-icon>
+                <ion-icon [name]="item.icon" slot=”start”>
+                </ion-icon>
                 <h2>{{item.label}}</h2>
             </ion-item>
         </div>
         <ion-item *ngIf="showScanQR" (click)="scanQR()">
-            <core-icon name="fa-qrcode" slot=”start” aria-hidden="true"></core-icon>
+            <ion-icon name="fa-qrcode" slot=”start” aria-hidden="true">
+            </ion-icon>
             <h2>{{ 'core.scanqr' | translate }}</h2>
         </ion-item>
         <ion-item *ngIf="showWeb" [href]="siteInfo.siteurl" core-link autoLogin="yes" title="{{ 'core.mainmenu.website' | translate }}">
@@ -44,7 +48,8 @@
             <h2>{{ 'core.mainmenu.help' | translate }}</h2>
         </ion-item>
         <ion-item (click)="openSitePreferences()" title="{{ 'core.settings.preferences' | translate }}">
-            <core-icon name="fa-wrench" slot=”start”></core-icon>
+            <ion-icon name="fa-wrench" slot=”start”>
+            </ion-icon>
             <h2>{{ 'core.settings.preferences' | translate }}</h2>
         </ion-item>
                 <ion-item (click)="logout()" title="{{ logoutLabel | translate }}">
@@ -53,7 +58,8 @@
         </ion-item>
         <ion-item-divider></ion-item-divider>
         <ion-item (click)="openAppSettings()" title="{{ 'core.settings.appsettings' | translate }}">
-            <core-icon name="fa-cogs" slot=”start”></core-icon>
+            <ion-icon name="fa-cogs" slot=”start”>
+            </ion-icon>
             <h2>{{ 'core.settings.appsettings' | translate }}</h2>
         </ion-item>
 

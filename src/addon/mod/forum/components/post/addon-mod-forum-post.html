@@ -3,15 +3,20 @@
         <ion-item class="ion-text-wrap">
             <div class="addon-mod-forum-post-title" *ngIf="displaySubject">
                 <h2 class="ion-text-wrap">
-                    <core-icon name="fa-map-pin" *ngIf="discussion && !post.parentid && discussion.pinned"></core-icon>
-                    <core-icon name="fa-star" class="addon-forum-star" *ngIf="discussion && !post.parentid && !discussion.pinned && discussion.starred"></core-icon>
+                    <ion-icon name="fa-map-pin" *ngIf="discussion && !post.parentid && discussion.pinned">
+                    </ion-icon>
+                    <ion-icon name="fa-star" class="addon-forum-star"
+                        *ngIf="discussion && !post.parentid && !discussion.pinned && discussion.starred">
+                    </ion-icon>
                     <core-format-text [text]="post.subject" contextLevel="module" [contextInstanceId]="forum && forum.cmid" [courseId]="courseId"></core-format-text>
                 </h2>
                 <ion-note class="ion-float-end ion-padding-left ion-text-end" *ngIf="trackPosts && post.unread" [attr.aria-label]="'addon.mod_forum.unread' | translate">
-                    <core-icon name="fa-circle" color="primary"></core-icon>
+                    <ion-icon name="fa-circle" color="primary">
+                    </ion-icon>
                 </ion-note>
                 <ion-button slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="showOptionsMenu($event)" *ngIf="optionsMenuEnabled" [attr.aria-label]="('core.displayoptions' | translate)">
-                    <core-icon name="more"></core-icon>
+                    <ion-icon name="more">
+                    </ion-icon>
                 </ion-button>
             </div>
             <div class="addon-mod-forum-post-info">
@@ -24,10 +29,12 @@
                 </div>
                 <ng-container *ngIf="!displaySubject">
                     <ion-note class="ion-float-end ion-padding-left ion-text-end" *ngIf="trackPosts && post.unread" [attr.aria-label]="'addon.mod_forum.unread' | translate">
-                        <core-icon name="fa-circle" color="primary"></core-icon>
+                        <ion-icon name="fa-circle" color="primary">
+                        </ion-icon>
                     </ion-note>
                     <ion-button slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="showOptionsMenu($event)" *ngIf="optionsMenuEnabled" [attr.aria-label]="('core.displayoptions' | translate)">
-                        <core-icon name="more"></core-icon>
+                        <ion-icon name="more">
+                        </ion-icon>
                     </ion-button>
                 </ng-container>
             </div>
@@ -52,7 +59,8 @@
 
         <ion-item class="ion-no-padding ion-text-end" *ngIf="post.id > 0 && post.capabilities.reply && !post.isprivatereply" class="addon-forum-reply-button">
             <ion-button slot="start //TODO: mode to icon" fill="clear" small (click)="showReplyForm()" [attr.aria-controls]="'addon-forum-reply-edit-form-' + uniqueId" [attr.aria-expanded]="replyData.replyingTo === post.id">
-                <core-icon name="fa-reply"></core-icon> {{ 'addon.mod_forum.reply' | translate }}
+                <ion-icon name="fa-reply">
+                </ion-icon> {{ 'addon.mod_forum.reply' | translate }}
             </ion-button>
         </ion-item>
     </div>
@@ -72,8 +80,10 @@
         </ion-item>
         <ng-container *ngIf="forum.id && forum.maxattachments > 0">
             <ion-item-divider class="ion-text-wrap" (click)="toggleAdvanced()" class="core-expandable">
-                <core-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”></core-icon>
-                <core-icon *ngIf="advanced" name="fa-caret-down" slot=”start”></core-icon>
+                <ion-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”>
+                </ion-icon>
+                <ion-icon *ngIf="advanced" name="fa-caret-down" slot=”start”>
+                </ion-icon>
                 {{ 'addon.mod_forum.advanced' | translate }}
             </ion-item-divider>
             <ng-container *ngIf="advanced">

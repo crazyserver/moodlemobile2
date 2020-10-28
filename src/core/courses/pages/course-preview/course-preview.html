@@ -14,7 +14,8 @@
                 <img [src]="course.courseImage" core-external-content alt=""/>
             </div>
             <ion-item class="ion-text-wrap" (click)="openCourse()" [title]="course.fullname" [attr.detail-none]=" avoidOpenCourse || !canAccessCourse">
-                <core-icon name="fa-graduation-cap" fixed-width slot=”start”></core-icon>
+                <ion-icon name="fa-graduation-cap" fixed-width slot=”start”>
+                </ion-icon>
                 <h2><core-format-text [text]="course.fullname" contextLevel="course" [contextInstanceId]="course.id"></core-format-text></h2>
                 <p *ngIf="course.categoryname"><core-format-text [text]="course.categoryname" contextLevel="coursecat" [contextInstanceId]="course.categoryid"></core-format-text></p>
                 <p *ngIf="course.startdate">{{course.startdate * 1000 | coreFormatDate:"strftimedatefullshort" }} <span *ngIf="course.enddate"> - {{course.enddate * 1000 | coreFormatDate:"strftimedatefullshort" }}</span></p>
@@ -57,7 +58,9 @@
                 <p>{{ 'core.courses.notenrollable' | translate }}</p>
             </ion-item>
             <ion-item *ngIf="canAccessCourse && downloadCourseEnabled" (click)="prefetchCourse()" detail="false" [attr.aria-label]="prefetchCourseData.title | translate">
-                <core-icon *ngIf="!prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'" [name]="prefetchCourseData.prefetchCourseIcon" slot=”start”></core-icon>
+                <ion-icon *ngIf="!prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'"
+                    [name]="prefetchCourseData.prefetchCourseIcon" slot=”start”>
+                </ion-icon>
                 <ion-icon *ngIf="prefetchCourseData.downloadSucceeded && prefetchCourseData.prefetchCourseIcon != 'spinner'" slot=”start” name="cloud-done" color="success" [attr.aria-label]="'core.downloaded' | translate" role="status"></ion-icon>
                 <ion-spinner *ngIf="prefetchCourseData.prefetchCourseIcon == 'spinner'" slot=”start”></ion-spinner>
                 <h2>{{ 'core.course.downloadcourse' | translate }}</h2>

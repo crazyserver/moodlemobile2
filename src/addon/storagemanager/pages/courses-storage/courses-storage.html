@@ -16,7 +16,8 @@
                         <p class="ion-text-end">{{ totalSize | coreBytesToSize }}</p>
                     </div>
                     <ion-button slot="icon-only //TODO: mode to icon" slot="end" class="ion-no-padding" (click)="deleteCompletelyDownloadedCourses()" [disabled]="completelyDownloadedCourses.length === 0">
-                        <core-icon name="trash" label="{{ 'addon.storagemanager.deletecourses' | translate }}"></core-icon>
+                        <ion-icon name="trash" label="{{ 'addon.storagemanager.deletecourses' | translate }}">
+                        </ion-icon>
                     </ion-button>
                 </ion-item>
             </ion-card-header>
@@ -31,7 +32,8 @@
                         {{ course.totalSize | coreBytesToSize }}
                     </p>
                     <ion-button slot="icon-only //TODO: mode to icon" slot="end" (click)="deleteCourse(course)" [disabled]="course.isDownloading">
-                        <core-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: course.name } }}"></core-icon>
+                        <ion-icon name="trash" label="{{ 'addon.storagemanager.deletedatafrom' | translate: { name: course.name } }}">
+                        </ion-icon>
                     </ion-button>
                 </ion-item>
             </ion-list>

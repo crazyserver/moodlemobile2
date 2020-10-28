@@ -4,8 +4,11 @@
             <img *ngIf="loaded && !otherMember && conversationImage" class="core-bar-button-image" [src]="conversationImage" [alt]="title" onError="this.src='assets/img/group-avatar.png'" core-external-content role="presentation" [siteId]="siteId || null">
             <ion-avatar *ngIf="loaded && otherMember" class="core-bar-button-image" core-user-avatar [user]="otherMember" [linkProfile]="false" [checkOnline]="otherMember.showonlinestatus" slot=”start” (click)="showInfo && viewInfo()"></ion-avatar>
             <core-format-text [text]="title" contextLevel="system" [contextInstanceId]="0" (click)="showInfo && !isGroup && viewInfo()"></core-format-text>
-            <core-icon *ngIf="conversation && conversation.isfavourite" name="fa-star" [label]="'core.favourites' | translate"></core-icon>
-            <core-icon *ngIf="conversation && conversation.ismuted" name="volume-off" [label]="'addon.messages.mutedconversation' | translate"></core-icon>
+            <ion-icon *ngIf="conversation && conversation.isfavourite" name="fa-star" [label]="'core.favourites' | translate">
+            </ion-icon>
+            <ion-icon *ngIf="conversation && conversation.ismuted" name="volume-off"
+                [label]="'addon.messages.mutedconversation' | translate">
+            </ion-icon>
         </ion-title>
         <ion-buttons slot="primary"></ion-buttons>
     </ion-toolbar>

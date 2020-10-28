@@ -3,7 +3,8 @@
     <!-- Download all courses. -->
     <div *ngIf="downloadCoursesEnabled && downloadEnabled && filteredCourses.length > 1 && !showFilter" class="core-button-spinner" slot="end">
         <ion-button *ngIf="prefetchCoursesData[selectedFilter] && prefetchCoursesData[selectedFilter].icon && prefetchCoursesData[selectedFilter].icon != 'spinner'" slot="icon-only //TODO: mode to icon" fill="clear" color="dark" (click)="prefetchCourses()">
-            <core-icon [name]="prefetchCoursesData[selectedFilter].icon"></core-icon>
+            <ion-icon [name]="prefetchCoursesData[selectedFilter].icon">
+            </ion-icon>
         </ion-button>
         <ion-badge class="core-course-download-courses-progress" *ngIf="prefetchCoursesData[selectedFilter].badge">{{prefetchCoursesData[selectedFilter].badge}}</ion-badge>
         <ion-spinner *ngIf="!prefetchCoursesData[selectedFilter].icon || prefetchCoursesData[selectedFilter].icon == 'spinner'"></ion-spinner>

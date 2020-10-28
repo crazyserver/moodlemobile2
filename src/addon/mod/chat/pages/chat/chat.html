@@ -19,11 +19,19 @@
 
                 <div class="ion-text-center" *ngIf="message.special" class="addon-mod-chat-notice">
                     <ion-badge class="ion-text-wrap" color="success" *ngIf="message.system && message.message == 'enter'">
-                        <span><core-icon name="fa-sign-in"></core-icon> {{ message.timestamp * 1000 | coreFormatDate:"strftimetime" }} {{ 'addon.mod_chat.messageenter' | translate:{$a: message.userfullname} }}</span>
+                        <span>
+                            <ion-icon name="fa-sign-in">
+                            </ion-icon> {{ message.timestamp * 1000 | coreFormatDate:"strftimetime" }}
+                            {{ 'addon.mod_chat.messageenter' | translate:{$a: message.userfullname} }}
+                        </span>
                     </ion-badge>
 
                     <ion-badge class="ion-text-wrap" color="danger" *ngIf="message.system && message.message == 'exit'">
-                        <span><core-icon name="fa-sign-out"></core-icon> {{ message.timestamp * 1000 | coreFormatDate:"strftimetime" }} {{ 'addon.mod_chat.messageexit' | translate:{$a: message.userfullname} }}</span>
+                        <span>
+                            <ion-icon name="fa-sign-out">
+                            </ion-icon> {{ message.timestamp * 1000 | coreFormatDate:"strftimetime" }}
+                            {{ 'addon.mod_chat.messageexit' | translate:{$a: message.userfullname} }}
+                        </span>
                     </ion-badge>
 
                     <ion-badge class="ion-text-wrap" color="primary" *ngIf="message.beep == 'all'">
@@ -42,7 +50,9 @@
                     </ion-badge>
 
                     <ion-badge class="ion-text-wrap" color="info" *ngIf="!message.system && !message.beep">
-                        <span><core-icon name="fa-asterisk"></core-icon> {{ message.timestamp * 1000 | coreFormatDate:"strftimetime" }}
+                        <span>
+                            <ion-icon name="fa-asterisk">
+                            </ion-icon> {{ message.timestamp * 1000 | coreFormatDate:"strftimetime" }}
                             <strong>{{ message.userfullname }} <core-format-text [text]="message.message" contextLevel="module" [contextInstanceId]="cmId" [courseId]="courseId" (afterRender)="last && scrollToBottom()"></core-format-text></strong></span>
                     </ion-badge>
                 </div>

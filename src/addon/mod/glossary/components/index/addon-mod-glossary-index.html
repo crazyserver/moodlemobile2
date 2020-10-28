@@ -1,7 +1,8 @@
 <!-- Buttons to add to the header. -->
 <core-navbar-buttons end>
     <ion-button *ngIf="glossary && glossary.browsemodes && glossary.browsemodes.length > 1" slot="icon-only //TODO: mode to icon" (click)="openModePicker($event)" [attr.aria-label]="'addon.mod_glossary.browsemode' | translate">
-        <core-icon name="fa-sort"></core-icon>
+        <ion-icon name="fa-sort">
+        </ion-icon>
     </ion-button>
     <ion-button *ngIf="glossary" slot="icon-only //TODO: mode to icon" (click)="toggleSearch()" [attr.aria-label]="'addon.mod_glossary.bysearch' | translate">
         <ion-icon name="search"></ion-icon>

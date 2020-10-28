@@ -4,7 +4,8 @@
 
         <ion-buttons slot="primary">
             <ion-button slot="icon-only //TODO: mode to icon" navPush="CoreAppSettingsPage" [attr.aria-label]="'core.settings.appsettings' | translate">
-                <core-icon name="fa-cogs"></core-icon>
+                <ion-icon name="fa-cogs">
+                </ion-icon>
             </ion-button>
             <ion-button *ngIf="sites && sites.length > 0" slot="icon-only //TODO: mode to icon" (click)="toggleDelete()" [attr.aria-label]="'core.delete' | translate">
                 <ion-icon name="create" ios="md-create"></ion-icon>
