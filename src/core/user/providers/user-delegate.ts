@@ -17,7 +17,7 @@ import { NavController } from '@ionic/angular';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreUtilsProvider } from '@services/utils/utils';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreEventsProvider } from '@services/events';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -158,7 +158,7 @@ export class CoreUserDelegate extends CoreDelegate {
             observable: Subject<CoreUserProfileHandlerToDisplay[]> // Observale to notify the handlers.
         }} = {};
 
-    constructor(protected loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
+    constructor(protected protected sitesProvider: CoreSitesProvider,
             private coursesProvider: CoreCoursesProvider, protected eventsProvider: CoreEventsProvider,
             protected utils: CoreUtilsProvider) {
         super('CoreUserDelegate', loggerProvider, sitesProvider, eventsProvider);

@@ -27,7 +27,7 @@ import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreTextUtilsProvider } from '@services/utils/text';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreAppProvider } from '@services/app';
 import { coreSlideInOut } from '@classes/animations';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -51,7 +51,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
     siteId: string;
     protected fetching: boolean;
     protected polling;
-    protected logger;
+    protected logger: CoreLogger;
 
     protected unreadMessageFrom = 0;
     protected messagesBeingSent = 0;
@@ -100,7 +100,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
     constructor(private eventsProvider: CoreEventsProvider, sitesProvider: CoreSitesProvider, navParams: NavParams,
             private userProvider: CoreUserProvider, private navCtrl: NavController, private messagesSync: AddonMessagesSyncProvider,
-            private domUtils: CoreDomUtilsProvider, private messagesProvider: AddonMessagesProvider, logger: CoreLoggerProvider,
+            private domUtils: CoreDomUtilsProvider, private messagesProvider: AddonMessagesProvider,
             private utils: CoreUtilsProvider, private appProvider: CoreAppProvider, private translate: TranslateService,
             @Optional() private svComponent: CoreSplitViewComponent, private messagesOffline: AddonMessagesOfflineProvider,
             private modalCtrl: ModalController, private textUtils: CoreTextUtilsProvider) {
@@ -110,7 +110,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         this.groupMessagingEnabled = this.messagesProvider.isGroupMessagingEnabled();
         this.muteEnabled = this.messagesProvider.isMuteConversationEnabled();
 
-        this.logger = logger.getInstance('AddonMessagesDiscussionPage');
+        this.logger = CoreLogger.getInstance('AddonMessagesDiscussionPage');
 
         this.conversationId = navParams.get('conversationId');
         this.userId = navParams.get('userId');

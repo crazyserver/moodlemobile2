@@ -17,7 +17,7 @@ import { CoreWSProvider } from '@services/ws';
 import { CoreAppProvider } from '@services/app';
 import { CoreFileProvider } from '@services/file';
 import { CoreFilepoolProvider } from '@services/filepool';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreConstants } from '@core/constants';
@@ -32,17 +32,17 @@ export class AddonRemoteThemesProvider {
     protected SEPARATOR_35 = /\/\*\*? *3\.5(\.0)? *styles? *\*\//i; // A comment like "/* 3.5 styles */".
     protected TMP_SITE_ID = 'tmpsite';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected stylesEls: {[siteId: string]: {element: HTMLStyleElement, hash: string}} = {};
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             protected sitesProvider: CoreSitesProvider,
             protected fileProvider: CoreFileProvider,
             protected filepoolProvider: CoreFilepoolProvider,
             protected wsProvider: CoreWSProvider,
             protected utils: CoreUtilsProvider,
             protected appProvider: CoreAppProvider) {
-        this.logger = logger.getInstance('AddonRemoteThemesProvider');
+        this.logger = CoreLogger.getInstance('AddonRemoteThemesProvider');
     }
 
     /**

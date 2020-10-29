@@ -15,7 +15,7 @@
 import { Directive, Input, AfterViewInit, ElementRef, OnChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { CoreApp } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreFile } from '@services/file';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreSitesProvider } from '@services/sites';
@@ -48,13 +48,13 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
 
     loaded = false;
     protected element: Element;
-    protected logger;
+    protected logger: CoreLogger;
     protected initialized = false;
 
     invalid = false;
 
     constructor(element: ElementRef,
-            logger: CoreLoggerProvider,
+
             protected filepoolProvider: CoreFilepoolProvider,
             protected platform: Platform,
             protected sitesProvider: CoreSitesProvider,
@@ -63,7 +63,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
             protected utils: CoreUtilsProvider) {
 
         this.element = element.nativeElement;
-        this.logger = logger.getInstance('CoreExternalContentDirective');
+        this.logger = CoreLogger.getInstance('CoreExternalContentDirective');
     }
 
     /**

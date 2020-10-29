@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from '@services/events';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { Subject, BehaviorSubject } from 'rxjs';
 
@@ -116,7 +116,7 @@ export class CoreMainMenuDelegate extends CoreDelegate {
     protected siteHandlers: Subject<CoreMainMenuHandlerToDisplay[]> = new BehaviorSubject<CoreMainMenuHandlerToDisplay[]>([]);
     protected featurePrefix = 'CoreMainMenuDelegate_';
 
-    constructor(protected loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
+    constructor(protected protected sitesProvider: CoreSitesProvider,
             protected eventsProvider: CoreEventsProvider) {
         super('CoreMainMenuDelegate', loggerProvider, sitesProvider, eventsProvider);
 

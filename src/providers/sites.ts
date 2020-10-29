@@ -341,7 +341,7 @@ export class CoreSitesProvider {
 
     protected isWPApp: boolean;
 
-    protected logger;
+    protected logger: CoreLogger;
     protected services = {};
     protected sessionRestored = false;
     protected currentSite: CoreSite;
@@ -446,7 +446,7 @@ export class CoreSitesProvider {
         }
     };
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             protected http: HttpClient,
             protected sitesFactory: CoreSitesFactoryProvider,
             protected appProvider: CoreAppProvider,
@@ -458,7 +458,7 @@ export class CoreSitesProvider {
             protected injector: Injector,
             protected wsProvider: CoreWSProvider,
             protected domUtils: CoreDomUtilsProvider) {
-        this.logger = logger.getInstance('CoreSitesProvider');
+        this.logger = CoreLogger.getInstance('CoreSitesProvider');
 
         this.appDB = appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.appTablesSchema).catch(() => {

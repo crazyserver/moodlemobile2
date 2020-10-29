@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from '@services/events';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 
@@ -135,7 +135,7 @@ export interface CoreFileUploaderHandlerDataToReturn extends CoreFileUploaderHan
  */
 @Injectable()
 export class CoreFileUploaderDelegate extends CoreDelegate {
-    constructor(loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
+    constructor(protected sitesProvider: CoreSitesProvider,
             protected eventsProvider: CoreEventsProvider) {
         super('CoreFileUploaderDelegate', loggerProvider, sitesProvider, eventsProvider);
 

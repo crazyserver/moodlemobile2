@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { CoreAppProvider, CoreAppSchema } from '@services/app';
 import { CoreEventsProvider } from '@services/events';
 import { CoreFileProvider } from '@services/file';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -49,14 +49,14 @@ export class CoreSharedFilesProvider {
         ],
     };
 
-    protected logger;
+    protected logger: CoreLogger;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
 
-    constructor(logger: CoreLoggerProvider, private fileProvider: CoreFileProvider, appProvider: CoreAppProvider,
+    constructor(private fileProvider: CoreFileProvider, appProvider: CoreAppProvider,
         private textUtils: CoreTextUtilsProvider, private mimeUtils: CoreMimetypeUtilsProvider,
         private sitesProvider: CoreSitesProvider, private eventsProvider: CoreEventsProvider) {
-        this.logger = logger.getInstance('CoreSharedFilesProvider');
+        this.logger = CoreLogger.getInstance('CoreSharedFilesProvider');
 
         this.appDB = appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.tableSchema).catch(() => {

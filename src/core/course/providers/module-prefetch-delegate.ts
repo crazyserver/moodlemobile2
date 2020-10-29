@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { CoreEventsProvider } from '@services/events';
 import { CoreFileProvider } from '@services/file';
 import { CoreFilepoolProvider, CoreFilepoolComponentFileEventData } from '@services/filepool';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -261,7 +261,7 @@ export class CoreCourseModulePrefetchDelegate extends CoreDelegate {
         }
     } = {};
 
-    constructor(loggerProvider: CoreLoggerProvider,
+    constructor(
             protected sitesProvider: CoreSitesProvider,
             protected utils: CoreUtilsProvider,
             protected courseProvider: CoreCourseProvider,

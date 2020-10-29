@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSyncBaseProvider } from '@classes/base-sync';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreAppProvider } from '@services/app';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -36,7 +36,7 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'core_course_autom_synced';
 
-    constructor(protected sitesProvider: CoreSitesProvider, loggerProvider: CoreLoggerProvider,
+    constructor(protected sitesProvider: CoreSitesProvider,
             protected appProvider: CoreAppProvider, private courseOffline: CoreCourseOfflineProvider,
             private eventsProvider: CoreEventsProvider,  private courseProvider: CoreCourseProvider,
             translate: TranslateService, private utils: CoreUtilsProvider, protected textUtils: CoreTextUtilsProvider,

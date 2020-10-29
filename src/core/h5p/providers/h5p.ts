@@ -268,7 +268,7 @@ export class CoreH5PProvider {
     };
 
     protected ROOT_CACHE_KEY = 'CoreH5P:';
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor() {
 

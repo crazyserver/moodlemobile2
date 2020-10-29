@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreEventsProvider } from '@services/events';
 import { CoreInitDelegate } from '@services/init';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -39,15 +39,15 @@ import { makeSingleton } from '@singletons/core.singletons';
  */
 @Injectable()
 export class CoreContentLinksHelperProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private loginHelper: CoreLoginHelperProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private loginHelper: CoreLoginHelperProvider,
             private contentLinksDelegate: CoreContentLinksDelegate, private appProvider: CoreAppProvider,
             private domUtils: CoreDomUtilsProvider, private urlUtils: CoreUrlUtilsProvider, private translate: TranslateService,
             private initDelegate: CoreInitDelegate, eventsProvider: CoreEventsProvider, private textUtils: CoreTextUtilsProvider,
             private sitePluginsProvider: CoreSitePluginsProvider, private zone: NgZone, private utils: CoreUtilsProvider,
             private mainMenuProvider: CoreMainMenuProvider) {
-        this.logger = logger.getInstance('CoreContentLinksHelperProvider');
+        this.logger = CoreLogger.getInstance('CoreContentLinksHelperProvider');
     }
 
     /**

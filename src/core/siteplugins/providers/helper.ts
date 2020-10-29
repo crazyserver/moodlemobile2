@@ -18,7 +18,7 @@ import { CoreAppProvider } from '@services/app';
 import { CoreEventsProvider } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreLangProvider } from '@services/lang';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSite } from '@classes/site';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -83,10 +83,10 @@ import { CoreSitePluginsBlockHandler } from '@core/siteplugins/classes/handlers/
 export class CoreSitePluginsHelperProvider {
     protected HANDLER_DISABLED = 'core_site_plugins_helper_handler_disabled';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected courseRestrictHandlers = {};
 
-    constructor(protected loggerProvider: CoreLoggerProvider,
+    constructor(protected
             private sitesProvider: CoreSitesProvider,
             private domUtils: CoreDomUtilsProvider,
             private mainMenuDelegate: CoreMainMenuDelegate,
@@ -121,7 +121,7 @@ export class CoreSitePluginsHelperProvider {
             private filterHelper: CoreFilterHelperProvider,
             private pluginFileDelegate: CorePluginFileDelegate) {
 
-        this.logger = loggerProvider.getInstance('CoreSitePluginsHelperProvider');
+        this.logger = CoreLogger.getInstance('CoreSitePluginsHelperProvider');
 
         // Fetch the plugins on login.
         eventsProvider.on(CoreEventsProvider.LOGIN, (data) => {

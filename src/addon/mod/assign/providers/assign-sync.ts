@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreEventsProvider } from '@services/events';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -64,7 +64,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
     protected componentTranslate: string;
 
-    constructor(loggerProvider: CoreLoggerProvider,
+    constructor(
             sitesProvider: CoreSitesProvider,
             appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider,

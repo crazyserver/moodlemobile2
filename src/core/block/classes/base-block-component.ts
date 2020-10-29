@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injector, OnInit, Input } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -35,14 +35,14 @@ export class CoreBlockBaseComponent implements OnInit {
     protected domUtils: CoreDomUtilsProvider;
     protected textUtils: CoreTextUtilsProvider;
     protected utils: CoreUtilsProvider;
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(injector: Injector, loggerName: string = 'AddonBlockComponent') {
         this.domUtils = injector.get(CoreDomUtilsProvider);
         this.utils = injector.get(CoreUtilsProvider);
         this.textUtils = injector.get(CoreTextUtilsProvider);
         const loggerProvider = injector.get(CoreLoggerProvider);
-        this.logger = loggerProvider.getInstance(loggerName);
+        this.logger = CoreLogger.getInstance(loggerName);
     }
     /**
      * Component being initialized.

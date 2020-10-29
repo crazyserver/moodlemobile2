@@ -38,9 +38,9 @@ import { WKUserScriptWindow, WKUserScriptInjectionTime } from 'cordova-plugin-wk
 export class CoreIframeUtilsProvider {
     static FRAME_TAGS = ['iframe', 'frame', 'object', 'embed'];
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             private fileProvider: CoreFileProvider,
             private sitesProvider: CoreSitesProvider,
             private urlUtils: CoreUrlUtilsProvider,
@@ -54,7 +54,7 @@ export class CoreIframeUtilsProvider {
             private config: Config,
             private contentLinksHelper: CoreContentLinksHelperProvider
             ) {
-        this.logger = logger.getInstance('CoreUtilsProvider');
+        this.logger = CoreLogger.getInstance('CoreUtilsProvider');
 
         const win = <WKUserScriptWindow> window;
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
@@ -24,10 +24,10 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
     name: 'coreToLocaleString',
 })
 export class CoreToLocaleStringPipe implements PipeTransform {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private timeUtils: CoreTimeUtilsProvider) {
-        this.logger = logger.getInstance('CoreToLocaleStringPipe');
+    constructor(private timeUtils: CoreTimeUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CoreToLocaleStringPipe');
     }
 
     /**

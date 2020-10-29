@@ -138,7 +138,7 @@ export type CorePluginFileDownloadableResult = {
 export class CorePluginFileDelegate extends CoreDelegate {
     protected handlerNameProperty = 'component';
 
-    constructor(loggerProvider: CoreLoggerProvider,
+    constructor(
             sitesProvider: CoreSitesProvider,
             eventsProvider: CoreEventsProvider) {
         super('CorePluginFileDelegate', loggerProvider, sitesProvider, eventsProvider);

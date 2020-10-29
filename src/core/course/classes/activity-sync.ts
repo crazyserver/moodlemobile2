@@ -15,7 +15,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreAppProvider } from '@services/app';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
@@ -28,7 +28,7 @@ import { CoreCourseModulePrefetchHandlerBase } from './module-prefetch-handler';
  */
 export class CoreCourseActivitySyncBaseProvider extends CoreSyncBaseProvider {
 
-    constructor(component: string, loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
+    constructor(component: string, protected sitesProvider: CoreSitesProvider,
             protected appProvider: CoreAppProvider, protected syncProvider: CoreSyncProvider,
             protected textUtils: CoreTextUtilsProvider, protected translate: TranslateService,
             protected timeUtils: CoreTimeUtilsProvider, protected prefetchDelegate: CoreCourseModulePrefetchDelegate,

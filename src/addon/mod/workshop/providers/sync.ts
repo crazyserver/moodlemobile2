@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreAppProvider } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreEventsProvider } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -44,7 +44,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             appProvider: CoreAppProvider,
             courseProvider: CoreCourseProvider,
             private eventsProvider: CoreEventsProvider,
-            loggerProvider: CoreLoggerProvider,
+
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,

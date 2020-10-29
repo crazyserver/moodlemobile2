@@ -14,7 +14,7 @@
 
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { CoreEventsProvider } from '@services/events';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from './filter';
 import { CoreFilterDefaultHandler } from './default-filter';
@@ -76,7 +76,7 @@ export class CoreFilterDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreFilterDelegate_';
     protected handlerNameProperty = 'filterName';
 
-    constructor(loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
             protected defaultHandler: CoreFilterDefaultHandler) {
 
         super('CoreFilterDelegate', loggerProvider, sitesProvider, eventsProvider);

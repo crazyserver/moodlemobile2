@@ -61,7 +61,7 @@ import { CoreEmulatorHelperProvider } from './providers/helper';
 import { CoreEmulatorCaptureHelperProvider } from './providers/capture-helper';
 import { CoreAppProvider } from '@services/app';
 import { CoreFileProvider } from '@services/file';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUrlUtilsProvider } from '@services/utils/url';
@@ -217,7 +217,7 @@ export const IONIC_NATIVE_PROVIDERS = [
         {
             provide: QRScanner,
             deps: [CoreAppProvider, CoreLoggerProvider],
-            useFactory: (appProvider: CoreAppProvider, loggerProvider: CoreLoggerProvider): QRScanner => {
+            useFactory: (appProvider: CoreAppProvider): QRScanner => {
                 return appProvider.isMobile() ? new QRScanner() : new QRScannerMock(loggerProvider);
             }
         },

@@ -61,10 +61,10 @@ export interface CoreCustomURLSchemesParams extends CoreLoginSSOData {
  */
 @Injectable()
 export class CoreCustomURLSchemesProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected lastUrls = {};
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             protected appProvider: CoreAppProvider,
             protected utils: CoreUtilsProvider,
             protected loginHelper: CoreLoginHelperProvider,
@@ -77,7 +77,7 @@ export class CoreCustomURLSchemesProvider {
             protected linksDelegate: CoreContentLinksDelegate,
             protected translate: TranslateService,
             protected sitePluginsProvider: CoreSitePluginsProvider) {
-        this.logger = logger.getInstance('CoreCustomURLSchemesProvider');
+        this.logger = CoreLogger.getInstance('CoreCustomURLSchemesProvider');
     }
 
     /**

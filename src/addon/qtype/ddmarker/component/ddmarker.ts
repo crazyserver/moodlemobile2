@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, ElementRef, ViewChild } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreSitesProvider } from '@services/sites';
@@ -38,7 +38,7 @@ export class AddonQtypeDdMarkerComponent extends CoreQuestionBaseComponent imple
     protected textIsRendered = false;
     protected ddAreaisRendered = false;
 
-    constructor(protected loggerProvider: CoreLoggerProvider, injector: Injector, element: ElementRef,
+    constructor(protected injector: Injector, element: ElementRef,
             protected sitesProvider: CoreSitesProvider, protected urlUtils: CoreUrlUtilsProvider,
             protected filepoolProvider: CoreFilepoolProvider) {
         super(loggerProvider, 'AddonQtypeDdMarkerComponent', injector);

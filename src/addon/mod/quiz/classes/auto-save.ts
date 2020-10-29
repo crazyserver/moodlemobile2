@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { PopoverController, Popover } from '@ionic/angular';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 import { AddonModQuizProvider } from '../providers/quiz';
 import { AddonModQuizConnectionErrorComponent } from '../components/connection-error/connection-error';
@@ -26,7 +26,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AddonModQuizAutoSave {
     protected CHECK_CHANGES_INTERVAL = 5000;
 
-    protected logger;
+    protected logger: CoreLogger;
     protected checkChangesInterval; // Interval to check if there are changes in the answers.
     protected loadPreviousAnswersTimeout; // Timeout to load previous answers.
     protected autoSaveTimeout; // Timeout to auto-save the answers.
@@ -45,11 +45,11 @@ export class AddonModQuizAutoSave {
      * @param questionHelper CoreQuestionHelperProvider instance.
      * @param quizProvider AddonModQuizProvider instance.
      */
-    constructor(protected formName: string, protected buttonSelector: string, loggerProvider: CoreLoggerProvider,
+    constructor(protected formName: string, protected buttonSelector: string,
             protected popoverCtrl: PopoverController, protected questionHelper: CoreQuestionHelperProvider,
             protected quizProvider: AddonModQuizProvider) {
 
-        this.logger = loggerProvider.getInstance('AddonModQuizAutoSave');
+        this.logger = CoreLogger.getInstance('AddonModQuizAutoSave');
 
         // Create the popover.
         this.popover = this.popoverCtrl.create(AddonModQuizConnectionErrorComponent);

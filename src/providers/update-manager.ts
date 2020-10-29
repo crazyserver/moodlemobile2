@@ -33,11 +33,11 @@ export class CoreUpdateManagerProvider implements CoreInitHandler {
     blocking = true;
 
     protected VERSION_APPLIED = 'version_applied';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             protected configProvider: CoreConfigProvider) {
-        this.logger = logger.getInstance('CoreUpdateManagerProvider');
+        this.logger = CoreLogger.getInstance('CoreUpdateManagerProvider');
     }
 
     /**

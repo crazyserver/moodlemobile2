@@ -19,7 +19,7 @@ import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreAppProvider } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreEventsProvider } from '@services/events';
 import { CoreGroupsProvider } from '@services/groups';
 import { CoreSitesProvider } from '@services/sites';
@@ -48,7 +48,7 @@ export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
             courseProvider: CoreCourseProvider,
             private eventsProvider: CoreEventsProvider,
             private groupsProvider: CoreGroupsProvider,
-            loggerProvider: CoreLoggerProvider,
+
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,

@@ -14,7 +14,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import * as moment from 'moment';
 
@@ -35,10 +35,10 @@ import * as moment from 'moment';
     name: 'coreDateDayOrTime',
 })
 export class CoreDateDayOrTimePipe implements PipeTransform {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private translate: TranslateService, private timeUtils: CoreTimeUtilsProvider) {
-        this.logger = logger.getInstance('CoreDateDayOrTimePipe');
+    constructor(private translate: TranslateService, private timeUtils: CoreTimeUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CoreDateDayOrTimePipe');
     }
 
     /**

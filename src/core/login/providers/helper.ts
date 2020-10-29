@@ -20,7 +20,7 @@ import { CoreApp, CoreStoreConfig } from '@services/app';
 import { CoreConfigProvider } from '@services/config';
 import { CoreEventsProvider } from '@services/events';
 import { CoreInitDelegate } from '@services/init';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreLoginSiteInfo } from '@services/sites';
 import { CoreWSProvider } from '@services/ws';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -80,7 +80,7 @@ export class CoreLoginHelperProvider {
     static FAQ_URL_IMAGE_HTML = '<img src="assets/img/login/faq_url.png" role="presentation">';
     static FAQ_QRCODE_IMAGE_HTML = '<img src="assets/img/login/faq_qrcode.png" role="presentation">';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected isSSOConfirmShown = false;
     protected isOpenEditAlertShown = false;
     protected pageToLoad: {page: string, params: any, time: number}; // Page to load once main menu is opened.
@@ -88,7 +88,7 @@ export class CoreLoginHelperProvider {
     waitingForBrowser = false;
 
     constructor(
-            logger: CoreLoggerProvider,
+
             private sitesProvider: CoreSitesProvider,
             private domUtils: CoreDomUtilsProvider,
             private wsProvider: CoreWSProvider,
@@ -103,7 +103,7 @@ export class CoreLoginHelperProvider {
             private location: Location,
             private courseProvider: CoreCourseProvider
             ) {
-        this.logger = logger.getInstance('CoreLoginHelper');
+        this.logger = CoreLogger.getInstance('CoreLoginHelper');
 
         this.eventsProvider.on(CoreEventsProvider.MAIN_MENU_OPEN, () => {
             /* If there is any page pending to be opened, do it now. Don't open pages stored more than 5 seconds ago, probably

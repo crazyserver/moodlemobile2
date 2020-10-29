@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, ElementRef } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 import { AddonQtypeDdImageOrTextQuestion } from '../classes/ddimageortext';
 
@@ -33,7 +33,7 @@ export class AddonQtypeDdImageOrTextComponent extends CoreQuestionBaseComponent 
     protected textIsRendered = false;
     protected ddAreaisRendered = false;
 
-    constructor(protected loggerProvider: CoreLoggerProvider, injector: Injector, element: ElementRef) {
+    constructor(protected injector: Injector, element: ElementRef) {
         super(loggerProvider, 'AddonQtypeDdImageOrTextComponent', injector);
 
         this.element = element.nativeElement;

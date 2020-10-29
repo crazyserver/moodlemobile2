@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -41,7 +41,7 @@ export interface AddonModDataOfflineAction {
 @Injectable()
 export class AddonModDataOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static DATA_ENTRY_TABLE = 'addon_mod_data_entry_1';
@@ -101,10 +101,10 @@ export class AddonModDataOfflineProvider {
         }
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
             private fileProvider: CoreFileProvider, private fileUploaderProvider: CoreFileUploaderProvider,
             private utils: CoreUtilsProvider) {
-        this.logger = logger.getInstance('AddonModDataOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonModDataOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

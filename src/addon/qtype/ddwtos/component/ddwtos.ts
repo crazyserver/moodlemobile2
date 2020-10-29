@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Injector, ElementRef, ViewChild } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 import { AddonQtypeDdwtosQuestion } from '../classes/ddwtos';
 
@@ -34,7 +34,7 @@ export class AddonQtypeDdwtosComponent extends CoreQuestionBaseComponent impleme
     protected textIsRendered = false;
     protected answerAreRendered = false;
 
-    constructor(protected loggerProvider: CoreLoggerProvider, injector: Injector, element: ElementRef) {
+    constructor(protected injector: Injector, element: ElementRef) {
         super(loggerProvider, 'AddonQtypeDdwtosComponent', injector);
 
         this.element = element.nativeElement;

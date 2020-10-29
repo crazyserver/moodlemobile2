@@ -20,7 +20,7 @@ import { CorePushNotificationsRegisterCronHandler } from './providers/register-c
 import { CorePushNotificationsUnregisterCronHandler } from './providers/unregister-cron-handler';
 import { CoreCronDelegate } from '@services/cron';
 import { CoreEventsProvider } from '@services/events';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 
 // List of providers (without handlers).
@@ -43,12 +43,12 @@ export const CORE_PUSHNOTIFICATIONS_PROVIDERS: any[] = [
 })
 export class CorePushNotificationsModule {
     constructor(platform: Platform, pushNotificationsProvider: CorePushNotificationsProvider, eventsProvider: CoreEventsProvider,
-            localNotificationsProvider: CoreLocalNotificationsProvider, loggerProvider: CoreLoggerProvider,
+            localNotificationsProvider: CoreLocalNotificationsProvider,
             cronDelegate: CoreCronDelegate,
             registerCronHandler: CorePushNotificationsRegisterCronHandler,
             unregisterCronHandler: CorePushNotificationsUnregisterCronHandler) {
 
-        const logger = loggerProvider.getInstance('CorePushNotificationsModule');
+        const logger = CoreLogger.getInstance('CorePushNotificationsModule');
 
         // Register the handlers.
         cronDelegate.register(registerCronHandler);

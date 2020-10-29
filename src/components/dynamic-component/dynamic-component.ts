@@ -17,7 +17,7 @@ import {
     KeyValueDiffers, SimpleChange, ChangeDetectorRef, Optional, ElementRef
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
@@ -69,11 +69,11 @@ export class CoreDynamicComponent implements OnInit, OnChanges, DoCheck {
     protected differ: any; // To detect changes in the data input.
     protected lastComponent: any;
 
-    constructor(logger: CoreLoggerProvider, protected factoryResolver: ComponentFactoryResolver, differs: KeyValueDiffers,
+    constructor(protected factoryResolver: ComponentFactoryResolver, differs: KeyValueDiffers,
             @Optional() protected navCtrl: NavController, protected cdr: ChangeDetectorRef, protected element: ElementRef,
             protected domUtils: CoreDomUtilsProvider) {
 
-        this.logger = logger.getInstance('CoreDynamicComponent');
+        this.logger = CoreLogger.getInstance('CoreDynamicComponent');
         this.differ = differs.find([]).create();
     }
 

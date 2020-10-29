@@ -457,7 +457,7 @@ export class CoreFilepoolProvider {
         ]
     };
 
-    protected logger;
+    protected logger: CoreLogger;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
     protected tokenRegex = new RegExp('(\\?|&)token=([A-Za-z0-9]*)');
@@ -474,7 +474,7 @@ export class CoreFilepoolProvider {
     protected packagesPromises = {};
     protected filePromises: { [s: string]: { [s: string]: Promise<any> } } = {};
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             protected appProvider: CoreAppProvider,
             protected fileProvider: CoreFileProvider,
             protected sitesProvider: CoreSitesProvider,
@@ -490,7 +490,7 @@ export class CoreFilepoolProvider {
             protected pluginFileDelegate: CorePluginFileDelegate,
             protected domUtils: CoreDomUtilsProvider,
             zone: NgZone) {
-        this.logger = logger.getInstance('CoreFilepoolProvider');
+        this.logger = CoreLogger.getInstance('CoreFilepoolProvider');
 
         this.appDB = this.appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.appTablesSchema).catch(() => {

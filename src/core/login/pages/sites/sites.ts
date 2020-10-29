@@ -14,7 +14,7 @@
 
 import { Component } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
@@ -32,15 +32,15 @@ import { CoreFilterProvider } from '@core/filter/providers/filter';
 export class CoreLoginSitesPage {
     sites: CoreSiteBasicInfo[];
     showDelete: boolean;
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(private domUtils: CoreDomUtilsProvider,
             private filterProvider: CoreFilterProvider,
             private sitesProvider: CoreSitesProvider,
             private loginHelper: CoreLoginHelperProvider,
-            logger: CoreLoggerProvider,
+
             private pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('CoreLoginSitesPage');
+        this.logger = CoreLogger.getInstance('CoreLoginSitesPage');
     }
 
     /**

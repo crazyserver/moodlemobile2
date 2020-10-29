@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 /**
@@ -23,10 +23,10 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
     name: 'coreFormatDate',
 })
 export class CoreFormatDatePipe implements PipeTransform {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private timeUtils: CoreTimeUtilsProvider) {
-        this.logger = logger.getInstance('CoreFormatDatePipe');
+    constructor(private timeUtils: CoreTimeUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CoreFormatDatePipe');
     }
 
     /**

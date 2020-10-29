@@ -19,7 +19,7 @@ import { Platform, NavController, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreIframeUtilsProvider } from '@services/utils/iframe';
@@ -81,7 +81,7 @@ export class CoreFormatTextDirective implements OnChanges {
             protected platform: Platform,
             protected utils: CoreUtilsProvider,
             protected urlUtils: CoreUrlUtilsProvider,
-            protected loggerProvider: CoreLoggerProvider,
+            protected
             protected filepoolProvider: CoreFilepoolProvider,
             protected contentLinksHelper: CoreContentLinksHelperProvider,
             @Optional() protected navCtrl: NavController,

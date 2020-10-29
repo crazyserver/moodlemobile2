@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreWSExternalWarning } from '@services/ws';
 import { CoreSite } from '@classes/site';
@@ -23,11 +23,11 @@ import { CoreSite } from '@classes/site';
  */
 @Injectable()
 export class AddonBadgesProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected ROOT_CACHE_KEY = 'mmaBadges:';
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider) {
-        this.logger = logger.getInstance('AddonBadgesProvider');
+    constructor(private sitesProvider: CoreSitesProvider) {
+        this.logger = CoreLogger.getInstance('AddonBadgesProvider');
     }
 
     /**

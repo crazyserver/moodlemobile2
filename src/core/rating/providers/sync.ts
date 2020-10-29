@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreAppProvider } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -37,7 +37,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,
             private eventsProvider: CoreEventsProvider,
-            loggerProvider: CoreLoggerProvider,
+
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,

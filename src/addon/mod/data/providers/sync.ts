@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreAppProvider } from '@services/app';
@@ -39,7 +39,7 @@ export class AddonModDataSyncProvider extends CoreSyncBaseProvider {
     static AUTO_SYNCED = 'addon_mod_data_autom_synced';
     protected componentTranslate: string;
 
-    constructor(protected sitesProvider: CoreSitesProvider, protected loggerProvider: CoreLoggerProvider,
+    constructor(protected sitesProvider: CoreSitesProvider, protected
             protected appProvider: CoreAppProvider, private dataOffline: AddonModDataOfflineProvider,
             private eventsProvider: CoreEventsProvider,  private dataProvider: AddonModDataProvider,
             protected translate: TranslateService, private utils: CoreUtilsProvider, courseProvider: CoreCourseProvider,

@@ -19,7 +19,7 @@ import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreAppProvider } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreEventsProvider } from '@services/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -45,7 +45,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
             appProvider: CoreAppProvider,
             courseProvider: CoreCourseProvider,
             private eventsProvider: CoreEventsProvider,
-            loggerProvider: CoreLoggerProvider,
+
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
             textUtils: CoreTextUtilsProvider,

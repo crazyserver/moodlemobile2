@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreConfigConstants } from '../../../../configconstants';
 import { CoreSite } from '@classes/site';
@@ -26,10 +26,10 @@ import { CoreWSExternalWarning } from '@services/ws';
 export class AddonMessageOutputAirnotifierProvider {
 
     protected ROOT_CACHE_KEY = 'mmaMessageOutputAirnotifier:';
-    protected logger: any;
+    protected logger: CoreLogger;
 
-    constructor(loggerProvider: CoreLoggerProvider, private sitesProvider: CoreSitesProvider) {
-        this.logger = loggerProvider.getInstance('AddonMessageOutputAirnotifier');
+    constructor(private sitesProvider: CoreSitesProvider) {
+        this.logger = CoreLogger.getInstance('AddonMessageOutputAirnotifier');
     }
 
     /**

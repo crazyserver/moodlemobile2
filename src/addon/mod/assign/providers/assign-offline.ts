@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreFileProvider } from '@services/file';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
@@ -25,7 +25,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 @Injectable()
 export class AddonModAssignOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static SUBMISSIONS_TABLE = 'addon_mod_assign_submissions';
@@ -129,9 +129,9 @@ export class AddonModAssignOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
             private fileProvider: CoreFileProvider, private timeUtils: CoreTimeUtilsProvider) {
-        this.logger = logger.getInstance('AddonModAssignOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonModAssignOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

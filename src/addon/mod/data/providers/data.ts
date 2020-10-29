@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesCommonWSOptions, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreFilepoolProvider } from '@services/filepool';
@@ -95,13 +95,13 @@ export class AddonModDataProvider {
     static ENTRY_CHANGED = 'addon_mod_data_entry_changed';
 
     protected ROOT_CACHE_KEY = AddonModDataProvider.COMPONENT + ':';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
             private filepoolProvider: CoreFilepoolProvider, private dataOffline: AddonModDataOfflineProvider,
             private appProvider: CoreAppProvider, private fieldsDelegate: AddonModDataFieldsDelegate,
             private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModDataProvider');
+        this.logger = CoreLogger.getInstance('AddonModDataProvider');
     }
 
     /**

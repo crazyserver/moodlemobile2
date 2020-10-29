@@ -23,7 +23,7 @@ import { makeSingleton } from '@singletons/core.singletons';
  * This service is meant to improve log messages, adding a timestamp and a name to all log messages.
  *
  * In your class constructor, call getInstance to configure your class name:
- * this.logger = logger.getInstance('InitPage');
+ * this.logger = CoreLogger.getInstance('InitPage');
  *
  * Then you can call the log function you want to use in this logger instance.
  */

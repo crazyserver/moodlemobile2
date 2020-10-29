@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@services/events';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreUtils } from '@services/utils/utils';
@@ -43,7 +43,7 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
     protected componentTranslate: string;
 
     constructor(sitesProvider: CoreSitesProvider,
-            loggerProvider: CoreLoggerProvider,
+
             appProvider: CoreAppProvider,
             translate: TranslateService,
             textUtils: CoreTextUtilsProvider,

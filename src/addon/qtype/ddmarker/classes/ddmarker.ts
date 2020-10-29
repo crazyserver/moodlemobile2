@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { AddonQtypeDdMarkerGraphicsApi } from './graphics_api';
@@ -76,10 +76,10 @@ export class AddonQtypeDdMarkerQuestion {
      * @param dropZones The drop zones received in the init object of the question.
      * @param imgSrc Background image source (3.6+ sites).
      */
-    constructor(logger: CoreLoggerProvider, protected domUtils: CoreDomUtilsProvider, protected textUtils: CoreTextUtilsProvider,
+    constructor(protected domUtils: CoreDomUtilsProvider, protected textUtils: CoreTextUtilsProvider,
             protected container: HTMLElement, protected question: any, protected readOnly: boolean, protected dropZones: any[],
             protected imgSrc?: string) {
-        this.logger = logger.getInstance('AddonQtypeDdMarkerQuestion');
+        this.logger = CoreLogger.getInstance('AddonQtypeDdMarkerQuestion');
 
         this.graphics = new AddonQtypeDdMarkerGraphicsApi(this, this.domUtils);
 

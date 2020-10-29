@@ -140,7 +140,7 @@ export interface CoreAppSchema {
 export class CoreAppProvider {
     protected DBNAME = 'MoodleMobile';
     protected db: SQLiteDB;
-    protected logger;
+    protected logger: CoreLogger;
     protected ssoAuthenticationPromise: Promise<any>;
     protected isKeyboardShown = false;
     protected _isKeyboardOpening = false;
@@ -173,14 +173,14 @@ export class CoreAppProvider {
             private keyboard: Keyboard,
             private appCtrl: App,
             private network: Network,
-            logger: CoreLoggerProvider,
+
             private events: CoreEventsProvider,
             zone: NgZone,
             private menuCtrl: MenuController,
             private statusBar: StatusBar,
             appRef: ApplicationRef) {
 
-        this.logger = logger.getInstance('CoreAppProvider');
+        this.logger = CoreLogger.getInstance('CoreAppProvider');
         this.db = dbProvider.getDB(this.DBNAME);
 
         // Create the schema versions table.

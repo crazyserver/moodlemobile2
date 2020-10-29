@@ -49,7 +49,7 @@ export class CoreH5PPlayerComponent implements OnInit, OnChanges, OnDestroy {
     protected siteId: string;
     protected siteCanDownload: boolean;
     protected observer;
-    protected logger;
+    protected logger: CoreLogger;
 
     constructor(public elementRef: ElementRef,
             protected pluginFileDelegate: CorePluginFileDelegate) {

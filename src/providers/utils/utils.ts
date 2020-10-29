@@ -62,7 +62,7 @@ export interface PromiseDefer {
 @Injectable()
 export class CoreUtilsProvider {
     protected DONT_CLONE = ['[object FileEntry]', '[object DirectoryEntry]', '[object DOMFileSystem]'];
-    protected logger;
+    protected logger: CoreLogger;
     protected iabInstance: InAppBrowserObject;
     protected uniqueIds: {[name: string]: number} = {};
     protected qrScanData: {deferred: PromiseDefer, observable: Subscription};
@@ -70,7 +70,7 @@ export class CoreUtilsProvider {
     constructor(protected iab: InAppBrowser,
             protected clipboard: Clipboard,
             protected domUtils: CoreDomUtilsProvider,
-            logger: CoreLoggerProvider,
+
             protected translate: TranslateService,
             protected platform: Platform,
             protected langProvider: CoreLangProvider,
@@ -83,7 +83,7 @@ export class CoreUtilsProvider {
             protected textUtils: CoreTextUtilsProvider,
             protected modalCtrl: ModalController,
             protected qrScanner: QRScanner) {
-        this.logger = logger.getInstance('CoreUtilsProvider');
+        this.logger = CoreLogger.getInstance('CoreUtilsProvider');
 
         this.platform.ready().then(() => {
             const win = <any> window;

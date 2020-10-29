@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncBaseProvider } from '@classes/base-sync';
 import { CoreAppProvider } from '@services/app';
@@ -35,7 +35,7 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_notes_autom_synced';
 
-    constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
+    constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
             private notesOffline: AddonNotesOfflineProvider, private utils: CoreUtilsProvider,
             private eventsProvider: CoreEventsProvider,  private notesProvider: AddonNotesProvider,

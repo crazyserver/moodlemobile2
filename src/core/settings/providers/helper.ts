@@ -17,7 +17,7 @@ import { CoreAppProvider } from '@services/app';
 import { CoreCronDelegate } from '@services/cron';
 import { CoreEventsProvider } from '@services/events';
 import { CoreFilepoolProvider } from '@services/filepool';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSite } from '@classes/site';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -42,10 +42,10 @@ export interface CoreSiteSpaceUsage {
  */
 @Injectable()
 export class CoreSettingsHelper {
-    protected logger;
+    protected logger: CoreLogger;
     protected syncPromises = {};
 
-    constructor(loggerProvider: CoreLoggerProvider,
+    constructor(
             protected appProvider: CoreAppProvider,
             protected cronDelegate: CoreCronDelegate,
             protected domUtils: CoreDomUtilsProvider,
@@ -58,7 +58,7 @@ export class CoreSettingsHelper {
             protected filterProvider: CoreFilterProvider,
             protected courseProvider: CoreCourseProvider,
     ) {
-        this.logger = loggerProvider.getInstance('CoreSettingsHelper');
+        this.logger = CoreLogger.getInstance('CoreSettingsHelper');
 
         if (!CoreConfigConstants.forceColorScheme) {
             // Update color scheme when a user enters or leaves a site, or when the site info is updated.

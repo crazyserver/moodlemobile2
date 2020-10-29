@@ -18,7 +18,7 @@ import { Network } from '@ionic-native/network';
 import { CoreApp, CoreAppProvider } from '@services/app';
 import { CoreEventsProvider } from '@services/events';
 import { CoreLangProvider } from '@services/lang';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -37,13 +37,13 @@ export class MoodleMobileApp implements OnInit {
     // Use page name (string) because the page is lazy loaded (Ionic feature). That way we can load pages without importing them.
     // The downside is that each page needs to implement a ngModule.
     rootPage: any = 'CoreLoginInitPage';
-    protected logger;
+    protected logger: CoreLogger;
     protected lastUrls = {};
     protected lastInAppUrl: string;
 
     constructor(
             private platform: Platform,
-            logger: CoreLoggerProvider,
+
             keyboard: Keyboard,
             config: Config,
             device: Device,
@@ -60,7 +60,7 @@ export class MoodleMobileApp implements OnInit {
             private urlUtils: CoreUrlUtilsProvider,
             private network: Network
             ) {
-        this.logger = logger.getInstance('AppComponent');
+        this.logger = CoreLogger.getInstance('AppComponent');
 
         if (this.appProvider.isIOS() && !platform.is('ios')) {
             // Solve problem with wrong detected iPadOS.

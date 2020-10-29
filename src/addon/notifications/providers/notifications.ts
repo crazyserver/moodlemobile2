@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
@@ -36,13 +36,13 @@ export class AddonNotificationsProvider {
     static LIST_LIMIT = 20;
 
     protected ROOT_CACHE_KEY = 'mmaNotifications:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private appProvider: CoreAppProvider, private sitesProvider: CoreSitesProvider,
+    constructor(private appProvider: CoreAppProvider, private sitesProvider: CoreSitesProvider,
             private timeUtils: CoreTimeUtilsProvider, private userProvider: CoreUserProvider,
             private emulatorHelper: CoreEmulatorHelperProvider, private messageProvider: AddonMessagesProvider,
             private textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('AddonNotificationsProvider');
+        this.logger = CoreLogger.getInstance('AddonNotificationsProvider');
     }
 
     /**

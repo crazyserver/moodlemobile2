@@ -20,7 +20,7 @@ import { Device } from '@ionic-native/device';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreApp, CoreAppProvider, CoreAppSchema } from '@services/app';
 import { CoreInitDelegate } from '@services/init';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreSitesFactoryProvider } from '@services/sites-factory';
 import { CorePushNotificationsDelegate } from './delegate';
@@ -81,7 +81,7 @@ export interface CorePushNotificationsRegisterData {
  */
 @Injectable()
 export class CorePushNotificationsProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected pushID: string;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
@@ -179,7 +179,7 @@ export class CorePushNotificationsProvider {
     };
 
     constructor(
-            logger: CoreLoggerProvider,
+
             private initDelegate: CoreInitDelegate,
             protected pushNotificationsDelegate: CorePushNotificationsDelegate,
             protected sitesProvider: CoreSitesProvider,
@@ -198,7 +198,7 @@ export class CorePushNotificationsProvider {
             private filterProvider: CoreFilterProvider,
             private filterDelegate: CoreFilterDelegate
             ) {
-        this.logger = logger.getInstance('CorePushNotificationsProvider');
+        this.logger = CoreLogger.getInstance('CorePushNotificationsProvider');
         this.appDB = appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.appTablesSchema).catch(() => {
             // Ignore errors.

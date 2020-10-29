@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
@@ -57,9 +57,9 @@ export class AddonQtypeDdImageOrTextQuestion {
      * @param readOnly Whether it's read only.
      * @param drops The drop zones received in the init object of the question.
      */
-    constructor(logger: CoreLoggerProvider, protected domUtils: CoreDomUtilsProvider, protected container: HTMLElement,
+    constructor(protected domUtils: CoreDomUtilsProvider, protected container: HTMLElement,
                 protected question: any, protected readOnly: boolean, protected drops: any[]) {
-        this.logger = logger.getInstance('AddonQtypeDdImageOrTextQuestion');
+        this.logger = CoreLogger.getInstance('AddonQtypeDdImageOrTextQuestion');
 
         this.initializer(question);
     }

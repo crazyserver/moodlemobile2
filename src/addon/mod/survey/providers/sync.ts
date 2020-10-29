@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreAppProvider } from '@services/app';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -39,7 +39,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
     static AUTO_SYNCED = 'addon_mod_survey_autom_synced';
     protected componentTranslate: string;
 
-    constructor(loggerProvider: CoreLoggerProvider, sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
+    constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
             private courseProvider: CoreCourseProvider, private surveyOffline: AddonModSurveyOfflineProvider,
             private eventsProvider: CoreEventsProvider,  private surveyProvider: AddonModSurveyProvider,

@@ -144,7 +144,7 @@ export type HttpRequestOptions = {
  */
 @Injectable()
 export class CoreWSProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected mimeTypeCache = {}; // A "cache" to store file mimetypes to prevent performing too many HEAD requests.
     protected ongoingCalls = {};
     protected retryCalls = [];
@@ -157,9 +157,9 @@ export class CoreWSProvider {
             protected fileProvider: CoreFileProvider,
             protected fileTransfer: FileTransfer,
             protected mimeUtils: CoreMimetypeUtilsProvider,
-            logger: CoreLoggerProvider,
+
             platform: Platform) {
-        this.logger = logger.getInstance('CoreWSProvider');
+        this.logger = CoreLogger.getInstance('CoreWSProvider');
 
         platform.ready().then(() => {
             if (this.appProvider.isIOS()) {

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesCommonWSOptions, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreFilepoolProvider } from '@services/filepool';
@@ -37,12 +37,12 @@ export class AddonModFeedbackProvider {
     static MULTICHOICERATED_VALUE_SEP = '####';
 
     protected ROOT_CACHE_KEY = '';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider,
             private filepoolProvider: CoreFilepoolProvider, private feedbackOffline: AddonModFeedbackOfflineProvider,
             private appProvider: CoreAppProvider, private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModFeedbackProvider');
+        this.logger = CoreLogger.getInstance('AddonModFeedbackProvider');
     }
 
     /**

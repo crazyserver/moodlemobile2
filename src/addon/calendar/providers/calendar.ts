@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
@@ -318,9 +318,9 @@ export class AddonCalendarProvider {
         },
     };
 
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             private sitesProvider: CoreSitesProvider,
             private groupsProvider: CoreGroupsProvider,
             private coursesProvider: CoreCoursesProvider,
@@ -335,7 +335,7 @@ export class AddonCalendarProvider {
             private translate: TranslateService,
             private userProvider: CoreUserProvider) {
 
-        this.logger = logger.getInstance('AddonCalendarProvider');
+        this.logger = CoreLogger.getInstance('AddonCalendarProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

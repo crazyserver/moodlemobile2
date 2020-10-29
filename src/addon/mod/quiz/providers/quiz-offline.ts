@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -29,7 +29,7 @@ import { SQLiteDB } from '@classes/sqlitedb';
 @Injectable()
 export class AddonModQuizOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static ATTEMPTS_TABLE = 'addon_mod_quiz_attempts';
@@ -82,10 +82,10 @@ export class AddonModQuizOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
             private questionProvider: CoreQuestionProvider, private translate: TranslateService, private utils: CoreUtilsProvider,
             private behaviourDelegate: CoreQuestionBehaviourDelegate) {
-        this.logger = logger.getInstance('AddonModQuizOfflineProvider');
+        this.logger = CoreLogger.getInstance('AddonModQuizOfflineProvider');
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }

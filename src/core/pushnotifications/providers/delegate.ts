@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { Subject } from 'rxjs';
@@ -61,13 +61,13 @@ export interface CorePushNotificationsClickHandler {
 @Injectable()
 export class CorePushNotificationsDelegate {
 
-    protected logger;
+    protected logger: CoreLogger;
     protected observables: { [s: string]: Subject<any> } = {};
     protected clickHandlers: { [s: string]: CorePushNotificationsClickHandler } = {};
     protected counterHandlers: { [s: string]: string } = {};
 
-    constructor(loggerProvider: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider) {
-        this.logger = loggerProvider.getInstance('CorePushNotificationsDelegate');
+    constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CorePushNotificationsDelegate');
         this.observables['receive'] = new Subject<any>();
     }
 

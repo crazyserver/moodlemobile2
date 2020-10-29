@@ -33,7 +33,7 @@ import { MoodleMobileApp } from './app.component';
 import { CoreInterceptor } from '@classes/interceptor';
 import { CorePageTransition } from '@classes/page-transition';
 import { CoreModalLateralTransition } from '@classes/modal-lateral-transition';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreDbProvider } from '@services/db';
 import { CoreAppProvider } from '@services/app';
 import { CoreConfigProvider } from '@services/config';

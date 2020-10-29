@@ -114,15 +114,15 @@ export class CoreCronDelegate {
         ],
     };
 
-    protected logger;
+    protected logger: CoreLogger;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
     protected handlers: { [s: string]: CoreCronHandler } = {};
     protected queuePromise = Promise.resolve();
 
-    constructor(logger: CoreLoggerProvider, private appProvider: CoreAppProvider, private configProvider: CoreConfigProvider,
+    constructor(private appProvider: CoreAppProvider, private configProvider: CoreConfigProvider,
             private utils: CoreUtilsProvider, network: Network, zone: NgZone) {
-        this.logger = logger.getInstance('CoreCronDelegate');
+        this.logger = CoreLogger.getInstance('CoreCronDelegate');
 
         this.appDB = this.appProvider.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.tableSchema).catch(() => {

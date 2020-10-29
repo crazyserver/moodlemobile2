@@ -14,7 +14,7 @@
 
 import { Injector } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from '@core/course/providers/module-delegate';
 import { CoreSitePluginsBaseHandler } from './base-handler';
 import { CoreSitePluginsModuleIndexComponent } from '../../components/module-index/module-index';
@@ -35,11 +35,10 @@ export class CoreSitePluginsModuleHandler extends CoreSitePluginsBaseHandler imp
             protected plugin: any,
             protected handlerSchema: any,
             protected initResult: any,
-            protected sitePluginsProvider: CoreSitePluginsProvider,
-            loggerProvider: CoreLoggerProvider) {
+            protected sitePluginsProvider: CoreSitePluginsProvider
         super(name);
 
-        this.logger = loggerProvider.getInstance('CoreSitePluginsModuleHandler');
+        this.logger = CoreLogger.getInstance('CoreSitePluginsModuleHandler');
         this.supportedFeatures = handlerSchema.supportedfeatures;
 
         if (initResult && initResult.jsResult && initResult.jsResult.supportsFeature) {

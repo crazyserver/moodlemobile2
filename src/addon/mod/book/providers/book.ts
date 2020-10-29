@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreFileProvider } from '@services/file';
 import { CoreFilepoolProvider } from '@services/filepool';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesCommonWSOptions } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -53,9 +53,9 @@ export class AddonModBookProvider {
     static COMPONENT = 'mmaModBook';
 
     protected ROOT_CACHE_KEY = 'mmaModBook:';
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider,
+    constructor(
             protected sitesProvider: CoreSitesProvider,
             protected textUtils: CoreTextUtilsProvider,
             protected fileProvider: CoreFileProvider,
@@ -65,7 +65,7 @@ export class AddonModBookProvider {
             protected courseProvider: CoreCourseProvider,
             protected domUtils: CoreDomUtilsProvider,
             protected logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModBookProvider');
+        this.logger = CoreLogger.getInstance('AddonModBookProvider');
     }
 
     /**

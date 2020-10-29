@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 
@@ -23,7 +23,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 @Injectable()
 export class AddonModSurveyOfflineProvider {
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     static SURVEY_TABLE = 'addon_mod_survey_answers';
@@ -64,8 +64,8 @@ export class AddonModSurveyOfflineProvider {
         ]
     };
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('AddonModSurveyOfflineProvider');
+    constructor(private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider) {
+        this.logger = CoreLogger.getInstance('AddonModSurveyOfflineProvider');
         this.sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

@@ -17,7 +17,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreFileProvider } from '@services/file';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreInitDelegate } from '@services/init';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -30,14 +30,14 @@ import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploa
  */
 @Injectable()
 export class CoreSharedFilesHelperProvider {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private alertCtrl: AlertController, private translate: TranslateService,
+    constructor(private alertCtrl: AlertController, private translate: TranslateService,
             private utils: CoreUtilsProvider, private sitesProvider: CoreSitesProvider, private modalCtrl: ModalController,
             private fileUploaderProvider: CoreFileUploaderProvider, private initDelegate: CoreInitDelegate,
             private sharedFilesProvider: CoreSharedFilesProvider, private domUtils: CoreDomUtilsProvider,
             private fileProvider: CoreFileProvider, private appProvider: CoreAppProvider) {
-        this.logger = logger.getInstance('CoreSharedFilesHelperProvider');
+        this.logger = CoreLogger.getInstance('CoreSharedFilesHelperProvider');
     }
 
     /**

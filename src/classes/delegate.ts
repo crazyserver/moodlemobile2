@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreEventsProvider } from '@services/events';
 import { CoreSite } from '@classes/site';
@@ -39,7 +39,7 @@ export class CoreDelegate {
     /**
      * Logger instance get from CoreLoggerProvider.
      */
-    protected logger;
+    protected logger: CoreLogger;
 
     /**
      * List of registered handlers.
@@ -103,9 +103,9 @@ export class CoreDelegate {
      * @param eventsProvider CoreEventsProvider instance, cannot be directly injected.
      *                       If not set, no events will be fired.
      */
-    constructor(delegateName: string, protected loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider,
+    constructor(delegateName: string, protected protected sitesProvider: CoreSitesProvider,
             protected eventsProvider?: CoreEventsProvider) {
-        this.logger = this.loggerProvider.getInstance(delegateName);
+        this.logger = CoreLogger.getInstance(delegateName);
 
         this.handlersInitPromise = new Promise((resolve): void => {
             this.handlersInitResolve = resolve;

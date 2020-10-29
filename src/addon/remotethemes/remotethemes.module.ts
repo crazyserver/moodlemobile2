@@ -16,7 +16,7 @@ import { NgModule } from '@angular/core';
 import { AddonRemoteThemesProvider } from './providers/remotethemes';
 import { CoreEventsProvider } from '@services/events';
 import { CoreInitDelegate } from '@services/init';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 
 // List of providers (without handlers).
@@ -35,9 +35,9 @@ export const ADDON_REMOTETHEMES_PROVIDERS: any[] = [
 })
 export class AddonRemoteThemesModule {
     constructor(initDelegate: CoreInitDelegate, remoteThemesProvider: AddonRemoteThemesProvider, eventsProvider: CoreEventsProvider,
-            sitesProvider: CoreSitesProvider, loggerProvider: CoreLoggerProvider) {
+            sitesProvider: CoreSitesProvider) {
 
-        const logger = loggerProvider.getInstance('AddonRemoteThemesModule');
+        const logger = CoreLogger.getInstance('AddonRemoteThemesModule');
 
         // Preload the current site styles.
         initDelegate.registerProcess({

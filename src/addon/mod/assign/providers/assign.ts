@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreFilepoolProvider } from '@services/filepool';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesCommonWSOptions, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
@@ -67,16 +67,16 @@ export class AddonModAssignProvider {
 
     protected ROOT_CACHE_KEY = 'mmaModAssign:';
 
-    protected logger;
+    protected logger: CoreLogger;
     protected gradingOfflineEnabled: {[siteId: string]: boolean}  = {};
 
-    constructor(logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
+    constructor(private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
             private timeUtils: CoreTimeUtilsProvider, private appProvider: CoreAppProvider, private utils: CoreUtilsProvider,
             private submissionDelegate: AddonModAssignSubmissionDelegate,
             private gradesProvider: CoreGradesProvider, private filepoolProvider: CoreFilepoolProvider,
             private assignOffline: AddonModAssignOfflineProvider, private commentsProvider: CoreCommentsProvider,
             private logHelper: CoreCourseLogHelperProvider) {
-        this.logger = logger.getInstance('AddonModAssignProvider');
+        this.logger = CoreLogger.getInstance('AddonModAssignProvider');
     }
 
     /**

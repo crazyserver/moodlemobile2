@@ -19,7 +19,7 @@ import { File } from '@ionic-native/file';
 import { LocalNotifications, ILocalNotification } from '@ionic-native/local-notifications';
 import { CoreAppProvider } from '@services/app';
 import { CoreInitDelegate, CoreInitHandler } from '@services/init';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
@@ -36,7 +36,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
     priority = CoreInitDelegate.MAX_RECOMMENDED_PRIORITY + 500;
     blocking = true;
 
-    protected logger;
+    protected logger: CoreLogger;
 
     // Variables for database.
     protected LAST_RECEIVED_NOTIFICATION_TABLE = 'core_emulator_last_received_notification';
@@ -66,10 +66,10 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
     };
 
     constructor(private file: File, private fileProvider: CoreFileProvider, private utils: CoreUtilsProvider,
-            logger: CoreLoggerProvider, private sitesProvider: CoreSitesProvider, private localNotif: LocalNotifications,
+            private sitesProvider: CoreSitesProvider, private localNotif: LocalNotifications,
             private captureHelper: CoreEmulatorCaptureHelperProvider, private timeUtils: CoreTimeUtilsProvider,
             private appProvider: CoreAppProvider, private localNotifProvider: CoreLocalNotificationsProvider) {
-        this.logger = logger.getInstance('CoreEmulatorHelper');
+        this.logger = CoreLogger.getInstance('CoreEmulatorHelper');
         sitesProvider.registerSiteSchema(this.siteSchema);
     }
 

@@ -25,15 +25,15 @@ import { makeSingleton } from '@singletons/core.singletons';
  */
 @Injectable()
 export class CoreMimetypeUtilsProvider {
-    protected logger;
+    protected logger: CoreLogger;
     protected extToMime = {}; // Object to map extensions -> mimetypes.
     protected mimeToExt = {}; // Object to map mimetypes -> extensions.
     protected groupsMimeInfo = {}; // Object to hold extensions and mimetypes that belong to a certain "group" (audio, video, ...).
     protected extensionRegex = /^[a-z0-9]+$/;
 
-    constructor(http: HttpClient, logger: CoreLoggerProvider, private translate: TranslateService,
+    constructor(http: HttpClient, private translate: TranslateService,
             private textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('CoreMimetypeUtilsProvider');
+        this.logger = CoreLogger.getInstance('CoreMimetypeUtilsProvider');
 
         http.get('assets/exttomime.json').subscribe((result) => {
             this.extToMime = result;

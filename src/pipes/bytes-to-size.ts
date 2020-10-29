@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
@@ -23,10 +23,10 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
     name: 'coreBytesToSize',
 })
 export class CoreBytesToSizePipe implements PipeTransform {
-    protected logger;
+    protected logger: CoreLogger;
 
-    constructor(logger: CoreLoggerProvider, private textUtils: CoreTextUtilsProvider) {
-        this.logger = logger.getInstance('CoreBytesToSizePipe');
+    constructor(private textUtils: CoreTextUtilsProvider) {
+        this.logger = CoreLogger.getInstance('CoreBytesToSizePipe');
     }
 
     /**

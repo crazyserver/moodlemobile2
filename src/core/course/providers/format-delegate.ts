@@ -15,7 +15,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreEventsProvider } from '@services/events';
-import { CoreLoggerProvider } from '@services/logger';
+import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseFormatDefaultHandler } from './default-format';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
@@ -184,7 +184,7 @@ export class CoreCourseFormatDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreCourseFormatDelegate_';
     protected handlerNameProperty = 'format';
 
-    constructor(loggerProvider: CoreLoggerProvider, protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
             protected defaultHandler: CoreCourseFormatDefaultHandler) {
         super('CoreCoursesCourseFormatDelegate', loggerProvider, sitesProvider, eventsProvider);
     }
