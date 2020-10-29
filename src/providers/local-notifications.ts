@@ -26,7 +26,7 @@ import { CoreUtilsProvider } from './utils/utils';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { CoreQueueRunner } from '@classes/queue-runner';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { Subject, Subscription } from 'rxjs';
 import { makeSingleton } from '@singletons/core.singletons';
 
@@ -621,7 +621,7 @@ export class CoreLocalNotificationsProvider {
         if (CoreApp.instance.isAndroid()) {
             notification.icon = notification.icon || 'res://icon';
             notification.smallIcon = notification.smallIcon || 'res://smallicon';
-            notification.color = notification.color || CoreConfigConstants.notificoncolor;
+            notification.color = notification.color || CoreConstants.CONFIG.notificoncolor;
 
             const led: any = notification.led || {};
             notification.led = {

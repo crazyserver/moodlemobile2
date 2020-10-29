@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreSite } from '@classes/site';
 import { CoreWSExternalWarning } from '@services/ws';
 
@@ -82,7 +82,7 @@ export class AddonMessageOutputAirnotifierProvider {
 
         return this.sitesProvider.getSite(siteId).then((site) => {
             const data = {
-                appid: CoreConfigConstants.app_id
+                appid: CoreConstants.CONFIG.app_id
             };
             const preSets = {
                 cacheKey: this.getUserDevicesCacheKey(),

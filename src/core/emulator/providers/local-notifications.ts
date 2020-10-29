@@ -19,7 +19,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import * as moment from 'moment';
 import { Subject, Observable } from 'rxjs';
 
@@ -1016,7 +1016,7 @@ export class LocalNotificationsMock extends LocalNotifications {
         if (this.winNotif) {
             // Use Windows notifications.
             const notifInstance = new this.winNotif.ToastNotification({
-                appId: CoreConfigConstants.app_id,
+                appId: CoreConstants.CONFIG.app_id,
                 template: this.toastTemplate,
                 strings: [notification.title, notification.text]
             });

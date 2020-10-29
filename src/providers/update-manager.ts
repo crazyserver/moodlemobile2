@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { CoreConfigProvider } from './config';
 import { CoreInitHandler, CoreInitDelegate } from './init';
 import { CoreLoggerProvider } from './logger';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreH5P } from '@core/h5p/providers/h5p';
 import { makeSingleton } from '@singletons/core.singletons';
 
@@ -48,7 +48,7 @@ export class CoreUpdateManagerProvider implements CoreInitHandler {
      */
     async load(): Promise<any> {
         const promises = [];
-        const versionCode = CoreConfigConstants.versioncode;
+        const versionCode = CoreConstants.CONFIG.versioncode;
 
         const versionApplied: number = await this.configProvider.get(this.VERSION_APPLIED, 0);
 

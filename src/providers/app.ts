@@ -22,7 +22,7 @@ import { CoreDbProvider } from './db';
 import { CoreLoggerProvider } from './logger';
 import { CoreEventsProvider } from './events';
 import { SQLiteDB, SQLiteDBTableSchema } from '@classes/sqlitedb';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { makeSingleton } from '@singletons/core.singletons';
 
 /**
@@ -826,20 +826,20 @@ export class CoreAppProvider {
      * Set StatusBar color depending on platform.
      */
     setStatusBarColor(): void {
-        if (typeof CoreConfigConstants.statusbarbgios == 'string' && this.isIOS()) {
+        if (typeof CoreConstants.CONFIG.statusbarbgios == 'string' && this.isIOS()) {
             // IOS Status bar properties.
             this.statusBar.overlaysWebView(false);
-            this.statusBar.backgroundColorByHexString(CoreConfigConstants.statusbarbgios);
-            CoreConfigConstants.statusbarlighttextios ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
-        } else if (typeof CoreConfigConstants.statusbarbgandroid == 'string' && this.isAndroid()) {
+            this.statusBar.backgroundColorByHexString(CoreConstants.CONFIG.statusbarbgios);
+            CoreConstants.CONFIG.statusbarlighttextios ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
+        } else if (typeof CoreConstants.CONFIG.statusbarbgandroid == 'string' && this.isAndroid()) {
             // Android Status bar properties.
-            this.statusBar.backgroundColorByHexString(CoreConfigConstants.statusbarbgandroid);
-            CoreConfigConstants.statusbarlighttextandroid ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
-        } else if (typeof CoreConfigConstants.statusbarbg == 'string') {
+            this.statusBar.backgroundColorByHexString(CoreConstants.CONFIG.statusbarbgandroid);
+            CoreConstants.CONFIG.statusbarlighttextandroid ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
+        } else if (typeof CoreConstants.CONFIG.statusbarbg == 'string') {
             // Generic Status bar properties.
             this.isIOS() && this.statusBar.overlaysWebView(false);
-            this.statusBar.backgroundColorByHexString(CoreConfigConstants.statusbarbg);
-            CoreConfigConstants.statusbarlighttext ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
+            this.statusBar.backgroundColorByHexString(CoreConstants.CONFIG.statusbarbg);
+            CoreConstants.CONFIG.statusbarlighttext ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
         } else {
             // Default Status bar properties.
             this.isAndroid() ? this.statusBar.styleLightContent() : this.statusBar.styleDefault();
@@ -850,14 +850,14 @@ export class CoreAppProvider {
      * Reset StatusBar color if any was set.
      */
     resetStatusBarColor(): void {
-        if (typeof CoreConfigConstants.statusbarbgremotetheme == 'string' &&
-                ((typeof CoreConfigConstants.statusbarbgios == 'string' && this.isIOS()) ||
-                (typeof CoreConfigConstants.statusbarbgandroid == 'string' && this.isAndroid()) ||
-                typeof CoreConfigConstants.statusbarbg == 'string')) {
+        if (typeof CoreConstants.CONFIG.statusbarbgremotetheme == 'string' &&
+                ((typeof CoreConstants.CONFIG.statusbarbgios == 'string' && this.isIOS()) ||
+                (typeof CoreConstants.CONFIG.statusbarbgandroid == 'string' && this.isAndroid()) ||
+                typeof CoreConstants.CONFIG.statusbarbg == 'string')) {
             // If the status bar has been overriden and there's a fallback color for remote themes, use it now.
             this.isIOS() && this.statusBar.overlaysWebView(false);
-            this.statusBar.backgroundColorByHexString(CoreConfigConstants.statusbarbgremotetheme);
-            CoreConfigConstants.statusbarlighttextremotetheme ?
+            this.statusBar.backgroundColorByHexString(CoreConstants.CONFIG.statusbarbgremotetheme);
+            CoreConstants.CONFIG.statusbarlighttextremotetheme ?
                 this.statusBar.styleLightContent() : this.statusBar.styleDefault();
         }
     }

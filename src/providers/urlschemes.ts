@@ -26,7 +26,7 @@ import { CoreLoginHelperProvider, CoreLoginSSOData } from '@core/login/providers
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 import { CoreSitePluginsProvider } from '@core/siteplugins/providers/siteplugins';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreConstants } from '@core/constants';
 import { makeSingleton } from '@singletons/core.singletons';
 
@@ -469,7 +469,7 @@ export class CoreCustomURLSchemesProvider {
             return false;
         }
 
-        return url.indexOf(CoreConfigConstants.customurlscheme + '://') != -1;
+        return url.indexOf(CoreConstants.CONFIG.customurlscheme + '://') != -1;
     }
 
     /**
@@ -483,7 +483,7 @@ export class CoreCustomURLSchemesProvider {
             return false;
         }
 
-        return url.indexOf(CoreConfigConstants.customurlscheme + '://link=') != -1;
+        return url.indexOf(CoreConstants.CONFIG.customurlscheme + '://link=') != -1;
     }
 
     /**
@@ -497,7 +497,7 @@ export class CoreCustomURLSchemesProvider {
             return false;
         }
 
-        return url.indexOf(CoreConfigConstants.customurlscheme + '://token=') != -1;
+        return url.indexOf(CoreConstants.CONFIG.customurlscheme + '://token=') != -1;
     }
 
     /**
@@ -507,7 +507,7 @@ export class CoreCustomURLSchemesProvider {
      * @return URL without scheme.
      */
     removeCustomURLScheme(url: string): string {
-        return url.replace(CoreConfigConstants.customurlscheme + '://', '');
+        return url.replace(CoreConstants.CONFIG.customurlscheme + '://', '');
     }
 
     /**
@@ -517,7 +517,7 @@ export class CoreCustomURLSchemesProvider {
      * @return URL without scheme and prefix.
      */
     removeCustomURLLinkScheme(url: string): string {
-        return url.replace(CoreConfigConstants.customurlscheme + '://link=', '');
+        return url.replace(CoreConstants.CONFIG.customurlscheme + '://link=', '');
     }
 
     /**
@@ -527,7 +527,7 @@ export class CoreCustomURLSchemesProvider {
      * @return URL without scheme and prefix.
      */
     removeCustomURLTokenScheme(url: string): string {
-        return url.replace(CoreConfigConstants.customurlscheme + '://token=', '');
+        return url.replace(CoreConstants.CONFIG.customurlscheme + '://token=', '');
     }
 
     /**

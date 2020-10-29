@@ -52,7 +52,7 @@ import { CoreSitePluginsProvider } from '@core/siteplugins/providers/siteplugins
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreConstants } from '@core/constants';
 import * as moment from 'moment';
 import { Md5 } from 'ts-md5/dist/md5';

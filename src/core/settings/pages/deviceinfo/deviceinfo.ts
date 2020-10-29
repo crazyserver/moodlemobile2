@@ -24,7 +24,7 @@ import { CoreLangProvider } from '@services/lang';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 
 /**
@@ -90,10 +90,10 @@ export class CoreSettingsDeviceInfoPage {
             protected translate: TranslateService) {
 
         this.deviceInfo = {
-            versionName: CoreConfigConstants.versionname,
-            versionCode: CoreConfigConstants.versioncode,
-            compilationTime: CoreConfigConstants.compilationtime,
-            lastCommit: CoreConfigConstants.lastcommit,
+            versionName: CoreConstants.CONFIG.versionname,
+            versionCode: CoreConstants.CONFIG.versioncode,
+            compilationTime: CoreConstants.CONFIG.compilationtime,
+            lastCommit: CoreConstants.CONFIG.lastcommit,
             networkStatus: appProvider.isOnline() ? 'online' : 'offline',
             wifiConnection: appProvider.isWifi() ? 'yes' : 'no',
             localNotifAvailable: localNotificationsProvider.isAvailable() ? 'yes' : 'no',
@@ -177,7 +177,7 @@ export class CoreSettingsDeviceInfoPage {
 
         langProvider.getCurrentLanguage().then((lang) => {
             this.deviceInfo.currentLanguage =  lang;
-            this.currentLangName = CoreConfigConstants.languages[lang];
+            this.currentLangName = CoreConstants.CONFIG.languages[lang];
         });
 
         if (fileProvider.isAvailable()) {
@@ -195,8 +195,8 @@ export class CoreSettingsDeviceInfoPage {
         const currentSite = sitesProvider.getCurrentSite();
 
         this.deviceInfo.siteUrl = (currentSite && currentSite.getURL()) ||
-            (typeof CoreConfigConstants.siteurl == 'string' && CoreConfigConstants.siteurl);
-        this.deviceInfo.isPrefixedUrl = !!CoreConfigConstants.siteurl;
+            (typeof CoreConstants.CONFIG.siteurl == 'string' && CoreConstants.CONFIG.siteurl);
+        this.deviceInfo.isPrefixedUrl = !!CoreConstants.CONFIG.siteurl;
         this.deviceInfo.siteId = currentSite && currentSite.getId();
         this.deviceInfo.siteVersion = currentSite && currentSite.getInfo().release;
 

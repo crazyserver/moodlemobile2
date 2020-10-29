@@ -27,7 +27,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 import { CoreContentLinksDelegate, CoreContentLinksAction } from './delegate';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreSitePluginsProvider } from '@core/siteplugins/providers/siteplugins';
 import { CoreSite } from '@classes/site';
 import { CoreMainMenuProvider } from '@core/mainmenu/providers/mainmenu';
@@ -160,7 +160,7 @@ export class CoreContentLinksHelperProvider {
      * @deprecated Please use CoreCustomURLSchemesProvider.handleCustomURL instead.
      */
     handleCustomUrl(url: string): boolean {
-        const contentLinksScheme = CoreConfigConstants.customurlscheme + '://link';
+        const contentLinksScheme = CoreConstants.CONFIG.customurlscheme + '://link';
         if (url.indexOf(contentLinksScheme) == -1) {
             return false;
         }

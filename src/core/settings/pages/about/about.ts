@@ -17,7 +17,7 @@ import { IonicPage, NavController } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 
 /**
  * Page that displays the about settings.
@@ -40,12 +40,12 @@ export class CoreSettingsAboutPage {
 
         const currentSite = sitesProvider.getCurrentSite();
 
-        this.appName = appProvider.isDesktop() ? CoreConfigConstants.desktopappname : CoreConfigConstants.appname;
-        this.versionName = CoreConfigConstants.versionname;
+        this.appName = appProvider.isDesktop() ? CoreConstants.CONFIG.desktopappname : CoreConstants.CONFIG.appname;
+        this.versionName = CoreConstants.CONFIG.versionname;
 
         // Calculate the privacy policy to use.
         this.privacyPolicy = (currentSite && (currentSite.getStoredConfig('tool_mobile_apppolicy') ||
-                currentSite.getStoredConfig('sitepolicy'))) || CoreConfigConstants.privacypolicy;
+                currentSite.getStoredConfig('sitepolicy'))) || CoreConstants.CONFIG.privacypolicy;
     }
 
     /**

@@ -17,7 +17,7 @@ import { File, Entry, DirectoryEntry, FileEntry, FileError, IWriteOptions } from
 import { CoreAppProvider } from '@services/app';
 import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreTextUtilsProvider } from '@services/utils/text';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { FileEntryMock, DirectoryEntryMock } from '../classes/filesystem';
 
 /**
@@ -380,7 +380,7 @@ export class FileMock extends File {
                     return;
                 }
 
-                basePath = this.textUtils.concatenatePaths(basePath.replace(/\\/g, '/'), CoreConfigConstants.app_id) + '/';
+                basePath = this.textUtils.concatenatePaths(basePath.replace(/\\/g, '/'), CoreConstants.CONFIG.app_id) + '/';
 
                 // Create the folder if needed.
                 fs.mkdir(basePath, (e) => {

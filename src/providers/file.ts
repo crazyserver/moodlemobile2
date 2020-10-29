@@ -19,7 +19,7 @@ import { CoreApp, CoreAppProvider } from './app';
 import { CoreLoggerProvider } from './logger';
 import { CoreMimetypeUtilsProvider } from './utils/mimetype';
 import { CoreTextUtilsProvider } from './utils/text';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { Zip } from '@ionic-native/zip';
 import { makeSingleton } from '@singletons/core.singletons';
 
@@ -1265,7 +1265,7 @@ export class CoreFileProvider {
             return src;
         }
 
-        return src.replace(CoreConfigConstants.ioswebviewscheme + '://localhost/_app_file_', 'file://');
+        return src.replace(CoreConstants.CONFIG.ioswebviewscheme + '://localhost/_app_file_', 'file://');
     }
 
     /**

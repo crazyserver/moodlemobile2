@@ -21,7 +21,7 @@ import { CoreEventsProvider } from '@services/events';
 import { CoreLangProvider } from '@services/lang';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreSettingsHelper } from '../../providers/helper';
 
 /**
@@ -56,7 +56,7 @@ export class CoreSettingsGeneralPage {
             protected settingsHelper: CoreSettingsHelper) {
 
         // Get the supported languages.
-        const languages = CoreConfigConstants.languages;
+        const languages = CoreConstants.CONFIG.languages;
         for (const code in languages) {
             this.languages.push({
                 code: code,
@@ -64,7 +64,7 @@ export class CoreSettingsGeneralPage {
             });
         }
 
-        if (!CoreConfigConstants.forceColorScheme) {
+        if (!CoreConstants.CONFIG.forceColorScheme) {
             this.colorSchemeDisabled = this.settingsHelper.isColorSchemeDisabledInSite();
 
             if (this.colorSchemeDisabled) {
@@ -96,9 +96,9 @@ export class CoreSettingsGeneralPage {
             this.selectedLanguage = currentLanguage;
         });
 
-        this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConfigConstants.font_sizes[0].toString()).then((fontSize) => {
+        this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConstants.CONFIG.font_sizes[0].toString()).then((fontSize) => {
             this.selectedFontSize = fontSize;
-            this.fontSizes = CoreConfigConstants.font_sizes.map((size) => {
+            this.fontSizes = CoreConstants.CONFIG.font_sizes.map((size) => {
                 return {
                     size: size,
                     // Absolute pixel size based on 1.4rem body text when this size is selected.
@@ -125,7 +125,7 @@ export class CoreSettingsGeneralPage {
             this.debugDisplay = !!debugDisplay;
         });
 
-        this.analyticsSupported = CoreConfigConstants.enableanalytics;
+        this.analyticsSupported = CoreConstants.CONFIG.enableanalytics;
         if (this.analyticsSupported) {
             this.configProvider.get(CoreConstants.SETTINGS_ANALYTICS_ENABLED, true).then((enabled) => {
                 this.analyticsEnabled = !!enabled;

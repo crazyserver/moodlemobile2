@@ -24,7 +24,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreConfig } from '@services/config';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 import { FormBuilder, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import { CoreUrl } from '@singletons/url';
@@ -93,7 +93,7 @@ export class CoreLoginSitePage {
         this.showKeyboard = !!navParams.get('showKeyboard');
 
         let url = '';
-        this.siteSelector = CoreConfigConstants.multisitesdisplay;
+        this.siteSelector = CoreConstants.CONFIG.multisitesdisplay;
 
         const siteFinderSettings: Partial<SiteFinderSettings> = CoreConfigConstants['sitefindersettings'] || {};
         this.siteFinderSettings = {
@@ -128,7 +128,7 @@ export class CoreLoginSitePage {
 
             this.filteredSites = this.fixedSites;
             url = this.fixedSites[0].url;
-        } else if (CoreConfigConstants.enableonboarding && !this.appProvider.isIOS() && !this.appProvider.isMac()) {
+        } else if (CoreConstants.CONFIG.enableonboarding && !this.appProvider.isIOS() && !this.appProvider.isMac()) {
             CoreConfig.instance.get(CoreLoginHelperProvider.ONBOARDING_DONE, false).then((onboardingDone) => {
                 if (!onboardingDone) {
                     // Check onboarding.
@@ -381,7 +381,7 @@ export class CoreLoginSitePage {
      * @return Site data if it's a demo site, undefined otherwise.
      */
     getDemoSiteData(name: string): any {
-        const demoSites = CoreConfigConstants.demo_sites;
+        const demoSites = CoreConstants.CONFIG.demo_sites;
         if (typeof demoSites != 'undefined' && typeof demoSites[name] != 'undefined') {
             return demoSites[name];
         }

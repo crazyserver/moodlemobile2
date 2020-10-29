@@ -19,7 +19,7 @@ import { Globalization } from '@ionic-native/globalization';
 import { Platform, Config } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreConfigProvider } from './config';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { makeSingleton } from '@singletons/core.singletons';
 
 /*
@@ -28,7 +28,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 @Injectable()
 export class CoreLangProvider {
     protected fallbackLanguage = 'en'; // Always use English as fallback language since it contains all strings.
-    protected defaultLanguage = CoreConfigConstants.default_lang || 'en'; // Lang to use if device lang not valid or is forced.
+    protected defaultLanguage = CoreConstants.CONFIG.default_lang || 'en'; // Lang to use if device lang not valid or is forced.
     protected currentLanguage: string; // Save current language in a variable to speed up the get function.
     protected customStrings = {}; // Strings defined using the admin tool.
     protected customStringsRaw: string;
@@ -233,8 +233,8 @@ export class CoreLangProvider {
             return language;
         }).catch(() => {
             // User hasn't defined a language. If default language is forced, use it.
-            if (CoreConfigConstants.default_lang && CoreConfigConstants.forcedefaultlanguage) {
-                return CoreConfigConstants.default_lang;
+            if (CoreConstants.CONFIG.default_lang && CoreConstants.CONFIG.forcedefaultlanguage) {
+                return CoreConstants.CONFIG.default_lang;
             }
 
             try {
@@ -243,14 +243,14 @@ export class CoreLangProvider {
                     let language = result.value.toLowerCase();
                     if (language.indexOf('-') > -1) {
                         // Language code defined by locale has a dash, like en-US or es-ES. Check if it's supported.
-                        if (CoreConfigConstants.languages && typeof CoreConfigConstants.languages[language] == 'undefined') {
+                        if (CoreConstants.CONFIG.languages && typeof CoreConstants.CONFIG.languages[language] == 'undefined') {
                             // Code is NOT supported. Fallback to language without dash. E.g. 'en-US' would fallback to 'en'.
                             language = language.substr(0, language.indexOf('-'));
 
                         }
                     }
 
-                    if (typeof CoreConfigConstants.languages[language] == 'undefined') {
+                    if (typeof CoreConstants.CONFIG.languages[language] == 'undefined') {
                         // Language not supported, use default language.
                         return this.defaultLanguage;
                     }

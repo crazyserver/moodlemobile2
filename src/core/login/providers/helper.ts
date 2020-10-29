@@ -29,7 +29,7 @@ import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSitePluginsProvider } from '@core/siteplugins/providers/siteplugins';
 import { CoreCourseProvider } from '@core/course/providers/course';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreConstants } from '@core/constants';
 import { Md5 } from 'ts-md5/dist/md5';
 import { CoreSite } from '@classes/site';
@@ -154,7 +154,7 @@ export class CoreLoginHelperProvider {
      * @deprecated Please use CoreCustomURLSchemesProvider.handleCustomURL instead.
      */
     appLaunchedByURL(url: string): boolean {
-        const ssoScheme = CoreConfigConstants.customurlscheme + '://token=';
+        const ssoScheme = CoreConstants.CONFIG.customurlscheme + '://token=';
         if (url.indexOf(ssoScheme) == -1) {
             return false;
         }
@@ -411,7 +411,7 @@ export class CoreLoginHelperProvider {
      * @return Logo URL.
      */
     getLogoUrl(config: any): string {
-        return !CoreConfigConstants.forceLoginLogo && config ? (config.logourl || config.compactlogourl) : null;
+        return !CoreConstants.CONFIG.forceLoginLogo && config ? (config.logourl || config.compactlogourl) : null;
     }
 
     /**
@@ -464,7 +464,7 @@ export class CoreLoginHelperProvider {
      * @return Fixed site or list of fixed sites.
      */
     getFixedSites(): string | CoreLoginSiteInfo[] {
-        return CoreConfigConstants.siteurl;
+        return CoreConstants.CONFIG.siteurl;
     }
 
     /**
@@ -512,8 +512,8 @@ export class CoreLoginHelperProvider {
 
         if (this.isFixedUrlSet()) {
             // Fixed URL is set, go to credentials page.
-            const url = typeof CoreConfigConstants.siteurl == 'string' ?
-                CoreConfigConstants.siteurl : CoreConfigConstants.siteurl[0].url;
+            const url = typeof CoreConstants.CONFIG.siteurl == 'string' ?
+                CoreConstants.CONFIG.siteurl : CoreConstants.CONFIG.siteurl[0].url;
 
             pageName = 'CoreLoginCredentialsPage';
             params = { siteUrl: url };
@@ -610,8 +610,8 @@ export class CoreLoginHelperProvider {
      * @return Whether there are several fixed URLs.
      */
     hasSeveralFixedSites(): boolean {
-        return CoreConfigConstants.siteurl && Array.isArray(CoreConfigConstants.siteurl) &&
-            CoreConfigConstants.siteurl.length > 1;
+        return CoreConstants.CONFIG.siteurl && Array.isArray(CoreConstants.CONFIG.siteurl) &&
+            CoreConstants.CONFIG.siteurl.length > 1;
     }
 
     /**
@@ -659,11 +659,11 @@ export class CoreLoginHelperProvider {
      * @return Whether there is 1 fixed URL.
      */
     isFixedUrlSet(): boolean {
-        if (Array.isArray(CoreConfigConstants.siteurl)) {
-            return CoreConfigConstants.siteurl.length == 1;
+        if (Array.isArray(CoreConstants.CONFIG.siteurl)) {
+            return CoreConstants.CONFIG.siteurl.length == 1;
         }
 
-        return !!CoreConfigConstants.siteurl;
+        return !!CoreConstants.CONFIG.siteurl;
     }
 
     /**
@@ -718,7 +718,7 @@ export class CoreLoginHelperProvider {
             return sites.some((site) => {
                 return CoreUrl.sameDomainAndPath(siteUrl, site.url);
             });
-        } else if (CoreConfigConstants.multisitesdisplay == 'sitefinder' && CoreConfigConstants.onlyallowlistedsites) {
+        } else if (CoreConstants.CONFIG.multisitesdisplay == 'sitefinder' && CoreConstants.CONFIG.onlyallowlistedsites) {
             // Call the sites finder to validate the site.
             const result = await this.sitesProvider.findSites(siteUrl.replace(/^https?\:\/\/|\.\w{2,3}\/?$/g, ''));
 
@@ -1009,14 +1009,14 @@ export class CoreLoginHelperProvider {
     prepareForSSOLogin(siteUrl: string, service?: string, launchUrl?: string, pageName?: string, pageParams?: any,
             urlParams?: {[name: string]: any}): string {
 
-        service = service || CoreConfigConstants.wsextservice;
+        service = service || CoreConstants.CONFIG.wsextservice;
         launchUrl = launchUrl || siteUrl + '/local/mobile/launch.php';
 
         const passport = Math.random() * 1000;
         let loginUrl = launchUrl + '?service=' + service;
 
         loginUrl += '&passport=' + passport;
-        loginUrl += '&urlscheme=' + CoreConfigConstants.customurlscheme;
+        loginUrl += '&urlscheme=' + CoreConstants.CONFIG.customurlscheme;
 
         if (urlParams) {
             loginUrl = this.urlUtils.addParamsToUrl(loginUrl, urlParams);
@@ -1223,7 +1223,7 @@ export class CoreLoginHelperProvider {
      */
     shouldShowSSOConfirm(typeOfLogin: number): boolean {
         return !this.isSSOEmbeddedBrowser(typeOfLogin) &&
-            (!CoreConfigConstants.skipssoconfirmation || String(CoreConfigConstants.skipssoconfirmation) === 'false');
+            (!CoreConstants.CONFIG.skipssoconfirmation || String(CoreConstants.CONFIG.skipssoconfirmation) === 'false');
     }
 
     /**
@@ -1243,7 +1243,7 @@ export class CoreLoginHelperProvider {
      * @param message The warning message.
      */
     protected showMoodleAppNoticeModal(message: string): void {
-        const storesConfig: CoreStoreConfig = CoreConfigConstants.appstores;
+        const storesConfig: CoreStoreConfig = CoreConstants.CONFIG.appstores;
         storesConfig.desktop = 'https://download.moodle.org/desktop/';
         storesConfig.mobile = 'https://download.moodle.org/mobile/';
         storesConfig.default = 'https://download.moodle.org/mobile/';

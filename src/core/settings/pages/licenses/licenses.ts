@@ -15,7 +15,7 @@
 import { Component } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 
 /**
  * Defines license info
@@ -48,7 +48,7 @@ export class CoreSettingsLicensesPage {
     error = false;
 
     constructor(protected http: HttpClient) {
-        let version = 'v' + CoreConfigConstants.versionname;
+        let version = 'v' + CoreConstants.CONFIG.versionname;
         if (version.indexOf('-') > 0) {
             version = 'integration';
         }

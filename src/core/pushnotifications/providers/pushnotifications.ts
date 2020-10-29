@@ -29,7 +29,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreConfigProvider } from '@services/config';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { ILocalNotification } from '@ionic-native/local-notifications';
 import { SQLiteDB } from '@classes/sqlitedb';
 import { CoreSite } from '@classes/site';
@@ -269,7 +269,7 @@ export class CorePushNotificationsProvider {
     enableAnalytics(enable: boolean): Promise<any> {
         const win = <any> window; // This feature is only present in our fork of the plugin.
 
-        if (CoreConfigConstants.enableanalytics && win.PushNotification && win.PushNotification.enableAnalytics) {
+        if (CoreConstants.CONFIG.enableanalytics && win.PushNotification && win.PushNotification.enableAnalytics) {
             return new Promise((resolve, reject): void => {
                 win.PushNotification.enableAnalytics(resolve, (error) => {
                     this.logger.error('Error enabling or disabling Firebase analytics', enable, error);
@@ -300,7 +300,7 @@ export class CorePushNotificationsProvider {
                 android: {
                     sound: !!soundEnabled,
                     icon: 'smallicon',
-                    iconColor: CoreConfigConstants.notificoncolor
+                    iconColor: CoreConstants.CONFIG.notificoncolor
                 },
                 ios: {
                     alert: 'true',
@@ -330,7 +330,7 @@ export class CorePushNotificationsProvider {
      */
     protected getRegisterData(): CorePushNotificationsRegisterData {
         return {
-            appid:      CoreConfigConstants.app_id,
+            appid:      CoreConstants.CONFIG.app_id,
             name:       this.device.manufacturer || '',
             model:      this.device.model,
             platform:   this.device.platform + '-fcm',
@@ -361,7 +361,7 @@ export class CorePushNotificationsProvider {
     logEvent(name: string, data: any, filter?: boolean): Promise<any> {
         const win = <any> window; // This feature is only present in our fork of the plugin.
 
-        if (CoreConfigConstants.enableanalytics && win.PushNotification && win.PushNotification.logEvent) {
+        if (CoreConstants.CONFIG.enableanalytics && win.PushNotification && win.PushNotification.logEvent) {
 
             // Check if the analytics is enabled by the user.
             return this.configProvider.get(CoreConstants.SETTINGS_ANALYTICS_ENABLED, true).then((enabled) => {
@@ -572,7 +572,7 @@ export class CorePushNotificationsProvider {
         this.logger.debug(`Unregister device on Moodle: '${site.id}'`);
 
         const data = {
-            appid: CoreConfigConstants.app_id,
+            appid: CoreConstants.CONFIG.app_id,
             uuid:  this.device.uuid
         };
 

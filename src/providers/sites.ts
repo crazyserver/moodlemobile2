@@ -25,7 +25,7 @@ import { CoreUrlUtilsProvider } from './utils/url';
 import { CoreUtilsProvider } from './utils/utils';
 import { CoreWSProvider } from './ws';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { SQLiteDB, SQLiteDBTableSchema } from '@classes/sqlitedb';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -474,7 +474,7 @@ export class CoreSitesProvider {
      * @return Site data if it's a demo site, undefined otherwise.
      */
     getDemoSiteData(name: string): any {
-        const demoSites = CoreConfigConstants.demo_sites;
+        const demoSites = CoreConstants.CONFIG.demo_sites;
         name = name.toLowerCase();
 
         if (typeof demoSites != 'undefined' && typeof demoSites[name] != 'undefined') {
@@ -569,7 +569,7 @@ export class CoreSitesProvider {
             const temporarySite = this.sitesFactory.makeSite(undefined, siteUrl);
 
             return temporarySite.checkLocalMobilePlugin().then((data) => {
-                data.service = data.service || CoreConfigConstants.wsservice;
+                data.service = data.service || CoreConstants.CONFIG.wsservice;
                 this.services[siteUrl] = data.service; // No need to store it in DB.
 
                 if (data.coreSupported ||
@@ -908,7 +908,7 @@ export class CoreSitesProvider {
         }
 
         // Return default service.
-        return CoreConfigConstants.wsservice;
+        return CoreConstants.CONFIG.wsservice;
     }
 
     /**
@@ -1054,7 +1054,7 @@ export class CoreSitesProvider {
     checkRequiredMinimumVersion(config: any, siteId?: string): Promise<void> {
         if (config && config.tool_mobile_minimumversion) {
             const requiredVersion = this.convertVersionName(config.tool_mobile_minimumversion),
-                appVersion = this.convertVersionName(CoreConfigConstants.versionname);
+                appVersion = this.convertVersionName(CoreConstants.CONFIG.versionname);
 
             if (requiredVersion > appVersion) {
                 const storesConfig: CoreStoreConfig = {
@@ -1392,7 +1392,7 @@ export class CoreSitesProvider {
                         id: site.id,
                         siteUrl: site.siteUrl,
                         fullName: siteInfo && siteInfo.fullname,
-                        siteName: CoreConfigConstants.sitename ? CoreConfigConstants.sitename : siteInfo && siteInfo.sitename,
+                        siteName: CoreConstants.CONFIG.sitename ? CoreConstants.CONFIG.sitename : siteInfo && siteInfo.sitename,
                         avatar: siteInfo && siteInfo.userpictureurl,
                         siteHomeId: siteInfo && siteInfo.siteid || 1,
                     };

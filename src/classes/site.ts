@@ -27,7 +27,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { Md5 } from 'ts-md5/dist/md5';
 import { InAppBrowserObject } from '@ionic-native/in-app-browser';
 
@@ -225,10 +225,10 @@ export class CoreSite {
 
     // Possible cache update frequencies.
     protected UPDATE_FREQUENCIES = [
-        CoreConfigConstants.cache_update_frequency_usually || 420000,
-        CoreConfigConstants.cache_update_frequency_often || 1200000,
-        CoreConfigConstants.cache_update_frequency_sometimes || 3600000,
-        CoreConfigConstants.cache_update_frequency_rarely || 43200000
+        CoreConstants.CONFIG.cache_update_frequency_usually || 420000,
+        CoreConstants.CONFIG.cache_update_frequency_often || 1200000,
+        CoreConstants.CONFIG.cache_update_frequency_sometimes || 3600000,
+        CoreConstants.CONFIG.cache_update_frequency_rarely || 43200000
     ];
 
     // Rest of variables.
@@ -368,9 +368,9 @@ export class CoreSite {
      * @return Site name.
      */
     getSiteName(): string {
-        if (CoreConfigConstants.sitename) {
+        if (CoreConstants.CONFIG.sitename) {
             // Overridden by config.
-            return CoreConfigConstants.sitename;
+            return CoreConstants.CONFIG.sitename;
         } else {
             return this.infos && this.infos.sitename || '';
         }
@@ -1443,7 +1443,7 @@ export class CoreSite {
      */
     async checkLocalMobilePlugin(retrying?: boolean): Promise<LocalMobileResponse> {
         const checkUrl = this.siteUrl + '/local/mobile/check.php',
-            service = CoreConfigConstants.wsextservice;
+            service = CoreConstants.CONFIG.wsextservice;
 
         if (!service) {
             // External service not defined.

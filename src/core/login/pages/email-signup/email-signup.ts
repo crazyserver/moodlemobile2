@@ -24,7 +24,7 @@ import { CoreWSProvider } from '@services/ws';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CoreUserProfileFieldDelegate } from '@core/user/providers/user-profile-field-delegate';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 
 /**
  * Page to signup using email.
@@ -212,7 +212,7 @@ export class CoreLoginEmailSignupPage {
      */
     protected treatSiteConfig(siteConfig: any): boolean {
         if (siteConfig && siteConfig.registerauth == 'email' && !this.loginHelper.isEmailSignupDisabled(siteConfig)) {
-            this.siteName = CoreConfigConstants.sitename ? CoreConfigConstants.sitename : siteConfig.sitename;
+            this.siteName = CoreConstants.CONFIG.sitename ? CoreConstants.CONFIG.sitename : siteConfig.sitename;
             this.authInstructions = siteConfig.authinstructions;
             this.ageDigitalConsentVerification = siteConfig.agedigitalconsentverification;
             this.supportName = siteConfig.supportname;

@@ -24,7 +24,7 @@ import { CoreAppProvider } from '@services/app';
 import { CoreTabComponent } from './tab';
 import { CoreConfigProvider } from '@services/config';
 import { CoreConstants } from '@core/constants';
-import { CoreConfigConstants } from '../../configconstants';
+import { CoreConstants } from '@core/constants';
 
 /**
  * This component displays some tabs that usually share data between them.
@@ -410,9 +410,9 @@ export class CoreTabsComponent implements OnInit, AfterViewInit, OnChanges, OnDe
             if (this.slides) {
                 const width = this.domUtils.getElementWidth(this.slides.getNativeElement()) || this.slides.renderedWidth;
                 if (width) {
-                    this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConfigConstants.font_sizes[0].toString()).
+                    this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConstants.CONFIG.font_sizes[0].toString()).
                         then((fontSize) => {
-                            this.maxSlides = Math.floor(width / (fontSize / CoreConfigConstants.font_sizes[0] *
+                            this.maxSlides = Math.floor(width / (fontSize / CoreConstants.CONFIG.font_sizes[0] *
                                 CoreTabsComponent.MIN_TAB_WIDTH));
                             resolve();
                         });

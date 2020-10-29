@@ -23,7 +23,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUrlUtils } from '@services/utils/url';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoreConfigConstants } from '../../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreCustomURLSchemes } from '@services/urlschemes';
 
 /**
@@ -70,7 +70,7 @@ export class CoreLoginCredentialsPage {
 
         this.siteUrl = navParams.get('siteUrl');
         this.siteName = navParams.get('siteName') || null;
-        this.logoUrl = !CoreConfigConstants.forceLoginLogo && navParams.get('logoUrl') || null;
+        this.logoUrl = !CoreConstants.CONFIG.forceLoginLogo && navParams.get('logoUrl') || null;
         this.siteConfig = navParams.get('siteConfig');
         this.urlToOpen = navParams.get('urlToOpen');
 
@@ -165,7 +165,7 @@ export class CoreLoginCredentialsPage {
      */
     protected treatSiteConfig(): void {
         if (this.siteConfig) {
-            this.siteName = CoreConfigConstants.sitename ? CoreConfigConstants.sitename : this.siteConfig.sitename;
+            this.siteName = CoreConstants.CONFIG.sitename ? CoreConstants.CONFIG.sitename : this.siteConfig.sitename;
             this.logoUrl = this.loginHelper.getLogoUrl(this.siteConfig);
             this.authInstructions = this.siteConfig.authinstructions || this.translate.instant('core.login.loginsteps');
 

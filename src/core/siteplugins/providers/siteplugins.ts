@@ -21,7 +21,7 @@ import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreEventsProvider } from '@services/events';
 
@@ -106,11 +106,11 @@ export class CoreSitePluginsProvider {
             const argsToSend = this.utils.clone(args);
 
             argsToSend.userid = args.userid || site.getUserId();
-            argsToSend.appid = CoreConfigConstants.app_id;
-            argsToSend.appversioncode = CoreConfigConstants.versioncode;
-            argsToSend.appversionname = CoreConfigConstants.versionname;
+            argsToSend.appid = CoreConstants.CONFIG.app_id;
+            argsToSend.appversioncode = CoreConstants.CONFIG.versioncode;
+            argsToSend.appversionname = CoreConstants.CONFIG.versionname;
             argsToSend.applang = lang;
-            argsToSend.appcustomurlscheme = CoreConfigConstants.customurlscheme;
+            argsToSend.appcustomurlscheme = CoreConstants.CONFIG.customurlscheme;
             argsToSend.appisdesktop = CoreApp.instance.isDesktop();
             argsToSend.appismobile = CoreApp.instance.isMobile();
             argsToSend.appiswide = CoreApp.instance.isWide();

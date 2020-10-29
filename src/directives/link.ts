@@ -22,7 +22,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreTextUtilsProvider } from '@services/utils/text';
-import { CoreConfigConstants } from '../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreCustomURLSchemesProvider } from '@services/urlschemes';
 
 /**

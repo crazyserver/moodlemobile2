@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { CoreLangProvider } from '../lang';
 import { CoreTextUtilsProvider } from './text';
 import { makeSingleton } from '@singletons/core.singletons';
-import { CoreConfigConstants } from '../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreUrl } from '@singletons/url';
 
 /*
@@ -439,7 +439,7 @@ export class CoreUrlUtilsProvider {
         return scheme == 'cdvfile' ||
                 scheme == 'file' ||
                 scheme == 'filesystem' ||
-                scheme == CoreConfigConstants.ioswebviewscheme;
+                scheme == CoreConstants.CONFIG.ioswebviewscheme;
     }
 
     /**

@@ -18,7 +18,7 @@ import { CoreApp } from '@services/app';
 import { CoreLangProvider } from '@services/lang';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { CoreMainMenuDelegate, CoreMainMenuHandlerToDisplay } from './delegate';
 
 /**
@@ -150,7 +150,7 @@ export class CoreMainMenuProvider {
             }
 
             return this.langProvider.getCurrentLanguage().then((currentLang) => {
-                const fallbackLang = CoreConfigConstants.default_lang || 'en';
+                const fallbackLang = CoreConstants.CONFIG.default_lang || 'en';
 
                 // Get the right label for each entry and add it to the result.
                 for (const id in map) {

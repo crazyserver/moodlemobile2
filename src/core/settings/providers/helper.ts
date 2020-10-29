@@ -26,7 +26,7 @@ import { CoreConfigProvider } from '@services/config';
 import { CoreFilterProvider } from '@core/filter/providers/filter';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
-import { CoreConfigConstants } from '../../../configconstants';
+import { CoreConstants } from '@core/constants';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -60,7 +60,7 @@ export class CoreSettingsHelper {
     ) {
         this.logger = CoreLogger.getInstance('CoreSettingsHelper');
 
-        if (!CoreConfigConstants.forceColorScheme) {
+        if (!CoreConstants.CONFIG.forceColorScheme) {
             // Update color scheme when a user enters or leaves a site, or when the site info is updated.
             const applySiteScheme = (): void => {
                 if (this.isColorSchemeDisabledInSite()) {
@@ -328,7 +328,7 @@ export class CoreSettingsHelper {
      */
     initDomSettings(): void {
         // Set the font size based on user preference.
-        this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConfigConstants.font_sizes[0].toString()).then((fontSize) => {
+        this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConstants.CONFIG.font_sizes[0].toString()).then((fontSize) => {
             this.setFontSize(fontSize);
         });
 
@@ -339,8 +339,8 @@ export class CoreSettingsHelper {
      * Init the color scheme.
      */
     initColorScheme(): void {
-        if (!!CoreConfigConstants.forceColorScheme) {
-            this.setColorScheme(CoreConfigConstants.forceColorScheme);
+        if (!!CoreConstants.CONFIG.forceColorScheme) {
+            this.setColorScheme(CoreConstants.CONFIG.forceColorScheme);
         } else {
             let defaultColorScheme = 'light';
 
