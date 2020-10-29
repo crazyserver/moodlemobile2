@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreApp } from '@providers/app';
-import { CoreSites } from '@providers/sites';
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreApp } from '@services/app';
+import { CoreSites } from '@services/sites';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreSite } from '@classes/site';
 import { CoreXAPIOffline, CoreXAPIOfflineSaveStatementsOptions } from './offline';
 

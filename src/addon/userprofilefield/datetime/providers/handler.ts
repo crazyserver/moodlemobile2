@@ -14,7 +14,7 @@
 // limitations under the License.
 import { Injectable, Injector } from '@angular/core';
 import { CoreUserProfileFieldHandler, CoreUserProfileFieldHandlerData } from '@core/user/providers/user-profile-field-delegate';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonUserProfileFieldDatetimeComponent } from '../component/datetime';
 
 /**

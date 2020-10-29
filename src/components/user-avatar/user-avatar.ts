@@ -14,10 +14,10 @@
 
 import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChange, Optional } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreAppProvider } from '@providers/app';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreEventsProvider } from '@services/events';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 

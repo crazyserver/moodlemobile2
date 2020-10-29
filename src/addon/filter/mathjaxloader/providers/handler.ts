@@ -15,11 +15,11 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { CoreFilterDefaultHandler } from '@core/filter/providers/default-filter';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from '@core/filter/providers/filter';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLangProvider } from '@providers/lang';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLangProvider } from '@services/lang';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreSite } from '@classes/site';
 
 /**

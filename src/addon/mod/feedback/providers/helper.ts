@@ -18,11 +18,11 @@ import { AddonModFeedbackProvider, AddonModFeedbackGroupPaginatedOptions } from 
 import { CoreUserProvider } from '@core/user/providers/user';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
-import { CoreSitesProvider, CoreSitesReadingStrategy } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { TranslateService } from '@ngx-translate/core';
 
 /**

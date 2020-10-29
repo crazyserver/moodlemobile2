@@ -14,8 +14,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreSites } from '@providers/sites';
-import { CoreDomUtils } from '@providers/utils/dom';
+import { CoreSites } from '@services/sites';
+import { CoreDomUtils } from '@services/utils/dom';
 import { CoreUser } from '@core/user/providers/user';
 import {
     AddonModH5PActivity, AddonModH5PActivityData, AddonModH5PActivityUserAttempts

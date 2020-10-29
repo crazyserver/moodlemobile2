@@ -15,11 +15,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from '@ionic/angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { AddonModDataComponentsModule } from '../../components/components.module';
 import { AddonModDataFieldsDelegate } from '../../providers/fields-delegate';
 import { AddonModDataHelperProvider } from '../../providers/helper';

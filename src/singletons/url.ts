@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreTextUtils } from '@providers/utils/text';
+import { CoreTextUtils } from '@services/utils/text';
 
 /**
  * Parts contained within a url.

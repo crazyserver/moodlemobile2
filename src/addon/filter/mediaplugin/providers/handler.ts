@@ -16,8 +16,8 @@
 import { Injectable } from '@angular/core';
 import { CoreFilterDefaultHandler } from '@core/filter/providers/default-filter';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from '@core/filter/providers/filter';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
 
 /**
  * Handler to support the Multimedia filter.

@@ -14,16 +14,16 @@
 
 import { Directive, Input, OnInit, ElementRef, Optional } from '@angular/core';
 import { NavController, Content } from '@ionic/angular';
-import { CoreFileHelper } from '@providers/file-helper';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreFileHelper } from '@services/file-helper';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUrlUtilsProvider } from '@services/utils/url';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreConfigConstants } from '../configconstants';
-import { CoreCustomURLSchemesProvider } from '@providers/urlschemes';
+import { CoreCustomURLSchemesProvider } from '@services/urlschemes';
 
 /**
  * Directive to open a link in external browser.

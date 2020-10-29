@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { CoreTagProvider } from './tag';
 import { CoreMainMenuHandler, CoreMainMenuHandlerData } from '@core/mainmenu/providers/delegate';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Handler to inject an option into main menu.

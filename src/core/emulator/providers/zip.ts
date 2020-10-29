@@ -16,7 +16,7 @@ import { Injectable } from '@angular/core';
 import { Zip } from '@ionic-native/zip';
 import * as JSZip from 'jszip';
 import { File } from '@ionic-native/file';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Emulates the Cordova Zip plugin in desktop apps and in browser.

@@ -19,9 +19,9 @@ import { CoreCourses } from '@core/courses/providers/courses';
 import { CoreArray } from '@singletons/array';
 import { CoreCourseModulePrefetch } from '@core/course/providers/module-prefetch-delegate';
 import { CoreConstants } from '@core/constants';
-import { CoreDomUtils } from '@providers/utils/dom';
+import { CoreDomUtils } from '@services/utils/dom';
 import { Translate } from '@singletons/core.singletons';
-import { CoreEvents, CoreEventsProvider, CoreEventObserver } from '@providers/events';
+import { CoreEvents, CoreEventsProvider, CoreEventObserver } from '@services/events';
 import { CoreCourseHelper } from '@core/course/providers/helper';
 
 /**

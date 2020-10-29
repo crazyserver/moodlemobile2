@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreCronHandler } from '@providers/cron';
+import { CoreCronHandler } from '@services/cron';
 import { AddonModSurveySyncProvider } from './sync';
 
 /**

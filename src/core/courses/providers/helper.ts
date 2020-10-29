@@ -14,8 +14,8 @@
 
 import { Injectable } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCoursesProvider } from './courses';
 import { AddonCourseCompletionProvider } from '@addon/coursecompletion/providers/coursecompletion';
 import { TranslateService } from '@ngx-translate/core';

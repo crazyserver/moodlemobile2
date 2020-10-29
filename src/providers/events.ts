@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLoggerProvider } from '@services/logger';
 import { makeSingleton } from '@singletons/core.singletons';
 
 /**

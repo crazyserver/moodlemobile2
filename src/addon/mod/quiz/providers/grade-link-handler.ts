@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreContentLinksModuleGradeHandler } from '@core/contentlinks/classes/module-grade-handler';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { AddonModQuizProvider } from './quiz';

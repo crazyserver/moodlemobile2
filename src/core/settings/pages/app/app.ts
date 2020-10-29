@@ -15,7 +15,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
-import { CoreApp } from '@providers/app';
+import { CoreApp } from '@services/app';
 
 /**
  * Page that displays the list of app settings pages.

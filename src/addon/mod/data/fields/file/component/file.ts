@@ -14,7 +14,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AddonModDataFieldPluginComponent } from '../../../classes/field-plugin-component';
-import { CoreFileSessionProvider } from '@providers/file-session';
+import { CoreFileSessionProvider } from '@services/file-session';
 import { AddonModDataProvider } from '../../../providers/data';
 
 /**

@@ -13,7 +13,7 @@
 // limitations under the License.
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { AddonModDataProvider } from '../../../providers/data';
 import { AddonModDataFieldPluginComponent } from '../../../classes/field-plugin-component';
 

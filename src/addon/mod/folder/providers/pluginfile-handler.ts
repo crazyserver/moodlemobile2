@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CorePluginFileHandler } from '@providers/plugin-file-delegate';
+import { CorePluginFileHandler } from '@services/plugin-file-delegate';
 
 /**
  * Handler to treat links to folder.

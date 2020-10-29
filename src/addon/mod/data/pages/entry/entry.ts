@@ -14,11 +14,11 @@
 
 import { ChangeDetectorRef, Component, ViewChild, OnDestroy } from '@angular/core';
 import { Content, IonicPage, NavParams, NavController } from '@ionic/angular';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreGroupsProvider } from '@providers/groups';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreGroupsProvider } from '@services/groups';
+import { CoreEventsProvider } from '@services/events';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreRatingInfo } from '@core/rating/providers/rating';
 import { AddonModDataProvider } from '../../providers/data';

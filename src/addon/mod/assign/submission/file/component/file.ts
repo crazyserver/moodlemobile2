@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { CoreFileSessionProvider } from '@providers/file-session';
+import { CoreFileSessionProvider } from '@services/file-session';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { AddonModAssignProvider } from '../../../providers/assign';
 import { AddonModAssignHelperProvider } from '../../../providers/helper';

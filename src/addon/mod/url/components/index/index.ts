@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Injector } from '@angular/core';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreCourseModuleMainResourceComponent } from '@core/course/classes/main-resource-component';
 import { AddonModUrlProvider } from '../../providers/url';
 import { AddonModUrlHelperProvider } from '../../providers/helper';

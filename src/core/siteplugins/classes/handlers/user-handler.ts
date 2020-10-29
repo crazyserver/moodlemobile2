@@ -16,7 +16,7 @@ import { NavController } from '@ionic/angular';
 import { CoreUserDelegate, CoreUserProfileHandler, CoreUserProfileHandlerData } from '@core/user/providers/user-delegate';
 import { CoreSitePluginsProvider } from '../../providers/siteplugins';
 import { CoreSitePluginsBaseHandler } from './base-handler';
-import { CoreUtilsProvider, PromiseDefer } from '@providers/utils/utils';
+import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
 
 /**
  * Handler to display a site plugin in the user profile.

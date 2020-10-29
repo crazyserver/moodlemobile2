@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Injector, ElementRef } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLoggerProvider } from '@services/logger';
 import { CoreQuestionBaseComponent } from '@core/question/classes/base-question-component';
 
 /**

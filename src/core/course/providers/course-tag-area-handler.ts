@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTagAreaHandler } from '@core/tag/providers/area-delegate';
 import { CoreCourseTagAreaComponent } from '../components/tag-area/tag-area';
 

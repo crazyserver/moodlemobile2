@@ -18,7 +18,7 @@ import { CoreCourseModuleDelegate } from '@core/course/providers/module-delegate
 import { CoreBlockBaseComponent } from '@core/block/classes/base-block-component';
 import { CoreConstants, ContextLevel } from '@core/constants';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Component to render an "activity modules" block.

@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Channel, EventResponse, Push, PushEvent, PushObject, PushOptions } from '@ionic-native/push';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Emulates the Cordova Push plugin in desktop apps and in browser.

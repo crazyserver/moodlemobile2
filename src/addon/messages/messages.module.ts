@@ -21,7 +21,7 @@ import { AddonMessagesMainMenuHandler } from './providers/mainmenu-handler';
 import { CoreMainMenuDelegate } from '@core/mainmenu/providers/delegate';
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 import { CoreUserDelegate } from '@core/user/providers/user-delegate';
-import { CoreCronDelegate } from '@providers/cron';
+import { CoreCronDelegate } from '@services/cron';
 import { AddonMessagesSendMessageUserHandler } from './providers/user-send-message-handler';
 import { AddonMessagesAddContactUserHandler } from './providers/user-add-contact-handler';
 import { AddonMessagesBlockContactUserHandler } from './providers/user-block-contact-handler';
@@ -30,14 +30,14 @@ import { AddonMessagesDiscussionLinkHandler } from './providers/discussion-link-
 import { AddonMessagesIndexLinkHandler } from './providers/index-link-handler';
 import { AddonMessagesSyncCronHandler } from './providers/sync-cron-handler';
 import { AddonMessagesPushClickHandler } from './providers/push-click-handler';
-import { CoreAppProvider } from '@providers/app';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
+import { CoreAppProvider } from '@services/app';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreSettingsDelegate } from '@core/settings/providers/delegate';
 import { AddonMessagesSettingsHandler } from './providers/settings-handler';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 // List of providers (without handlers).
 export const ADDON_MESSAGES_PROVIDERS: any[] = [

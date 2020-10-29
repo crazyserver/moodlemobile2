@@ -14,7 +14,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreSitePluginsPluginContentComponent } from '../../components/plugin-content/plugin-content';
 
 /**

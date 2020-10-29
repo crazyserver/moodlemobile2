@@ -21,7 +21,7 @@ import { AddonNotesSyncCronHandler } from './providers/sync-cron-handler';
 import { AddonNotesUserHandler } from './providers/user-handler';
 import { AddonNotesComponentsModule } from './components/components.module';
 import { CoreCourseOptionsDelegate } from '@core/course/providers/options-delegate';
-import { CoreCronDelegate } from '@providers/cron';
+import { CoreCronDelegate } from '@services/cron';
 import { CoreUserDelegate } from '@core/user/providers/user-delegate';
 
 // List of providers (without handlers).

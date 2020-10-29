@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import * as moment from 'moment';
 import { AddonModChatMessageWithUserData, AddonModChatSessionMessageWithUserData } from './chat';
 

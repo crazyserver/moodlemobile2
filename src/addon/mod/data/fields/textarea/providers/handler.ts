@@ -15,7 +15,7 @@ import { Injector, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AddonModDataFieldTextHandler } from '../../text/providers/handler';
 import { AddonModDataFieldTextareaComponent } from '../component/textarea';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Handler for textarea data field plugin.

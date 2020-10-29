@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Component, OnInit, AfterViewInit, Input, ElementRef } from '@angular/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreApp } from '@providers/app';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreApp } from '@services/app';
 
 /**
  * Component to allow showing and hiding a password. The affected input MUST have a name to identify it.

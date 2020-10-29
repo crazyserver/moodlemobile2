@@ -15,7 +15,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Content } from '@ionic/angular';
 import { CoreGradesProvider } from '../../providers/grades';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreGradesHelperProvider } from '../../providers/helper';
 

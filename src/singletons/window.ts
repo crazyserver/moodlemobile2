@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { NavController } from '@ionic/angular';
-import { CoreFileHelper } from '@providers/file-helper';
-import { CoreSites } from '@providers/sites';
-import { CoreUrlUtils } from '@providers/utils/url';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreFileHelper } from '@services/file-helper';
+import { CoreSites } from '@services/sites';
+import { CoreUrlUtils } from '@services/utils/url';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreContentLinksHelper } from '@core/contentlinks/providers/helper';
 
 /**

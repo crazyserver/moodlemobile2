@@ -16,7 +16,7 @@ import { Component, Input, OnInit, Injector, ViewChild, OnDestroy, DoCheck, KeyV
 import { CoreBlockDelegate } from '../../providers/delegate';
 import { CoreDynamicComponent } from '@components/dynamic-component/dynamic-component';
 import { Subscription } from 'rxjs';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 
 /**
  * Component to render a block.

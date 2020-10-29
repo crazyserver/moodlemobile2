@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Component to show a "bar" with arrows to navigate forward/backward and a "info" icon to display more data.

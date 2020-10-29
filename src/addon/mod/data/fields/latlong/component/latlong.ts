@@ -15,9 +15,9 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AddonModDataFieldPluginComponent } from '../../../classes/field-plugin-component';
-import { CoreApp, CoreAppProvider } from '@providers/app';
-import { CoreGeolocation, CoreGeolocationError, CoreGeolocationErrorReason } from '@providers/geolocation';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreApp, CoreAppProvider } from '@services/app';
+import { CoreGeolocation, CoreGeolocationError, CoreGeolocationErrorReason } from '@services/geolocation';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Component to render data latlong field.

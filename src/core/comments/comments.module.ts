@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreCronDelegate } from '@providers/cron';
+import { CoreEventsProvider } from '@services/events';
+import { CoreCronDelegate } from '@services/cron';
 import { CoreCommentsProvider } from './providers/comments';
 import { CoreCommentsOfflineProvider } from './providers/offline';
 import { CoreCommentsSyncCronHandler } from './providers/sync-cron-handler';

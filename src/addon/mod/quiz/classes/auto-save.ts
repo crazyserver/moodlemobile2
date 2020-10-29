@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { PopoverController, Popover } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLoggerProvider } from '@services/logger';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 import { AddonModQuizProvider } from '../providers/quiz';
 import { AddonModQuizConnectionErrorComponent } from '../components/connection-error/connection-error';

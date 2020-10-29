@@ -14,17 +14,17 @@
 
 import { Component, OnDestroy, OnInit, Input, OnChanges, DoCheck, SimpleChange, Output, EventEmitter,
     KeyValueDiffers } from '@angular/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonCalendarProvider, AddonCalendarWeek } from '../../providers/calendar';
 import { AddonCalendarHelperProvider, AddonCalendarFilter } from '../../providers/helper';
 import { AddonCalendarOfflineProvider } from '../../providers/calendar-offline';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Component that displays a calendar.

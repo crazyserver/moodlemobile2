@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreLoggerProvider } from '@services/logger';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { AddonModAssignDefaultSubmissionHandler } from './default-submission-handler';
 import { AddonModAssignAssign, AddonModAssignSubmission, AddonModAssignPlugin } from './assign';

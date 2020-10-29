@@ -16,7 +16,7 @@ import { Component, Input, OnDestroy, OnInit, ElementRef, OnChanges, ViewChild }
 import { Chart } from 'chart.js';
 import { CoreFilterProvider } from '@core/filter/providers/filter';
 import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * This component shows a chart using chart.js.

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreUtils, PromiseDefer } from '@providers/utils/utils';
+import { CoreUtils, PromiseDefer } from '@services/utils/utils';
 
 /**
  * Function to add to the queue.

@@ -21,7 +21,7 @@ import {
     IonicModule
 } from '@ionic/angular';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CoreLoggerProvider } from '@providers/logger';
+import { CoreLoggerProvider } from '@services/logger';
 
 // Import core providers.
 import { CORE_PROVIDERS } from '@app/app.module';
@@ -69,7 +69,7 @@ import { CoreContentLinksModuleGradeHandler } from '@core/contentlinks/classes/m
 import { CoreContentLinksModuleIndexHandler } from '@core/contentlinks/classes/module-index-handler';
 import { CoreCourseActivityPrefetchHandlerBase } from '@core/course/classes/activity-prefetch-handler';
 import { CoreCourseResourcePrefetchHandlerBase } from '@core/course/classes/resource-prefetch-handler';
-import { CoreGeolocationError, CoreGeolocationErrorReason } from '@providers/geolocation';
+import { CoreGeolocationError, CoreGeolocationErrorReason } from '@services/geolocation';
 
 // Import all core modules that define components, directives and pipes.
 import { CoreComponentsModule } from '@components/components.module';

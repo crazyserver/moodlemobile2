@@ -17,9 +17,9 @@ import { IonicPage, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreUserProvider } from '@core/user/providers/user';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreGroupsProvider, CoreGroupInfo } from '@services/groups';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonModChatProvider, AddonModChatSession, AddonModChatSessionUser } from '../../providers/chat';
 
 /**

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseModuleDelegate } from '@core/course/providers/module-delegate';
 import { CoreSiteHomeProvider } from '../../providers/sitehome';

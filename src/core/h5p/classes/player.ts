@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreFile } from '@providers/file';
-import { CoreSites } from '@providers/sites';
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreUrlUtils } from '@providers/utils/url';
-import { CoreUtils } from '@providers/utils/utils';
+import { CoreFile } from '@services/file';
+import { CoreSites } from '@services/sites';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreUrlUtils } from '@services/utils/url';
+import { CoreUtils } from '@services/utils/utils';
 import { CoreXAPI } from '@core/xapi/providers/xapi';
 import { CoreH5P } from '../providers/h5p';
 import { CoreH5PCore, CoreH5PDisplayOptions, CoreH5PContentData, CoreH5PDependenciesFiles } from './core';

@@ -14,9 +14,9 @@
 
 import { Component, Input, OnChanges, SimpleChange, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreEventsProvider } from '@services/events';
 import { CoreRatingProvider, CoreRatingInfo, CoreRatingInfoItem } from '@core/rating/providers/rating';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Component that displays the aggregation of a rating item.

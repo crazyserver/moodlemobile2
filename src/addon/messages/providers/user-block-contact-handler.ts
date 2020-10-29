@@ -14,11 +14,11 @@
 
 import { Injectable, OnDestroy } from '@angular/core';
 import { CoreUserDelegate, CoreUserProfileHandler, CoreUserProfileHandlerData } from '@core/user/providers/user-delegate';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from './messages';
 import { AddonMessagesAddContactUserHandler } from './user-add-contact-handler';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreEventsProvider } from '@services/events';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { TranslateService } from '@ngx-translate/core';
 
 /**

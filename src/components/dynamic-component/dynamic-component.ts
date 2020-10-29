@@ -17,8 +17,8 @@ import {
     KeyValueDiffers, SimpleChange, ChangeDetectorRef, Optional, ElementRef
 } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreLoggerProvider } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreLoggerProvider } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Component to create another component dynamically.

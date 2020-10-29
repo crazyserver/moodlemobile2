@@ -15,13 +15,13 @@
 import { Component } from '@angular/core';
 import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import {
     AddonMessagesProvider, AddonMessagesGetContactsResult, AddonMessagesSearchContactsContact
 } from '../../providers/messages';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreEventsProvider } from '@services/events';
 
 /**
  * Component that displays the list of contacts.

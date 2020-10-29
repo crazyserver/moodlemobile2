@@ -14,8 +14,8 @@
 
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 import { AddonModChatProvider } from '../../providers/chat';
 import { AddonModChatHelperProvider, AddonModChatSessionMessageForView } from '../../providers/helper';

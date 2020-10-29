@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreConfigProvider } from '@providers/config';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreAppProvider } from '@services/app';
+import { CoreConfigProvider } from '@services/config';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreConstants } from '@core/constants';
 
 /**

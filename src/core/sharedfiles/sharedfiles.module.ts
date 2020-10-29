@@ -18,8 +18,8 @@ import { CoreSharedFilesProvider } from './providers/sharedfiles';
 import { CoreSharedFilesHelperProvider } from './providers/helper';
 import { CoreSharedFilesUploadHandler } from './providers/upload-handler';
 import { CoreFileUploaderDelegate } from '@core/fileuploader/providers/delegate';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreAppProvider } from '@providers/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreAppProvider } from '@services/app';
 
 // List of providers (without handlers).
 export const CORE_SHAREDFILES_PROVIDERS: any[] = [

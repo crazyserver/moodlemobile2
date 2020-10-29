@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreAppProvider } from '@services/app';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreSite } from '@classes/site';
 import { CoreCommentsOfflineProvider } from './offline';
 

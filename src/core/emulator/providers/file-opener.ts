@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { FileOpener } from '@ionic-native/file-opener';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Emulates the FileOpener plugin in desktop apps and in browser.

@@ -20,12 +20,12 @@ import { AddonModResourceHelperProvider } from './helper';
 import { AddonModResourceIndexComponent } from '../components/index/index';
 import { CoreCourseModuleHandler, CoreCourseModuleHandlerData } from '@core/course/providers/module-delegate';
 import { CoreCourseProvider } from '@core/course/providers/course';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 import { CoreConstants } from '@core/constants';
-import { CoreWSExternalFile } from '@providers/ws';
+import { CoreWSExternalFile } from '@services/ws';
 
 /**
  * Handler to support resource modules.

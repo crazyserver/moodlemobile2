@@ -14,8 +14,8 @@
 
 import { Component, Optional, Injector, ViewChild } from '@angular/core';
 import { Content, NavController } from '@ionic/angular';
-import { CoreGroupsProvider, CoreGroupInfo } from '@providers/groups';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreGroupsProvider, CoreGroupInfo } from '@services/groups';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { AddonModAssignProvider, AddonModAssignAssign, AddonModAssignSubmissionGradingSummary } from '../../providers/assign';
 import { AddonModAssignHelperProvider } from '../../providers/helper';

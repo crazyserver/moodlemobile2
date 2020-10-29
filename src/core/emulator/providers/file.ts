@@ -14,9 +14,9 @@
 
 import { Injectable } from '@angular/core';
 import { File, Entry, DirectoryEntry, FileEntry, FileError, IWriteOptions } from '@ionic-native/file';
-import { CoreAppProvider } from '@providers/app';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreAppProvider } from '@services/app';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreConfigConstants } from '../../../configconstants';
 import { FileEntryMock, DirectoryEntryMock } from '../classes/filesystem';
 

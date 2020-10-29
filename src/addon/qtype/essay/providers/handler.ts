@@ -14,9 +14,9 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreQuestionHandler } from '@core/question/providers/delegate';
 import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 import { AddonQtypeEssayComponent } from '../component/essay';

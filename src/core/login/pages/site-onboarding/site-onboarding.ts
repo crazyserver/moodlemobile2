@@ -14,8 +14,8 @@
 
 import { Component } from '@angular/core';
 import { IonicPage, ViewController } from '@ionic/angular';
-import { CoreUtils } from '@providers/utils/utils';
-import { CoreConfig } from '@providers/config';
+import { CoreUtils } from '@services/utils/utils';
+import { CoreConfig } from '@services/config';
 import { CoreLoginHelperProvider } from '../../providers/helper';
 
 /**

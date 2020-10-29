@@ -17,7 +17,7 @@ import { CoreContentLinksHandlerBase } from '@core/contentlinks/classes/base-han
 import { CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { CoreCourseProvider } from '@core/course/providers/course';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModGlossaryProvider } from './glossary';
 
 /**

@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
-import { CoreSites, CoreSiteSchema } from '@providers/sites';
+import { CoreLogger } from '@services/logger';
+import { CoreSites, CoreSiteSchema } from '@services/sites';
 import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
-import { CoreWSExternalWarning, CoreWSExternalFile } from '@providers/ws';
-import { CoreTextUtils } from '@providers/utils/text';
-import { CoreUrlUtils } from '@providers/utils/url';
+import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
+import { CoreTextUtils } from '@services/utils/text';
+import { CoreUrlUtils } from '@services/utils/url';
 import { CoreQueueRunner } from '@classes/queue-runner';
 
 import { CoreH5PCore } from '../classes/core';

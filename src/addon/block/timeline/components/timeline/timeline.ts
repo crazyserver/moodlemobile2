@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Component, OnInit, Injector } from '@angular/core';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreCoursesHelperProvider } from '@core/courses/providers/helper';
 import { CoreCourseOptionsDelegate } from '@core/course/providers/options-delegate';

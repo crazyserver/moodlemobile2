@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange, Optional, ViewChild, ElementRef } from '@angular/core';
 import { InfiniteScroll, Content } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Component to show a infinite loading trigger and spinner while more data is being loaded.

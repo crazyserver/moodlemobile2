@@ -15,7 +15,7 @@
 import { Component, Optional, Injector } from '@angular/core';
 import { Content } from '@ionic/angular';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
-import { CoreEvents, CoreEventsProvider } from '@providers/events';
+import { CoreEvents, CoreEventsProvider } from '@services/events';
 import { AddonModSurveyProvider, AddonModSurveySurvey } from '../../providers/survey';
 import { AddonModSurveyHelperProvider, AddonModSurveyQuestionFormatted } from '../../providers/helper';
 import { AddonModSurveyOfflineProvider } from '../../providers/offline';

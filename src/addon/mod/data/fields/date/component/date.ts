@@ -14,7 +14,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModDataFieldPluginComponent } from '../../../classes/field-plugin-component';
 
 /**

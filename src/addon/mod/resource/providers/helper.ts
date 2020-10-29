@@ -13,17 +13,17 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { AddonModResourceProvider } from './resource';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreFilepoolProvider } from '@providers/filepool';
-import { CoreFileProvider } from '@providers/file';
-import { CoreFileHelperProvider } from '@providers/file-helper';
-import { CoreAppProvider } from '@providers/app';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreFilepoolProvider } from '@services/filepool';
+import { CoreFileProvider } from '@services/file';
+import { CoreFileHelperProvider } from '@services/file-helper';
+import { CoreAppProvider } from '@services/app';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Service that provides helper functions for resources.

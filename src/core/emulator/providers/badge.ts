@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Badge } from '@ionic-native/badge';
-import { CoreAppProvider } from '@providers/app';
+import { CoreAppProvider } from '@services/app';
 
 /**
  * Emulates the Cordova Push plugin in desktop apps and in browser.

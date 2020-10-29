@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injector } from '@angular/core';
-import { CoreLogger } from '@providers/logger';
+import { CoreLogger } from '@services/logger';
 import { CoreSitePluginsBaseHandler } from './base-handler';
 import { CoreBlockDelegate, CoreBlockHandler, CoreBlockHandlerData } from '@core/block/providers/delegate';
 import { CoreBlockPreRenderedComponent } from '@core/block/components/pre-rendered-block/pre-rendered-block';

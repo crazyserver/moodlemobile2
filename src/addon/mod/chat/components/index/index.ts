@@ -15,7 +15,7 @@
 import { Component, Injector } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModChatProvider, AddonModChatChat } from '../../providers/chat';
 
 /**

@@ -14,11 +14,11 @@
 
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '../../providers/course';
 import { CoreCourseModuleDelegate } from '../../providers/module-delegate';
 import { CoreCourseHelperProvider } from '../../providers/helper';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreConstants } from '@core/constants';
 
 /**

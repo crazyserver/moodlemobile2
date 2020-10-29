@@ -15,14 +15,14 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, Platform, NavController, NavParams, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreEventsProvider } from '@services/events';
+import { CoreSitesProvider } from '@services/sites';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMessage
 } from '../../providers/messages';
 import { AddonMessagesOfflineProvider } from '../../providers/messages-offline';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreUserProvider } from '@core/user/providers/user';

@@ -14,12 +14,12 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, ViewController, NavParams, Platform } from '@ionic/angular';
-import { CoreApp } from '@providers/app';
-import { CoreFileProvider } from '@providers/file';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreMimetypeUtils } from '@providers/utils/mimetype';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreApp } from '@services/app';
+import { CoreFileProvider } from '@services/file';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreMimetypeUtils } from '@services/utils/mimetype';
+import { CoreTextUtilsProvider } from '@services/utils/text';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 
 import { FileEntry } from '@ionic-native/file';
 import { MediaFile } from '@ionic-native/media-capture';

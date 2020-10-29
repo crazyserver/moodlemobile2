@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreFileProvider } from '@providers/file';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreFileProvider } from '@services/file';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
+import { CoreUtilsProvider } from '@services/utils/utils';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Service to handle offline glossary.

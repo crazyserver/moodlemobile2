@@ -14,7 +14,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterProvider } from '@core/filter/providers/filter';
 
 /**

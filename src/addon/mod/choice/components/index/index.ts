@@ -14,8 +14,8 @@
 
 import { Component, Optional, Injector } from '@angular/core';
 import { Content } from '@ionic/angular';
-import { CoreEvents, CoreEventsProvider } from '@providers/events';
-import { CoreTimeUtilsProvider } from '@providers/utils/time';
+import { CoreEvents, CoreEventsProvider } from '@services/events';
+import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreCourseModuleMainActivityComponent } from '@core/course/classes/main-activity-component';
 import { AddonModChoiceProvider, AddonModChoiceChoice, AddonModChoiceOption, AddonModChoiceResult } from '../../providers/choice';
 import { AddonModChoiceOfflineProvider } from '../../providers/offline';

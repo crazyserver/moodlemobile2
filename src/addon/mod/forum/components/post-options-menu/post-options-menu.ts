@@ -14,11 +14,11 @@
 
 import { Component, OnInit, NgZone } from '@angular/core';
 import { NavParams, ViewController } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreSitesProvider, CoreSitesReadingStrategy } from '@providers/sites';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
+import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSite } from '@classes/site';
 import { AddonModForumProvider } from '../../providers/forum';
-import { CoreApp } from '@providers/app';
+import { CoreApp } from '@services/app';
 import { Network } from '@ionic-native/network';
 
 /**

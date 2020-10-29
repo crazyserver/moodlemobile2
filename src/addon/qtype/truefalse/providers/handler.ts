@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreQuestionHandler } from '@core/question/providers/delegate';
 import { AddonQtypeMultichoiceComponent } from '@addon/qtype/multichoice/component/multichoice';
 

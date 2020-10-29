@@ -14,7 +14,7 @@
 
 import { Component, ViewChildren, Input, OnInit, QueryList, ElementRef } from '@angular/core';
 import { Content } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreBlockComponent } from '../block/block';
 import { CoreBlockHelperProvider } from '../../providers/helper';

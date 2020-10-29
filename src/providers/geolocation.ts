@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { Coordinates } from '@ionic-native/geolocation';
-import { CoreApp } from '@providers/app';
+import { CoreApp } from '@services/app';
 import { Geolocation, Diagnostic, makeSingleton } from '@singletons/core.singletons';
 import { CoreError } from '@classes/error';
 

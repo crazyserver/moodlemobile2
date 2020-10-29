@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
-import { CoreFileProvider } from '@providers/file';
+import { CoreFileProvider } from '@services/file';
 import { AddonModGlossaryProvider } from './glossary';
 import { AddonModGlossaryOfflineProvider } from './offline';
 

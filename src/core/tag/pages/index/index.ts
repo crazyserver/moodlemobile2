@@ -14,7 +14,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams } from '@ionic/angular';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreTagProvider } from '@core/tag/providers/tag';
 import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';

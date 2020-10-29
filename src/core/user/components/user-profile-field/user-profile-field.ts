@@ -14,7 +14,7 @@
 
 import { Component, Input, OnInit, Injector } from '@angular/core';
 import { CoreUserProfileFieldDelegate } from '../../providers/user-profile-field-delegate';
-import { CoreUtilsProvider } from '@providers/utils/utils';
+import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Directive to render user profile field.

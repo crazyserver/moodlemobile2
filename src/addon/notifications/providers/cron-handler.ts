@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreAppProvider } from '@providers/app';
-import { CoreCronHandler } from '@providers/cron';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreLocalNotificationsProvider } from '@providers/local-notifications';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
+import { CoreAppProvider } from '@services/app';
+import { CoreCronHandler } from '@services/cron';
+import { CoreEventsProvider } from '@services/events';
+import { CoreLocalNotificationsProvider } from '@services/local-notifications';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreEmulatorHelperProvider } from '@core/emulator/providers/helper';
 import { AddonNotificationsProvider } from './notifications';
 import { AddonNotificationsHelperProvider } from './helper';

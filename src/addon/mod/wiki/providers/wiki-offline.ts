@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreLoggerProvider } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteSchema } from '@providers/sites';
+import { CoreLoggerProvider } from '@services/logger';
+import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 
 /**
  * Service to handle offline wiki.

@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreMimetypeUtilsProvider } from '@providers/utils/mimetype';
+import { CoreSitesProvider } from '@services/sites';
+import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreSite } from '@classes/site';
-import { CoreWSExternalWarning } from '@providers/ws';
+import { CoreWSExternalWarning } from '@services/ws';
 
 /**
  * Service to handle my files and site files.

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { CoreLoggerProvider } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { CoreLoggerProvider } from '@services/logger';
+import { CoreDomUtilsProvider } from '@services/utils/dom';
 
 /**
  * Encapsulates operations on dd area.

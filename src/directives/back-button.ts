@@ -15,8 +15,8 @@
 import { Directive, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Navbar } from '@ionic/angular';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreApp } from '@providers/app';
+import { CoreEventsProvider } from '@services/events';
+import { CoreApp } from '@services/app';
 
 /**
  * Directive to tramslate the back button of navigation bars in iOS.

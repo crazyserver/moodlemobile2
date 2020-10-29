@@ -15,7 +15,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { CoreContentLinksDelegate, CoreContentLinksAction } from '@core/contentlinks/providers/delegate';
-import { CoreSitesProvider } from '@providers/sites';
+import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Component that displays the actions for a notification.
