@@ -1,5 +1,8 @@
 <ion-header>
-    <ion-toolbar core-back-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
         <ion-buttons slot="secondary">
             <ion-button (click)="cancel()">{{ 'core.cancel' | translate }}</ion-button>
         </ion-buttons>

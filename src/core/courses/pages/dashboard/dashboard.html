@@ -1,5 +1,8 @@
 <ion-header>
-    <ion-toolbar core-back-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
         <ion-title>
             <core-format-text [text]="siteName" contextLevel="system" [contextInstanceId]="0"></core-format-text>
             <img src="assets/img/login_logo.png" class="core-header-logo" [alt]="siteName">

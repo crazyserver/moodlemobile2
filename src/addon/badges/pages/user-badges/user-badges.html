@@ -1,5 +1,8 @@
 <ion-header>
-    <ion-toolbar core-back-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
         <ion-title>{{ 'addon.badges.badges' | translate }}</ion-title>
     </ion-toolbar>
 </ion-header>

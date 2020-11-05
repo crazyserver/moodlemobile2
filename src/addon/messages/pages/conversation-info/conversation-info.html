@@ -1,5 +1,8 @@
 <ion-header>
-    <ion-toolbar core-back-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
         <ion-title>{{ 'addon.messages.groupinfo' | translate }}</ion-title>
         <ion-buttons slot="primary">
             <ion-button slot="icon-only //TODO: mode to icon" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">

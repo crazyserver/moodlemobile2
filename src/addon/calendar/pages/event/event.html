@@ -1,5 +1,8 @@
 <ion-header>
-    <ion-toolbar core-back-button>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
         <ion-title>
             <img *ngIf="event && event.moduleIcon" src="{{event.moduleIcon}}" alt="" role="presentation" class="core-module-icon">
             <ion-icon *ngIf="event && event.eventIcon && !event.moduleIcon" [name]="event.eventIcon" slot=”start”>
