@@ -47,7 +47,7 @@ export class CoreGradesGradePage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData().finally(() => {
             this.gradeLoaded = true;
         });

@@ -55,7 +55,7 @@ export class AddonBadgesIssuedBadgePage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
 
         this.fetchIssuedBadge().finally(() => {
             this.badgeLoaded = true;

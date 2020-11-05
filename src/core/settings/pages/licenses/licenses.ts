@@ -59,7 +59,7 @@ export class CoreSettingsLicensesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.http.get(this.licensesUrl).toPromise().then((licenses) => {
             this.licenses = Object.keys(licenses).map((name) => {
                 const license = licenses[name];

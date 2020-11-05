@@ -146,7 +146,7 @@ export class CoreCourseSectionPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
 
         if (this.module) {
             this.moduleId = this.module.id;

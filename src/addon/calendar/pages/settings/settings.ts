@@ -36,7 +36,7 @@ export class AddonCalendarSettingsPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.calendarProvider.getDefaultNotificationTime().then((time) => {
             this.defaultTime = time;
         });

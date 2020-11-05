@@ -38,7 +38,7 @@ export class CoreLoginInitPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         // Wait for the app to be ready.
         this.initDelegate.ready().then(() => {
             // Check if there was a pending redirect.

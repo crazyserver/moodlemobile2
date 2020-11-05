@@ -47,7 +47,7 @@ export class CoreCoursesCategoriesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchCategories().finally(() => {
             this.categoriesLoaded = true;
         });

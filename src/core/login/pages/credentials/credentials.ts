@@ -94,7 +94,7 @@ export class CoreLoginCredentialsPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.treatSiteConfig();
         this.isFixedUrlSet = this.loginHelper.isFixedUrlSet();
 

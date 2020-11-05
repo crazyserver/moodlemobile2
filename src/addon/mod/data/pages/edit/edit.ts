@@ -87,7 +87,7 @@ export class AddonModDataEditPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchEntryData();
     }
 

@@ -139,7 +139,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
     /**
      * View loaded.
      */
-    async ionViewDidLoad(): Promise<void> {
+    async ngOnInit(): Promise<void> {
         if (this.parent) {
             this.sort = 'nested'; // Force nested order.
         } else {

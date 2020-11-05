@@ -77,7 +77,7 @@ export class CoreMainMenuPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (!this.sitesProvider.isLoggedIn()) {
             this.navCtrl.setRoot('CoreLoginInitPage');
 

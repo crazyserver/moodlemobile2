@@ -65,7 +65,7 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.sitesProvider.getSortedSites().then((sites) => {
             this.sites = sites;
         }).finally(() => {

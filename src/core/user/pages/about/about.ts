@@ -53,7 +53,7 @@ export class CoreUserAboutPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchUser().finally(() => {
             this.userLoaded = true;
         });

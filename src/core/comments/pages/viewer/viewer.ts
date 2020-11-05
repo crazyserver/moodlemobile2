@@ -109,7 +109,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.commentsProvider.isAddCommentsAvailable().then((enabled) => {
             // Is implicit the user can delete if he can add.
             this.addDeleteCommentsAvailable = enabled;

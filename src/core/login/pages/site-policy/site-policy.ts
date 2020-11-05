@@ -45,7 +45,7 @@ export class CoreLoginSitePolicyPage {
     /**
      * View laoded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.currentSite = this.sitesProvider.getCurrentSite();
 
         if (!this.currentSite) {

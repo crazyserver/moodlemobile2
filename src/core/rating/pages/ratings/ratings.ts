@@ -52,7 +52,7 @@ export class CoreRatingRatingsPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData().finally(() => {
             this.loaded = true;
         });

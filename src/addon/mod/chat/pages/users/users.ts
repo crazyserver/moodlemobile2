@@ -56,7 +56,7 @@ export class AddonModChatUsersPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.chatProvider.getChatUsers(this.sessionId, {cmId: this.cmId}).then((data) => {
             this.users = data.users;
         }).catch((error) => {

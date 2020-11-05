@@ -53,7 +53,7 @@ export class AddonCompetencyCompetenciesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.competencyId) {
             // There is a competency to load.
             this.openCompetency(this.competencyId);

@@ -69,7 +69,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();
         this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
         this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();

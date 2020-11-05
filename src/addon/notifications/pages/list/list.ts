@@ -56,7 +56,7 @@ export class AddonNotificationsListPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchNotifications();
 
         this.cronObserver = this.eventsProvider.on(AddonNotificationsProvider.READ_CRON_EVENT, () => {

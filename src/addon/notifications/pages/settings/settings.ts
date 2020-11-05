@@ -71,7 +71,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.notifPrefsEnabled) {
             this.fetchPreferences();
         } else {

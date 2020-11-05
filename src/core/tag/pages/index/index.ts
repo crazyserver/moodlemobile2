@@ -64,7 +64,7 @@ export class CoreTagIndexPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData().then(() => {
             if (this.splitviewCtrl.isOn() && this.areas && this.areas.length > 0) {
                 const area = this.areas.find((area) => area.id == this.areaId);

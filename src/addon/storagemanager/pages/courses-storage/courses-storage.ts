@@ -61,7 +61,7 @@ export class AddonStorageManagerCoursesStoragePage {
     /**
      * View loaded.
      */
-    async ionViewDidLoad(): Promise<void> {
+    async ngOnInit(): Promise<void> {
         this.userCourses = await CoreCourses.instance.getUserCourses();
         this.courseStatusObserver = CoreEvents.instance.on(
             CoreEventsProvider.COURSE_STATUS_CHANGED,

@@ -43,7 +43,7 @@ export class AddonCompetencyPlanListPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.planId) {
             // There is a learning plan to load.
             this.openPlan(this.planId);

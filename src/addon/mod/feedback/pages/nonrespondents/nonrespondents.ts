@@ -61,7 +61,7 @@ export class AddonModFeedbackNonRespondentsPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData();
     }
 

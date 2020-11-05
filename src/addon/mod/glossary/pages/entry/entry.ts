@@ -58,7 +58,7 @@ export class AddonModGlossaryEntryPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
         this.commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
 

@@ -70,7 +70,7 @@ export class AddonModFeedbackRespondentsPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData().then(() => {
             if (this.splitviewCtrl.isOn()) {
                 if (this.responses.attempts.length > 0) {

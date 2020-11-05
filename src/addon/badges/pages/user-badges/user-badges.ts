@@ -50,7 +50,7 @@ export class AddonBadgesUserBadgesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
 
         this.fetchBadges().finally(() => {
             if (!this.badgeHash && this.splitviewCtrl.isOn() && this.badges.length > 0) {

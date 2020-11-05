@@ -68,7 +68,7 @@ export class CoreTagIndexAreaPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         let promise: Promise<any>;
         if (!this.componentName || !this.itemType || !this.items.length || this.nextPage == 0) {
             promise = this.fetchData(true);

@@ -74,7 +74,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
      * If a page leaves but is cached, then this event will not fire again on a subsequent viewing.
      * Setup code for the page.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchPreferences();
     }
 

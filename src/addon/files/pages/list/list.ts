@@ -66,7 +66,7 @@ export class AddonFilesListPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.setVisibility();
         this.userQuota = this.sitesProvider.getCurrentSite().getInfo().userquota;
 

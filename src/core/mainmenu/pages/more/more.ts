@@ -74,7 +74,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         // Load the handlers.
         this.subscription = this.menuDelegate.getHandlers().subscribe((handlers) => {
             this.allHandlers = handlers;

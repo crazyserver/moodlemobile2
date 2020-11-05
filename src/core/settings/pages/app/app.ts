@@ -40,7 +40,7 @@ export class CoreAppSettingsPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.selectedPage) {
             this.openHandler(this.selectedPage);
         } else if (this.splitviewCtrl.isOn()) {

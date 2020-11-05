@@ -112,7 +112,7 @@ export class CoreLoginEmailSignupPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         // Fetch the data.
         this.fetchData().finally(() => {
             this.settingsLoaded = true;

@@ -80,7 +80,7 @@ export class CoreLoginReconnectPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.siteConfig) {
             this.getDataFromConfig(this.siteConfig);
         }

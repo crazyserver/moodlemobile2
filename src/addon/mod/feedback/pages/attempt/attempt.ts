@@ -51,7 +51,7 @@ export class AddonModFeedbackAttemptPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData();
     }
 

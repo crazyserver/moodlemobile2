@@ -52,7 +52,7 @@ export class CoreCourseListModTypePage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.downloadEnabled = !this.sitesProvider.getCurrentSite().isOfflineDisabled();
 
         this.fetchData().finally(() => {

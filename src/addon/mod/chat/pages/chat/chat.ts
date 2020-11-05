@@ -84,7 +84,7 @@ export class AddonModChatChatPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.loginUser().then(() => {
             return this.fetchMessages().then(() => {
                 this.startPolling();

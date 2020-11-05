@@ -82,7 +82,7 @@ export class CoreUserProfilePage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchUser().then(() => {
             return this.userProvider.logView(this.userId, this.courseId, this.user.fullname).catch((error) => {
                 this.isDeleted = error.errorcode === 'userdeleted';

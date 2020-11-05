@@ -43,7 +43,7 @@ export class AddonCompetencyPlanPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchLearningPlan().finally(() => {
             this.planLoaded = true;
         });

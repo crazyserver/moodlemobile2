@@ -93,7 +93,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchData().then(() => {
             this.feedbackProvider.logView(this.feedback.id, this.feedback.name, true).then(() => {
                 this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);

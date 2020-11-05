@@ -48,7 +48,7 @@ export class CoreSettingsSpaceUsagePage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.loadSiteData().finally(() => {
             this.loaded = true;
         });

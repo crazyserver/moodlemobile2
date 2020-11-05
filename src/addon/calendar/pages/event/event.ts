@@ -136,7 +136,7 @@ export class AddonCalendarEventPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.syncIcon = 'spinner';
 
         this.fetchEvent();

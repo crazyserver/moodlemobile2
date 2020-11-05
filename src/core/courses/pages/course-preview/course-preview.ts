@@ -100,7 +100,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         const currentSite = this.sitesProvider.getCurrentSite(),
             currentSiteUrl = currentSite && currentSite.getURL();
 

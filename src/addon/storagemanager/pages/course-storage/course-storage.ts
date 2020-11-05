@@ -51,7 +51,7 @@ export class AddonStorageManagerCourseStoragePage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.courseProvider.getSections(this.course.id, false, true).then((sections) => {
             this.courseHelperProvider.addHandlerDataForModules(sections, this.course.id);
             this.sections = sections;

@@ -62,7 +62,7 @@ export class AddonCompetencyCompetencyPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.fetchCompetency().then(() => {
             const name = this.competency && this.competency.competency && this.competency.competency.competency &&
                     this.competency.competency.competency.shortname;

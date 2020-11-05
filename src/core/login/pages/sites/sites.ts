@@ -46,7 +46,7 @@ export class CoreLoginSitesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.sitesProvider.getSortedSites().then((sites) => {
             if (sites.length == 0) {
                 this.loginHelper.goToAddSite(true);

@@ -195,7 +195,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
      * If a page leaves but is cached, then this event will not fire again on a subsequent viewing.
      * Setup code for the page.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         // Disable the profile button if we're already coming from a profile.
         const backViewPage = this.navCtrl.getPrevious() && this.navCtrl.getPrevious().component.name;
         this.showInfo = !backViewPage || backViewPage !== 'CoreUserProfilePage';

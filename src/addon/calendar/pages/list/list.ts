@@ -251,7 +251,7 @@ export class AddonCalendarListPage implements OnDestroy {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.eventId) {
             // There is an event to load, open the event in a new state.
             this.gotoEvent(this.eventId);

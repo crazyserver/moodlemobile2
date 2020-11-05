@@ -43,7 +43,7 @@ export class CoreGradesCoursesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         if (this.courseId) {
             // There is the course to load, open the course in a new state.
             this.gotoCourseGrades(this.courseId);

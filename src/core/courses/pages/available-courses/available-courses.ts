@@ -36,7 +36,7 @@ export class CoreCoursesAvailableCoursesPage {
     /**
      * View loaded.
      */
-    ionViewDidLoad(): void {
+    ngOnInit(): void {
         this.loadCourses().finally(() => {
             this.coursesLoaded = true;
         });
