@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { AddonModBookTocPage } from './toc';
@@ -24,7 +24,7 @@ import { AddonModBookTocPage } from './toc';
     ],
     imports: [
         CoreDirectivesModule,
-        IonicPageModule.forChild(AddonModBookTocPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

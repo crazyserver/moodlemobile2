@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreTagSearchPage } from './search';
 import { CoreComponentsModule } from '@components/components.module';
@@ -28,7 +28,7 @@ import { CoreSearchComponentsModule } from '@core/search/components/components.m
         CoreComponentsModule,
         CoreDirectivesModule,
         CoreSearchComponentsModule,
-        IonicPageModule.forChild(CoreTagSearchPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

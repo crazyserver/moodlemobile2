@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreComponentsModule } from '@components/components.module';
 import { CoreMainMenuPage } from './menu';
@@ -24,7 +24,7 @@ import { CoreMainMenuPage } from './menu';
     ],
     imports: [
         CoreComponentsModule,
-        IonicPageModule.forChild(CoreMainMenuPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

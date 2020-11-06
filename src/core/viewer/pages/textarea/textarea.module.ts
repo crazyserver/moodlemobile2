@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreViewerTextAreaPage } from './textarea';
 import { CoreComponentsModule } from '@components/components.module';
@@ -29,7 +29,7 @@ import { CoreDirectivesModule } from '@directives/directives.module';
     imports: [
         CoreComponentsModule,
         CoreDirectivesModule,
-        IonicPageModule.forChild(CoreViewerTextAreaPage),
+        IonicModule,
         TranslateModule.forChild()
     ]
 })

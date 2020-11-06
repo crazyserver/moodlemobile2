@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { AddonModAssignEditFeedbackModalPage } from './edit-feedback-modal';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreComponentsModule } from '@components/components.module';
@@ -28,7 +28,7 @@ import { AddonModAssignComponentsModule } from '../../components/components.modu
         CoreComponentsModule,
         CoreDirectivesModule,
         AddonModAssignComponentsModule,
-        IonicPageModule.forChild(AddonModAssignEditFeedbackModalPage),
+        IonicModule,
         TranslateModule.forChild()
     ]
 })

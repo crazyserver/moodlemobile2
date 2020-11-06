@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreCommentsViewerPage } from './viewer';
 import { CoreComponentsModule } from '@components/components.module';
@@ -30,7 +30,7 @@ import { CoreCommentsComponentsModule } from '../../components/components.module
         CoreDirectivesModule,
         CorePipesModule,
         CoreCommentsComponentsModule,
-        IonicPageModule.forChild(CoreCommentsViewerPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

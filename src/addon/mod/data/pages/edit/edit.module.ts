@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { CoreComponentsModule } from '@components/components.module';
@@ -32,7 +32,7 @@ import { AddonModDataEditPage } from './edit';
         AddonModDataComponentsModule,
         CoreCompileHtmlComponentModule,
         CoreCommentsComponentsModule,
-        IonicPageModule.forChild(AddonModDataEditPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreCourseUnsupportedModulePage } from './unsupported-module';
 import { CoreComponentsModule } from '@components/components.module';
@@ -28,7 +28,7 @@ import { CoreCourseComponentsModule } from '../../components/components.module';
         CoreComponentsModule,
         CoreDirectivesModule,
         CoreCourseComponentsModule,
-        IonicPageModule.forChild(CoreCourseUnsupportedModulePage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreComponentsModule } from '@components/components.module';
 import { CoreDirectivesModule } from '@directives/directives.module';
@@ -28,7 +28,7 @@ import { AddonCalendarEditEventPage } from './edit-event';
         CoreComponentsModule,
         CoreDirectivesModule,
         CoreEditorComponentsModule,
-        IonicPageModule.forChild(AddonCalendarEditEventPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

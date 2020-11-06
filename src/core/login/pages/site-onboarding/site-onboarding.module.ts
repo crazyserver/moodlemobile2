@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { CoreLoginSiteOnboardingPage } from './site-onboarding';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreDirectivesModule } from '@directives/directives.module';
@@ -26,7 +26,7 @@ import { CoreComponentsModule } from '@components/components.module';
     imports: [
         CoreComponentsModule,
         CoreDirectivesModule,
-        IonicPageModule.forChild(CoreLoginSiteOnboardingPage),
+        IonicModule,
         TranslateModule.forChild(),
     ]
 })

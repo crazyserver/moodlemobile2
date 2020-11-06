@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { CoreLoginInitPage } from './init';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { CoreLoginInitPage } from './init';
         CoreLoginInitPage,
     ],
     imports: [
-        IonicPageModule.forChild(CoreLoginInitPage),
+        IonicModule,
     ],
 })
 export class CoreLoginInitPageModule {}

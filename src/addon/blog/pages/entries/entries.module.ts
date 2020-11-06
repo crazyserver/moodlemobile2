@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { AddonBlogEntriesPage } from './entries';
@@ -26,7 +26,7 @@ import { AddonBlogComponentsModule } from '../../components/components.module';
     imports: [
         CoreDirectivesModule,
         AddonBlogComponentsModule,
-        IonicPageModule.forChild(AddonBlogEntriesPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

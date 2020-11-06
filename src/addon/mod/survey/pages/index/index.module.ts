@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { AddonModSurveyComponentsModule } from '../../components/components.module';
@@ -26,7 +26,7 @@ import { AddonModSurveyIndexPage } from './index';
     imports: [
         CoreDirectivesModule,
         AddonModSurveyComponentsModule,
-        IonicPageModule.forChild(AddonModSurveyIndexPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })

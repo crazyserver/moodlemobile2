@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreDirectivesModule } from '@directives/directives.module';
 import { AddonModWorkshopPhaseInfoPage } from './phase';
@@ -26,7 +26,7 @@ import { CoreCompileHtmlComponentModule } from '@core/compile/components/compile
     imports: [
         CoreDirectivesModule,
         CoreCompileHtmlComponentModule,
-        IonicPageModule.forChild(AddonModWorkshopPhaseInfoPage),
+        IonicModule,
         TranslateModule.forChild()
     ],
 })
