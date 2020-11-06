@@ -556,7 +556,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
     doRefresh(refresher?: any, done?: () => void, showErrors: boolean = false): Promise<any> {
         if (this.discussionLoaded) {
             return this.refreshPosts(true, showErrors).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
                 done && done();
             });
         }

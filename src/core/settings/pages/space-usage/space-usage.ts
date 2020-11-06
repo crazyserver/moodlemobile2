@@ -88,7 +88,7 @@ export class CoreSettingsSpaceUsagePage {
      */
     refreshData(refresher: any): void {
         this.loadSiteData().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

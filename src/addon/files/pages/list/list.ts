@@ -93,7 +93,7 @@ export class AddonFilesListPage implements OnDestroy {
      */
     refreshData(refresher: any): void {
         this.refreshFiles().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

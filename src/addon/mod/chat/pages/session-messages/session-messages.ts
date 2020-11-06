@@ -117,7 +117,7 @@ export class AddonModChatSessionMessagesPage {
     refreshMessages(refresher: any): void {
         this.chatProvider.invalidateSessionMessages(this.chatId, this.sessionStart, this.groupId).finally(() => {
             this.fetchMessages().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

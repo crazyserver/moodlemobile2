@@ -31,7 +31,8 @@
         <core-tab [show]="siteHomeEnabled" [title]="'core.sitehome.sitehome' | translate">
             <ng-template>
                 <ion-content>
-                    <ion-refresher [enabled]="!!siteHomeComponent && siteHomeComponent.dataLoaded" (ionRefresh)="siteHomeComponent.doRefresh($event)">
+                    <ion-refresher slot="fixed" [disabled]="//TODO negative !!siteHomeComponent && siteHomeComponent.dataLoaded"
+                        (ionRefresh)="siteHomeComponent.doRefresh($event)">
                         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
                     </ion-refresher>
                     <core-sitehome-index [downloadEnabled]="downloadEnabled"></core-sitehome-index>
@@ -43,7 +44,7 @@
         <core-tab [show]="dashboardEnabled" [title]="'core.courses.mymoodle' | translate">
             <ng-template>
                 <ion-content>
-                    <ion-refresher [enabled]="dashboardLoaded" (ionRefresh)="refreshDashboard($event)">
+                    <ion-refresher slot="fixed" [disabled]="//TODO negative dashboardLoaded" (ionRefresh)="refreshDashboard($event)">
                         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
                     </ion-refresher>
                     <core-loading [hideUntil]="dashboardLoaded" class="core-loading-center">
@@ -64,7 +65,8 @@
         <core-tab [show]="!siteHomeEnabled && !dashboardEnabled" [title]="'core.courses.mymoodle' | translate">
             <ng-template>
                 <ion-content>
-                    <ion-refresher [enabled]="mcComponent && mcComponent.coursesLoaded" (ionRefresh)="refreshMyCourses($event)">
+                    <ion-refresher slot="fixed" [disabled]="//TODO negative mcComponent && mcComponent.coursesLoaded"
+                        (ionRefresh)="refreshMyCourses($event)">
                         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
                     </ion-refresher>
                     <core-courses-my-courses></core-courses-my-courses>

@@ -421,7 +421,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
             return this.getCourse(true);
         }).finally(() => {
             if (refresher) {
-                refresher.complete();
+                refresher?.detail.complete();
             }
         });
     }

@@ -81,7 +81,7 @@ export class CoreRatingRatingsPage {
         this.ratingProvider.invalidateRatingItems(this.contextLevel, this.instanceId, this.component, this.ratingArea, this.itemId,
                 this.scaleId).finally(() => {
             return this.fetchData().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

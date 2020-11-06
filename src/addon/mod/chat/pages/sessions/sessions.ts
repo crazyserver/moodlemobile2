@@ -122,7 +122,7 @@ export class AddonModChatSessionsPage {
 
         this.utils.allPromises(promises).finally(() => {
             this.fetchSessions().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

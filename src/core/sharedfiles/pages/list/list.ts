@@ -106,7 +106,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
      */
     refreshFiles(refresher: any): void {
         this.loadFiles().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

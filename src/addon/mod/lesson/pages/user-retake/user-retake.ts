@@ -92,7 +92,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
      */
     doRefresh(refresher: any): void {
         this.refreshData().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

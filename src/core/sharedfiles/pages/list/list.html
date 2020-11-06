@@ -13,7 +13,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="filesLoaded" (ionRefresh)="refreshFiles($event)">
+    <ion-refresher slot="fixed" [disabled]="!filesLoaded" (ionRefresh)="refreshFiles($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <!-- Allow selecting the site to view. -->

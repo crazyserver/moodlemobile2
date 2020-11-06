@@ -194,7 +194,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
 
         Promise.all(promises).finally(() => {
             this.loadDashboardContent().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }
@@ -214,7 +214,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
                 this.mcComponent && this.mcComponent.refreshCourses(refresher);
             } else {
                 this.tabsComponent.selectTab(1);
-                refresher.complete();
+                refresher?.detail.complete();
             }
         });
     }

@@ -11,7 +11,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="quizComponent.loaded" (ionRefresh)="quizComponent.doRefresh($event)">
+    <ion-refresher slot="fixed" [disabled]="!quizComponent.loaded" (ionRefresh)="quizComponent.doRefresh($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
 

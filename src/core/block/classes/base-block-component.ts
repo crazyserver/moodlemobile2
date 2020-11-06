@@ -73,7 +73,7 @@ export class CoreBlockBaseComponent implements OnInit {
     doRefresh(refresher?: any, done?: () => void, showErrors: boolean = false): Promise<any> {
         if (this.loaded) {
             return this.refreshContent(showErrors).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
                 done && done();
             });
         }

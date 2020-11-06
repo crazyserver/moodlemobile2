@@ -11,7 +11,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="workshopComponent.loaded" (ionRefresh)="workshopComponent.doRefresh($event)">
+    <ion-refresher slot="fixed" [disabled]="!workshopComponent.loaded" (ionRefresh)="workshopComponent.doRefresh($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
 

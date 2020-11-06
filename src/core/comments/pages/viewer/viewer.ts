@@ -204,7 +204,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
             this.comments = [];
 
             return this.fetchComments(true, showErrors).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

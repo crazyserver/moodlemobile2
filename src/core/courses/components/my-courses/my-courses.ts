@@ -141,7 +141,7 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
 
             this.prefetchIconInitialized = false;
             this.fetchCourses().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

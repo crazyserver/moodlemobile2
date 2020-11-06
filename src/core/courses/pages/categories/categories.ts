@@ -110,7 +110,7 @@ export class CoreCoursesCategoriesPage {
 
         Promise.all(promises).finally(() => {
             this.fetchCategories().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

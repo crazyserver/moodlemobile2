@@ -56,7 +56,7 @@ export class CoreSitePluginsPluginPage {
      */
     refreshData(refresher: any): void {
         this.content.refreshContent(false).finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

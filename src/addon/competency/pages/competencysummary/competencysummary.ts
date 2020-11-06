@@ -82,7 +82,7 @@ export class AddonCompetencyCompetencySummaryPage {
     refreshCompetency(refresher: any): void {
         this.competencyProvider.invalidateCompetencySummary(this.competencyId).finally(() => {
             this.fetchCompetency().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

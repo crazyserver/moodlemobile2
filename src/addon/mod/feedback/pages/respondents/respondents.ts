@@ -201,7 +201,7 @@ export class AddonModFeedbackRespondentsPage {
             Promise.all(promises).finally(() => {
                 return this.fetchData(true);
             }).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         }
     }

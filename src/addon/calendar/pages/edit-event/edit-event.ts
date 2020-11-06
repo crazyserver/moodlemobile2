@@ -370,7 +370,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
         Promise.all(promises).finally(() => {
             this.fetchData(true).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

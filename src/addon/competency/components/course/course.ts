@@ -101,7 +101,7 @@ export class AddonCompetencyCourseComponent {
     refreshCourseCompetencies(refresher: any): void {
         this.competencyProvider.invalidateCourseCompetencies(this.courseId, this.userId).finally(() => {
             this.fetchCourseCompetencies().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

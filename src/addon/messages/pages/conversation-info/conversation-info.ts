@@ -120,7 +120,7 @@ export class AddonMessagesConversationInfoPage implements OnInit {
 
         return Promise.all(promises).then(() => {
             return this.fetchData().finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

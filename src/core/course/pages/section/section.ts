@@ -366,7 +366,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                  }
 
                 return promise.finally(() => {
-                    refresher && refresher.complete();
+                    refresher?.detail.complete();
                 });
             });
         });

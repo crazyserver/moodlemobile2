@@ -112,7 +112,7 @@ export class AddonMessagesContactRequestsComponent implements OnInit, OnDestroy 
 
         // No need to invalidate contact requests, we always try to get the latest.
         return this.fetchData(true).finally(() => {
-            refresher && refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

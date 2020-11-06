@@ -324,7 +324,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
      */
     refreshList(refresher: any): void {
         this.refreshAllData(true).finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

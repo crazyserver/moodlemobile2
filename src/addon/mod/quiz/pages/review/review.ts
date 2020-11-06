@@ -214,7 +214,7 @@ export class AddonModQuizReviewPage implements OnInit {
         Promise.all(promises).finally(() => {
             return this.fetchData();
         }).finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

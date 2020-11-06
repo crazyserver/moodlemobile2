@@ -84,7 +84,7 @@ export class AddonBadgesUserBadgesPage {
     refreshBadges(refresher: any): void {
         this.badgesProvider.invalidateUserBadges(this.courseId, this.userId).finally(() => {
             this.fetchBadges().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

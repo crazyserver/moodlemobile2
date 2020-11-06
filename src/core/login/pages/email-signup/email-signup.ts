@@ -236,7 +236,7 @@ export class CoreLoginEmailSignupPage {
      */
     refreshSettings(refresher: any): void {
         this.fetchData().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

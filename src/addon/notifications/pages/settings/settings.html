@@ -14,7 +14,8 @@
     </core-context-menu>
 </core-navbar-buttons>
 <ion-content>
-    <ion-refresher [enabled]="preferencesLoaded && notifPrefsEnabled" (ionRefresh)="refreshPreferences($event)">
+    <ion-refresher slot="fixed" [disabled]="//TODO negative preferencesLoaded && notifPrefsEnabled"
+        (ionRefresh)="refreshPreferences($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="preferencesLoaded">

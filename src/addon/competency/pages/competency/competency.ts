@@ -153,7 +153,7 @@ export class AddonCompetencyCompetencyPage {
 
         return promise.finally(() => {
             this.fetchCompetency().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

@@ -7,7 +7,9 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="entryLoaded && (isPullingToRefresh || !renderingEntry && !loadingRating && !loadingComments)" (ionRefresh)="refreshDatabase($event)">
+    <ion-refresher slot="fixed"
+        [disabled]="//TODO negative entryLoaded && (isPullingToRefresh || !renderingEntry && !loadingRating && !loadingComments)"
+        (ionRefresh)="refreshDatabase($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="entryLoaded && (isPullingToRefresh || !renderingEntry && !loadingRating && !loadingComments)">

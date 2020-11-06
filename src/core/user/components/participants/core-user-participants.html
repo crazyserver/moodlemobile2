@@ -6,7 +6,8 @@
 
 <core-split-view>
     <ion-content>
-        <ion-refresher [enabled]="participantsLoaded && !displaySearchResult" (ionRefresh)="refreshParticipants($event)">
+        <ion-refresher slot="fixed" [disabled]="//TODO negative participantsLoaded && !displaySearchResult"
+            (ionRefresh)="refreshParticipants($event)">
             <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
         </ion-refresher>
 

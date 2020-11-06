@@ -420,7 +420,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
     refreshSubmission(refresher: any): void {
         if (this.loaded) {
             this.refreshAllData().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         }
     }

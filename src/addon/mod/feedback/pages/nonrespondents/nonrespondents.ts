@@ -157,7 +157,7 @@ export class AddonModFeedbackNonRespondentsPage {
             Promise.all(promises).finally(() => {
                 return this.fetchData(true);
             }).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         }
     }

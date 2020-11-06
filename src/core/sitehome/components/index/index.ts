@@ -85,7 +85,7 @@ export class CoreSiteHomeIndexComponent implements OnInit {
             p2.push(this.courseBlocksComponent.loadContent());
 
             return Promise.all(p2).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

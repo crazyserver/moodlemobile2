@@ -90,7 +90,7 @@ export class AddonCompetencyPlanPage {
     refreshLearningPlan(refresher: any): void {
         this.competencyProvider.invalidateLearningPlan(this.planId).finally(() => {
             this.fetchLearningPlan().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

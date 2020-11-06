@@ -154,7 +154,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
         return this.utils.allPromises(promises).finally(() => {
             return this.fetchData().finally(() => {
                 if (refresher) {
-                    refresher.complete();
+                    refresher?.detail.complete();
                 }
             });
         });

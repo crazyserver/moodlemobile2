@@ -45,7 +45,7 @@ export class CoreSitePluginsModuleIndexPage {
      */
     refreshData(refresher: any): void {
         this.content.doRefresh().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

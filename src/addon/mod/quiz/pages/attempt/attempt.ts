@@ -61,7 +61,7 @@ export class AddonModQuizAttemptPage implements OnInit {
      */
     doRefresh(refresher: any): void {
         this.refreshData().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

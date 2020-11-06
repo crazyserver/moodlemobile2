@@ -83,7 +83,7 @@ export class AddonCourseCompletionReportComponent implements OnInit {
     refreshCompletion(refresher?: any): void {
         this.courseCompletionProvider.invalidateCourseCompletion(this.courseId, this.userId).finally(() => {
             this.fetchCompletion().finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

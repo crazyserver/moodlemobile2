@@ -311,7 +311,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
     refreshAssessment(refresher: any): void {
         if (this.loaded) {
             this.refreshAllData().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         }
     }

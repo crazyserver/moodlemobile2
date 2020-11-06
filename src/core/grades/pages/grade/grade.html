@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="gradeLoaded" (ionRefresh)="refreshGrade($event)">
+    <ion-refresher slot="fixed" [disabled]="!gradeLoaded" (ionRefresh)="refreshGrade($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="gradeLoaded">

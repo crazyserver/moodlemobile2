@@ -152,7 +152,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
         this.notesProvider.invalidateNotes(this.courseId, this.userId).finally(() => {
             this.fetchNotes(true, showErrors).finally(() => {
                 if (refresher) {
-                    refresher.complete();
+                    refresher?.detail.complete();
                 }
             });
         });

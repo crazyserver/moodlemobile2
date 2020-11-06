@@ -173,7 +173,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
     refreshPreferences(refresher?: any): void {
         this.notificationsProvider.invalidateNotificationPreferences().finally(() => {
             this.fetchPreferences().finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

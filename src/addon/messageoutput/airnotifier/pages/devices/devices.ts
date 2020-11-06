@@ -99,7 +99,7 @@ export class AddonMessageOutputAirnotifierDevicesPage implements OnDestroy {
     refreshDevices(refresher: any): void {
         this.airnotifierProivder.invalidateUserDevices().finally(() => {
             this.fetchDevices().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

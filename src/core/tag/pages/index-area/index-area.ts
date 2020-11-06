@@ -143,7 +143,7 @@ export class CoreTagIndexAreaPage {
         this.tagProvider.invalidateTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
                 this.contextId, this.recursive).finally(() => {
             this.fetchData(true).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

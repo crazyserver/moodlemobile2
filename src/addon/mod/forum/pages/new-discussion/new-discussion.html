@@ -10,7 +10,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="groupsLoaded" (ionRefresh)="refreshGroups($event)">
+    <ion-refresher slot="fixed" [disabled]="!groupsLoaded" (ionRefresh)="refreshGroups($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
 

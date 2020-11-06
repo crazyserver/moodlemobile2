@@ -63,7 +63,7 @@ export class CoreSitePluginsCourseOptionComponent implements OnInit {
      */
     refreshData(refresher: any): void {
         this.content.refreshContent(false).finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 }

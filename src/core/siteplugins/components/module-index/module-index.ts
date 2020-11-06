@@ -117,11 +117,11 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
             this.refreshIcon = 'spinner';
 
             return Promise.resolve(this.content.refreshContent(false)).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
                 done && done();
             });
         } else {
-            refresher && refresher.complete();
+            refresher?.detail.complete();
             done && done();
 
             return Promise.resolve();

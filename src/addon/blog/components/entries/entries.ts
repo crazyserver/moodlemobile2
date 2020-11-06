@@ -263,7 +263,7 @@ export class AddonBlogEntriesComponent implements OnInit {
         this.utils.allPromises(promises).finally(() => {
             this.fetchEntries(true).finally(() => {
                 if (refresher) {
-                    refresher.complete();
+                    refresher?.detail.complete();
                 }
             });
         });

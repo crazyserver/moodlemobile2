@@ -552,7 +552,7 @@ export class AddonCalendarListPage implements OnDestroy {
     doRefresh(refresher?: any, done?: () => void, showErrors?: boolean): Promise<any> {
         if (this.eventsLoaded) {
             return this.refreshEvents(true, showErrors).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
                 done && done();
             });
         }

@@ -110,7 +110,7 @@ export class CoreTagSearchPage {
             this.tagProvider.invalidateTagCloud(this.collectionId, undefined, undefined, this.query),
         ]).finally(() => {
             return this.fetchData().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

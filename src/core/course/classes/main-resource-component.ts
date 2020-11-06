@@ -146,7 +146,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
 
             return promise.finally(() => {
                 return this.refreshContent(true, showErrors).finally(() => {
-                    refresher && refresher.complete();
+                    refresher?.detail.complete();
                     done && done();
                 });
             });

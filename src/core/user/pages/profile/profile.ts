@@ -208,7 +208,7 @@ export class CoreUserProfilePage {
                     userId: this.userId,
                     user: this.user
                 }, this.site.getId());
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

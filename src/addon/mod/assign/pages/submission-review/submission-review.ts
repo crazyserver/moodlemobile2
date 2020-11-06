@@ -150,7 +150,7 @@ export class AddonModAssignSubmissionReviewPage implements OnInit {
      */
     refreshSubmission(refresher: any): void {
         this.refreshAllData().finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

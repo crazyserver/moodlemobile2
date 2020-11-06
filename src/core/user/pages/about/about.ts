@@ -92,7 +92,7 @@ export class CoreUserAboutPage {
                     courseId: this.courseId, userId: this.userId,
                     user: this.user
                 }, this.siteId);
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

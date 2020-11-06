@@ -435,7 +435,7 @@ export class AddonCalendarDayPage implements OnInit, OnDestroy {
     doRefresh(refresher?: any, done?: () => void, showErrors?: boolean): Promise<any> {
         if (this.loaded) {
             return this.refreshData(true, showErrors).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
                 done && done();
             });
         }

@@ -91,7 +91,7 @@ export class AddonModGlossaryEntryPage {
         }).then(() => {
             return this.fetchEntry(true);
         }).finally(() => {
-            refresher && refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

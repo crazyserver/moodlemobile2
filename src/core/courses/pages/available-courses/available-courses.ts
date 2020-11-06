@@ -72,7 +72,7 @@ export class CoreCoursesAvailableCoursesPage {
 
         Promise.all(promises).finally(() => {
             this.loadCourses().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

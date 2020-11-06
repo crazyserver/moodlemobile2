@@ -9,7 +9,7 @@
 </core-navbar-buttons>
 
 <ion-content>
-    <ion-refresher [enabled]="notesLoaded" (ionRefresh)="refreshNotes(false, $event)">
+    <ion-refresher slot="fixed" [disabled]="!notesLoaded" (ionRefresh)="refreshNotes(false, $event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="notesLoaded" class="core-loading-center">

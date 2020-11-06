@@ -631,7 +631,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         return this.utils.allPromises(promises).finally(() => {
             return this.fetchData(refreshUnreadCounts).finally(() => {
                 if (refresher) {
-                    refresher.complete();
+                    refresher?.detail.complete();
                 }
             });
         });

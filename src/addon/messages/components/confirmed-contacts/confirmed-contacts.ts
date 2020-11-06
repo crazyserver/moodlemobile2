@@ -118,7 +118,7 @@ export class AddonMessagesConfirmedContactsComponent implements OnInit, OnDestro
     refreshData(refresher?: any): Promise<any> {
         // No need to invalidate contacts, we always try to get the latest.
         return this.fetchData(true).finally(() => {
-            refresher && refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

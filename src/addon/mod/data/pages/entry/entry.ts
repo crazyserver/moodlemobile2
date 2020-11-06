@@ -244,7 +244,7 @@ export class AddonModDataEntryPage implements OnDestroy {
     refreshDatabase(refresher?: any): Promise<any> {
         if (this.entryLoaded) {
             return this.refreshAllData(true).finally(() => {
-                refresher && refresher.complete();
+                refresher?.detail.complete();
             });
         }
     }

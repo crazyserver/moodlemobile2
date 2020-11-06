@@ -122,7 +122,7 @@ export class CoreUserParticipantsComponent implements OnInit {
     refreshParticipants(refresher: any): void {
         this.userProvider.invalidateParticipantsList(this.courseId).finally(() => {
             this.fetchData(true).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

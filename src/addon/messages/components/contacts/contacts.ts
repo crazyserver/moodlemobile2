@@ -123,7 +123,7 @@ export class AddonMessagesContactsComponent {
         }
 
         return promise.finally(() => {
-            refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

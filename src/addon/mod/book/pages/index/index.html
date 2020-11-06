@@ -11,7 +11,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="bookComponent.loaded" (ionRefresh)="bookComponent.doRefresh($event)">
+    <ion-refresher slot="fixed" [disabled]="!bookComponent.loaded" (ionRefresh)="bookComponent.doRefresh($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
 

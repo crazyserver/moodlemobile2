@@ -12,7 +12,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="loaded" (ionRefresh)="refreshAssessment($event)" *ngIf="!evaluating">
+    <ion-refresher slot="fixed" [disabled]="!loaded" (ionRefresh)="refreshAssessment($event)" *ngIf="!evaluating">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="loaded">

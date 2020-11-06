@@ -249,7 +249,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
     refreshPreferences(refresher: any): void {
         this.messagesProvider.invalidateMessagePreferences().finally(() => {
             this.fetchPreferences().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

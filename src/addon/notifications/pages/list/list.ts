@@ -181,7 +181,7 @@ export class AddonNotificationsListPage {
         return this.notificationsProvider.invalidateNotificationsList().finally(() => {
             return this.fetchNotifications(true).finally(() => {
                 if (refresher) {
-                    refresher.complete();
+                    refresher?.detail.complete();
                 }
             });
         });

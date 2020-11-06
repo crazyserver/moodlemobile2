@@ -144,7 +144,7 @@ export class CoreSitePreferencesPage {
      */
     refreshData(refresher?: any): void {
         this.fetchData().finally(() => {
-            refresher && refresher.complete();
+            refresher?.detail.complete();
         });
     }
 

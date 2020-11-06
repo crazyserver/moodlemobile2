@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="categoriesLoaded" (ionRefresh)="refreshCategories($event)">
+    <ion-refresher slot="fixed" [disabled]="!categoriesLoaded" (ionRefresh)="refreshCategories($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="categoriesLoaded">

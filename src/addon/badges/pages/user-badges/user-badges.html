@@ -8,7 +8,7 @@
 </ion-header>
 <core-split-view>
     <ion-content>
-        <ion-refresher [enabled]="badgesLoaded" (ionRefresh)="refreshBadges($event)">
+        <ion-refresher slot="fixed" [disabled]="!badgesLoaded" (ionRefresh)="refreshBadges($event)">
             <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
         </ion-refresher>
         <core-loading [hideUntil]="badgesLoaded">

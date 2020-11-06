@@ -113,7 +113,7 @@ export class CoreCourseListModTypePage {
     refreshData(refresher: any): void {
         this.courseProvider.invalidateSections(this.courseId).finally(() => {
             return this.fetchData().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

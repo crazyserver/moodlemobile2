@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-refresher [enabled]="feedbackLoaded" (ionRefresh)="refreshFeedback($event)">
+    <ion-refresher slot="fixed" [disabled]="!feedbackLoaded" (ionRefresh)="refreshFeedback($event)">
         <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
     </ion-refresher>
     <core-loading [hideUntil]="feedbackLoaded">

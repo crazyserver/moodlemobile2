@@ -383,7 +383,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
 
         Promise.all(promises).finally(() => {
             this.fetchDiscussionData(true).finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }

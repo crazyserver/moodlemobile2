@@ -86,7 +86,7 @@ export class CoreGradesCoursesPage {
     refreshGrades(refresher: any): void {
         this.gradesProvider.invalidateCoursesGradesData().finally(() => {
             this.fetchData().finally(() => {
-                refresher.complete();
+                refresher?.detail.complete();
             });
         });
     }
