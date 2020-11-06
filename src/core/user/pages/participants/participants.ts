@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 
 /**
  * Page that displays the list of course participants.
  */
-@IonicPage({segment: 'core-user-participants'})
 @Component({
     selector: 'page-core-user-participants',
     templateUrl: 'participants.html',

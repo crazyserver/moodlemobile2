@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModWorkshopIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a workshop.
  */
-@IonicPage({ segment: 'addon-mod-workshop-index' })
 @Component({
     selector: 'page-addon-mod-workshop-index',
     templateUrl: 'index.html',

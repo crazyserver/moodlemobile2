@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
@@ -26,7 +26,6 @@ import { AddonFilesHelperProvider } from '../../providers/helper';
 /**
  * Page that displays the list of files.
  */
-@IonicPage({ segment: 'addon-files-list' })
 @Component({
     selector: 'page-addon-files-list',
     templateUrl: 'list.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, ViewChild, ViewChildren, QueryList } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -29,7 +29,6 @@ import { CoreCoursesMyCoursesComponent } from '../../components/my-courses/my-co
 /**
  * Page that displays the dashboard.
  */
-@IonicPage({ segment: 'core-courses-dashboard' })
 @Component({
     selector: 'page-core-courses-dashboard',
     templateUrl: 'dashboard.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '../../providers/course';
 import { CoreCourseModuleDelegate } from '../../providers/module-delegate';
@@ -24,7 +24,6 @@ import { CoreConstants } from '@core/constants';
 /**
  * Page that displays comments.
  */
-@IonicPage({ segment: 'core-course-list-mod-type' })
 @Component({
     selector: 'page-core-course-list-mod-type',
     templateUrl: 'list-mod-type.html',

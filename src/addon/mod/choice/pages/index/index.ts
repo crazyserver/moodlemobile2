@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModChoiceIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a choice.
  */
-@IonicPage({ segment: 'addon-mod-choice-index' })
 @Component({
     selector: 'page-addon-mod-choice-index',
     templateUrl: 'index.html',

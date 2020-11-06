@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { CoreConstants } from '@core/constants';
 
@@ -35,7 +34,6 @@ interface CoreSettingsLicense {
 /**
  * Page that displays the open source licenses information.
  */
-@IonicPage({segment: 'core-settings-licenses'})
 @Component({
     selector: 'page-core-settings-licenses',
     templateUrl: 'licenses.html',

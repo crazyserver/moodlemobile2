@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { AddonModFeedbackProvider } from '../../providers/feedback';
 import { AddonModFeedbackHelperProvider } from '../../providers/helper';
 import { CoreGroupInfo, CoreGroupsProvider } from '@services/groups';
@@ -22,7 +22,6 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 /**
  * Page that displays feedback non respondents.
  */
-@IonicPage({ segment: 'addon-mod-feedback-nonrespondents' })
 @Component({
     selector: 'page-addon-mod-feedback-nonrespondents',
     templateUrl: 'nonrespondents.html',

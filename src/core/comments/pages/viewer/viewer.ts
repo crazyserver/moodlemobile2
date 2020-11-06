@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, OnDestroy } from '@angular/core';
-import { IonicPage, Content, NavParams, ModalController } from '@ionic/angular';
+import { Content, NavParams, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { coreSlideInOut } from '@classes/animations';
 import { CoreSitesProvider } from '@services/sites';
@@ -29,7 +29,6 @@ import { CoreCommentsSyncProvider } from '../../providers/sync';
 /**
  * Page that displays comments.
  */
-@IonicPage({ segment: 'core-comments-viewer' })
 @Component({
     selector: 'page-core-comments-viewer',
     templateUrl: 'viewer.html',

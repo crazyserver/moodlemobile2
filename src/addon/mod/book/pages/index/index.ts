@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModBookIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a book.
  */
-@IonicPage({ segment: 'addon-mod-book-index' })
 @Component({
     selector: 'page-addon-mod-book-index',
     templateUrl: 'index.html',

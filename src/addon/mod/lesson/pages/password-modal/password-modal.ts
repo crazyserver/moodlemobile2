@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController } from '@ionic/angular';
+import { ViewController } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -21,7 +21,6 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 /**
  * Modal that asks the password for a lesson.
  */
-@IonicPage({ segment: 'addon-mod-lesson-password-modal' })
 @Component({
     selector: 'page-addon-mod-lesson-password-modal',
     templateUrl: 'password-modal.html',

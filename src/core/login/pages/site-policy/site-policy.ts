@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
@@ -24,7 +24,6 @@ import { CoreSite } from '@classes/site';
 /**
  * Page to accept a site policy.
  */
-@IonicPage({ segment: 'core-login-site-policy' })
 @Component({
     selector: 'page-core-login-site-policy',
     templateUrl: 'site-policy.html',

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreLoginHelperProvider } from '../../providers/helper';
@@ -22,7 +21,6 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 /**
  * Page that shows instructions to change the password.
  */
-@IonicPage({ segment: 'core-login-change-password' })
 @Component({
     selector: 'page-core-change-password',
     templateUrl: 'change-password.html',

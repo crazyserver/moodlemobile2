@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, Content, NavParams, NavController, PopoverController } from '@ionic/angular';
+import { Content, NavParams, NavController, PopoverController } from '@ionic/angular';
 import { AddonCalendarProvider, AddonCalendarGetEventsEvent } from '../../providers/calendar';
 import { AddonCalendarOfflineProvider } from '../../providers/calendar-offline';
 import { AddonCalendarHelperProvider, AddonCalendarFilter } from '../../providers/helper';
@@ -36,7 +36,6 @@ import { AddonCalendarFilterPopoverComponent } from '../../components/filter/fil
 /**
  * Page that displays the list of calendar events.
  */
-@IonicPage({ segment: 'addon-calendar-list' })
 @Component({
     selector: 'page-addon-calendar-list',
     templateUrl: 'list.html',

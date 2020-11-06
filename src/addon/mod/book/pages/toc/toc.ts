@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { AddonModBookTocChapter, AddonModBookBook, AddonModBookNumbering } from '../../providers/book';
 
 /**
  * Modal to display the TOC of a book.
  */
-@IonicPage({ segment: 'addon-mod-book-toc-modal' })
 @Component({
     selector: 'page-addon-mod-book-toc',
     templateUrl: 'toc.html'

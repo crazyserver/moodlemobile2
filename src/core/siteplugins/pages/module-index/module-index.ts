@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreSitePluginsModuleIndexComponent } from '../../components/module-index/module-index';
 
 /**
  * Page to render the index page of a module site plugin.
  */
-@IonicPage({ segment: 'core-site-plugins-module-index-page' })
 @Component({
     selector: 'page-core-site-plugins-module-index',
     templateUrl: 'module-index.html',

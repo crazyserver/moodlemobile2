@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUtils } from '@services/utils/utils';
 
 /**
  * Page to render a certain text. If opened as a modal, it will have a button to close the modal.
  */
-@IonicPage({ segment: 'core-viewer-text' })
 @Component({
     selector: 'page-core-viewer-text',
     templateUrl: 'text.html',

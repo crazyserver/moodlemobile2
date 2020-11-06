@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Page that displays the phase info modal.
  */
-@IonicPage({ segment: 'addon-mod-workshop-phase-info' })
 @Component({
     selector: 'page-addon-mod-workshop-phase-info',
     templateUrl: 'phase.html',

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -24,7 +23,6 @@ import { CoreFilterProvider } from '@core/filter/providers/filter';
 /**
  * Page that displays the list of stored sites.
  */
-@IonicPage({ segment: 'core-login-sites' })
 @Component({
     selector: 'page-core-login-sites',
     templateUrl: 'sites.html',

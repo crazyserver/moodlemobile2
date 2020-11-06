@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 
 /**
  * Modal that renders the quiz navigation.
  */
-@IonicPage({ segment: 'addon-mod-quiz-navigation-modal' })
 @Component({
     selector: 'page-addon-mod-quiz-navigation-modal',
     templateUrl: 'navigation-modal.html',

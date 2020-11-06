@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreCourse, CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourses } from '@core/courses/providers/courses';
 import { CoreArray } from '@singletons/array';
@@ -43,7 +42,6 @@ interface DownloadedCourse extends Course {
 /**
  * Page that displays downloaded courses and allows the user to delete them.
  */
-@IonicPage({ segment: 'addon-storagemanager-courses-storage' })
 @Component({
     selector: 'page-addon-storagemanager-courses-storage',
     templateUrl: 'courses-storage.html',

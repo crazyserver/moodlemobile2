@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -25,7 +25,6 @@ import { CoreTagProvider, CoreTagCloud, CoreTagCollection, CoreTagCloudTag } fro
 /**
  * Page that displays most used tags and allows searching.
  */
-@IonicPage({ segment: 'core-tag-search' })
 @Component({
     selector: 'page-core-tag-search',
     templateUrl: 'search.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -26,7 +26,6 @@ import {
 /**
  * Modal that allows editing a feedback plugin.
  */
-@IonicPage({ segment: 'addon-mod-assign-edit-feedback-modal' })
 @Component({
     selector: 'page-addon-mod-assign-edit-feedback-modal',
     templateUrl: 'edit-feedback-modal.html',

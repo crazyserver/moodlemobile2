@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -25,7 +25,6 @@ import {
 /**
  * Page that displays the list of competencies of a learning plan.
  */
-@IonicPage({ segment: 'addon-competency-competencies' })
 @Component({
     selector: 'page-addon-competency-competencies',
     templateUrl: 'competencies.html',

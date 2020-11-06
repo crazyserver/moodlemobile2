@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { AddonModFeedbackProvider } from '../../providers/feedback';
 import { AddonModFeedbackHelperProvider } from '../../providers/helper';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -22,7 +22,6 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Page that displays a feedback attempt review.
  */
-@IonicPage({ segment: 'addon-mod-feedback-attempt' })
 @Component({
     selector: 'page-addon-mod-feedback-attempt',
     templateUrl: 'attempt.html',

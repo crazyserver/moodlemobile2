@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -22,7 +22,6 @@ import { CoreConstants } from '@core/constants';
 /**
  * Page that displays the about settings.
  */
-@IonicPage({segment: 'core-settings-about'})
 @Component({
     selector: 'page-core-settings-about',
     templateUrl: 'about.html',

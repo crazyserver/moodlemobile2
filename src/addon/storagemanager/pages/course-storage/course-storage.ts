@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content, NavParams } from '@ionic/angular';
+import { Content, NavParams } from '@ionic/angular';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
@@ -25,7 +25,6 @@ import { CoreConstants } from '@core/constants';
  * Page that displays the amount of file storage used by each activity on the course, and allows
  * the user to delete these files.
  */
-@IonicPage({ segment: 'addon-storagemanager-course-storage' })
 @Component({
     selector: 'page-addon-storagemanager-course-storage',
     templateUrl: 'course-storage.html',

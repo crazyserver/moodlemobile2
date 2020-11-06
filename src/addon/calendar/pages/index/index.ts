@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavParams, NavController, PopoverController } from '@ionic/angular';
+import { NavParams, NavController, PopoverController } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
@@ -32,7 +32,6 @@ import { Network } from '@ionic-native/network';
 /**
  * Page that displays the calendar events.
  */
-@IonicPage({ segment: 'addon-calendar-index' })
 @Component({
     selector: 'page-addon-calendar-index',
     templateUrl: 'index.html',

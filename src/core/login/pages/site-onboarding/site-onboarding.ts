@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController } from '@ionic/angular';
+import { ViewController } from '@ionic/angular';
 import { CoreUtils } from '@services/utils/utils';
 import { CoreConfig } from '@services/config';
 import { CoreLoginHelperProvider } from '../../providers/helper';
@@ -21,7 +21,6 @@ import { CoreLoginHelperProvider } from '../../providers/helper';
 /**
  * Component that displays onboarding help regarding the CoreLoginSitePage.
  */
-@IonicPage({ segment: 'core-login-site-onboarding' })
 @Component({
     selector: 'page-core-login-site-onboarding',
     templateUrl: 'site-onboarding.html',

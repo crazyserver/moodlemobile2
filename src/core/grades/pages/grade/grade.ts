@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content, NavParams } from '@ionic/angular';
+import { Content, NavParams } from '@ionic/angular';
 import { CoreGradesProvider } from '../../providers/grades';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreGradesHelperProvider } from '../../providers/helper';
@@ -22,7 +22,6 @@ import { CoreSitesProvider } from '@services/sites';
 /**
  * Page that displays activity grade.
  */
-@IonicPage({ segment: 'core-grades-grade' })
 @Component({
     selector: 'page-core-grades-grade',
     templateUrl: 'grade.html',

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider, AddonMessagesConversationMember, AddonMessagesMessageAreaContact } from '../../providers/messages';
@@ -24,7 +23,6 @@ import { CoreAppProvider } from '@services/app';
 /**
  * Page for searching users.
  */
-@IonicPage({ segment: 'addon-messages-search' })
 @Component({
     selector: 'page-addon-messages-search',
     templateUrl: 'search.html',

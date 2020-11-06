@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component, } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider, CoreSiteBasicInfo } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -22,7 +21,6 @@ import { CoreSettingsHelper, CoreSiteSpaceUsage } from '../../providers/helper';
 /**
  * Page that displays the space usage settings.
  */
-@IonicPage({segment: 'core-settings-space-usage'})
 @Component({
     selector: 'page-core-settings-space-usage',
     templateUrl: 'space-usage.html',

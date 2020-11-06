@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreRatingInfo } from '@core/rating/providers/rating';
 import { CoreTagProvider } from '@core/tag/providers/tag';
@@ -24,7 +24,6 @@ import { AddonModGlossaryProvider } from '../../providers/glossary';
 /**
  * Page that displays a glossary entry.
  */
-@IonicPage({ segment: 'addon-mod-glossary-entry' })
 @Component({
     selector: 'page-addon-mod-glossary-entry',
     templateUrl: 'entry.html',

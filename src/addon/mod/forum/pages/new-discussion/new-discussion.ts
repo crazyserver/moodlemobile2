@@ -14,7 +14,7 @@
 
 import { Component, OnDestroy, Optional, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreGroupsProvider } from '@services/groups';
@@ -34,7 +34,6 @@ import { AddonModForumSyncProvider } from '../../providers/sync';
 /**
  * Page that displays the new discussion form.
  */
-@IonicPage({ segment: 'addon-mod-forum-new-discussion' })
 @Component({
     selector: 'page-addon-mod-forum-new-discussion',
     templateUrl: 'new-discussion.html',

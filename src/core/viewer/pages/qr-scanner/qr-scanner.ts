@@ -14,14 +14,13 @@
 
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
  * Page to scan a QR code.
  */
-@IonicPage({ segment: 'core-viewer-qr-scanner' })
 @Component({
     selector: 'page-core-viewer-qr-scanner',
     templateUrl: 'qr-scanner.html',

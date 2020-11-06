@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from '@ionic/angular';
+import { NavController, NavParams, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -29,7 +29,6 @@ import { CoreConstants } from '@core/constants';
 /**
  * Page to signup using email.
  */
-@IonicPage({ segment: 'core-login-email-signup' })
 @Component({
     selector: 'page-core-login-email-signup',
     templateUrl: 'email-signup.html',

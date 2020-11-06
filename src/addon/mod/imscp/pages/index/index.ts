@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModImscpIndexComponent } from '../../components/index/index';
 
 /**
  * Imscp that displays a IMSCP.
  */
-@IonicPage({ segment: 'addon-mod-imscp-index' })
 @Component({
     selector: 'page-addon-mod-imscp-index',
     templateUrl: 'index.html',

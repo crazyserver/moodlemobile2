@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 import { CoreSiteHomeIndexComponent } from '../../components/index/index';
@@ -21,7 +21,6 @@ import { CoreSiteHomeIndexComponent } from '../../components/index/index';
 /**
  * Page that displays site home index.
  */
-@IonicPage({ segment: 'core-sitehome-index' })
 @Component({
     selector: 'page-core-sitehome-index',
     templateUrl: 'index.html',

@@ -14,7 +14,7 @@
 
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -28,7 +28,6 @@ import { AddonModGlossaryHelperProvider } from '../../providers/helper';
 /**
  * Page that displays the edit form.
  */
-@IonicPage({ segment: 'addon-mod-glossary-edit' })
 @Component({
     selector: 'page-addon-mod-glossary-edit',
     templateUrl: 'edit.html',

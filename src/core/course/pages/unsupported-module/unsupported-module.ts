@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 
 /**
  * Page that displays info about an unsupported module.
  */
-@IonicPage({ segment: 'core-course-unsupported-module' })
 @Component({
     selector: 'page-core-course-unsupported-module',
     templateUrl: 'unsupported-module.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from '@ionic/angular';
+import { NavController, NavParams, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -24,7 +24,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /**
  * Page to recover a forgotten password.
  */
-@IonicPage({ segment: 'core-login-forgotten-password' })
 @Component({
     selector: 'page-core-login-forgotten-password',
     templateUrl: 'forgotten-password.html',

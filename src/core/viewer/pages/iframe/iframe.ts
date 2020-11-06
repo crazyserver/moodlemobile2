@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Page to display a URL in an iframe.
  */
-@IonicPage({ segment: 'core-viewer-iframe' })
 @Component({
     selector: 'page-core-viewer-iframe',
     templateUrl: 'iframe.html',

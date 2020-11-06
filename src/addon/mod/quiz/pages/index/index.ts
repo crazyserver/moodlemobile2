@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModQuizIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays the quiz entry page.
  */
-@IonicPage({ segment: 'addon-mod-quiz-index' })
 @Component({
     selector: 'page-addon-mod-quiz-index',
     templateUrl: 'index.html',

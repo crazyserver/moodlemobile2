@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCourseProvider } from '@core/course/providers/course';
@@ -23,7 +23,6 @@ import { AddonModAssignSubmissionComponent } from '../../components/submission/s
 /**
  * Page that displays a submission.
  */
-@IonicPage({ segment: 'addon-mod-assign-submission-review' })
 @Component({
     selector: 'page-addon-mod-assign-submission-review',
     templateUrl: 'submission-review.html',

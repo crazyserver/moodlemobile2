@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { AddonModScormProvider } from '../../providers/scorm';
 
 /**
  * Modal to display the TOC of a SCORM.
  */
-@IonicPage({ segment: 'addon-mod-scorm-toc-modal' })
 @Component({
     selector: 'page-addon-mod-scorm-toc',
     templateUrl: 'toc.html'

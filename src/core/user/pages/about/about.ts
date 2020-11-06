@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreUserProvider } from '../../providers/user';
 import { CoreUserHelperProvider } from '../../providers/helper';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -24,7 +24,6 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Page that displays an user about page.
  */
-@IonicPage({ segment: 'core-user-about' })
 @Component({
     selector: 'page-core-user-about',
     templateUrl: 'about.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, Optional, NgZone } from '@angular/core';
-import { IonicPage, NavParams, NavController, Content } from '@ionic/angular';
+import { NavParams, NavController, Content } from '@ionic/angular';
 import { Network } from '@ionic-native/network';
 import { TranslateService } from '@ngx-translate/core';
 import { AddonModFeedbackProvider } from '../../providers/feedback';
@@ -32,7 +32,6 @@ import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 /**
  * Page that displays feedback form.
  */
-@IonicPage({ segment: 'addon-mod-feedback-form' })
 @Component({
     selector: 'page-addon-mod-feedback-form',
     templateUrl: 'form.html',

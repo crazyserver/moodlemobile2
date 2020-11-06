@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import {
     AddonMessagesProvider, AddonMessagesMessagePreferences, AddonMessagesMessagePreferencesNotification,
     AddonMessagesMessagePreferencesNotificationProcessor
@@ -29,7 +28,6 @@ import { CoreConstants } from '@core/constants';
 /**
  * Page that displays the messages settings page.
  */
-@IonicPage({ segment: 'addon-messages-settings' })
 @Component({
     selector: 'page-addon-messages-settings',
     templateUrl: 'settings.html',

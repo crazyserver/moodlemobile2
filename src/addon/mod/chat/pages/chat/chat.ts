@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Content, IonicPage, ModalController, NavController, NavParams } from '@ionic/angular';
+import { Content, ModalController, NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
@@ -28,7 +28,6 @@ import { CoreSendMessageFormComponent } from '@components/send-message-form/send
 /**
  * Page that displays a chat session.
  */
-@IonicPage({ segment: 'addon-mod-chat-chat' })
 @Component({
     selector: 'page-addon-mod-chat-chat',
     templateUrl: 'chat.html',

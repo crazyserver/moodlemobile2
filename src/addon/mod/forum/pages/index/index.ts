@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModForumIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a forum.
  */
-@IonicPage({ segment: 'addon-mod-forum-index' })
 @Component({
     selector: 'page-addon-mod-forum-index',
     templateUrl: 'index.html',

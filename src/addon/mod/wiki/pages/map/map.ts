@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 
 /**
  * Modal to display the map of a Wiki.
  */
-@IonicPage({ segment: 'addon-mod-wiki-map' })
 @Component({
     selector: 'page-addon-mod-wiki-map',
     templateUrl: 'map.html',

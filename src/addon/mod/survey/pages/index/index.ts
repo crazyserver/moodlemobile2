@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModSurveyIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a survey.
  */
-@IonicPage({ segment: 'addon-mod-survey-index' })
 @Component({
     selector: 'page-addon-mod-survey-index',
     templateUrl: 'index.html',

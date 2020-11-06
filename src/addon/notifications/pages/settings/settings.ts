@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, Optional } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import {
     AddonNotificationsProvider, AddonNotificationsNotificationPreferences, AddonNotificationsNotificationPreferencesProcessor,
     AddonNotificationsNotificationPreferencesComponent, AddonNotificationsNotificationPreferencesNotification,
@@ -34,7 +34,6 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 /**
  * Page that displays notifications settings.
  */
-@IonicPage({ segment: 'addon-notifications-settings' })
 @Component({
     selector: 'page-addon-notifications-settings',
     templateUrl: 'settings.html',

@@ -14,7 +14,7 @@
 
 import { Component, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTagProvider } from '@core/tag/providers/tag';
 import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';
@@ -22,7 +22,6 @@ import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';
 /**
  * Page that displays the tag index area.
  */
-@IonicPage({ segment: 'core-tag-index-area' })
 @Component({
     selector: 'page-core-tag-index-area',
     templateUrl: 'index-area.html',

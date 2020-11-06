@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 
 /**
  * Modal that renders the lesson menu and media file.
  */
-@IonicPage({ segment: 'addon-mod-lesson-menu-modal' })
 @Component({
     selector: 'page-addon-mod-lesson-menu-modal',
     templateUrl: 'menu-modal.html',

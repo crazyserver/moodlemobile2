@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, ModalController, AlertController, NavParams } from '@ionic/angular';
+import { NavController, ModalController, AlertController, NavParams } from '@ionic/angular';
 import { CoreSite } from '@classes/site';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
@@ -51,7 +51,6 @@ type SiteFinderSettings = {
 /**
  * Page to enter or select the site URL to connect to.
  */
-@IonicPage({ segment: 'core-login-site' })
 @Component({
     selector: 'page-core-login-site',
     templateUrl: 'site.html',

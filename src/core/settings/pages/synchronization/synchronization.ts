@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreConstants } from '@core/constants';
 import { CoreEvents } from '@singletons/events';
@@ -25,7 +24,6 @@ import { CoreSettingsHelper } from '@core/settings/providers/helper';
 /**
  * Page that displays the synchronization settings.
  */
-@IonicPage({segment: 'core-settings-synchronization'})
 @Component({
     selector: 'page-core-settings-synchronization',
     templateUrl: 'synchronization.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -30,7 +30,6 @@ import { CoreCourseModuleSummary } from '@core/course/providers/course';
 /**
  * Page that displays a learning plan.
  */
-@IonicPage({ segment: 'addon-competency-competency' })
 @Component({
     selector: 'page-addon-competency-competency',
     templateUrl: 'competency.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Segment } from '@ionic/angular';
+import { Segment } from '@ionic/angular';
 import { CoreConstants } from '@core/constants';
 import { CoreConfigProvider } from '@services/config';
 import { CoreFileProvider } from '@services/file';
@@ -27,7 +27,6 @@ import { CoreSettingsHelper } from '../../providers/helper';
 /**
  * Page that displays the general settings.
  */
-@IonicPage({segment: 'core-settings-general'})
 @Component({
     selector: 'page-core-settings-general',
     templateUrl: 'general.html',

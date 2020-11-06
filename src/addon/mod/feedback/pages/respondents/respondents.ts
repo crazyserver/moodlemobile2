@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { AddonModFeedbackProvider } from '../../providers/feedback';
 import { AddonModFeedbackHelperProvider } from '../../providers/helper';
 import { CoreGroupInfo, CoreGroupsProvider } from '@services/groups';
@@ -23,7 +23,6 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 /**
  * Page that displays feedback respondents.
  */
-@IonicPage({ segment: 'addon-mod-feedback-respondents' })
 @Component({
     selector: 'page-addon-mod-feedback-respondents',
     templateUrl: 'respondents.html',

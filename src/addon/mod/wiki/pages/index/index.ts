@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModWikiIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a wiki page.
  */
-@IonicPage({ segment: 'addon-mod-wiki-index' })
 @Component({
     selector: 'page-addon-mod-wiki-index',
     templateUrl: 'index.html',

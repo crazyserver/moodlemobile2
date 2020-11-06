@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CoreCoursesMyCoursesComponent } from '../../components/my-courses/my-courses';
 
 /**
  * Page that displays the list of courses the user is enrolled in.
  */
-@IonicPage({ segment: 'core-courses-my-courses' })
 @Component({
     selector: 'page-core-courses-my-courses',
     templateUrl: 'my-courses.html',

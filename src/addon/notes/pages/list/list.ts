@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 
 /**
  * Page that displays a list of notes.
  */
-@IonicPage({ segment: 'addon-notes-list-page' })
 @Component({
     selector: 'page-addon-notes-list-page',
     templateUrl: 'list.html',

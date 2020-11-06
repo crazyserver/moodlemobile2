@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModAssignIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays an assign.
  */
-@IonicPage({ segment: 'addon-mod-assign-index' })
 @Component({
     selector: 'page-addon-mod-assign-index',
     templateUrl: 'index.html',

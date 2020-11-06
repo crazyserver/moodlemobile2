@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CoreFileProvider } from '@services/file';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -22,7 +22,6 @@ import { CoreSharedFilesHelperProvider } from '../../providers/helper';
 /**
  * Modal to display the list of sites to choose one to store a shared file.
  */
-@IonicPage({ segment: 'core-shared-files-choose-site' })
 @Component({
     selector: 'page-core-shared-files-choose-site',
     templateUrl: 'choose-site.html',

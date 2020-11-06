@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCoursesProvider } from '../../providers/courses';
@@ -21,7 +20,6 @@ import { CoreCoursesProvider } from '../../providers/courses';
 /**
  * Page that displays available courses in current site.
  */
-@IonicPage({ segment: 'core-courses-available-courses' })
 @Component({
     selector: 'page-core-courses-available-courses',
     templateUrl: 'available-courses.html',

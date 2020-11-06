@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
@@ -30,7 +30,6 @@ import { AddonModWikiSyncProvider, AddonModWikiSyncSubwikiResult } from '../../p
 /**
  * Page that allows adding or editing a wiki page.
  */
-@IonicPage({ segment: 'addon-mod-wiki-edit' })
 @Component({
     selector: 'page-addon-mod-wiki-edit',
     templateUrl: 'edit.html',

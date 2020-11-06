@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, ViewController, NavParams, NavController } from '@ionic/angular';
+import { ViewController, NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreFileProvider } from '@services/file';
@@ -24,7 +24,6 @@ import { CoreSharedFilesProvider } from '../../providers/sharedfiles';
 /**
  * Modal to display the list of shared files.
  */
-@IonicPage({ segment: 'core-shared-files-list' })
 @Component({
     selector: 'page-core-shared-files-list',
     templateUrl: 'list.html',

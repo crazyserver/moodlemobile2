@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -23,7 +23,6 @@ import { AddonNotesProvider } from '../../providers/notes';
 /**
  * Component that displays a text area for composing a note.
  */
-@IonicPage({ segment: 'addon-notes-add' })
 @Component({
     selector: 'page-addon-notes-add',
     templateUrl: 'add.html',

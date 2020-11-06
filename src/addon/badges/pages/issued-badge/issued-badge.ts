@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content, NavParams } from '@ionic/angular';
+import { Content, NavParams } from '@ionic/angular';
 import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSitesProvider } from '@services/sites';
@@ -24,7 +24,6 @@ import { AddonBadgesProvider, AddonBadgesUserBadge } from '../../providers/badge
 /**
  * Page that displays the list of calendar events.
  */
-@IonicPage({ segment: 'addon-badges-issued-badge' })
 @Component({
     selector: 'page-addon-badges-issued-badge',
     templateUrl: 'issued-badge.html',

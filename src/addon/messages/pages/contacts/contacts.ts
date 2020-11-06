@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from '../../providers/messages';
@@ -23,7 +23,6 @@ import { CoreTabsComponent } from '@components/tabs/tabs';
 /**
  * Page that displays contacts and contact requests.
  */
-@IonicPage({ segment: 'addon-messages-contacts' })
 @Component({
     selector: 'page-addon-messages-contacts',
     templateUrl: 'contacts.html',

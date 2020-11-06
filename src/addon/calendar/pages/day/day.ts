@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, NavParams, NavController, PopoverController } from '@ionic/angular';
+import { NavParams, NavController, PopoverController } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
@@ -33,7 +33,6 @@ import * as moment from 'moment';
 /**
  * Page that displays the calendar events for a certain day.
  */
-@IonicPage({ segment: 'addon-calendar-day' })
 @Component({
     selector: 'page-addon-calendar-day',
     templateUrl: 'day.html',

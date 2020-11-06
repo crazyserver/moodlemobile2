@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, Injector, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Content } from '@ionic/angular';
+import { ViewController, NavParams, Content } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CoreEvents } from '@singletons/events';
@@ -24,7 +24,6 @@ import { AddonModQuizAccessRuleDelegate } from '../../providers/access-rules-del
 /**
  * Modal that renders the access rules for a quiz.
  */
-@IonicPage({ segment: 'addon-mod-quiz-preflight-modal' })
 @Component({
     selector: 'page-addon-mod-quiz-preflight-modal',
     templateUrl: 'preflight-modal.html',

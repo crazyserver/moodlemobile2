@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModResourceIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a resource.
  */
-@IonicPage({ segment: 'addon-mod-resource-index' })
 @Component({
     selector: 'page-addon-mod-resource-index',
     templateUrl: 'index.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents, CoreEventObserver } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -30,7 +30,6 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 /**
  * Page that displays a list of submissions of an assignment.
  */
-@IonicPage({ segment: 'addon-mod-assign-submission-list' })
 @Component({
     selector: 'page-addon-mod-assign-submission-list',
     templateUrl: 'submission-list.html',

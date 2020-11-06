@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonicPage, NavParams, Content, ModalController, Modal } from '@ionic/angular';
+import { NavParams, Content, ModalController, Modal } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -25,7 +25,6 @@ import { AddonModQuizHelperProvider } from '../../providers/helper';
 /**
  * Page that allows reviewing a quiz attempt.
  */
-@IonicPage({ segment: 'addon-mod-quiz-review' })
 @Component({
     selector: 'page-addon-mod-quiz-review',
     templateUrl: 'review.html',

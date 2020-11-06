@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController, Modal } from '@ionic/angular';
+import { NavController, NavParams, Platform, ModalController, Modal } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
@@ -28,7 +28,6 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Page that allows "previewing" a course and enrolling in it if enabled and not enrolled.
  */
-@IonicPage({ segment: 'core-courses-course-preview' })
 @Component({
     selector: 'page-core-courses-course-preview',
     templateUrl: 'course-preview.html',

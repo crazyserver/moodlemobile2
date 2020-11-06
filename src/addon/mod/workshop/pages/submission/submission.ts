@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, Optional, ViewChild, ElementRef } from '@angular/core';
-import { Content, IonicPage, NavParams, NavController } from '@ionic/angular';
+import { Content, NavParams, NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
@@ -33,7 +33,6 @@ import { AddonModWorkshopSyncProvider } from '../../providers/sync';
 /**
  * Page that displays a workshop submission.
  */
-@IonicPage({ segment: 'addon-mod-workshop-submission' })
 @Component({
     selector: 'page-addon-mod-workshop-submission-page',
     templateUrl: 'submission.html',

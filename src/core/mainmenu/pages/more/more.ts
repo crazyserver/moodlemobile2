@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCustomURLSchemesProvider, CoreCustomURLSchemesHandleError } from '@services/urlschemes';
@@ -28,7 +28,6 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Page that displays the list of main menu options that aren't in the tabs.
  */
-@IonicPage({segment: 'core-mainmenu-more'})
 @Component({
     selector: 'page-core-mainmenu-more',
     templateUrl: 'more.html',

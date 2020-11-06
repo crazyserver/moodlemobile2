@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { IonicPage, NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
+import { NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
@@ -33,7 +33,6 @@ import { Subscription } from 'rxjs';
 /**
  * Page that allows attempting a quiz.
  */
-@IonicPage({ segment: 'addon-mod-quiz-player' })
 @Component({
     selector: 'page-addon-mod-quiz-player',
     templateUrl: 'player.html',

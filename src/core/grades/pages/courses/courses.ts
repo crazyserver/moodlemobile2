@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content } from '@ionic/angular';
+import { Content } from '@ionic/angular';
 import { CoreGradesProvider } from '../../providers/grades';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -22,7 +22,6 @@ import { CoreGradesHelperProvider } from '../../providers/helper';
 /**
  * Page that displays courses grades (main menu option).
  */
-@IonicPage({ segment: 'core-grades-courses' })
 @Component({
     selector: 'page-core-grades-courses',
     templateUrl: 'courses.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreTagProvider } from '@core/tag/providers/tag';
@@ -22,7 +22,6 @@ import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';
 /**
  * Page that displays the tag index.
  */
-@IonicPage({ segment: 'core-tag-index' })
 @Component({
     selector: 'page-core-tag-index',
     templateUrl: 'index.html',

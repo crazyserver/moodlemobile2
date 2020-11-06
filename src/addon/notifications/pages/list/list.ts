@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
@@ -27,7 +27,6 @@ import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers
 /**
  * Page that displays the list of notifications.
  */
-@IonicPage({ segment: 'addon-notifications-list' })
 @Component({
     selector: 'page-addon-notifications-list',
     templateUrl: 'list.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, ViewChild, Optional } from '@angular/core';
-import { IonicPage, NavParams, NavController, Content, ModalController } from '@ionic/angular';
+import { NavParams, NavController, Content, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -38,7 +38,6 @@ import * as moment from 'moment';
 /**
  * Page that displays a message discussion page.
  */
-@IonicPage({ segment: 'addon-messages-discussion' })
 @Component({
     selector: 'page-addon-messages-discussion',
     templateUrl: 'discussion.html',

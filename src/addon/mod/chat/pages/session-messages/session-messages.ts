@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
@@ -23,7 +23,6 @@ import { AddonModChatHelperProvider, AddonModChatSessionMessageForView } from '.
 /**
  * Page that displays list of chat session messages.
  */
-@IonicPage({ segment: 'addon-mod-chat-session-messages' })
 @Component({
     selector: 'page-addon-mod-chat-session-messages',
     templateUrl: 'session-messages.html',

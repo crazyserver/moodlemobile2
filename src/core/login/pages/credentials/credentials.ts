@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreUtils } from '@services/utils/utils';
@@ -29,7 +29,6 @@ import { CoreCustomURLSchemes } from '@services/urlschemes';
 /**
  * Page to enter the user credentials.
  */
-@IonicPage({ segment: 'core-login-credentials' })
 @Component({
     selector: 'page-core-login-credentials',
     templateUrl: 'credentials.html',

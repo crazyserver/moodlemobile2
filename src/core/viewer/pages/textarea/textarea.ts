@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams, AlertButton } from '@ionic/angular';
+import { ViewController, NavParams, AlertButton } from '@ionic/angular';
 
 /**
  * Page to render a textarea prompt.
  */
-@IonicPage({ segment: 'core-viewer-textarea' })
 @Component({
     selector: 'page-core-viewer-textarea',
     templateUrl: 'textarea.html',

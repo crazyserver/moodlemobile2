@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonMessagesProvider } from '../../providers/messages';
@@ -23,7 +22,6 @@ import { CoreTabsComponent } from '@components/tabs/tabs';
 /**
  * Page that displays the messages index page.
  */
-@IonicPage({ segment: 'addon-messages-index' })
 @Component({
     selector: 'page-addon-messages-index',
     templateUrl: 'index.html',

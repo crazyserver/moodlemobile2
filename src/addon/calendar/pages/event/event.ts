@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, Optional, OnDestroy, NgZone } from '@angular/core';
-import { IonicPage, Content, NavParams, NavController } from '@ionic/angular';
+import { Content, NavParams, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AddonCalendarProvider } from '../../providers/calendar';
 import { AddonCalendarHelperProvider } from '../../providers/helper';
@@ -35,7 +35,6 @@ import { Network } from '@ionic-native/network';
 /**
  * Page that displays a single calendar event.
  */
-@IonicPage({ segment: 'addon-calendar-event' })
 @Component({
     selector: 'page-addon-calendar-event',
     templateUrl: 'event.html',

@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { CoreCourseHelperProvider } from '../../providers/helper';
 import { CoreCourseProvider } from '../../providers/course';
 
 /**
  * Page that displays course section selector.
  */
-@IonicPage({ segment: 'core-course-section-selector' })
 @Component({
     selector: 'page-core-course-section-selector',
     templateUrl: 'section-selector.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreUserProvider } from '@core/user/providers/user';
@@ -25,7 +25,6 @@ import { AddonModChatProvider, AddonModChatSession, AddonModChatSessionUser } fr
 /**
  * Page that displays list of chat sessions.
  */
-@IonicPage({ segment: 'addon-mod-chat-sessions' })
 @Component({
     selector: 'page-addon-mod-chat-sessions',
     templateUrl: 'sessions.html',

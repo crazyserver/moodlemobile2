@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { CoreUserProvider } from '../../providers/user';
 import { CoreUserHelperProvider } from '../../providers/helper';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -29,7 +29,6 @@ import { CoreSplitViewComponent } from '@components/split-view/split-view';
 /**
  * Page that displays an user profile page.
  */
-@IonicPage({ segment: 'core-user-profile' })
 @Component({
     selector: 'page-core-user-profile',
     templateUrl: 'profile.html',

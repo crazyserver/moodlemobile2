@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { AddonCalendarProvider } from '../../providers/calendar';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -21,7 +20,6 @@ import { CoreSitesProvider } from '@services/sites';
 /**
  * Page that displays the calendar settings.
  */
-@IonicPage({ segment: 'addon-calendar-settings' })
 @Component({
     selector: 'page-addon-calendar-settings',
     templateUrl: 'settings.html',

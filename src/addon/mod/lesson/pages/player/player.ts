@@ -14,7 +14,7 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IonicPage, NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
+import { NavParams, Content, PopoverController, ModalController, Modal, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
@@ -33,7 +33,6 @@ import { AddonModLessonHelperProvider } from '../../providers/helper';
 /**
  * Page that allows attempting and reviewing a lesson.
  */
-@IonicPage({ segment: 'addon-mod-lesson-player' })
 @Component({
     selector: 'page-addon-mod-lesson-player',
     templateUrl: 'player.html',

@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreRatingProvider, CoreRatingItemRating } from '@core/rating/providers/rating';
 
 /**
  * Page that displays individual ratings
  */
-@IonicPage({ segment: 'core-rating-ratings' })
 @Component({
     selector: 'page-core-rating-ratings',
     templateUrl: 'ratings.html',

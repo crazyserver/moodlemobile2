@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Device } from '@ionic-native/device';
 import { Network } from '@ionic-native/network';
 import { TranslateService } from '@ngx-translate/core';
@@ -61,7 +61,6 @@ interface CoreSettingsDeviceInfo {
 /**
  * Page that displays the device information.
  */
-@IonicPage({segment: 'core-settings-deviceinfo'})
 @Component({
     selector: 'page-core-settings-deviceinfo',
     templateUrl: 'deviceinfo.html',

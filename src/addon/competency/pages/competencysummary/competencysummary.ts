@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Optional } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { AddonCompetencyProvider, AddonCompetencySummary } from '../../providers/competency';
@@ -21,7 +21,6 @@ import { AddonCompetencyProvider, AddonCompetencySummary } from '../../providers
 /**
  * Page that displays a learning plan.
  */
-@IonicPage({ segment: 'addon-competency-competency-summary' })
 @Component({
     selector: 'page-addon-competency-competency-summary',
     templateUrl: 'competencysummary.html',

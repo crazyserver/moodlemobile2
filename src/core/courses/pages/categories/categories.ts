@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -23,7 +23,6 @@ import { CoreCoursesProvider } from '../../providers/courses';
 /**
  * Page that displays a list of categories and the courses in the current category if any.
  */
-@IonicPage({ segment: 'core-courses-categories' })
 @Component({
     selector: 'page-core-courses-categories',
     templateUrl: 'categories.html',

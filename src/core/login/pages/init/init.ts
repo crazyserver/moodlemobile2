@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CoreAppProvider } from '@services/app';
 import { CoreInitDelegate } from '@services/init';
@@ -24,7 +24,6 @@ import { CoreLoginHelperProvider } from '../../providers/helper';
 /**
  * Page that displays a "splash screen" while the app is being initialized.
  */
-@IonicPage({ segment: 'core-login-init' })
 @Component({
     selector: 'page-core-login-init',
     templateUrl: 'init.html',

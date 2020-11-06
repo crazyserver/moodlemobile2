@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 
 /**
  * Page that displays the sort selector.
  */
-@IonicPage({ segment: 'addon-mod-forum-sort-order-selector' })
 @Component({
     selector: 'page-addon-mod-forum-sort-order-selector',
     templateUrl: 'sort-order-selector.html',

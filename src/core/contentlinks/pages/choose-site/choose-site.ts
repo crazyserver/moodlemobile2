@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -24,7 +24,6 @@ import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 /**
  * Page to display the list of sites to choose one to perform a content link action.
  */
-@IonicPage({ segment: 'core-content-links-choose-site' })
 @Component({
     selector: 'page-core-content-links-choose-site',
     templateUrl: 'choose-site.html',

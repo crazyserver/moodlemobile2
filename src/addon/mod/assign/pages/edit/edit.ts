@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
@@ -28,7 +28,6 @@ import { AddonModAssignHelperProvider } from '../../providers/helper';
 /**
  * Page that allows adding or editing an assigment submission.
  */
-@IonicPage({ segment: 'addon-mod-assign-edit' })
 @Component({
     selector: 'page-addon-mod-assign-edit',
     templateUrl: 'edit.html',

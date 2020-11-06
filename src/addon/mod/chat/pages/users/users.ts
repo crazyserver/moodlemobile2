@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -23,7 +23,6 @@ import { Network } from '@ionic-native/network';
 /**
  * Page that displays the chat session users.
  */
-@IonicPage({ segment: 'addon-mod-chat-users' })
 @Component({
     selector: 'page-addon-mod-chat-users',
     templateUrl: 'users.html',

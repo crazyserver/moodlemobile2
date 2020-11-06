@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModFeedbackIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a feedback.
  */
-@IonicPage({ segment: 'addon-mod-feedback-index' })
 @Component({
     selector: 'page-addon-mod-feedback-index',
     templateUrl: 'index.html',

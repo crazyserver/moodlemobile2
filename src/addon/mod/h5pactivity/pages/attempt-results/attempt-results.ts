@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtils } from '@services/utils/dom';
 import { CoreUser } from '@core/user/providers/user';
 import {
@@ -23,7 +23,6 @@ import {
 /**
  * Page that displays results of an attempt.
  */
-@IonicPage({ segment: 'addon-mod-h5pactivity-attempt-results' })
 @Component({
     selector: 'page-addon-mod-h5pactivity-attempt-results',
     templateUrl: 'attempt-results.html',

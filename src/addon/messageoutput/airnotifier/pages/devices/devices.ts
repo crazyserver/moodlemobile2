@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
 import { AddonMessageOutputAirnotifierProvider, AddonMessageOutputAirnotifierDevice } from '../../providers/airnotifier';
@@ -21,7 +20,6 @@ import { AddonMessageOutputAirnotifierProvider, AddonMessageOutputAirnotifierDev
 /**
  * Page that displays the list of devices.
  */
-@IonicPage({ segment: 'addon-message-output-airnotifier-devices' })
 @Component({
     selector: 'page-addon-message-output-airnotifier-devices',
     templateUrl: 'devices.html',

@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModFolderIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a folder.
  */
-@IonicPage({ segment: 'addon-mod-folder-index' })
 @Component({
     selector: 'page-addon-mod-folder-index',
     templateUrl: 'index.html',

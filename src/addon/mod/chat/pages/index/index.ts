@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModChatIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays a chat.
  */
-@IonicPage({ segment: 'addon-mod-chat-index' })
 @Component({
     selector: 'page-addon-mod-chat-index',
     templateUrl: 'index.html',

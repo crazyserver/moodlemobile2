@@ -15,9 +15,7 @@
 // Code based on https://github.com/martinpritchardelevate/ionic-split-pane-demo
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 
-@IonicPage({ segment: 'core-placeholder' })
 @Component({
     selector: 'core-placeholder',
     templateUrl: 'core-placeholder.html',

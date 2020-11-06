@@ -14,12 +14,11 @@
 
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 
 /**
  * Page to view an image. If opened as a modal, it will have a button to close the modal.
  */
-@IonicPage({ segment: 'core-viewer-image' })
 @Component({
     selector: 'page-core-viewer-image',
     templateUrl: 'image.html',

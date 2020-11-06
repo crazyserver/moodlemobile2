@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSettingsDelegate, CoreSettingsHandlerData } from '../../providers/delegate';
 import { CoreEvents } from '@singletons/events';
@@ -27,7 +27,6 @@ import { CoreApp } from '@services/app';
 /**
  * Page that displays the list of site settings pages.
  */
-@IonicPage({segment: 'core-site-preferences'})
 @Component({
     selector: 'page-core-site-preferences',
     templateUrl: 'site.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import {
     AddonMessagesProvider, AddonMessagesConversationFormatted, AddonMessagesConversationMember
 } from '../../providers/messages';
@@ -23,7 +23,6 @@ import { CoreSitesProvider } from '@services/sites';
 /**
  * Page that displays the list of conversations, including group conversations.
  */
-@IonicPage({ segment: 'addon-messages-conversation-info' })
 @Component({
     selector: 'page-addon-messages-conversation-info',
     templateUrl: 'conversation-info.html',

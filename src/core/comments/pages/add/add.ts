@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -23,7 +23,6 @@ import { CoreCommentsProvider } from '../../providers/comments';
 /**
  * Component that displays a text area for composing a comment.
  */
-@IonicPage({ segment: 'core-comments-add' })
 @Component({
     selector: 'page-core-comments-add',
     templateUrl: 'add.html',

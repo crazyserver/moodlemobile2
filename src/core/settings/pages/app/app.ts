@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 import { CoreApp } from '@services/app';
 
 /**
  * Page that displays the list of app settings pages.
  */
-@IonicPage({segment: 'core-settings-app'})
 @Component({
     selector: 'page-core-settings-app',
     templateUrl: 'app.html',

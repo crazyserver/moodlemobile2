@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CoreAppProvider } from '@services/app';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -24,7 +24,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /**
  * Page to enter the user password to reconnect to a site.
  */
-@IonicPage({ segment: 'core-login-reconnect' })
 @Component({
     selector: 'page-core-login-reconnect',
     templateUrl: 'reconnect.html',

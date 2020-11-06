@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { AddonModQuizProvider } from '../../providers/quiz';
 import { AddonModQuizHelperProvider } from '../../providers/helper';
@@ -21,7 +21,6 @@ import { AddonModQuizHelperProvider } from '../../providers/helper';
 /**
  * Page that displays some summary data about an attempt.
  */
-@IonicPage({ segment: 'addon-mod-quiz-attempt' })
 @Component({
     selector: 'page-addon-mod-quiz-attempt',
     templateUrl: 'attempt.html',

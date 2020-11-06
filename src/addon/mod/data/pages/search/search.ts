@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -28,7 +28,6 @@ import { CoreTagProvider } from '@core/tag/providers/tag';
 /**
  * Page that displays the search modal.
  */
-@IonicPage({ segment: 'addon-mod-data-search' })
 @Component({
     selector: 'page-addon-mod-data-search',
     templateUrl: 'search.html',

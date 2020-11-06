@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -27,7 +27,6 @@ import { AddonModLessonHelperProvider } from '../../providers/helper';
 /**
  * Page that displays a retake made by a certain user.
  */
-@IonicPage({ segment: 'addon-mod-lesson-user-retake' })
 @Component({
     selector: 'page-addon-mod-lesson-user-retake',
     templateUrl: 'user-retake.html',

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, OnDestroy, Injector } from '@angular/core';
-import { IonicPage, NavParams, Content, NavController } from '@ionic/angular';
+import { NavParams, Content, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
@@ -34,7 +34,6 @@ import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
 /**
  * Page that displays the list of courses the user is enrolled in.
  */
-@IonicPage({ segment: 'core-course-section' })
 @Component({
     selector: 'page-core-course-section',
     templateUrl: 'section.html',

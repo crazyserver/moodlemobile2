@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { ChangeDetectorRef, Component, ViewChild, OnDestroy } from '@angular/core';
-import { Content, IonicPage, NavParams, NavController } from '@ionic/angular';
+import { Content, NavParams, NavController } from '@ionic/angular';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreSitesProvider } from '@services/sites';
@@ -32,7 +32,6 @@ import { CoreCommentsCommentsComponent } from '@core/comments/components/comment
 /**
  * Page that displays the view entry page.
  */
-@IonicPage({ segment: 'addon-mod-data-entry' })
 @Component({
     selector: 'page-addon-mod-data-entry',
     templateUrl: 'entry.html',

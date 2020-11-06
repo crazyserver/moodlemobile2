@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreSites } from '@services/sites';
 import { CoreDomUtils } from '@services/utils/dom';
 import { CoreUser } from '@core/user/providers/user';
@@ -24,7 +24,6 @@ import {
 /**
  * Page that displays user attempts of a certain user.
  */
-@IonicPage({ segment: 'addon-mod-h5pactivity-user-attempts' })
 @Component({
     selector: 'page-addon-mod-h5pactivity-user-attempts',
     templateUrl: 'user-attempts.html',

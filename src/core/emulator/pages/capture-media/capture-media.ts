@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Platform } from '@ionic/angular';
+import { ViewController, NavParams, Platform } from '@ionic/angular';
 import { CoreApp } from '@services/app';
 import { CoreFileProvider } from '@services/file';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -28,7 +28,6 @@ import { Media, MediaObject } from '@ionic-native/media';
 /**
  * Page to capture media in browser or desktop, or to capture audio in mobile devices.
  */
-@IonicPage({ segment: 'core-emulator-capture-media' })
 @Component({
     selector: 'page-core-emulator-capture-media',
     templateUrl: 'capture-media.html',

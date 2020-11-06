@@ -14,7 +14,7 @@
 
 import { Component, OnInit, OnDestroy, Optional, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
 import { CoreGroupsProvider } from '@services/groups';
@@ -36,7 +36,6 @@ import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
 /**
  * Page that displays a form to create/edit an event.
  */
-@IonicPage({ segment: 'addon-calendar-edit-event' })
 @Component({
     selector: 'page-addon-calendar-edit-event',
     templateUrl: 'edit-event.html',

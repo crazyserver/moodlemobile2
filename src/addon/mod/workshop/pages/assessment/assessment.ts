@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEvents } from '@singletons/events';
@@ -32,7 +32,6 @@ import { AddonModWorkshopSyncProvider } from '../../providers/sync';
 /**
  * Page that displays a workshop assessment.
  */
-@IonicPage({ segment: 'addon-mod-workshop-assessment' })
 @Component({
     selector: 'page-addon-mod-workshop-assessment-page',
     templateUrl: 'assessment.html',

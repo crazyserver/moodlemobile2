@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreDomUtils } from '@services/utils/dom';
 import { AddonModH5PActivityIndexComponent } from '../../components/index/index';
 import { AddonModH5PActivityData } from '../../providers/h5pactivity';
@@ -23,7 +23,6 @@ import { Translate } from '@singletons/core.singletons';
 /**
  * Page that displays an H5P activity.
  */
-@IonicPage({ segment: 'addon-mod-h5pactivity-index' })
 @Component({
     selector: 'page-addon-mod-h5pactivity-index',
     templateUrl: 'index.html',

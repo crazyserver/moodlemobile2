@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { CoreSitesProvider } from '@services/sites';
 
 /**
  * Page that displays a course grades.
  */
-@IonicPage({ segment: 'core-grades-course-split' })
 @Component({
     selector: 'page-core-grades-course-split',
     templateUrl: 'coursesplit.html',

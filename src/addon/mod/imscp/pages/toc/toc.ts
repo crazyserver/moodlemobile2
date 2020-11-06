@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from '@ionic/angular';
+import { NavParams, ViewController } from '@ionic/angular';
 
 /**
  * Modal to display the TOC of a imscp.
  */
-@IonicPage({ segment: 'addon-mod-imscp-toc-modal' })
 @Component({
     selector: 'page-addon-mod-imscp-toc',
     templateUrl: 'toc.html'

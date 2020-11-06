@@ -13,14 +13,12 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage } from '@ionic/angular';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreCoursesProvider } from '../../providers/courses';
 
 /**
  * Page that allows searching for courses.
  */
-@IonicPage({ segment: 'core-courses-search' })
 @Component({
     selector: 'page-core-courses-search',
     templateUrl: 'search.html',

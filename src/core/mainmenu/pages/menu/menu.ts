@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CoreApp } from '@services/app';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreEvents } from '@singletons/events';
@@ -26,7 +26,6 @@ import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/hel
 /**
  * Page that displays the main menu of the app.
  */
-@IonicPage({segment: 'core-mainmenu'})
 @Component({
     selector: 'page-core-mainmenu',
     templateUrl: 'menu.html',

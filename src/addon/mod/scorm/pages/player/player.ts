@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IonicPage, NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -28,7 +28,6 @@ import { AddonModScormDataModel12 } from '../../classes/data-model-12';
 /**
  * Page that allows playing a SCORM.
  */
-@IonicPage({ segment: 'addon-mod-scorm-player' })
 @Component({
     selector: 'page-addon-mod-scorm-player',
     templateUrl: 'player.html',

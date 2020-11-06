@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 
 /**
  * Page that displays the list of competencies of a course.
  */
-@IonicPage({ segment: 'addon-competency-coursecompetencies' })
 @Component({
     selector: 'page-addon-competency-coursecompetencies',
     templateUrl: 'coursecompetencies.html',

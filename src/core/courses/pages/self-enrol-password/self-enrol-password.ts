@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, ViewController } from '@ionic/angular';
+import { ViewController } from '@ionic/angular';
 import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
@@ -21,7 +21,6 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 /**
  * Page that displays a form to enter a password to self enrol in a course.
  */
-@IonicPage({ segment: 'core-courses-self-enrol-password' })
 @Component({
     selector: 'page-core-courses-self-enrol-password',
     templateUrl: 'self-enrol-password.html',

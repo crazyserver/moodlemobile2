@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavParams } from '@ionic/angular';
+import { NavParams } from '@ionic/angular';
 import { AddonModScormIndexComponent } from '../../components/index/index';
 
 /**
  * Page that displays the SCORM entry page.
  */
-@IonicPage({ segment: 'addon-mod-scorm-index' })
 @Component({
     selector: 'page-addon-mod-scorm-index',
     templateUrl: 'index.html',

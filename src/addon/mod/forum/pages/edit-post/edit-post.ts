@@ -14,7 +14,7 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { IonicPage, ViewController, NavParams } from '@ionic/angular';
+import { ViewController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreSitesProvider } from '@services/sites';
@@ -25,7 +25,6 @@ import { AddonModForumHelperProvider } from '../../providers/helper';
 /**
  * Page that displays a form to edit discussion post.
  */
-@IonicPage({ segment: 'addon-mod-edit-post' })
 @Component({
     selector: 'addon-mod-forum-edit-post',
     templateUrl: 'addon-mod-forum-edit-post.html',
