@@ -24,7 +24,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreRatingProvider } from './rating';
 import { CoreRatingOfflineProvider, CoreRatingItemSet } from './offline';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 
 /**
  * Service to sync ratings.
@@ -36,7 +36,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
 
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,
-            private eventsProvider: CoreEventsProvider,
+
 
             sitesProvider: CoreSitesProvider,
             syncProvider: CoreSyncProvider,
@@ -78,7 +78,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
                 return promise.then((result) => {
                     if (result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(CoreRatingSyncProvider.SYNCED_EVENT, {
+                        CoreEvents.trigger(CoreRatingSyncProvider.SYNCED_EVENT, {
                             ...itemSet,
                             warnings: result.warnings
                         }, siteId);

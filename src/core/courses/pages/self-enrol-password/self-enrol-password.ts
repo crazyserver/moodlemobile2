@@ -14,7 +14,7 @@
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, ViewController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 
@@ -31,7 +31,7 @@ export class CoreCoursesSelfEnrolPasswordPage {
     @ViewChild('enrolPasswordForm') formElement: ElementRef;
 
     constructor(protected viewCtrl: ViewController,
-            protected eventsProvider: CoreEventsProvider,
+
             protected sitesProvider: CoreSitesProvider,
             protected domUtils: CoreDomUtilsProvider) { }
 

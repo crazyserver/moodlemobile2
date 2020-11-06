@@ -21,7 +21,7 @@ import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreUrlUtilsProvider } from '@services/utils/url';
 import { CoreUtilsProvider } from '@services/utils/utils';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreEditorOfflineProvider } from '../../providers/editor-offline';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -115,7 +115,6 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
             protected filepoolProvider: CoreFilepoolProvider,
             @Optional() protected content: Content,
             elementRef: ElementRef,
-            protected events: CoreEventsProvider,
             protected utils: CoreUtilsProvider,
             protected platform: Platform,
             protected editorOffline: CoreEditorOfflineProvider) {
@@ -180,7 +179,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
             });
         }, 750);
 
-        this.keyboardObs = this.events.on(CoreEventsProvider.KEYBOARD_CHANGE, (kbHeight) => {
+        this.keyboardObs = CoreEvents.on(CoreEvents.KEYBOARD_CHANGE, (kbHeight) => {
             this.kbHeight = kbHeight;
             this.maximizeEditorSize();
         });
@@ -878,7 +877,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
      */
     protected deleteDraftOnSubmitOrCancel(): void {
 
-        this.resetObs = this.events.on(CoreEventsProvider.FORM_ACTION, async (data) => {
+        this.resetObs = CoreEvents.on(CoreEvents.FORM_ACTION, async (data) => {
             const form = this.element.closest('form');
 
             if (data.form && form && data.form == form) {

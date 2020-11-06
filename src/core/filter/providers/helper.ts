@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterDelegate } from './delegate';
@@ -47,7 +47,7 @@ export class CoreFilterHelperProvider {
     } = {};
 
     constructor(
-            eventsProvider: CoreEventsProvider,
+
             protected appProvider: CoreAppProvider,
             protected sitesProvider: CoreSitesProvider,
             protected filterDelegate: CoreFilterDelegate,
@@ -57,11 +57,11 @@ export class CoreFilterHelperProvider {
 
         this.logger = CoreLogger.getInstance('CoreFilterHelperProvider');
 
-        eventsProvider.on(CoreEventsProvider.WS_CACHE_INVALIDATED, (data) => {
+        CoreEvents.on(CoreEvents.WS_CACHE_INVALIDATED, (data) => {
             delete this.moduleContextsCache[data.siteId];
         });
 
-        eventsProvider.on(CoreEventsProvider.SITE_STORAGE_DELETED, (data) => {
+        CoreEvents.on(CoreEvents.SITE_STORAGE_DELETED, (data) => {
             delete this.moduleContextsCache[data.siteId];
         });
     }

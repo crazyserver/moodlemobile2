@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 
@@ -74,7 +74,7 @@ export interface AddonWorkshopAssessmentStrategyHandler extends CoreDelegateHand
      protected handlerNameProperty = 'strategyName';
 
      constructor(protected protected sitesProvider: CoreSitesProvider,
-             protected eventsProvider: CoreEventsProvider) {
+            ) {
          super('AddonWorkshopAssessmentStrategyDelegate', loggerProvider, sitesProvider, eventsProvider);
      }
 

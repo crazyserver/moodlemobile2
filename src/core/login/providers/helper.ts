@@ -18,7 +18,7 @@ import { NavController, NavOptions } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreApp, CoreStoreConfig } from '@services/app';
 import { CoreConfigProvider } from '@services/config';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreInitDelegate } from '@services/init';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreLoginSiteInfo } from '@services/sites';
@@ -94,7 +94,7 @@ export class CoreLoginHelperProvider {
             private wsProvider: CoreWSProvider,
             private translate: TranslateService,
             private textUtils: CoreTextUtilsProvider,
-            private eventsProvider: CoreEventsProvider,
+
             private utils: CoreUtilsProvider,
             private urlUtils: CoreUrlUtilsProvider,
             private configProvider: CoreConfigProvider,
@@ -105,7 +105,7 @@ export class CoreLoginHelperProvider {
             ) {
         this.logger = CoreLogger.getInstance('CoreLoginHelper');
 
-        this.eventsProvider.on(CoreEventsProvider.MAIN_MENU_OPEN, () => {
+        CoreEvents.on(CoreEvents.MAIN_MENU_OPEN, () => {
             /* If there is any page pending to be opened, do it now. Don't open pages stored more than 5 seconds ago, probably
                the function to open the page was called when it shouldn't. */
             if (this.pageToLoad && Date.now() - this.pageToLoad.time < 5000) {
@@ -691,7 +691,7 @@ export class CoreLoginHelperProvider {
         }
 
         if (site.isLoggedOut()) {
-            this.eventsProvider.trigger(CoreEventsProvider.SESSION_EXPIRED, {
+            CoreEvents.trigger(CoreEvents.SESSION_EXPIRED, {
                 pageName: pageName,
                 params: params
             }, site.getId());
@@ -808,7 +808,7 @@ export class CoreLoginHelperProvider {
             // Use the openCourse function.
             this.courseProvider.openCourse(undefined, params.course, params);
         } else {
-            this.eventsProvider.trigger(CoreEventsProvider.LOAD_PAGE_MAIN_MENU, { redirectPage: page, redirectParams: params });
+            CoreEvents.trigger(CoreEvents.LOAD_PAGE_MAIN_MENU, { redirectPage: page, redirectParams: params });
         }
     }
 

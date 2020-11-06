@@ -23,7 +23,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 import { AddonModDataOfflineProvider, AddonModDataOfflineAction } from './offline';
 import { AddonModDataProvider } from './data';
 import { AddonModDataHelperProvider } from './helper';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreCourseProvider } from '@core/course/providers/course';
 import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
@@ -41,7 +41,7 @@ export class AddonModDataSyncProvider extends CoreSyncBaseProvider {
 
     constructor(protected sitesProvider: CoreSitesProvider, protected
             protected appProvider: CoreAppProvider, private dataOffline: AddonModDataOfflineProvider,
-            private eventsProvider: CoreEventsProvider,  private dataProvider: AddonModDataProvider,
+             private dataProvider: AddonModDataProvider,
             protected translate: TranslateService, private utils: CoreUtilsProvider, courseProvider: CoreCourseProvider,
             syncProvider: CoreSyncProvider, protected textUtils: CoreTextUtilsProvider, timeUtils: CoreTimeUtilsProvider,
             private dataHelper: AddonModDataHelperProvider, private logHelper: CoreCourseLogHelperProvider,
@@ -102,7 +102,7 @@ export class AddonModDataSyncProvider extends CoreSyncBaseProvider {
                 promises[action.dataid].then((result) => {
                     if (result && result.updated) {
                         // Sync done. Send event.
-                        this.eventsProvider.trigger(AddonModDataSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModDataSyncProvider.AUTO_SYNCED, {
                             dataId: action.dataid,
                             warnings: result.warnings
                         }, siteId);
@@ -380,7 +380,7 @@ export class AddonModDataSyncProvider extends CoreSyncBaseProvider {
             }
 
             // Sync done. Send event.
-            this.eventsProvider.trigger(AddonModDataSyncProvider.AUTO_SYNCED, {
+            CoreEvents.trigger(AddonModDataSyncProvider.AUTO_SYNCED, {
                 dataId: data.id,
                 entryId: entryId,
                 offlineEntryId: offlineId,

@@ -13,7 +13,7 @@
 // limitations under the License.
 import { Component, Input, OnInit, Injector } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { AddonModDataProvider } from '../../providers/data';
 import { AddonModDataHelperProvider } from '../../providers/helper';
 import { AddonModDataOfflineProvider } from '../../providers/offline';
@@ -45,7 +45,7 @@ export class AddonModDataActionComponent implements OnInit {
     tagsEnabled: boolean;
 
     constructor(protected injector: Injector, protected dataProvider: AddonModDataProvider,
-            protected dataOffline: AddonModDataOfflineProvider, protected eventsProvider: CoreEventsProvider,
+            protected dataOffline: AddonModDataOfflineProvider,
             sitesProvider: CoreSitesProvider, protected userProvider: CoreUserProvider, private navCtrl: NavController,
             protected linkHelper: CoreContentLinksHelperProvider, private dataHelper: AddonModDataHelperProvider,
             private tagProvider: CoreTagProvider) {
@@ -127,7 +127,7 @@ export class AddonModDataActionComponent implements OnInit {
             // Found. Just delete the action.
             return this.dataOffline.deleteEntry(dataId, entryId, 'delete', this.siteId);
         }).then(() => {
-            this.eventsProvider.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId: dataId, entryId: entryId}, this.siteId);
+            CoreEvents.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId: dataId, entryId: entryId}, this.siteId);
         });
     }
 }

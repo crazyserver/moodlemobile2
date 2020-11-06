@@ -27,7 +27,7 @@ import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CoreConfigProvider } from '@services/config';
 import { CoreAppProvider } from '@services/app';
 import { CoreConstants } from '@core/constants';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
 
@@ -54,7 +54,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
     constructor(private notificationsProvider: AddonNotificationsProvider, private domUtils: CoreDomUtilsProvider,
             private settingsHelper: CoreSettingsHelper, private userProvider: CoreUserProvider,
             private navCtrl: NavController, private messageOutputDelegate: AddonMessageOutputDelegate,
-            appProvider: CoreAppProvider, private configProvider: CoreConfigProvider, private eventsProvider: CoreEventsProvider,
+            appProvider: CoreAppProvider, private configProvider: CoreConfigProvider,
             private localNotificationsProvider: CoreLocalNotificationsProvider, private sitesProvider: CoreSitesProvider,
             @Optional() private svComponent: CoreSplitViewComponent) {
 
@@ -254,7 +254,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
     changeNotificationSound(enabled: boolean): void {
         this.configProvider.set(CoreConstants.SETTINGS_NOTIFICATION_SOUND, enabled ? 1 : 0).finally(() => {
             const siteId = this.sitesProvider.getCurrentSiteId();
-            this.eventsProvider.trigger(CoreEventsProvider.NOTIFICATION_SOUND_CHANGED, {enabled}, siteId);
+            CoreEvents.trigger(CoreEvents.NOTIFICATION_SOUND_CHANGED, {enabled}, siteId);
             this.localNotificationsProvider.rescheduleAll();
         });
     }

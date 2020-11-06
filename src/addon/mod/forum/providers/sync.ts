@@ -20,7 +20,7 @@ import { CoreCourseLogHelperProvider } from '@core/course/providers/log-helper';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
 import { CoreAppProvider } from '@services/app';
 import { CoreLogger } from '@singletons/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreGroupsProvider } from '@services/groups';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -46,7 +46,7 @@ export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,
             courseProvider: CoreCourseProvider,
-            private eventsProvider: CoreEventsProvider,
+
             private groupsProvider: CoreGroupsProvider,
 
             sitesProvider: CoreSitesProvider,
@@ -104,7 +104,7 @@ export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
                 promises[discussion.forumid].then((result) => {
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModForumSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModForumSyncProvider.AUTO_SYNCED, {
                             forumId: discussion.forumid,
                             userId: discussion.userid,
                             warnings: result.warnings
@@ -132,7 +132,7 @@ export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
                 promises[reply.discussionid].then((result) => {
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModForumSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModForumSyncProvider.AUTO_SYNCED, {
                             forumId: reply.forumid,
                             discussionId: reply.discussionid,
                             userId: reply.userid,

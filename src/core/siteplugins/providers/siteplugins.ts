@@ -23,7 +23,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUtilsProvider, PromiseDefer } from '@services/utils/utils';
 import { CoreConstants } from '@core/constants';
 import { CoreCoursesProvider } from '@core/courses/providers/courses';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 
 /**
  * Handler of a site plugin.
@@ -73,18 +73,18 @@ export class CoreSitePluginsProvider {
             private filepoolProvider: CoreFilepoolProvider,
             private coursesProvider: CoreCoursesProvider,
             private textUtils: CoreTextUtilsProvider,
-            private eventsProvider: CoreEventsProvider
+
             ) {
         this.logger = CoreLogger.getInstance('CoreUserProvider');
 
-        const observer = this.eventsProvider.on(CoreEventsProvider.SITE_PLUGINS_LOADED, () => {
+        const observer = CoreEvents.on(CoreEvents.SITE_PLUGINS_LOADED, () => {
             this.sitePluginsFinishedLoading = true;
             observer && observer.off();
         });
 
         // Initialize deferred at start and on logout.
         this.fetchPluginsDeferred = this.utils.promiseDefer();
-        eventsProvider.on(CoreEventsProvider.LOGOUT, () => {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             this.fetchPluginsDeferred = this.utils.promiseDefer();
         });
     }

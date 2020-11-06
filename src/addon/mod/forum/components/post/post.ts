@@ -22,7 +22,7 @@ import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploa
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { AddonModForumProvider } from '../../providers/forum';
 import { AddonModForumHelperProvider } from '../../providers/helper';
@@ -83,7 +83,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
             @Optional() private content: Content,
             protected popoverCtrl: PopoverController,
             protected modalCtrl: ModalController,
-            protected eventsProvider: CoreEventsProvider,
+
             protected sitesProvider: CoreSitesProvider) {
         this.onPostChange = new EventEmitter<void>();
         this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
@@ -133,7 +133,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
                     post: this.post
                 };
 
-                this.eventsProvider.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data,
+                CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data,
                     this.sitesProvider.getCurrentSiteId());
 
                 this.domUtils.showToast('addon.mod_forum.deletedpost', true);

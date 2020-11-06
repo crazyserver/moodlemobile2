@@ -14,7 +14,7 @@
 
 import { NgModule } from '@angular/core';
 import { AddonRemoteThemesProvider } from './providers/remotethemes';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreInitDelegate } from '@services/init';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
@@ -34,7 +34,7 @@ export const ADDON_REMOTETHEMES_PROVIDERS: any[] = [
     ]
 })
 export class AddonRemoteThemesModule {
-    constructor(initDelegate: CoreInitDelegate, remoteThemesProvider: AddonRemoteThemesProvider, eventsProvider: CoreEventsProvider,
+    constructor(initDelegate: CoreInitDelegate, remoteThemesProvider: AddonRemoteThemesProvider,
             sitesProvider: CoreSitesProvider) {
 
         const logger = CoreLogger.getInstance('AddonRemoteThemesModule');
@@ -57,7 +57,7 @@ export class AddonRemoteThemesModule {
         let addingSite;
 
         // When a new site is added to the app, add its styles.
-        eventsProvider.on(CoreEventsProvider.SITE_ADDED, (data) => {
+        CoreEvents.on(CoreEvents.SITE_ADDED, (data) => {
             addingSite = data.siteId;
 
             remoteThemesProvider.addSite(data.siteId).catch((error) => {
@@ -76,7 +76,7 @@ export class AddonRemoteThemesModule {
         });
 
         // Update styles when current site is updated.
-        eventsProvider.on(CoreEventsProvider.SITE_UPDATED, (data) => {
+        CoreEvents.on(CoreEvents.SITE_UPDATED, (data) => {
             if (data.siteId === sitesProvider.getCurrentSiteId()) {
                 remoteThemesProvider.load(data.siteId).catch((error) => {
                     logger.error('Error loading site after site update', error);
@@ -85,30 +85,30 @@ export class AddonRemoteThemesModule {
         });
 
         // Enable styles of current site on login.
-        eventsProvider.on(CoreEventsProvider.LOGIN, (data) => {
+        CoreEvents.on(CoreEvents.LOGIN, (data) => {
             remoteThemesProvider.unloadTmpStyles();
             remoteThemesProvider.enable(data.siteId);
         });
 
         // Disable added styles on logout.
-        eventsProvider.on(CoreEventsProvider.LOGOUT, (data) => {
+        CoreEvents.on(CoreEvents.LOGOUT, (data) => {
             remoteThemesProvider.clear();
         });
 
         // Remove site styles when a site is deleted.
-        eventsProvider.on(CoreEventsProvider.SITE_DELETED, (site) => {
+        CoreEvents.on(CoreEvents.SITE_DELETED, (site) => {
             remoteThemesProvider.removeSite(site.id);
         });
 
         // Load temporary styles when site config is checked in login.
-        eventsProvider.on(CoreEventsProvider.LOGIN_SITE_CHECKED, (data) => {
+        CoreEvents.on(CoreEvents.LOGIN_SITE_CHECKED, (data) => {
             remoteThemesProvider.loadTmpStylesForSiteConfig(data.config).catch((error) => {
                 logger.error('Error loading tmp styles', error);
             });
         });
 
         // Unload temporary styles when site config is "unchecked" in login.
-        eventsProvider.on(CoreEventsProvider.LOGIN_SITE_UNCHECKED, (data) => {
+        CoreEvents.on(CoreEvents.LOGIN_SITE_UNCHECKED, (data) => {
             if (data.siteId && data.siteId === addingSite) {
                 // The tmp styles are from a site that is being added permanently.
                 // Wait for the final site styles to be loaded before removing the tmp styles so there is no blink effect.

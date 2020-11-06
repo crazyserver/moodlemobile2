@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreGroupsProvider } from '@services/groups';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
@@ -95,7 +95,7 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
-            courseProvider: CoreCourseProvider, private eventsProvider: CoreEventsProvider,
+            courseProvider: CoreCourseProvider,
             private wikiProvider: AddonModWikiProvider, private wikiOfflineProvider: AddonModWikiOfflineProvider,
             private utils: CoreUtilsProvider, private groupsProvider: CoreGroupsProvider, timeUtils: CoreTimeUtilsProvider,
             private logHelper: CoreCourseLogHelperProvider) {
@@ -172,7 +172,7 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
 
                     if (result && result.updated) {
                         // Sync successful, send event.
-                        this.eventsProvider.trigger(AddonModWikiSyncProvider.AUTO_SYNCED, {
+                        CoreEvents.trigger(AddonModWikiSyncProvider.AUTO_SYNCED, {
                             siteId: siteId,
                             subwikiId: subwiki.subwikiid,
                             wikiId: subwiki.wikiid,

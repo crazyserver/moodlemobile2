@@ -14,7 +14,7 @@
 
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSite } from '@classes/site';
 
 export interface CoreDelegateHandler {
@@ -100,11 +100,8 @@ export class CoreDelegate {
      * @param delegateName Delegate name used for logging purposes.
      * @param loggerProvider CoreLoggerProvider instance, cannot be directly injected.
      * @param sitesProvider CoreSitesProvider instance, cannot be directly injected.
-     * @param eventsProvider CoreEventsProvider instance, cannot be directly injected.
-     *                       If not set, no events will be fired.
      */
-    constructor(delegateName: string, protected protected sitesProvider: CoreSitesProvider,
-            protected eventsProvider?: CoreEventsProvider) {
+    constructor(delegateName: string, protected protected sitesProvider: CoreSitesProvider) {
         this.logger = CoreLogger.getInstance(delegateName);
 
         this.handlersInitPromise = new Promise((resolve): void => {
@@ -113,9 +110,9 @@ export class CoreDelegate {
 
         if (eventsProvider) {
             // Update handlers on this cases.
-            eventsProvider.on(CoreEventsProvider.LOGIN, this.updateHandlers.bind(this));
-            eventsProvider.on(CoreEventsProvider.SITE_UPDATED, this.updateHandlers.bind(this));
-            eventsProvider.on(CoreEventsProvider.SITE_PLUGINS_LOADED, this.updateHandlers.bind(this));
+            CoreEvents.on(CoreEvents.LOGIN, this.updateHandlers.bind(this));
+            CoreEvents.on(CoreEvents.SITE_UPDATED, this.updateHandlers.bind(this));
+            CoreEvents.on(CoreEvents.SITE_PLUGINS_LOADED, this.updateHandlers.bind(this));
         }
     }
 

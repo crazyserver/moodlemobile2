@@ -19,7 +19,7 @@ import { CoreCoursesProvider } from '@core/courses/providers/courses';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 /**
@@ -159,11 +159,11 @@ export class CoreUserDelegate extends CoreDelegate {
         }} = {};
 
     constructor(protected protected sitesProvider: CoreSitesProvider,
-            private coursesProvider: CoreCoursesProvider, protected eventsProvider: CoreEventsProvider,
+            private coursesProvider: CoreCoursesProvider,
             protected utils: CoreUtilsProvider) {
         super('CoreUserDelegate', loggerProvider, sitesProvider, eventsProvider);
 
-        eventsProvider.on(CoreUserDelegate.UPDATE_HANDLER_EVENT, (data) => {
+        CoreEvents.on(CoreUserDelegate.UPDATE_HANDLER_EVENT, (data) => {
             if (data && data.handler && this.userHandlers[data.userId]) {
                 const userData = this.userHandlers[data.userId],
                     handler = userData.handlers.find((userHandler) => {

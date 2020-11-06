@@ -61,7 +61,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
 
         if (this.syncEventName) {
             // Refresh data if this discussion is synchronized automatically.
-            this.syncObserver = this.eventsProvider.on(this.syncEventName, (data) => {
+            this.syncObserver = CoreEvents.on(this.syncEventName, (data) => {
                 this.autoSyncEventReceived(data);
             }, this.siteId);
         }

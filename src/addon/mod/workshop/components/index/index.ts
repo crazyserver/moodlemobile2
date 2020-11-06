@@ -76,12 +76,12 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
         super(injector, content);
 
         // Listen to submission and assessment changes.
-        this.obsSubmissionChanged = this.eventsProvider.on(AddonModWorkshopProvider.SUBMISSION_CHANGED, (data) => {
+        this.obsSubmissionChanged = CoreEvents.on(AddonModWorkshopProvider.SUBMISSION_CHANGED, (data) => {
             this.eventReceived(data);
         }, this.siteId);
 
         // Listen to submission and assessment changes.
-        this.obsAssessmentSaved = this.eventsProvider.on(AddonModWorkshopProvider.ASSESSMENT_SAVED, (data) => {
+        this.obsAssessmentSaved = CoreEvents.on(AddonModWorkshopProvider.ASSESSMENT_SAVED, (data) => {
             this.eventReceived(data);
         }, this.siteId);
 
@@ -91,7 +91,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
         });
 
         // Refresh workshop on sync.
-        this.syncObserver = this.eventsProvider.on(AddonModWorkshopSyncProvider.AUTO_SYNCED, (data) => {
+        this.syncObserver = CoreEvents.on(AddonModWorkshopSyncProvider.AUTO_SYNCED, (data) => {
             // Update just when all database is synced.
             this.eventReceived(data);
         }, this.siteId);

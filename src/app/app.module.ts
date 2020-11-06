@@ -48,7 +48,7 @@ import { CoreMimetypeUtilsProvider } from '@services/utils/mimetype';
 import { CoreInitDelegate } from '@services/init';
 import { CoreFileProvider } from '@services/file';
 import { CoreWSProvider } from '@services/ws';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesFactoryProvider } from '@services/sites-factory';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
@@ -369,7 +369,7 @@ export class AppModule {
             config: Config,
             sitesProvider: CoreSitesProvider,
             fileProvider: CoreFileProvider,
-            private eventsProvider: CoreEventsProvider,
+
             cronDelegate: CoreCronDelegate,
             siteInfoCronHandler: CoreSiteInfoCronHandler,
             injector: Injector,
@@ -614,7 +614,7 @@ export class AppModule {
             };
 
             // Recalculate size when screen rotates.
-            this._orientationObs = eventsProvider.on(CoreEventsProvider.ORIENTATION_CHANGE, this.resize.bind(this));
+            this._orientationObs = CoreEvents.on(CoreEvents.ORIENTATION_CHANGE, this.resize.bind(this));
         };
 
         // tslint:disable: typedef

@@ -19,7 +19,7 @@ import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
 import { CoreUtilsProvider } from '@services/utils/utils';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreFileSessionProvider } from '@services/file-session';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploader';
@@ -79,7 +79,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
 
     constructor(private translate: TranslateService,
             private injector: Injector,
-            private eventsProvider: CoreEventsProvider,
+
             private fileSessionProvider: CoreFileSessionProvider,
             private syncProvider: CoreSyncProvider,
             private domUtils: CoreDomUtilsProvider,
@@ -129,7 +129,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
             }
 
             this.load().then(() => {
-                this.obsInvalidated = this.eventsProvider.on(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED,
+                this.obsInvalidated = CoreEvents.on(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED,
                         this.load.bind(this), this.sitesProvider.getCurrentSiteId());
             }).finally(() => {
                 this.assessmentStrategyLoaded = true;
@@ -320,7 +320,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
             return Promise.all(promises).catch(() => {
                 // Ignore errors.
             }).finally(() => {
-                this.eventsProvider.trigger(AddonModWorkshopProvider.ASSESSMENT_SAVED, {
+                CoreEvents.trigger(AddonModWorkshopProvider.ASSESSMENT_SAVED, {
                     workshopId: this.workshop.id,
                     assessmentId: this.assessmentId,
                     userId: this.sitesProvider.getCurrentSiteUserId(),

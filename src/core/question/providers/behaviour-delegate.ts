@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreLogger } from '@singletons/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
 import { CoreQuestionState } from './question';
@@ -63,7 +63,7 @@ export class CoreQuestionBehaviourDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';
 
-    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(sitesProvider: CoreSitesProvider,
             protected questionDelegate: CoreQuestionDelegate, protected defaultHandler: CoreQuestionBehaviourDefaultHandler) {
         super('CoreQuestionBehaviourDelegate', logger, sitesProvider, eventsProvider);
     }

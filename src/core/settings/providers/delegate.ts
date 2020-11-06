@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
@@ -76,10 +76,10 @@ export class CoreSettingsDelegate extends CoreDelegate {
     protected siteHandlers: CoreSettingsHandlerData[] = []; // Handlers to return.
 
     constructor(protected protected sitesProvider: CoreSitesProvider,
-            protected eventsProvider: CoreEventsProvider, protected utils: CoreUtilsProvider) {
+            protected utils: CoreUtilsProvider) {
         super('CoreSettingsDelegate', loggerProvider, sitesProvider, eventsProvider);
 
-        eventsProvider.on(CoreEventsProvider.LOGOUT, this.clearSiteHandlers.bind(this));
+        CoreEvents.on(CoreEvents.LOGOUT, this.clearSiteHandlers.bind(this));
     }
 
     /**

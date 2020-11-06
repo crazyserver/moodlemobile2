@@ -20,7 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { CoreDbProvider } from './db';
 import { CoreLoggerProvider } from './logger';
-import { CoreEventsProvider } from './events';
+import { CoreEvents } from '@singletons/events';
 import { SQLiteDB, SQLiteDBTableSchema } from '@classes/sqlitedb';
 import { CoreConstants } from '@core/constants';
 import { makeSingleton } from '@singletons/core.singletons';
@@ -173,8 +173,6 @@ export class CoreAppProvider {
             private keyboard: Keyboard,
             private appCtrl: App,
             private network: Network,
-
-            private events: CoreEventsProvider,
             zone: NgZone,
             private menuCtrl: MenuController,
             private statusBar: StatusBar,
@@ -193,7 +191,7 @@ export class CoreAppProvider {
                 this.setKeyboardShown(true);
                 // Error on iOS calculating size.
                 // More info: https://github.com/ionic-team/ionic-plugin-keyboard/issues/276 .
-                events.trigger(CoreEventsProvider.KEYBOARD_CHANGE, data.keyboardHeight);
+                events.trigger(CoreEvents.KEYBOARD_CHANGE, data.keyboardHeight);
             });
         });
         this.keyboard.onKeyboardHide().subscribe((data) => {
@@ -201,7 +199,7 @@ export class CoreAppProvider {
             zone.run(() => {
                 document.body.classList.remove('keyboard-is-open');
                 this.setKeyboardShown(false);
-                events.trigger(CoreEventsProvider.KEYBOARD_CHANGE, 0);
+                events.trigger(CoreEvents.KEYBOARD_CHANGE, 0);
             });
         });
         this.keyboard.onKeyboardWillShow().subscribe((data) => {
@@ -593,7 +591,7 @@ export class CoreAppProvider {
     setMainMenuOpen(id: number, open: boolean): void {
         if (open) {
             this.mainMenuOpen = id;
-            this.events.trigger(CoreEventsProvider.MAIN_MENU_OPEN);
+            CoreEvents.trigger(CoreEvents.MAIN_MENU_OPEN);
         } else if (this.mainMenuOpen == id) {
             delete this.mainMenuOpen;
         }

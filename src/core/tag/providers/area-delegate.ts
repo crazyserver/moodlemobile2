@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, Injector } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
@@ -52,7 +52,7 @@ export class CoreTagAreaDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';
 
-    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider) {
+    constructor(sitesProvider: CoreSitesProvider) {
         super('CoreTagAreaDelegate', logger, sitesProvider, eventsProvider);
     }
 

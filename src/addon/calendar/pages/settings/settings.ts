@@ -15,7 +15,7 @@
 import { Component } from '@angular/core';
 import { IonicPage } from '@ionic/angular';
 import { AddonCalendarProvider } from '../../providers/calendar';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 
 /**
@@ -30,7 +30,7 @@ export class AddonCalendarSettingsPage {
 
     defaultTime = 0;
 
-    constructor(private calendarProvider: AddonCalendarProvider, private eventsProvider: CoreEventsProvider,
+    constructor(private calendarProvider: AddonCalendarProvider,
         private sitesProvider: CoreSitesProvider) { }
 
     /**
@@ -49,7 +49,7 @@ export class AddonCalendarSettingsPage {
      */
     updateDefaultTime(newTime: number): void {
         this.calendarProvider.setDefaultNotificationTime(newTime);
-        this.eventsProvider.trigger(AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_CHANGED, { time: newTime },
+        CoreEvents.trigger(AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_CHANGED, { time: newTime },
             this.sitesProvider.getCurrentSiteId());
     }
 }

@@ -77,7 +77,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
         super(injector, content);
 
         // Listen for form submit events.
-        this.submitObserver = this.eventsProvider.on(AddonModFeedbackProvider.FORM_SUBMITTED, (data) => {
+        this.submitObserver = CoreEvents.on(AddonModFeedbackProvider.FORM_SUBMITTED, (data) => {
             if (this.feedback && data.feedbackId == this.feedback.id) {
                 this.tabsLoaded['analysis'] = false;
                 this.tabsLoaded['overview'] = false;

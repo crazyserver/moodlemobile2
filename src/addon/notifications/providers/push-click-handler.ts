@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreTextUtils } from '@services/utils/text';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CorePushNotificationsClickHandler } from '@core/pushnotifications/providers/delegate';
@@ -30,7 +30,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
     featureName = 'CoreMainMenuDelegate_AddonNotifications';
 
     constructor(private utils: CoreUtilsProvider, private notificationsProvider: AddonNotificationsProvider,
-            private linkHelper: CoreContentLinksHelperProvider, private eventsProvider: CoreEventsProvider) {}
+            private linkHelper: CoreContentLinksHelperProvider,) {}
 
     /**
      * Check if a notification click is handled by this handler.
@@ -44,7 +44,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
             const notifId = notification.savedmessageid || notification.id;
 
             this.notificationsProvider.markNotificationRead(notifId, notification.site).then(() => {
-                this.eventsProvider.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, notification.site);
+                CoreEvents.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, notification.site);
             }).catch(() => {
                 // Ignore errors.
             });

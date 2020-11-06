@@ -21,7 +21,7 @@ import { CoreCourseModulePrefetch } from '@core/course/providers/module-prefetch
 import { CoreConstants } from '@core/constants';
 import { CoreDomUtils } from '@services/utils/dom';
 import { Translate } from '@singletons/core.singletons';
-import { CoreEvents, CoreEventsProvider, CoreEventObserver } from '@services/events';
+import { CoreEvents, CoreEventObserver } from '@singletons/events';
 import { CoreCourseHelper } from '@core/course/providers/helper';
 
 /**
@@ -64,7 +64,7 @@ export class AddonStorageManagerCoursesStoragePage {
     async ngOnInit(): Promise<void> {
         this.userCourses = await CoreCourses.instance.getUserCourses();
         this.courseStatusObserver = CoreEvents.instance.on(
-            CoreEventsProvider.COURSE_STATUS_CHANGED,
+            CoreEvents.COURSE_STATUS_CHANGED,
             ({ courseId, status }) => this.onCourseUpdated(courseId, status),
         );
 

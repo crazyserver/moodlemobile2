@@ -15,7 +15,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider } from '@services/app';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
@@ -58,7 +58,7 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,
-            private eventsProvider: CoreEventsProvider, timeUtils: CoreTimeUtilsProvider,
+            timeUtils: CoreTimeUtilsProvider,
             private quizProvider: AddonModQuizProvider, private quizOfflineProvider: AddonModQuizOfflineProvider,
             protected prefetchHandler: AddonModQuizPrefetchHandler, private questionProvider: CoreQuestionProvider,
             private questionDelegate: CoreQuestionDelegate, private logHelper: CoreCourseLogHelperProvider,
@@ -245,7 +245,7 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
                         }).then((data) => {
                             if (typeof data != 'undefined') {
                                 // Sync successful. Send event.
-                                this.eventsProvider.trigger(AddonModQuizSyncProvider.AUTO_SYNCED, {
+                                CoreEvents.trigger(AddonModQuizSyncProvider.AUTO_SYNCED, {
                                     quizId: quiz.id,
                                     attemptFinished: data.attemptFinished,
                                     warnings: data.warnings

@@ -79,7 +79,7 @@ export class CoreEventsProvider {
 
     /**
      * Listen for a certain event. To stop listening to the event:
-     * let observer = eventsProvider.on('something', myCallBack);
+     * let observer = CoreEvents.on('something', myCallBack);
      * ...
      * observer.off();
      *
@@ -126,7 +126,7 @@ export class CoreEventsProvider {
 
     /**
      * Listen for several events. To stop listening to the events:
-     * let observer = eventsProvider.onMultiple(['something', 'another'], myCallBack);
+     * let observer = CoreEvents.onMultiple(['something', 'another'], myCallBack);
      * ...
      * observer.off();
      *

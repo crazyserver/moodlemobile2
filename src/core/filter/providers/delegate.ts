@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Injectable, ViewContainerRef } from '@angular/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreFilterFilter, CoreFilterFormatTextOptions } from './filter';
@@ -76,7 +76,7 @@ export class CoreFilterDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreFilterDelegate_';
     protected handlerNameProperty = 'filterName';
 
-    constructor(protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(protected sitesProvider: CoreSitesProvider,
             protected defaultHandler: CoreFilterDefaultHandler) {
 
         super('CoreFilterDelegate', loggerProvider, sitesProvider, eventsProvider);

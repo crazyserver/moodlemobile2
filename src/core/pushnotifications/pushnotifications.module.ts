@@ -19,7 +19,7 @@ import { CorePushNotificationsDelegate } from './providers/delegate';
 import { CorePushNotificationsRegisterCronHandler } from './providers/register-cron-handler';
 import { CorePushNotificationsUnregisterCronHandler } from './providers/unregister-cron-handler';
 import { CoreCronDelegate } from '@services/cron';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 
@@ -42,7 +42,7 @@ export const CORE_PUSHNOTIFICATIONS_PROVIDERS: any[] = [
     ]
 })
 export class CorePushNotificationsModule {
-    constructor(platform: Platform, pushNotificationsProvider: CorePushNotificationsProvider, eventsProvider: CoreEventsProvider,
+    constructor(platform: Platform, pushNotificationsProvider: CorePushNotificationsProvider,
             localNotificationsProvider: CoreLocalNotificationsProvider,
             cronDelegate: CoreCronDelegate,
             registerCronHandler: CorePushNotificationsRegisterCronHandler,
@@ -59,19 +59,19 @@ export class CorePushNotificationsModule {
             pushNotificationsProvider.registerDevice();
         });
 
-        eventsProvider.on(CoreEventsProvider.NOTIFICATION_SOUND_CHANGED, () => {
+        CoreEvents.on(CoreEvents.NOTIFICATION_SOUND_CHANGED, () => {
             // Notification sound has changed, register the device again to update the sound setting.
             pushNotificationsProvider.registerDevice();
         });
 
         // Register device on Moodle site when login.
-        eventsProvider.on(CoreEventsProvider.LOGIN, () => {
+        CoreEvents.on(CoreEvents.LOGIN, () => {
             pushNotificationsProvider.registerDeviceOnMoodle().catch((error) => {
                 logger.warn('Can\'t register device', error);
             });
         });
 
-        eventsProvider.on(CoreEventsProvider.SITE_DELETED, (site) => {
+        CoreEvents.on(CoreEvents.SITE_DELETED, (site) => {
             pushNotificationsProvider.unregisterDeviceOnMoodle(site).catch((error) => {
                 logger.warn('Can\'t unregister device', error);
             });

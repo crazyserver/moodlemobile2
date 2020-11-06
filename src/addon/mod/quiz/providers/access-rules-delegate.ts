@@ -14,7 +14,7 @@
 
 import { Injectable, Injector } from '@angular/core';
 import { CoreLogger } from '@singletons/logger';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { CoreDelegate, CoreDelegateHandler } from '@classes/delegate';
@@ -107,7 +107,7 @@ export class AddonModQuizAccessRuleDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'ruleName';
 
-    constructor(sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(sitesProvider: CoreSitesProvider,
             protected utils: CoreUtilsProvider) {
         super('AddonModQuizAccessRulesDelegate', logger, sitesProvider, eventsProvider);
     }

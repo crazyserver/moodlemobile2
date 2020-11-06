@@ -17,7 +17,7 @@ import { IonicPage, Segment } from '@ionic/angular';
 import { CoreConstants } from '@core/constants';
 import { CoreConfigProvider } from '@services/config';
 import { CoreFileProvider } from '@services/file';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLangProvider } from '@services/lang';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
@@ -49,7 +49,7 @@ export class CoreSettingsGeneralPage {
 
     constructor(protected configProvider: CoreConfigProvider,
             fileProvider: CoreFileProvider,
-            protected eventsProvider: CoreEventsProvider,
+
             protected langProvider: CoreLangProvider,
             protected domUtils: CoreDomUtilsProvider,
             protected pushNotificationsProvider: CorePushNotificationsProvider,
@@ -141,7 +141,7 @@ export class CoreSettingsGeneralPage {
      */
     languageChanged(): void {
         this.langProvider.changeCurrentLanguage(this.selectedLanguage).finally(() => {
-            this.eventsProvider.trigger(CoreEventsProvider.LANGUAGE_CHANGED, this.selectedLanguage);
+            CoreEvents.trigger(CoreEvents.LANGUAGE_CHANGED, this.selectedLanguage);
         });
     }
 

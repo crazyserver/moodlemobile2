@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreFilepoolProvider } from '@services/filepool';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider, CoreSitesCommonWSOptions, CoreSitesReadingStrategy } from '@services/sites';
@@ -132,7 +132,7 @@ export class AddonModScormProvider {
             private wsProvider: CoreWSProvider, private textUtils: CoreTextUtilsProvider, private utils: CoreUtilsProvider,
             private filepoolProvider: CoreFilepoolProvider, private scormOfflineProvider: AddonModScormOfflineProvider,
             private timeUtils: CoreTimeUtilsProvider, private syncProvider: CoreSyncProvider,
-            private eventsProvider: CoreEventsProvider, private logHelper: CoreCourseLogHelperProvider) {
+            private logHelper: CoreCourseLogHelperProvider) {
         this.logger = CoreLogger.getInstance('AddonModScormProvider');
     }
 
@@ -1542,7 +1542,7 @@ export class AddonModScormProvider {
                 // Tracks have been saved, update cached user data.
                 this.updateUserDataAfterSave(scorm.id, attempt, tracks, {cmId: scorm.coursemodule, siteId});
 
-                this.eventsProvider.trigger(AddonModScormProvider.DATA_SENT_EVENT, {
+                CoreEvents.trigger(AddonModScormProvider.DATA_SENT_EVENT, {
                     scormId: scorm.id,
                     scoId: scoId,
                     attempt: attempt
@@ -1611,7 +1611,7 @@ export class AddonModScormProvider {
                 // Tracks have been saved, update cached user data.
                 this.updateUserDataAfterSave(scorm.id, attempt, tracks, {cmId: scorm.coursemodule});
 
-                this.eventsProvider.trigger(AddonModScormProvider.DATA_SENT_EVENT, {
+                CoreEvents.trigger(AddonModScormProvider.DATA_SENT_EVENT, {
                     scormId: scorm.id,
                     scoId: scoId,
                     attempt: attempt

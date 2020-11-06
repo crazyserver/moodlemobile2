@@ -14,7 +14,7 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonicPage, NavParams, ModalController } from '@ionic/angular';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreSitesProvider, CoreSitesReadingStrategy } from '@services/sites';
 import { CoreSyncProvider } from '@services/sync';
 import { CoreDomUtils } from '@services/utils/dom';
@@ -70,7 +70,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
     constructor(
             navParams: NavParams,
             protected modalCtrl: ModalController,
-            protected eventsProvider: CoreEventsProvider,
+
             protected sitesProvider: CoreSitesProvider,
             protected syncProvider: CoreSyncProvider,
             protected timeUtils: CoreTimeUtilsProvider,
@@ -133,7 +133,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
         });
 
         // Listen for events to update the TOC, navigate through SCOs and go offline.
-        this.tocObserver = this.eventsProvider.on(AddonModScormProvider.UPDATE_TOC_EVENT, (data) => {
+        this.tocObserver = CoreEvents.on(AddonModScormProvider.UPDATE_TOC_EVENT, (data) => {
             if (data.scormId === this.scorm.id) {
                 if (this.offline) {
                     // Wait a bit to make sure data is stored.
@@ -144,19 +144,19 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
             }
         }, this.siteId);
 
-        this.launchNextObserver = this.eventsProvider.on(AddonModScormProvider.LAUNCH_NEXT_SCO_EVENT, (data) => {
+        this.launchNextObserver = CoreEvents.on(AddonModScormProvider.LAUNCH_NEXT_SCO_EVENT, (data) => {
             if (data.scormId === this.scorm.id && this.nextSco) {
                 this.loadSco(this.nextSco);
             }
         }, this.siteId);
 
-        this.launchPrevObserver = this.eventsProvider.on(AddonModScormProvider.LAUNCH_PREV_SCO_EVENT, (data) => {
+        this.launchPrevObserver = CoreEvents.on(AddonModScormProvider.LAUNCH_PREV_SCO_EVENT, (data) => {
             if (data.scormId === this.scorm.id && this.previousSco) {
                 this.loadSco(this.previousSco);
             }
         }, this.siteId);
 
-        this.goOfflineObserver = this.eventsProvider.on(AddonModScormProvider.GO_OFFLINE_EVENT, (data) => {
+        this.goOfflineObserver = CoreEvents.on(AddonModScormProvider.GO_OFFLINE_EVENT, (data) => {
             if (data.scormId === this.scorm.id && !this.offline) {
                 this.offline = true;
 
@@ -343,7 +343,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
      * Page will leave.
      */
     ionViewWillUnload(): void {
-        this.eventsProvider.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'scorm' });
+        CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'scorm' });
 
         // Empty src when leaving the state so unload event is triggered in the iframe.
         this.src = '';

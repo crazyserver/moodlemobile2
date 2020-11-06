@@ -15,7 +15,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { NavController, NavOptions } from '@ionic/angular';
 import { SafeUrl } from '@angular/platform-browser';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreCourseProvider } from './course';
@@ -230,7 +230,7 @@ export class CoreCourseModuleDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreCourseModuleDelegate_';
     protected handlerNameProperty = 'modName';
 
-    constructor(protected sitesProvider: CoreSitesProvider, eventsProvider: CoreEventsProvider,
+    constructor(protected sitesProvider: CoreSitesProvider,
             protected courseProvider: CoreCourseProvider, protected defaultHandler: CoreCourseModuleDefaultHandler) {
         super('CoreCourseModuleDelegate', loggerProvider, sitesProvider, eventsProvider);
     }

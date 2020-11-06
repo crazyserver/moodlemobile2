@@ -17,7 +17,7 @@ import { IonicPage, NavParams } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { CoreDomUtilsProvider } from '@services/utils/dom';
 import { CoreTextUtilsProvider } from '@services/utils/text';
-import { CoreEventsProvider, CoreEventObserver } from '@services/events';
+import { CoreEvents, CoreEventObserver } from '@singletons/events';
 import { CoreSitesProvider } from '@services/sites';
 import { CoreUtilsProvider } from '@services/utils/utils';
 import { AddonNotificationsProvider, AddonNotificationsAnyNotification } from '../../providers/notifications';
@@ -46,7 +46,7 @@ export class AddonNotificationsListPage {
     protected pushObserver: Subscription;
     protected pendingRefresh = false;
 
-    constructor(navParams: NavParams, private domUtils: CoreDomUtilsProvider, private eventsProvider: CoreEventsProvider,
+    constructor(navParams: NavParams, private domUtils: CoreDomUtilsProvider,
             private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
             private utils: CoreUtilsProvider, private notificationsProvider: AddonNotificationsProvider,
             private pushNotificationsDelegate: CorePushNotificationsDelegate,
@@ -59,7 +59,7 @@ export class AddonNotificationsListPage {
     ngOnInit(): void {
         this.fetchNotifications();
 
-        this.cronObserver = this.eventsProvider.on(AddonNotificationsProvider.READ_CRON_EVENT, () => {
+        this.cronObserver = CoreEvents.on(AddonNotificationsProvider.READ_CRON_EVENT, () => {
             if (this.isCurrentView) {
                 this.notificationsLoaded = false;
                 this.refreshNotifications();
@@ -116,7 +116,7 @@ export class AddonNotificationsListPage {
             // Omit failure.
         }).then(() => {
             const siteId = this.sitesProvider.getCurrentSiteId();
-            this.eventsProvider.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, siteId);
+            CoreEvents.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, siteId);
 
             // All marked as read, refresh the list.
             this.notificationsLoaded = false;
@@ -149,7 +149,7 @@ export class AddonNotificationsListPage {
             }).finally(() => {
                 this.notificationsProvider.invalidateNotificationsList().finally(() => {
                     const siteId = this.sitesProvider.getCurrentSiteId();
-                    this.eventsProvider.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, siteId);
+                    CoreEvents.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, siteId);
                 });
             });
         } else {

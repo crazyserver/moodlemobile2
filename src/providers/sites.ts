@@ -16,7 +16,7 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreAppProvider, CoreAppSchema, CoreStoreConfig } from './app';
-import { CoreEventsProvider } from './events';
+import { CoreEvents } from '@singletons/events';
 import { CoreLoggerProvider } from './logger';
 import { CoreSitesFactoryProvider } from './sites-factory';
 import { CoreDomUtilsProvider } from './utils/dom';
@@ -452,7 +452,7 @@ export class CoreSitesProvider {
             protected appProvider: CoreAppProvider,
             protected translate: TranslateService,
             protected urlUtils: CoreUrlUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
+
             protected textUtils: CoreTextUtilsProvider,
             protected utils: CoreUtilsProvider,
             protected injector: Injector,
@@ -812,7 +812,7 @@ export class CoreSitesProvider {
                             this.login(siteId);
                         }
 
-                        this.eventsProvider.trigger(CoreEventsProvider.SITE_ADDED, info, siteId);
+                        CoreEvents.trigger(CoreEvents.SITE_ADDED, info, siteId);
 
                         return siteId;
                     });
@@ -1137,7 +1137,7 @@ export class CoreSitesProvider {
 
             if (site.isLoggedOut()) {
                 // Logged out, trigger session expired event and stop.
-                this.eventsProvider.trigger(CoreEventsProvider.SESSION_EXPIRED, {
+                CoreEvents.trigger(CoreEvents.SESSION_EXPIRED, {
                     pageName: pageName,
                     params: params
                 }, site.getId());
@@ -1148,7 +1148,7 @@ export class CoreSitesProvider {
             // Check if local_mobile was installed to Moodle.
             return site.checkIfLocalMobileInstalledAndNotUsed().then(() => {
                 // Local mobile was added. Throw invalid session to force reconnect and create a new token.
-                this.eventsProvider.trigger(CoreEventsProvider.SESSION_EXPIRED, {
+                CoreEvents.trigger(CoreEvents.SESSION_EXPIRED, {
                     pageName: pageName,
                     params: params
                 }, siteId);
@@ -1262,7 +1262,7 @@ export class CoreSitesProvider {
         // Site deleted from sites list, now delete the folder.
         await site.deleteFolder();
 
-        this.eventsProvider.trigger(CoreEventsProvider.SITE_DELETED, site, siteId);
+        CoreEvents.trigger(CoreEvents.SITE_DELETED, site, siteId);
     }
 
     /**
@@ -1479,7 +1479,7 @@ export class CoreSitesProvider {
 
         await this.appDB.insertRecord(CoreSitesProvider.CURRENT_SITE_TABLE, entry);
 
-        this.eventsProvider.trigger(CoreEventsProvider.LOGIN, {}, siteId);
+        CoreEvents.trigger(CoreEvents.LOGIN, {}, siteId);
     }
 
     /**
@@ -1509,7 +1509,7 @@ export class CoreSitesProvider {
         try {
             await Promise.all(promises);
         } finally {
-            this.eventsProvider.trigger(CoreEventsProvider.LOGOUT, {}, siteId);
+            CoreEvents.trigger(CoreEvents.LOGOUT, {}, siteId);
         }
     }
 
@@ -1652,7 +1652,7 @@ export class CoreSitesProvider {
             try {
                 await this.appDB.updateRecords(CoreSitesProvider.SITES_TABLE, newValues, { id: siteId });
             } finally {
-                this.eventsProvider.trigger(CoreEventsProvider.SITE_UPDATED, info, siteId);
+                CoreEvents.trigger(CoreEvents.SITE_UPDATED, info, siteId);
             }
         } catch (error) {
             // Ignore that we cannot fetch site info. Probably the auth token is invalid.

@@ -15,7 +15,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChange, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { coreShowHideAnimation } from '@classes/animations';
-import { CoreEventsProvider } from '@services/events';
+import { CoreEvents } from '@singletons/events';
 import { CoreUtilsProvider } from '@services/utils/utils';
 
 /**
@@ -51,7 +51,7 @@ export class CoreLoadingComponent implements OnInit, OnChanges {
     protected uniqueId: string;
     protected element: HTMLElement; // Current element.
 
-    constructor(private translate: TranslateService, element: ElementRef, private eventsProvider: CoreEventsProvider,
+    constructor(private translate: TranslateService, element: ElementRef,
             utils: CoreUtilsProvider) {
         this.element = element.nativeElement;
 
@@ -95,7 +95,7 @@ export class CoreLoadingComponent implements OnInit, OnChanges {
 
             // Trigger the event after a timeout since the elements inside ngIf haven't been added to DOM yet.
             setTimeout(() => {
-                this.eventsProvider.trigger(CoreEventsProvider.CORE_LOADING_CHANGED, {
+                CoreEvents.trigger(CoreEvents.CORE_LOADING_CHANGED, {
                     loaded: !!this.hideUntil,
                     uniqueId: this.uniqueId
                 });
