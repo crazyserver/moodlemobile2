@@ -23,8 +23,11 @@
         </div>
         <ion-card *ngFor="let notification of notifications">
             <ion-item class="ion-text-wrap">
-                <ion-avatar *ngIf="notification.useridfrom > 0" core-user-avatar [user]="notification" slot=”start” [profileUrl]="notification.profileimageurlfrom" [fullname]="notification.userfromfullname" [userId]="notification.useridfrom" [extraIcon]="notification.iconurl"></ion-avatar>
-                <img *ngIf="notification.useridfrom <= 0 && notification.iconurl" [src]="notification.iconurl" alt="" role="presentation" class="core-notification-icon" slot=”start”>
+                <ion-avatar *ngIf="notification.useridfrom > 0" core-user-avatar [user]="notification" slot="start"
+                    [profileUrl]="notification.profileimageurlfrom" [fullname]="notification.userfromfullname"
+                    [userId]="notification.useridfrom" [extraIcon]="notification.iconurl"></ion-avatar>
+                <img *ngIf="notification.useridfrom <= 0 && notification.iconurl" [src]="notification.iconurl" alt=""
+                    role="presentation" class="core-notification-icon" slot="start">
                 <h2>{{ notification.subject }}</h2>
                 <p><ion-note class="ion-float-end ion-padding-left ion-text-end">
                         {{notification.timecreated | coreDateDayOrTime}}

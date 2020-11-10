@@ -11,7 +11,7 @@
         <ng-container *ngFor="let entry of entries">
             <ion-card *ngIf="!onlyMyEntries || entry.userid == currentUserId">
                 <ion-item class="ion-text-wrap">
-                    <ion-avatar core-user-avatar [user]="entry.user" slot=”start” [courseId]="entry.courseid"></ion-avatar>
+                    <ion-avatar core-user-avatar [user]="entry.user" slot="start" [courseId]="entry.courseid"></ion-avatar>
                     <h2>
                         <core-format-text [text]="entry.subject" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId"></core-format-text>
                         <ion-note class="ion-float-end ion-padding-left ion-text-end">
@@ -30,7 +30,7 @@
                         <core-format-text [text]="entry.summary" [component]="this.component" [componentId]="entry.id" [contextLevel]="contextLevel" [contextInstanceId]="contextInstanceId"></core-format-text>
                     </ion-item>
                     <ion-item class="ion-text-wrap" *ngIf="tagsEnabled && entry.tags && entry.tags.length > 0">
-                        <div slot=”start”>{{ 'core.tag.tags' | translate }}:</div>
+                        <div slot="start">{{ 'core.tag.tags' | translate }}:</div>
                         <core-tag-list [tags]="entry.tags"></core-tag-list>
                     </ion-item>
                     <ion-item *ngIf="commentsEnabled">

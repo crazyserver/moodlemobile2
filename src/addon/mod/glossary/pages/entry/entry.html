@@ -14,7 +14,7 @@
     <core-loading [hideUntil]="loaded">
         <ng-container *ngIf="entry && loaded">
             <ion-item class="ion-text-wrap" *ngIf="showAuthor">
-                <ion-avatar core-user-avatar [user]="entry" (click)="openUserProfile(post.userid)" slot=”start”></ion-avatar>
+                <ion-avatar core-user-avatar [user]="entry" (click)="openUserProfile(post.userid)" slot="start"></ion-avatar>
                 <h2><core-format-text [text]="entry.concept" contextLevel="module" [contextInstanceId]="glossary && glossary.coursemodule" [courseId]="courseId"></core-format-text></h2>
                 <ion-note slot="end" *ngIf="showDate">{{ entry.timemodified | coreDateDayOrTime }}</ion-note>
                 <p>{{ entry.userfullname }}</p>
@@ -32,7 +32,7 @@
                 </div>
             </ng-container>
             <ion-item class="ion-text-wrap" *ngIf="tagsEnabled && entry && entry.tags && entry.tags.length > 0">
-                <div slot=”start”>{{ 'core.tag.tags' | translate }}:</div>
+                <div slot="start">{{ 'core.tag.tags' | translate }}:</div>
                 <core-tag-list [tags]="entry.tags"></core-tag-list>
             </ion-item>
             <ion-item class="ion-text-wrap" *ngIf="entry.approved != 1">

@@ -2,7 +2,7 @@
 
 <ion-list *ngIf="chart" inset>
     <ion-item *ngFor="let data of chart.legend.legendItems">
-        <ion-icon name="square" slot=”start” [style.color]="data.fillStyle"></ion-icon>
+        <ion-icon name="square" slot="start" [style.color]="data.fillStyle"></ion-icon>
         {{data.text}}
     </ion-item>
 </ion-list>

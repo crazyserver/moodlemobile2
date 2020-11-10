@@ -14,7 +14,7 @@
     </ion-refresher>
     <core-loading [hideUntil]="notesLoaded" class="core-loading-center">
         <ion-item class="ion-text-wrap" *ngIf="user">
-            <ion-avatar core-user-avatar [user]="user" [courseId]="courseId" slot=”start” [linkProfile]="false"></ion-avatar>
+            <ion-avatar core-user-avatar [user]="user" [courseId]="courseId" slot="start" [linkProfile]="false"></ion-avatar>
             <h2>{{user.fullname}}</h2>
         </ion-item>
 
@@ -36,7 +36,7 @@
         <ion-list *ngIf="notes && notes.length > 0">
             <ion-card *ngFor="let note of notes">
                 <ion-item class="ion-text-wrap">
-                    <ion-avatar core-user-avatar [user]="note" [courseId]="courseId" slot=”start” *ngIf="!userId"></ion-avatar>
+                    <ion-avatar core-user-avatar [user]="note" [courseId]="courseId" slot="start" *ngIf="!userId"></ion-avatar>
                     <h2 *ngIf="!userId">{{note.userfullname}}</h2>
                     <p *ngIf="!note.deleted && !note.offline" slot="end">
                         <span class="ion-text-wrap">{{note.lastmodified | coreDateDayOrTime}}</span>

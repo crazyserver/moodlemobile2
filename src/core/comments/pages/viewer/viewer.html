@@ -29,7 +29,7 @@
 
         <ion-card *ngIf="offlineComment" (click)="addComment($event)">
             <ion-item class="ion-text-wrap">
-                <ion-avatar core-user-avatar [user]="offlineComment" slot=”start”></ion-avatar>
+                <ion-avatar core-user-avatar [user]="offlineComment" slot="start"></ion-avatar>
                 <h2>{{ offlineComment.fullname }}</h2>
                 <p>
                     <ion-icon name="time"></ion-icon> {{ 'core.notsent' | translate }}
@@ -45,7 +45,7 @@
 
         <ion-card *ngFor="let comment of comments">
             <ion-item class="ion-text-wrap">
-                <ion-avatar core-user-avatar [user]="comment" slot=”start”></ion-avatar>
+                <ion-avatar core-user-avatar [user]="comment" slot="start"></ion-avatar>
                 <h2>{{ comment.fullname }}</h2>
                 <p *ngIf="!comment.deleted">{{ comment.timecreated * 1000 | coreFormatDate: 'strftimerecentfull' }}</p>
                 <p *ngIf="comment.deleted">

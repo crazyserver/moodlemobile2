@@ -42,7 +42,7 @@
             </ion-grid>
 
             <ion-item class="ion-text-wrap core-user-profile-handler" (click)="openUserDetails()" title="{{ 'core.user.details' | translate }}">
-                <ion-icon name="person" slot=”start”></ion-icon>
+                <ion-icon name="person" slot="start"></ion-icon>
                 <h2>{{ 'core.user.details' | translate }}</h2>
             </ion-item>
             <ion-item class="ion-text-center core-loading-handlers" *ngIf="isLoadingHandlers">
@@ -50,7 +50,7 @@
             </ion-item>
 
             <ion-item *ngFor="let npHandler of newPageHandlers" class="ion-text-wrap" [ngClass]="['core-user-profile-handler', npHandler.class]" (click)="handlerClicked($event, npHandler)" [hidden]="npHandler.hidden" title="{{ npHandler.title | translate }}">
-                <ion-icon *ngIf="npHandler.icon" [name]="npHandler.icon" slot=”start”>
+                <ion-icon *ngIf="npHandler.icon" [name]="npHandler.icon" slot="start">
                 </ion-icon>
                 <h2>{{ npHandler.title | translate }}</h2>
             </ion-item>

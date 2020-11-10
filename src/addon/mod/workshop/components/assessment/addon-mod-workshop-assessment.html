@@ -1,6 +1,7 @@
 <core-loading [hideUntil]="loaded">
     <ion-item *ngIf="summary" class="ion-text-wrap" [attr.detail-none]="canViewAssessment && !canSelfAssess? null : true" (click)="gotoAssessment()">
-        <ion-avatar core-user-avatar [user]="profile" slot=”start” [courseId]="courseId" [userId]="profile && profile.id"></ion-avatar>
+        <ion-avatar core-user-avatar [user]="profile" slot="start" [courseId]="courseId" [userId]="profile && profile.id">
+        </ion-avatar>
 
         <h2 *ngIf="profile && profile.fullname">{{profile.fullname}}</h2>
         <p *ngIf="showGrade(assessment.grade)">

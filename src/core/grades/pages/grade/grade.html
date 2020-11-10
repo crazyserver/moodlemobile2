@@ -15,14 +15,14 @@
 
         <ion-list *ngIf="grade">
             <ion-item *ngIf="grade.itemname && grade.link" class="ion-text-wrap" detail="true" [href]="grade.link" core-link capture="true">
-                <ion-icon *ngIf="grade.icon" name="{{grade.icon}}" slot=”start”></ion-icon>
-                <img *ngIf="grade.image" [src]="grade.image" slot=”start” class="core-module-icon"/>
+                <ion-icon *ngIf="grade.icon" name="{{grade.icon}}" slot="start"></ion-icon>
+                <img *ngIf="grade.image" [src]="grade.image" slot="start" class="core-module-icon" />
                 <h2><core-format-text [text]="grade.itemname" contextLevel="course" [contextInstanceId]="courseId"></core-format-text></h2>
             </ion-item>
 
             <ion-item *ngIf="grade.itemname && !grade.link" class="ion-text-wrap" >
-                <ion-icon *ngIf="grade.icon" name="{{grade.icon}}" slot=”start”></ion-icon>
-                <img *ngIf="grade.image" [src]="grade.image" slot=”start” class="core-module-icon"/>
+                <ion-icon *ngIf="grade.icon" name="{{grade.icon}}" slot="start"></ion-icon>
+                <img *ngIf="grade.image" [src]="grade.image" slot="start" class="core-module-icon" />
                 <h2><core-format-text [text]="grade.itemname" contextLevel="course" [contextInstanceId]="courseId"></core-format-text></h2>
             </ion-item>
 

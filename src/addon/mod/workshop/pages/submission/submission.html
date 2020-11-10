@@ -40,7 +40,8 @@
 
         <ion-list *ngIf="!canAddFeedback && evaluate && evaluate.text">
             <ion-item class="ion-text-wrap">
-                <ion-avatar core-user-avatar *ngIf="evaluateByProfile" [user]="evaluateByProfile" slot=”start” [courseId]="courseId" [userId]="evaluateByProfile.id"></ion-avatar>
+                <ion-avatar core-user-avatar *ngIf="evaluateByProfile" [user]="evaluateByProfile" slot="start" [courseId]="courseId"
+                    [userId]="evaluateByProfile.id"></ion-avatar>
                 <h2 *ngIf="evaluateByProfile && evaluateByProfile.fullname">{{ 'addon.mod_workshop.feedbackby' | translate : {$a: evaluateByProfile.fullname} }}</h2>
                 <core-format-text [text]="evaluate.text" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
             </ion-item>
@@ -99,7 +100,8 @@
 
         <ion-list *ngIf="assessmentId && !access.assessingallowed && assessment.feedbackreviewer">
             <ion-item class="ion-text-wrap">
-                <ion-avatar core-user-avatar *ngIf="evaluateGradingByProfile" [user]="evaluateGradingByProfile" slot=”start” [courseId]="courseId" [userId]="evaluateGradingByProfile.id"></ion-avatar>
+                <ion-avatar core-user-avatar *ngIf="evaluateGradingByProfile" [user]="evaluateGradingByProfile" slot="start"
+                    [courseId]="courseId" [userId]="evaluateGradingByProfile.id"></ion-avatar>
                 <h2 *ngIf="evaluateGradingByProfile && evaluateGradingByProfile.fullname">{{ 'addon.mod_workshop.feedbackby' | translate : {$a: evaluateGradingByProfile.fullname} }}</h2>
                 <core-format-text [text]="assessment.feedbackreviewer" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-format-text>
             </ion-item>

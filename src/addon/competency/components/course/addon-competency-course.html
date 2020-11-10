@@ -29,7 +29,7 @@
         <h3  class="ion-margin-horizontal" *ngIf="competencies && competencies.statistics.competencycount > 0">{{ 'addon.competency.coursecompetencies' | translate }}</h3>
         <ion-card *ngIf="user">
              <ion-item class="ion-text-wrap">
-                <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
+                <ion-avatar core-user-avatar [user]="user" slot="start"></ion-avatar>
                 <h2>{{ user.fullname }}</h2>
             </ion-item>
         </ion-card>
@@ -68,7 +68,8 @@
                             {{ 'addon.competency.noactivities' | translate }}
                         </p>
                         <ion-item class="ion-text-wrap" *ngFor="let activity of competency.coursemodules" [href]="activity.url" [title]="activity.name" core-link capture="true" class="core-course-module-handler item-media">
-                            <img slot=”start” [src]="activity.iconurl" core-external-content alt="" role="presentation" *ngIf="activity.iconurl" class="core-module-icon">
+                            <img slot="start" [src]="activity.iconurl" core-external-content alt="" role="presentation" *ngIf="activity.iconurl"
+                                class="core-module-icon">
                             <core-format-text [text]="activity.name" contextLevel="module" [contextInstanceId]="activity.id" [courseId]="courseId"></core-format-text>
                         </ion-item>
                     </div>

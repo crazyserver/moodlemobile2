@@ -17,8 +17,8 @@
 
             <ion-list *ngIf="badges && badges.length"  class="ion-no-margin">
                 <ion-item class="ion-text-wrap" *ngFor="let badge of badges" [title]="badge.name" (click)="loadIssuedBadge(badge.uniquehash)" [class.core-split-item-selected]="badge.uniquehash == badgeHash">
-                    <ion-avatar slot=”start”>
-                        <img [src]="badge.badgeurl" [alt]="badge.name" slot=”start” core-external-content>
+                    <ion-avatar slot="start">
+                        <img [src]="badge.badgeurl" [alt]="badge.name" slot="start" core-external-content>
                     </ion-avatar>
                     <h2>{{ badge.name }}</h2>
                     <p>{{ badge.dateissued * 1000 | coreFormatDate :'strftimedatetimeshort' }}</p>

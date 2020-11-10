@@ -26,15 +26,15 @@
         <core-loading [hideUntil]="loaded" [message]="loadingMessage">
             <ion-list>
                 <ion-item class="ion-text-wrap" (click)="gotoContacts($event)" [attr.aria-label]="'addon.messages.contacts' | translate" class="addon-message-discussion">
-                    <ion-icon name="person" slot=”start”></ion-icon>
+                    <ion-icon name="person" slot="start"></ion-icon>
                     <h2>{{ 'addon.messages.contacts' | translate }}</h2>
                     <ion-badge *ngIf="contactRequestsCount > 0" slot="end">{{contactRequestsCount}}</ion-badge>
                 </ion-item>
                 <!-- Favourite conversations. -->
                 <ion-item-divider class="ion-text-wrap" (click)="toggle(favourites)" class="core-expandable">
-                    <ion-icon *ngIf="!favourites.expanded" name="fa-caret-right" slot=”start”>
+                    <ion-icon *ngIf="!favourites.expanded" name="fa-caret-right" slot="start">
                     </ion-icon>
-                    <ion-icon *ngIf="favourites.expanded" name="fa-caret-down" slot=”start”>
+                    <ion-icon *ngIf="favourites.expanded" name="fa-caret-down" slot="start">
                     </ion-icon>
                     {{ 'core.favourites' | translate }} ({{ favourites.count }})
                     <ion-badge slot="end" *ngIf="favourites.unread">{{ favourites.unread }}</ion-badge>
@@ -53,9 +53,9 @@
 
                 <!-- Group conversations. -->
                 <ion-item-divider class="ion-text-wrap" (click)="toggle(group)" class="core-expandable">
-                    <ion-icon *ngIf="!group.expanded" name="fa-caret-right" slot=”start”>
+                    <ion-icon *ngIf="!group.expanded" name="fa-caret-right" slot="start">
                     </ion-icon>
-                    <ion-icon *ngIf="group.expanded" name="fa-caret-down" slot=”start”>
+                    <ion-icon *ngIf="group.expanded" name="fa-caret-down" slot="start">
                     </ion-icon>
                     {{ 'addon.messages.groupconversations' | translate }} ({{ group.count }})
                     <ion-badge slot="end" *ngIf="group.unread">{{ group.unread }}</ion-badge>
@@ -73,9 +73,9 @@
                 </ion-item>
 
                 <ion-item-divider class="ion-text-wrap" (click)="toggle(individual)" class="core-expandable">
-                    <ion-icon *ngIf="!individual.expanded" name="fa-caret-right" slot=”start”>
+                    <ion-icon *ngIf="!individual.expanded" name="fa-caret-right" slot="start">
                     </ion-icon>
-                    <ion-icon *ngIf="individual.expanded" name="fa-caret-down" slot=”start”>
+                    <ion-icon *ngIf="individual.expanded" name="fa-caret-down" slot="start">
                     </ion-icon>
                     {{ 'addon.messages.individualconversations' | translate }} ({{ individual.count }})
                     <ion-badge slot="end" *ngIf="individual.unread">{{ individual.unread }}</ion-badge>
@@ -101,12 +101,13 @@
 <ng-template #conversationsTemplate let-conversations="conversations">
     <ion-item class="ion-text-wrap" *ngFor="let conversation of conversations" [title]="conversation.name" (click)="gotoConversation(conversation.id, conversation.userid)" [class.core-split-item-selected]="(conversation.id && conversation.id == selectedConversationId) || (conversation.userid && conversation.userid == selectedUserId)" class="addon-message-discussion" id="addon-message-conversation-{{ conversation.id ? conversation.id : 'user-' + conversation.userid }}">
         <!-- Group conversation image. -->
-        <ion-avatar slot=”start” *ngIf="conversation.type == typeGroup">
+        <ion-avatar slot="start" *ngIf="conversation.type == typeGroup">
             <img [src]="conversation.imageurl" [alt]="conversation.name" core-external-content onError="this.src='assets/img/group-avatar.png'">
         </ion-avatar>
 
         <!-- Avatar for individual conversations. -->
-        <ion-avatar *ngIf="conversation.type != typeGroup" core-user-avatar [user]="conversation.otherUser" [linkProfile]="false" [checkOnline]="conversation.showonlinestatus" slot=”start”></ion-avatar>
+        <ion-avatar *ngIf="conversation.type != typeGroup" core-user-avatar [user]="conversation.otherUser"
+            [linkProfile]="false" [checkOnline]="conversation.showonlinestatus" slot="start"></ion-avatar>
 
         <h2>
             <core-format-text [text]="conversation.name" contextLevel="system" [contextInstanceId]="0"></core-format-text>

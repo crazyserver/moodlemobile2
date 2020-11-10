@@ -50,7 +50,8 @@
                             </h2>
                         </div>
                         <div class="addon-mod-forum-discussion-info">
-                            <ion-avatar core-user-avatar [user]="discussion" slot=”start” [courseId]="courseId" *ngIf="discussion.userfullname"></ion-avatar>
+                            <ion-avatar core-user-avatar [user]="discussion" slot="start" [courseId]="courseId" *ngIf="discussion.userfullname">
+                            </ion-avatar>
                             <div class="addon-mod-forum-discussion-author">
                                 <h3 *ngIf="discussion.userfullname">{{discussion.userfullname}}</h3>
                                 <p *ngIf="discussion.groupname"><ion-icon name="people"></ion-icon> {{ discussion.groupname }}</p>
@@ -75,7 +76,8 @@
                             </ion-button>
                         </div>
                         <div class="addon-mod-forum-discussion-info">
-                            <ion-avatar *ngIf="discussion.userfullname" core-user-avatar [user]="discussion" slot=”start” [courseId]="courseId"></ion-avatar>
+                            <ion-avatar *ngIf="discussion.userfullname" core-user-avatar [user]="discussion" slot="start" [courseId]="courseId">
+                            </ion-avatar>
                             <div class="addon-mod-forum-discussion-author">
                                 <h3 *ngIf="discussion.userfullname">{{discussion.userfullname}}</h3>
                                 <p *ngIf="discussion.groupname"><ion-icon name="people"></ion-icon> {{ discussion.groupname }}</p>

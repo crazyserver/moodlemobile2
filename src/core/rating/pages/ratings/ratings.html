@@ -18,7 +18,7 @@
     <core-loading [hideUntil]="loaded">
         <ion-list *ngIf="ratings.length > 0">
             <ion-item class="ion-text-wrap" *ngFor="let rating of ratings">
-                <ion-avatar core-user-avatar [user]="rating" [courseId]="courseId" slot=”start”></ion-avatar>
+                <ion-avatar core-user-avatar [user]="rating" [courseId]="courseId" slot="start"></ion-avatar>
                 <ion-note slot="end" class="ion-padding-left" *ngIf="rating.timemodified">
                     {{ rating.timemodified | coreDateDayOrTime }}
                 </ion-note>

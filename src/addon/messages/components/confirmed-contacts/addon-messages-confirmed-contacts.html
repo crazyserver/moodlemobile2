@@ -5,7 +5,8 @@
     <core-loading [hideUntil]="loaded" class="core-loading-center">
         <ion-list  class="ion-no-margin">
             <ion-item class="ion-text-wrap" *ngFor="let contact of contacts" [title]="contact.fullname" (click)="selectUser(contact.id)" [class.core-split-item-selected]="contact.id == selectedUserId" class="addon-messages-conversation-item">
-                <ion-avatar slot=”start” core-user-avatar [user]="contact" [checkOnline]="contact.showonlinestatus" [linkProfile]="false"></ion-avatar>
+                <ion-avatar slot="start" core-user-avatar [user]="contact" [checkOnline]="contact.showonlinestatus"
+                    [linkProfile]="false"></ion-avatar>
                 <h2>
                     {{ contact.fullname }}
                     <ion-icon *ngIf="contact.isblocked" name="fa-ban" slot="end">

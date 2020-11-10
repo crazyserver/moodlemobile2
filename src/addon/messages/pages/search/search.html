@@ -34,7 +34,7 @@
 
         <!-- List of results -->
         <ion-item class="ion-text-wrap" *ngFor="let result of item.results" [title]="result.fullname" (click)="openConversation(result)" [class.core-split-item-selected]="result == selectedResult" class="addon-message-discussion">
-            <ion-avatar slot=”start” core-user-avatar [user]="result" [checkOnline]="true" [linkProfile]="false"></ion-avatar>
+            <ion-avatar slot="start" core-user-avatar [user]="result" [checkOnline]="true" [linkProfile]="false"></ion-avatar>
             <h2>
                 <core-format-text [text]="result.fullname" [highlight]="result.highlightName" [filter]="false"></core-format-text>
                 <ion-icon name="fa-ban" *ngIf="result.isblocked" [label]="'addon.messages.contactblocked' | translate">

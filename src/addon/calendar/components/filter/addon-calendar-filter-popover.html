@@ -1,7 +1,7 @@
 <ion-list>
 <ion-radio-group>
     <ion-item *ngFor="let type of typeKeys" class="addon-calendar-event" [ngClass]="['addon-calendar-eventtype-'+type]">
-        <ion-icon [name]="typeIcons[type]" slot=”start”>
+        <ion-icon [name]="typeIcons[type]" slot="start">
         </ion-icon>
         <ion-label>{{ 'addon.calendar.' + type + 'events' | translate}}</ion-label>
         <ion-toggle [(ngModel)]="types[type]" (ionChange)="onChange($event)"></ion-toggle>

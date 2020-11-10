@@ -20,7 +20,8 @@
                 </ion-button>
             </div>
             <div class="addon-mod-forum-post-info">
-                <ion-avatar *ngIf="post.author && post.author.fullname" core-user-avatar [user]="post.author" slot=”start” [courseId]="courseId"></ion-avatar>
+                <ion-avatar *ngIf="post.author && post.author.fullname" core-user-avatar [user]="post.author" slot="start"
+                    [courseId]="courseId"></ion-avatar>
                 <div class="addon-mod-forum-post-author">
                     <h3 *ngIf="post.author && post.author.fullname">{{post.author.fullname}}</h3>
                     <p *ngIf="post.author && post.author.groups"><ng-container *ngFor="let group of post.author.groups"><ion-icon name="people"></ion-icon> {{ group.name }} </ng-container></p>
@@ -51,7 +52,7 @@
     </ion-card-content>
     <div class="addon-mod-forum-post-more-info">
         <ion-item class="ion-text-wrap" *ngIf="tagsEnabled && post.tags && post.tags.length > 0">
-            <div slot=”start”>{{ 'core.tag.tags' | translate }}:</div>
+            <div slot="start">{{ 'core.tag.tags' | translate }}:</div>
             <core-tag-list [tags]="post.tags"></core-tag-list>
         </ion-item>
         <core-rating-rate *ngIf="forum && ratingInfo" [ratingInfo]="ratingInfo" contextLevel="module" [instanceId]="componentId" [itemId]="post.id" [itemSetId]="discussionId" [courseId]="courseId" [aggregateMethod]="forum.assessed" [scaleId]="forum.scale" [userId]="post.author.id" (onUpdate)="ratingUpdated()"></core-rating-rate>
@@ -80,9 +81,9 @@
         </ion-item>
         <ng-container *ngIf="forum.id && forum.maxattachments > 0">
             <ion-item-divider class="ion-text-wrap" (click)="toggleAdvanced()" class="core-expandable">
-                <ion-icon *ngIf="!advanced" name="fa-caret-right" slot=”start”>
+                <ion-icon *ngIf="!advanced" name="fa-caret-right" slot="start">
                 </ion-icon>
-                <ion-icon *ngIf="advanced" name="fa-caret-down" slot=”start”>
+                <ion-icon *ngIf="advanced" name="fa-caret-down" slot="start">
                 </ion-icon>
                 {{ 'addon.mod_forum.advanced' | translate }}
             </ion-item-divider>

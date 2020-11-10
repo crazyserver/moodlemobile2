@@ -25,7 +25,7 @@
                         {{ 'addon.mod_feedback.non_anonymous_entries' | translate : {$a: responses.total } }}
                     </ion-item-divider>
                     <ion-item *ngFor="let attempt of responses.attempts" class="ion-text-wrap" (click)="gotoAttempt(attempt)" [class.core-split-item-selected]="attempt.id == attemptId">
-                        <ion-avatar core-user-avatar [user]="attempt" slot=”start”></ion-avatar>
+                        <ion-avatar core-user-avatar [user]="attempt" slot="start"></ion-avatar>
                         <h2>{{ attempt.fullname }}</h2>
                         <p *ngIf="attempt.timemodified">{{attempt.timemodified * 1000 | coreFormatDate }}</p>
                     </ion-item>

@@ -13,11 +13,11 @@
     <core-loading [hideUntil]="loaded">
         <!-- User viewed. -->
         <ion-item class="ion-text-wrap" *ngIf="user && !isCurrentUser" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
-            <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
+            <ion-avatar core-user-avatar [user]="user" slot="start"></ion-avatar>
             <h2>{{ user.fullname }}</h2>
         </ion-item>
         <ion-item class="ion-text-wrap" *ngIf="user && isCurrentUser">
-            <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
+            <ion-avatar core-user-avatar [user]="user" slot="start"></ion-avatar>
             <h2>{{ 'addon.mod_h5pactivity.myattempts' | translate }}</h2>
         </ion-item>
 

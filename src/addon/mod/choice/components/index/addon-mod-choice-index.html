@@ -76,7 +76,7 @@
             <ion-row>
                 <ion-col size="12" size-lg="5">
                     <ion-item class="ion-text-wrap core-warning-item" *ngIf="hasOffline">
-                        <ion-icon slot=”start” name="warning" color="warning"></ion-icon> {{ 'addon.mod_choice.resultsnotsynced' | translate }}
+                        <ion-icon slot="start" name="warning" color="warning"></ion-icon> {{ 'addon.mod_choice.resultsnotsynced' | translate }}
                     </ion-item>
                     <ion-item>
                         <core-chart type="pie" [data]="data" [labels]="labels" height="300" contextLevel="module" [contextInstanceId]="module.id" [courseId]="courseId"></core-chart>
@@ -90,7 +90,7 @@
                             <p *ngIf="choice.limitanswers && choice.showavailable">{{ 'addon.mod_choice.limita' | translate:{$a: result.maxanswer} }}</p>
                         </ion-item-divider>
                         <ion-item *ngFor="let user of result.userresponses" core-user-link [courseId]="courseid" [userId]="user.userid" [title]="user.fullname" class="ion-text-wrap">
-                            <ion-avatar core-user-avatar [user]="user" slot=”start” [courseId]="courseid"></ion-avatar>
+                            <ion-avatar core-user-avatar [user]="user" slot="start" [courseId]="courseid"></ion-avatar>
                             <p>{{user.fullname}}</p>
                         </ion-item>
                     </ion-item-group>

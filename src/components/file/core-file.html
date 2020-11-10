@@ -1,5 +1,5 @@
 <ion-item class="ion-text-wrap item-media" (click)="download($event, true)" detail="false">
-    <img [src]="fileIcon" alt="" role="presentation" slot=”start” />
+    <img [src]="fileIcon" alt="" role="presentation" slot="start" />
     <h2>{{fileName}}</h2>
     <p *ngIf="fileSizeReadable">{{ fileSizeReadable }}</p>
     <p *ngIf="showTime">{{ timemodified * 1000 | coreFormatDate }}</p>

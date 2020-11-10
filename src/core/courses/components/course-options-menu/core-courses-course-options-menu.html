@@ -1,29 +1,29 @@
 <ion-item class="ion-text-wrap" (click)="action('download')" *ngIf="downloadCourseEnabled">
-    <ion-icon *ngIf="prefetch.prefetchCourseIcon != 'spinner'" [name]="prefetch.prefetchCourseIcon" slot=”start”></ion-icon>
-    <ion-spinner *ngIf="prefetch.prefetchCourseIcon == 'spinner'" slot=”start”></ion-spinner>
+    <ion-icon *ngIf="prefetch.prefetchCourseIcon != 'spinner'" [name]="prefetch.prefetchCourseIcon" slot="start"></ion-icon>
+    <ion-spinner *ngIf="prefetch.prefetchCourseIcon == 'spinner'" slot="start"></ion-spinner>
     <h2>{{ prefetch.title | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('delete')" *ngIf="courseStatus == 'downloaded' || courseStatus == 'outdated'">
-    <ion-icon name="trash" slot=”start”></ion-icon>
+    <ion-icon name="trash" slot="start"></ion-icon>
     <h2>{{ 'addon.storagemanager.deletecourse' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('hide')" *ngIf="!course.hidden">
-    <ion-icon name="fa-eye" slot=”start”>
+    <ion-icon name="fa-eye" slot="start">
     </ion-icon>
     <h2>{{ 'core.courses.hidecourse' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('show')" *ngIf="course.hidden">
-    <ion-icon name="fa-eye-slash" slot=”start”>
+    <ion-icon name="fa-eye-slash" slot="start">
     </ion-icon>
     <h2>{{ 'core.courses.show' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('favourite')" *ngIf="!course.isfavourite">
-    <ion-icon name="fa-star" slot=”start”>
+    <ion-icon name="fa-star" slot="start">
     </ion-icon>
     <h2>{{ 'core.courses.addtofavourites' | translate }}</h2>
 </ion-item>
 <ion-item class="ion-text-wrap" (click)="action('unfavourite')" *ngIf="course.isfavourite">
-    <ion-icon name="fa-star" [slash]="true" slot=”start”>
+    <ion-icon name="fa-star" [slash]="true" slot="start">
     </ion-icon>
     <h2>{{ 'core.courses.removefromfavourites' | translate }}</h2>
 </ion-item>

@@ -23,7 +23,7 @@
             <ng-container *ngFor="let file of files; let idx = index">
                 <core-local-file *ngIf="file.isFile" [file]="file" [manage]="manage" [overrideClick]="pick" (onClick)="filePicked(file)" (onDelete)="fileDeleted(idx)" (onRename)="fileRenamed(idx, $event)"></core-local-file>
                 <ion-item class="ion-text-wrap item-media" *ngIf="!file.isFile" (click)="openFolder(file)">
-                    <img src="assets/img/files/folder-64.png" alt="{{ 'core.folder' | translate }}" role="presentation" slot=”start”>
+                    <img src="assets/img/files/folder-64.png" alt="{{ 'core.folder' | translate }}" role="presentation" slot="start">
                     <p>{{ file.name }}</p>
                 </ion-item>
             </ng-container>

@@ -14,7 +14,7 @@
         <core-loading [hideUntil]="loaded">
             <ion-list *ngIf="hasUnsupportedAreas || areas">
                 <ion-item class="ion-text-wrap" *ngIf="hasUnsupportedAreas" class="core-warning-item">
-                    <ion-icon slot=”start” name="warning" color="warning"></ion-icon>
+                    <ion-icon slot="start" name="warning" color="warning"></ion-icon>
                     {{ 'core.tag.warningareasnotsupported' | translate }}
                 </ion-item>
                 <ion-item class="ion-text-wrap" *ngFor="let area of areas" [title]="area.nameKey | translate" (click)="openArea(area)" [class.core-split-item-selected]="area.id == selectedAreaId">

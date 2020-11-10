@@ -14,7 +14,7 @@
         <ng-container *ngIf="attempt">
             <!-- Attempt number and user that did the attempt. -->
             <ion-item class="ion-text-wrap" *ngIf="user" core-user-link [userId]="user.id" [courseId]="courseId" [title]="user.fullname">
-                <ion-avatar core-user-avatar [user]="user" slot=”start”></ion-avatar>
+                <ion-avatar core-user-avatar [user]="user" slot="start"></ion-avatar>
                 <h2>{{ 'addon.mod_h5pactivity.attempt' | translate }} #{{attempt.attempt}}: {{user.fullname}}</h2>
             </ion-item>
             <!-- Attempt number (if user not known). -->
@@ -112,7 +112,8 @@
 
                     <!-- Result doesn't support tracking. -->
                     <ion-item class="ion-text-wrap core-warning-item" *ngIf="!result.track">
-                        <ion-icon slot=”start” name="warning" color="warning"></ion-icon> {{ 'addon.mod_h5pactivity.no_compatible_track' | translate:{$a: result.interactiontype} }}
+                        <ion-icon slot="start" name="warning" color="warning"></ion-icon>
+                        {{ 'addon.mod_h5pactivity.no_compatible_track' | translate:{$a: result.interactiontype} }}
                     </ion-item>
                 </ion-card>
             </ng-container>

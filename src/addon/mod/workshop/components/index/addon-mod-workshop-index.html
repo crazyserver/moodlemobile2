@@ -19,10 +19,10 @@
         </ion-item>
         <ng-container *ngIf="phases && phases[workshop.phase] && phases[workshop.phase].tasks && phases[workshop.phase].tasks.length">
             <ion-item class="ion-text-wrap" *ngFor="let task of phases[workshop.phase].tasks" [class.item-dimmed]="task.code == 'submit' && !showSubmit" (click)="runTask(task)" detail="false">
-                <ion-icon slot=”start” name="radio-button-off" *ngIf="task.completed == null"></ion-icon>
-                <ion-icon slot=”start” name="close-circle" color="danger" *ngIf="task.completed == ''"></ion-icon>
-                <ion-icon slot=”start” name="information-circle" color="info" *ngIf="task.completed == 'info'"></ion-icon>
-                <ion-icon slot=”start” name="checkmark-circle" color="success" *ngIf="task.completed == '1'"></ion-icon>
+                <ion-icon slot="start" name="radio-button-off" *ngIf="task.completed == null"></ion-icon>
+                <ion-icon slot="start" name="close-circle" color="danger" *ngIf="task.completed == ''"></ion-icon>
+                <ion-icon slot="start" name="information-circle" color="info" *ngIf="task.completed == 'info'"></ion-icon>
+                <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="task.completed == '1'"></ion-icon>
 
                 <h2>{{task.title}}</h2>
                 <p *ngIf="task.details" [innerHTML]="task.details"></p>
