@@ -3,7 +3,7 @@
  * Params of block_recentlyaccesseditems_get_recent_items WS.
  */
 export type BlockRecentlyaccesseditemsGetRecentItemsParams = {
-    limit: number; // Result set limit.
+    limit?: number; // Result set limit.
 };
 
 /**
@@ -27,8 +27,8 @@ export type BlockRecentlyaccesseditemsGetRecentItemsResponse = { // The most rec
  * Params of block_starredcourses_get_starred_courses WS.
  */
 export type BlockStarredcoursesGetStarredCoursesParams = {
-    limit: number; // Limit.
-    offset: number; // Offset.
+    limit?: number; // Limit.
+    offset?: number; // Offset.
 };
 
 /**
@@ -60,12 +60,12 @@ export type BlockStarredcoursesGetStarredCoursesResponse = {
  * Params of core_badges_get_user_badges WS.
  */
 export type CoreBadgesGetUserBadgesParams = {
-    userid: number; // Badges only for this user id, empty for current user.
-    courseid: number; // Filter badges by course id, empty all the courses.
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
-    search: string; // A simple string to search for.
-    onlypublic: boolean; // Whether to return only public badges.
+    userid?: number; // Badges only for this user id, empty for current user.
+    courseid?: number; // Filter badges by course id, empty all the courses.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+    search?: string; // A simple string to search for.
+    onlypublic?: boolean; // Whether to return only public badges.
 };
 
 /**
@@ -141,7 +141,7 @@ export type CoreBadgesGetUserBadgesResponse = {
  */
 export type CoreBlockGetCourseBlocksParams = {
     courseid: number; // Course id.
-    returncontents: boolean; // Whether to return the block contents.
+    returncontents?: boolean; // Whether to return the block contents.
 };
 
 /**
@@ -177,8 +177,8 @@ export type CoreBlockGetCourseBlocksResponse = {
  * Params of core_block_get_dashboard_blocks WS.
  */
 export type CoreBlockGetDashboardBlocksParams = {
-    userid: number; // User id (optional), default is current user.
-    returncontents: boolean; // Whether to return the block contents.
+    userid?: number; // User id (optional), default is current user.
+    returncontents?: boolean; // Whether to return the block contents.
 };
 
 /**
@@ -214,7 +214,7 @@ export type CoreBlockGetDashboardBlocksResponse = {
  * Params of core_blog_get_entries WS.
  */
 export type CoreBlogGetEntriesParams = {
-    filters: { // Parameters to filter blog listings.
+    filters?: { // Parameters to filter blog listings.
         name: string; // The expected keys (value format) are:
                              // tag      PARAM_NOTAGS blog tag
                              // tagid    PARAM_INT    blog tag id
@@ -227,8 +227,8 @@ export type CoreBlogGetEntriesParams = {
 
         value: string; // The value of the filter.
     }[];
-    page: number; // The blog page to return.
-    perpage: number; // The number of posts to return per page.
+    page?: number; // The blog page to return.
+    perpage?: number; // The number of posts to return per page.
 };
 
 /**
@@ -245,7 +245,7 @@ export type CoreBlogGetEntriesResponse = {
         coursemoduleid: number; // Course module id where the post was created.
         subject: string; // Post subject.
         summary: string; // Post summary.
-        summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        summaryformat?: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         content: string; // Post content.
         uniquehash: string; // Post unique hash.
         rating: number; // Post rating.
@@ -296,7 +296,7 @@ export type CoreBlogGetEntriesResponse = {
  * Params of core_blog_view_entries WS.
  */
 export type CoreBlogViewEntriesParams = {
-    filters: { // Parameters used in the filter of view_entries.
+    filters?: { // Parameters used in the filter of view_entries.
         name: string; // The expected keys (value format) are:
                              // tag      PARAM_NOTAGS blog tag
                              // tagid    PARAM_INT    blog tag id
@@ -325,16 +325,16 @@ export type CoreBlogViewEntriesResponse = {
 export type CoreCalendarCreateCalendarEventsParams = {
     events: {
         name: string; // Event name.
-        description: string; // Description.
-        format: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
-        courseid: number; // Course id.
-        groupid: number; // Group id.
-        repeats: number; // Number of repeats.
-        eventtype: string; // Event type.
-        timestart: number; // Timestart.
-        timeduration: number; // Time duration.
-        visible: number; // Visible.
-        sequence: number; // Sequence.
+        description?: string; // Description.
+        format?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        courseid?: number; // Course id.
+        groupid?: number; // Group id.
+        repeats?: number; // Number of repeats.
+        eventtype?: string; // Event type.
+        timestart?: number; // Timestart.
+        timeduration?: number; // Time duration.
+        visible?: number; // Visible.
+        sequence?: number; // Sequence.
     }[];
 };
 
@@ -385,10 +385,10 @@ export type CoreCalendarDeleteCalendarEventsResponse = {}; // WARNING: Null stru
  */
 export type CoreCalendarGetActionEventsByCourseParams = {
     courseid: number; // Course id.
-    timesortfrom: number; // Time sort from.
-    timesortto: number; // Time sort to.
-    aftereventid: number; // The last seen event id.
-    limitnum: number; // Limit number.
+    timesortfrom?: number; // Time sort from.
+    timesortto?: number; // Time sort to.
+    aftereventid?: number; // The last seen event id.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -399,7 +399,7 @@ export type CoreCalendarGetActionEventsByCourseResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -490,9 +490,9 @@ export type CoreCalendarGetActionEventsByCourseResponse = {
  */
 export type CoreCalendarGetActionEventsByCoursesParams = {
     courseids: number[];
-    timesortfrom: number; // Time sort from.
-    timesortto: number; // Time sort to.
-    limitnum: number; // Limit number.
+    timesortfrom?: number; // Time sort from.
+    timesortto?: number; // Time sort to.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -504,7 +504,7 @@ export type CoreCalendarGetActionEventsByCoursesResponse = {
             id: number; // Id.
             name: string; // Name.
             description?: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             location?: string; // Location.
             categoryid?: number; // Categoryid.
             groupid?: number; // Groupid.
@@ -596,12 +596,12 @@ export type CoreCalendarGetActionEventsByCoursesResponse = {
  * Params of core_calendar_get_action_events_by_timesort WS.
  */
 export type CoreCalendarGetActionEventsByTimesortParams = {
-    timesortfrom: number; // Time sort from.
-    timesortto: number; // Time sort to.
-    aftereventid: number; // The last seen event id.
-    limitnum: number; // Limit number.
-    limittononsuspendedevents: boolean; // Limit the events to courses the user is not suspended in.
-    userid: number; // The user id.
+    timesortfrom?: number; // Time sort from.
+    timesortto?: number; // Time sort to.
+    aftereventid?: number; // The last seen event id.
+    limitnum?: number; // Limit number.
+    limittononsuspendedevents?: boolean; // Limit the events to courses the user is not suspended in.
+    userid?: number; // The user id.
 };
 
 /**
@@ -612,7 +612,7 @@ export type CoreCalendarGetActionEventsByTimesortResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -702,7 +702,7 @@ export type CoreCalendarGetActionEventsByTimesortResponse = {
  * Params of core_calendar_get_allowed_event_types WS.
  */
 export type CoreCalendarGetAllowedEventTypesParams = {
-    courseid: number; // Course to check, empty for site.
+    courseid?: number; // Course to check, empty for site.
 };
 
 /**
@@ -717,7 +717,7 @@ export type CoreCalendarGetAllowedEventTypesResponse = {
  * Params of core_calendar_get_calendar_access_information WS.
  */
 export type CoreCalendarGetCalendarAccessInformationParams = {
-    courseid: number; // Course to check, empty for site calendar events.
+    courseid?: number; // Course to check, empty for site calendar events.
 };
 
 /**
@@ -737,8 +737,8 @@ export type CoreCalendarGetCalendarDayViewParams = {
     year: number; // Year to be viewed.
     month: number; // Month to be viewed.
     day: number; // Day to be viewed.
-    courseid: number; // Course being viewed.
-    categoryid: number; // Category being viewed.
+    courseid?: number; // Course being viewed.
+    categoryid?: number; // Category being viewed.
 };
 
 /**
@@ -749,7 +749,7 @@ export type CoreCalendarGetCalendarDayViewResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -906,7 +906,7 @@ export type CoreCalendarGetCalendarEventByIdResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -995,18 +995,18 @@ export type CoreCalendarGetCalendarEventByIdResponse = {
  * Params of core_calendar_get_calendar_events WS.
  */
 export type CoreCalendarGetCalendarEventsParams = {
-    events: {
-        eventids: number[]; // List of event ids.
-        courseids: number[]; // List of course ids for which events will be returned.
-        groupids: number[]; // List of group ids for which events should be returned.
-        categoryids: number[]; // List of category ids for which events will be returned.
+    events?: {
+        eventids?: number[]; // List of event ids.
+        courseids?: number[]; // List of course ids for which events will be returned.
+        groupids?: number[]; // List of group ids for which events should be returned.
+        categoryids?: number[]; // List of category ids for which events will be returned.
     }; // Event details.
-    options: {
-        userevents: boolean; // Set to true to return current user's user events.
-        siteevents: boolean; // Set to true to return site events.
-        timestart: number; // Time from which events should be returned.
-        timeend: number; // Time to which the events should be returned. We treat 0 and null as no end.
-        ignorehidden: boolean; // Ignore hidden events or not.
+    options?: {
+        userevents?: boolean; // Set to true to return current user's user events.
+        siteevents?: boolean; // Set to true to return site events.
+        timestart?: number; // Time from which events should be returned.
+        timeend?: number; // Time to which the events should be returned. We treat 0 and null as no end.
+        ignorehidden?: boolean; // Ignore hidden events or not.
     }; // Options.
 };
 
@@ -1058,11 +1058,11 @@ export type CoreCalendarGetCalendarExportTokenResponse = {
 export type CoreCalendarGetCalendarMonthlyViewParams = {
     year: number; // Year to be viewed.
     month: number; // Month to be viewed.
-    courseid: number; // Course being viewed.
-    categoryid: number; // Category being viewed.
-    includenavigation: boolean; // Whether to show course navigation.
-    mini: boolean; // Whether to return the mini month view or not.
-    day: number; // Day to be viewed.
+    courseid?: number; // Course being viewed.
+    categoryid?: number; // Category being viewed.
+    includenavigation?: boolean; // Whether to show course navigation.
+    mini?: boolean; // Whether to return the mini month view or not.
+    day?: number; // Day to be viewed.
 };
 
 /**
@@ -1094,7 +1094,7 @@ export type CoreCalendarGetCalendarMonthlyViewResponse = {
                 id: number; // Id.
                 name: string; // Name.
                 description?: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 location?: string; // Location.
                 categoryid?: number; // Categoryid.
                 groupid?: number; // Groupid.
@@ -1254,8 +1254,8 @@ export type CoreCalendarGetCalendarMonthlyViewResponse = {
  * Params of core_calendar_get_calendar_upcoming_view WS.
  */
 export type CoreCalendarGetCalendarUpcomingViewParams = {
-    courseid: number; // Course being viewed.
-    categoryid: number; // Category being viewed.
+    courseid?: number; // Course being viewed.
+    categoryid?: number; // Category being viewed.
 };
 
 /**
@@ -1266,7 +1266,7 @@ export type CoreCalendarGetCalendarUpcomingViewResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -1390,7 +1390,7 @@ export type CoreCalendarSubmitCreateUpdateFormResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -1472,7 +1472,7 @@ export type CoreCalendarSubmitCreateUpdateFormResponse = {
         };
         url: string; // Url.
     };
-    validationerror: boolean; // Invalid form data.
+    validationerror?: boolean; // Invalid form data.
 };
 
 /**
@@ -1491,7 +1491,7 @@ export type CoreCalendarUpdateEventStartDayResponse = {
         id: number; // Id.
         name: string; // Name.
         description?: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         location?: string; // Location.
         categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
@@ -1585,7 +1585,7 @@ export type CoreCommentAddCommentsParams = {
         component: string; // Component.
         content: string; // Component.
         itemid: number; // Associated id.
-        area: string; // String comment area.
+        area?: string; // String comment area.
     }[];
 };
 
@@ -1626,9 +1626,9 @@ export type CoreCommentGetCommentsParams = {
     instanceid: number; // The Instance id of item associated with the context level.
     component: string; // Component.
     itemid: number; // Associated id.
-    area: string; // String comment area.
-    page: number; // Page number (0 based).
-    sortdirection: string; // Sort direction: ASC or DESC.
+    area?: string; // String comment area.
+    page?: number; // Page number (0 based).
+    sortdirection?: string; // Sort direction: ASC or DESC.
 };
 
 /**
@@ -1701,7 +1701,7 @@ export type CoreCompetencyGradeCompetencyInCourseParams = {
     userid: number; // User id.
     competencyid: number; // Competency id.
     grade: number; // New grade.
-    note: string; // A note to attach to the evidence.
+    note?: string; // A note to attach to the evidence.
 };
 
 /**
@@ -1757,7 +1757,7 @@ export type CoreCompetencyListCourseCompetenciesResponse = {
         shortname: string; // Shortname.
         idnumber: string; // Idnumber.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         sortorder: number; // Sortorder.
         parentid: number; // Parentid.
         path: string; // Path.
@@ -1945,7 +1945,7 @@ export type CoreCourseCheckUpdatesParams = {
         id: number; // Context instance id.
         since: number; // Check updates since this time stamp.
     }[];
-    filter: string[]; // Check only for updates in these areas.
+    filter?: string[]; // Check only for updates in these areas.
 };
 
 /**
@@ -1968,13 +1968,13 @@ export type CoreCourseCheckUpdatesResponse = {
  * Params of core_course_get_categories WS.
  */
 export type CoreCourseGetCategoriesParams = {
-    criteria: { // Criteria.
+    criteria?: { // Criteria.
         key: string; // The category column to search, expected keys (value format) are:"id" (int) the category id,"ids" (string) category ids separated by commas,"name" (string) the category name,"parent" (int) the parent category id,"idnumber" (string) category idnumber - user must have 'moodle/category:manage' to search on idnumber,"visible" (int) whether the returned categories must be visible or hidden. If the key is not passed,
                                           // then the function return all categories that the user can see. - user must have 'moodle/category:manage' or 'moodle/category:viewhiddencategories' to search on visible,"theme" (string) only return the categories having this theme - user must have 'moodle/category:manage' to search on theme.
 
         value: string; // The value to match.
     }[];
-    addsubcategories: boolean; // Return the sub categories infos
+    addsubcategories?: boolean; // Return the sub categories infos
                                        // (1 - default) otherwise only the category info (0).
 
 };
@@ -2004,7 +2004,7 @@ export type CoreCourseGetCategoriesResponse = {
  */
 export type CoreCourseGetContentsParams = {
     courseid: number; // Course id.
-    options: { // Options, used since Moodle 2.9.
+    options?: { // Options, used since Moodle 2.9.
         name: string; // The expected keys (value format) are:
                                              // excludemodules (bool) Do not return modules, return only the sections structure
                                              // excludecontents (bool) Do not return module contents (i.e: files inside a resource)
@@ -2220,7 +2220,7 @@ export type CoreCourseGetCourseModuleByInstanceResponse = {
  * Params of core_course_get_courses WS.
  */
 export type CoreCourseGetCoursesParams = {
-    options: {
+    options?: {
         ids?: number[]; // List of course id. If empty return all courses
                                          // except front page course.
 
@@ -2278,14 +2278,14 @@ export type CoreCourseGetCoursesResponse = {
  * Params of core_course_get_courses_by_field WS.
  */
 export type CoreCourseGetCoursesByFieldParams = {
-    field: string; // The field to search can be left empty for all courses or:
+    field?: string; // The field to search can be left empty for all courses or:
                  // id: course id
                  // ids: comma separated course ids
                  // shortname: course short name
                  // idnumber: course id number
                  // category: category id the course belongs to.
 
-    value: string; // The value to match.
+    value?: string; // The value to match.
 };
 
 /**
@@ -2357,11 +2357,11 @@ export type CoreCourseGetCoursesByFieldResponse = {
  */
 export type CoreCourseGetEnrolledCoursesByTimelineClassificationParams = {
     classification: string; // Future, inprogress, or past.
-    limit: number; // Result set limit.
-    offset: number; // Result set offset.
-    sort: string; // Sort string.
-    customfieldname: string; // Used when classification = customfield.
-    customfieldvalue: string; // Used when classification = customfield.
+    limit?: number; // Result set limit.
+    offset?: number; // Result set offset.
+    sort?: string; // Sort string.
+    customfieldname?: string; // Used when classification = customfield.
+    customfieldvalue?: string; // Used when classification = customfield.
 };
 
 /**
@@ -2396,10 +2396,10 @@ export type CoreCourseGetEnrolledCoursesByTimelineClassificationResponse = {
  * Params of core_course_get_recent_courses WS.
  */
 export type CoreCourseGetRecentCoursesParams = {
-    userid: number; // Id of the user, default to current user.
-    limit: number; // Result set limit.
-    offset: number; // Result set offset.
-    sort: string; // Sort string.
+    userid?: number; // Id of the user, default to current user.
+    limit?: number; // Result set limit.
+    offset?: number; // Result set offset.
+    sort?: string; // Sort string.
 };
 
 /**
@@ -2433,7 +2433,7 @@ export type CoreCourseGetRecentCoursesResponse = { // Courses.
 export type CoreCourseGetUpdatesSinceParams = {
     courseid: number; // Course id to check.
     since: number; // Check updates since this time stamp.
-    filter: string[]; // Check only for updates in these areas.
+    filter?: string[]; // Check only for updates in these areas.
 };
 
 /**
@@ -2502,11 +2502,11 @@ export type CoreCourseSearchCoursesParams = {
                                                      // (search, modulelist (only admins), blocklist (only admins), tagid).
 
     criteriavalue: string; // Criteria value.
-    page: number; // Page number (0 based).
-    perpage: number; // Items per page.
-    requiredcapabilities: string[]; // Optional list of required capabilities (used to filter the list).
-    limittoenrolled: boolean; // Limit to enrolled courses.
-    onlywithcompletion: boolean; // Limit to courses where completion is enabled.
+    page?: number; // Page number (0 based).
+    perpage?: number; // Items per page.
+    requiredcapabilities?: string[]; // Optional list of required capabilities (used to filter the list).
+    limittoenrolled?: boolean; // Limit to enrolled courses.
+    onlywithcompletion?: boolean; // Limit to courses where completion is enabled.
 };
 
 /**
@@ -2564,7 +2564,7 @@ export type CoreCourseSetFavouriteCoursesResponse = {
  */
 export type CoreCourseViewCourseParams = {
     courseid: number; // Id of the course.
-    sectionnumber: number; // Section number.
+    sectionnumber?: number; // Section number.
 };
 
 /**
@@ -2599,7 +2599,7 @@ export type CoreEnrolGetCourseEnrolmentMethodsResponse = {
  */
 export type CoreEnrolGetEnrolledUsersParams = {
     courseid: number; // Course id.
-    options: { // Option names:
+    options?: { // Option names:
                          // * withcapability (string) return only users with this capability. This option requires 'moodle/role:review' on the course context.
                          // * groupid (integer) return only users in this group id. If the course has groups enabled and this param
                                              // isn't defined, returns all the viewable users.
@@ -2683,7 +2683,7 @@ export type CoreEnrolGetEnrolledUsersResponse = {
  */
 export type CoreEnrolGetUsersCoursesParams = {
     userid: number; // User id.
-    returnusercount: boolean; // Include count of enrolled users for each course? This can add several seconds to the response time if a user is on several large courses, so set this to false if the value will not be used to improve performance.
+    returnusercount?: boolean; // Include count of enrolled users for each course? This can add several seconds to the response time if a user is on several large courses, so set this to false if the value will not be used to improve performance.
 };
 
 /**
@@ -2808,9 +2808,9 @@ export type CoreFilesGetFilesParams = {
     itemid: number; // Associated id.
     filepath: string; // File path.
     filename: string; // File name.
-    modified: number; // Timestamp to return files changed after this time.
-    contextlevel: string; // The context level for the file location.
-    instanceid: number; // The instance id for where the file is located.
+    modified?: number; // Timestamp to return files changed after this time.
+    contextlevel?: string; // The context level for the file location.
+    instanceid?: number; // The instance id for where the file is located.
 };
 
 /**
@@ -2876,7 +2876,7 @@ export type CoreFiltersGetAvailableInContextResponse = {
  */
 export type CoreGetComponentStringsParams = {
     component: string; // Component.
-    lang: string; // Lang.
+    lang?: string; // Lang.
 };
 
 /**
@@ -2922,7 +2922,7 @@ export type CoreGradesGraderGradingpanelPointStoreParams = {
     contextid: number; // The ID of the context being graded.
     itemname: string; // The grade item itemname being graded.
     gradeduserid: number; // The ID of the user show.
-    notifyuser: boolean; // Wheteher to notify the user or not.
+    notifyuser?: boolean; // Wheteher to notify the user or not.
     formdata: string; // The serialised form data representing the grade.
 };
 
@@ -2982,7 +2982,7 @@ export type CoreGradesGraderGradingpanelScaleStoreParams = {
     contextid: number; // The ID of the context being graded.
     itemname: string; // The grade item itemname being graded.
     gradeduserid: number; // The ID of the user show.
-    notifyuser: boolean; // Wheteher to notify the user or not.
+    notifyuser?: boolean; // Wheteher to notify the user or not.
     formdata: string; // The serialised form data representing the grade.
 };
 
@@ -3012,7 +3012,7 @@ export type CoreGradesGraderGradingpanelScaleStoreResponse = {
  */
 export type CoreGroupGetActivityAllowedGroupsParams = {
     cmid: number; // Course module id.
-    userid: number; // Id of user, empty for current user.
+    userid?: number; // Id of user, empty for current user.
 };
 
 /**
@@ -3091,9 +3091,9 @@ export type CoreGroupGetCourseGroupsResponse = {
  * Params of core_group_get_course_user_groups WS.
  */
 export type CoreGroupGetCourseUserGroupsParams = {
-    courseid: number; // Id of course (empty or 0 for all the courses where the user is enrolled).
-    userid: number; // Id of user (empty or 0 for current user).
-    groupingid: number; // Returns only groups in the specified grouping.
+    courseid?: number; // Id of course (empty or 0 for all the courses where the user is enrolled).
+    userid?: number; // Id of user (empty or 0 for current user).
+    groupingid?: number; // Returns only groups in the specified grouping.
 };
 
 /**
@@ -3116,10 +3116,10 @@ export type CoreGroupGetCourseUserGroupsResponse = {
  */
 export type CoreH5pGetTrustedH5pFileParams = {
     url: string; // H5P file url.
-    frame: number; // The frame allow to show the bar options below the content.
-    export: number; // The export allow to download the package.
-    embed: number; // The embed allow to copy the code to your site.
-    copyright: number; // The copyright option.
+    frame?: number; // The frame allow to show the bar options below the content.
+    export?: number; // The export allow to download the package.
+    embed?: number; // The embed allow to copy the code to your site.
+    copyright?: number; // The copyright option.
 };
 
 /**
@@ -3183,8 +3183,8 @@ export type CoreMessageCreateContactRequestResponse = {
 export type CoreMessageDataForMessageareaSearchMessagesParams = {
     userid: number; // The id of the user who is performing the search.
     search: string; // The string being searched.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -3199,14 +3199,14 @@ export type CoreMessageDataForMessageareaSearchMessagesResponse = {
         ismessaging: boolean; // If we are messaging the user.
         sentfromcurrentuser: boolean; // Was the last message sent from the current user?.
         lastmessage: string; // The user's last message.
-        lastmessagedate: number; // Timestamp for last message.
-        messageid: number; // The unique search message id.
+        lastmessagedate?: number; // Timestamp for last message.
+        messageid?: number; // The unique search message id.
         showonlinestatus: boolean; // Show the user's online status?.
         isonline: boolean; // The user's online status.
         isread: boolean; // If the user has read the message.
         isblocked: boolean; // If the user has been blocked.
-        unreadcount: number; // The number of unread messages in this conversation.
-        conversationid: number; // The id of the conversation.
+        unreadcount?: number; // The number of unread messages in this conversation.
+        conversationid?: number; // The id of the conversation.
     }[];
 };
 
@@ -3228,7 +3228,7 @@ export type CoreMessageDeclineContactRequestResponse = CoreWSExternalWarning[];
  */
 export type CoreMessageDeleteContactsParams = {
     userids: number[]; // List of user IDs.
-    userid: number; // The id of the user we are deleting the contacts for, 0 for the
+    userid?: number; // The id of the user we are deleting the contacts for, 0 for the
                  // current user.
 
 };
@@ -3257,7 +3257,7 @@ export type CoreMessageDeleteConversationsByIdResponse = CoreWSExternalWarning[]
 export type CoreMessageDeleteMessageParams = {
     messageid: number; // The message id.
     userid: number; // The user id of who we want to delete the message for.
-    read: boolean; // If is a message read.
+    read?: boolean; // If is a message read.
 };
 
 /**
@@ -3305,8 +3305,8 @@ export type CoreMessageGetBlockedUsersResponse = {
  */
 export type CoreMessageGetContactRequestsParams = {
     userid: number; // The id of the user we want the requests for.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -3348,11 +3348,11 @@ export type CoreMessageGetConversationParams = {
     conversationid: number; // The id of the conversation to fetch.
     includecontactrequests: boolean; // Include contact requests in the members.
     includeprivacyinfo: boolean; // Include privacy info in the members.
-    memberlimit: number; // Limit for number of members.
-    memberoffset: number; // Offset for member list.
-    messagelimit: number; // Limit for number of messages.
-    messageoffset: number; // Offset for messages list.
-    newestmessagesfirst: boolean; // Order messages by newest first.
+    memberlimit?: number; // Limit for number of members.
+    memberoffset?: number; // Offset for member list.
+    messagelimit?: number; // Limit for number of messages.
+    messageoffset?: number; // Offset for messages list.
+    newestmessagesfirst?: boolean; // Order messages by newest first.
 };
 
 /**
@@ -3360,15 +3360,15 @@ export type CoreMessageGetConversationParams = {
  */
 export type CoreMessageGetConversationResponse = {
     id: number; // The conversation id.
-    name: string; // The conversation name, if set.
-    subname: string; // A subtitle for the conversation name, if set.
-    imageurl: string; // A link to the conversation picture, if set.
+    name?: string; // The conversation name, if set.
+    subname?: string; // A subtitle for the conversation name, if set.
+    imageurl?: string; // A link to the conversation picture, if set.
     type: number; // The type of the conversation (1=individual,2=group,3=self).
     membercount: number; // Total number of conversation members.
     ismuted: boolean; // If the user muted this conversation.
     isfavourite: boolean; // If the user marked this conversation as a favourite.
     isread: boolean; // If the user has read all messages in the conversation.
-    unreadcount: number; // The number of unread messages in this conversation.
+    unreadcount?: number; // The number of unread messages in this conversation.
     members: {
         id: number; // The user id.
         fullname: string; // The user's name.
@@ -3402,7 +3402,7 @@ export type CoreMessageGetConversationResponse = {
         text: string; // The text of the message.
         timecreated: number; // The timecreated timestamp for the message.
     }[];
-    candeletemessagesforallusers: boolean; // If the user can delete messages in the conversation for all users.
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 };
 
 /**
@@ -3413,11 +3413,11 @@ export type CoreMessageGetConversationBetweenUsersParams = {
     otheruserid: number; // The other user id.
     includecontactrequests: boolean; // Include contact requests in the members.
     includeprivacyinfo: boolean; // Include privacy info in the members.
-    memberlimit: number; // Limit for number of members.
-    memberoffset: number; // Offset for member list.
-    messagelimit: number; // Limit for number of messages.
-    messageoffset: number; // Offset for messages list.
-    newestmessagesfirst: boolean; // Order messages by newest first.
+    memberlimit?: number; // Limit for number of members.
+    memberoffset?: number; // Offset for member list.
+    messagelimit?: number; // Limit for number of messages.
+    messageoffset?: number; // Offset for messages list.
+    newestmessagesfirst?: boolean; // Order messages by newest first.
 };
 
 /**
@@ -3425,15 +3425,15 @@ export type CoreMessageGetConversationBetweenUsersParams = {
  */
 export type CoreMessageGetConversationBetweenUsersResponse = {
     id: number; // The conversation id.
-    name: string; // The conversation name, if set.
-    subname: string; // A subtitle for the conversation name, if set.
-    imageurl: string; // A link to the conversation picture, if set.
+    name?: string; // The conversation name, if set.
+    subname?: string; // A subtitle for the conversation name, if set.
+    imageurl?: string; // A link to the conversation picture, if set.
     type: number; // The type of the conversation (1=individual,2=group,3=self).
     membercount: number; // Total number of conversation members.
     ismuted: boolean; // If the user muted this conversation.
     isfavourite: boolean; // If the user marked this conversation as a favourite.
     isread: boolean; // If the user has read all messages in the conversation.
-    unreadcount: number; // The number of unread messages in this conversation.
+    unreadcount?: number; // The number of unread messages in this conversation.
     members: {
         id: number; // The user id.
         fullname: string; // The user's name.
@@ -3467,14 +3467,14 @@ export type CoreMessageGetConversationBetweenUsersResponse = {
         text: string; // The text of the message.
         timecreated: number; // The timecreated timestamp for the message.
     }[];
-    candeletemessagesforallusers: boolean; // If the user can delete messages in the conversation for all users.
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 };
 
 /**
  * Params of core_message_get_conversation_counts WS.
  */
 export type CoreMessageGetConversationCountsParams = {
-    userid: number; // Id of the user, 0 for current user.
+    userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
@@ -3495,10 +3495,10 @@ export type CoreMessageGetConversationCountsResponse = {
 export type CoreMessageGetConversationMembersParams = {
     userid: number; // The id of the user we are performing this action on behalf of.
     conversationid: number; // The id of the conversation.
-    includecontactrequests: boolean; // Do we want to include contact requests?.
-    includeprivacyinfo: boolean; // Do we want to include privacy info?.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
+    includecontactrequests?: boolean; // Do we want to include contact requests?.
+    includeprivacyinfo?: boolean; // Do we want to include privacy info?.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -3538,10 +3538,10 @@ export type CoreMessageGetConversationMembersResponse = {
 export type CoreMessageGetConversationMessagesParams = {
     currentuserid: number; // The current user's id.
     convid: number; // The conversation id.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
-    newest: boolean; // Newest first?.
-    timefrom: number; // The timestamp from which the messages were created.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
+    newest?: boolean; // Newest first?.
+    timefrom?: number; // The timestamp from which the messages were created.
 };
 
 /**
@@ -3589,13 +3589,13 @@ export type CoreMessageGetConversationMessagesResponse = {
  */
 export type CoreMessageGetConversationsParams = {
     userid: number; // The id of the user who we are viewing conversations for.
-    limitfrom: number; // The offset to start at.
-    limitnum: number; // Limit number of conversations to this.
-    type: number; // Filter by type.
-    favourites: boolean; // Whether to restrict the results to contain NO favourite
+    limitfrom?: number; // The offset to start at.
+    limitnum?: number; // Limit number of conversations to this.
+    type?: number; // Filter by type.
+    favourites?: boolean; // Whether to restrict the results to contain NO favourite
              // conversations (false), ONLY favourite conversation (true), or ignore any restriction altogether (null).
 
-    mergeself: boolean; // Whether to include self-conversations (true) or ONLY private
+    mergeself?: boolean; // Whether to include self-conversations (true) or ONLY private
                  // conversations (false) when private conversations are requested.
 
 };
@@ -3606,15 +3606,15 @@ export type CoreMessageGetConversationsParams = {
 export type CoreMessageGetConversationsResponse = {
     conversations: {
         id: number; // The conversation id.
-        name: string; // The conversation name, if set.
-        subname: string; // A subtitle for the conversation name, if set.
-        imageurl: string; // A link to the conversation picture, if set.
+        name?: string; // The conversation name, if set.
+        subname?: string; // A subtitle for the conversation name, if set.
+        imageurl?: string; // A link to the conversation picture, if set.
         type: number; // The type of the conversation (1=individual,2=group,3=self).
         membercount: number; // Total number of conversation members.
         ismuted: boolean; // If the user muted this conversation.
         isfavourite: boolean; // If the user marked this conversation as a favourite.
         isread: boolean; // If the user has read all messages in the conversation.
-        unreadcount: number; // The number of unread messages in this conversation.
+        unreadcount?: number; // The number of unread messages in this conversation.
         members: {
             id: number; // The user id.
             fullname: string; // The user's name.
@@ -3648,7 +3648,7 @@ export type CoreMessageGetConversationsResponse = {
             text: string; // The text of the message.
             timecreated: number; // The timecreated timestamp for the message.
         }[];
-        candeletemessagesforallusers: boolean; // If the user can delete messages in the conversation for all users.
+        candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
     }[];
 };
 
@@ -3658,8 +3658,8 @@ export type CoreMessageGetConversationsResponse = {
 export type CoreMessageGetMemberInfoParams = {
     referenceuserid: number; // Id of the user.
     userids: number[];
-    includecontactrequests: boolean; // Include contact requests in response.
-    includeprivacyinfo: boolean; // Include privacy info in response.
+    includecontactrequests?: boolean; // Include contact requests in response.
+    includeprivacyinfo?: boolean; // Include privacy info in response.
 };
 
 /**
@@ -3698,12 +3698,12 @@ export type CoreMessageGetMemberInfoResponse = {
  */
 export type CoreMessageGetMessagesParams = {
     useridto: number; // The user id who received the message, 0 for any user.
-    useridfrom: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
-    type: string; // Type of message to return, expected values are: notifications, conversations and both.
-    read: boolean; // True for getting read messages, false for unread.
-    newestfirst: boolean; // True for ordering by newest first, false for oldest first.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
+    useridfrom?: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
+    type?: string; // Type of message to return, expected values are: notifications, conversations and both.
+    read?: boolean; // True for getting read messages, false for unread.
+    newestfirst?: boolean; // True for ordering by newest first, false for oldest first.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -3753,9 +3753,9 @@ export type CoreMessageGetReceivedContactRequestsCountResponse = number;
  */
 export type CoreMessageGetSelfConversationParams = {
     userid: number; // The id of the user who we are viewing self-conversations for.
-    messagelimit: number; // Limit for number of messages.
-    messageoffset: number; // Offset for messages list.
-    newestmessagesfirst: boolean; // Order messages by newest first.
+    messagelimit?: number; // Limit for number of messages.
+    messageoffset?: number; // Offset for messages list.
+    newestmessagesfirst?: boolean; // Order messages by newest first.
 };
 
 /**
@@ -3763,15 +3763,15 @@ export type CoreMessageGetSelfConversationParams = {
  */
 export type CoreMessageGetSelfConversationResponse = {
     id: number; // The conversation id.
-    name: string; // The conversation name, if set.
-    subname: string; // A subtitle for the conversation name, if set.
-    imageurl: string; // A link to the conversation picture, if set.
+    name?: string; // The conversation name, if set.
+    subname?: string; // A subtitle for the conversation name, if set.
+    imageurl?: string; // A link to the conversation picture, if set.
     type: number; // The type of the conversation (1=individual,2=group,3=self).
     membercount: number; // Total number of conversation members.
     ismuted: boolean; // If the user muted this conversation.
     isfavourite: boolean; // If the user marked this conversation as a favourite.
     isread: boolean; // If the user has read all messages in the conversation.
-    unreadcount: number; // The number of unread messages in this conversation.
+    unreadcount?: number; // The number of unread messages in this conversation.
     members: {
         id: number; // The user id.
         fullname: string; // The user's name.
@@ -3805,14 +3805,14 @@ export type CoreMessageGetSelfConversationResponse = {
         text: string; // The text of the message.
         timecreated: number; // The timecreated timestamp for the message.
     }[];
-    candeletemessagesforallusers: boolean; // If the user can delete messages in the conversation for all users.
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 };
 
 /**
  * Params of core_message_get_unread_conversation_counts WS.
  */
 export type CoreMessageGetUnreadConversationCountsParams = {
-    userid: number; // Id of the user, 0 for current user.
+    userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
@@ -3844,8 +3844,8 @@ export type CoreMessageGetUnreadConversationsCountResponse = number;
  */
 export type CoreMessageGetUserContactsParams = {
     userid: number; // The id of the user who we retrieving the contacts for.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -3883,7 +3883,7 @@ export type CoreMessageGetUserContactsResponse = {
  * Params of core_message_get_user_message_preferences WS.
  */
 export type CoreMessageGetUserMessagePreferencesParams = {
-    userid: number; // Id of the user, 0 for current user.
+    userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
@@ -3934,7 +3934,7 @@ export type CoreMessageGetUserMessagePreferencesResponse = {
  * Params of core_message_get_user_notification_preferences WS.
  */
 export type CoreMessageGetUserNotificationPreferencesParams = {
-    userid: number; // Id of the user, 0 for current user.
+    userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
@@ -3997,8 +3997,8 @@ export type CoreMessageMarkAllConversationMessagesAsReadResponse = {}; // WARNIN
  */
 export type CoreMessageMarkAllNotificationsAsReadParams = {
     useridto: number; // The user id who received the message, 0 for any user.
-    useridfrom: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
-    timecreatedto: number; // Mark messages created before this time as read, 0 for all messages.
+    useridfrom?: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
+    timecreatedto?: number; // Mark messages created before this time as read, 0 for all messages.
 };
 
 /**
@@ -4011,7 +4011,7 @@ export type CoreMessageMarkAllNotificationsAsReadResponse = boolean;
  */
 export type CoreMessageMarkMessageReadParams = {
     messageid: number; // Id of the message in the messages table.
-    timeread: number; // Timestamp for when the message should be marked read.
+    timeread?: number; // Timestamp for when the message should be marked read.
 };
 
 /**
@@ -4027,7 +4027,7 @@ export type CoreMessageMarkMessageReadResponse = {
  */
 export type CoreMessageMarkNotificationReadParams = {
     notificationid: number; // Id of the notification.
-    timeread: number; // Timestamp for when the notification should be marked read.
+    timeread?: number; // Timestamp for when the notification should be marked read.
 };
 
 /**
@@ -4061,8 +4061,8 @@ export type CoreMessageMessageProcessorConfigFormResponse = {}; // WARNING: Null
 export type CoreMessageMessageSearchUsersParams = {
     userid: number; // The id of the user who is performing the search.
     search: string; // The string being searched.
-    limitfrom: number; // Limit from.
-    limitnum: number; // Limit number.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
 };
 
 /**
@@ -4143,7 +4143,7 @@ export type CoreMessageMuteConversationsResponse = CoreWSExternalWarning[];
  */
 export type CoreMessageSearchContactsParams = {
     searchtext: string; // String the user's fullname has to match to be found.
-    onlymycourses: boolean; // Limit search to the user's courses.
+    onlymycourses?: boolean; // Limit search to the user's courses.
 };
 
 /**
@@ -4163,7 +4163,7 @@ export type CoreMessageSendInstantMessagesParams = {
     messages: {
         touserid: number; // Id of the user to send the private message.
         text: string; // The text of the message.
-        textformat: number; // Text format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        textformat?: number; // Text format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         clientmsgid?: string; // Your own client id for the message. If this id is provided, the fail message id will be returned to you.
     }[];
 };
@@ -4179,7 +4179,7 @@ export type CoreMessageSendInstantMessagesResponse = {
     timecreated?: number; // The timecreated timestamp for the message.
     conversationid?: number; // The conversation id for this message.
     useridfrom?: number; // The user id who sent the message.
-    candeletemessagesforallusers: boolean; // If the user can delete messages in the conversation for all users.
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 }[];
 
 /**
@@ -4189,7 +4189,7 @@ export type CoreMessageSendMessagesToConversationParams = {
     conversationid: number; // Id of the conversation.
     messages: {
         text: string; // The text of the message.
-        textformat: number; // Text format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        textformat?: number; // Text format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     }[];
 };
 
@@ -4207,7 +4207,7 @@ export type CoreMessageSendMessagesToConversationResponse = {
  * Params of core_message_set_favourite_conversations WS.
  */
 export type CoreMessageSetFavouriteConversationsParams = {
-    userid: number; // Id of the user, 0 for current user.
+    userid?: number; // Id of the user, 0 for current user.
     conversations: number[];
 };
 
@@ -4246,7 +4246,7 @@ export type CoreMessageUnmuteConversationsResponse = CoreWSExternalWarning[];
  * Params of core_message_unset_favourite_conversations WS.
  */
 export type CoreMessageUnsetFavouriteConversationsParams = {
-    userid: number; // Id of the user, 0 for current user.
+    userid?: number; // Id of the user, 0 for current user.
     conversations: number[];
 };
 
@@ -4264,7 +4264,7 @@ export type CoreNotesCreateNotesParams = {
         publishstate: string; // 'personal', 'course' or 'site'.
         courseid: number; // Course id of the note (in Moodle a note can only be created into a course, even for site and personal notes).
         text: string; // The text of the message - text or HTML.
-        format: number; // Text format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        format?: number; // Text format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         clientnoteid?: string; // Your own client id for the note. If this id is provided, the fail message id will be returned to you.
     }[];
 };
@@ -4295,7 +4295,7 @@ export type CoreNotesDeleteNotesResponse = CoreWSExternalWarning[];
  */
 export type CoreNotesGetCourseNotesParams = {
     courseid: number; // Course id, 0 for SITE.
-    userid: number; // User id.
+    userid?: number; // User id.
 };
 
 /**
@@ -4345,7 +4345,7 @@ export type CoreNotesGetCourseNotesResponse = {
  */
 export type CoreNotesViewNotesParams = {
     courseid: number; // Course id, 0 for notes at system level.
-    userid: number; // User id, 0 means view all the user notes.
+    userid?: number; // User id, 0 means view all the user notes.
 };
 
 /**
@@ -4390,7 +4390,7 @@ export type CoreRatingAddRatingParams = {
     scaleid: number; // Scale id.
     rating: number; // User rating.
     rateduserid: number; // Rated user id.
-    aggregation: number; // Agreggation method.
+    aggregation?: number; // Agreggation method.
 };
 
 /**
@@ -4494,16 +4494,16 @@ export type CoreTagGetTagAreasResponse = {
  * Params of core_tag_get_tag_cloud WS.
  */
 export type CoreTagGetTagCloudParams = {
-    tagcollid: number; // Tag collection id.
-    isstandard: boolean; // Whether to return only standard tags.
-    limit: number; // Maximum number of tags to retrieve.
-    sort: string; // Sort order for display
+    tagcollid?: number; // Tag collection id.
+    isstandard?: boolean; // Whether to return only standard tags.
+    limit?: number; // Maximum number of tags to retrieve.
+    sort?: string; // Sort order for display
                  // (id, name, rawname, count, flag, isstandard, tagcollid).
 
-    search: string; // Search string.
-    fromctx: number; // Context id where this tag cloud is displayed.
-    ctx: number; // Only retrieve tag instances in this context.
-    rec: number; // Retrieve tag instances in the $ctx context and it's children.
+    search?: string; // Search string.
+    fromctx?: number; // Context id where this tag cloud is displayed.
+    ctx?: number; // Only retrieve tag instances in this context.
+    rec?: number; // Retrieve tag instances in the $ctx context and it's children.
 };
 
 /**
@@ -4740,7 +4740,7 @@ export type CoreUserGetCourseUserProfilesResponse = {
  * Params of core_user_get_private_files_info WS.
  */
 export type CoreUserGetPrivateFilesInfoParams = {
-    userid: number; // Id of the user, default to current user.
+    userid?: number; // Id of the user, default to current user.
 };
 
 /**
@@ -4758,8 +4758,8 @@ export type CoreUserGetPrivateFilesInfoResponse = {
  * Params of core_user_get_user_preferences WS.
  */
 export type CoreUserGetUserPreferencesParams = {
-    name: string; // Preference name, empty for all.
-    userid: number; // Id of the user, default to current user.
+    name?: string; // Preference name, empty for all.
+    userid?: number; // Id of the user, default to current user.
 };
 
 /**
@@ -4839,7 +4839,7 @@ export type CoreUserGetUsersByFieldResponse = {
  */
 export type CoreUserRemoveUserDeviceParams = {
     uuid: string; // The device UUID.
-    appid: string; // The app id, if empty devices matching the UUID for the user will be removed.
+    appid?: string; // The app id, if empty devices matching the UUID for the user will be removed.
 };
 
 /**
@@ -4877,8 +4877,8 @@ export type CoreUserSetUserPreferencesResponse = {
  */
 export type CoreUserUpdatePictureParams = {
     draftitemid: number; // Id of the user draft file to use as image.
-    delete: boolean; // If we should delete the user picture.
-    userid: number; // Id of the user, 0 for current user.
+    delete?: boolean; // If we should delete the user picture.
+    userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
@@ -4894,11 +4894,11 @@ export type CoreUserUpdatePictureResponse = {
  * Params of core_user_update_user_preferences WS.
  */
 export type CoreUserUpdateUserPreferencesParams = {
-    userid: number; // Id of the user, default to current user.
-    emailstop: number; // Enable or disable notifications for this user.
-    preferences: { // User preferences.
+    userid?: number; // Id of the user, default to current user.
+    emailstop?: number; // Enable or disable notifications for this user.
+    preferences?: { // User preferences.
         type: string; // The name of the preference.
-        value: string; // The value of the preference, do not set this field if you
+        value?: string; // The value of the preference, do not set this field if you
                              // want to remove (unset) the current value.
 
     }[];
@@ -4929,7 +4929,7 @@ export type CoreUserViewUserListResponse = {
  */
 export type CoreUserViewUserProfileParams = {
     userid: number; // Id of the user, 0 for current user.
-    courseid: number; // Id of the course, default site course.
+    courseid?: number; // Id of the course, default site course.
 };
 
 /**
@@ -4944,7 +4944,7 @@ export type CoreUserViewUserProfileResponse = {
  * Params of core_webservice_get_site_info WS.
  */
 export type CoreWebserviceGetSiteInfoParams = {
-    serviceshortnames: string[]; // DEPRECATED PARAMETER - it was a design error in the original implementation. \
+    serviceshortnames?: string[]; // DEPRECATED PARAMETER - it was a design error in the original implementation. \
                  // It is ignored now. (parameter kept for backward compatibility).
 
 };
@@ -5033,8 +5033,8 @@ export type EnrolGuestGetInstanceInfoResponse = {
  */
 export type EnrolSelfEnrolUserParams = {
     courseid: number; // Id of the course.
-    password: string; // Enrolment key.
-    instanceid: number; // Instance id of self enrolment plugin.
+    password?: string; // Enrolment key.
+    instanceid?: number; // Instance id of self enrolment plugin.
 };
 
 /**
@@ -5068,7 +5068,7 @@ export type EnrolSelfGetInstanceInfoResponse = {
  * Params of gradereport_overview_get_course_grades WS.
  */
 export type GradereportOverviewGetCourseGradesParams = {
-    userid: number; // Get grades for this user (optional, default current).
+    userid?: number; // Get grades for this user (optional, default current).
 };
 
 /**
@@ -5089,7 +5089,7 @@ export type GradereportOverviewGetCourseGradesResponse = {
  */
 export type GradereportOverviewViewGradeReportParams = {
     courseid: number; // Id of the course.
-    userid: number; // Id of the user, 0 means current user.
+    userid?: number; // Id of the user, 0 means current user.
 };
 
 /**
@@ -5105,8 +5105,8 @@ export type GradereportOverviewViewGradeReportResponse = {
  */
 export type GradereportUserGetGradeItemsParams = {
     courseid: number; // Course Id.
-    userid: number; // Return grades only for this user (optional).
-    groupid: number; // Get users from this group only.
+    userid?: number; // Return grades only for this user (optional).
+    groupid?: number; // Get users from this group only.
 };
 
 /**
@@ -5164,8 +5164,8 @@ export type GradereportUserGetGradeItemsResponse = {
  */
 export type GradereportUserGetGradesTableParams = {
     courseid: number; // Course Id.
-    userid: number; // Return grades only for this user (optional).
-    groupid: number; // Get users from this group only.
+    userid?: number; // Return grades only for this user (optional).
+    groupid?: number; // Get users from this group only.
 };
 
 /**
@@ -5244,7 +5244,7 @@ export type GradereportUserGetGradesTableResponse = {
  */
 export type GradereportUserViewGradeReportParams = {
     courseid: number; // Id of the course.
-    userid: number; // Id of the user, 0 means current user.
+    userid?: number; // Id of the user, 0 means current user.
 };
 
 /**
@@ -5294,7 +5294,7 @@ export type MessageAirnotifierEnableDeviceResponse = {
  */
 export type MessageAirnotifierGetUserDevicesParams = {
     appid: string; // App unique id (usually a reversed domain).
-    userid: number; // User id, 0 for current user.
+    userid?: number; // User id, 0 for current user.
 };
 
 /**
@@ -5333,9 +5333,9 @@ export type MessageAirnotifierIsSystemConfiguredResponse = number;
  */
 export type MessagePopupGetPopupNotificationsParams = {
     useridto: number; // The user id who received the message, 0 for current user.
-    newestfirst: boolean; // True for ordering by newest first, false for oldest first.
-    limit: number; // The number of results to return.
-    offset: number; // Offset the result set by a given amount.
+    newestfirst?: boolean; // True for ordering by newest first, false for oldest first.
+    limit?: number; // The number of results to return.
+    offset?: number; // Offset the result set by a given amount.
 };
 
 /**
@@ -5390,9 +5390,9 @@ export type MessagePopupGetUnreadPopupNotificationCountResponse = number;
  * Params of mod_assign_get_assignments WS.
  */
 export type ModAssignGetAssignmentsParams = {
-    courseids: number[]; // 0 or more course ids.
-    capabilities: string[]; // List of capabilities used to filter courses.
-    includenotenrolledcourses: boolean; // Whether to return courses that the user can see
+    courseids?: number[]; // 0 or more course ids.
+    capabilities?: string[]; // List of capabilities used to filter courses.
+    includenotenrolledcourses?: boolean; // Whether to return courses that the user can see
                                                                  // even if is not enroled in. This requires the parameter courseids
                                                                  // to not be empty.
 
@@ -5460,7 +5460,7 @@ export type ModAssignGetAssignmentsResponse = {
  */
 export type ModAssignGetGradesParams = {
     assignmentids: number[]; // 1 or more assignment ids.
-    since: number; // Timestamp, only return records where timemodified >= since.
+    since?: number; // Timestamp, only return records where timemodified >= since.
 };
 
 /**
@@ -5490,7 +5490,7 @@ export type ModAssignGetGradesResponse = {
 export type ModAssignGetParticipantParams = {
     assignid: number; // Assign instance id.
     userid: number; // User id.
-    embeduser: boolean; // User id.
+    embeduser?: boolean; // User id.
 };
 
 /**
@@ -5563,8 +5563,8 @@ export type ModAssignGetParticipantResponse = {
  */
 export type ModAssignGetSubmissionStatusParams = {
     assignid: number; // Assignment instance id.
-    userid: number; // User id (empty for current user).
-    groupid: number; // Filter by users in group (used for generating the grading summary).
+    userid?: number; // User id (empty for current user).
+    groupid?: number; // Filter by users in group (used for generating the grading summary).
                  // Empty or 0 for all groups information.
 
 };
@@ -5742,9 +5742,9 @@ export type ModAssignGetSubmissionStatusResponse = {
  */
 export type ModAssignGetSubmissionsParams = {
     assignmentids: number[]; // 1 or more assignment ids.
-    status: string; // Status.
-    since: number; // Submitted since.
-    before: number; // Submitted before.
+    status?: string; // Status.
+    since?: number; // Submitted since.
+    before?: number; // Submitted before.
 };
 
 /**
@@ -5837,11 +5837,11 @@ export type ModAssignListParticipantsParams = {
     assignid: number; // Assign instance id.
     groupid: number; // Group id.
     filter: string; // Search string to filter the results.
-    skip: number; // Number of records to skip.
-    limit: number; // Maximum number of records to return.
-    onlyids: boolean; // Do not return all user fields.
-    includeenrolments: boolean; // Do return courses where the user is enrolled.
-    tablesort: boolean; // Apply current user table sorting preferences.
+    skip?: number; // Number of records to skip.
+    limit?: number; // Maximum number of records to return.
+    onlyids?: boolean; // Do not return all user fields.
+    includeenrolments?: boolean; // Do return courses where the user is enrolled.
+    tablesort?: boolean; // Apply current user table sorting preferences.
 };
 
 /**
@@ -5959,14 +5959,14 @@ export type ModAssignSaveGradeParams = {
     addattempt: boolean; // Allow another attempt if the attempt reopen method is manual.
     workflowstate: string; // The next marking workflow state.
     applytoall: boolean; // If true, this grade will be applied to all members of the group (for group assignments).
-    plugindata: {
+    plugindata?: {
         assignfeedbackcomments_editor?: {
             text: string; // The text for this feedback.
             format: number; // The format for this feedback.
         }; // Editor structure.
         files_filemanager?: number; // The id of a draft area containing files for this feedback.
     }; // Plugin data.
-    advancedgradingdata: {
+    advancedgradingdata?: {
         guide?: {
             criteria: {
                 criterionid: number; // Criterion id.
@@ -6010,14 +6010,14 @@ export type ModAssignSaveGradesParams = {
         attemptnumber: number; // The attempt number (-1 means latest attempt).
         addattempt: boolean; // Allow another attempt if manual attempt reopen method.
         workflowstate: string; // The next marking workflow state.
-        plugindata: {
+        plugindata?: {
             assignfeedbackcomments_editor?: {
                 text: string; // The text for this feedback.
                 format: number; // The format for this feedback.
             }; // Editor structure.
             files_filemanager?: number; // The id of a draft area containing files for this feedback.
         }; // Plugin data.
-        advancedgradingdata: {
+        advancedgradingdata?: {
             guide?: {
                 criteria: {
                     criterionid: number; // Criterion id.
@@ -6197,7 +6197,7 @@ export type ModAssignViewSubmissionStatusResponse = {
  * Params of mod_book_get_books_by_courses WS.
  */
 export type ModBookGetBooksByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -6231,7 +6231,7 @@ export type ModBookGetBooksByCoursesResponse = {
  */
 export type ModBookViewBookParams = {
     bookid: number; // Book instance id.
-    chapterid: number; // Chapter id.
+    chapterid?: number; // Chapter id.
 };
 
 /**
@@ -6247,7 +6247,7 @@ export type ModBookViewBookResponse = {
  */
 export type ModChatGetChatLatestMessagesParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
-    chatlasttime: number; // Last time messages were retrieved (epoch time).
+    chatlasttime?: number; // Last time messages were retrieved (epoch time).
 };
 
 /**
@@ -6288,7 +6288,7 @@ export type ModChatGetChatUsersResponse = {
  * Params of mod_chat_get_chats_by_courses WS.
  */
 export type ModChatGetChatsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -6324,7 +6324,7 @@ export type ModChatGetSessionMessagesParams = {
     chatid: number; // Chat instance id.
     sessionstart: number; // The session start time (timestamp).
     sessionend: number; // The session end time (timestamp).
-    groupid: number; // Get messages from users in this group.
+    groupid?: number; // Get messages from users in this group.
                                              // 0 means that the function will determine the user group.
 
 };
@@ -6350,10 +6350,10 @@ export type ModChatGetSessionMessagesResponse = {
  */
 export type ModChatGetSessionsParams = {
     chatid: number; // Chat instance id.
-    groupid: number; // Get messages from users in this group.
+    groupid?: number; // Get messages from users in this group.
                                              // 0 means that the function will determine the user group.
 
-    showall: boolean; // Whether to show completed sessions or not.
+    showall?: boolean; // Whether to show completed sessions or not.
 };
 
 /**
@@ -6377,7 +6377,7 @@ export type ModChatGetSessionsResponse = {
  */
 export type ModChatLoginUserParams = {
     chatid: number; // Chat instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
 
 /**
@@ -6394,7 +6394,7 @@ export type ModChatLoginUserResponse = {
 export type ModChatSendChatMessageParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
     messagetext: string; // The message text.
-    beepid: string; // The beep id.
+    beepid?: string; // The beep id.
 };
 
 /**
@@ -6425,7 +6425,7 @@ export type ModChatViewChatResponse = {
  */
 export type ModChoiceDeleteChoiceResponsesParams = {
     choiceid: number; // Choice instance id.
-    responses: number[]; // Array of response ids, empty for deleting all the current user responses.
+    responses?: number[]; // Array of response ids, empty for deleting all the current user responses.
 };
 
 /**
@@ -6491,7 +6491,7 @@ export type ModChoiceGetChoiceResultsResponse = {
  * Params of mod_choice_get_choices_by_courses WS.
  */
 export type ModChoiceGetChoicesByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -6570,10 +6570,10 @@ export type ModChoiceViewChoiceResponse = {
  */
 export type ModDataAddEntryParams = {
     databaseid: number; // Data instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
     data: { // The fields data to be created.
         fieldid: number; // The field id.
-        subfield: string; // The subfield name (if required).
+        subfield?: string; // The subfield name (if required).
         value: string; // The contents for the field always JSON encoded.
     }[];
 };
@@ -6596,7 +6596,7 @@ export type ModDataAddEntryResponse = {
  */
 export type ModDataApproveEntryParams = {
     entryid: number; // Record entry id.
-    approve: boolean; // Whether to approve (true) or unapprove the entry.
+    approve?: boolean; // Whether to approve (true) or unapprove the entry.
 };
 
 /**
@@ -6627,7 +6627,7 @@ export type ModDataDeleteEntryResponse = {
  */
 export type ModDataGetDataAccessInformationParams = {
     databaseid: number; // Database instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
 
 /**
@@ -6650,7 +6650,7 @@ export type ModDataGetDataAccessInformationResponse = {
  * Params of mod_data_get_databases_by_courses WS.
  */
 export type ModDataGetDatabasesByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -6662,7 +6662,7 @@ export type ModDataGetDatabasesByCoursesResponse = {
         course: number; // Course id.
         name: string; // Database name.
         intro: string; // The Database intro.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         comments: boolean; // Comments enabled.
         timeavailablefrom: number; // Timeavailablefrom field.
         timeavailableto: number; // Timeavailableto field.
@@ -6713,11 +6713,11 @@ export type ModDataGetDatabasesByCoursesResponse = {
  */
 export type ModDataGetEntriesParams = {
     databaseid: number; // Data instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
-    returncontents: boolean; // Whether to return contents or not. This will return each entry
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    returncontents?: boolean; // Whether to return contents or not. This will return each entry
                                                      // raw contents and the complete list view (using the template).
 
-    sort: number; // Sort the records by this field id, reserved ids are:
+    sort?: number; // Sort the records by this field id, reserved ids are:
                                              // 0: timeadded
                                              // -1: firstname
                                              // -2: lastname
@@ -6725,11 +6725,11 @@ export type ModDataGetEntriesParams = {
                                              // -4: timemodified.
                                              // Empty for using the default database setting.
 
-    order: string; // The direction of the sorting: 'ASC' or 'DESC'.
+    order?: string; // The direction of the sorting: 'ASC' or 'DESC'.
                                              // Empty for using the default database setting.
 
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
 };
 
 /**
@@ -6790,7 +6790,7 @@ export type ModDataGetEntriesResponse = {
  */
 export type ModDataGetEntryParams = {
     entryid: number; // Record entry id.
-    returncontents: boolean; // Whether to return contents or not.
+    returncontents?: boolean; // Whether to return contents or not.
 };
 
 /**
@@ -6911,16 +6911,16 @@ export type ModDataGetFieldsResponse = {
  */
 export type ModDataSearchEntriesParams = {
     databaseid: number; // Data instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
-    returncontents: boolean; // Whether to return contents or not.
-    search: string; // Search string (empty when using advanced).
-    advsearch: { // Advanced search.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    returncontents?: boolean; // Whether to return contents or not.
+    search?: string; // Search string (empty when using advanced).
+    advsearch?: { // Advanced search.
         name: string; // Field key for search.
                                                          // Use fn or ln for first or last name.
 
         value: string; // JSON encoded value for search.
     }[];
-    sort: number; // Sort the records by this field id, reserved ids are:
+    sort?: number; // Sort the records by this field id, reserved ids are:
                                              // 0: timeadded
                                              // -1: firstname
                                              // -2: lastname
@@ -6928,11 +6928,11 @@ export type ModDataSearchEntriesParams = {
                                              // -4: timemodified.
                                              // Empty for using the default database setting.
 
-    order: string; // The direction of the sorting: 'ASC' or 'DESC'.
+    order?: string; // The direction of the sorting: 'ASC' or 'DESC'.
                                              // Empty for using the default database setting.
 
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
 };
 
 /**
@@ -6997,7 +6997,7 @@ export type ModDataUpdateEntryParams = {
     entryid: number; // The entry record id.
     data: { // The fields data to be updated.
         fieldid: number; // The field id.
-        subfield: string; // The subfield name (if required).
+        subfield?: string; // The subfield name (if required).
         value: string; // The new contents for the field always JSON encoded.
     }[];
 };
@@ -7035,8 +7035,8 @@ export type ModDataViewDatabaseResponse = {
  */
 export type ModFeedbackGetAnalysisParams = {
     feedbackid: number; // Feedback instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7094,7 +7094,7 @@ export type ModFeedbackGetAnalysisResponse = {
  */
 export type ModFeedbackGetCurrentCompletedTmpParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7119,7 +7119,7 @@ export type ModFeedbackGetCurrentCompletedTmpResponse = {
  */
 export type ModFeedbackGetFeedbackAccessInformationParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7143,7 +7143,7 @@ export type ModFeedbackGetFeedbackAccessInformationResponse = {
  * Params of mod_feedback_get_feedbacks_by_courses WS.
  */
 export type ModFeedbackGetFeedbacksByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -7155,14 +7155,14 @@ export type ModFeedbackGetFeedbacksByCoursesResponse = {
         course: number; // Course id this feedback is part of.
         name: string; // Feedback name.
         intro: string; // Feedback introduction text.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         anonymous: number; // Whether the feedback is anonymous.
         email_notification?: boolean; // Whether email notifications will be sent to teachers.
         multiple_submit: boolean; // Whether multiple submissions are allowed.
         autonumbering: boolean; // Whether questions should be auto-numbered.
         site_after_submit?: string; // Link to next page after submission.
         page_after_submit?: string; // Text to display after submission.
-        page_after_submitformat: number; // Page_after_submit format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        page_after_submitformat?: number; // Page_after_submit format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         publish_stats: boolean; // Whether stats should be published.
         timeopen?: number; // Allow answers from this time.
         timeclose?: number; // Allow answers until this time.
@@ -7198,7 +7198,7 @@ export type ModFeedbackGetFeedbacksByCoursesResponse = {
  */
 export type ModFeedbackGetFinishedResponsesParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7221,7 +7221,7 @@ export type ModFeedbackGetFinishedResponsesResponse = {
  */
 export type ModFeedbackGetItemsParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7274,7 +7274,7 @@ export type ModFeedbackGetItemsResponse = {
  */
 export type ModFeedbackGetLastCompletedParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7298,11 +7298,11 @@ export type ModFeedbackGetLastCompletedResponse = {
  */
 export type ModFeedbackGetNonRespondentsParams = {
     feedbackid: number; // Feedback instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
-    sort: string; // Sort param, must be firstname, lastname or lastaccess (default).
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    sort?: string; // Sort param, must be firstname, lastname or lastaccess (default).
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7325,7 +7325,7 @@ export type ModFeedbackGetNonRespondentsResponse = {
 export type ModFeedbackGetPageItemsParams = {
     feedbackid: number; // Feedback instance id.
     page: number; // The page to get starting by 0.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7380,10 +7380,10 @@ export type ModFeedbackGetPageItemsResponse = {
  */
 export type ModFeedbackGetResponsesAnalysisParams = {
     feedbackid: number; // Feedback instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7424,7 +7424,7 @@ export type ModFeedbackGetResponsesAnalysisResponse = {
  */
 export type ModFeedbackGetUnfinishedResponsesParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7447,7 +7447,7 @@ export type ModFeedbackGetUnfinishedResponsesResponse = {
  */
 export type ModFeedbackLaunchFeedbackParams = {
     feedbackid: number; // Feedback instance id.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7464,12 +7464,12 @@ export type ModFeedbackLaunchFeedbackResponse = {
 export type ModFeedbackProcessPageParams = {
     feedbackid: number; // Feedback instance id.
     page: number; // The page being processed.
-    responses: { // The data to be processed.
+    responses?: { // The data to be processed.
         name: string; // The response name (usually type[index]_id).
         value: string; // The response value.
     }[];
-    goprevious: boolean; // Whether we want to jump to previous page.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    goprevious?: boolean; // Whether we want to jump to previous page.
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7488,8 +7488,8 @@ export type ModFeedbackProcessPageResponse = {
  */
 export type ModFeedbackViewFeedbackParams = {
     feedbackid: number; // Feedback instance id.
-    moduleviewed: boolean; // If we need to mark the module as viewed for completion.
-    courseid: number; // Course where user completes the feedback (for site feedbacks only).
+    moduleviewed?: boolean; // If we need to mark the module as viewed for completion.
+    courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
 
 /**
@@ -7504,7 +7504,7 @@ export type ModFeedbackViewFeedbackResponse = {
  * Params of mod_folder_get_folders_by_courses WS.
  */
 export type ModFolderGetFoldersByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -7517,7 +7517,7 @@ export type ModFolderGetFoldersByCoursesResponse = {
         course: number; // Course id.
         name: string; // Page name.
         intro: string; // Summary.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         introfiles: CoreWSExternalFile[];
         revision: number; // Incremented when after each file changes, to avoid cache.
         timemodified: number; // Last time the folder was modified.
@@ -7554,8 +7554,8 @@ export type ModForumAddDiscussionParams = {
     forumid: number; // Forum instance ID.
     subject: string; // New Discussion subject.
     message: string; // New Discussion message (only html format allowed).
-    groupid: number; // The group, default to 0.
-    options: { // Options.
+    groupid?: number; // The group, default to 0.
+    options?: { // Options.
         name: string; // The allowed keys (value format) are:
                                      // discussionsubscribe (bool); subscribe to the discussion?, default to true
                                      // discussionpinned    (bool); is the discussion pinned, default to false
@@ -7585,7 +7585,7 @@ export type ModForumAddDiscussionPostParams = {
 
     subject: string; // New post subject.
     message: string; // New post message (html assumed if messageformat is not provided).
-    options: { // Options.
+    options?: { // Options.
         name: string; // The allowed keys (value format) are:
                                      // discussionsubscribe (bool); subscribe to the discussion?, default to true
                                      // private (bool); make this reply private to the author of the parent post, default to false.
@@ -7597,7 +7597,7 @@ export type ModForumAddDiscussionPostParams = {
                                                          // this param is validated in the external function.
 
     }[];
-    messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    messageformat?: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
 };
 
 /**
@@ -7716,7 +7716,7 @@ export type ModForumAddDiscussionPostResponse = {
  */
 export type ModForumCanAddDiscussionParams = {
     forumid: number; // Forum instance ID.
-    groupid: number; // The group to check, default to active group.
+    groupid?: number; // The group to check, default to active group.
                                              // Use -1 to check if the user can post in all the groups.
 
 };
@@ -7864,8 +7864,8 @@ export type ModForumGetDiscussionPostResponse = {
  */
 export type ModForumGetDiscussionPostsParams = {
     discussionid: number; // The ID of the discussion from which to fetch posts.
-    sortby: string; // Sort by this element: id, created or modified.
-    sortdirection: string; // Sort direction: ASC or DESC.
+    sortby?: string; // Sort by this element: id, created or modified.
+    sortdirection?: string; // Sort direction: ASC or DESC.
 };
 
 /**
@@ -8060,8 +8060,8 @@ export type ModForumGetForumAccessInformationResponse = {
  */
 export type ModForumGetForumDiscussionPostsParams = {
     discussionid: number; // Discussion ID.
-    sortby: string; // Sort by this element: id, created or modified.
-    sortdirection: string; // Sort direction: ASC or DESC.
+    sortby?: string; // Sort by this element: id, created or modified.
+    sortdirection?: string; // Sort direction: ASC or DESC.
 };
 
 /**
@@ -8143,10 +8143,10 @@ export type ModForumGetForumDiscussionPostsResponse = {
  */
 export type ModForumGetForumDiscussionsParams = {
     forumid: number; // Forum instance id.
-    sortorder: number; // Sort by this element: numreplies, , created or timemodified.
-    page: number; // Current page.
-    perpage: number; // Items per page.
-    groupid: number; // Group id.
+    sortorder?: number; // Sort by this element: numreplies, , created or timemodified.
+    page?: number; // Current page.
+    perpage?: number; // Items per page.
+    groupid?: number; // Group id.
 };
 
 /**
@@ -8197,10 +8197,10 @@ export type ModForumGetForumDiscussionsResponse = {
  */
 export type ModForumGetForumDiscussionsPaginatedParams = {
     forumid: number; // Forum instance id.
-    sortby: string; // Sort by this element: id, timemodified, timestart or timeend.
-    sortdirection: string; // Sort direction: ASC or DESC.
-    page: number; // Current page.
-    perpage: number; // Items per page.
+    sortby?: string; // Sort by this element: id, timemodified, timestart or timeend.
+    sortdirection?: string; // Sort direction: ASC or DESC.
+    page?: number; // Current page.
+    perpage?: number; // Items per page.
 };
 
 /**
@@ -8248,7 +8248,7 @@ export type ModForumGetForumDiscussionsPaginatedResponse = {
  * Params of mod_forum_get_forums_by_courses WS.
  */
 export type ModForumGetForumsByCoursesParams = {
-    courseids: number[]; // Array of Course IDs.
+    courseids?: number[]; // Array of Course IDs.
 };
 
 /**
@@ -8297,8 +8297,8 @@ export type ModForumGetForumsByCoursesResponse = {
 export type ModForumPrepareDraftAreaForPostParams = {
     postid: number; // Post to prepare the draft area for.
     area: string; // Area to prepare: attachment or post.
-    draftitemid: number; // The draft item id to use. 0 to generate one.
-    filestokeep: { // Only keep these files in the draft file area. Empty for keeping all.
+    draftitemid?: number; // The draft item id to use. 0 to generate one.
+    filestokeep?: { // Only keep these files in the draft file area. Empty for keeping all.
         filename: string; // File name.
         filepath: string; // File path.
     }[];
@@ -8518,10 +8518,10 @@ export type ModForumToggleFavouriteStateResponse = {
  */
 export type ModForumUpdateDiscussionPostParams = {
     postid: number; // Post to be updated. It can be a discussion topic post.
-    subject: string; // Updated post subject.
-    message: string; // Updated post message (HTML assumed if messageformat is not provided).
-    messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
-    options: { // Configuration options for the post.
+    subject?: string; // Updated post subject.
+    message?: string; // Updated post message (HTML assumed if messageformat is not provided).
+    messageformat?: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    options?: { // Configuration options for the post.
         name: string; // The allowed keys (value format) are:
                              // pinned (bool); (only for discussions) whether to pin this discussion or not
                              // discussionsubscribe (bool); whether to subscribe to the post or not
@@ -8578,7 +8578,7 @@ export type ModGlossaryAddEntryParams = {
     concept: string; // Glossary concept.
     definition: string; // Glossary concept definition.
     definitionformat: number; // Definition format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
-    options: { // Optional settings.
+    options?: { // Optional settings.
         name: string; // The allowed keys (value format) are:
                          // inlineattachmentsid (int); the draft file area id for inline attachments
                          // attachmentsid (int); the draft file area id for attachments
@@ -8620,10 +8620,10 @@ export type ModGlossaryDeleteEntryResponse = {
  */
 export type ModGlossaryGetAuthorsParams = {
     id: number; // Glossary entry ID.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes self even if all of their entries require approval. When true, also includes authors only having entries pending approval.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes self even if all of their entries require approval. When true, also includes authors only having entries pending approval.
     }; // An array of options.
 };
 
@@ -8645,8 +8645,8 @@ export type ModGlossaryGetAuthorsResponse = {
  */
 export type ModGlossaryGetCategoriesParams = {
     id: number; // The glossary ID.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
 };
 
 /**
@@ -8669,12 +8669,12 @@ export type ModGlossaryGetCategoriesResponse = {
 export type ModGlossaryGetEntriesByAuthorParams = {
     id: number; // Glossary entry ID.
     letter: string; // First letter of firstname or lastname, or either keywords: 'ALL' or 'SPECIAL'.
-    field: string; // Search and order using: 'FIRSTNAME' or 'LASTNAME'.
-    sort: string; // The direction of the order: 'ASC' or 'DESC'.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    field?: string; // Search and order using: 'FIRSTNAME' or 'LASTNAME'.
+    sort?: string; // The direction of the order: 'ASC' or 'DESC'.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -8756,12 +8756,12 @@ export type ModGlossaryGetEntriesByAuthorResponse = {
 export type ModGlossaryGetEntriesByAuthorIdParams = {
     id: number; // Glossary entry ID.
     authorid: number; // The author ID.
-    order: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
-    sort: string; // The direction of the order: 'ASC' or 'DESC'.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
+    sort?: string; // The direction of the order: 'ASC' or 'DESC'.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -8843,10 +8843,10 @@ export type ModGlossaryGetEntriesByAuthorIdResponse = {
 export type ModGlossaryGetEntriesByCategoryParams = {
     id: number; // The glossary ID.
     categoryid: number; // The category ID. Use '0' for all categories, or '-1' for uncategorised entries.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -8888,8 +8888,8 @@ export type ModGlossaryGetEntriesByCategoryResponse = {
             ordering: number; // Tag ordering.
             flag: number; // Whether the tag is flagged as inappropriate.
         }[];
-        categoryid: number; // The category ID. This may be '-1' when the entry is not categorised.
-        categoryname: string; // The category name. May be empty when the entry is not categorised, or the request was limited to one category.
+        categoryid?: number; // The category ID. This may be '-1' when the entry is not categorised.
+        categoryname?: string; // The category name. May be empty when the entry is not categorised, or the request was limited to one category.
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -8929,12 +8929,12 @@ export type ModGlossaryGetEntriesByCategoryResponse = {
  */
 export type ModGlossaryGetEntriesByDateParams = {
     id: number; // Glossary entry ID.
-    order: string; // Order the records by: 'CREATION' or 'UPDATE'.
-    sort: string; // The direction of the order: 'ASC' or 'DESC'.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    order?: string; // Order the records by: 'CREATION' or 'UPDATE'.
+    sort?: string; // The direction of the order: 'ASC' or 'DESC'.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -9016,10 +9016,10 @@ export type ModGlossaryGetEntriesByDateResponse = {
 export type ModGlossaryGetEntriesByLetterParams = {
     id: number; // Glossary entry ID.
     letter: string; // A letter, or either keywords: 'ALL' or 'SPECIAL'.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -9101,13 +9101,13 @@ export type ModGlossaryGetEntriesByLetterResponse = {
 export type ModGlossaryGetEntriesBySearchParams = {
     id: number; // Glossary entry ID.
     query: string; // The query string.
-    fullsearch: boolean; // The query.
-    order: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
-    sort: string; // The direction of the order: 'ASC' or 'DESC'.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    fullsearch?: boolean; // The query.
+    order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
+    sort?: string; // The direction of the order: 'ASC' or 'DESC'.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -9189,10 +9189,10 @@ export type ModGlossaryGetEntriesBySearchResponse = {
 export type ModGlossaryGetEntriesByTermParams = {
     id: number; // Glossary entry ID.
     term: string; // The entry concept, or alias.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
-        includenotapproved: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
+        includenotapproved?: boolean; // When false, includes the non-approved entries created by the user. When true, also includes the ones that the user has the permission to approve.
     }; // An array of options.
 };
 
@@ -9274,11 +9274,11 @@ export type ModGlossaryGetEntriesByTermResponse = {
 export type ModGlossaryGetEntriesToApproveParams = {
     id: number; // Glossary entry ID.
     letter: string; // A letter, or either keywords: 'ALL' or 'SPECIAL'.
-    order: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
-    sort: string; // The direction of the order: 'ASC' or 'DESC'.
-    from: number; // Start returning records from here.
-    limit: number; // Number of records to return.
-    options: {
+    order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
+    sort?: string; // The direction of the order: 'ASC' or 'DESC'.
+    from?: number; // Start returning records from here.
+    limit?: number; // Number of records to return.
+    options?: {
     }; // An array of options.
 };
 
@@ -9440,7 +9440,7 @@ export type ModGlossaryGetEntryByIdResponse = {
  * Params of mod_glossary_get_glossaries_by_courses WS.
  */
 export type ModGlossaryGetGlossariesByCoursesParams = {
-    courseids: number[]; // Array of course IDs.
+    courseids?: number[]; // Array of course IDs.
 };
 
 /**
@@ -9521,7 +9521,7 @@ export type ModGlossaryUpdateEntryParams = {
     concept: string; // Glossary concept.
     definition: string; // Glossary concept definition.
     definitionformat: number; // Definition format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
-    options: { // Optional settings.
+    options?: { // Optional settings.
         name: string; // The allowed keys (value format) are:
                          // inlineattachmentsid (int); the draft file area id for inline attachments
                          // attachmentsid (int); the draft file area id for attachments
@@ -9579,7 +9579,7 @@ export type ModGlossaryViewGlossaryResponse = {
  */
 export type ModH5pactivityGetAttemptsParams = {
     h5pactivityid: number; // H5p activity instance id.
-    userids: number[]; // User ids.
+    userids?: number[]; // User ids.
 };
 
 /**
@@ -9629,7 +9629,7 @@ export type ModH5pactivityGetAttemptsResponse = {
  * Params of mod_h5pactivity_get_h5pactivities_by_courses WS.
  */
 export type ModH5pactivityGetH5pactivitiesByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -9643,7 +9643,7 @@ export type ModH5pactivityGetH5pactivitiesByCoursesResponse = {
         timecreated?: number; // Timestamp of when the instance was added to the course.
         timemodified?: number; // Timestamp of when the instance was last modified.
         intro: string; // H5P activity description.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         grade?: number; // The maximum grade for submission.
         displayoptions: number; // H5P Button display options.
         enabletracking: number; // Enable xAPI tracking.
@@ -9706,7 +9706,7 @@ export type ModH5pactivityGetH5pactivityAccessInformationResponse = {
  */
 export type ModH5pactivityGetResultsParams = {
     h5pactivityid: number; // H5p activity instance id.
-    attemptids: number[]; // Attempt ids.
+    attemptids?: number[]; // Attempt ids.
 };
 
 /**
@@ -9792,7 +9792,7 @@ export type ModH5pactivityViewH5pactivityResponse = {
  * Params of mod_imscp_get_imscps_by_courses WS.
  */
 export type ModImscpGetImscpsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -9838,7 +9838,7 @@ export type ModImscpViewImscpResponse = {
  * Params of mod_label_get_labels_by_courses WS.
  */
 export type ModLabelGetLabelsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -9851,7 +9851,7 @@ export type ModLabelGetLabelsByCoursesResponse = {
         course: number; // Course id.
         name: string; // Label name.
         intro: string; // Label contents.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         introfiles: CoreWSExternalFile[];
         timemodified: number; // Last time the label was modified.
         section: number; // Course section id.
@@ -9867,9 +9867,9 @@ export type ModLabelGetLabelsByCoursesResponse = {
  */
 export type ModLessonFinishAttemptParams = {
     lessonid: number; // Lesson instance id.
-    password: string; // Optional password (the lesson may be protected).
-    outoftime: boolean; // If the user run out of time.
-    review: boolean; // If we want to review just after finishing (1 hour margin).
+    password?: string; // Optional password (the lesson may be protected).
+    outoftime?: boolean; // If the user run out of time.
+    review?: boolean; // If we want to review just after finishing (1 hour margin).
 };
 
 /**
@@ -9895,7 +9895,7 @@ export type ModLessonFinishAttemptResponse = {
  */
 export type ModLessonGetAttemptsOverviewParams = {
     lessonid: number; // Lesson instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
 
 /**
@@ -9933,7 +9933,7 @@ export type ModLessonGetAttemptsOverviewResponse = {
 export type ModLessonGetContentPagesViewedParams = {
     lessonid: number; // Lesson instance id.
     lessonattempt: number; // Lesson attempt number.
-    userid: number; // The user id (empty for current user).
+    userid?: number; // The user id (empty for current user).
 };
 
 /**
@@ -9958,7 +9958,7 @@ export type ModLessonGetContentPagesViewedResponse = {
  */
 export type ModLessonGetLessonParams = {
     lessonid: number; // Lesson instance id.
-    password: string; // Lesson password.
+    password?: string; // Lesson password.
 };
 
 /**
@@ -9971,7 +9971,7 @@ export type ModLessonGetLessonResponse = {
         coursemodule: number; // Course module id.
         name: string; // Lesson name.
         intro?: string; // Lesson introduction text.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         practice?: boolean; // Practice lesson?.
         modattempts?: boolean; // Allow student review?.
         usepassword?: boolean; // Password protected lesson?.
@@ -10064,7 +10064,7 @@ export type ModLessonGetLessonAccessInformationResponse = {
  * Params of mod_lesson_get_lessons_by_courses WS.
  */
 export type ModLessonGetLessonsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -10077,7 +10077,7 @@ export type ModLessonGetLessonsByCoursesResponse = {
         coursemodule: number; // Course module id.
         name: string; // Lesson name.
         intro?: string; // Lesson introduction text.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         practice?: boolean; // Practice lesson?.
         modattempts?: boolean; // Allow student review?.
         usepassword?: boolean; // Password protected lesson?.
@@ -10145,9 +10145,9 @@ export type ModLessonGetLessonsByCoursesResponse = {
 export type ModLessonGetPageDataParams = {
     lessonid: number; // Lesson instance id.
     pageid: number; // The page id.
-    password: string; // Optional password (the lesson may be protected).
-    review: boolean; // If we want to review just after finishing (1 hour margin).
-    returncontents: boolean; // If we must return the complete page contents once rendered.
+    password?: string; // Optional password (the lesson may be protected).
+    review?: boolean; // If we want to review just after finishing (1 hour margin).
+    returncontents?: boolean; // If we must return the complete page contents once rendered.
 };
 
 /**
@@ -10208,7 +10208,7 @@ export type ModLessonGetPageDataResponse = {
  */
 export type ModLessonGetPagesParams = {
     lessonid: number; // Lesson instance id.
-    password: string; // Optional password (the lesson may be protected).
+    password?: string; // Optional password (the lesson may be protected).
 };
 
 /**
@@ -10269,9 +10269,9 @@ export type ModLessonGetPagesPossibleJumpsResponse = {
 export type ModLessonGetQuestionsAttemptsParams = {
     lessonid: number; // Lesson instance id.
     attempt: number; // Lesson attempt number.
-    correct: boolean; // Only fetch correct attempts.
-    pageid: number; // Only fetch attempts at the given page.
-    userid: number; // Only fetch attempts of the given user.
+    correct?: boolean; // Only fetch correct attempts.
+    pageid?: number; // Only fetch attempts at the given page.
+    userid?: number; // Only fetch attempts of the given user.
 };
 
 /**
@@ -10359,7 +10359,7 @@ export type ModLessonGetUserAttemptResponse = {
 export type ModLessonGetUserAttemptGradeParams = {
     lessonid: number; // Lesson instance id.
     lessonattempt: number; // Lesson attempt number.
-    userid: number; // The user id (empty for current user).
+    userid?: number; // The user id (empty for current user).
 };
 
 /**
@@ -10383,7 +10383,7 @@ export type ModLessonGetUserAttemptGradeResponse = {
  */
 export type ModLessonGetUserGradeParams = {
     lessonid: number; // Lesson instance id.
-    userid: number; // The user id (empty for current user).
+    userid?: number; // The user id (empty for current user).
 };
 
 /**
@@ -10400,7 +10400,7 @@ export type ModLessonGetUserGradeResponse = {
  */
 export type ModLessonGetUserTimersParams = {
     lessonid: number; // Lesson instance id.
-    userid: number; // The user id (empty for current user).
+    userid?: number; // The user id (empty for current user).
 };
 
 /**
@@ -10424,9 +10424,9 @@ export type ModLessonGetUserTimersResponse = {
  */
 export type ModLessonLaunchAttemptParams = {
     lessonid: number; // Lesson instance id.
-    password: string; // Optional password (the lesson may be protected).
-    pageid: number; // Page id to continue from (only when continuing an attempt).
-    review: boolean; // If we want to review just after finishing.
+    password?: string; // Optional password (the lesson may be protected).
+    pageid?: number; // Page id to continue from (only when continuing an attempt).
+    review?: boolean; // If we want to review just after finishing.
 };
 
 /**
@@ -10452,8 +10452,8 @@ export type ModLessonProcessPageParams = {
         name: string; // Data name.
         value: string; // Data value.
     }[];
-    password: string; // Optional password (the lesson may be protected).
-    review: boolean; // If we want to review just after finishing (1 hour margin).
+    password?: string; // Optional password (the lesson may be protected).
+    review?: boolean; // If we want to review just after finishing (1 hour margin).
 };
 
 /**
@@ -10490,7 +10490,7 @@ export type ModLessonProcessPageResponse = {
  */
 export type ModLessonViewLessonParams = {
     lessonid: number; // Lesson instance id.
-    password: string; // Lesson password.
+    password?: string; // Lesson password.
 };
 
 /**
@@ -10505,7 +10505,7 @@ export type ModLessonViewLessonResponse = {
  * Params of mod_lti_get_ltis_by_courses WS.
  */
 export type ModLtiGetLtisByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -10587,7 +10587,7 @@ export type ModLtiViewLtiResponse = {
  * Params of mod_page_get_pages_by_courses WS.
  */
 export type ModPageGetPagesByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -10600,10 +10600,10 @@ export type ModPageGetPagesByCoursesResponse = {
         course: number; // Course id.
         name: string; // Page name.
         intro: string; // Summary.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         introfiles: CoreWSExternalFile[];
         content: string; // Page content.
-        contentformat: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        contentformat?: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         contentfiles: CoreWSExternalFile[];
         legacyfiles: number; // Legacy files flag.
         legacyfileslast: number; // Legacy files last control flag.
@@ -10639,7 +10639,7 @@ export type ModPageViewPageResponse = {
  */
 export type ModQuizGetAttemptAccessInformationParams = {
     quizid: number; // Quiz instance id.
-    attemptid: number; // Attempt id, 0 for the user last attempt if exists.
+    attemptid?: number; // Attempt id, 0 for the user last attempt if exists.
 };
 
 /**
@@ -10661,7 +10661,7 @@ export type ModQuizGetAttemptAccessInformationResponse = {
 export type ModQuizGetAttemptDataParams = {
     attemptid: number; // Attempt id.
     page: number; // Page number.
-    preflightdata: { // Preflight required data (like passwords).
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
@@ -10735,7 +10735,7 @@ export type ModQuizGetAttemptDataResponse = {
  */
 export type ModQuizGetAttemptReviewParams = {
     attemptid: number; // Attempt id.
-    page: number; // Page number, empty for all the questions in all the pages.
+    page?: number; // Page number, empty for all the questions in all the pages.
 };
 
 /**
@@ -10808,7 +10808,7 @@ export type ModQuizGetAttemptReviewResponse = {
  */
 export type ModQuizGetAttemptSummaryParams = {
     attemptid: number; // Attempt id.
-    preflightdata: { // Preflight required data (like passwords).
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
@@ -10852,7 +10852,7 @@ export type ModQuizGetAttemptSummaryResponse = {
  */
 export type ModQuizGetCombinedReviewOptionsParams = {
     quizid: number; // Quiz instance id.
-    userid: number; // User id (empty for current user).
+    userid?: number; // User id (empty for current user).
 };
 
 /**
@@ -10931,7 +10931,7 @@ export type ModQuizGetQuizRequiredQtypesResponse = {
  * Params of mod_quiz_get_quizzes_by_courses WS.
  */
 export type ModQuizGetQuizzesByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -11063,9 +11063,9 @@ export type ModQuizGetQuizzesByCoursesResponse = {
  */
 export type ModQuizGetUserAttemptsParams = {
     quizid: number; // Quiz instance id.
-    userid: number; // User id, empty for current user.
-    status: string; // Quiz status: all, finished or unfinished.
-    includepreviews: boolean; // Whether to include previews or not.
+    userid?: number; // User id, empty for current user.
+    status?: string; // Quiz status: all, finished or unfinished.
+    includepreviews?: boolean; // Whether to include previews or not.
 };
 
 /**
@@ -11106,7 +11106,7 @@ export type ModQuizGetUserAttemptsResponse = {
  */
 export type ModQuizGetUserBestGradeParams = {
     quizid: number; // Quiz instance id.
-    userid: number; // User id.
+    userid?: number; // User id.
 };
 
 /**
@@ -11123,13 +11123,13 @@ export type ModQuizGetUserBestGradeResponse = {
  */
 export type ModQuizProcessAttemptParams = {
     attemptid: number; // Attempt id.
-    data: { // The data to be saved.
+    data?: { // The data to be saved.
         name: string; // Data name.
         value: string; // Data value.
     }[];
-    finishattempt: boolean; // Whether to finish or not the attempt.
-    timeup: boolean; // Whether the WS was called by a timer when the time is up.
-    preflightdata: { // Preflight required data (like passwords).
+    finishattempt?: boolean; // Whether to finish or not the attempt.
+    timeup?: boolean; // Whether the WS was called by a timer when the time is up.
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
@@ -11154,7 +11154,7 @@ export type ModQuizSaveAttemptParams = {
         name: string; // Data name.
         value: string; // Data value.
     }[];
-    preflightdata: { // Preflight required data (like passwords).
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
@@ -11173,11 +11173,11 @@ export type ModQuizSaveAttemptResponse = {
  */
 export type ModQuizStartAttemptParams = {
     quizid: number; // Quiz instance id.
-    preflightdata: { // Preflight required data (like passwords).
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
-    forcenew: boolean; // Whether to force a new attempt or not.
+    forcenew?: boolean; // Whether to force a new attempt or not.
 };
 
 /**
@@ -11219,7 +11219,7 @@ export type ModQuizStartAttemptResponse = {
 export type ModQuizViewAttemptParams = {
     attemptid: number; // Attempt id.
     page: number; // Page number.
-    preflightdata: { // Preflight required data (like passwords).
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
@@ -11253,7 +11253,7 @@ export type ModQuizViewAttemptReviewResponse = {
  */
 export type ModQuizViewAttemptSummaryParams = {
     attemptid: number; // Attempt id.
-    preflightdata: { // Preflight required data (like passwords).
+    preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
         value: string; // Data value.
     }[];
@@ -11286,7 +11286,7 @@ export type ModQuizViewQuizResponse = {
  * Params of mod_resource_get_resources_by_courses WS.
  */
 export type ModResourceGetResourcesByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -11299,7 +11299,7 @@ export type ModResourceGetResourcesByCoursesResponse = {
         course: number; // Course id.
         name: string; // Page name.
         intro: string; // Summary.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         introfiles: CoreWSExternalFile[];
         contentfiles: CoreWSExternalFile[];
         tobemigrated: number; // Whether this resource was migrated.
@@ -11360,7 +11360,7 @@ export type ModScormGetScormAccessInformationResponse = {
 export type ModScormGetScormAttemptCountParams = {
     scormid: number; // SCORM instance id.
     userid: number; // User id.
-    ignoremissingcompletion: boolean; // Ignores attempts that haven't reported a grade/completion.
+    ignoremissingcompletion?: boolean; // Ignores attempts that haven't reported a grade/completion.
 };
 
 /**
@@ -11377,7 +11377,7 @@ export type ModScormGetScormAttemptCountResponse = {
 export type ModScormGetScormScoTracksParams = {
     scoid: number; // Sco id.
     userid: number; // User id.
-    attempt: number; // Attempt number (0 for last attempt).
+    attempt?: number; // Attempt number (0 for last attempt).
 };
 
 /**
@@ -11399,7 +11399,7 @@ export type ModScormGetScormScoTracksResponse = {
  */
 export type ModScormGetScormScoesParams = {
     scormid: number; // Scorm instance id.
-    organization: string; // Organization id.
+    organization?: string; // Organization id.
 };
 
 /**
@@ -11455,7 +11455,7 @@ export type ModScormGetScormUserDataResponse = {
  * Params of mod_scorm_get_scorms_by_courses WS.
  */
 export type ModScormGetScormsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -11542,7 +11542,7 @@ export type ModScormInsertScormTracksResponse = {
  */
 export type ModScormLaunchScoParams = {
     scormid: number; // SCORM instance id.
-    scoid: number; // SCO id (empty for launching the first SCO).
+    scoid?: number; // SCO id (empty for launching the first SCO).
 };
 
 /**
@@ -11596,7 +11596,7 @@ export type ModSurveyGetQuestionsResponse = {
  * Params of mod_survey_get_surveys_by_courses WS.
  */
 export type ModSurveyGetSurveysByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -11663,7 +11663,7 @@ export type ModSurveyViewSurveyResponse = {
  * Params of mod_url_get_urls_by_courses WS.
  */
 export type ModUrlGetUrlsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -11676,7 +11676,7 @@ export type ModUrlGetUrlsByCoursesResponse = {
         course: number; // Course id.
         name: string; // URL name.
         intro: string; // Summary.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         introfiles: CoreWSExternalFile[];
         externalurl: string; // External URL.
         display: number; // How to display the url.
@@ -11712,7 +11712,7 @@ export type ModUrlViewUrlResponse = {
 export type ModWikiEditPageParams = {
     pageid: number; // Page ID.
     content: string; // Page contents.
-    section: string; // Section page title.
+    section?: string; // Section page title.
 };
 
 /**
@@ -11766,8 +11766,8 @@ export type ModWikiGetPageContentsResponse = {
  */
 export type ModWikiGetPageForEditingParams = {
     pageid: number; // Page ID to edit.
-    section: string; // Section page title.
-    lockonly: boolean; // Just renew lock and not return content.
+    section?: string; // Section page title.
+    lockonly?: boolean; // Just renew lock and not return content.
 };
 
 /**
@@ -11787,8 +11787,8 @@ export type ModWikiGetPageForEditingResponse = {
  */
 export type ModWikiGetSubwikiFilesParams = {
     wikiid: number; // Wiki instance ID.
-    groupid: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
-    userid: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
+    groupid?: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
+    userid?: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
 };
 
 /**
@@ -11804,12 +11804,12 @@ export type ModWikiGetSubwikiFilesResponse = {
  */
 export type ModWikiGetSubwikiPagesParams = {
     wikiid: number; // Wiki instance ID.
-    groupid: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
-    userid: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
-    options: {
-        sortby: string; // Field to sort by (id, title, ...).
-        sortdirection: string; // Sort direction: ASC or DESC.
-        includecontent: number; // Include each page contents or just the contents size.
+    groupid?: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
+    userid?: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
+    options?: {
+        sortby?: string; // Field to sort by (id, title, ...).
+        sortdirection?: string; // Sort direction: ASC or DESC.
+        includecontent?: number; // Include each page contents or just the contents size.
     }; // Options.
 };
 
@@ -11873,7 +11873,7 @@ export type ModWikiGetSubwikisResponse = {
  * Params of mod_wiki_get_wikis_by_courses WS.
  */
 export type ModWikiGetWikisByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -11911,13 +11911,13 @@ export type ModWikiGetWikisByCoursesResponse = {
 export type ModWikiNewPageParams = {
     title: string; // New page title.
     content: string; // Page contents.
-    contentformat: string; // Page contents format. If an invalid format is provided, default
+    contentformat?: string; // Page contents format. If an invalid format is provided, default
                  // wiki format is used.
 
-    subwikiid: number; // Page's subwiki ID.
-    wikiid: number; // Page's wiki ID. Used if subwiki does not exists.
-    userid: number; // Subwiki's user ID. Used if subwiki does not exists.
-    groupid: number; // Subwiki's group ID. Used if subwiki does not exists.
+    subwikiid?: number; // Page's subwiki ID.
+    wikiid?: number; // Page's wiki ID. Used if subwiki does not exists.
+    userid?: number; // Subwiki's user ID. Used if subwiki does not exists.
+    groupid?: number; // Subwiki's group ID. Used if subwiki does not exists.
 };
 
 /**
@@ -11964,10 +11964,10 @@ export type ModWikiViewWikiResponse = {
 export type ModWorkshopAddSubmissionParams = {
     workshopid: number; // Workshop id.
     title: string; // Submission title.
-    content: string; // Submission text content.
-    contentformat: number; // The format used for the content.
-    inlineattachmentsid: number; // The draft file area id for inline attachments in the content.
-    attachmentsid: number; // The draft file area id for attachments.
+    content?: string; // Submission text content.
+    contentformat?: number; // The format used for the content.
+    inlineattachmentsid?: number; // The draft file area id for inline attachments in the content.
+    attachmentsid?: number; // The draft file area id for attachments.
 };
 
 /**
@@ -11999,10 +11999,10 @@ export type ModWorkshopDeleteSubmissionResponse = {
  */
 export type ModWorkshopEvaluateAssessmentParams = {
     assessmentid: number; // Assessment id.
-    feedbacktext: string; // The feedback for the reviewer.
-    feedbackformat: number; // The feedback format for text.
-    weight: number; // The new weight for the assessment.
-    gradinggradeover: string; // The new grading grade.
+    feedbacktext?: string; // The feedback for the reviewer.
+    feedbackformat?: number; // The feedback format for text.
+    weight?: number; // The new weight for the assessment.
+    gradinggradeover?: string; // The new grading grade.
 };
 
 /**
@@ -12018,10 +12018,10 @@ export type ModWorkshopEvaluateAssessmentResponse = {
  */
 export type ModWorkshopEvaluateSubmissionParams = {
     submissionid: number; // Submission id.
-    feedbacktext: string; // The feedback for the author.
-    feedbackformat: number; // The feedback format for text.
-    published: boolean; // Publish the submission for others?.
-    gradeover: string; // The new submission grade.
+    feedbacktext?: string; // The feedback for the author.
+    feedbackformat?: number; // The feedback format for text.
+    published?: boolean; // Publish the submission for others?.
+    gradeover?: string; // The new submission grade.
 };
 
 /**
@@ -12063,14 +12063,14 @@ export type ModWorkshopGetAssessmentResponse = {
 
         gradinggradeoverby: number; // The id of the user who has overridden the grade for submission.
         feedbackauthor: string; // The comment/feedback from the reviewer for the author.
-        feedbackauthorformat: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         feedbackauthorattachment: number; // Are there some files attached to the feedbackauthor field?
                  // Sets to 1 by file_postupdate_standard_filemanager().
 
         feedbackreviewer?: string; // The comment/feedback from the teacher for the reviewer.
                  // For example the reason why the grade for assessment was overridden.
 
-        feedbackreviewerformat: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackreviewerformat?: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         feedbackcontentfiles: { // Feedbackcontentfiles.
             filename?: string; // File name.
             filepath?: string; // File path.
@@ -12100,7 +12100,7 @@ export type ModWorkshopGetAssessmentResponse = {
  */
 export type ModWorkshopGetAssessmentFormDefinitionParams = {
     assessmentid: number; // Assessment id.
-    mode: string; // The form mode (assessment or preview).
+    mode?: string; // The form mode (assessment or preview).
 };
 
 /**
@@ -12136,7 +12136,7 @@ export type ModWorkshopGetAssessmentFormDefinitionResponse = {
  */
 export type ModWorkshopGetGradesParams = {
     workshopid: number; // Workshop instance id.
-    userid: number; // User id (empty or 0 for current user).
+    userid?: number; // User id (empty or 0 for current user).
 };
 
 /**
@@ -12157,13 +12157,13 @@ export type ModWorkshopGetGradesResponse = {
  */
 export type ModWorkshopGetGradesReportParams = {
     workshopid: number; // Workshop instance id.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
-    sortby: string; // Sort by this element: lastname, firstname, submissiontitle,
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    sortby?: string; // Sort by this element: lastname, firstname, submissiontitle,
                  // submissionmodified, submissiongrade, gradinggrade.
 
-    sortdirection: string; // Sort direction: ASC or DESC.
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
+    sortdirection?: string; // Sort direction: ASC or DESC.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
 };
 
 /**
@@ -12218,7 +12218,7 @@ export type ModWorkshopGetGradesReportResponse = {
  */
 export type ModWorkshopGetReviewerAssessmentsParams = {
     workshopid: number; // Workshop instance id.
-    userid: number; // User id who did the assessment review (empty or 0 for current user).
+    userid?: number; // User id who did the assessment review (empty or 0 for current user).
 };
 
 /**
@@ -12245,14 +12245,14 @@ export type ModWorkshopGetReviewerAssessmentsResponse = {
 
         gradinggradeoverby: number; // The id of the user who has overridden the grade for submission.
         feedbackauthor: string; // The comment/feedback from the reviewer for the author.
-        feedbackauthorformat: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         feedbackauthorattachment: number; // Are there some files attached to the feedbackauthor field?
                  // Sets to 1 by file_postupdate_standard_filemanager().
 
         feedbackreviewer?: string; // The comment/feedback from the teacher for the reviewer.
                  // For example the reason why the grade for assessment was overridden.
 
-        feedbackreviewerformat: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackreviewerformat?: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         feedbackcontentfiles: { // Feedbackcontentfiles.
             filename?: string; // File name.
             filepath?: string; // File path.
@@ -12297,7 +12297,7 @@ export type ModWorkshopGetSubmissionResponse = {
         timemodified: number; // Timestamp when the submission has been updated.
         title: string; // The submission title.
         content: string; // Submission text.
-        contentformat: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        contentformat?: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         contenttrust: number; // The trust mode of the data.
         attachment: number; // Used by File API file_postupdate_standard_filemanager.
         grade?: number; // Aggregated grade for the submission. The grade is a decimal number from interval 0..100.
@@ -12310,7 +12310,7 @@ export type ModWorkshopGetSubmissionResponse = {
         feedbackauthor?: string; // Teacher comment/feedback for the author of the submission, for example describing the reasons
                  // for the grade overriding.
 
-        feedbackauthorformat: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         timegraded?: number; // The timestamp when grade or gradeover was recently modified.
         published: boolean; // Shall the submission be available to other when the workshop is closed.
         late: number; // Has this submission been submitted after the deadline or during the assessment phase?.
@@ -12369,14 +12369,14 @@ export type ModWorkshopGetSubmissionAssessmentsResponse = {
 
         gradinggradeoverby: number; // The id of the user who has overridden the grade for submission.
         feedbackauthor: string; // The comment/feedback from the reviewer for the author.
-        feedbackauthorformat: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         feedbackauthorattachment: number; // Are there some files attached to the feedbackauthor field?
                  // Sets to 1 by file_postupdate_standard_filemanager().
 
         feedbackreviewer?: string; // The comment/feedback from the teacher for the reviewer.
                  // For example the reason why the grade for assessment was overridden.
 
-        feedbackreviewerformat: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackreviewerformat?: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         feedbackcontentfiles: { // Feedbackcontentfiles.
             filename?: string; // File name.
             filepath?: string; // File path.
@@ -12406,12 +12406,12 @@ export type ModWorkshopGetSubmissionAssessmentsResponse = {
  */
 export type ModWorkshopGetSubmissionsParams = {
     workshopid: number; // Workshop instance id.
-    userid: number; // Get submissions done by this user. Use 0 or empty for the current user.
-    groupid: number; // Group id, 0 means that the function will determine the user group.
+    userid?: number; // Get submissions done by this user. Use 0 or empty for the current user.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
                                                 // It will return submissions done by users in the given group.
 
-    page: number; // The page of records to return.
-    perpage: number; // The number of records to return per page.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
 };
 
 /**
@@ -12427,7 +12427,7 @@ export type ModWorkshopGetSubmissionsResponse = {
         timemodified: number; // Timestamp when the submission has been updated.
         title: string; // The submission title.
         content: string; // Submission text.
-        contentformat: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        contentformat?: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         contenttrust: number; // The trust mode of the data.
         attachment: number; // Used by File API file_postupdate_standard_filemanager.
         grade?: number; // Aggregated grade for the submission. The grade is a decimal number from interval 0..100.
@@ -12440,7 +12440,7 @@ export type ModWorkshopGetSubmissionsResponse = {
         feedbackauthor?: string; // Teacher comment/feedback for the author of the submission, for example describing the reasons
                  // for the grade overriding.
 
-        feedbackauthorformat: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         timegraded?: number; // The timestamp when grade or gradeover was recently modified.
         published: boolean; // Shall the submission be available to other when the workshop is closed.
         late: number; // Has this submission been submitted after the deadline or during the assessment phase?.
@@ -12477,7 +12477,7 @@ export type ModWorkshopGetSubmissionsResponse = {
  */
 export type ModWorkshopGetUserPlanParams = {
     workshopid: number; // Workshop instance id.
-    userid: number; // User id (empty or 0 for current user).
+    userid?: number; // User id (empty or 0 for current user).
 };
 
 /**
@@ -12561,7 +12561,7 @@ export type ModWorkshopGetWorkshopAccessInformationResponse = {
  * Params of mod_workshop_get_workshops_by_courses WS.
  */
 export type ModWorkshopGetWorkshopsByCoursesParams = {
-    courseids: number[]; // Array of course ids.
+    courseids?: number[]; // Array of course ids.
 };
 
 /**
@@ -12573,11 +12573,11 @@ export type ModWorkshopGetWorkshopsByCoursesResponse = {
         course: number; // Course id this workshop is part of.
         name: string; // Workshop name.
         intro: string; // Workshop introduction text.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         instructauthors?: string; // Instructions for the submission phase.
-        instructauthorsformat: number; // Instructauthors format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        instructauthorsformat?: number; // Instructauthors format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         instructreviewers?: string; // Instructions for the assessment phase.
-        instructreviewersformat: number; // Instructreviewers format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        instructreviewersformat?: number; // Instructreviewers format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         timemodified?: number; // The timestamp when the module was modified.
         phase?: number; // The current phase of workshop (0 = not available, 1 = submission, 2 = assessment, 3 = closed).
         useexamples?: boolean; // Optional feature: students practise evaluating on example submissions from teacher.
@@ -12603,7 +12603,7 @@ export type ModWorkshopGetWorkshopsByCoursesResponse = {
         assessmentend?: number; // 0 = will be closed manually, greater than 0 the timestamp of the end of the assessment phase.
         phaseswitchassessment?: boolean; // Automatically switch to the assessment phase after the submissions deadline.
         conclusion?: string; // A text to be displayed at the end of the workshop.
-        conclusionformat: number; // Conclusion format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        conclusionformat?: number; // Conclusion format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         overallfeedbackmode?: number; // Mode of the overall feedback support.
         overallfeedbackfiles?: number; // Number of allowed attachments to the overall feedback.
         overallfeedbackfiletypes?: string; // Comma separated list of file extensions.
@@ -12685,10 +12685,10 @@ export type ModWorkshopUpdateAssessmentResponse = {
 export type ModWorkshopUpdateSubmissionParams = {
     submissionid: number; // Submission id.
     title: string; // Submission title.
-    content: string; // Submission text content.
-    contentformat: number; // The format used for the content.
-    inlineattachmentsid: number; // The draft file area id for inline attachments in the content.
-    attachmentsid: number; // The draft file area id for attachments.
+    content?: string; // Submission text content.
+    contentformat?: number; // The format used for the content.
+    inlineattachmentsid?: number; // The draft file area id for inline attachments in the content.
+    attachmentsid?: number; // The draft file area id for attachments.
 };
 
 /**
@@ -12778,8 +12778,8 @@ export type ReportInsightsSetNotusefulPredictionResponse = {
  * Params of tool_analytics_potential_contexts WS.
  */
 export type ToolAnalyticsPotentialContextsParams = {
-    query: string; // The model id.
-    modelid: number; // The model id.
+    query?: string; // The model id.
+    modelid?: number; // The model id.
 };
 
 /**
@@ -12795,7 +12795,7 @@ export type ToolAnalyticsPotentialContextsResponse = {
  */
 export type ToolLpDataForCourseCompetenciesPageParams = {
     courseid: number; // The course id.
-    moduleid: number; // The module id.
+    moduleid?: number; // The module id.
 };
 
 /**
@@ -12826,7 +12826,7 @@ export type ToolLpDataForCourseCompetenciesPageResponse = {
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             sortorder: number; // Sortorder.
             parentid: number; // Parentid.
             path: string; // Path.
@@ -12850,7 +12850,7 @@ export type ToolLpDataForCourseCompetenciesPageResponse = {
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             sortorder: number; // Sortorder.
             parentid: number; // Parentid.
             path: string; // Path.
@@ -12921,7 +12921,7 @@ export type ToolLpDataForCourseCompetenciesPageResponse = {
         plans: {
             name: string; // Name.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             userid: number; // Userid.
             templateid: number; // Templateid.
             origtemplateid: number; // Origtemplateid.
@@ -12990,7 +12990,7 @@ export type ToolLpDataForCourseCompetenciesPageResponse = {
             template?: {
                 shortname: string; // Shortname.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 duedate: number; // Duedate.
                 visible: boolean; // Visible.
                 contextid: number; // Contextid.
@@ -13027,7 +13027,7 @@ export type ToolLpDataForPlanPageResponse = {
     plan: {
         name: string; // Name.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         userid: number; // Userid.
         templateid: number; // Templateid.
         origtemplateid: number; // Origtemplateid.
@@ -13096,7 +13096,7 @@ export type ToolLpDataForPlanPageResponse = {
         template?: {
             shortname: string; // Shortname.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             duedate: number; // Duedate.
             visible: boolean; // Visible.
             contextid: number; // Contextid.
@@ -13121,7 +13121,7 @@ export type ToolLpDataForPlanPageResponse = {
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             sortorder: number; // Sortorder.
             parentid: number; // Parentid.
             path: string; // Path.
@@ -13230,7 +13230,7 @@ export type ToolLpDataForPlansPageResponse = {
     plans: {
         name: string; // Name.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         userid: number; // Userid.
         templateid: number; // Templateid.
         origtemplateid: number; // Origtemplateid.
@@ -13299,7 +13299,7 @@ export type ToolLpDataForPlansPageResponse = {
         template?: {
             shortname: string; // Shortname.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             duedate: number; // Duedate.
             visible: boolean; // Visible.
             contextid: number; // Contextid.
@@ -13363,7 +13363,7 @@ export type ToolLpDataForUserCompetencySummaryResponse = {
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             sortorder: number; // Sortorder.
             parentid: number; // Parentid.
             path: string; // Path.
@@ -13382,7 +13382,7 @@ export type ToolLpDataForUserCompetencySummaryResponse = {
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             sortorder: number; // Sortorder.
             parentid: number; // Parentid.
             path: string; // Path.
@@ -13401,7 +13401,7 @@ export type ToolLpDataForUserCompetencySummaryResponse = {
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             visible: boolean; // Visible.
             scaleid: number; // Scaleid.
             scaleconfiguration: string; // Scaleconfiguration.
@@ -13620,7 +13620,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 sortorder: number; // Sortorder.
                 parentid: number; // Parentid.
                 path: string; // Path.
@@ -13639,7 +13639,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 sortorder: number; // Sortorder.
                 parentid: number; // Parentid.
                 path: string; // Path.
@@ -13658,7 +13658,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 visible: boolean; // Visible.
                 scaleid: number; // Scaleid.
                 scaleconfiguration: string; // Scaleconfiguration.
@@ -13864,7 +13864,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
     plans: { // Plans.
         name: string; // Name.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         userid: number; // Userid.
         templateid: number; // Templateid.
         origtemplateid: number; // Origtemplateid.
@@ -13933,7 +13933,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
         template?: {
             shortname: string; // Shortname.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             duedate: number; // Duedate.
             visible: boolean; // Visible.
             contextid: number; // Contextid.
@@ -13995,7 +13995,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 sortorder: number; // Sortorder.
                 parentid: number; // Parentid.
                 path: string; // Path.
@@ -14014,7 +14014,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 sortorder: number; // Sortorder.
                 parentid: number; // Parentid.
                 path: string; // Path.
@@ -14033,7 +14033,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 visible: boolean; // Visible.
                 scaleid: number; // Scaleid.
                 scaleconfiguration: string; // Scaleconfiguration.
@@ -14212,7 +14212,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
     plan: {
         name: string; // Name.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         userid: number; // Userid.
         templateid: number; // Templateid.
         origtemplateid: number; // Origtemplateid.
@@ -14281,7 +14281,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
         template?: {
             shortname: string; // Shortname.
             description: string; // Description.
-            descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             duedate: number; // Duedate.
             visible: boolean; // Visible.
             contextid: number; // Contextid.
@@ -14319,7 +14319,7 @@ export type ToolLpDataForUserEvidenceListPageResponse = {
         userid: number; // Userid.
         name: string; // Name.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         url: string; // Url.
         id: number; // Id.
         timecreated: number; // Timecreated.
@@ -14356,7 +14356,7 @@ export type ToolLpDataForUserEvidenceListPageResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 sortorder: number; // Sortorder.
                 parentid: number; // Parentid.
                 path: string; // Path.
@@ -14431,7 +14431,7 @@ export type ToolLpDataForUserEvidencePageResponse = {
         userid: number; // Userid.
         name: string; // Name.
         description: string; // Description.
-        descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         url: string; // Url.
         id: number; // Id.
         timecreated: number; // Timecreated.
@@ -14468,7 +14468,7 @@ export type ToolLpDataForUserEvidencePageResponse = {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
-                descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 sortorder: number; // Sortorder.
                 parentid: number; // Parentid.
                 path: string; // Path.
@@ -14534,11 +14534,11 @@ export type ToolLpDataForUserEvidencePageResponse = {
 export type ToolMobileCallExternalFunctionsParams = {
     requests: {
         function: string; // Function name.
-        arguments: string; // JSON-encoded object with named arguments.
-        settingraw: boolean; // Return raw text.
-        settingfilter: boolean; // Filter text.
-        settingfileurl: boolean; // Rewrite plugin file URLs.
-        settinglang: string; // Session language.
+        arguments?: string; // JSON-encoded object with named arguments.
+        settingraw?: boolean; // Return raw text.
+        settingfilter?: boolean; // Filter text.
+        settingfileurl?: boolean; // Rewrite plugin file URLs.
+        settinglang?: string; // Session language.
     }[];
 };
 
@@ -14573,7 +14573,7 @@ export type ToolMobileGetAutologinKeyResponse = {
  * Params of tool_mobile_get_config WS.
  */
 export type ToolMobileGetConfigParams = {
-    section: string; // Settings section name.
+    section?: string; // Settings section name.
 };
 
 /**
