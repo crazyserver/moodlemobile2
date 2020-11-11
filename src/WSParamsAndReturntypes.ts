@@ -1,3 +1,34 @@
+/**
+ * Structure of warnings returned by WS.
+ */
+export type CoreWSExternalWarning = {
+    item?: string; // Item.
+    itemid?: number; // Item id.
+    warningcode: string; // The warning code can be used by the client app to implement specific behaviour.
+    message: string; // Untranslated english message to explain the warning.
+};
+
+/**
+ * Structure of files returned by WS.
+ */
+export type CoreWSExternalFile = {
+    fileurl: string; // Downloadable file url.
+    filename?: string; //File name.
+    filepath?: string; // File path.
+    filesize?: number; // File size.
+    timemodified?: number; // Time modified.
+    mimetype?: string; // File mime type.
+    isexternalfile?: number; // Whether is an external file.
+    repositorytype?: string; // The repository type for external files.
+};
+
+/**
+ * Special response of many webservices that contains success status and warnings.
+ */
+export type CoreStatusWithWarningsResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
 
 /**
  * Params of block_recentlyaccesseditems_get_recent_items WS.
@@ -314,10 +345,7 @@ export type CoreBlogViewEntriesParams = {
 /**
  * Data returned by core_blog_view_entries WS.
  */
-export type CoreBlogViewEntriesResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreBlogViewEntriesResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_calendar_create_calendar_events WS.
@@ -1912,10 +1940,7 @@ export type CoreCompletionMarkCourseSelfCompletedParams = {
 /**
  * Data returned by core_completion_mark_course_self_completed WS.
  */
-export type CoreCompletionMarkCourseSelfCompletedResponse = {
-    status: boolean; // Status, true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreCompletionMarkCourseSelfCompletedResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_completion_update_activity_completion_status_manually WS.
@@ -1928,10 +1953,7 @@ export type CoreCompletionUpdateActivityCompletionStatusManuallyParams = {
 /**
  * Data returned by core_completion_update_activity_completion_status_manually WS.
  */
-export type CoreCompletionUpdateActivityCompletionStatusManuallyResponse = {
-    status: boolean; // Status, true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreCompletionUpdateActivityCompletionStatusManuallyResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_course_check_updates WS.
@@ -2570,10 +2592,7 @@ export type CoreCourseViewCourseParams = {
 /**
  * Data returned by core_course_view_course WS.
  */
-export type CoreCourseViewCourseResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreCourseViewCourseResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_enrol_get_course_enrolment_methods WS.
@@ -3263,10 +3282,7 @@ export type CoreMessageDeleteMessageParams = {
 /**
  * Data returned by core_message_delete_message WS.
  */
-export type CoreMessageDeleteMessageResponse = {
-    status: boolean; // True if the message was deleted, false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreMessageDeleteMessageResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_message_delete_message_for_all_users WS.
@@ -4351,10 +4367,7 @@ export type CoreNotesViewNotesParams = {
 /**
  * Data returned by core_notes_view_notes WS.
  */
-export type CoreNotesViewNotesResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreNotesViewNotesResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_question_update_flag WS.
@@ -4373,10 +4386,7 @@ export type CoreQuestionUpdateFlagParams = {
 /**
  * Data returned by core_question_update_flag WS.
  */
-export type CoreQuestionUpdateFlagResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreQuestionUpdateFlagResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_rating_add_rating WS.
@@ -4653,10 +4663,7 @@ export type CoreUserAgreeSitePolicyParams = {
 /**
  * Data returned by core_user_agree_site_policy WS.
  */
-export type CoreUserAgreeSitePolicyResponse = {
-    status: boolean; // Status: true only if we set the policyagreed to 1 for the user.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreUserAgreeSitePolicyResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_user_get_course_user_profiles WS.
@@ -4919,10 +4926,7 @@ export type CoreUserViewUserListParams = {
 /**
  * Data returned by core_user_view_user_list WS.
  */
-export type CoreUserViewUserListResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreUserViewUserListResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_user_view_user_profile WS.
@@ -4935,10 +4939,7 @@ export type CoreUserViewUserProfileParams = {
 /**
  * Data returned by core_user_view_user_profile WS.
  */
-export type CoreUserViewUserProfileResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type CoreUserViewUserProfileResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of core_webservice_get_site_info WS.
@@ -5040,10 +5041,7 @@ export type EnrolSelfEnrolUserParams = {
 /**
  * Data returned by enrol_self_enrol_user WS.
  */
-export type EnrolSelfEnrolUserResponse = {
-    status: boolean; // Status: true if the user is enrolled, false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type EnrolSelfEnrolUserResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of enrol_self_get_instance_info WS.
@@ -5095,10 +5093,7 @@ export type GradereportOverviewViewGradeReportParams = {
 /**
  * Data returned by gradereport_overview_view_grade_report WS.
  */
-export type GradereportOverviewViewGradeReportResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type GradereportOverviewViewGradeReportResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of gradereport_user_get_grade_items WS.
@@ -5250,10 +5245,7 @@ export type GradereportUserViewGradeReportParams = {
 /**
  * Data returned by gradereport_user_view_grade_report WS.
  */
-export type GradereportUserViewGradeReportResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type GradereportUserViewGradeReportResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of message_airnotifier_are_notification_preferences_configured WS.
@@ -6158,10 +6150,7 @@ export type ModAssignViewAssignParams = {
 /**
  * Data returned by mod_assign_view_assign WS.
  */
-export type ModAssignViewAssignResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModAssignViewAssignResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_assign_view_grading_table WS.
@@ -6173,10 +6162,7 @@ export type ModAssignViewGradingTableParams = {
 /**
  * Data returned by mod_assign_view_grading_table WS.
  */
-export type ModAssignViewGradingTableResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModAssignViewGradingTableResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_assign_view_submission_status WS.
@@ -6188,10 +6174,7 @@ export type ModAssignViewSubmissionStatusParams = {
 /**
  * Data returned by mod_assign_view_submission_status WS.
  */
-export type ModAssignViewSubmissionStatusResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModAssignViewSubmissionStatusResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_book_get_books_by_courses WS.
@@ -6237,10 +6220,7 @@ export type ModBookViewBookParams = {
 /**
  * Data returned by mod_book_view_book WS.
  */
-export type ModBookViewBookResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModBookViewBookResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_chat_get_chat_latest_messages WS.
@@ -6415,10 +6395,7 @@ export type ModChatViewChatParams = {
 /**
  * Data returned by mod_chat_view_chat WS.
  */
-export type ModChatViewChatResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModChatViewChatResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_choice_delete_choice_responses WS.
@@ -6431,10 +6408,7 @@ export type ModChoiceDeleteChoiceResponsesParams = {
 /**
  * Data returned by mod_choice_delete_choice_responses WS.
  */
-export type ModChoiceDeleteChoiceResponsesResponse = {
-    status: boolean; // Status, true if everything went right.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModChoiceDeleteChoiceResponsesResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_choice_get_choice_options WS.
@@ -6560,10 +6534,7 @@ export type ModChoiceViewChoiceParams = {
 /**
  * Data returned by mod_choice_view_choice WS.
  */
-export type ModChoiceViewChoiceResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModChoiceViewChoiceResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_data_add_entry WS.
@@ -6602,10 +6573,7 @@ export type ModDataApproveEntryParams = {
 /**
  * Data returned by mod_data_approve_entry WS.
  */
-export type ModDataApproveEntryResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModDataApproveEntryResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_data_delete_entry WS.
@@ -6617,10 +6585,7 @@ export type ModDataDeleteEntryParams = {
 /**
  * Data returned by mod_data_delete_entry WS.
  */
-export type ModDataDeleteEntryResponse = {
-    status: boolean; // Always true. If we see this field it means that the entry was deleted.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModDataDeleteEntryResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_data_get_data_access_information WS.
@@ -7025,10 +6990,7 @@ export type ModDataViewDatabaseParams = {
 /**
  * Data returned by mod_data_view_database WS.
  */
-export type ModDataViewDatabaseResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModDataViewDatabaseResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_feedback_get_analysis WS.
@@ -7495,10 +7457,7 @@ export type ModFeedbackViewFeedbackParams = {
 /**
  * Data returned by mod_feedback_view_feedback WS.
  */
-export type ModFeedbackViewFeedbackResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModFeedbackViewFeedbackResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_folder_get_folders_by_courses WS.
@@ -7542,10 +7501,7 @@ export type ModFolderViewFolderParams = {
 /**
  * Data returned by mod_folder_view_folder WS.
  */
-export type ModFolderViewFolderResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModFolderViewFolderResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_forum_add_discussion WS.
@@ -7741,10 +7697,7 @@ export type ModForumDeletePostParams = {
 /**
  * Data returned by mod_forum_delete_post WS.
  */
-export type ModForumDeletePostResponse = {
-    status: boolean; // True if the post/discussion was deleted, false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModForumDeletePostResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_forum_get_discussion_post WS.
@@ -8535,10 +8488,7 @@ export type ModForumUpdateDiscussionPostParams = {
 /**
  * Data returned by mod_forum_update_discussion_post WS.
  */
-export type ModForumUpdateDiscussionPostResponse = {
-    status: boolean; // True if the post/discussion was updated, false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModForumUpdateDiscussionPostResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_forum_view_forum WS.
@@ -8550,10 +8500,7 @@ export type ModForumViewForumParams = {
 /**
  * Data returned by mod_forum_view_forum WS.
  */
-export type ModForumViewForumResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModForumViewForumResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_forum_view_forum_discussion WS.
@@ -8565,10 +8512,7 @@ export type ModForumViewForumDiscussionParams = {
 /**
  * Data returned by mod_forum_view_forum_discussion WS.
  */
-export type ModForumViewForumDiscussionResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModForumViewForumDiscussionResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_glossary_add_entry WS.
@@ -9553,10 +9497,7 @@ export type ModGlossaryViewEntryParams = {
 /**
  * Data returned by mod_glossary_view_entry WS.
  */
-export type ModGlossaryViewEntryResponse = {
-    status: boolean; // True on success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModGlossaryViewEntryResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_glossary_view_glossary WS.
@@ -9569,10 +9510,7 @@ export type ModGlossaryViewGlossaryParams = {
 /**
  * Data returned by mod_glossary_view_glossary WS.
  */
-export type ModGlossaryViewGlossaryResponse = {
-    status: boolean; // True on success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModGlossaryViewGlossaryResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_h5pactivity_get_attempts WS.
@@ -9783,10 +9721,7 @@ export type ModH5pactivityViewH5pactivityParams = {
 /**
  * Data returned by mod_h5pactivity_view_h5pactivity WS.
  */
-export type ModH5pactivityViewH5pactivityResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModH5pactivityViewH5pactivityResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_imscp_get_imscps_by_courses WS.
@@ -9829,10 +9764,7 @@ export type ModImscpViewImscpParams = {
 /**
  * Data returned by mod_imscp_view_imscp WS.
  */
-export type ModImscpViewImscpResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModImscpViewImscpResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_label_get_labels_by_courses WS.
@@ -10496,10 +10428,7 @@ export type ModLessonViewLessonParams = {
 /**
  * Data returned by mod_lesson_view_lesson WS.
  */
-export type ModLessonViewLessonResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModLessonViewLessonResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_lti_get_ltis_by_courses WS.
@@ -10578,10 +10507,7 @@ export type ModLtiViewLtiParams = {
 /**
  * Data returned by mod_lti_view_lti WS.
  */
-export type ModLtiViewLtiResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModLtiViewLtiResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_page_get_pages_by_courses WS.
@@ -10629,10 +10555,7 @@ export type ModPageViewPageParams = {
 /**
  * Data returned by mod_page_view_page WS.
  */
-export type ModPageViewPageResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModPageViewPageResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_quiz_get_attempt_access_information WS.
@@ -11163,10 +11086,7 @@ export type ModQuizSaveAttemptParams = {
 /**
  * Data returned by mod_quiz_save_attempt WS.
  */
-export type ModQuizSaveAttemptResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModQuizSaveAttemptResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_quiz_start_attempt WS.
@@ -11228,10 +11148,7 @@ export type ModQuizViewAttemptParams = {
 /**
  * Data returned by mod_quiz_view_attempt WS.
  */
-export type ModQuizViewAttemptResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModQuizViewAttemptResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_quiz_view_attempt_review WS.
@@ -11243,10 +11160,7 @@ export type ModQuizViewAttemptReviewParams = {
 /**
  * Data returned by mod_quiz_view_attempt_review WS.
  */
-export type ModQuizViewAttemptReviewResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModQuizViewAttemptReviewResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_quiz_view_attempt_summary WS.
@@ -11262,10 +11176,7 @@ export type ModQuizViewAttemptSummaryParams = {
 /**
  * Data returned by mod_quiz_view_attempt_summary WS.
  */
-export type ModQuizViewAttemptSummaryResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModQuizViewAttemptSummaryResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_quiz_view_quiz WS.
@@ -11277,10 +11188,7 @@ export type ModQuizViewQuizParams = {
 /**
  * Data returned by mod_quiz_view_quiz WS.
  */
-export type ModQuizViewQuizResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModQuizViewQuizResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_resource_get_resources_by_courses WS.
@@ -11328,10 +11236,7 @@ export type ModResourceViewResourceParams = {
 /**
  * Data returned by mod_resource_view_resource WS.
  */
-export type ModResourceViewResourceResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModResourceViewResourceResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_scorm_get_scorm_access_information WS.
@@ -11548,10 +11453,7 @@ export type ModScormLaunchScoParams = {
 /**
  * Data returned by mod_scorm_launch_sco WS.
  */
-export type ModScormLaunchScoResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModScormLaunchScoResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_scorm_view_scorm WS.
@@ -11563,10 +11465,7 @@ export type ModScormViewScormParams = {
 /**
  * Data returned by mod_scorm_view_scorm WS.
  */
-export type ModScormViewScormResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModScormViewScormResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_survey_get_questions WS.
@@ -11639,10 +11538,7 @@ export type ModSurveySubmitAnswersParams = {
 /**
  * Data returned by mod_survey_submit_answers WS.
  */
-export type ModSurveySubmitAnswersResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModSurveySubmitAnswersResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_survey_view_survey WS.
@@ -11654,10 +11550,7 @@ export type ModSurveyViewSurveyParams = {
 /**
  * Data returned by mod_survey_view_survey WS.
  */
-export type ModSurveyViewSurveyResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModSurveyViewSurveyResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_url_get_urls_by_courses WS.
@@ -11701,10 +11594,7 @@ export type ModUrlViewUrlParams = {
 /**
  * Data returned by mod_url_view_url WS.
  */
-export type ModUrlViewUrlResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModUrlViewUrlResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_wiki_edit_page WS.
@@ -11938,10 +11828,7 @@ export type ModWikiViewPageParams = {
 /**
  * Data returned by mod_wiki_view_page WS.
  */
-export type ModWikiViewPageResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWikiViewPageResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_wiki_view_wiki WS.
@@ -11953,10 +11840,7 @@ export type ModWikiViewWikiParams = {
 /**
  * Data returned by mod_wiki_view_wiki WS.
  */
-export type ModWikiViewWikiResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWikiViewWikiResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_workshop_add_submission WS.
@@ -11989,10 +11873,7 @@ export type ModWorkshopDeleteSubmissionParams = {
 /**
  * Data returned by mod_workshop_delete_submission WS.
  */
-export type ModWorkshopDeleteSubmissionResponse = {
-    status: boolean; // True if the submission was deleted.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWorkshopDeleteSubmissionResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_workshop_evaluate_assessment WS.
@@ -12008,10 +11889,7 @@ export type ModWorkshopEvaluateAssessmentParams = {
 /**
  * Data returned by mod_workshop_evaluate_assessment WS.
  */
-export type ModWorkshopEvaluateAssessmentResponse = {
-    status: boolean; // Status: true if the assessment was evaluated, false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWorkshopEvaluateAssessmentResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_workshop_evaluate_submission WS.
@@ -12027,10 +11905,7 @@ export type ModWorkshopEvaluateSubmissionParams = {
 /**
  * Data returned by mod_workshop_evaluate_submission WS.
  */
-export type ModWorkshopEvaluateSubmissionResponse = {
-    status: boolean; // Status: true if the submission was evaluated, false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWorkshopEvaluateSubmissionResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_workshop_get_assessment WS.
@@ -12694,10 +12569,7 @@ export type ModWorkshopUpdateSubmissionParams = {
 /**
  * Data returned by mod_workshop_update_submission WS.
  */
-export type ModWorkshopUpdateSubmissionResponse = {
-    status: boolean; // True if the submission was updated false otherwise.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWorkshopUpdateSubmissionResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_workshop_view_submission WS.
@@ -12709,10 +12581,7 @@ export type ModWorkshopViewSubmissionParams = {
 /**
  * Data returned by mod_workshop_view_submission WS.
  */
-export type ModWorkshopViewSubmissionResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWorkshopViewSubmissionResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of mod_workshop_view_workshop WS.
@@ -12724,10 +12593,7 @@ export type ModWorkshopViewWorkshopParams = {
 /**
  * Data returned by mod_workshop_view_workshop WS.
  */
-export type ModWorkshopViewWorkshopResponse = {
-    status: boolean; // Status: true if success.
-    warnings?: CoreWSExternalWarning[];
-};
+export type ModWorkshopViewWorkshopResponse = CoreStatusWithWarningsResponse;
 
 /**
  * Params of report_insights_action_executed WS.
@@ -14775,3 +14641,5 @@ export type ToolMoodlenetVerifyWebfingerResponse = {
     message: string; // Our message for the user.
     domain?: string; // Domain to redirect the user to.
 };
+
+
