@@ -25,7 +25,7 @@ export type CoreWSExternalFile = {
 /**
  * Special response of many webservices that contains success status and warnings.
  */
-export type CoreStatusWithWarningsResponse = {
+export type CoreStatusWithWarningsWSResponse = {
     status: boolean; // Status: true if success.
     warnings?: CoreWSExternalWarning[];
 };
@@ -33,14 +33,14 @@ export type CoreStatusWithWarningsResponse = {
 /**
  * Params of block_recentlyaccesseditems_get_recent_items WS.
  */
-export type BlockRecentlyaccesseditemsGetRecentItemsParams = {
+export type BlockRecentlyaccesseditemsGetRecentItemsWSParams = {
     limit?: number; // Result set limit.
 };
 
 /**
  * Data returned by block_recentlyaccesseditems_get_recent_items WS.
  */
-export type BlockRecentlyaccesseditemsGetRecentItemsResponse = { // The most recently accessed activities/resources by the logged user.
+export type BlockRecentlyaccesseditemsGetRecentItemsWSResponse = { // The most recently accessed activities/resources by the logged user.
     id: number; // Id.
     courseid: number; // Courseid.
     cmid: number; // Cmid.
@@ -57,7 +57,7 @@ export type BlockRecentlyaccesseditemsGetRecentItemsResponse = { // The most rec
 /**
  * Params of block_starredcourses_get_starred_courses WS.
  */
-export type BlockStarredcoursesGetStarredCoursesParams = {
+export type BlockStarredcoursesGetStarredCoursesWSParams = {
     limit?: number; // Limit.
     offset?: number; // Offset.
 };
@@ -65,7 +65,7 @@ export type BlockStarredcoursesGetStarredCoursesParams = {
 /**
  * Data returned by block_starredcourses_get_starred_courses WS.
  */
-export type BlockStarredcoursesGetStarredCoursesResponse = {
+export type BlockStarredcoursesGetStarredCoursesWSResponse = {
     id: number; // Id.
     fullname: string; // Fullname.
     shortname: string; // Shortname.
@@ -90,7 +90,7 @@ export type BlockStarredcoursesGetStarredCoursesResponse = {
 /**
  * Params of core_badges_get_user_badges WS.
  */
-export type CoreBadgesGetUserBadgesParams = {
+export type CoreBadgesGetUserBadgesWSParams = {
     userid?: number; // Badges only for this user id, empty for current user.
     courseid?: number; // Filter badges by course id, empty all the courses.
     page?: number; // The page of records to return.
@@ -102,7 +102,7 @@ export type CoreBadgesGetUserBadgesParams = {
 /**
  * Data returned by core_badges_get_user_badges WS.
  */
-export type CoreBadgesGetUserBadgesResponse = {
+export type CoreBadgesGetUserBadgesWSResponse = {
     badges: {
         id?: number; // Badge id.
         name: string; // Badge name.
@@ -170,7 +170,7 @@ export type CoreBadgesGetUserBadgesResponse = {
 /**
  * Params of core_block_get_course_blocks WS.
  */
-export type CoreBlockGetCourseBlocksParams = {
+export type CoreBlockGetCourseBlocksWSParams = {
     courseid: number; // Course id.
     returncontents?: boolean; // Whether to return the block contents.
 };
@@ -178,7 +178,7 @@ export type CoreBlockGetCourseBlocksParams = {
 /**
  * Data returned by core_block_get_course_blocks WS.
  */
-export type CoreBlockGetCourseBlocksResponse = {
+export type CoreBlockGetCourseBlocksWSResponse = {
     blocks: { // List of blocks in the course.
         instanceid: number; // Block instance id.
         name: string; // Block name.
@@ -207,7 +207,7 @@ export type CoreBlockGetCourseBlocksResponse = {
 /**
  * Params of core_block_get_dashboard_blocks WS.
  */
-export type CoreBlockGetDashboardBlocksParams = {
+export type CoreBlockGetDashboardBlocksWSParams = {
     userid?: number; // User id (optional), default is current user.
     returncontents?: boolean; // Whether to return the block contents.
 };
@@ -215,7 +215,7 @@ export type CoreBlockGetDashboardBlocksParams = {
 /**
  * Data returned by core_block_get_dashboard_blocks WS.
  */
-export type CoreBlockGetDashboardBlocksResponse = {
+export type CoreBlockGetDashboardBlocksWSResponse = {
     blocks: { // List of blocks in the dashboard.
         instanceid: number; // Block instance id.
         name: string; // Block name.
@@ -244,7 +244,7 @@ export type CoreBlockGetDashboardBlocksResponse = {
 /**
  * Params of core_blog_get_entries WS.
  */
-export type CoreBlogGetEntriesParams = {
+export type CoreBlogGetEntriesWSParams = {
     filters?: { // Parameters to filter blog listings.
         name: string; // The expected keys (value format) are:
                              // tag      PARAM_NOTAGS blog tag
@@ -265,7 +265,7 @@ export type CoreBlogGetEntriesParams = {
 /**
  * Data returned by core_blog_get_entries WS.
  */
-export type CoreBlogGetEntriesResponse = {
+export type CoreBlogGetEntriesWSResponse = {
     entries: {
         id: number; // Post/entry id.
         module: string; // Where it was published the post (blog, blog_external...).
@@ -326,7 +326,7 @@ export type CoreBlogGetEntriesResponse = {
 /**
  * Params of core_blog_view_entries WS.
  */
-export type CoreBlogViewEntriesParams = {
+export type CoreBlogViewEntriesWSParams = {
     filters?: { // Parameters used in the filter of view_entries.
         name: string; // The expected keys (value format) are:
                              // tag      PARAM_NOTAGS blog tag
@@ -345,12 +345,12 @@ export type CoreBlogViewEntriesParams = {
 /**
  * Data returned by core_blog_view_entries WS.
  */
-export type CoreBlogViewEntriesResponse = CoreStatusWithWarningsResponse;
+export type CoreBlogViewEntriesWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_calendar_create_calendar_events WS.
  */
-export type CoreCalendarCreateCalendarEventsParams = {
+export type CoreCalendarCreateCalendarEventsWSParams = {
     events: {
         name: string; // Event name.
         description?: string; // Description.
@@ -369,7 +369,7 @@ export type CoreCalendarCreateCalendarEventsParams = {
 /**
  * Data returned by core_calendar_create_calendar_events WS.
  */
-export type CoreCalendarCreateCalendarEventsResponse = {
+export type CoreCalendarCreateCalendarEventsWSResponse = {
     events: {
         id: number; // Event id.
         name: string; // Event name.
@@ -396,7 +396,7 @@ export type CoreCalendarCreateCalendarEventsResponse = {
 /**
  * Params of core_calendar_delete_calendar_events WS.
  */
-export type CoreCalendarDeleteCalendarEventsParams = {
+export type CoreCalendarDeleteCalendarEventsWSParams = {
     events: {
         eventid: number; // Event ID.
         repeat: boolean; // Delete comeplete series if repeated event.
@@ -406,12 +406,12 @@ export type CoreCalendarDeleteCalendarEventsParams = {
 /**
  * Data returned by core_calendar_delete_calendar_events WS.
  */
-export type CoreCalendarDeleteCalendarEventsResponse = {}; // WARNING: Null structure found;
+export type CoreCalendarDeleteCalendarEventsWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of core_calendar_get_action_events_by_course WS.
  */
-export type CoreCalendarGetActionEventsByCourseParams = {
+export type CoreCalendarGetActionEventsByCourseWSParams = {
     courseid: number; // Course id.
     timesortfrom?: number; // Time sort from.
     timesortto?: number; // Time sort to.
@@ -422,7 +422,7 @@ export type CoreCalendarGetActionEventsByCourseParams = {
 /**
  * Data returned by core_calendar_get_action_events_by_course WS.
  */
-export type CoreCalendarGetActionEventsByCourseResponse = {
+export type CoreCalendarGetActionEventsByCourseWSResponse = {
     events: { // Events.
         id: number; // Id.
         name: string; // Name.
@@ -516,7 +516,7 @@ export type CoreCalendarGetActionEventsByCourseResponse = {
 /**
  * Params of core_calendar_get_action_events_by_courses WS.
  */
-export type CoreCalendarGetActionEventsByCoursesParams = {
+export type CoreCalendarGetActionEventsByCoursesWSParams = {
     courseids: number[];
     timesortfrom?: number; // Time sort from.
     timesortto?: number; // Time sort to.
@@ -526,7 +526,7 @@ export type CoreCalendarGetActionEventsByCoursesParams = {
 /**
  * Data returned by core_calendar_get_action_events_by_courses WS.
  */
-export type CoreCalendarGetActionEventsByCoursesResponse = {
+export type CoreCalendarGetActionEventsByCoursesWSResponse = {
     groupedbycourse: { // Groupedbycourse.
         events: { // Events.
             id: number; // Id.
@@ -623,7 +623,7 @@ export type CoreCalendarGetActionEventsByCoursesResponse = {
 /**
  * Params of core_calendar_get_action_events_by_timesort WS.
  */
-export type CoreCalendarGetActionEventsByTimesortParams = {
+export type CoreCalendarGetActionEventsByTimesortWSParams = {
     timesortfrom?: number; // Time sort from.
     timesortto?: number; // Time sort to.
     aftereventid?: number; // The last seen event id.
@@ -635,7 +635,7 @@ export type CoreCalendarGetActionEventsByTimesortParams = {
 /**
  * Data returned by core_calendar_get_action_events_by_timesort WS.
  */
-export type CoreCalendarGetActionEventsByTimesortResponse = {
+export type CoreCalendarGetActionEventsByTimesortWSResponse = {
     events: { // Events.
         id: number; // Id.
         name: string; // Name.
@@ -729,14 +729,14 @@ export type CoreCalendarGetActionEventsByTimesortResponse = {
 /**
  * Params of core_calendar_get_allowed_event_types WS.
  */
-export type CoreCalendarGetAllowedEventTypesParams = {
+export type CoreCalendarGetAllowedEventTypesWSParams = {
     courseid?: number; // Course to check, empty for site.
 };
 
 /**
  * Data returned by core_calendar_get_allowed_event_types WS.
  */
-export type CoreCalendarGetAllowedEventTypesResponse = {
+export type CoreCalendarGetAllowedEventTypesWSResponse = {
     allowedeventtypes: string[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -744,14 +744,14 @@ export type CoreCalendarGetAllowedEventTypesResponse = {
 /**
  * Params of core_calendar_get_calendar_access_information WS.
  */
-export type CoreCalendarGetCalendarAccessInformationParams = {
+export type CoreCalendarGetCalendarAccessInformationWSParams = {
     courseid?: number; // Course to check, empty for site calendar events.
 };
 
 /**
  * Data returned by core_calendar_get_calendar_access_information WS.
  */
-export type CoreCalendarGetCalendarAccessInformationResponse = {
+export type CoreCalendarGetCalendarAccessInformationWSResponse = {
     canmanageentries: boolean; // Whether the user can manage entries.
     canmanageownentries: boolean; // Whether the user can manage its own entries.
     canmanagegroupentries: boolean; // Whether the user can manage group entries.
@@ -761,7 +761,7 @@ export type CoreCalendarGetCalendarAccessInformationResponse = {
 /**
  * Params of core_calendar_get_calendar_day_view WS.
  */
-export type CoreCalendarGetCalendarDayViewParams = {
+export type CoreCalendarGetCalendarDayViewWSParams = {
     year: number; // Year to be viewed.
     month: number; // Month to be viewed.
     day: number; // Day to be viewed.
@@ -772,7 +772,7 @@ export type CoreCalendarGetCalendarDayViewParams = {
 /**
  * Data returned by core_calendar_get_calendar_day_view WS.
  */
-export type CoreCalendarGetCalendarDayViewResponse = {
+export type CoreCalendarGetCalendarDayViewWSResponse = {
     events: { // Events.
         id: number; // Id.
         name: string; // Name.
@@ -922,14 +922,14 @@ export type CoreCalendarGetCalendarDayViewResponse = {
 /**
  * Params of core_calendar_get_calendar_event_by_id WS.
  */
-export type CoreCalendarGetCalendarEventByIdParams = {
+export type CoreCalendarGetCalendarEventByIdWSParams = {
     eventid: number; // The event id to be retrieved.
 };
 
 /**
  * Data returned by core_calendar_get_calendar_event_by_id WS.
  */
-export type CoreCalendarGetCalendarEventByIdResponse = {
+export type CoreCalendarGetCalendarEventByIdWSResponse = {
     event: {
         id: number; // Id.
         name: string; // Name.
@@ -1022,7 +1022,7 @@ export type CoreCalendarGetCalendarEventByIdResponse = {
 /**
  * Params of core_calendar_get_calendar_events WS.
  */
-export type CoreCalendarGetCalendarEventsParams = {
+export type CoreCalendarGetCalendarEventsWSParams = {
     events?: {
         eventids?: number[]; // List of event ids.
         courseids?: number[]; // List of course ids for which events will be returned.
@@ -1041,7 +1041,7 @@ export type CoreCalendarGetCalendarEventsParams = {
 /**
  * Data returned by core_calendar_get_calendar_events WS.
  */
-export type CoreCalendarGetCalendarEventsResponse = {
+export type CoreCalendarGetCalendarEventsWSResponse = {
     events: {
         id: number; // Event id.
         name: string; // Event name.
@@ -1069,13 +1069,13 @@ export type CoreCalendarGetCalendarEventsResponse = {
 /**
  * Params of core_calendar_get_calendar_export_token WS.
  */
-export type CoreCalendarGetCalendarExportTokenParams = {
+export type CoreCalendarGetCalendarExportTokenWSParams = {
 };
 
 /**
  * Data returned by core_calendar_get_calendar_export_token WS.
  */
-export type CoreCalendarGetCalendarExportTokenResponse = {
+export type CoreCalendarGetCalendarExportTokenWSResponse = {
     token: string; // The calendar permanent access token for calendar export.
     warnings?: CoreWSExternalWarning[];
 };
@@ -1083,7 +1083,7 @@ export type CoreCalendarGetCalendarExportTokenResponse = {
 /**
  * Params of core_calendar_get_calendar_monthly_view WS.
  */
-export type CoreCalendarGetCalendarMonthlyViewParams = {
+export type CoreCalendarGetCalendarMonthlyViewWSParams = {
     year: number; // Year to be viewed.
     month: number; // Month to be viewed.
     courseid?: number; // Course being viewed.
@@ -1096,7 +1096,7 @@ export type CoreCalendarGetCalendarMonthlyViewParams = {
 /**
  * Data returned by core_calendar_get_calendar_monthly_view WS.
  */
-export type CoreCalendarGetCalendarMonthlyViewResponse = {
+export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
     url: string; // Url.
     courseid: number; // Courseid.
     categoryid?: number; // Categoryid.
@@ -1281,7 +1281,7 @@ export type CoreCalendarGetCalendarMonthlyViewResponse = {
 /**
  * Params of core_calendar_get_calendar_upcoming_view WS.
  */
-export type CoreCalendarGetCalendarUpcomingViewParams = {
+export type CoreCalendarGetCalendarUpcomingViewWSParams = {
     courseid?: number; // Course being viewed.
     categoryid?: number; // Category being viewed.
 };
@@ -1289,7 +1289,7 @@ export type CoreCalendarGetCalendarUpcomingViewParams = {
 /**
  * Data returned by core_calendar_get_calendar_upcoming_view WS.
  */
-export type CoreCalendarGetCalendarUpcomingViewResponse = {
+export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
     events: { // Events.
         id: number; // Id.
         name: string; // Name.
@@ -1406,14 +1406,14 @@ export type CoreCalendarGetCalendarUpcomingViewResponse = {
 /**
  * Params of core_calendar_submit_create_update_form WS.
  */
-export type CoreCalendarSubmitCreateUpdateFormParams = {
+export type CoreCalendarSubmitCreateUpdateFormWSParams = {
     formdata: string; // The data from the event form.
 };
 
 /**
  * Data returned by core_calendar_submit_create_update_form WS.
  */
-export type CoreCalendarSubmitCreateUpdateFormResponse = {
+export type CoreCalendarSubmitCreateUpdateFormWSResponse = {
     event?: {
         id: number; // Id.
         name: string; // Name.
@@ -1506,7 +1506,7 @@ export type CoreCalendarSubmitCreateUpdateFormResponse = {
 /**
  * Params of core_calendar_update_event_start_day WS.
  */
-export type CoreCalendarUpdateEventStartDayParams = {
+export type CoreCalendarUpdateEventStartDayWSParams = {
     eventid: number; // Id of event to be updated.
     daytimestamp: number; // Timestamp for the new start day.
 };
@@ -1514,7 +1514,7 @@ export type CoreCalendarUpdateEventStartDayParams = {
 /**
  * Data returned by core_calendar_update_event_start_day WS.
  */
-export type CoreCalendarUpdateEventStartDayResponse = {
+export type CoreCalendarUpdateEventStartDayWSResponse = {
     event: {
         id: number; // Id.
         name: string; // Name.
@@ -1606,7 +1606,7 @@ export type CoreCalendarUpdateEventStartDayResponse = {
 /**
  * Params of core_comment_add_comments WS.
  */
-export type CoreCommentAddCommentsParams = {
+export type CoreCommentAddCommentsWSParams = {
     comments: {
         contextlevel: string; // Contextlevel system, course, user...
         instanceid: number; // The id of item associated with the contextlevel.
@@ -1620,7 +1620,7 @@ export type CoreCommentAddCommentsParams = {
 /**
  * Data returned by core_comment_add_comments WS.
  */
-export type CoreCommentAddCommentsResponse = {
+export type CoreCommentAddCommentsWSResponse = {
     id: number; // Comment ID.
     content: string; // The content text formatted.
     format: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
@@ -1637,19 +1637,19 @@ export type CoreCommentAddCommentsResponse = {
 /**
  * Params of core_comment_delete_comments WS.
  */
-export type CoreCommentDeleteCommentsParams = {
+export type CoreCommentDeleteCommentsWSParams = {
     comments: number[];
 };
 
 /**
  * Data returned by core_comment_delete_comments WS.
  */
-export type CoreCommentDeleteCommentsResponse = CoreWSExternalWarning[];
+export type CoreCommentDeleteCommentsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_comment_get_comments WS.
  */
-export type CoreCommentGetCommentsParams = {
+export type CoreCommentGetCommentsWSParams = {
     contextlevel: string; // Contextlevel system, course, user...
     instanceid: number; // The Instance id of item associated with the context level.
     component: string; // Component.
@@ -1662,7 +1662,7 @@ export type CoreCommentGetCommentsParams = {
 /**
  * Data returned by core_comment_get_comments WS.
  */
-export type CoreCommentGetCommentsResponse = {
+export type CoreCommentGetCommentsWSResponse = {
     comments: { // List of comments.
         id: number; // Comment ID.
         content: string; // The content text formatted.
@@ -1685,38 +1685,38 @@ export type CoreCommentGetCommentsResponse = {
 /**
  * Params of core_competency_competency_viewed WS.
  */
-export type CoreCompetencyCompetencyViewedParams = {
+export type CoreCompetencyCompetencyViewedWSParams = {
     id: number; // The competency id.
 };
 
 /**
  * Data returned by core_competency_competency_viewed WS.
  */
-export type CoreCompetencyCompetencyViewedResponse = boolean;
+export type CoreCompetencyCompetencyViewedWSResponse = boolean;
 
 /**
  * Params of core_competency_delete_evidence WS.
  */
-export type CoreCompetencyDeleteEvidenceParams = {
+export type CoreCompetencyDeleteEvidenceWSParams = {
     id: number; // The evidence ID.
 };
 
 /**
  * Data returned by core_competency_delete_evidence WS.
  */
-export type CoreCompetencyDeleteEvidenceResponse = boolean;
+export type CoreCompetencyDeleteEvidenceWSResponse = boolean;
 
 /**
  * Params of core_competency_get_scale_values WS.
  */
-export type CoreCompetencyGetScaleValuesParams = {
+export type CoreCompetencyGetScaleValuesWSParams = {
     scaleid: number; // The scale id.
 };
 
 /**
  * Data returned by core_competency_get_scale_values WS.
  */
-export type CoreCompetencyGetScaleValuesResponse = {
+export type CoreCompetencyGetScaleValuesWSResponse = {
     id: number; // Scale value ID.
     name: string; // Scale value name.
 }[];
@@ -1724,7 +1724,7 @@ export type CoreCompetencyGetScaleValuesResponse = {
 /**
  * Params of core_competency_grade_competency_in_course WS.
  */
-export type CoreCompetencyGradeCompetencyInCourseParams = {
+export type CoreCompetencyGradeCompetencyInCourseWSParams = {
     courseid: number; // Course id.
     userid: number; // User id.
     competencyid: number; // Competency id.
@@ -1735,7 +1735,7 @@ export type CoreCompetencyGradeCompetencyInCourseParams = {
 /**
  * Data returned by core_competency_grade_competency_in_course WS.
  */
-export type CoreCompetencyGradeCompetencyInCourseResponse = {
+export type CoreCompetencyGradeCompetencyInCourseWSResponse = {
     usercompetencyid: number; // Usercompetencyid.
     contextid: number; // Contextid.
     action: number; // Action.
@@ -1773,14 +1773,14 @@ export type CoreCompetencyGradeCompetencyInCourseResponse = {
 /**
  * Params of core_competency_list_course_competencies WS.
  */
-export type CoreCompetencyListCourseCompetenciesParams = {
+export type CoreCompetencyListCourseCompetenciesWSParams = {
     id: number; // The course id.
 };
 
 /**
  * Data returned by core_competency_list_course_competencies WS.
  */
-export type CoreCompetencyListCourseCompetenciesResponse = {
+export type CoreCompetencyListCourseCompetenciesWSResponse = {
     competency: {
         shortname: string; // Shortname.
         idnumber: string; // Idnumber.
@@ -1815,7 +1815,7 @@ export type CoreCompetencyListCourseCompetenciesResponse = {
 /**
  * Params of core_competency_user_competency_plan_viewed WS.
  */
-export type CoreCompetencyUserCompetencyPlanViewedParams = {
+export type CoreCompetencyUserCompetencyPlanViewedWSParams = {
     competencyid: number; // The competency id.
     userid: number; // The user id.
     planid: number; // The plan id.
@@ -1824,24 +1824,24 @@ export type CoreCompetencyUserCompetencyPlanViewedParams = {
 /**
  * Data returned by core_competency_user_competency_plan_viewed WS.
  */
-export type CoreCompetencyUserCompetencyPlanViewedResponse = boolean;
+export type CoreCompetencyUserCompetencyPlanViewedWSResponse = boolean;
 
 /**
  * Params of core_competency_user_competency_viewed WS.
  */
-export type CoreCompetencyUserCompetencyViewedParams = {
+export type CoreCompetencyUserCompetencyViewedWSParams = {
     usercompetencyid: number; // The user competency id.
 };
 
 /**
  * Data returned by core_competency_user_competency_viewed WS.
  */
-export type CoreCompetencyUserCompetencyViewedResponse = boolean;
+export type CoreCompetencyUserCompetencyViewedWSResponse = boolean;
 
 /**
  * Params of core_competency_user_competency_viewed_in_course WS.
  */
-export type CoreCompetencyUserCompetencyViewedInCourseParams = {
+export type CoreCompetencyUserCompetencyViewedInCourseWSParams = {
     competencyid: number; // The competency id.
     userid: number; // The user id.
     courseid: number; // The course id.
@@ -1850,12 +1850,12 @@ export type CoreCompetencyUserCompetencyViewedInCourseParams = {
 /**
  * Data returned by core_competency_user_competency_viewed_in_course WS.
  */
-export type CoreCompetencyUserCompetencyViewedInCourseResponse = boolean;
+export type CoreCompetencyUserCompetencyViewedInCourseWSResponse = boolean;
 
 /**
  * Params of core_competency_user_competency_viewed_in_plan WS.
  */
-export type CoreCompetencyUserCompetencyViewedInPlanParams = {
+export type CoreCompetencyUserCompetencyViewedInPlanWSParams = {
     competencyid: number; // The competency id.
     userid: number; // The user id.
     planid: number; // The plan id.
@@ -1864,12 +1864,12 @@ export type CoreCompetencyUserCompetencyViewedInPlanParams = {
 /**
  * Data returned by core_competency_user_competency_viewed_in_plan WS.
  */
-export type CoreCompetencyUserCompetencyViewedInPlanResponse = boolean;
+export type CoreCompetencyUserCompetencyViewedInPlanWSResponse = boolean;
 
 /**
  * Params of core_completion_get_activities_completion_status WS.
  */
-export type CoreCompletionGetActivitiesCompletionStatusParams = {
+export type CoreCompletionGetActivitiesCompletionStatusWSParams = {
     courseid: number; // Course ID.
     userid: number; // User ID.
 };
@@ -1877,7 +1877,7 @@ export type CoreCompletionGetActivitiesCompletionStatusParams = {
 /**
  * Data returned by core_completion_get_activities_completion_status WS.
  */
-export type CoreCompletionGetActivitiesCompletionStatusResponse = {
+export type CoreCompletionGetActivitiesCompletionStatusWSResponse = {
     statuses: { // List of activities status.
         cmid: number; // Comment ID.
         modname: string; // Activity module name.
@@ -1901,7 +1901,7 @@ export type CoreCompletionGetActivitiesCompletionStatusResponse = {
 /**
  * Params of core_completion_get_course_completion_status WS.
  */
-export type CoreCompletionGetCourseCompletionStatusParams = {
+export type CoreCompletionGetCourseCompletionStatusWSParams = {
     courseid: number; // Course ID.
     userid: number; // User ID.
 };
@@ -1909,7 +1909,7 @@ export type CoreCompletionGetCourseCompletionStatusParams = {
 /**
  * Data returned by core_completion_get_course_completion_status WS.
  */
-export type CoreCompletionGetCourseCompletionStatusResponse = {
+export type CoreCompletionGetCourseCompletionStatusWSResponse = {
     completionstatus: {
         completed: boolean; // True if the course is complete, false otherwise.
         aggregation: number; // Aggregation method 1 means all, 2 means any.
@@ -1933,19 +1933,19 @@ export type CoreCompletionGetCourseCompletionStatusResponse = {
 /**
  * Params of core_completion_mark_course_self_completed WS.
  */
-export type CoreCompletionMarkCourseSelfCompletedParams = {
+export type CoreCompletionMarkCourseSelfCompletedWSParams = {
     courseid: number; // Course ID.
 };
 
 /**
  * Data returned by core_completion_mark_course_self_completed WS.
  */
-export type CoreCompletionMarkCourseSelfCompletedResponse = CoreStatusWithWarningsResponse;
+export type CoreCompletionMarkCourseSelfCompletedWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_completion_update_activity_completion_status_manually WS.
  */
-export type CoreCompletionUpdateActivityCompletionStatusManuallyParams = {
+export type CoreCompletionUpdateActivityCompletionStatusManuallyWSParams = {
     cmid: number; // Course module id.
     completed: boolean; // Activity completed or not.
 };
@@ -1953,12 +1953,12 @@ export type CoreCompletionUpdateActivityCompletionStatusManuallyParams = {
 /**
  * Data returned by core_completion_update_activity_completion_status_manually WS.
  */
-export type CoreCompletionUpdateActivityCompletionStatusManuallyResponse = CoreStatusWithWarningsResponse;
+export type CoreCompletionUpdateActivityCompletionStatusManuallyWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_course_check_updates WS.
  */
-export type CoreCourseCheckUpdatesParams = {
+export type CoreCourseCheckUpdatesWSParams = {
     courseid: number; // Course id to check.
     tocheck: { // Instances to check.
         contextlevel: string; // The context level for the file location.
@@ -1973,7 +1973,7 @@ export type CoreCourseCheckUpdatesParams = {
 /**
  * Data returned by core_course_check_updates WS.
  */
-export type CoreCourseCheckUpdatesResponse = {
+export type CoreCourseCheckUpdatesWSResponse = {
     instances: {
         contextlevel: string; // The context level.
         id: number; // Instance id.
@@ -1989,7 +1989,7 @@ export type CoreCourseCheckUpdatesResponse = {
 /**
  * Params of core_course_get_categories WS.
  */
-export type CoreCourseGetCategoriesParams = {
+export type CoreCourseGetCategoriesWSParams = {
     criteria?: { // Criteria.
         key: string; // The category column to search, expected keys (value format) are:"id" (int) the category id,"ids" (string) category ids separated by commas,"name" (string) the category name,"parent" (int) the parent category id,"idnumber" (string) category idnumber - user must have 'moodle/category:manage' to search on idnumber,"visible" (int) whether the returned categories must be visible or hidden. If the key is not passed,
                                           // then the function return all categories that the user can see. - user must have 'moodle/category:manage' or 'moodle/category:viewhiddencategories' to search on visible,"theme" (string) only return the categories having this theme - user must have 'moodle/category:manage' to search on theme.
@@ -2004,7 +2004,7 @@ export type CoreCourseGetCategoriesParams = {
 /**
  * Data returned by core_course_get_categories WS.
  */
-export type CoreCourseGetCategoriesResponse = {
+export type CoreCourseGetCategoriesWSResponse = {
     id: number; // Category id.
     name: string; // Category name.
     idnumber?: string; // Category id number.
@@ -2024,7 +2024,7 @@ export type CoreCourseGetCategoriesResponse = {
 /**
  * Params of core_course_get_contents WS.
  */
-export type CoreCourseGetContentsParams = {
+export type CoreCourseGetContentsWSParams = {
     courseid: number; // Course id.
     options?: { // Options, used since Moodle 2.9.
         name: string; // The expected keys (value format) are:
@@ -2047,7 +2047,7 @@ export type CoreCourseGetContentsParams = {
 /**
  * Data returned by core_course_get_contents WS.
  */
-export type CoreCourseGetContentsResponse = {
+export type CoreCourseGetContentsWSResponse = {
     id: number; // Section ID.
     name: string; // Section name.
     visible?: number; // Is the section visible.
@@ -2136,14 +2136,14 @@ export type CoreCourseGetContentsResponse = {
 /**
  * Params of core_course_get_course_module WS.
  */
-export type CoreCourseGetCourseModuleParams = {
+export type CoreCourseGetCourseModuleWSParams = {
     cmid: number; // The course module id.
 };
 
 /**
  * Data returned by core_course_get_course_module WS.
  */
-export type CoreCourseGetCourseModuleResponse = {
+export type CoreCourseGetCourseModuleWSResponse = {
     cm: {
         id: number; // The course module id.
         course: number; // The course id.
@@ -2188,7 +2188,7 @@ export type CoreCourseGetCourseModuleResponse = {
 /**
  * Params of core_course_get_course_module_by_instance WS.
  */
-export type CoreCourseGetCourseModuleByInstanceParams = {
+export type CoreCourseGetCourseModuleByInstanceWSParams = {
     module: string; // The module name.
     instance: number; // The module instance id.
 };
@@ -2196,7 +2196,7 @@ export type CoreCourseGetCourseModuleByInstanceParams = {
 /**
  * Data returned by core_course_get_course_module_by_instance WS.
  */
-export type CoreCourseGetCourseModuleByInstanceResponse = {
+export type CoreCourseGetCourseModuleByInstanceWSResponse = {
     cm: {
         id: number; // The course module id.
         course: number; // The course id.
@@ -2241,7 +2241,7 @@ export type CoreCourseGetCourseModuleByInstanceResponse = {
 /**
  * Params of core_course_get_courses WS.
  */
-export type CoreCourseGetCoursesParams = {
+export type CoreCourseGetCoursesWSParams = {
     options?: {
         ids?: number[]; // List of course id. If empty return all courses
                                          // except front page course.
@@ -2252,7 +2252,7 @@ export type CoreCourseGetCoursesParams = {
 /**
  * Data returned by core_course_get_courses WS.
  */
-export type CoreCourseGetCoursesResponse = {
+export type CoreCourseGetCoursesWSResponse = {
     id: number; // Course id.
     shortname: string; // Course short name.
     categoryid: number; // Category id.
@@ -2299,7 +2299,7 @@ export type CoreCourseGetCoursesResponse = {
 /**
  * Params of core_course_get_courses_by_field WS.
  */
-export type CoreCourseGetCoursesByFieldParams = {
+export type CoreCourseGetCoursesByFieldWSParams = {
     field?: string; // The field to search can be left empty for all courses or:
                  // id: course id
                  // ids: comma separated course ids
@@ -2313,7 +2313,7 @@ export type CoreCourseGetCoursesByFieldParams = {
 /**
  * Data returned by core_course_get_courses_by_field WS.
  */
-export type CoreCourseGetCoursesByFieldResponse = {
+export type CoreCourseGetCoursesByFieldWSResponse = {
     courses: { // Course.
         id: number; // Course id.
         fullname: string; // Course full name.
@@ -2377,7 +2377,7 @@ export type CoreCourseGetCoursesByFieldResponse = {
 /**
  * Params of core_course_get_enrolled_courses_by_timeline_classification WS.
  */
-export type CoreCourseGetEnrolledCoursesByTimelineClassificationParams = {
+export type CoreCourseGetEnrolledCoursesByTimelineClassificationWSParams = {
     classification: string; // Future, inprogress, or past.
     limit?: number; // Result set limit.
     offset?: number; // Result set offset.
@@ -2389,7 +2389,7 @@ export type CoreCourseGetEnrolledCoursesByTimelineClassificationParams = {
 /**
  * Data returned by core_course_get_enrolled_courses_by_timeline_classification WS.
  */
-export type CoreCourseGetEnrolledCoursesByTimelineClassificationResponse = {
+export type CoreCourseGetEnrolledCoursesByTimelineClassificationWSResponse = {
     courses: { // Course.
         id: number; // Id.
         fullname: string; // Fullname.
@@ -2417,7 +2417,7 @@ export type CoreCourseGetEnrolledCoursesByTimelineClassificationResponse = {
 /**
  * Params of core_course_get_recent_courses WS.
  */
-export type CoreCourseGetRecentCoursesParams = {
+export type CoreCourseGetRecentCoursesWSParams = {
     userid?: number; // Id of the user, default to current user.
     limit?: number; // Result set limit.
     offset?: number; // Result set offset.
@@ -2427,7 +2427,7 @@ export type CoreCourseGetRecentCoursesParams = {
 /**
  * Data returned by core_course_get_recent_courses WS.
  */
-export type CoreCourseGetRecentCoursesResponse = { // Courses.
+export type CoreCourseGetRecentCoursesWSResponse = { // Courses.
     id: number; // Id.
     fullname: string; // Fullname.
     shortname: string; // Shortname.
@@ -2452,7 +2452,7 @@ export type CoreCourseGetRecentCoursesResponse = { // Courses.
 /**
  * Params of core_course_get_updates_since WS.
  */
-export type CoreCourseGetUpdatesSinceParams = {
+export type CoreCourseGetUpdatesSinceWSParams = {
     courseid: number; // Course id to check.
     since: number; // Check updates since this time stamp.
     filter?: string[]; // Check only for updates in these areas.
@@ -2461,7 +2461,7 @@ export type CoreCourseGetUpdatesSinceParams = {
 /**
  * Data returned by core_course_get_updates_since WS.
  */
-export type CoreCourseGetUpdatesSinceResponse = {
+export type CoreCourseGetUpdatesSinceWSResponse = {
     instances: {
         contextlevel: string; // The context level.
         id: number; // Instance id.
@@ -2477,14 +2477,14 @@ export type CoreCourseGetUpdatesSinceResponse = {
 /**
  * Params of core_course_get_user_administration_options WS.
  */
-export type CoreCourseGetUserAdministrationOptionsParams = {
+export type CoreCourseGetUserAdministrationOptionsWSParams = {
     courseids: number[];
 };
 
 /**
  * Data returned by core_course_get_user_administration_options WS.
  */
-export type CoreCourseGetUserAdministrationOptionsResponse = {
+export type CoreCourseGetUserAdministrationOptionsWSResponse = {
     courses: { // List of courses.
         id: number; // Course id.
         options: {
@@ -2498,14 +2498,14 @@ export type CoreCourseGetUserAdministrationOptionsResponse = {
 /**
  * Params of core_course_get_user_navigation_options WS.
  */
-export type CoreCourseGetUserNavigationOptionsParams = {
+export type CoreCourseGetUserNavigationOptionsWSParams = {
     courseids: number[];
 };
 
 /**
  * Data returned by core_course_get_user_navigation_options WS.
  */
-export type CoreCourseGetUserNavigationOptionsResponse = {
+export type CoreCourseGetUserNavigationOptionsWSResponse = {
     courses: { // List of courses.
         id: number; // Course id.
         options: {
@@ -2519,7 +2519,7 @@ export type CoreCourseGetUserNavigationOptionsResponse = {
 /**
  * Params of core_course_search_courses WS.
  */
-export type CoreCourseSearchCoursesParams = {
+export type CoreCourseSearchCoursesWSParams = {
     criterianame: string; // Criteria name
                                                      // (search, modulelist (only admins), blocklist (only admins), tagid).
 
@@ -2534,7 +2534,7 @@ export type CoreCourseSearchCoursesParams = {
 /**
  * Data returned by core_course_search_courses WS.
  */
-export type CoreCourseSearchCoursesResponse = {
+export type CoreCourseSearchCoursesWSResponse = {
     total: number; // Total course count.
     courses: { // Course.
         id: number; // Course id.
@@ -2567,7 +2567,7 @@ export type CoreCourseSearchCoursesResponse = {
 /**
  * Params of core_course_set_favourite_courses WS.
  */
-export type CoreCourseSetFavouriteCoursesParams = {
+export type CoreCourseSetFavouriteCoursesWSParams = {
     courses: {
         id: number; // Course ID.
         favourite: boolean; // Favourite status.
@@ -2577,14 +2577,14 @@ export type CoreCourseSetFavouriteCoursesParams = {
 /**
  * Data returned by core_course_set_favourite_courses WS.
  */
-export type CoreCourseSetFavouriteCoursesResponse = {
+export type CoreCourseSetFavouriteCoursesWSResponse = {
     warnings?: CoreWSExternalWarning[];
 };
 
 /**
  * Params of core_course_view_course WS.
  */
-export type CoreCourseViewCourseParams = {
+export type CoreCourseViewCourseWSParams = {
     courseid: number; // Id of the course.
     sectionnumber?: number; // Section number.
 };
@@ -2592,19 +2592,19 @@ export type CoreCourseViewCourseParams = {
 /**
  * Data returned by core_course_view_course WS.
  */
-export type CoreCourseViewCourseResponse = CoreStatusWithWarningsResponse;
+export type CoreCourseViewCourseWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_enrol_get_course_enrolment_methods WS.
  */
-export type CoreEnrolGetCourseEnrolmentMethodsParams = {
+export type CoreEnrolGetCourseEnrolmentMethodsWSParams = {
     courseid: number; // Course id.
 };
 
 /**
  * Data returned by core_enrol_get_course_enrolment_methods WS.
  */
-export type CoreEnrolGetCourseEnrolmentMethodsResponse = {
+export type CoreEnrolGetCourseEnrolmentMethodsWSResponse = {
     id: number; // Id of course enrolment instance.
     courseid: number; // Id of course.
     type: string; // Type of enrolment plugin.
@@ -2616,7 +2616,7 @@ export type CoreEnrolGetCourseEnrolmentMethodsResponse = {
 /**
  * Params of core_enrol_get_enrolled_users WS.
  */
-export type CoreEnrolGetEnrolledUsersParams = {
+export type CoreEnrolGetEnrolledUsersWSParams = {
     courseid: number; // Course id.
     options?: { // Option names:
                          // * withcapability (string) return only users with this capability. This option requires 'moodle/role:review' on the course context.
@@ -2639,7 +2639,7 @@ export type CoreEnrolGetEnrolledUsersParams = {
 /**
  * Data returned by core_enrol_get_enrolled_users WS.
  */
-export type CoreEnrolGetEnrolledUsersResponse = {
+export type CoreEnrolGetEnrolledUsersWSResponse = {
     id: number; // ID of the user.
     username?: string; // Username policy is defined in Moodle security config.
     firstname?: string; // The first name(s) of the user.
@@ -2700,7 +2700,7 @@ export type CoreEnrolGetEnrolledUsersResponse = {
 /**
  * Params of core_enrol_get_users_courses WS.
  */
-export type CoreEnrolGetUsersCoursesParams = {
+export type CoreEnrolGetUsersCoursesWSParams = {
     userid: number; // User id.
     returnusercount?: boolean; // Include count of enrolled users for each course? This can add several seconds to the response time if a user is on several large courses, so set this to false if the value will not be used to improve performance.
 };
@@ -2708,7 +2708,7 @@ export type CoreEnrolGetUsersCoursesParams = {
 /**
  * Data returned by core_enrol_get_users_courses WS.
  */
-export type CoreEnrolGetUsersCoursesResponse = {
+export type CoreEnrolGetUsersCoursesWSResponse = {
     id: number; // Id of course.
     shortname: string; // Short name of course.
     fullname: string; // Long name of course.
@@ -2739,7 +2739,7 @@ export type CoreEnrolGetUsersCoursesResponse = {
 /**
  * Params of core_enrol_search_users WS.
  */
-export type CoreEnrolSearchUsersParams = {
+export type CoreEnrolSearchUsersWSParams = {
     courseid: number; // Course id.
     search: string; // Query.
     searchanywhere: boolean; // Find a match anywhere, or only at the beginning.
@@ -2750,7 +2750,7 @@ export type CoreEnrolSearchUsersParams = {
 /**
  * Data returned by core_enrol_search_users WS.
  */
-export type CoreEnrolSearchUsersResponse = {
+export type CoreEnrolSearchUsersWSResponse = {
     id: number; // ID of the user.
     username?: string; // The username.
     firstname?: string; // The first name(s) of the user.
@@ -2801,7 +2801,7 @@ export type CoreEnrolSearchUsersResponse = {
 /**
  * Params of core_files_delete_draft_files WS.
  */
-export type CoreFilesDeleteDraftFilesParams = {
+export type CoreFilesDeleteDraftFilesWSParams = {
     draftitemid: number; // Item id of the draft file area.
     files: { // Files or directories to be deleted.
         filepath: string; // Path to the file or directory to delete.
@@ -2812,7 +2812,7 @@ export type CoreFilesDeleteDraftFilesParams = {
 /**
  * Data returned by core_files_delete_draft_files WS.
  */
-export type CoreFilesDeleteDraftFilesResponse = {
+export type CoreFilesDeleteDraftFilesWSResponse = {
     parentpaths: string[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -2820,7 +2820,7 @@ export type CoreFilesDeleteDraftFilesResponse = {
 /**
  * Params of core_files_get_files WS.
  */
-export type CoreFilesGetFilesParams = {
+export type CoreFilesGetFilesWSParams = {
     contextid: number; // Context id Set to -1 to use contextlevel and instanceid.
     component: string; // Component.
     filearea: string; // File area.
@@ -2835,7 +2835,7 @@ export type CoreFilesGetFilesParams = {
 /**
  * Data returned by core_files_get_files WS.
  */
-export type CoreFilesGetFilesResponse = {
+export type CoreFilesGetFilesWSResponse = {
     parents: {
         contextid: number;
         component: string;
@@ -2864,7 +2864,7 @@ export type CoreFilesGetFilesResponse = {
 /**
  * Params of core_filters_get_available_in_context WS.
  */
-export type CoreFiltersGetAvailableInContextParams = {
+export type CoreFiltersGetAvailableInContextWSParams = {
     contexts: { // The list of contexts to check.
         contextlevel: string; // The context level where the filters are:
                              // (coursecat, course, module).
@@ -2876,7 +2876,7 @@ export type CoreFiltersGetAvailableInContextParams = {
 /**
  * Data returned by core_filters_get_available_in_context WS.
  */
-export type CoreFiltersGetAvailableInContextResponse = {
+export type CoreFiltersGetAvailableInContextWSResponse = {
     filters: { // Available filters.
         contextlevel: string; // The context level where the filters are:
                              // (coursecat, course, module).
@@ -2893,7 +2893,7 @@ export type CoreFiltersGetAvailableInContextResponse = {
 /**
  * Params of core_get_component_strings WS.
  */
-export type CoreGetComponentStringsParams = {
+export type CoreGetComponentStringsWSParams = {
     component: string; // Component.
     lang?: string; // Lang.
 };
@@ -2901,7 +2901,7 @@ export type CoreGetComponentStringsParams = {
 /**
  * Data returned by core_get_component_strings WS.
  */
-export type CoreGetComponentStringsResponse = {
+export type CoreGetComponentStringsWSResponse = {
     stringid: string; // String id.
     string: string; // Translated string.
 }[];
@@ -2909,7 +2909,7 @@ export type CoreGetComponentStringsResponse = {
 /**
  * Params of core_grades_grader_gradingpanel_point_fetch WS.
  */
-export type CoreGradesGraderGradingpanelPointFetchParams = {
+export type CoreGradesGraderGradingpanelPointFetchWSParams = {
     component: string; // The name of the component.
     contextid: number; // The ID of the context being graded.
     itemname: string; // The grade item itemname being graded.
@@ -2919,7 +2919,7 @@ export type CoreGradesGraderGradingpanelPointFetchParams = {
 /**
  * Data returned by core_grades_grader_gradingpanel_point_fetch WS.
  */
-export type CoreGradesGraderGradingpanelPointFetchResponse = {
+export type CoreGradesGraderGradingpanelPointFetchWSResponse = {
     templatename: string; // The template to use when rendering this data.
     hasgrade: boolean; // Does the user have a grade?.
     grade: {
@@ -2936,7 +2936,7 @@ export type CoreGradesGraderGradingpanelPointFetchResponse = {
 /**
  * Params of core_grades_grader_gradingpanel_point_store WS.
  */
-export type CoreGradesGraderGradingpanelPointStoreParams = {
+export type CoreGradesGraderGradingpanelPointStoreWSParams = {
     component: string; // The name of the component.
     contextid: number; // The ID of the context being graded.
     itemname: string; // The grade item itemname being graded.
@@ -2948,7 +2948,7 @@ export type CoreGradesGraderGradingpanelPointStoreParams = {
 /**
  * Data returned by core_grades_grader_gradingpanel_point_store WS.
  */
-export type CoreGradesGraderGradingpanelPointStoreResponse = {
+export type CoreGradesGraderGradingpanelPointStoreWSResponse = {
     templatename: string; // The template to use when rendering this data.
     hasgrade: boolean; // Does the user have a grade?.
     grade: {
@@ -2965,7 +2965,7 @@ export type CoreGradesGraderGradingpanelPointStoreResponse = {
 /**
  * Params of core_grades_grader_gradingpanel_scale_fetch WS.
  */
-export type CoreGradesGraderGradingpanelScaleFetchParams = {
+export type CoreGradesGraderGradingpanelScaleFetchWSParams = {
     component: string; // The name of the component.
     contextid: number; // The ID of the context being graded.
     itemname: string; // The grade item itemname being graded.
@@ -2975,7 +2975,7 @@ export type CoreGradesGraderGradingpanelScaleFetchParams = {
 /**
  * Data returned by core_grades_grader_gradingpanel_scale_fetch WS.
  */
-export type CoreGradesGraderGradingpanelScaleFetchResponse = {
+export type CoreGradesGraderGradingpanelScaleFetchWSResponse = {
     templatename: string; // The template to use when rendering this data.
     hasgrade: boolean; // Does the user have a grade?.
     grade: {
@@ -2996,7 +2996,7 @@ export type CoreGradesGraderGradingpanelScaleFetchResponse = {
 /**
  * Params of core_grades_grader_gradingpanel_scale_store WS.
  */
-export type CoreGradesGraderGradingpanelScaleStoreParams = {
+export type CoreGradesGraderGradingpanelScaleStoreWSParams = {
     component: string; // The name of the component.
     contextid: number; // The ID of the context being graded.
     itemname: string; // The grade item itemname being graded.
@@ -3008,7 +3008,7 @@ export type CoreGradesGraderGradingpanelScaleStoreParams = {
 /**
  * Data returned by core_grades_grader_gradingpanel_scale_store WS.
  */
-export type CoreGradesGraderGradingpanelScaleStoreResponse = {
+export type CoreGradesGraderGradingpanelScaleStoreWSResponse = {
     templatename: string; // The template to use when rendering this data.
     hasgrade: boolean; // Does the user have a grade?.
     grade: {
@@ -3029,7 +3029,7 @@ export type CoreGradesGraderGradingpanelScaleStoreResponse = {
 /**
  * Params of core_group_get_activity_allowed_groups WS.
  */
-export type CoreGroupGetActivityAllowedGroupsParams = {
+export type CoreGroupGetActivityAllowedGroupsWSParams = {
     cmid: number; // Course module id.
     userid?: number; // Id of user, empty for current user.
 };
@@ -3037,7 +3037,7 @@ export type CoreGroupGetActivityAllowedGroupsParams = {
 /**
  * Data returned by core_group_get_activity_allowed_groups WS.
  */
-export type CoreGroupGetActivityAllowedGroupsResponse = {
+export type CoreGroupGetActivityAllowedGroupsWSResponse = {
     groups: {
         id: number; // Group record id.
         name: string; // Multilang compatible name, course unique.
@@ -3053,14 +3053,14 @@ export type CoreGroupGetActivityAllowedGroupsResponse = {
 /**
  * Params of core_group_get_activity_groupmode WS.
  */
-export type CoreGroupGetActivityGroupmodeParams = {
+export type CoreGroupGetActivityGroupmodeWSParams = {
     cmid: number; // Course module id.
 };
 
 /**
  * Data returned by core_group_get_activity_groupmode WS.
  */
-export type CoreGroupGetActivityGroupmodeResponse = {
+export type CoreGroupGetActivityGroupmodeWSResponse = {
     groupmode: number; // Group mode:
                                                  // 0 for no groups, 1 for separate groups, 2 for visible groups.
 
@@ -3070,14 +3070,14 @@ export type CoreGroupGetActivityGroupmodeResponse = {
 /**
  * Params of core_group_get_course_groupings WS.
  */
-export type CoreGroupGetCourseGroupingsParams = {
+export type CoreGroupGetCourseGroupingsWSParams = {
     courseid: number; // Id of course.
 };
 
 /**
  * Data returned by core_group_get_course_groupings WS.
  */
-export type CoreGroupGetCourseGroupingsResponse = {
+export type CoreGroupGetCourseGroupingsWSResponse = {
     id: number; // Grouping record id.
     courseid: number; // Id of course.
     name: string; // Multilang compatible name, course unique.
@@ -3089,14 +3089,14 @@ export type CoreGroupGetCourseGroupingsResponse = {
 /**
  * Params of core_group_get_course_groups WS.
  */
-export type CoreGroupGetCourseGroupsParams = {
+export type CoreGroupGetCourseGroupsWSParams = {
     courseid: number; // Id of course.
 };
 
 /**
  * Data returned by core_group_get_course_groups WS.
  */
-export type CoreGroupGetCourseGroupsResponse = {
+export type CoreGroupGetCourseGroupsWSResponse = {
     id: number; // Group record id.
     courseid: number; // Id of course.
     name: string; // Multilang compatible name, course unique.
@@ -3109,7 +3109,7 @@ export type CoreGroupGetCourseGroupsResponse = {
 /**
  * Params of core_group_get_course_user_groups WS.
  */
-export type CoreGroupGetCourseUserGroupsParams = {
+export type CoreGroupGetCourseUserGroupsWSParams = {
     courseid?: number; // Id of course (empty or 0 for all the courses where the user is enrolled).
     userid?: number; // Id of user (empty or 0 for current user).
     groupingid?: number; // Returns only groups in the specified grouping.
@@ -3118,7 +3118,7 @@ export type CoreGroupGetCourseUserGroupsParams = {
 /**
  * Data returned by core_group_get_course_user_groups WS.
  */
-export type CoreGroupGetCourseUserGroupsResponse = {
+export type CoreGroupGetCourseUserGroupsWSResponse = {
     groups: {
         id: number; // Group record id.
         name: string; // Multilang compatible name, course unique.
@@ -3133,7 +3133,7 @@ export type CoreGroupGetCourseUserGroupsResponse = {
 /**
  * Params of core_h5p_get_trusted_h5p_file WS.
  */
-export type CoreH5pGetTrustedH5pFileParams = {
+export type CoreH5pGetTrustedH5pFileWSParams = {
     url: string; // H5P file url.
     frame?: number; // The frame allow to show the bar options below the content.
     export?: number; // The export allow to download the package.
@@ -3144,7 +3144,7 @@ export type CoreH5pGetTrustedH5pFileParams = {
 /**
  * Data returned by core_h5p_get_trusted_h5p_file WS.
  */
-export type CoreH5pGetTrustedH5pFileResponse = {
+export type CoreH5pGetTrustedH5pFileWSResponse = {
     files: CoreWSExternalFile[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -3152,7 +3152,7 @@ export type CoreH5pGetTrustedH5pFileResponse = {
 /**
  * Params of core_message_block_user WS.
  */
-export type CoreMessageBlockUserParams = {
+export type CoreMessageBlockUserWSParams = {
     userid: number; // The id of the user who is blocking.
     blockeduserid: number; // The id of the user being blocked.
 };
@@ -3160,12 +3160,12 @@ export type CoreMessageBlockUserParams = {
 /**
  * Data returned by core_message_block_user WS.
  */
-export type CoreMessageBlockUserResponse = CoreWSExternalWarning[];
+export type CoreMessageBlockUserWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_confirm_contact_request WS.
  */
-export type CoreMessageConfirmContactRequestParams = {
+export type CoreMessageConfirmContactRequestWSParams = {
     userid: number; // The id of the user making the request.
     requesteduserid: number; // The id of the user being requested.
 };
@@ -3173,12 +3173,12 @@ export type CoreMessageConfirmContactRequestParams = {
 /**
  * Data returned by core_message_confirm_contact_request WS.
  */
-export type CoreMessageConfirmContactRequestResponse = CoreWSExternalWarning[];
+export type CoreMessageConfirmContactRequestWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_create_contact_request WS.
  */
-export type CoreMessageCreateContactRequestParams = {
+export type CoreMessageCreateContactRequestWSParams = {
     userid: number; // The id of the user making the request.
     requesteduserid: number; // The id of the user being requested.
 };
@@ -3186,7 +3186,7 @@ export type CoreMessageCreateContactRequestParams = {
 /**
  * Data returned by core_message_create_contact_request WS.
  */
-export type CoreMessageCreateContactRequestResponse = {
+export type CoreMessageCreateContactRequestWSResponse = {
     request?: {
         id: number; // Message id.
         userid: number; // User from id.
@@ -3199,7 +3199,7 @@ export type CoreMessageCreateContactRequestResponse = {
 /**
  * Params of core_message_data_for_messagearea_search_messages WS.
  */
-export type CoreMessageDataForMessageareaSearchMessagesParams = {
+export type CoreMessageDataForMessageareaSearchMessagesWSParams = {
     userid: number; // The id of the user who is performing the search.
     search: string; // The string being searched.
     limitfrom?: number; // Limit from.
@@ -3209,7 +3209,7 @@ export type CoreMessageDataForMessageareaSearchMessagesParams = {
 /**
  * Data returned by core_message_data_for_messagearea_search_messages WS.
  */
-export type CoreMessageDataForMessageareaSearchMessagesResponse = {
+export type CoreMessageDataForMessageareaSearchMessagesWSResponse = {
     contacts: {
         userid: number; // The user's id.
         fullname: string; // The user's name.
@@ -3232,7 +3232,7 @@ export type CoreMessageDataForMessageareaSearchMessagesResponse = {
 /**
  * Params of core_message_decline_contact_request WS.
  */
-export type CoreMessageDeclineContactRequestParams = {
+export type CoreMessageDeclineContactRequestWSParams = {
     userid: number; // The id of the user making the request.
     requesteduserid: number; // The id of the user being requested.
 };
@@ -3240,12 +3240,12 @@ export type CoreMessageDeclineContactRequestParams = {
 /**
  * Data returned by core_message_decline_contact_request WS.
  */
-export type CoreMessageDeclineContactRequestResponse = CoreWSExternalWarning[];
+export type CoreMessageDeclineContactRequestWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_delete_contacts WS.
  */
-export type CoreMessageDeleteContactsParams = {
+export type CoreMessageDeleteContactsWSParams = {
     userids: number[]; // List of user IDs.
     userid?: number; // The id of the user we are deleting the contacts for, 0 for the
                  // current user.
@@ -3255,12 +3255,12 @@ export type CoreMessageDeleteContactsParams = {
 /**
  * Data returned by core_message_delete_contacts WS.
  */
-export type CoreMessageDeleteContactsResponse = {}; // WARNING: Null structure found;
+export type CoreMessageDeleteContactsWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of core_message_delete_conversations_by_id WS.
  */
-export type CoreMessageDeleteConversationsByIdParams = {
+export type CoreMessageDeleteConversationsByIdWSParams = {
     userid: number; // The user id of who we want to delete the conversation for.
     conversationids: number[]; // List of conversation IDs.
 };
@@ -3268,12 +3268,12 @@ export type CoreMessageDeleteConversationsByIdParams = {
 /**
  * Data returned by core_message_delete_conversations_by_id WS.
  */
-export type CoreMessageDeleteConversationsByIdResponse = CoreWSExternalWarning[];
+export type CoreMessageDeleteConversationsByIdWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_delete_message WS.
  */
-export type CoreMessageDeleteMessageParams = {
+export type CoreMessageDeleteMessageWSParams = {
     messageid: number; // The message id.
     userid: number; // The user id of who we want to delete the message for.
     read?: boolean; // If is a message read.
@@ -3282,12 +3282,12 @@ export type CoreMessageDeleteMessageParams = {
 /**
  * Data returned by core_message_delete_message WS.
  */
-export type CoreMessageDeleteMessageResponse = CoreStatusWithWarningsResponse;
+export type CoreMessageDeleteMessageWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_message_delete_message_for_all_users WS.
  */
-export type CoreMessageDeleteMessageForAllUsersParams = {
+export type CoreMessageDeleteMessageForAllUsersWSParams = {
     messageid: number; // The message id.
     userid: number; // The user id of who we want to delete the message for all users.
 };
@@ -3295,19 +3295,19 @@ export type CoreMessageDeleteMessageForAllUsersParams = {
 /**
  * Data returned by core_message_delete_message_for_all_users WS.
  */
-export type CoreMessageDeleteMessageForAllUsersResponse = CoreWSExternalWarning[];
+export type CoreMessageDeleteMessageForAllUsersWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_get_blocked_users WS.
  */
-export type CoreMessageGetBlockedUsersParams = {
+export type CoreMessageGetBlockedUsersWSParams = {
     userid: number; // The user whose blocked users we want to retrieve.
 };
 
 /**
  * Data returned by core_message_get_blocked_users WS.
  */
-export type CoreMessageGetBlockedUsersResponse = {
+export type CoreMessageGetBlockedUsersWSResponse = {
     users: { // List of blocked users.
         id: number; // User ID.
         fullname: string; // User full name.
@@ -3319,7 +3319,7 @@ export type CoreMessageGetBlockedUsersResponse = {
 /**
  * Params of core_message_get_contact_requests WS.
  */
-export type CoreMessageGetContactRequestsParams = {
+export type CoreMessageGetContactRequestsWSParams = {
     userid: number; // The id of the user we want the requests for.
     limitfrom?: number; // Limit from.
     limitnum?: number; // Limit number.
@@ -3328,7 +3328,7 @@ export type CoreMessageGetContactRequestsParams = {
 /**
  * Data returned by core_message_get_contact_requests WS.
  */
-export type CoreMessageGetContactRequestsResponse = {
+export type CoreMessageGetContactRequestsWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
     profileurl: string; // The link to the user's profile page.
@@ -3359,7 +3359,7 @@ export type CoreMessageGetContactRequestsResponse = {
 /**
  * Params of core_message_get_conversation WS.
  */
-export type CoreMessageGetConversationParams = {
+export type CoreMessageGetConversationWSParams = {
     userid: number; // The id of the user who we are viewing conversations for.
     conversationid: number; // The id of the conversation to fetch.
     includecontactrequests: boolean; // Include contact requests in the members.
@@ -3374,7 +3374,7 @@ export type CoreMessageGetConversationParams = {
 /**
  * Data returned by core_message_get_conversation WS.
  */
-export type CoreMessageGetConversationResponse = {
+export type CoreMessageGetConversationWSResponse = {
     id: number; // The conversation id.
     name?: string; // The conversation name, if set.
     subname?: string; // A subtitle for the conversation name, if set.
@@ -3424,7 +3424,7 @@ export type CoreMessageGetConversationResponse = {
 /**
  * Params of core_message_get_conversation_between_users WS.
  */
-export type CoreMessageGetConversationBetweenUsersParams = {
+export type CoreMessageGetConversationBetweenUsersWSParams = {
     userid: number; // The id of the user who we are viewing conversations for.
     otheruserid: number; // The other user id.
     includecontactrequests: boolean; // Include contact requests in the members.
@@ -3439,7 +3439,7 @@ export type CoreMessageGetConversationBetweenUsersParams = {
 /**
  * Data returned by core_message_get_conversation_between_users WS.
  */
-export type CoreMessageGetConversationBetweenUsersResponse = {
+export type CoreMessageGetConversationBetweenUsersWSResponse = {
     id: number; // The conversation id.
     name?: string; // The conversation name, if set.
     subname?: string; // A subtitle for the conversation name, if set.
@@ -3489,14 +3489,14 @@ export type CoreMessageGetConversationBetweenUsersResponse = {
 /**
  * Params of core_message_get_conversation_counts WS.
  */
-export type CoreMessageGetConversationCountsParams = {
+export type CoreMessageGetConversationCountsWSParams = {
     userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
  * Data returned by core_message_get_conversation_counts WS.
  */
-export type CoreMessageGetConversationCountsResponse = {
+export type CoreMessageGetConversationCountsWSResponse = {
     favourites: number; // Total number of favourite conversations.
     types: {
         1: number; // Total number of individual conversations.
@@ -3508,7 +3508,7 @@ export type CoreMessageGetConversationCountsResponse = {
 /**
  * Params of core_message_get_conversation_members WS.
  */
-export type CoreMessageGetConversationMembersParams = {
+export type CoreMessageGetConversationMembersWSParams = {
     userid: number; // The id of the user we are performing this action on behalf of.
     conversationid: number; // The id of the conversation.
     includecontactrequests?: boolean; // Do we want to include contact requests?.
@@ -3520,7 +3520,7 @@ export type CoreMessageGetConversationMembersParams = {
 /**
  * Data returned by core_message_get_conversation_members WS.
  */
-export type CoreMessageGetConversationMembersResponse = {
+export type CoreMessageGetConversationMembersWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
     profileurl: string; // The link to the user's profile page.
@@ -3551,7 +3551,7 @@ export type CoreMessageGetConversationMembersResponse = {
 /**
  * Params of core_message_get_conversation_messages WS.
  */
-export type CoreMessageGetConversationMessagesParams = {
+export type CoreMessageGetConversationMessagesWSParams = {
     currentuserid: number; // The current user's id.
     convid: number; // The conversation id.
     limitfrom?: number; // Limit from.
@@ -3563,7 +3563,7 @@ export type CoreMessageGetConversationMessagesParams = {
 /**
  * Data returned by core_message_get_conversation_messages WS.
  */
-export type CoreMessageGetConversationMessagesResponse = {
+export type CoreMessageGetConversationMessagesWSResponse = {
     id: number; // The conversation id.
     members: {
         id: number; // The user id.
@@ -3603,7 +3603,7 @@ export type CoreMessageGetConversationMessagesResponse = {
 /**
  * Params of core_message_get_conversations WS.
  */
-export type CoreMessageGetConversationsParams = {
+export type CoreMessageGetConversationsWSParams = {
     userid: number; // The id of the user who we are viewing conversations for.
     limitfrom?: number; // The offset to start at.
     limitnum?: number; // Limit number of conversations to this.
@@ -3619,7 +3619,7 @@ export type CoreMessageGetConversationsParams = {
 /**
  * Data returned by core_message_get_conversations WS.
  */
-export type CoreMessageGetConversationsResponse = {
+export type CoreMessageGetConversationsWSResponse = {
     conversations: {
         id: number; // The conversation id.
         name?: string; // The conversation name, if set.
@@ -3671,7 +3671,7 @@ export type CoreMessageGetConversationsResponse = {
 /**
  * Params of core_message_get_member_info WS.
  */
-export type CoreMessageGetMemberInfoParams = {
+export type CoreMessageGetMemberInfoWSParams = {
     referenceuserid: number; // Id of the user.
     userids: number[];
     includecontactrequests?: boolean; // Include contact requests in response.
@@ -3681,7 +3681,7 @@ export type CoreMessageGetMemberInfoParams = {
 /**
  * Data returned by core_message_get_member_info WS.
  */
-export type CoreMessageGetMemberInfoResponse = {
+export type CoreMessageGetMemberInfoWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
     profileurl: string; // The link to the user's profile page.
@@ -3712,7 +3712,7 @@ export type CoreMessageGetMemberInfoResponse = {
 /**
  * Params of core_message_get_messages WS.
  */
-export type CoreMessageGetMessagesParams = {
+export type CoreMessageGetMessagesWSParams = {
     useridto: number; // The user id who received the message, 0 for any user.
     useridfrom?: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
     type?: string; // Type of message to return, expected values are: notifications, conversations and both.
@@ -3725,7 +3725,7 @@ export type CoreMessageGetMessagesParams = {
 /**
  * Data returned by core_message_get_messages WS.
  */
-export type CoreMessageGetMessagesResponse = {
+export type CoreMessageGetMessagesWSResponse = {
     messages: {
         id: number; // Message id.
         useridfrom: number; // User from id.
@@ -3755,19 +3755,19 @@ export type CoreMessageGetMessagesResponse = {
 /**
  * Params of core_message_get_received_contact_requests_count WS.
  */
-export type CoreMessageGetReceivedContactRequestsCountParams = {
+export type CoreMessageGetReceivedContactRequestsCountWSParams = {
     userid: number; // The id of the user we want to return the number of received contact requests for.
 };
 
 /**
  * Data returned by core_message_get_received_contact_requests_count WS.
  */
-export type CoreMessageGetReceivedContactRequestsCountResponse = number;
+export type CoreMessageGetReceivedContactRequestsCountWSResponse = number;
 
 /**
  * Params of core_message_get_self_conversation WS.
  */
-export type CoreMessageGetSelfConversationParams = {
+export type CoreMessageGetSelfConversationWSParams = {
     userid: number; // The id of the user who we are viewing self-conversations for.
     messagelimit?: number; // Limit for number of messages.
     messageoffset?: number; // Offset for messages list.
@@ -3777,7 +3777,7 @@ export type CoreMessageGetSelfConversationParams = {
 /**
  * Data returned by core_message_get_self_conversation WS.
  */
-export type CoreMessageGetSelfConversationResponse = {
+export type CoreMessageGetSelfConversationWSResponse = {
     id: number; // The conversation id.
     name?: string; // The conversation name, if set.
     subname?: string; // A subtitle for the conversation name, if set.
@@ -3827,14 +3827,14 @@ export type CoreMessageGetSelfConversationResponse = {
 /**
  * Params of core_message_get_unread_conversation_counts WS.
  */
-export type CoreMessageGetUnreadConversationCountsParams = {
+export type CoreMessageGetUnreadConversationCountsWSParams = {
     userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
  * Data returned by core_message_get_unread_conversation_counts WS.
  */
-export type CoreMessageGetUnreadConversationCountsResponse = {
+export type CoreMessageGetUnreadConversationCountsWSResponse = {
     favourites: number; // Total number of unread favourite conversations.
     types: {
         1: number; // Total number of unread individual conversations.
@@ -3846,19 +3846,19 @@ export type CoreMessageGetUnreadConversationCountsResponse = {
 /**
  * Params of core_message_get_unread_conversations_count WS.
  */
-export type CoreMessageGetUnreadConversationsCountParams = {
+export type CoreMessageGetUnreadConversationsCountWSParams = {
     useridto: number; // The user id who received the message, 0 for any user.
 };
 
 /**
  * Data returned by core_message_get_unread_conversations_count WS.
  */
-export type CoreMessageGetUnreadConversationsCountResponse = number;
+export type CoreMessageGetUnreadConversationsCountWSResponse = number;
 
 /**
  * Params of core_message_get_user_contacts WS.
  */
-export type CoreMessageGetUserContactsParams = {
+export type CoreMessageGetUserContactsWSParams = {
     userid: number; // The id of the user who we retrieving the contacts for.
     limitfrom?: number; // Limit from.
     limitnum?: number; // Limit number.
@@ -3867,7 +3867,7 @@ export type CoreMessageGetUserContactsParams = {
 /**
  * Data returned by core_message_get_user_contacts WS.
  */
-export type CoreMessageGetUserContactsResponse = {
+export type CoreMessageGetUserContactsWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
     profileurl: string; // The link to the user's profile page.
@@ -3898,14 +3898,14 @@ export type CoreMessageGetUserContactsResponse = {
 /**
  * Params of core_message_get_user_message_preferences WS.
  */
-export type CoreMessageGetUserMessagePreferencesParams = {
+export type CoreMessageGetUserMessagePreferencesWSParams = {
     userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
  * Data returned by core_message_get_user_message_preferences WS.
  */
-export type CoreMessageGetUserMessagePreferencesResponse = {
+export type CoreMessageGetUserMessagePreferencesWSResponse = {
     preferences: {
         userid: number; // User id.
         disableall: number; // Whether all the preferences are disabled.
@@ -3949,14 +3949,14 @@ export type CoreMessageGetUserMessagePreferencesResponse = {
 /**
  * Params of core_message_get_user_notification_preferences WS.
  */
-export type CoreMessageGetUserNotificationPreferencesParams = {
+export type CoreMessageGetUserNotificationPreferencesWSParams = {
     userid?: number; // Id of the user, 0 for current user.
 };
 
 /**
  * Data returned by core_message_get_user_notification_preferences WS.
  */
-export type CoreMessageGetUserNotificationPreferencesResponse = {
+export type CoreMessageGetUserNotificationPreferencesWSResponse = {
     preferences: {
         userid: number; // User id.
         disableall: number; // Whether all the preferences are disabled.
@@ -3998,7 +3998,7 @@ export type CoreMessageGetUserNotificationPreferencesResponse = {
 /**
  * Params of core_message_mark_all_conversation_messages_as_read WS.
  */
-export type CoreMessageMarkAllConversationMessagesAsReadParams = {
+export type CoreMessageMarkAllConversationMessagesAsReadWSParams = {
     userid: number; // The user id who who we are marking the messages as read for.
     conversationid: number; // The conversation id who who we are marking the messages as read for.
 };
@@ -4006,12 +4006,12 @@ export type CoreMessageMarkAllConversationMessagesAsReadParams = {
 /**
  * Data returned by core_message_mark_all_conversation_messages_as_read WS.
  */
-export type CoreMessageMarkAllConversationMessagesAsReadResponse = {}; // WARNING: Null structure found;
+export type CoreMessageMarkAllConversationMessagesAsReadWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of core_message_mark_all_notifications_as_read WS.
  */
-export type CoreMessageMarkAllNotificationsAsReadParams = {
+export type CoreMessageMarkAllNotificationsAsReadWSParams = {
     useridto: number; // The user id who received the message, 0 for any user.
     useridfrom?: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
     timecreatedto?: number; // Mark messages created before this time as read, 0 for all messages.
@@ -4020,12 +4020,12 @@ export type CoreMessageMarkAllNotificationsAsReadParams = {
 /**
  * Data returned by core_message_mark_all_notifications_as_read WS.
  */
-export type CoreMessageMarkAllNotificationsAsReadResponse = boolean;
+export type CoreMessageMarkAllNotificationsAsReadWSResponse = boolean;
 
 /**
  * Params of core_message_mark_message_read WS.
  */
-export type CoreMessageMarkMessageReadParams = {
+export type CoreMessageMarkMessageReadWSParams = {
     messageid: number; // Id of the message in the messages table.
     timeread?: number; // Timestamp for when the message should be marked read.
 };
@@ -4033,7 +4033,7 @@ export type CoreMessageMarkMessageReadParams = {
 /**
  * Data returned by core_message_mark_message_read WS.
  */
-export type CoreMessageMarkMessageReadResponse = {
+export type CoreMessageMarkMessageReadWSResponse = {
     messageid: number; // The id of the message in the messages table.
     warnings?: CoreWSExternalWarning[];
 };
@@ -4041,7 +4041,7 @@ export type CoreMessageMarkMessageReadResponse = {
 /**
  * Params of core_message_mark_notification_read WS.
  */
-export type CoreMessageMarkNotificationReadParams = {
+export type CoreMessageMarkNotificationReadWSParams = {
     notificationid: number; // Id of the notification.
     timeread?: number; // Timestamp for when the notification should be marked read.
 };
@@ -4049,7 +4049,7 @@ export type CoreMessageMarkNotificationReadParams = {
 /**
  * Data returned by core_message_mark_notification_read WS.
  */
-export type CoreMessageMarkNotificationReadResponse = {
+export type CoreMessageMarkNotificationReadWSResponse = {
     notificationid: number; // Id of the notification.
     warnings?: CoreWSExternalWarning[];
 };
@@ -4057,7 +4057,7 @@ export type CoreMessageMarkNotificationReadResponse = {
 /**
  * Params of core_message_message_processor_config_form WS.
  */
-export type CoreMessageMessageProcessorConfigFormParams = {
+export type CoreMessageMessageProcessorConfigFormWSParams = {
     userid: number; // Id of the user, 0 for current user.
     name: string; // The name of the message processor.
     formvalues: { // Config form values.
@@ -4069,12 +4069,12 @@ export type CoreMessageMessageProcessorConfigFormParams = {
 /**
  * Data returned by core_message_message_processor_config_form WS.
  */
-export type CoreMessageMessageProcessorConfigFormResponse = {}; // WARNING: Null structure found;
+export type CoreMessageMessageProcessorConfigFormWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of core_message_message_search_users WS.
  */
-export type CoreMessageMessageSearchUsersParams = {
+export type CoreMessageMessageSearchUsersWSParams = {
     userid: number; // The id of the user who is performing the search.
     search: string; // The string being searched.
     limitfrom?: number; // Limit from.
@@ -4084,7 +4084,7 @@ export type CoreMessageMessageSearchUsersParams = {
 /**
  * Data returned by core_message_message_search_users WS.
  */
-export type CoreMessageMessageSearchUsersResponse = {
+export type CoreMessageMessageSearchUsersWSResponse = {
     contacts: {
         id: number; // The user id.
         fullname: string; // The user's name.
@@ -4144,7 +4144,7 @@ export type CoreMessageMessageSearchUsersResponse = {
 /**
  * Params of core_message_mute_conversations WS.
  */
-export type CoreMessageMuteConversationsParams = {
+export type CoreMessageMuteConversationsWSParams = {
     userid: number; // The id of the user who is blocking.
     conversationids: number[];
 };
@@ -4152,12 +4152,12 @@ export type CoreMessageMuteConversationsParams = {
 /**
  * Data returned by core_message_mute_conversations WS.
  */
-export type CoreMessageMuteConversationsResponse = CoreWSExternalWarning[];
+export type CoreMessageMuteConversationsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_search_contacts WS.
  */
-export type CoreMessageSearchContactsParams = {
+export type CoreMessageSearchContactsWSParams = {
     searchtext: string; // String the user's fullname has to match to be found.
     onlymycourses?: boolean; // Limit search to the user's courses.
 };
@@ -4165,7 +4165,7 @@ export type CoreMessageSearchContactsParams = {
 /**
  * Data returned by core_message_search_contacts WS.
  */
-export type CoreMessageSearchContactsResponse = { // List of contacts.
+export type CoreMessageSearchContactsWSResponse = { // List of contacts.
     id: number; // User ID.
     fullname: string; // User full name.
     profileimageurl?: string; // User picture URL.
@@ -4175,7 +4175,7 @@ export type CoreMessageSearchContactsResponse = { // List of contacts.
 /**
  * Params of core_message_send_instant_messages WS.
  */
-export type CoreMessageSendInstantMessagesParams = {
+export type CoreMessageSendInstantMessagesWSParams = {
     messages: {
         touserid: number; // Id of the user to send the private message.
         text: string; // The text of the message.
@@ -4187,7 +4187,7 @@ export type CoreMessageSendInstantMessagesParams = {
 /**
  * Data returned by core_message_send_instant_messages WS.
  */
-export type CoreMessageSendInstantMessagesResponse = {
+export type CoreMessageSendInstantMessagesWSResponse = {
     msgid: number; // Test this to know if it succeeds:  id of the created message if it succeeded, -1 when failed.
     clientmsgid?: string; // Your own id for the message.
     errormessage?: string; // Error message - if it failed.
@@ -4201,7 +4201,7 @@ export type CoreMessageSendInstantMessagesResponse = {
 /**
  * Params of core_message_send_messages_to_conversation WS.
  */
-export type CoreMessageSendMessagesToConversationParams = {
+export type CoreMessageSendMessagesToConversationWSParams = {
     conversationid: number; // Id of the conversation.
     messages: {
         text: string; // The text of the message.
@@ -4212,7 +4212,7 @@ export type CoreMessageSendMessagesToConversationParams = {
 /**
  * Data returned by core_message_send_messages_to_conversation WS.
  */
-export type CoreMessageSendMessagesToConversationResponse = {
+export type CoreMessageSendMessagesToConversationWSResponse = {
     id: number; // The id of the message.
     useridfrom: number; // The id of the user who sent the message.
     text: string; // The text of the message.
@@ -4222,7 +4222,7 @@ export type CoreMessageSendMessagesToConversationResponse = {
 /**
  * Params of core_message_set_favourite_conversations WS.
  */
-export type CoreMessageSetFavouriteConversationsParams = {
+export type CoreMessageSetFavouriteConversationsWSParams = {
     userid?: number; // Id of the user, 0 for current user.
     conversations: number[];
 };
@@ -4230,12 +4230,12 @@ export type CoreMessageSetFavouriteConversationsParams = {
 /**
  * Data returned by core_message_set_favourite_conversations WS.
  */
-export type CoreMessageSetFavouriteConversationsResponse = CoreWSExternalWarning[];
+export type CoreMessageSetFavouriteConversationsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_unblock_user WS.
  */
-export type CoreMessageUnblockUserParams = {
+export type CoreMessageUnblockUserWSParams = {
     userid: number; // The id of the user who is unblocking.
     unblockeduserid: number; // The id of the user being unblocked.
 };
@@ -4243,12 +4243,12 @@ export type CoreMessageUnblockUserParams = {
 /**
  * Data returned by core_message_unblock_user WS.
  */
-export type CoreMessageUnblockUserResponse = CoreWSExternalWarning[];
+export type CoreMessageUnblockUserWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_unmute_conversations WS.
  */
-export type CoreMessageUnmuteConversationsParams = {
+export type CoreMessageUnmuteConversationsWSParams = {
     userid: number; // The id of the user who is unblocking.
     conversationids: number[];
 };
@@ -4256,12 +4256,12 @@ export type CoreMessageUnmuteConversationsParams = {
 /**
  * Data returned by core_message_unmute_conversations WS.
  */
-export type CoreMessageUnmuteConversationsResponse = CoreWSExternalWarning[];
+export type CoreMessageUnmuteConversationsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_unset_favourite_conversations WS.
  */
-export type CoreMessageUnsetFavouriteConversationsParams = {
+export type CoreMessageUnsetFavouriteConversationsWSParams = {
     userid?: number; // Id of the user, 0 for current user.
     conversations: number[];
 };
@@ -4269,12 +4269,12 @@ export type CoreMessageUnsetFavouriteConversationsParams = {
 /**
  * Data returned by core_message_unset_favourite_conversations WS.
  */
-export type CoreMessageUnsetFavouriteConversationsResponse = CoreWSExternalWarning[];
+export type CoreMessageUnsetFavouriteConversationsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_notes_create_notes WS.
  */
-export type CoreNotesCreateNotesParams = {
+export type CoreNotesCreateNotesWSParams = {
     notes: {
         userid: number; // Id of the user the note is about.
         publishstate: string; // 'personal', 'course' or 'site'.
@@ -4288,7 +4288,7 @@ export type CoreNotesCreateNotesParams = {
 /**
  * Data returned by core_notes_create_notes WS.
  */
-export type CoreNotesCreateNotesResponse = {
+export type CoreNotesCreateNotesWSResponse = {
     clientnoteid?: string; // Your own id for the note.
     noteid: number; // ID of the created note when successful, -1 when failed.
     errormessage?: string; // Error message - if failed.
@@ -4297,19 +4297,19 @@ export type CoreNotesCreateNotesResponse = {
 /**
  * Params of core_notes_delete_notes WS.
  */
-export type CoreNotesDeleteNotesParams = {
+export type CoreNotesDeleteNotesWSParams = {
     notes: number[]; // Array of Note Ids to be deleted.
 };
 
 /**
  * Data returned by core_notes_delete_notes WS.
  */
-export type CoreNotesDeleteNotesResponse = CoreWSExternalWarning[];
+export type CoreNotesDeleteNotesWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_notes_get_course_notes WS.
  */
-export type CoreNotesGetCourseNotesParams = {
+export type CoreNotesGetCourseNotesWSParams = {
     courseid: number; // Course id, 0 for SITE.
     userid?: number; // User id.
 };
@@ -4317,7 +4317,7 @@ export type CoreNotesGetCourseNotesParams = {
 /**
  * Data returned by core_notes_get_course_notes WS.
  */
-export type CoreNotesGetCourseNotesResponse = {
+export type CoreNotesGetCourseNotesWSResponse = {
     sitenotes?: { // Site notes.
         id: number; // Id of this note.
         courseid: number; // Id of the course.
@@ -4359,7 +4359,7 @@ export type CoreNotesGetCourseNotesResponse = {
 /**
  * Params of core_notes_view_notes WS.
  */
-export type CoreNotesViewNotesParams = {
+export type CoreNotesViewNotesWSParams = {
     courseid: number; // Course id, 0 for notes at system level.
     userid?: number; // User id, 0 means view all the user notes.
 };
@@ -4367,12 +4367,12 @@ export type CoreNotesViewNotesParams = {
 /**
  * Data returned by core_notes_view_notes WS.
  */
-export type CoreNotesViewNotesResponse = CoreStatusWithWarningsResponse;
+export type CoreNotesViewNotesWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_question_update_flag WS.
  */
-export type CoreQuestionUpdateFlagParams = {
+export type CoreQuestionUpdateFlagWSParams = {
     qubaid: number; // The question usage id.
     questionid: number; // The question id.
     qaid: number; // The question_attempt id.
@@ -4386,12 +4386,12 @@ export type CoreQuestionUpdateFlagParams = {
 /**
  * Data returned by core_question_update_flag WS.
  */
-export type CoreQuestionUpdateFlagResponse = CoreStatusWithWarningsResponse;
+export type CoreQuestionUpdateFlagWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_rating_add_rating WS.
  */
-export type CoreRatingAddRatingParams = {
+export type CoreRatingAddRatingWSParams = {
     contextlevel: string; // Context level: course, module, user, etc...
     instanceid: number; // The instance id of item associated with the context level.
     component: string; // Component.
@@ -4406,7 +4406,7 @@ export type CoreRatingAddRatingParams = {
 /**
  * Data returned by core_rating_add_rating WS.
  */
-export type CoreRatingAddRatingResponse = {
+export type CoreRatingAddRatingWSResponse = {
     success: boolean; // Whether the rate was successfully created.
     aggregate?: string; // New aggregate.
     count?: number; // Ratings count.
@@ -4417,7 +4417,7 @@ export type CoreRatingAddRatingResponse = {
 /**
  * Params of core_rating_get_item_ratings WS.
  */
-export type CoreRatingGetItemRatingsParams = {
+export type CoreRatingGetItemRatingsWSParams = {
     contextlevel: string; // Context level: course, module, user, etc...
     instanceid: number; // The instance id of item associated with the context level.
     component: string; // Component.
@@ -4430,7 +4430,7 @@ export type CoreRatingGetItemRatingsParams = {
 /**
  * Data returned by core_rating_get_item_ratings WS.
  */
-export type CoreRatingGetItemRatingsResponse = {
+export type CoreRatingGetItemRatingsWSResponse = {
     ratings: { // List of ratings.
         id: number; // Rating id.
         userid: number; // User id.
@@ -4445,7 +4445,7 @@ export type CoreRatingGetItemRatingsResponse = {
 /**
  * Params of core_table_get_dynamic_table_content WS.
  */
-export type CoreTableGetDynamicTableContentParams = {
+export type CoreTableGetDynamicTableContentWSParams = {
     component: string; // Component.
     handler: string; // Handler.
     uniqueid: string; // Unique ID for the container.
@@ -4470,7 +4470,7 @@ export type CoreTableGetDynamicTableContentParams = {
 /**
  * Data returned by core_table_get_dynamic_table_content WS.
  */
-export type CoreTableGetDynamicTableContentResponse = {
+export type CoreTableGetDynamicTableContentWSResponse = {
     html: string; // The raw html of the requested table.
     warnings?: CoreWSExternalWarning[];
 };
@@ -4478,13 +4478,13 @@ export type CoreTableGetDynamicTableContentResponse = {
 /**
  * Params of core_tag_get_tag_areas WS.
  */
-export type CoreTagGetTagAreasParams = {
+export type CoreTagGetTagAreasWSParams = {
 };
 
 /**
  * Data returned by core_tag_get_tag_areas WS.
  */
-export type CoreTagGetTagAreasResponse = {
+export type CoreTagGetTagAreasWSResponse = {
     areas: {
         id: number; // Area id.
         component: string; // Component the area is related to.
@@ -4503,7 +4503,7 @@ export type CoreTagGetTagAreasResponse = {
 /**
  * Params of core_tag_get_tag_cloud WS.
  */
-export type CoreTagGetTagCloudParams = {
+export type CoreTagGetTagCloudWSParams = {
     tagcollid?: number; // Tag collection id.
     isstandard?: boolean; // Whether to return only standard tags.
     limit?: number; // Maximum number of tags to retrieve.
@@ -4519,7 +4519,7 @@ export type CoreTagGetTagCloudParams = {
 /**
  * Data returned by core_tag_get_tag_cloud WS.
  */
-export type CoreTagGetTagCloudResponse = {
+export type CoreTagGetTagCloudWSResponse = {
     tags: {
         name: string; // Tag name.
         viewurl: string; // URL to view the tag index.
@@ -4536,13 +4536,13 @@ export type CoreTagGetTagCloudResponse = {
 /**
  * Params of core_tag_get_tag_collections WS.
  */
-export type CoreTagGetTagCollectionsParams = {
+export type CoreTagGetTagCollectionsWSParams = {
 };
 
 /**
  * Data returned by core_tag_get_tag_collections WS.
  */
-export type CoreTagGetTagCollectionsResponse = {
+export type CoreTagGetTagCollectionsWSResponse = {
     collections: {
         id: number; // Collection id.
         name: string; // Collection name.
@@ -4558,7 +4558,7 @@ export type CoreTagGetTagCollectionsResponse = {
 /**
  * Params of core_tag_get_tagindex WS.
  */
-export type CoreTagGetTagindexParams = {
+export type CoreTagGetTagindexWSParams = {
     tagindex: {
         tag: string; // Tag name.
         tc: number; // Tag collection id.
@@ -4574,7 +4574,7 @@ export type CoreTagGetTagindexParams = {
 /**
  * Data returned by core_tag_get_tagindex WS.
  */
-export type CoreTagGetTagindexResponse = {
+export type CoreTagGetTagindexWSResponse = {
     tagid: number; // Tag id.
     ta: number; // Tag area id.
     component: string; // Component.
@@ -4592,7 +4592,7 @@ export type CoreTagGetTagindexResponse = {
 /**
  * Params of core_tag_get_tagindex_per_area WS.
  */
-export type CoreTagGetTagindexPerAreaParams = {
+export type CoreTagGetTagindexPerAreaWSParams = {
     tagindex: {
         id?: number; // Tag id.
         tag?: string; // Tag name.
@@ -4609,7 +4609,7 @@ export type CoreTagGetTagindexPerAreaParams = {
 /**
  * Data returned by core_tag_get_tagindex_per_area WS.
  */
-export type CoreTagGetTagindexPerAreaResponse = {
+export type CoreTagGetTagindexPerAreaWSResponse = {
     tagid: number; // Tag id.
     ta: number; // Tag area id.
     component: string; // Component.
@@ -4627,7 +4627,7 @@ export type CoreTagGetTagindexPerAreaResponse = {
 /**
  * Params of core_user_add_user_device WS.
  */
-export type CoreUserAddUserDeviceParams = {
+export type CoreUserAddUserDeviceWSParams = {
     appid: string; // The app id, usually something like com.moodle.moodlemobile.
     name: string; // The device name, 'occam' or 'iPhone' etc.
     model: string; // The device model 'Nexus4' or 'iPad1,1' etc.
@@ -4640,35 +4640,35 @@ export type CoreUserAddUserDeviceParams = {
 /**
  * Data returned by core_user_add_user_device WS.
  */
-export type CoreUserAddUserDeviceResponse = CoreWSExternalWarning[][];
+export type CoreUserAddUserDeviceWSResponse = CoreWSExternalWarning[][];
 
 /**
  * Params of core_user_add_user_private_files WS.
  */
-export type CoreUserAddUserPrivateFilesParams = {
+export type CoreUserAddUserPrivateFilesWSParams = {
     draftid: number; // Draft area id.
 };
 
 /**
  * Data returned by core_user_add_user_private_files WS.
  */
-export type CoreUserAddUserPrivateFilesResponse = {}; // WARNING: Null structure found;
+export type CoreUserAddUserPrivateFilesWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of core_user_agree_site_policy WS.
  */
-export type CoreUserAgreeSitePolicyParams = {
+export type CoreUserAgreeSitePolicyWSParams = {
 };
 
 /**
  * Data returned by core_user_agree_site_policy WS.
  */
-export type CoreUserAgreeSitePolicyResponse = CoreStatusWithWarningsResponse;
+export type CoreUserAgreeSitePolicyWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_user_get_course_user_profiles WS.
  */
-export type CoreUserGetCourseUserProfilesParams = {
+export type CoreUserGetCourseUserProfilesWSParams = {
     userlist: {
         userid: number; // Userid.
         courseid: number; // Courseid.
@@ -4678,7 +4678,7 @@ export type CoreUserGetCourseUserProfilesParams = {
 /**
  * Data returned by core_user_get_course_user_profiles WS.
  */
-export type CoreUserGetCourseUserProfilesResponse = {
+export type CoreUserGetCourseUserProfilesWSResponse = {
     id: number; // ID of the user.
     username?: string; // The username.
     firstname?: string; // The first name(s) of the user.
@@ -4746,14 +4746,14 @@ export type CoreUserGetCourseUserProfilesResponse = {
 /**
  * Params of core_user_get_private_files_info WS.
  */
-export type CoreUserGetPrivateFilesInfoParams = {
+export type CoreUserGetPrivateFilesInfoWSParams = {
     userid?: number; // Id of the user, default to current user.
 };
 
 /**
  * Data returned by core_user_get_private_files_info WS.
  */
-export type CoreUserGetPrivateFilesInfoResponse = {
+export type CoreUserGetPrivateFilesInfoWSResponse = {
     filecount: number; // Number of files in the area.
     foldercount: number; // Number of folders in the area.
     filesize: number; // Total size of the files in the area.
@@ -4764,7 +4764,7 @@ export type CoreUserGetPrivateFilesInfoResponse = {
 /**
  * Params of core_user_get_user_preferences WS.
  */
-export type CoreUserGetUserPreferencesParams = {
+export type CoreUserGetUserPreferencesWSParams = {
     name?: string; // Preference name, empty for all.
     userid?: number; // Id of the user, default to current user.
 };
@@ -4772,7 +4772,7 @@ export type CoreUserGetUserPreferencesParams = {
 /**
  * Data returned by core_user_get_user_preferences WS.
  */
-export type CoreUserGetUserPreferencesResponse = {
+export type CoreUserGetUserPreferencesWSResponse = {
     preferences: { // User custom fields (also known as user profile fields).
         name: string; // The name of the preference.
         value: string; // The value of the preference.
@@ -4783,7 +4783,7 @@ export type CoreUserGetUserPreferencesResponse = {
 /**
  * Params of core_user_get_users_by_field WS.
  */
-export type CoreUserGetUsersByFieldParams = {
+export type CoreUserGetUsersByFieldWSParams = {
     field: string; // The search field can be
                  // 'id' or 'idnumber' or 'username' or 'email'.
 
@@ -4793,7 +4793,7 @@ export type CoreUserGetUsersByFieldParams = {
 /**
  * Data returned by core_user_get_users_by_field WS.
  */
-export type CoreUserGetUsersByFieldResponse = {
+export type CoreUserGetUsersByFieldWSResponse = {
     id: number; // ID of the user.
     username?: string; // The username.
     firstname?: string; // The first name(s) of the user.
@@ -4844,7 +4844,7 @@ export type CoreUserGetUsersByFieldResponse = {
 /**
  * Params of core_user_remove_user_device WS.
  */
-export type CoreUserRemoveUserDeviceParams = {
+export type CoreUserRemoveUserDeviceWSParams = {
     uuid: string; // The device UUID.
     appid?: string; // The app id, if empty devices matching the UUID for the user will be removed.
 };
@@ -4852,7 +4852,7 @@ export type CoreUserRemoveUserDeviceParams = {
 /**
  * Data returned by core_user_remove_user_device WS.
  */
-export type CoreUserRemoveUserDeviceResponse = {
+export type CoreUserRemoveUserDeviceWSResponse = {
     removed: boolean; // True if removed, false if not removed because it doesn't exists.
     warnings?: CoreWSExternalWarning[];
 };
@@ -4860,7 +4860,7 @@ export type CoreUserRemoveUserDeviceResponse = {
 /**
  * Params of core_user_set_user_preferences WS.
  */
-export type CoreUserSetUserPreferencesParams = {
+export type CoreUserSetUserPreferencesWSParams = {
     preferences: {
         name: string; // The name of the preference.
         value: string; // The value of the preference.
@@ -4871,7 +4871,7 @@ export type CoreUserSetUserPreferencesParams = {
 /**
  * Data returned by core_user_set_user_preferences WS.
  */
-export type CoreUserSetUserPreferencesResponse = {
+export type CoreUserSetUserPreferencesWSResponse = {
     saved: { // Preferences saved.
         name: string; // The name of the preference.
         userid: number; // The user the preference was set for.
@@ -4882,7 +4882,7 @@ export type CoreUserSetUserPreferencesResponse = {
 /**
  * Params of core_user_update_picture WS.
  */
-export type CoreUserUpdatePictureParams = {
+export type CoreUserUpdatePictureWSParams = {
     draftitemid: number; // Id of the user draft file to use as image.
     delete?: boolean; // If we should delete the user picture.
     userid?: number; // Id of the user, 0 for current user.
@@ -4891,7 +4891,7 @@ export type CoreUserUpdatePictureParams = {
 /**
  * Data returned by core_user_update_picture WS.
  */
-export type CoreUserUpdatePictureResponse = {
+export type CoreUserUpdatePictureWSResponse = {
     success: boolean; // True if the image was updated, false otherwise.
     profileimageurl?: string; // New profile user image url.
     warnings?: CoreWSExternalWarning[];
@@ -4900,7 +4900,7 @@ export type CoreUserUpdatePictureResponse = {
 /**
  * Params of core_user_update_user_preferences WS.
  */
-export type CoreUserUpdateUserPreferencesParams = {
+export type CoreUserUpdateUserPreferencesWSParams = {
     userid?: number; // Id of the user, default to current user.
     emailstop?: number; // Enable or disable notifications for this user.
     preferences?: { // User preferences.
@@ -4914,24 +4914,24 @@ export type CoreUserUpdateUserPreferencesParams = {
 /**
  * Data returned by core_user_update_user_preferences WS.
  */
-export type CoreUserUpdateUserPreferencesResponse = {}; // WARNING: Null structure found;
+export type CoreUserUpdateUserPreferencesWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of core_user_view_user_list WS.
  */
-export type CoreUserViewUserListParams = {
+export type CoreUserViewUserListWSParams = {
     courseid: number; // Id of the course, 0 for site.
 };
 
 /**
  * Data returned by core_user_view_user_list WS.
  */
-export type CoreUserViewUserListResponse = CoreStatusWithWarningsResponse;
+export type CoreUserViewUserListWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_user_view_user_profile WS.
  */
-export type CoreUserViewUserProfileParams = {
+export type CoreUserViewUserProfileWSParams = {
     userid: number; // Id of the user, 0 for current user.
     courseid?: number; // Id of the course, default site course.
 };
@@ -4939,12 +4939,12 @@ export type CoreUserViewUserProfileParams = {
 /**
  * Data returned by core_user_view_user_profile WS.
  */
-export type CoreUserViewUserProfileResponse = CoreStatusWithWarningsResponse;
+export type CoreUserViewUserProfileWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of core_webservice_get_site_info WS.
  */
-export type CoreWebserviceGetSiteInfoParams = {
+export type CoreWebserviceGetSiteInfoWSParams = {
     serviceshortnames?: string[]; // DEPRECATED PARAMETER - it was a design error in the original implementation. \
                  // It is ignored now. (parameter kept for backward compatibility).
 
@@ -4953,7 +4953,7 @@ export type CoreWebserviceGetSiteInfoParams = {
 /**
  * Data returned by core_webservice_get_site_info WS.
  */
-export type CoreWebserviceGetSiteInfoResponse = {
+export type CoreWebserviceGetSiteInfoWSResponse = {
     sitename: string; // Site name.
     username: string; // Username.
     firstname: string; // First name.
@@ -4997,7 +4997,7 @@ export type CoreWebserviceGetSiteInfoResponse = {
 /**
  * Params of core_xapi_statement_post WS.
  */
-export type CoreXapiStatementPostParams = {
+export type CoreXapiStatementPostWSParams = {
     component: string; // Component name.
     requestjson: string; // Json object with all the statements to post.
 };
@@ -5005,19 +5005,19 @@ export type CoreXapiStatementPostParams = {
 /**
  * Data returned by core_xapi_statement_post WS.
  */
-export type CoreXapiStatementPostResponse = boolean[];
+export type CoreXapiStatementPostWSResponse = boolean[];
 
 /**
  * Params of enrol_guest_get_instance_info WS.
  */
-export type EnrolGuestGetInstanceInfoParams = {
+export type EnrolGuestGetInstanceInfoWSParams = {
     instanceid: number; // Instance id of guest enrolment plugin.
 };
 
 /**
  * Data returned by enrol_guest_get_instance_info WS.
  */
-export type EnrolGuestGetInstanceInfoResponse = {
+export type EnrolGuestGetInstanceInfoWSResponse = {
     instanceinfo: {
         id: number; // Id of course enrolment instance.
         courseid: number; // Id of course.
@@ -5032,7 +5032,7 @@ export type EnrolGuestGetInstanceInfoResponse = {
 /**
  * Params of enrol_self_enrol_user WS.
  */
-export type EnrolSelfEnrolUserParams = {
+export type EnrolSelfEnrolUserWSParams = {
     courseid: number; // Id of the course.
     password?: string; // Enrolment key.
     instanceid?: number; // Instance id of self enrolment plugin.
@@ -5041,19 +5041,19 @@ export type EnrolSelfEnrolUserParams = {
 /**
  * Data returned by enrol_self_enrol_user WS.
  */
-export type EnrolSelfEnrolUserResponse = CoreStatusWithWarningsResponse;
+export type EnrolSelfEnrolUserWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of enrol_self_get_instance_info WS.
  */
-export type EnrolSelfGetInstanceInfoParams = {
+export type EnrolSelfGetInstanceInfoWSParams = {
     instanceid: number; // Instance id of self enrolment plugin.
 };
 
 /**
  * Data returned by enrol_self_get_instance_info WS.
  */
-export type EnrolSelfGetInstanceInfoResponse = {
+export type EnrolSelfGetInstanceInfoWSResponse = {
     id: number; // Id of course enrolment instance.
     courseid: number; // Id of course.
     type: string; // Type of enrolment plugin.
@@ -5065,14 +5065,14 @@ export type EnrolSelfGetInstanceInfoResponse = {
 /**
  * Params of gradereport_overview_get_course_grades WS.
  */
-export type GradereportOverviewGetCourseGradesParams = {
+export type GradereportOverviewGetCourseGradesWSParams = {
     userid?: number; // Get grades for this user (optional, default current).
 };
 
 /**
  * Data returned by gradereport_overview_get_course_grades WS.
  */
-export type GradereportOverviewGetCourseGradesResponse = {
+export type GradereportOverviewGetCourseGradesWSResponse = {
     grades: {
         courseid: number; // Course id.
         grade: string; // Grade formatted.
@@ -5085,7 +5085,7 @@ export type GradereportOverviewGetCourseGradesResponse = {
 /**
  * Params of gradereport_overview_view_grade_report WS.
  */
-export type GradereportOverviewViewGradeReportParams = {
+export type GradereportOverviewViewGradeReportWSParams = {
     courseid: number; // Id of the course.
     userid?: number; // Id of the user, 0 means current user.
 };
@@ -5093,12 +5093,12 @@ export type GradereportOverviewViewGradeReportParams = {
 /**
  * Data returned by gradereport_overview_view_grade_report WS.
  */
-export type GradereportOverviewViewGradeReportResponse = CoreStatusWithWarningsResponse;
+export type GradereportOverviewViewGradeReportWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of gradereport_user_get_grade_items WS.
  */
-export type GradereportUserGetGradeItemsParams = {
+export type GradereportUserGetGradeItemsWSParams = {
     courseid: number; // Course Id.
     userid?: number; // Return grades only for this user (optional).
     groupid?: number; // Get users from this group only.
@@ -5107,7 +5107,7 @@ export type GradereportUserGetGradeItemsParams = {
 /**
  * Data returned by gradereport_user_get_grade_items WS.
  */
-export type GradereportUserGetGradeItemsResponse = {
+export type GradereportUserGetGradeItemsWSResponse = {
     usergrades: {
         courseid: number; // Course id.
         userid: number; // User id.
@@ -5157,7 +5157,7 @@ export type GradereportUserGetGradeItemsResponse = {
 /**
  * Params of gradereport_user_get_grades_table WS.
  */
-export type GradereportUserGetGradesTableParams = {
+export type GradereportUserGetGradesTableWSParams = {
     courseid: number; // Course Id.
     userid?: number; // Return grades only for this user (optional).
     groupid?: number; // Get users from this group only.
@@ -5166,7 +5166,7 @@ export type GradereportUserGetGradesTableParams = {
 /**
  * Data returned by gradereport_user_get_grades_table WS.
  */
-export type GradereportUserGetGradesTableResponse = {
+export type GradereportUserGetGradesTableWSResponse = {
     tables: {
         courseid: number; // Course id.
         userid: number; // User id.
@@ -5237,7 +5237,7 @@ export type GradereportUserGetGradesTableResponse = {
 /**
  * Params of gradereport_user_view_grade_report WS.
  */
-export type GradereportUserViewGradeReportParams = {
+export type GradereportUserViewGradeReportWSParams = {
     courseid: number; // Id of the course.
     userid?: number; // Id of the user, 0 means current user.
 };
@@ -5245,19 +5245,19 @@ export type GradereportUserViewGradeReportParams = {
 /**
  * Data returned by gradereport_user_view_grade_report WS.
  */
-export type GradereportUserViewGradeReportResponse = CoreStatusWithWarningsResponse;
+export type GradereportUserViewGradeReportWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of message_airnotifier_are_notification_preferences_configured WS.
  */
-export type MessageAirnotifierAreNotificationPreferencesConfiguredParams = {
+export type MessageAirnotifierAreNotificationPreferencesConfiguredWSParams = {
     userids: number[];
 };
 
 /**
  * Data returned by message_airnotifier_are_notification_preferences_configured WS.
  */
-export type MessageAirnotifierAreNotificationPreferencesConfiguredResponse = {
+export type MessageAirnotifierAreNotificationPreferencesConfiguredWSResponse = {
     users: { // List of preferences by user.
         userid: number; // Userid id.
         configured: number; // 1 if the user preferences have been configured and 0 if not.
@@ -5268,7 +5268,7 @@ export type MessageAirnotifierAreNotificationPreferencesConfiguredResponse = {
 /**
  * Params of message_airnotifier_enable_device WS.
  */
-export type MessageAirnotifierEnableDeviceParams = {
+export type MessageAirnotifierEnableDeviceWSParams = {
     deviceid: number; // The device id.
     enable: boolean; // True for enable the device, false otherwise.
 };
@@ -5276,7 +5276,7 @@ export type MessageAirnotifierEnableDeviceParams = {
 /**
  * Data returned by message_airnotifier_enable_device WS.
  */
-export type MessageAirnotifierEnableDeviceResponse = {
+export type MessageAirnotifierEnableDeviceWSResponse = {
     success: boolean; // True if success.
     warnings?: CoreWSExternalWarning[];
 };
@@ -5284,7 +5284,7 @@ export type MessageAirnotifierEnableDeviceResponse = {
 /**
  * Params of message_airnotifier_get_user_devices WS.
  */
-export type MessageAirnotifierGetUserDevicesParams = {
+export type MessageAirnotifierGetUserDevicesWSParams = {
     appid: string; // App unique id (usually a reversed domain).
     userid?: number; // User id, 0 for current user.
 };
@@ -5292,7 +5292,7 @@ export type MessageAirnotifierGetUserDevicesParams = {
 /**
  * Data returned by message_airnotifier_get_user_devices WS.
  */
-export type MessageAirnotifierGetUserDevicesResponse = {
+export type MessageAirnotifierGetUserDevicesWSResponse = {
     devices: { // List of devices.
         id: number; // Device id (in the message_airnotifier table).
         appid: string; // The app id, something like com.moodle.moodlemobile.
@@ -5312,18 +5312,18 @@ export type MessageAirnotifierGetUserDevicesResponse = {
 /**
  * Params of message_airnotifier_is_system_configured WS.
  */
-export type MessageAirnotifierIsSystemConfiguredParams = {
+export type MessageAirnotifierIsSystemConfiguredWSParams = {
 };
 
 /**
  * Data returned by message_airnotifier_is_system_configured WS.
  */
-export type MessageAirnotifierIsSystemConfiguredResponse = number;
+export type MessageAirnotifierIsSystemConfiguredWSResponse = number;
 
 /**
  * Params of message_popup_get_popup_notifications WS.
  */
-export type MessagePopupGetPopupNotificationsParams = {
+export type MessagePopupGetPopupNotificationsWSParams = {
     useridto: number; // The user id who received the message, 0 for current user.
     newestfirst?: boolean; // True for ordering by newest first, false for oldest first.
     limit?: number; // The number of results to return.
@@ -5333,7 +5333,7 @@ export type MessagePopupGetPopupNotificationsParams = {
 /**
  * Data returned by message_popup_get_popup_notifications WS.
  */
-export type MessagePopupGetPopupNotificationsResponse = {
+export type MessagePopupGetPopupNotificationsWSResponse = {
     notifications: {
         id: number; // Notification id (this is not guaranteed to be unique
                              // within this result set).
@@ -5369,19 +5369,19 @@ export type MessagePopupGetPopupNotificationsResponse = {
 /**
  * Params of message_popup_get_unread_popup_notification_count WS.
  */
-export type MessagePopupGetUnreadPopupNotificationCountParams = {
+export type MessagePopupGetUnreadPopupNotificationCountWSParams = {
     useridto: number; // The user id who received the message, 0 for any user.
 };
 
 /**
  * Data returned by message_popup_get_unread_popup_notification_count WS.
  */
-export type MessagePopupGetUnreadPopupNotificationCountResponse = number;
+export type MessagePopupGetUnreadPopupNotificationCountWSResponse = number;
 
 /**
  * Params of mod_assign_get_assignments WS.
  */
-export type ModAssignGetAssignmentsParams = {
+export type ModAssignGetAssignmentsWSParams = {
     courseids?: number[]; // 0 or more course ids.
     capabilities?: string[]; // List of capabilities used to filter courses.
     includenotenrolledcourses?: boolean; // Whether to return courses that the user can see
@@ -5393,7 +5393,7 @@ export type ModAssignGetAssignmentsParams = {
 /**
  * Data returned by mod_assign_get_assignments WS.
  */
-export type ModAssignGetAssignmentsResponse = {
+export type ModAssignGetAssignmentsWSResponse = {
     courses: { // List of courses.
         id: number; // Course id.
         fullname: string; // Course full name.
@@ -5450,7 +5450,7 @@ export type ModAssignGetAssignmentsResponse = {
 /**
  * Params of mod_assign_get_grades WS.
  */
-export type ModAssignGetGradesParams = {
+export type ModAssignGetGradesWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
     since?: number; // Timestamp, only return records where timemodified >= since.
 };
@@ -5458,7 +5458,7 @@ export type ModAssignGetGradesParams = {
 /**
  * Data returned by mod_assign_get_grades WS.
  */
-export type ModAssignGetGradesResponse = {
+export type ModAssignGetGradesWSResponse = {
     assignments: { // List of assignment grade information.
         assignmentid: number; // Assignment id.
         grades: {
@@ -5479,7 +5479,7 @@ export type ModAssignGetGradesResponse = {
 /**
  * Params of mod_assign_get_participant WS.
  */
-export type ModAssignGetParticipantParams = {
+export type ModAssignGetParticipantWSParams = {
     assignid: number; // Assign instance id.
     userid: number; // User id.
     embeduser?: boolean; // User id.
@@ -5488,7 +5488,7 @@ export type ModAssignGetParticipantParams = {
 /**
  * Data returned by mod_assign_get_participant WS.
  */
-export type ModAssignGetParticipantResponse = {
+export type ModAssignGetParticipantWSResponse = {
     id: number; // ID of the user.
     fullname: string; // The fullname of the user.
     submitted: boolean; // Have they submitted their assignment.
@@ -5553,7 +5553,7 @@ export type ModAssignGetParticipantResponse = {
 /**
  * Params of mod_assign_get_submission_status WS.
  */
-export type ModAssignGetSubmissionStatusParams = {
+export type ModAssignGetSubmissionStatusWSParams = {
     assignid: number; // Assignment instance id.
     userid?: number; // User id (empty for current user).
     groupid?: number; // Filter by users in group (used for generating the grading summary).
@@ -5564,7 +5564,7 @@ export type ModAssignGetSubmissionStatusParams = {
 /**
  * Data returned by mod_assign_get_submission_status WS.
  */
-export type ModAssignGetSubmissionStatusResponse = {
+export type ModAssignGetSubmissionStatusWSResponse = {
     gradingsummary?: {
         participantcount: number; // Number of users who can submit.
         submissiondraftscount: number; // Number of submissions in draft status.
@@ -5732,7 +5732,7 @@ export type ModAssignGetSubmissionStatusResponse = {
 /**
  * Params of mod_assign_get_submissions WS.
  */
-export type ModAssignGetSubmissionsParams = {
+export type ModAssignGetSubmissionsWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
     status?: string; // Status.
     since?: number; // Submitted since.
@@ -5742,7 +5742,7 @@ export type ModAssignGetSubmissionsParams = {
 /**
  * Data returned by mod_assign_get_submissions WS.
  */
-export type ModAssignGetSubmissionsResponse = {
+export type ModAssignGetSubmissionsWSResponse = {
     assignments: { // Assignment submissions.
         assignmentid: number; // Assignment id.
         submissions: {
@@ -5778,14 +5778,14 @@ export type ModAssignGetSubmissionsResponse = {
 /**
  * Params of mod_assign_get_user_flags WS.
  */
-export type ModAssignGetUserFlagsParams = {
+export type ModAssignGetUserFlagsWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
 };
 
 /**
  * Data returned by mod_assign_get_user_flags WS.
  */
-export type ModAssignGetUserFlagsResponse = {
+export type ModAssignGetUserFlagsWSResponse = {
     assignments: { // List of assign user flag information.
         assignmentid: number; // Assignment id.
         userflags: {
@@ -5804,14 +5804,14 @@ export type ModAssignGetUserFlagsResponse = {
 /**
  * Params of mod_assign_get_user_mappings WS.
  */
-export type ModAssignGetUserMappingsParams = {
+export type ModAssignGetUserMappingsWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
 };
 
 /**
  * Data returned by mod_assign_get_user_mappings WS.
  */
-export type ModAssignGetUserMappingsResponse = {
+export type ModAssignGetUserMappingsWSResponse = {
     assignments: { // List of assign user mapping data.
         assignmentid: number; // Assignment id.
         mappings: {
@@ -5825,7 +5825,7 @@ export type ModAssignGetUserMappingsResponse = {
 /**
  * Params of mod_assign_list_participants WS.
  */
-export type ModAssignListParticipantsParams = {
+export type ModAssignListParticipantsWSParams = {
     assignid: number; // Assign instance id.
     groupid: number; // Group id.
     filter: string; // Search string to filter the results.
@@ -5839,7 +5839,7 @@ export type ModAssignListParticipantsParams = {
 /**
  * Data returned by mod_assign_list_participants WS.
  */
-export type ModAssignListParticipantsResponse = {
+export type ModAssignListParticipantsWSResponse = {
     id: number; // ID of the user.
     username?: string; // The username.
     firstname?: string; // The first name(s) of the user.
@@ -5905,7 +5905,7 @@ export type ModAssignListParticipantsResponse = {
 /**
  * Params of mod_assign_lock_submissions WS.
  */
-export type ModAssignLockSubmissionsParams = {
+export type ModAssignLockSubmissionsWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
 };
@@ -5913,24 +5913,24 @@ export type ModAssignLockSubmissionsParams = {
 /**
  * Data returned by mod_assign_lock_submissions WS.
  */
-export type ModAssignLockSubmissionsResponse = CoreWSExternalWarning[];
+export type ModAssignLockSubmissionsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_reveal_identities WS.
  */
-export type ModAssignRevealIdentitiesParams = {
+export type ModAssignRevealIdentitiesWSParams = {
     assignmentid: number; // The assignment id to operate on.
 };
 
 /**
  * Data returned by mod_assign_reveal_identities WS.
  */
-export type ModAssignRevealIdentitiesResponse = CoreWSExternalWarning[];
+export type ModAssignRevealIdentitiesWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_revert_submissions_to_draft WS.
  */
-export type ModAssignRevertSubmissionsToDraftParams = {
+export type ModAssignRevertSubmissionsToDraftWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
 };
@@ -5938,12 +5938,12 @@ export type ModAssignRevertSubmissionsToDraftParams = {
 /**
  * Data returned by mod_assign_revert_submissions_to_draft WS.
  */
-export type ModAssignRevertSubmissionsToDraftResponse = CoreWSExternalWarning[];
+export type ModAssignRevertSubmissionsToDraftWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_save_grade WS.
  */
-export type ModAssignSaveGradeParams = {
+export type ModAssignSaveGradeWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userid: number; // The student id to operate on.
     grade: number; // The new grade for this user. Ignored if advanced grading used.
@@ -5988,12 +5988,12 @@ export type ModAssignSaveGradeParams = {
 /**
  * Data returned by mod_assign_save_grade WS.
  */
-export type ModAssignSaveGradeResponse = {}; // WARNING: Null structure found;
+export type ModAssignSaveGradeWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of mod_assign_save_grades WS.
  */
-export type ModAssignSaveGradesParams = {
+export type ModAssignSaveGradesWSParams = {
     assignmentid: number; // The assignment id to operate on.
     applytoall: boolean; // If true, this grade will be applied to all members of the group (for group assignments).
     grades: {
@@ -6040,12 +6040,12 @@ export type ModAssignSaveGradesParams = {
 /**
  * Data returned by mod_assign_save_grades WS.
  */
-export type ModAssignSaveGradesResponse = {}; // WARNING: Null structure found;
+export type ModAssignSaveGradesWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of mod_assign_save_submission WS.
  */
-export type ModAssignSaveSubmissionParams = {
+export type ModAssignSaveSubmissionWSParams = {
     assignmentid: number; // The assignment id to operate on.
     plugindata: {
         onlinetext_editor?: {
@@ -6060,12 +6060,12 @@ export type ModAssignSaveSubmissionParams = {
 /**
  * Data returned by mod_assign_save_submission WS.
  */
-export type ModAssignSaveSubmissionResponse = CoreWSExternalWarning[];
+export type ModAssignSaveSubmissionWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_save_user_extensions WS.
  */
-export type ModAssignSaveUserExtensionsParams = {
+export type ModAssignSaveUserExtensionsWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
     dates: number[]; // 1 or more extension dates (timestamp).
@@ -6074,12 +6074,12 @@ export type ModAssignSaveUserExtensionsParams = {
 /**
  * Data returned by mod_assign_save_user_extensions WS.
  */
-export type ModAssignSaveUserExtensionsResponse = CoreWSExternalWarning[];
+export type ModAssignSaveUserExtensionsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_set_user_flags WS.
  */
-export type ModAssignSetUserFlagsParams = {
+export type ModAssignSetUserFlagsWSParams = {
     assignmentid: number; // Assignment id.
     userflags: {
         userid: number; // Student id.
@@ -6094,7 +6094,7 @@ export type ModAssignSetUserFlagsParams = {
 /**
  * Data returned by mod_assign_set_user_flags WS.
  */
-export type ModAssignSetUserFlagsResponse = {
+export type ModAssignSetUserFlagsWSResponse = {
     id: number; // Id of record if successful, -1 for failure.
     userid: number; // Userid of record.
     errormessage?: string; // Failure error message.
@@ -6103,7 +6103,7 @@ export type ModAssignSetUserFlagsResponse = {
 /**
  * Params of mod_assign_submit_for_grading WS.
  */
-export type ModAssignSubmitForGradingParams = {
+export type ModAssignSubmitForGradingWSParams = {
     assignmentid: number; // The assignment id to operate on.
     acceptsubmissionstatement: boolean; // Accept the assignment submission statement.
 };
@@ -6111,12 +6111,12 @@ export type ModAssignSubmitForGradingParams = {
 /**
  * Data returned by mod_assign_submit_for_grading WS.
  */
-export type ModAssignSubmitForGradingResponse = CoreWSExternalWarning[];
+export type ModAssignSubmitForGradingWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_submit_grading_form WS.
  */
-export type ModAssignSubmitGradingFormParams = {
+export type ModAssignSubmitGradingFormWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userid: number; // The user id the submission belongs to.
     jsonformdata: string; // The data from the grading form, encoded as a json array.
@@ -6125,12 +6125,12 @@ export type ModAssignSubmitGradingFormParams = {
 /**
  * Data returned by mod_assign_submit_grading_form WS.
  */
-export type ModAssignSubmitGradingFormResponse = CoreWSExternalWarning[];
+export type ModAssignSubmitGradingFormWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_unlock_submissions WS.
  */
-export type ModAssignUnlockSubmissionsParams = {
+export type ModAssignUnlockSubmissionsWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
 };
@@ -6138,55 +6138,55 @@ export type ModAssignUnlockSubmissionsParams = {
 /**
  * Data returned by mod_assign_unlock_submissions WS.
  */
-export type ModAssignUnlockSubmissionsResponse = CoreWSExternalWarning[];
+export type ModAssignUnlockSubmissionsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_view_assign WS.
  */
-export type ModAssignViewAssignParams = {
+export type ModAssignViewAssignWSParams = {
     assignid: number; // Assign instance id.
 };
 
 /**
  * Data returned by mod_assign_view_assign WS.
  */
-export type ModAssignViewAssignResponse = CoreStatusWithWarningsResponse;
+export type ModAssignViewAssignWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_assign_view_grading_table WS.
  */
-export type ModAssignViewGradingTableParams = {
+export type ModAssignViewGradingTableWSParams = {
     assignid: number; // Assign instance id.
 };
 
 /**
  * Data returned by mod_assign_view_grading_table WS.
  */
-export type ModAssignViewGradingTableResponse = CoreStatusWithWarningsResponse;
+export type ModAssignViewGradingTableWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_assign_view_submission_status WS.
  */
-export type ModAssignViewSubmissionStatusParams = {
+export type ModAssignViewSubmissionStatusWSParams = {
     assignid: number; // Assign instance id.
 };
 
 /**
  * Data returned by mod_assign_view_submission_status WS.
  */
-export type ModAssignViewSubmissionStatusResponse = CoreStatusWithWarningsResponse;
+export type ModAssignViewSubmissionStatusWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_book_get_books_by_courses WS.
  */
-export type ModBookGetBooksByCoursesParams = {
+export type ModBookGetBooksByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_book_get_books_by_courses WS.
  */
-export type ModBookGetBooksByCoursesResponse = {
+export type ModBookGetBooksByCoursesWSResponse = {
     books: {
         id: number; // Book id.
         coursemodule: number; // Course module id.
@@ -6212,7 +6212,7 @@ export type ModBookGetBooksByCoursesResponse = {
 /**
  * Params of mod_book_view_book WS.
  */
-export type ModBookViewBookParams = {
+export type ModBookViewBookWSParams = {
     bookid: number; // Book instance id.
     chapterid?: number; // Chapter id.
 };
@@ -6220,12 +6220,12 @@ export type ModBookViewBookParams = {
 /**
  * Data returned by mod_book_view_book WS.
  */
-export type ModBookViewBookResponse = CoreStatusWithWarningsResponse;
+export type ModBookViewBookWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_chat_get_chat_latest_messages WS.
  */
-export type ModChatGetChatLatestMessagesParams = {
+export type ModChatGetChatLatestMessagesWSParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
     chatlasttime?: number; // Last time messages were retrieved (epoch time).
 };
@@ -6233,7 +6233,7 @@ export type ModChatGetChatLatestMessagesParams = {
 /**
  * Data returned by mod_chat_get_chat_latest_messages WS.
  */
-export type ModChatGetChatLatestMessagesResponse = {
+export type ModChatGetChatLatestMessagesWSResponse = {
     messages: { // List of users.
         id: number; // Message id.
         userid: number; // User id.
@@ -6248,14 +6248,14 @@ export type ModChatGetChatLatestMessagesResponse = {
 /**
  * Params of mod_chat_get_chat_users WS.
  */
-export type ModChatGetChatUsersParams = {
+export type ModChatGetChatUsersWSParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
 };
 
 /**
  * Data returned by mod_chat_get_chat_users WS.
  */
-export type ModChatGetChatUsersResponse = {
+export type ModChatGetChatUsersWSResponse = {
     users: { // List of users.
         id: number; // User id.
         fullname: string; // User full name.
@@ -6267,14 +6267,14 @@ export type ModChatGetChatUsersResponse = {
 /**
  * Params of mod_chat_get_chats_by_courses WS.
  */
-export type ModChatGetChatsByCoursesParams = {
+export type ModChatGetChatsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_chat_get_chats_by_courses WS.
  */
-export type ModChatGetChatsByCoursesResponse = {
+export type ModChatGetChatsByCoursesWSResponse = {
     chats: {
         id: number; // Chat id.
         coursemodule: number; // Course module id.
@@ -6300,7 +6300,7 @@ export type ModChatGetChatsByCoursesResponse = {
 /**
  * Params of mod_chat_get_session_messages WS.
  */
-export type ModChatGetSessionMessagesParams = {
+export type ModChatGetSessionMessagesWSParams = {
     chatid: number; // Chat instance id.
     sessionstart: number; // The session start time (timestamp).
     sessionend: number; // The session end time (timestamp).
@@ -6312,7 +6312,7 @@ export type ModChatGetSessionMessagesParams = {
 /**
  * Data returned by mod_chat_get_session_messages WS.
  */
-export type ModChatGetSessionMessagesResponse = {
+export type ModChatGetSessionMessagesWSResponse = {
     messages: {
         id: number; // The message record id.
         chatid: number; // The chat id.
@@ -6328,7 +6328,7 @@ export type ModChatGetSessionMessagesResponse = {
 /**
  * Params of mod_chat_get_sessions WS.
  */
-export type ModChatGetSessionsParams = {
+export type ModChatGetSessionsWSParams = {
     chatid: number; // Chat instance id.
     groupid?: number; // Get messages from users in this group.
                                              // 0 means that the function will determine the user group.
@@ -6339,7 +6339,7 @@ export type ModChatGetSessionsParams = {
 /**
  * Data returned by mod_chat_get_sessions WS.
  */
-export type ModChatGetSessionsResponse = {
+export type ModChatGetSessionsWSResponse = {
     sessions: { // List of users.
         sessionstart: number; // Session start time.
         sessionend: number; // Session end time.
@@ -6355,7 +6355,7 @@ export type ModChatGetSessionsResponse = {
 /**
  * Params of mod_chat_login_user WS.
  */
-export type ModChatLoginUserParams = {
+export type ModChatLoginUserWSParams = {
     chatid: number; // Chat instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
@@ -6363,7 +6363,7 @@ export type ModChatLoginUserParams = {
 /**
  * Data returned by mod_chat_login_user WS.
  */
-export type ModChatLoginUserResponse = {
+export type ModChatLoginUserWSResponse = {
     chatsid: string; // Unique chat session id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -6371,7 +6371,7 @@ export type ModChatLoginUserResponse = {
 /**
  * Params of mod_chat_send_chat_message WS.
  */
-export type ModChatSendChatMessageParams = {
+export type ModChatSendChatMessageWSParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
     messagetext: string; // The message text.
     beepid?: string; // The beep id.
@@ -6380,7 +6380,7 @@ export type ModChatSendChatMessageParams = {
 /**
  * Data returned by mod_chat_send_chat_message WS.
  */
-export type ModChatSendChatMessageResponse = {
+export type ModChatSendChatMessageWSResponse = {
     messageid: number; // Message sent id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -6388,19 +6388,19 @@ export type ModChatSendChatMessageResponse = {
 /**
  * Params of mod_chat_view_chat WS.
  */
-export type ModChatViewChatParams = {
+export type ModChatViewChatWSParams = {
     chatid: number; // Chat instance id.
 };
 
 /**
  * Data returned by mod_chat_view_chat WS.
  */
-export type ModChatViewChatResponse = CoreStatusWithWarningsResponse;
+export type ModChatViewChatWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_choice_delete_choice_responses WS.
  */
-export type ModChoiceDeleteChoiceResponsesParams = {
+export type ModChoiceDeleteChoiceResponsesWSParams = {
     choiceid: number; // Choice instance id.
     responses?: number[]; // Array of response ids, empty for deleting all the current user responses.
 };
@@ -6408,19 +6408,19 @@ export type ModChoiceDeleteChoiceResponsesParams = {
 /**
  * Data returned by mod_choice_delete_choice_responses WS.
  */
-export type ModChoiceDeleteChoiceResponsesResponse = CoreStatusWithWarningsResponse;
+export type ModChoiceDeleteChoiceResponsesWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_choice_get_choice_options WS.
  */
-export type ModChoiceGetChoiceOptionsParams = {
+export type ModChoiceGetChoiceOptionsWSParams = {
     choiceid: number; // Choice instance id.
 };
 
 /**
  * Data returned by mod_choice_get_choice_options WS.
  */
-export type ModChoiceGetChoiceOptionsResponse = {
+export type ModChoiceGetChoiceOptionsWSResponse = {
     options: { // Options.
         id: number; // Option id.
         text: string; // Text of the choice.
@@ -6436,14 +6436,14 @@ export type ModChoiceGetChoiceOptionsResponse = {
 /**
  * Params of mod_choice_get_choice_results WS.
  */
-export type ModChoiceGetChoiceResultsParams = {
+export type ModChoiceGetChoiceResultsWSParams = {
     choiceid: number; // Choice instance id.
 };
 
 /**
  * Data returned by mod_choice_get_choice_results WS.
  */
-export type ModChoiceGetChoiceResultsResponse = {
+export type ModChoiceGetChoiceResultsWSResponse = {
     options: {
         id: number; // Choice instance id.
         text: string; // Text of the choice.
@@ -6464,14 +6464,14 @@ export type ModChoiceGetChoiceResultsResponse = {
 /**
  * Params of mod_choice_get_choices_by_courses WS.
  */
-export type ModChoiceGetChoicesByCoursesParams = {
+export type ModChoiceGetChoicesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_choice_get_choices_by_courses WS.
  */
-export type ModChoiceGetChoicesByCoursesResponse = {
+export type ModChoiceGetChoicesByCoursesWSResponse = {
     choices: {
         id: number; // Choice instance id.
         coursemodule: number; // Course module id.
@@ -6505,7 +6505,7 @@ export type ModChoiceGetChoicesByCoursesResponse = {
 /**
  * Params of mod_choice_submit_choice_response WS.
  */
-export type ModChoiceSubmitChoiceResponseParams = {
+export type ModChoiceSubmitChoiceResponseWSParams = {
     choiceid: number; // Choice instance id.
     responses: number[]; // Array of response ids.
 };
@@ -6513,7 +6513,7 @@ export type ModChoiceSubmitChoiceResponseParams = {
 /**
  * Data returned by mod_choice_submit_choice_response WS.
  */
-export type ModChoiceSubmitChoiceResponseResponse = {
+export type ModChoiceSubmitChoiceResponseWSResponse = {
     answers: {
         id: number; // Answer id.
         choiceid: number; // Choiceid.
@@ -6527,19 +6527,19 @@ export type ModChoiceSubmitChoiceResponseResponse = {
 /**
  * Params of mod_choice_view_choice WS.
  */
-export type ModChoiceViewChoiceParams = {
+export type ModChoiceViewChoiceWSParams = {
     choiceid: number; // Choice instance id.
 };
 
 /**
  * Data returned by mod_choice_view_choice WS.
  */
-export type ModChoiceViewChoiceResponse = CoreStatusWithWarningsResponse;
+export type ModChoiceViewChoiceWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_data_add_entry WS.
  */
-export type ModDataAddEntryParams = {
+export type ModDataAddEntryWSParams = {
     databaseid: number; // Data instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     data: { // The fields data to be created.
@@ -6552,7 +6552,7 @@ export type ModDataAddEntryParams = {
 /**
  * Data returned by mod_data_add_entry WS.
  */
-export type ModDataAddEntryResponse = {
+export type ModDataAddEntryWSResponse = {
     newentryid: number; // True new created entry id. 0 if the entry was not created.
     generalnotifications: string[];
     fieldnotifications: {
@@ -6565,7 +6565,7 @@ export type ModDataAddEntryResponse = {
 /**
  * Params of mod_data_approve_entry WS.
  */
-export type ModDataApproveEntryParams = {
+export type ModDataApproveEntryWSParams = {
     entryid: number; // Record entry id.
     approve?: boolean; // Whether to approve (true) or unapprove the entry.
 };
@@ -6573,24 +6573,24 @@ export type ModDataApproveEntryParams = {
 /**
  * Data returned by mod_data_approve_entry WS.
  */
-export type ModDataApproveEntryResponse = CoreStatusWithWarningsResponse;
+export type ModDataApproveEntryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_data_delete_entry WS.
  */
-export type ModDataDeleteEntryParams = {
+export type ModDataDeleteEntryWSParams = {
     entryid: number; // Record entry id.
 };
 
 /**
  * Data returned by mod_data_delete_entry WS.
  */
-export type ModDataDeleteEntryResponse = CoreStatusWithWarningsResponse;
+export type ModDataDeleteEntryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_data_get_data_access_information WS.
  */
-export type ModDataGetDataAccessInformationParams = {
+export type ModDataGetDataAccessInformationWSParams = {
     databaseid: number; // Database instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
@@ -6598,7 +6598,7 @@ export type ModDataGetDataAccessInformationParams = {
 /**
  * Data returned by mod_data_get_data_access_information WS.
  */
-export type ModDataGetDataAccessInformationResponse = {
+export type ModDataGetDataAccessInformationWSResponse = {
     groupid: number; // User current group id (calculated).
     canaddentry: boolean; // Whether the user can add entries or not.
     canmanageentries: boolean; // Whether the user can manage entries or not.
@@ -6614,14 +6614,14 @@ export type ModDataGetDataAccessInformationResponse = {
 /**
  * Params of mod_data_get_databases_by_courses WS.
  */
-export type ModDataGetDatabasesByCoursesParams = {
+export type ModDataGetDatabasesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_data_get_databases_by_courses WS.
  */
-export type ModDataGetDatabasesByCoursesResponse = {
+export type ModDataGetDatabasesByCoursesWSResponse = {
     databases: {
         id: number; // Database id.
         course: number; // Course id.
@@ -6676,7 +6676,7 @@ export type ModDataGetDatabasesByCoursesResponse = {
 /**
  * Params of mod_data_get_entries WS.
  */
-export type ModDataGetEntriesParams = {
+export type ModDataGetEntriesWSParams = {
     databaseid: number; // Data instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     returncontents?: boolean; // Whether to return contents or not. This will return each entry
@@ -6700,7 +6700,7 @@ export type ModDataGetEntriesParams = {
 /**
  * Data returned by mod_data_get_entries WS.
  */
-export type ModDataGetEntriesResponse = {
+export type ModDataGetEntriesWSResponse = {
     entries: {
         id: number; // Record id.
         userid: number; // The id of the user who created the record.
@@ -6753,7 +6753,7 @@ export type ModDataGetEntriesResponse = {
 /**
  * Params of mod_data_get_entry WS.
  */
-export type ModDataGetEntryParams = {
+export type ModDataGetEntryWSParams = {
     entryid: number; // Record entry id.
     returncontents?: boolean; // Whether to return contents or not.
 };
@@ -6761,7 +6761,7 @@ export type ModDataGetEntryParams = {
 /**
  * Data returned by mod_data_get_entry WS.
  */
-export type ModDataGetEntryResponse = {
+export type ModDataGetEntryWSResponse = {
     entry: {
         id: number; // Record id.
         userid: number; // The id of the user who created the record.
@@ -6842,14 +6842,14 @@ export type ModDataGetEntryResponse = {
 /**
  * Params of mod_data_get_fields WS.
  */
-export type ModDataGetFieldsParams = {
+export type ModDataGetFieldsWSParams = {
     databaseid: number; // Database instance id.
 };
 
 /**
  * Data returned by mod_data_get_fields WS.
  */
-export type ModDataGetFieldsResponse = {
+export type ModDataGetFieldsWSResponse = {
     fields: {
         id: number; // Field id.
         dataid: number; // The field type of the content.
@@ -6874,7 +6874,7 @@ export type ModDataGetFieldsResponse = {
 /**
  * Params of mod_data_search_entries WS.
  */
-export type ModDataSearchEntriesParams = {
+export type ModDataSearchEntriesWSParams = {
     databaseid: number; // Data instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     returncontents?: boolean; // Whether to return contents or not.
@@ -6903,7 +6903,7 @@ export type ModDataSearchEntriesParams = {
 /**
  * Data returned by mod_data_search_entries WS.
  */
-export type ModDataSearchEntriesResponse = {
+export type ModDataSearchEntriesWSResponse = {
     entries: {
         id: number; // Record id.
         userid: number; // The id of the user who created the record.
@@ -6958,7 +6958,7 @@ export type ModDataSearchEntriesResponse = {
 /**
  * Params of mod_data_update_entry WS.
  */
-export type ModDataUpdateEntryParams = {
+export type ModDataUpdateEntryWSParams = {
     entryid: number; // The entry record id.
     data: { // The fields data to be updated.
         fieldid: number; // The field id.
@@ -6970,7 +6970,7 @@ export type ModDataUpdateEntryParams = {
 /**
  * Data returned by mod_data_update_entry WS.
  */
-export type ModDataUpdateEntryResponse = {
+export type ModDataUpdateEntryWSResponse = {
     updated: boolean; // True if the entry was successfully updated, false other wise.
     generalnotifications: string[];
     fieldnotifications: {
@@ -6983,19 +6983,19 @@ export type ModDataUpdateEntryResponse = {
 /**
  * Params of mod_data_view_database WS.
  */
-export type ModDataViewDatabaseParams = {
+export type ModDataViewDatabaseWSParams = {
     databaseid: number; // Data instance id.
 };
 
 /**
  * Data returned by mod_data_view_database WS.
  */
-export type ModDataViewDatabaseResponse = CoreStatusWithWarningsResponse;
+export type ModDataViewDatabaseWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_feedback_get_analysis WS.
  */
-export type ModFeedbackGetAnalysisParams = {
+export type ModFeedbackGetAnalysisWSParams = {
     feedbackid: number; // Feedback instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
@@ -7004,7 +7004,7 @@ export type ModFeedbackGetAnalysisParams = {
 /**
  * Data returned by mod_feedback_get_analysis WS.
  */
-export type ModFeedbackGetAnalysisResponse = {
+export type ModFeedbackGetAnalysisWSResponse = {
     completedcount: number; // Number of completed submissions.
     itemscount: number; // Number of items (questions).
     itemsdata: {
@@ -7054,7 +7054,7 @@ export type ModFeedbackGetAnalysisResponse = {
 /**
  * Params of mod_feedback_get_current_completed_tmp WS.
  */
-export type ModFeedbackGetCurrentCompletedTmpParams = {
+export type ModFeedbackGetCurrentCompletedTmpWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7062,7 +7062,7 @@ export type ModFeedbackGetCurrentCompletedTmpParams = {
 /**
  * Data returned by mod_feedback_get_current_completed_tmp WS.
  */
-export type ModFeedbackGetCurrentCompletedTmpResponse = {
+export type ModFeedbackGetCurrentCompletedTmpWSResponse = {
     feedback: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7079,7 +7079,7 @@ export type ModFeedbackGetCurrentCompletedTmpResponse = {
 /**
  * Params of mod_feedback_get_feedback_access_information WS.
  */
-export type ModFeedbackGetFeedbackAccessInformationParams = {
+export type ModFeedbackGetFeedbackAccessInformationWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7087,7 +7087,7 @@ export type ModFeedbackGetFeedbackAccessInformationParams = {
 /**
  * Data returned by mod_feedback_get_feedback_access_information WS.
  */
-export type ModFeedbackGetFeedbackAccessInformationResponse = {
+export type ModFeedbackGetFeedbackAccessInformationWSResponse = {
     canviewanalysis: boolean; // Whether the user can view the analysis or not.
     cancomplete: boolean; // Whether the user can complete the feedback or not.
     cansubmit: boolean; // Whether the user can submit the feedback or not.
@@ -7104,14 +7104,14 @@ export type ModFeedbackGetFeedbackAccessInformationResponse = {
 /**
  * Params of mod_feedback_get_feedbacks_by_courses WS.
  */
-export type ModFeedbackGetFeedbacksByCoursesParams = {
+export type ModFeedbackGetFeedbacksByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_feedback_get_feedbacks_by_courses WS.
  */
-export type ModFeedbackGetFeedbacksByCoursesResponse = {
+export type ModFeedbackGetFeedbacksByCoursesWSResponse = {
     feedbacks: {
         id: number; // The primary key of the record.
         course: number; // Course id this feedback is part of.
@@ -7158,7 +7158,7 @@ export type ModFeedbackGetFeedbacksByCoursesResponse = {
 /**
  * Params of mod_feedback_get_finished_responses WS.
  */
-export type ModFeedbackGetFinishedResponsesParams = {
+export type ModFeedbackGetFinishedResponsesWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7166,7 +7166,7 @@ export type ModFeedbackGetFinishedResponsesParams = {
 /**
  * Data returned by mod_feedback_get_finished_responses WS.
  */
-export type ModFeedbackGetFinishedResponsesResponse = {
+export type ModFeedbackGetFinishedResponsesWSResponse = {
     responses: {
         id: number; // The record id.
         course_id: number; // The course id this record belongs to.
@@ -7181,7 +7181,7 @@ export type ModFeedbackGetFinishedResponsesResponse = {
 /**
  * Params of mod_feedback_get_items WS.
  */
-export type ModFeedbackGetItemsParams = {
+export type ModFeedbackGetItemsWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7189,7 +7189,7 @@ export type ModFeedbackGetItemsParams = {
 /**
  * Data returned by mod_feedback_get_items WS.
  */
-export type ModFeedbackGetItemsResponse = {
+export type ModFeedbackGetItemsWSResponse = {
     items: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7234,7 +7234,7 @@ export type ModFeedbackGetItemsResponse = {
 /**
  * Params of mod_feedback_get_last_completed WS.
  */
-export type ModFeedbackGetLastCompletedParams = {
+export type ModFeedbackGetLastCompletedWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7242,7 +7242,7 @@ export type ModFeedbackGetLastCompletedParams = {
 /**
  * Data returned by mod_feedback_get_last_completed WS.
  */
-export type ModFeedbackGetLastCompletedResponse = {
+export type ModFeedbackGetLastCompletedWSResponse = {
     completed: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7258,7 +7258,7 @@ export type ModFeedbackGetLastCompletedResponse = {
 /**
  * Params of mod_feedback_get_non_respondents WS.
  */
-export type ModFeedbackGetNonRespondentsParams = {
+export type ModFeedbackGetNonRespondentsWSParams = {
     feedbackid: number; // Feedback instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     sort?: string; // Sort param, must be firstname, lastname or lastaccess (default).
@@ -7270,7 +7270,7 @@ export type ModFeedbackGetNonRespondentsParams = {
 /**
  * Data returned by mod_feedback_get_non_respondents WS.
  */
-export type ModFeedbackGetNonRespondentsResponse = {
+export type ModFeedbackGetNonRespondentsWSResponse = {
     users: {
         courseid: number; // Course id.
         userid: number; // The user id.
@@ -7284,7 +7284,7 @@ export type ModFeedbackGetNonRespondentsResponse = {
 /**
  * Params of mod_feedback_get_page_items WS.
  */
-export type ModFeedbackGetPageItemsParams = {
+export type ModFeedbackGetPageItemsWSParams = {
     feedbackid: number; // Feedback instance id.
     page: number; // The page to get starting by 0.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
@@ -7293,7 +7293,7 @@ export type ModFeedbackGetPageItemsParams = {
 /**
  * Data returned by mod_feedback_get_page_items WS.
  */
-export type ModFeedbackGetPageItemsResponse = {
+export type ModFeedbackGetPageItemsWSResponse = {
     items: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7340,7 +7340,7 @@ export type ModFeedbackGetPageItemsResponse = {
 /**
  * Params of mod_feedback_get_responses_analysis WS.
  */
-export type ModFeedbackGetResponsesAnalysisParams = {
+export type ModFeedbackGetResponsesAnalysisWSParams = {
     feedbackid: number; // Feedback instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     page?: number; // The page of records to return.
@@ -7351,7 +7351,7 @@ export type ModFeedbackGetResponsesAnalysisParams = {
 /**
  * Data returned by mod_feedback_get_responses_analysis WS.
  */
-export type ModFeedbackGetResponsesAnalysisResponse = {
+export type ModFeedbackGetResponsesAnalysisWSResponse = {
     attempts: {
         id: number; // Completed id.
         courseid: number; // Course id.
@@ -7384,7 +7384,7 @@ export type ModFeedbackGetResponsesAnalysisResponse = {
 /**
  * Params of mod_feedback_get_unfinished_responses WS.
  */
-export type ModFeedbackGetUnfinishedResponsesParams = {
+export type ModFeedbackGetUnfinishedResponsesWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7392,7 +7392,7 @@ export type ModFeedbackGetUnfinishedResponsesParams = {
 /**
  * Data returned by mod_feedback_get_unfinished_responses WS.
  */
-export type ModFeedbackGetUnfinishedResponsesResponse = {
+export type ModFeedbackGetUnfinishedResponsesWSResponse = {
     responses: {
         id: number; // The record id.
         course_id: number; // The course id this record belongs to.
@@ -7407,7 +7407,7 @@ export type ModFeedbackGetUnfinishedResponsesResponse = {
 /**
  * Params of mod_feedback_launch_feedback WS.
  */
-export type ModFeedbackLaunchFeedbackParams = {
+export type ModFeedbackLaunchFeedbackWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7415,7 +7415,7 @@ export type ModFeedbackLaunchFeedbackParams = {
 /**
  * Data returned by mod_feedback_launch_feedback WS.
  */
-export type ModFeedbackLaunchFeedbackResponse = {
+export type ModFeedbackLaunchFeedbackWSResponse = {
     gopage: number; // The next page to go (-1 if we were already in the last page). 0 for first page.
     warnings?: CoreWSExternalWarning[];
 };
@@ -7423,7 +7423,7 @@ export type ModFeedbackLaunchFeedbackResponse = {
 /**
  * Params of mod_feedback_process_page WS.
  */
-export type ModFeedbackProcessPageParams = {
+export type ModFeedbackProcessPageWSParams = {
     feedbackid: number; // Feedback instance id.
     page: number; // The page being processed.
     responses?: { // The data to be processed.
@@ -7437,7 +7437,7 @@ export type ModFeedbackProcessPageParams = {
 /**
  * Data returned by mod_feedback_process_page WS.
  */
-export type ModFeedbackProcessPageResponse = {
+export type ModFeedbackProcessPageWSResponse = {
     jumpto: number; // The page to jump to.
     completed: boolean; // If the user completed the feedback.
     completionpagecontents: string; // The completion page contents.
@@ -7448,7 +7448,7 @@ export type ModFeedbackProcessPageResponse = {
 /**
  * Params of mod_feedback_view_feedback WS.
  */
-export type ModFeedbackViewFeedbackParams = {
+export type ModFeedbackViewFeedbackWSParams = {
     feedbackid: number; // Feedback instance id.
     moduleviewed?: boolean; // If we need to mark the module as viewed for completion.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
@@ -7457,19 +7457,19 @@ export type ModFeedbackViewFeedbackParams = {
 /**
  * Data returned by mod_feedback_view_feedback WS.
  */
-export type ModFeedbackViewFeedbackResponse = CoreStatusWithWarningsResponse;
+export type ModFeedbackViewFeedbackWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_folder_get_folders_by_courses WS.
  */
-export type ModFolderGetFoldersByCoursesParams = {
+export type ModFolderGetFoldersByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_folder_get_folders_by_courses WS.
  */
-export type ModFolderGetFoldersByCoursesResponse = {
+export type ModFolderGetFoldersByCoursesWSResponse = {
     folders: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -7494,19 +7494,19 @@ export type ModFolderGetFoldersByCoursesResponse = {
 /**
  * Params of mod_folder_view_folder WS.
  */
-export type ModFolderViewFolderParams = {
+export type ModFolderViewFolderWSParams = {
     folderid: number; // Folder instance id.
 };
 
 /**
  * Data returned by mod_folder_view_folder WS.
  */
-export type ModFolderViewFolderResponse = CoreStatusWithWarningsResponse;
+export type ModFolderViewFolderWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_add_discussion WS.
  */
-export type ModForumAddDiscussionParams = {
+export type ModForumAddDiscussionWSParams = {
     forumid: number; // Forum instance ID.
     subject: string; // New Discussion subject.
     message: string; // New Discussion message (only html format allowed).
@@ -7527,7 +7527,7 @@ export type ModForumAddDiscussionParams = {
 /**
  * Data returned by mod_forum_add_discussion WS.
  */
-export type ModForumAddDiscussionResponse = {
+export type ModForumAddDiscussionWSResponse = {
     discussionid: number; // New Discussion ID.
     warnings?: CoreWSExternalWarning[];
 };
@@ -7535,7 +7535,7 @@ export type ModForumAddDiscussionResponse = {
 /**
  * Params of mod_forum_add_discussion_post WS.
  */
-export type ModForumAddDiscussionPostParams = {
+export type ModForumAddDiscussionPostWSParams = {
     postid: number; // The post id we are going to reply to
                                              // (can be the initial discussion post.
 
@@ -7559,7 +7559,7 @@ export type ModForumAddDiscussionPostParams = {
 /**
  * Data returned by mod_forum_add_discussion_post WS.
  */
-export type ModForumAddDiscussionPostResponse = {
+export type ModForumAddDiscussionPostWSResponse = {
     postid: number; // New post id.
     warnings?: CoreWSExternalWarning[];
     post: {
@@ -7670,7 +7670,7 @@ export type ModForumAddDiscussionPostResponse = {
 /**
  * Params of mod_forum_can_add_discussion WS.
  */
-export type ModForumCanAddDiscussionParams = {
+export type ModForumCanAddDiscussionWSParams = {
     forumid: number; // Forum instance ID.
     groupid?: number; // The group to check, default to active group.
                                              // Use -1 to check if the user can post in all the groups.
@@ -7680,7 +7680,7 @@ export type ModForumCanAddDiscussionParams = {
 /**
  * Data returned by mod_forum_can_add_discussion WS.
  */
-export type ModForumCanAddDiscussionResponse = {
+export type ModForumCanAddDiscussionWSResponse = {
     status: boolean; // True if the user can add discussions, false otherwise.
     canpindiscussions?: boolean; // True if the user can pin discussions, false otherwise.
     cancreateattachment?: boolean; // True if the user can add attachments, false otherwise.
@@ -7690,26 +7690,26 @@ export type ModForumCanAddDiscussionResponse = {
 /**
  * Params of mod_forum_delete_post WS.
  */
-export type ModForumDeletePostParams = {
+export type ModForumDeletePostWSParams = {
     postid: number; // Post to be deleted. It can be a discussion topic post.
 };
 
 /**
  * Data returned by mod_forum_delete_post WS.
  */
-export type ModForumDeletePostResponse = CoreStatusWithWarningsResponse;
+export type ModForumDeletePostWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_get_discussion_post WS.
  */
-export type ModForumGetDiscussionPostParams = {
+export type ModForumGetDiscussionPostWSParams = {
     postid: number; // Post to fetch.
 };
 
 /**
  * Data returned by mod_forum_get_discussion_post WS.
  */
-export type ModForumGetDiscussionPostResponse = {
+export type ModForumGetDiscussionPostWSResponse = {
     post: {
         id: number; // Id.
         subject: string; // Subject.
@@ -7815,7 +7815,7 @@ export type ModForumGetDiscussionPostResponse = {
 /**
  * Params of mod_forum_get_discussion_posts WS.
  */
-export type ModForumGetDiscussionPostsParams = {
+export type ModForumGetDiscussionPostsWSParams = {
     discussionid: number; // The ID of the discussion from which to fetch posts.
     sortby?: string; // Sort by this element: id, created or modified.
     sortdirection?: string; // Sort direction: ASC or DESC.
@@ -7824,7 +7824,7 @@ export type ModForumGetDiscussionPostsParams = {
 /**
  * Data returned by mod_forum_get_discussion_posts WS.
  */
-export type ModForumGetDiscussionPostsResponse = {
+export type ModForumGetDiscussionPostsWSResponse = {
     posts: {
         id: number; // Id.
         subject: string; // Subject.
@@ -7962,14 +7962,14 @@ export type ModForumGetDiscussionPostsResponse = {
 /**
  * Params of mod_forum_get_forum_access_information WS.
  */
-export type ModForumGetForumAccessInformationParams = {
+export type ModForumGetForumAccessInformationWSParams = {
     forumid: number; // Forum instance id.
 };
 
 /**
  * Data returned by mod_forum_get_forum_access_information WS.
  */
-export type ModForumGetForumAccessInformationResponse = {
+export type ModForumGetForumAccessInformationWSResponse = {
     warnings?: CoreWSExternalWarning[];
     canaddinstance?: boolean; // Whether the user has the capability mod/forum:addinstance allowed.
     canviewdiscussion?: boolean; // Whether the user has the capability mod/forum:viewdiscussion allowed.
@@ -8011,7 +8011,7 @@ export type ModForumGetForumAccessInformationResponse = {
 /**
  * Params of mod_forum_get_forum_discussion_posts WS.
  */
-export type ModForumGetForumDiscussionPostsParams = {
+export type ModForumGetForumDiscussionPostsWSParams = {
     discussionid: number; // Discussion ID.
     sortby?: string; // Sort by this element: id, created or modified.
     sortdirection?: string; // Sort direction: ASC or DESC.
@@ -8020,7 +8020,7 @@ export type ModForumGetForumDiscussionPostsParams = {
 /**
  * Data returned by mod_forum_get_forum_discussion_posts WS.
  */
-export type ModForumGetForumDiscussionPostsResponse = {
+export type ModForumGetForumDiscussionPostsWSResponse = {
     posts: {
         id: number; // Post id.
         discussion: number; // Discussion id.
@@ -8094,7 +8094,7 @@ export type ModForumGetForumDiscussionPostsResponse = {
 /**
  * Params of mod_forum_get_forum_discussions WS.
  */
-export type ModForumGetForumDiscussionsParams = {
+export type ModForumGetForumDiscussionsWSParams = {
     forumid: number; // Forum instance id.
     sortorder?: number; // Sort by this element: numreplies, , created or timemodified.
     page?: number; // Current page.
@@ -8105,7 +8105,7 @@ export type ModForumGetForumDiscussionsParams = {
 /**
  * Data returned by mod_forum_get_forum_discussions WS.
  */
-export type ModForumGetForumDiscussionsResponse = {
+export type ModForumGetForumDiscussionsWSResponse = {
     discussions: {
         id: number; // Post id.
         name: string; // Discussion name.
@@ -8148,7 +8148,7 @@ export type ModForumGetForumDiscussionsResponse = {
 /**
  * Params of mod_forum_get_forum_discussions_paginated WS.
  */
-export type ModForumGetForumDiscussionsPaginatedParams = {
+export type ModForumGetForumDiscussionsPaginatedWSParams = {
     forumid: number; // Forum instance id.
     sortby?: string; // Sort by this element: id, timemodified, timestart or timeend.
     sortdirection?: string; // Sort direction: ASC or DESC.
@@ -8159,7 +8159,7 @@ export type ModForumGetForumDiscussionsPaginatedParams = {
 /**
  * Data returned by mod_forum_get_forum_discussions_paginated WS.
  */
-export type ModForumGetForumDiscussionsPaginatedResponse = {
+export type ModForumGetForumDiscussionsPaginatedWSResponse = {
     discussions: {
         id: number; // Post id.
         name: string; // Discussion name.
@@ -8200,14 +8200,14 @@ export type ModForumGetForumDiscussionsPaginatedResponse = {
 /**
  * Params of mod_forum_get_forums_by_courses WS.
  */
-export type ModForumGetForumsByCoursesParams = {
+export type ModForumGetForumsByCoursesWSParams = {
     courseids?: number[]; // Array of Course IDs.
 };
 
 /**
  * Data returned by mod_forum_get_forums_by_courses WS.
  */
-export type ModForumGetForumsByCoursesResponse = {
+export type ModForumGetForumsByCoursesWSResponse = {
     id: number; // Forum id.
     course: number; // Course id.
     type: string; // The forum type.
@@ -8247,7 +8247,7 @@ export type ModForumGetForumsByCoursesResponse = {
 /**
  * Params of mod_forum_prepare_draft_area_for_post WS.
  */
-export type ModForumPrepareDraftAreaForPostParams = {
+export type ModForumPrepareDraftAreaForPostWSParams = {
     postid: number; // Post to prepare the draft area for.
     area: string; // Area to prepare: attachment or post.
     draftitemid?: number; // The draft item id to use. 0 to generate one.
@@ -8260,7 +8260,7 @@ export type ModForumPrepareDraftAreaForPostParams = {
 /**
  * Data returned by mod_forum_prepare_draft_area_for_post WS.
  */
-export type ModForumPrepareDraftAreaForPostResponse = {
+export type ModForumPrepareDraftAreaForPostWSResponse = {
     draftitemid: number; // Draft item id for the file area.
     files?: CoreWSExternalFile[];
     areaoptions: { // Draft file area options.
@@ -8274,7 +8274,7 @@ export type ModForumPrepareDraftAreaForPostResponse = {
 /**
  * Params of mod_forum_set_lock_state WS.
  */
-export type ModForumSetLockStateParams = {
+export type ModForumSetLockStateWSParams = {
     forumid: number; // Forum that the discussion is in.
     discussionid: number; // The discussion to lock / unlock.
     targetstate: number; // The timestamp for the lock state.
@@ -8283,7 +8283,7 @@ export type ModForumSetLockStateParams = {
 /**
  * Data returned by mod_forum_set_lock_state WS.
  */
-export type ModForumSetLockStateResponse = {
+export type ModForumSetLockStateWSResponse = {
     id: number; // The discussion we are locking.
     locked: boolean; // The locked state of the discussion.
     times: {
@@ -8294,7 +8294,7 @@ export type ModForumSetLockStateResponse = {
 /**
  * Params of mod_forum_set_pin_state WS.
  */
-export type ModForumSetPinStateParams = {
+export type ModForumSetPinStateWSParams = {
     discussionid: number; // The discussion to pin or unpin.
     targetstate: number; // The target state.
 };
@@ -8302,7 +8302,7 @@ export type ModForumSetPinStateParams = {
 /**
  * Data returned by mod_forum_set_pin_state WS.
  */
-export type ModForumSetPinStateResponse = {
+export type ModForumSetPinStateWSResponse = {
     id: number; // Id.
     forumid: number; // Forumid.
     pinned: boolean; // Pinned.
@@ -8352,7 +8352,7 @@ export type ModForumSetPinStateResponse = {
 /**
  * Params of mod_forum_set_subscription_state WS.
  */
-export type ModForumSetSubscriptionStateParams = {
+export type ModForumSetSubscriptionStateWSParams = {
     forumid: number; // Forum that the discussion is in.
     discussionid: number; // The discussion to subscribe or unsubscribe.
     targetstate: boolean; // The target state.
@@ -8361,7 +8361,7 @@ export type ModForumSetSubscriptionStateParams = {
 /**
  * Data returned by mod_forum_set_subscription_state WS.
  */
-export type ModForumSetSubscriptionStateResponse = {
+export type ModForumSetSubscriptionStateWSResponse = {
     id: number; // Id.
     forumid: number; // Forumid.
     pinned: boolean; // Pinned.
@@ -8411,7 +8411,7 @@ export type ModForumSetSubscriptionStateResponse = {
 /**
  * Params of mod_forum_toggle_favourite_state WS.
  */
-export type ModForumToggleFavouriteStateParams = {
+export type ModForumToggleFavouriteStateWSParams = {
     discussionid: number; // The discussion to subscribe or unsubscribe.
     targetstate: boolean; // The target state.
 };
@@ -8419,7 +8419,7 @@ export type ModForumToggleFavouriteStateParams = {
 /**
  * Data returned by mod_forum_toggle_favourite_state WS.
  */
-export type ModForumToggleFavouriteStateResponse = {
+export type ModForumToggleFavouriteStateWSResponse = {
     id: number; // Id.
     forumid: number; // Forumid.
     pinned: boolean; // Pinned.
@@ -8469,7 +8469,7 @@ export type ModForumToggleFavouriteStateResponse = {
 /**
  * Params of mod_forum_update_discussion_post WS.
  */
-export type ModForumUpdateDiscussionPostParams = {
+export type ModForumUpdateDiscussionPostWSParams = {
     postid: number; // Post to be updated. It can be a discussion topic post.
     subject?: string; // Updated post subject.
     message?: string; // Updated post message (HTML assumed if messageformat is not provided).
@@ -8488,36 +8488,36 @@ export type ModForumUpdateDiscussionPostParams = {
 /**
  * Data returned by mod_forum_update_discussion_post WS.
  */
-export type ModForumUpdateDiscussionPostResponse = CoreStatusWithWarningsResponse;
+export type ModForumUpdateDiscussionPostWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_view_forum WS.
  */
-export type ModForumViewForumParams = {
+export type ModForumViewForumWSParams = {
     forumid: number; // Forum instance id.
 };
 
 /**
  * Data returned by mod_forum_view_forum WS.
  */
-export type ModForumViewForumResponse = CoreStatusWithWarningsResponse;
+export type ModForumViewForumWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_view_forum_discussion WS.
  */
-export type ModForumViewForumDiscussionParams = {
+export type ModForumViewForumDiscussionWSParams = {
     discussionid: number; // Discussion id.
 };
 
 /**
  * Data returned by mod_forum_view_forum_discussion WS.
  */
-export type ModForumViewForumDiscussionResponse = CoreStatusWithWarningsResponse;
+export type ModForumViewForumDiscussionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_glossary_add_entry WS.
  */
-export type ModGlossaryAddEntryParams = {
+export type ModGlossaryAddEntryWSParams = {
     glossaryid: number; // Glossary id.
     concept: string; // Glossary concept.
     definition: string; // Glossary concept definition.
@@ -8539,7 +8539,7 @@ export type ModGlossaryAddEntryParams = {
 /**
  * Data returned by mod_glossary_add_entry WS.
  */
-export type ModGlossaryAddEntryResponse = {
+export type ModGlossaryAddEntryWSResponse = {
     entryid: number; // New glossary entry ID.
     warnings?: CoreWSExternalWarning[];
 };
@@ -8547,14 +8547,14 @@ export type ModGlossaryAddEntryResponse = {
 /**
  * Params of mod_glossary_delete_entry WS.
  */
-export type ModGlossaryDeleteEntryParams = {
+export type ModGlossaryDeleteEntryWSParams = {
     entryid: number; // Glossary entry id to delete.
 };
 
 /**
  * Data returned by mod_glossary_delete_entry WS.
  */
-export type ModGlossaryDeleteEntryResponse = {
+export type ModGlossaryDeleteEntryWSResponse = {
     result: boolean; // The processing result.
     warnings?: CoreWSExternalWarning[];
 };
@@ -8562,7 +8562,7 @@ export type ModGlossaryDeleteEntryResponse = {
 /**
  * Params of mod_glossary_get_authors WS.
  */
-export type ModGlossaryGetAuthorsParams = {
+export type ModGlossaryGetAuthorsWSParams = {
     id: number; // Glossary entry ID.
     from?: number; // Start returning records from here.
     limit?: number; // Number of records to return.
@@ -8574,7 +8574,7 @@ export type ModGlossaryGetAuthorsParams = {
 /**
  * Data returned by mod_glossary_get_authors WS.
  */
-export type ModGlossaryGetAuthorsResponse = {
+export type ModGlossaryGetAuthorsWSResponse = {
     count: number; // The total number of records.
     authors: {
         id: number; // The user ID.
@@ -8587,7 +8587,7 @@ export type ModGlossaryGetAuthorsResponse = {
 /**
  * Params of mod_glossary_get_categories WS.
  */
-export type ModGlossaryGetCategoriesParams = {
+export type ModGlossaryGetCategoriesWSParams = {
     id: number; // The glossary ID.
     from?: number; // Start returning records from here.
     limit?: number; // Number of records to return.
@@ -8596,7 +8596,7 @@ export type ModGlossaryGetCategoriesParams = {
 /**
  * Data returned by mod_glossary_get_categories WS.
  */
-export type ModGlossaryGetCategoriesResponse = {
+export type ModGlossaryGetCategoriesWSResponse = {
     count: number; // The total number of records.
     categories: {
         id: number; // The category ID.
@@ -8610,7 +8610,7 @@ export type ModGlossaryGetCategoriesResponse = {
 /**
  * Params of mod_glossary_get_entries_by_author WS.
  */
-export type ModGlossaryGetEntriesByAuthorParams = {
+export type ModGlossaryGetEntriesByAuthorWSParams = {
     id: number; // Glossary entry ID.
     letter: string; // First letter of firstname or lastname, or either keywords: 'ALL' or 'SPECIAL'.
     field?: string; // Search and order using: 'FIRSTNAME' or 'LASTNAME'.
@@ -8625,7 +8625,7 @@ export type ModGlossaryGetEntriesByAuthorParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_author WS.
  */
-export type ModGlossaryGetEntriesByAuthorResponse = {
+export type ModGlossaryGetEntriesByAuthorWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8697,7 +8697,7 @@ export type ModGlossaryGetEntriesByAuthorResponse = {
 /**
  * Params of mod_glossary_get_entries_by_author_id WS.
  */
-export type ModGlossaryGetEntriesByAuthorIdParams = {
+export type ModGlossaryGetEntriesByAuthorIdWSParams = {
     id: number; // Glossary entry ID.
     authorid: number; // The author ID.
     order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
@@ -8712,7 +8712,7 @@ export type ModGlossaryGetEntriesByAuthorIdParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_author_id WS.
  */
-export type ModGlossaryGetEntriesByAuthorIdResponse = {
+export type ModGlossaryGetEntriesByAuthorIdWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8784,7 +8784,7 @@ export type ModGlossaryGetEntriesByAuthorIdResponse = {
 /**
  * Params of mod_glossary_get_entries_by_category WS.
  */
-export type ModGlossaryGetEntriesByCategoryParams = {
+export type ModGlossaryGetEntriesByCategoryWSParams = {
     id: number; // The glossary ID.
     categoryid: number; // The category ID. Use '0' for all categories, or '-1' for uncategorised entries.
     from?: number; // Start returning records from here.
@@ -8797,7 +8797,7 @@ export type ModGlossaryGetEntriesByCategoryParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_category WS.
  */
-export type ModGlossaryGetEntriesByCategoryResponse = {
+export type ModGlossaryGetEntriesByCategoryWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8871,7 +8871,7 @@ export type ModGlossaryGetEntriesByCategoryResponse = {
 /**
  * Params of mod_glossary_get_entries_by_date WS.
  */
-export type ModGlossaryGetEntriesByDateParams = {
+export type ModGlossaryGetEntriesByDateWSParams = {
     id: number; // Glossary entry ID.
     order?: string; // Order the records by: 'CREATION' or 'UPDATE'.
     sort?: string; // The direction of the order: 'ASC' or 'DESC'.
@@ -8885,7 +8885,7 @@ export type ModGlossaryGetEntriesByDateParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_date WS.
  */
-export type ModGlossaryGetEntriesByDateResponse = {
+export type ModGlossaryGetEntriesByDateWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8957,7 +8957,7 @@ export type ModGlossaryGetEntriesByDateResponse = {
 /**
  * Params of mod_glossary_get_entries_by_letter WS.
  */
-export type ModGlossaryGetEntriesByLetterParams = {
+export type ModGlossaryGetEntriesByLetterWSParams = {
     id: number; // Glossary entry ID.
     letter: string; // A letter, or either keywords: 'ALL' or 'SPECIAL'.
     from?: number; // Start returning records from here.
@@ -8970,7 +8970,7 @@ export type ModGlossaryGetEntriesByLetterParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_letter WS.
  */
-export type ModGlossaryGetEntriesByLetterResponse = {
+export type ModGlossaryGetEntriesByLetterWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9042,7 +9042,7 @@ export type ModGlossaryGetEntriesByLetterResponse = {
 /**
  * Params of mod_glossary_get_entries_by_search WS.
  */
-export type ModGlossaryGetEntriesBySearchParams = {
+export type ModGlossaryGetEntriesBySearchWSParams = {
     id: number; // Glossary entry ID.
     query: string; // The query string.
     fullsearch?: boolean; // The query.
@@ -9058,7 +9058,7 @@ export type ModGlossaryGetEntriesBySearchParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_search WS.
  */
-export type ModGlossaryGetEntriesBySearchResponse = {
+export type ModGlossaryGetEntriesBySearchWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9130,7 +9130,7 @@ export type ModGlossaryGetEntriesBySearchResponse = {
 /**
  * Params of mod_glossary_get_entries_by_term WS.
  */
-export type ModGlossaryGetEntriesByTermParams = {
+export type ModGlossaryGetEntriesByTermWSParams = {
     id: number; // Glossary entry ID.
     term: string; // The entry concept, or alias.
     from?: number; // Start returning records from here.
@@ -9143,7 +9143,7 @@ export type ModGlossaryGetEntriesByTermParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_term WS.
  */
-export type ModGlossaryGetEntriesByTermResponse = {
+export type ModGlossaryGetEntriesByTermWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9215,7 +9215,7 @@ export type ModGlossaryGetEntriesByTermResponse = {
 /**
  * Params of mod_glossary_get_entries_to_approve WS.
  */
-export type ModGlossaryGetEntriesToApproveParams = {
+export type ModGlossaryGetEntriesToApproveWSParams = {
     id: number; // Glossary entry ID.
     letter: string; // A letter, or either keywords: 'ALL' or 'SPECIAL'.
     order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
@@ -9229,7 +9229,7 @@ export type ModGlossaryGetEntriesToApproveParams = {
 /**
  * Data returned by mod_glossary_get_entries_to_approve WS.
  */
-export type ModGlossaryGetEntriesToApproveResponse = {
+export type ModGlossaryGetEntriesToApproveWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9301,14 +9301,14 @@ export type ModGlossaryGetEntriesToApproveResponse = {
 /**
  * Params of mod_glossary_get_entry_by_id WS.
  */
-export type ModGlossaryGetEntryByIdParams = {
+export type ModGlossaryGetEntryByIdWSParams = {
     id: number; // Glossary entry ID.
 };
 
 /**
  * Data returned by mod_glossary_get_entry_by_id WS.
  */
-export type ModGlossaryGetEntryByIdResponse = {
+export type ModGlossaryGetEntryByIdWSResponse = {
     entry: {
         id: number; // The entry ID.
         glossaryid: number; // The glossary ID.
@@ -9383,14 +9383,14 @@ export type ModGlossaryGetEntryByIdResponse = {
 /**
  * Params of mod_glossary_get_glossaries_by_courses WS.
  */
-export type ModGlossaryGetGlossariesByCoursesParams = {
+export type ModGlossaryGetGlossariesByCoursesWSParams = {
     courseids?: number[]; // Array of course IDs.
 };
 
 /**
  * Data returned by mod_glossary_get_glossaries_by_courses WS.
  */
-export type ModGlossaryGetGlossariesByCoursesResponse = {
+export type ModGlossaryGetGlossariesByCoursesWSResponse = {
     glossaries: {
         id: number; // Glossary id.
         coursemodule: number; // Course module id.
@@ -9435,14 +9435,14 @@ export type ModGlossaryGetGlossariesByCoursesResponse = {
 /**
  * Params of mod_glossary_prepare_entry_for_edition WS.
  */
-export type ModGlossaryPrepareEntryForEditionParams = {
+export type ModGlossaryPrepareEntryForEditionWSParams = {
     entryid: number; // Glossary entry id to update.
 };
 
 /**
  * Data returned by mod_glossary_prepare_entry_for_edition WS.
  */
-export type ModGlossaryPrepareEntryForEditionResponse = {
+export type ModGlossaryPrepareEntryForEditionWSResponse = {
     inlineattachmentsid: number; // Draft item id for the text editor.
     attachmentsid: number; // Draft item id for the file manager.
     areas: { // File areas including options.
@@ -9460,7 +9460,7 @@ export type ModGlossaryPrepareEntryForEditionResponse = {
 /**
  * Params of mod_glossary_update_entry WS.
  */
-export type ModGlossaryUpdateEntryParams = {
+export type ModGlossaryUpdateEntryWSParams = {
     entryid: number; // Glossary entry id to update.
     concept: string; // Glossary concept.
     definition: string; // Glossary concept definition.
@@ -9482,7 +9482,7 @@ export type ModGlossaryUpdateEntryParams = {
 /**
  * Data returned by mod_glossary_update_entry WS.
  */
-export type ModGlossaryUpdateEntryResponse = {
+export type ModGlossaryUpdateEntryWSResponse = {
     result: boolean; // The update result.
     warnings?: CoreWSExternalWarning[];
 };
@@ -9490,19 +9490,19 @@ export type ModGlossaryUpdateEntryResponse = {
 /**
  * Params of mod_glossary_view_entry WS.
  */
-export type ModGlossaryViewEntryParams = {
+export type ModGlossaryViewEntryWSParams = {
     id: number; // Glossary entry ID.
 };
 
 /**
  * Data returned by mod_glossary_view_entry WS.
  */
-export type ModGlossaryViewEntryResponse = CoreStatusWithWarningsResponse;
+export type ModGlossaryViewEntryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_glossary_view_glossary WS.
  */
-export type ModGlossaryViewGlossaryParams = {
+export type ModGlossaryViewGlossaryWSParams = {
     id: number; // Glossary instance ID.
     mode: string; // The mode in which the glossary is viewed.
 };
@@ -9510,12 +9510,12 @@ export type ModGlossaryViewGlossaryParams = {
 /**
  * Data returned by mod_glossary_view_glossary WS.
  */
-export type ModGlossaryViewGlossaryResponse = CoreStatusWithWarningsResponse;
+export type ModGlossaryViewGlossaryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_h5pactivity_get_attempts WS.
  */
-export type ModH5pactivityGetAttemptsParams = {
+export type ModH5pactivityGetAttemptsWSParams = {
     h5pactivityid: number; // H5p activity instance id.
     userids?: number[]; // User ids.
 };
@@ -9523,7 +9523,7 @@ export type ModH5pactivityGetAttemptsParams = {
 /**
  * Data returned by mod_h5pactivity_get_attempts WS.
  */
-export type ModH5pactivityGetAttemptsResponse = {
+export type ModH5pactivityGetAttemptsWSResponse = {
     activityid: number; // Activity course module ID.
     usersattempts: { // The complete users attempts list.
         userid: number; // The user id.
@@ -9566,14 +9566,14 @@ export type ModH5pactivityGetAttemptsResponse = {
 /**
  * Params of mod_h5pactivity_get_h5pactivities_by_courses WS.
  */
-export type ModH5pactivityGetH5pactivitiesByCoursesParams = {
+export type ModH5pactivityGetH5pactivitiesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_h5pactivity_get_h5pactivities_by_courses WS.
  */
-export type ModH5pactivityGetH5pactivitiesByCoursesResponse = {
+export type ModH5pactivityGetH5pactivitiesByCoursesWSResponse = {
     h5pactivities: {
         id: number; // The primary key of the record.
         course: number; // Course id this h5p activity is part of.
@@ -9624,14 +9624,14 @@ export type ModH5pactivityGetH5pactivitiesByCoursesResponse = {
 /**
  * Params of mod_h5pactivity_get_h5pactivity_access_information WS.
  */
-export type ModH5pactivityGetH5pactivityAccessInformationParams = {
+export type ModH5pactivityGetH5pactivityAccessInformationWSParams = {
     h5pactivityid: number; // H5p activity instance id.
 };
 
 /**
  * Data returned by mod_h5pactivity_get_h5pactivity_access_information WS.
  */
-export type ModH5pactivityGetH5pactivityAccessInformationResponse = {
+export type ModH5pactivityGetH5pactivityAccessInformationWSResponse = {
     warnings?: CoreWSExternalWarning[];
     canview?: boolean; // Whether the user has the capability mod/h5pactivity:view allowed.
     canaddinstance?: boolean; // Whether the user has the capability mod/h5pactivity:addinstance allowed.
@@ -9642,7 +9642,7 @@ export type ModH5pactivityGetH5pactivityAccessInformationResponse = {
 /**
  * Params of mod_h5pactivity_get_results WS.
  */
-export type ModH5pactivityGetResultsParams = {
+export type ModH5pactivityGetResultsWSParams = {
     h5pactivityid: number; // H5p activity instance id.
     attemptids?: number[]; // Attempt ids.
 };
@@ -9650,7 +9650,7 @@ export type ModH5pactivityGetResultsParams = {
 /**
  * Data returned by mod_h5pactivity_get_results WS.
  */
-export type ModH5pactivityGetResultsResponse = {
+export type ModH5pactivityGetResultsWSResponse = {
     activityid: number; // Activity course module ID.
     attempts: { // The complete attempts list.
         id: number; // ID of the context.
@@ -9714,26 +9714,26 @@ export type ModH5pactivityGetResultsResponse = {
 /**
  * Params of mod_h5pactivity_view_h5pactivity WS.
  */
-export type ModH5pactivityViewH5pactivityParams = {
+export type ModH5pactivityViewH5pactivityWSParams = {
     h5pactivityid: number; // H5P activity instance id.
 };
 
 /**
  * Data returned by mod_h5pactivity_view_h5pactivity WS.
  */
-export type ModH5pactivityViewH5pactivityResponse = CoreStatusWithWarningsResponse;
+export type ModH5pactivityViewH5pactivityWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_imscp_get_imscps_by_courses WS.
  */
-export type ModImscpGetImscpsByCoursesParams = {
+export type ModImscpGetImscpsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_imscp_get_imscps_by_courses WS.
  */
-export type ModImscpGetImscpsByCoursesResponse = {
+export type ModImscpGetImscpsByCoursesWSResponse = {
     imscps: {
         id: number; // IMSCP id.
         coursemodule: number; // Course module id.
@@ -9757,26 +9757,26 @@ export type ModImscpGetImscpsByCoursesResponse = {
 /**
  * Params of mod_imscp_view_imscp WS.
  */
-export type ModImscpViewImscpParams = {
+export type ModImscpViewImscpWSParams = {
     imscpid: number; // Imscp instance id.
 };
 
 /**
  * Data returned by mod_imscp_view_imscp WS.
  */
-export type ModImscpViewImscpResponse = CoreStatusWithWarningsResponse;
+export type ModImscpViewImscpWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_label_get_labels_by_courses WS.
  */
-export type ModLabelGetLabelsByCoursesParams = {
+export type ModLabelGetLabelsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_label_get_labels_by_courses WS.
  */
-export type ModLabelGetLabelsByCoursesResponse = {
+export type ModLabelGetLabelsByCoursesWSResponse = {
     labels: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -9797,7 +9797,7 @@ export type ModLabelGetLabelsByCoursesResponse = {
 /**
  * Params of mod_lesson_finish_attempt WS.
  */
-export type ModLessonFinishAttemptParams = {
+export type ModLessonFinishAttemptWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Optional password (the lesson may be protected).
     outoftime?: boolean; // If the user run out of time.
@@ -9807,7 +9807,7 @@ export type ModLessonFinishAttemptParams = {
 /**
  * Data returned by mod_lesson_finish_attempt WS.
  */
-export type ModLessonFinishAttemptResponse = {
+export type ModLessonFinishAttemptWSResponse = {
     data: { // The EOL page information data.
         name: string; // Data name.
         value: string; // Data value.
@@ -9825,7 +9825,7 @@ export type ModLessonFinishAttemptResponse = {
 /**
  * Params of mod_lesson_get_attempts_overview WS.
  */
-export type ModLessonGetAttemptsOverviewParams = {
+export type ModLessonGetAttemptsOverviewWSParams = {
     lessonid: number; // Lesson instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
@@ -9833,7 +9833,7 @@ export type ModLessonGetAttemptsOverviewParams = {
 /**
  * Data returned by mod_lesson_get_attempts_overview WS.
  */
-export type ModLessonGetAttemptsOverviewResponse = {
+export type ModLessonGetAttemptsOverviewWSResponse = {
     data?: {
         lessonscored: boolean; // True if the lesson was scored.
         numofattempts: number; // Number of attempts.
@@ -9862,7 +9862,7 @@ export type ModLessonGetAttemptsOverviewResponse = {
 /**
  * Params of mod_lesson_get_content_pages_viewed WS.
  */
-export type ModLessonGetContentPagesViewedParams = {
+export type ModLessonGetContentPagesViewedWSParams = {
     lessonid: number; // Lesson instance id.
     lessonattempt: number; // Lesson attempt number.
     userid?: number; // The user id (empty for current user).
@@ -9871,7 +9871,7 @@ export type ModLessonGetContentPagesViewedParams = {
 /**
  * Data returned by mod_lesson_get_content_pages_viewed WS.
  */
-export type ModLessonGetContentPagesViewedResponse = {
+export type ModLessonGetContentPagesViewedWSResponse = {
     pages: {
         id: number; // The attempt id.
         lessonid: number; // The lesson id.
@@ -9888,7 +9888,7 @@ export type ModLessonGetContentPagesViewedResponse = {
 /**
  * Params of mod_lesson_get_lesson WS.
  */
-export type ModLessonGetLessonParams = {
+export type ModLessonGetLessonWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Lesson password.
 };
@@ -9896,7 +9896,7 @@ export type ModLessonGetLessonParams = {
 /**
  * Data returned by mod_lesson_get_lesson WS.
  */
-export type ModLessonGetLessonResponse = {
+export type ModLessonGetLessonWSResponse = {
     lesson: {
         id: number; // Standard Moodle primary key.
         course: number; // Foreign key reference to the course this lesson is part of.
@@ -9968,14 +9968,14 @@ export type ModLessonGetLessonResponse = {
 /**
  * Params of mod_lesson_get_lesson_access_information WS.
  */
-export type ModLessonGetLessonAccessInformationParams = {
+export type ModLessonGetLessonAccessInformationWSParams = {
     lessonid: number; // Lesson instance id.
 };
 
 /**
  * Data returned by mod_lesson_get_lesson_access_information WS.
  */
-export type ModLessonGetLessonAccessInformationResponse = {
+export type ModLessonGetLessonAccessInformationWSResponse = {
     canmanage: boolean; // Whether the user can manage the lesson or not.
     cangrade: boolean; // Whether the user can grade the lesson or not.
     canviewreports: boolean; // Whether the user can view the lesson reports or not.
@@ -9995,14 +9995,14 @@ export type ModLessonGetLessonAccessInformationResponse = {
 /**
  * Params of mod_lesson_get_lessons_by_courses WS.
  */
-export type ModLessonGetLessonsByCoursesParams = {
+export type ModLessonGetLessonsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_lesson_get_lessons_by_courses WS.
  */
-export type ModLessonGetLessonsByCoursesResponse = {
+export type ModLessonGetLessonsByCoursesWSResponse = {
     lessons: {
         id: number; // Standard Moodle primary key.
         course: number; // Foreign key reference to the course this lesson is part of.
@@ -10074,7 +10074,7 @@ export type ModLessonGetLessonsByCoursesResponse = {
 /**
  * Params of mod_lesson_get_page_data WS.
  */
-export type ModLessonGetPageDataParams = {
+export type ModLessonGetPageDataWSParams = {
     lessonid: number; // Lesson instance id.
     pageid: number; // The page id.
     password?: string; // Optional password (the lesson may be protected).
@@ -10085,7 +10085,7 @@ export type ModLessonGetPageDataParams = {
 /**
  * Data returned by mod_lesson_get_page_data WS.
  */
-export type ModLessonGetPageDataResponse = {
+export type ModLessonGetPageDataWSResponse = {
     page?: {
         id: number; // The id of this lesson page.
         lessonid: number; // The id of the lesson this page belongs to.
@@ -10138,7 +10138,7 @@ export type ModLessonGetPageDataResponse = {
 /**
  * Params of mod_lesson_get_pages WS.
  */
-export type ModLessonGetPagesParams = {
+export type ModLessonGetPagesWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Optional password (the lesson may be protected).
 };
@@ -10146,7 +10146,7 @@ export type ModLessonGetPagesParams = {
 /**
  * Data returned by mod_lesson_get_pages WS.
  */
-export type ModLessonGetPagesResponse = {
+export type ModLessonGetPagesWSResponse = {
     pages: {
         page: {
             id: number; // The id of this lesson page.
@@ -10178,14 +10178,14 @@ export type ModLessonGetPagesResponse = {
 /**
  * Params of mod_lesson_get_pages_possible_jumps WS.
  */
-export type ModLessonGetPagesPossibleJumpsParams = {
+export type ModLessonGetPagesPossibleJumpsWSParams = {
     lessonid: number; // Lesson instance id.
 };
 
 /**
  * Data returned by mod_lesson_get_pages_possible_jumps WS.
  */
-export type ModLessonGetPagesPossibleJumpsResponse = {
+export type ModLessonGetPagesPossibleJumpsWSResponse = {
     jumps: {
         pageid: number; // The page id.
         answerid: number; // The answer id.
@@ -10198,7 +10198,7 @@ export type ModLessonGetPagesPossibleJumpsResponse = {
 /**
  * Params of mod_lesson_get_questions_attempts WS.
  */
-export type ModLessonGetQuestionsAttemptsParams = {
+export type ModLessonGetQuestionsAttemptsWSParams = {
     lessonid: number; // Lesson instance id.
     attempt: number; // Lesson attempt number.
     correct?: boolean; // Only fetch correct attempts.
@@ -10209,7 +10209,7 @@ export type ModLessonGetQuestionsAttemptsParams = {
 /**
  * Data returned by mod_lesson_get_questions_attempts WS.
  */
-export type ModLessonGetQuestionsAttemptsResponse = {
+export type ModLessonGetQuestionsAttemptsWSResponse = {
     attempts: {
         id: number; // The attempt id.
         lessonid: number; // The attempt lessonid.
@@ -10227,7 +10227,7 @@ export type ModLessonGetQuestionsAttemptsResponse = {
 /**
  * Params of mod_lesson_get_user_attempt WS.
  */
-export type ModLessonGetUserAttemptParams = {
+export type ModLessonGetUserAttemptWSParams = {
     lessonid: number; // Lesson instance id.
     userid: number; // The user id. 0 for current user.
     lessonattempt: number; // The attempt number.
@@ -10236,7 +10236,7 @@ export type ModLessonGetUserAttemptParams = {
 /**
  * Data returned by mod_lesson_get_user_attempt WS.
  */
-export type ModLessonGetUserAttemptResponse = {
+export type ModLessonGetUserAttemptWSResponse = {
     answerpages: {
         page?: {
             id: number; // The id of this lesson page.
@@ -10288,7 +10288,7 @@ export type ModLessonGetUserAttemptResponse = {
 /**
  * Params of mod_lesson_get_user_attempt_grade WS.
  */
-export type ModLessonGetUserAttemptGradeParams = {
+export type ModLessonGetUserAttemptGradeWSParams = {
     lessonid: number; // Lesson instance id.
     lessonattempt: number; // Lesson attempt number.
     userid?: number; // The user id (empty for current user).
@@ -10297,7 +10297,7 @@ export type ModLessonGetUserAttemptGradeParams = {
 /**
  * Data returned by mod_lesson_get_user_attempt_grade WS.
  */
-export type ModLessonGetUserAttemptGradeResponse = {
+export type ModLessonGetUserAttemptGradeWSResponse = {
     grade: {
         nquestions: number; // Number of questions answered.
         attempts: number; // Number of question attempts.
@@ -10313,7 +10313,7 @@ export type ModLessonGetUserAttemptGradeResponse = {
 /**
  * Params of mod_lesson_get_user_grade WS.
  */
-export type ModLessonGetUserGradeParams = {
+export type ModLessonGetUserGradeWSParams = {
     lessonid: number; // Lesson instance id.
     userid?: number; // The user id (empty for current user).
 };
@@ -10321,7 +10321,7 @@ export type ModLessonGetUserGradeParams = {
 /**
  * Data returned by mod_lesson_get_user_grade WS.
  */
-export type ModLessonGetUserGradeResponse = {
+export type ModLessonGetUserGradeWSResponse = {
     grade: number; // The lesson final raw grade.
     formattedgrade: string; // The lesson final grade formatted.
     warnings?: CoreWSExternalWarning[];
@@ -10330,7 +10330,7 @@ export type ModLessonGetUserGradeResponse = {
 /**
  * Params of mod_lesson_get_user_timers WS.
  */
-export type ModLessonGetUserTimersParams = {
+export type ModLessonGetUserTimersWSParams = {
     lessonid: number; // Lesson instance id.
     userid?: number; // The user id (empty for current user).
 };
@@ -10338,7 +10338,7 @@ export type ModLessonGetUserTimersParams = {
 /**
  * Data returned by mod_lesson_get_user_timers WS.
  */
-export type ModLessonGetUserTimersResponse = {
+export type ModLessonGetUserTimersWSResponse = {
     timers: {
         id: number; // The attempt id.
         lessonid: number; // The lesson id.
@@ -10354,7 +10354,7 @@ export type ModLessonGetUserTimersResponse = {
 /**
  * Params of mod_lesson_launch_attempt WS.
  */
-export type ModLessonLaunchAttemptParams = {
+export type ModLessonLaunchAttemptWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Optional password (the lesson may be protected).
     pageid?: number; // Page id to continue from (only when continuing an attempt).
@@ -10364,7 +10364,7 @@ export type ModLessonLaunchAttemptParams = {
 /**
  * Data returned by mod_lesson_launch_attempt WS.
  */
-export type ModLessonLaunchAttemptResponse = {
+export type ModLessonLaunchAttemptWSResponse = {
     messages: {
         message: string; // Message.
         type: string; // Message type: usually a CSS identifier like:
@@ -10377,7 +10377,7 @@ export type ModLessonLaunchAttemptResponse = {
 /**
  * Params of mod_lesson_process_page WS.
  */
-export type ModLessonProcessPageParams = {
+export type ModLessonProcessPageWSParams = {
     lessonid: number; // Lesson instance id.
     pageid: number; // The page id.
     data: { // The data to be saved.
@@ -10391,7 +10391,7 @@ export type ModLessonProcessPageParams = {
 /**
  * Data returned by mod_lesson_process_page WS.
  */
-export type ModLessonProcessPageResponse = {
+export type ModLessonProcessPageWSResponse = {
     newpageid: number; // New page id (if a jump was made).
     inmediatejump: boolean; // Whether the page processing redirect directly to anoter page.
     nodefaultresponse: boolean; // Whether there is not a default response.
@@ -10420,7 +10420,7 @@ export type ModLessonProcessPageResponse = {
 /**
  * Params of mod_lesson_view_lesson WS.
  */
-export type ModLessonViewLessonParams = {
+export type ModLessonViewLessonWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Lesson password.
 };
@@ -10428,19 +10428,19 @@ export type ModLessonViewLessonParams = {
 /**
  * Data returned by mod_lesson_view_lesson WS.
  */
-export type ModLessonViewLessonResponse = CoreStatusWithWarningsResponse;
+export type ModLessonViewLessonWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_lti_get_ltis_by_courses WS.
  */
-export type ModLtiGetLtisByCoursesParams = {
+export type ModLtiGetLtisByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_lti_get_ltis_by_courses WS.
  */
-export type ModLtiGetLtisByCoursesResponse = {
+export type ModLtiGetLtisByCoursesWSResponse = {
     ltis: {
         id: number; // External tool id.
         coursemodule: number; // Course module id.
@@ -10481,14 +10481,14 @@ export type ModLtiGetLtisByCoursesResponse = {
 /**
  * Params of mod_lti_get_tool_launch_data WS.
  */
-export type ModLtiGetToolLaunchDataParams = {
+export type ModLtiGetToolLaunchDataWSParams = {
     toolid: number; // External tool instance id.
 };
 
 /**
  * Data returned by mod_lti_get_tool_launch_data WS.
  */
-export type ModLtiGetToolLaunchDataResponse = {
+export type ModLtiGetToolLaunchDataWSResponse = {
     endpoint: string; // Endpoint URL.
     parameters: {
         name: string; // Parameter name.
@@ -10500,26 +10500,26 @@ export type ModLtiGetToolLaunchDataResponse = {
 /**
  * Params of mod_lti_view_lti WS.
  */
-export type ModLtiViewLtiParams = {
+export type ModLtiViewLtiWSParams = {
     ltiid: number; // Lti instance id.
 };
 
 /**
  * Data returned by mod_lti_view_lti WS.
  */
-export type ModLtiViewLtiResponse = CoreStatusWithWarningsResponse;
+export type ModLtiViewLtiWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_page_get_pages_by_courses WS.
  */
-export type ModPageGetPagesByCoursesParams = {
+export type ModPageGetPagesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_page_get_pages_by_courses WS.
  */
-export type ModPageGetPagesByCoursesResponse = {
+export type ModPageGetPagesByCoursesWSResponse = {
     pages: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -10548,19 +10548,19 @@ export type ModPageGetPagesByCoursesResponse = {
 /**
  * Params of mod_page_view_page WS.
  */
-export type ModPageViewPageParams = {
+export type ModPageViewPageWSParams = {
     pageid: number; // Page instance id.
 };
 
 /**
  * Data returned by mod_page_view_page WS.
  */
-export type ModPageViewPageResponse = CoreStatusWithWarningsResponse;
+export type ModPageViewPageWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_get_attempt_access_information WS.
  */
-export type ModQuizGetAttemptAccessInformationParams = {
+export type ModQuizGetAttemptAccessInformationWSParams = {
     quizid: number; // Quiz instance id.
     attemptid?: number; // Attempt id, 0 for the user last attempt if exists.
 };
@@ -10568,7 +10568,7 @@ export type ModQuizGetAttemptAccessInformationParams = {
 /**
  * Data returned by mod_quiz_get_attempt_access_information WS.
  */
-export type ModQuizGetAttemptAccessInformationResponse = {
+export type ModQuizGetAttemptAccessInformationWSResponse = {
     endtime?: number; // When the attempt must be submitted (determined by rules).
     isfinished: boolean; // Whether there is no way the user will ever be allowed to attempt.
     ispreflightcheckrequired?: boolean; // Whether a check is required before the user
@@ -10581,7 +10581,7 @@ export type ModQuizGetAttemptAccessInformationResponse = {
 /**
  * Params of mod_quiz_get_attempt_data WS.
  */
-export type ModQuizGetAttemptDataParams = {
+export type ModQuizGetAttemptDataWSParams = {
     attemptid: number; // Attempt id.
     page: number; // Page number.
     preflightdata?: { // Preflight required data (like passwords).
@@ -10593,7 +10593,7 @@ export type ModQuizGetAttemptDataParams = {
 /**
  * Data returned by mod_quiz_get_attempt_data WS.
  */
-export type ModQuizGetAttemptDataResponse = {
+export type ModQuizGetAttemptDataWSResponse = {
     attempt: {
         id?: number; // Attempt id.
         quiz?: number; // Foreign key reference to the quiz that was attempted.
@@ -10656,7 +10656,7 @@ export type ModQuizGetAttemptDataResponse = {
 /**
  * Params of mod_quiz_get_attempt_review WS.
  */
-export type ModQuizGetAttemptReviewParams = {
+export type ModQuizGetAttemptReviewWSParams = {
     attemptid: number; // Attempt id.
     page?: number; // Page number, empty for all the questions in all the pages.
 };
@@ -10664,7 +10664,7 @@ export type ModQuizGetAttemptReviewParams = {
 /**
  * Data returned by mod_quiz_get_attempt_review WS.
  */
-export type ModQuizGetAttemptReviewResponse = {
+export type ModQuizGetAttemptReviewWSResponse = {
     grade: string; // Grade for the quiz (or empty or "notyetgraded").
     attempt: {
         id?: number; // Attempt id.
@@ -10729,7 +10729,7 @@ export type ModQuizGetAttemptReviewResponse = {
 /**
  * Params of mod_quiz_get_attempt_summary WS.
  */
-export type ModQuizGetAttemptSummaryParams = {
+export type ModQuizGetAttemptSummaryWSParams = {
     attemptid: number; // Attempt id.
     preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
@@ -10740,7 +10740,7 @@ export type ModQuizGetAttemptSummaryParams = {
 /**
  * Data returned by mod_quiz_get_attempt_summary WS.
  */
-export type ModQuizGetAttemptSummaryResponse = {
+export type ModQuizGetAttemptSummaryWSResponse = {
     questions: {
         slot: number; // Slot number.
         type: string; // Question type, i.e: multichoice.
@@ -10773,7 +10773,7 @@ export type ModQuizGetAttemptSummaryResponse = {
 /**
  * Params of mod_quiz_get_combined_review_options WS.
  */
-export type ModQuizGetCombinedReviewOptionsParams = {
+export type ModQuizGetCombinedReviewOptionsWSParams = {
     quizid: number; // Quiz instance id.
     userid?: number; // User id (empty for current user).
 };
@@ -10781,7 +10781,7 @@ export type ModQuizGetCombinedReviewOptionsParams = {
 /**
  * Data returned by mod_quiz_get_combined_review_options WS.
  */
-export type ModQuizGetCombinedReviewOptionsResponse = {
+export type ModQuizGetCombinedReviewOptionsWSResponse = {
     someoptions: {
         name: string; // Option name.
         value: number; // Option value.
@@ -10796,14 +10796,14 @@ export type ModQuizGetCombinedReviewOptionsResponse = {
 /**
  * Params of mod_quiz_get_quiz_access_information WS.
  */
-export type ModQuizGetQuizAccessInformationParams = {
+export type ModQuizGetQuizAccessInformationWSParams = {
     quizid: number; // Quiz instance id.
 };
 
 /**
  * Data returned by mod_quiz_get_quiz_access_information WS.
  */
-export type ModQuizGetQuizAccessInformationResponse = {
+export type ModQuizGetQuizAccessInformationWSResponse = {
     canattempt: boolean; // Whether the user can do the quiz or not.
     canmanage: boolean; // Whether the user can edit the quiz settings or not.
     canpreview: boolean; // Whether the user can preview the quiz or not.
@@ -10820,7 +10820,7 @@ export type ModQuizGetQuizAccessInformationResponse = {
 /**
  * Params of mod_quiz_get_quiz_feedback_for_grade WS.
  */
-export type ModQuizGetQuizFeedbackForGradeParams = {
+export type ModQuizGetQuizFeedbackForGradeWSParams = {
     quizid: number; // Quiz instance id.
     grade: number; // The grade to check.
 };
@@ -10828,7 +10828,7 @@ export type ModQuizGetQuizFeedbackForGradeParams = {
 /**
  * Data returned by mod_quiz_get_quiz_feedback_for_grade WS.
  */
-export type ModQuizGetQuizFeedbackForGradeResponse = {
+export type ModQuizGetQuizFeedbackForGradeWSResponse = {
     feedbacktext: string; // The comment that corresponds to this grade (empty for none).
     feedbacktextformat?: number; // Feedbacktext format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     feedbackinlinefiles?: CoreWSExternalFile[];
@@ -10838,14 +10838,14 @@ export type ModQuizGetQuizFeedbackForGradeResponse = {
 /**
  * Params of mod_quiz_get_quiz_required_qtypes WS.
  */
-export type ModQuizGetQuizRequiredQtypesParams = {
+export type ModQuizGetQuizRequiredQtypesWSParams = {
     quizid: number; // Quiz instance id.
 };
 
 /**
  * Data returned by mod_quiz_get_quiz_required_qtypes WS.
  */
-export type ModQuizGetQuizRequiredQtypesResponse = {
+export type ModQuizGetQuizRequiredQtypesWSResponse = {
     questiontypes: string[]; // List of question types used in the quiz.
     warnings?: CoreWSExternalWarning[];
 };
@@ -10853,14 +10853,14 @@ export type ModQuizGetQuizRequiredQtypesResponse = {
 /**
  * Params of mod_quiz_get_quizzes_by_courses WS.
  */
-export type ModQuizGetQuizzesByCoursesParams = {
+export type ModQuizGetQuizzesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_quiz_get_quizzes_by_courses WS.
  */
-export type ModQuizGetQuizzesByCoursesResponse = {
+export type ModQuizGetQuizzesByCoursesWSResponse = {
     quizzes: {
         id: number; // Standard Moodle primary key.
         course: number; // Foreign key reference to the course this quiz is part of.
@@ -10984,7 +10984,7 @@ export type ModQuizGetQuizzesByCoursesResponse = {
 /**
  * Params of mod_quiz_get_user_attempts WS.
  */
-export type ModQuizGetUserAttemptsParams = {
+export type ModQuizGetUserAttemptsWSParams = {
     quizid: number; // Quiz instance id.
     userid?: number; // User id, empty for current user.
     status?: string; // Quiz status: all, finished or unfinished.
@@ -10994,7 +10994,7 @@ export type ModQuizGetUserAttemptsParams = {
 /**
  * Data returned by mod_quiz_get_user_attempts WS.
  */
-export type ModQuizGetUserAttemptsResponse = {
+export type ModQuizGetUserAttemptsWSResponse = {
     attempts: {
         id?: number; // Attempt id.
         quiz?: number; // Foreign key reference to the quiz that was attempted.
@@ -11027,7 +11027,7 @@ export type ModQuizGetUserAttemptsResponse = {
 /**
  * Params of mod_quiz_get_user_best_grade WS.
  */
-export type ModQuizGetUserBestGradeParams = {
+export type ModQuizGetUserBestGradeWSParams = {
     quizid: number; // Quiz instance id.
     userid?: number; // User id.
 };
@@ -11035,7 +11035,7 @@ export type ModQuizGetUserBestGradeParams = {
 /**
  * Data returned by mod_quiz_get_user_best_grade WS.
  */
-export type ModQuizGetUserBestGradeResponse = {
+export type ModQuizGetUserBestGradeWSResponse = {
     hasgrade: boolean; // Whether the user has a grade on the given quiz.
     grade?: number; // The grade (only if the user has a grade).
     warnings?: CoreWSExternalWarning[];
@@ -11044,7 +11044,7 @@ export type ModQuizGetUserBestGradeResponse = {
 /**
  * Params of mod_quiz_process_attempt WS.
  */
-export type ModQuizProcessAttemptParams = {
+export type ModQuizProcessAttemptWSParams = {
     attemptid: number; // Attempt id.
     data?: { // The data to be saved.
         name: string; // Data name.
@@ -11061,7 +11061,7 @@ export type ModQuizProcessAttemptParams = {
 /**
  * Data returned by mod_quiz_process_attempt WS.
  */
-export type ModQuizProcessAttemptResponse = {
+export type ModQuizProcessAttemptWSResponse = {
     state: string; // State: the new attempt state:
                                                                  // inprogress, finished, overdue, abandoned.
 
@@ -11071,7 +11071,7 @@ export type ModQuizProcessAttemptResponse = {
 /**
  * Params of mod_quiz_save_attempt WS.
  */
-export type ModQuizSaveAttemptParams = {
+export type ModQuizSaveAttemptWSParams = {
     attemptid: number; // Attempt id.
     data: { // The data to be saved.
         name: string; // Data name.
@@ -11086,12 +11086,12 @@ export type ModQuizSaveAttemptParams = {
 /**
  * Data returned by mod_quiz_save_attempt WS.
  */
-export type ModQuizSaveAttemptResponse = CoreStatusWithWarningsResponse;
+export type ModQuizSaveAttemptWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_start_attempt WS.
  */
-export type ModQuizStartAttemptParams = {
+export type ModQuizStartAttemptWSParams = {
     quizid: number; // Quiz instance id.
     preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
@@ -11103,7 +11103,7 @@ export type ModQuizStartAttemptParams = {
 /**
  * Data returned by mod_quiz_start_attempt WS.
  */
-export type ModQuizStartAttemptResponse = {
+export type ModQuizStartAttemptWSResponse = {
     attempt: {
         id?: number; // Attempt id.
         quiz?: number; // Foreign key reference to the quiz that was attempted.
@@ -11136,7 +11136,7 @@ export type ModQuizStartAttemptResponse = {
 /**
  * Params of mod_quiz_view_attempt WS.
  */
-export type ModQuizViewAttemptParams = {
+export type ModQuizViewAttemptWSParams = {
     attemptid: number; // Attempt id.
     page: number; // Page number.
     preflightdata?: { // Preflight required data (like passwords).
@@ -11148,24 +11148,24 @@ export type ModQuizViewAttemptParams = {
 /**
  * Data returned by mod_quiz_view_attempt WS.
  */
-export type ModQuizViewAttemptResponse = CoreStatusWithWarningsResponse;
+export type ModQuizViewAttemptWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_view_attempt_review WS.
  */
-export type ModQuizViewAttemptReviewParams = {
+export type ModQuizViewAttemptReviewWSParams = {
     attemptid: number; // Attempt id.
 };
 
 /**
  * Data returned by mod_quiz_view_attempt_review WS.
  */
-export type ModQuizViewAttemptReviewResponse = CoreStatusWithWarningsResponse;
+export type ModQuizViewAttemptReviewWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_view_attempt_summary WS.
  */
-export type ModQuizViewAttemptSummaryParams = {
+export type ModQuizViewAttemptSummaryWSParams = {
     attemptid: number; // Attempt id.
     preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
@@ -11176,31 +11176,31 @@ export type ModQuizViewAttemptSummaryParams = {
 /**
  * Data returned by mod_quiz_view_attempt_summary WS.
  */
-export type ModQuizViewAttemptSummaryResponse = CoreStatusWithWarningsResponse;
+export type ModQuizViewAttemptSummaryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_view_quiz WS.
  */
-export type ModQuizViewQuizParams = {
+export type ModQuizViewQuizWSParams = {
     quizid: number; // Quiz instance id.
 };
 
 /**
  * Data returned by mod_quiz_view_quiz WS.
  */
-export type ModQuizViewQuizResponse = CoreStatusWithWarningsResponse;
+export type ModQuizViewQuizWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_resource_get_resources_by_courses WS.
  */
-export type ModResourceGetResourcesByCoursesParams = {
+export type ModResourceGetResourcesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_resource_get_resources_by_courses WS.
  */
-export type ModResourceGetResourcesByCoursesResponse = {
+export type ModResourceGetResourcesByCoursesWSResponse = {
     resources: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -11229,26 +11229,26 @@ export type ModResourceGetResourcesByCoursesResponse = {
 /**
  * Params of mod_resource_view_resource WS.
  */
-export type ModResourceViewResourceParams = {
+export type ModResourceViewResourceWSParams = {
     resourceid: number; // Resource instance id.
 };
 
 /**
  * Data returned by mod_resource_view_resource WS.
  */
-export type ModResourceViewResourceResponse = CoreStatusWithWarningsResponse;
+export type ModResourceViewResourceWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_scorm_get_scorm_access_information WS.
  */
-export type ModScormGetScormAccessInformationParams = {
+export type ModScormGetScormAccessInformationWSParams = {
     scormid: number; // Scorm instance id.
 };
 
 /**
  * Data returned by mod_scorm_get_scorm_access_information WS.
  */
-export type ModScormGetScormAccessInformationResponse = {
+export type ModScormGetScormAccessInformationWSResponse = {
     warnings?: CoreWSExternalWarning[];
     canaddinstance?: boolean; // Whether the user has the capability mod/scorm:addinstance allowed.
     canviewreport?: boolean; // Whether the user has the capability mod/scorm:viewreport allowed.
@@ -11262,7 +11262,7 @@ export type ModScormGetScormAccessInformationResponse = {
 /**
  * Params of mod_scorm_get_scorm_attempt_count WS.
  */
-export type ModScormGetScormAttemptCountParams = {
+export type ModScormGetScormAttemptCountWSParams = {
     scormid: number; // SCORM instance id.
     userid: number; // User id.
     ignoremissingcompletion?: boolean; // Ignores attempts that haven't reported a grade/completion.
@@ -11271,7 +11271,7 @@ export type ModScormGetScormAttemptCountParams = {
 /**
  * Data returned by mod_scorm_get_scorm_attempt_count WS.
  */
-export type ModScormGetScormAttemptCountResponse = {
+export type ModScormGetScormAttemptCountWSResponse = {
     attemptscount: number; // Attempts count.
     warnings?: CoreWSExternalWarning[];
 };
@@ -11279,7 +11279,7 @@ export type ModScormGetScormAttemptCountResponse = {
 /**
  * Params of mod_scorm_get_scorm_sco_tracks WS.
  */
-export type ModScormGetScormScoTracksParams = {
+export type ModScormGetScormScoTracksWSParams = {
     scoid: number; // Sco id.
     userid: number; // User id.
     attempt?: number; // Attempt number (0 for last attempt).
@@ -11288,7 +11288,7 @@ export type ModScormGetScormScoTracksParams = {
 /**
  * Data returned by mod_scorm_get_scorm_sco_tracks WS.
  */
-export type ModScormGetScormScoTracksResponse = {
+export type ModScormGetScormScoTracksWSResponse = {
     data: {
         attempt: number; // Attempt number.
         tracks: {
@@ -11302,7 +11302,7 @@ export type ModScormGetScormScoTracksResponse = {
 /**
  * Params of mod_scorm_get_scorm_scoes WS.
  */
-export type ModScormGetScormScoesParams = {
+export type ModScormGetScormScoesWSParams = {
     scormid: number; // Scorm instance id.
     organization?: string; // Organization id.
 };
@@ -11310,7 +11310,7 @@ export type ModScormGetScormScoesParams = {
 /**
  * Data returned by mod_scorm_get_scorm_scoes WS.
  */
-export type ModScormGetScormScoesResponse = {
+export type ModScormGetScormScoesWSResponse = {
     scoes: {
         id: number; // Sco id.
         scorm: number; // Scorm id.
@@ -11333,7 +11333,7 @@ export type ModScormGetScormScoesResponse = {
 /**
  * Params of mod_scorm_get_scorm_user_data WS.
  */
-export type ModScormGetScormUserDataParams = {
+export type ModScormGetScormUserDataWSParams = {
     scormid: number; // Scorm instance id.
     attempt: number; // Attempt number.
 };
@@ -11341,7 +11341,7 @@ export type ModScormGetScormUserDataParams = {
 /**
  * Data returned by mod_scorm_get_scorm_user_data WS.
  */
-export type ModScormGetScormUserDataResponse = {
+export type ModScormGetScormUserDataWSResponse = {
     data: {
         scoid: number; // Sco id.
         userdata: {
@@ -11359,14 +11359,14 @@ export type ModScormGetScormUserDataResponse = {
 /**
  * Params of mod_scorm_get_scorms_by_courses WS.
  */
-export type ModScormGetScormsByCoursesParams = {
+export type ModScormGetScormsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_scorm_get_scorms_by_courses WS.
  */
-export type ModScormGetScormsByCoursesResponse = {
+export type ModScormGetScormsByCoursesWSResponse = {
     scorms: {
         id: number; // SCORM id.
         coursemodule: number; // Course module id.
@@ -11425,7 +11425,7 @@ export type ModScormGetScormsByCoursesResponse = {
 /**
  * Params of mod_scorm_insert_scorm_tracks WS.
  */
-export type ModScormInsertScormTracksParams = {
+export type ModScormInsertScormTracksWSParams = {
     scoid: number; // SCO id.
     attempt: number; // Attempt number.
     tracks: {
@@ -11437,7 +11437,7 @@ export type ModScormInsertScormTracksParams = {
 /**
  * Data returned by mod_scorm_insert_scorm_tracks WS.
  */
-export type ModScormInsertScormTracksResponse = {
+export type ModScormInsertScormTracksWSResponse = {
     trackids: number[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -11445,7 +11445,7 @@ export type ModScormInsertScormTracksResponse = {
 /**
  * Params of mod_scorm_launch_sco WS.
  */
-export type ModScormLaunchScoParams = {
+export type ModScormLaunchScoWSParams = {
     scormid: number; // SCORM instance id.
     scoid?: number; // SCO id (empty for launching the first SCO).
 };
@@ -11453,31 +11453,31 @@ export type ModScormLaunchScoParams = {
 /**
  * Data returned by mod_scorm_launch_sco WS.
  */
-export type ModScormLaunchScoResponse = CoreStatusWithWarningsResponse;
+export type ModScormLaunchScoWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_scorm_view_scorm WS.
  */
-export type ModScormViewScormParams = {
+export type ModScormViewScormWSParams = {
     scormid: number; // Scorm instance id.
 };
 
 /**
  * Data returned by mod_scorm_view_scorm WS.
  */
-export type ModScormViewScormResponse = CoreStatusWithWarningsResponse;
+export type ModScormViewScormWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_survey_get_questions WS.
  */
-export type ModSurveyGetQuestionsParams = {
+export type ModSurveyGetQuestionsWSParams = {
     surveyid: number; // Survey instance id.
 };
 
 /**
  * Data returned by mod_survey_get_questions WS.
  */
-export type ModSurveyGetQuestionsResponse = {
+export type ModSurveyGetQuestionsWSResponse = {
     questions: {
         id: number; // Question id.
         text: string; // Question text.
@@ -11494,14 +11494,14 @@ export type ModSurveyGetQuestionsResponse = {
 /**
  * Params of mod_survey_get_surveys_by_courses WS.
  */
-export type ModSurveyGetSurveysByCoursesParams = {
+export type ModSurveyGetSurveysByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_survey_get_surveys_by_courses WS.
  */
-export type ModSurveyGetSurveysByCoursesResponse = {
+export type ModSurveyGetSurveysByCoursesWSResponse = {
     surveys: {
         id: number; // Survey id.
         coursemodule: number; // Course module id.
@@ -11527,7 +11527,7 @@ export type ModSurveyGetSurveysByCoursesResponse = {
 /**
  * Params of mod_survey_submit_answers WS.
  */
-export type ModSurveySubmitAnswersParams = {
+export type ModSurveySubmitAnswersWSParams = {
     surveyid: number; // Survey id.
     answers: {
         key: string; // Answer key.
@@ -11538,31 +11538,31 @@ export type ModSurveySubmitAnswersParams = {
 /**
  * Data returned by mod_survey_submit_answers WS.
  */
-export type ModSurveySubmitAnswersResponse = CoreStatusWithWarningsResponse;
+export type ModSurveySubmitAnswersWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_survey_view_survey WS.
  */
-export type ModSurveyViewSurveyParams = {
+export type ModSurveyViewSurveyWSParams = {
     surveyid: number; // Survey instance id.
 };
 
 /**
  * Data returned by mod_survey_view_survey WS.
  */
-export type ModSurveyViewSurveyResponse = CoreStatusWithWarningsResponse;
+export type ModSurveyViewSurveyWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_url_get_urls_by_courses WS.
  */
-export type ModUrlGetUrlsByCoursesParams = {
+export type ModUrlGetUrlsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_url_get_urls_by_courses WS.
  */
-export type ModUrlGetUrlsByCoursesResponse = {
+export type ModUrlGetUrlsByCoursesWSResponse = {
     urls: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -11587,19 +11587,19 @@ export type ModUrlGetUrlsByCoursesResponse = {
 /**
  * Params of mod_url_view_url WS.
  */
-export type ModUrlViewUrlParams = {
+export type ModUrlViewUrlWSParams = {
     urlid: number; // Url instance id.
 };
 
 /**
  * Data returned by mod_url_view_url WS.
  */
-export type ModUrlViewUrlResponse = CoreStatusWithWarningsResponse;
+export type ModUrlViewUrlWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_wiki_edit_page WS.
  */
-export type ModWikiEditPageParams = {
+export type ModWikiEditPageWSParams = {
     pageid: number; // Page ID.
     content: string; // Page contents.
     section?: string; // Section page title.
@@ -11608,7 +11608,7 @@ export type ModWikiEditPageParams = {
 /**
  * Data returned by mod_wiki_edit_page WS.
  */
-export type ModWikiEditPageResponse = {
+export type ModWikiEditPageWSResponse = {
     pageid: number; // Edited page id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -11616,14 +11616,14 @@ export type ModWikiEditPageResponse = {
 /**
  * Params of mod_wiki_get_page_contents WS.
  */
-export type ModWikiGetPageContentsParams = {
+export type ModWikiGetPageContentsWSParams = {
     pageid: number; // Page ID.
 };
 
 /**
  * Data returned by mod_wiki_get_page_contents WS.
  */
-export type ModWikiGetPageContentsResponse = {
+export type ModWikiGetPageContentsWSResponse = {
     page: {
         id: number; // Page ID.
         wikiid: number; // Page's wiki ID.
@@ -11654,7 +11654,7 @@ export type ModWikiGetPageContentsResponse = {
 /**
  * Params of mod_wiki_get_page_for_editing WS.
  */
-export type ModWikiGetPageForEditingParams = {
+export type ModWikiGetPageForEditingWSParams = {
     pageid: number; // Page ID to edit.
     section?: string; // Section page title.
     lockonly?: boolean; // Just renew lock and not return content.
@@ -11663,7 +11663,7 @@ export type ModWikiGetPageForEditingParams = {
 /**
  * Data returned by mod_wiki_get_page_for_editing WS.
  */
-export type ModWikiGetPageForEditingResponse = {
+export type ModWikiGetPageForEditingWSResponse = {
     pagesection: {
         content?: string; // The contents of the page-section to be edited.
         contentformat?: string; // Format of the original content of the page.
@@ -11675,7 +11675,7 @@ export type ModWikiGetPageForEditingResponse = {
 /**
  * Params of mod_wiki_get_subwiki_files WS.
  */
-export type ModWikiGetSubwikiFilesParams = {
+export type ModWikiGetSubwikiFilesWSParams = {
     wikiid: number; // Wiki instance ID.
     groupid?: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
     userid?: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
@@ -11684,7 +11684,7 @@ export type ModWikiGetSubwikiFilesParams = {
 /**
  * Data returned by mod_wiki_get_subwiki_files WS.
  */
-export type ModWikiGetSubwikiFilesResponse = {
+export type ModWikiGetSubwikiFilesWSResponse = {
     files: CoreWSExternalFile[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -11692,7 +11692,7 @@ export type ModWikiGetSubwikiFilesResponse = {
 /**
  * Params of mod_wiki_get_subwiki_pages WS.
  */
-export type ModWikiGetSubwikiPagesParams = {
+export type ModWikiGetSubwikiPagesWSParams = {
     wikiid: number; // Wiki instance ID.
     groupid?: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
     userid?: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
@@ -11706,7 +11706,7 @@ export type ModWikiGetSubwikiPagesParams = {
 /**
  * Data returned by mod_wiki_get_subwiki_pages WS.
  */
-export type ModWikiGetSubwikiPagesResponse = {
+export type ModWikiGetSubwikiPagesWSResponse = {
     pages: {
         id: number; // Page ID.
         subwikiid: number; // Page's subwiki ID.
@@ -11741,14 +11741,14 @@ export type ModWikiGetSubwikiPagesResponse = {
 /**
  * Params of mod_wiki_get_subwikis WS.
  */
-export type ModWikiGetSubwikisParams = {
+export type ModWikiGetSubwikisWSParams = {
     wikiid: number; // Wiki instance ID.
 };
 
 /**
  * Data returned by mod_wiki_get_subwikis WS.
  */
-export type ModWikiGetSubwikisResponse = {
+export type ModWikiGetSubwikisWSResponse = {
     subwikis: {
         id: number; // Subwiki ID.
         wikiid: number; // Wiki ID.
@@ -11762,14 +11762,14 @@ export type ModWikiGetSubwikisResponse = {
 /**
  * Params of mod_wiki_get_wikis_by_courses WS.
  */
-export type ModWikiGetWikisByCoursesParams = {
+export type ModWikiGetWikisByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_wiki_get_wikis_by_courses WS.
  */
-export type ModWikiGetWikisByCoursesResponse = {
+export type ModWikiGetWikisByCoursesWSResponse = {
     wikis: {
         id: number; // Wiki ID.
         coursemodule: number; // Course module ID.
@@ -11798,7 +11798,7 @@ export type ModWikiGetWikisByCoursesResponse = {
 /**
  * Params of mod_wiki_new_page WS.
  */
-export type ModWikiNewPageParams = {
+export type ModWikiNewPageWSParams = {
     title: string; // New page title.
     content: string; // Page contents.
     contentformat?: string; // Page contents format. If an invalid format is provided, default
@@ -11813,7 +11813,7 @@ export type ModWikiNewPageParams = {
 /**
  * Data returned by mod_wiki_new_page WS.
  */
-export type ModWikiNewPageResponse = {
+export type ModWikiNewPageWSResponse = {
     pageid: number; // New page id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -11821,31 +11821,31 @@ export type ModWikiNewPageResponse = {
 /**
  * Params of mod_wiki_view_page WS.
  */
-export type ModWikiViewPageParams = {
+export type ModWikiViewPageWSParams = {
     pageid: number; // Wiki page ID.
 };
 
 /**
  * Data returned by mod_wiki_view_page WS.
  */
-export type ModWikiViewPageResponse = CoreStatusWithWarningsResponse;
+export type ModWikiViewPageWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_wiki_view_wiki WS.
  */
-export type ModWikiViewWikiParams = {
+export type ModWikiViewWikiWSParams = {
     wikiid: number; // Wiki instance ID.
 };
 
 /**
  * Data returned by mod_wiki_view_wiki WS.
  */
-export type ModWikiViewWikiResponse = CoreStatusWithWarningsResponse;
+export type ModWikiViewWikiWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_add_submission WS.
  */
-export type ModWorkshopAddSubmissionParams = {
+export type ModWorkshopAddSubmissionWSParams = {
     workshopid: number; // Workshop id.
     title: string; // Submission title.
     content?: string; // Submission text content.
@@ -11857,7 +11857,7 @@ export type ModWorkshopAddSubmissionParams = {
 /**
  * Data returned by mod_workshop_add_submission WS.
  */
-export type ModWorkshopAddSubmissionResponse = {
+export type ModWorkshopAddSubmissionWSResponse = {
     status: boolean; // True if the submission was created false otherwise.
     submissionid?: number; // New workshop submission id.
     warnings?: CoreWSExternalWarning[];
@@ -11866,19 +11866,19 @@ export type ModWorkshopAddSubmissionResponse = {
 /**
  * Params of mod_workshop_delete_submission WS.
  */
-export type ModWorkshopDeleteSubmissionParams = {
+export type ModWorkshopDeleteSubmissionWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_delete_submission WS.
  */
-export type ModWorkshopDeleteSubmissionResponse = CoreStatusWithWarningsResponse;
+export type ModWorkshopDeleteSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_evaluate_assessment WS.
  */
-export type ModWorkshopEvaluateAssessmentParams = {
+export type ModWorkshopEvaluateAssessmentWSParams = {
     assessmentid: number; // Assessment id.
     feedbacktext?: string; // The feedback for the reviewer.
     feedbackformat?: number; // The feedback format for text.
@@ -11889,12 +11889,12 @@ export type ModWorkshopEvaluateAssessmentParams = {
 /**
  * Data returned by mod_workshop_evaluate_assessment WS.
  */
-export type ModWorkshopEvaluateAssessmentResponse = CoreStatusWithWarningsResponse;
+export type ModWorkshopEvaluateAssessmentWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_evaluate_submission WS.
  */
-export type ModWorkshopEvaluateSubmissionParams = {
+export type ModWorkshopEvaluateSubmissionWSParams = {
     submissionid: number; // Submission id.
     feedbacktext?: string; // The feedback for the author.
     feedbackformat?: number; // The feedback format for text.
@@ -11905,19 +11905,19 @@ export type ModWorkshopEvaluateSubmissionParams = {
 /**
  * Data returned by mod_workshop_evaluate_submission WS.
  */
-export type ModWorkshopEvaluateSubmissionResponse = CoreStatusWithWarningsResponse;
+export type ModWorkshopEvaluateSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_get_assessment WS.
  */
-export type ModWorkshopGetAssessmentParams = {
+export type ModWorkshopGetAssessmentWSParams = {
     assessmentid: number; // Assessment id.
 };
 
 /**
  * Data returned by mod_workshop_get_assessment WS.
  */
-export type ModWorkshopGetAssessmentResponse = {
+export type ModWorkshopGetAssessmentWSResponse = {
     assessment: {
         id: number; // The primary key of the record.
         submissionid: number; // The id of the assessed submission.
@@ -11973,7 +11973,7 @@ export type ModWorkshopGetAssessmentResponse = {
 /**
  * Params of mod_workshop_get_assessment_form_definition WS.
  */
-export type ModWorkshopGetAssessmentFormDefinitionParams = {
+export type ModWorkshopGetAssessmentFormDefinitionWSParams = {
     assessmentid: number; // Assessment id.
     mode?: string; // The form mode (assessment or preview).
 };
@@ -11981,7 +11981,7 @@ export type ModWorkshopGetAssessmentFormDefinitionParams = {
 /**
  * Data returned by mod_workshop_get_assessment_form_definition WS.
  */
-export type ModWorkshopGetAssessmentFormDefinitionResponse = {
+export type ModWorkshopGetAssessmentFormDefinitionWSResponse = {
     dimenssionscount: number; // The number of dimenssions used by the form.
     descriptionfiles: CoreWSExternalFile[];
     options: { // The form options.
@@ -12009,7 +12009,7 @@ export type ModWorkshopGetAssessmentFormDefinitionResponse = {
 /**
  * Params of mod_workshop_get_grades WS.
  */
-export type ModWorkshopGetGradesParams = {
+export type ModWorkshopGetGradesWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // User id (empty or 0 for current user).
 };
@@ -12017,7 +12017,7 @@ export type ModWorkshopGetGradesParams = {
 /**
  * Data returned by mod_workshop_get_grades WS.
  */
-export type ModWorkshopGetGradesResponse = {
+export type ModWorkshopGetGradesWSResponse = {
     assessmentrawgrade?: number; // The assessment raw (numeric) grade.
     assessmentlongstrgrade?: string; // The assessment string grade.
     assessmentgradehidden?: boolean; // Whether the grade is hidden or not.
@@ -12030,7 +12030,7 @@ export type ModWorkshopGetGradesResponse = {
 /**
  * Params of mod_workshop_get_grades_report WS.
  */
-export type ModWorkshopGetGradesReportParams = {
+export type ModWorkshopGetGradesReportWSParams = {
     workshopid: number; // Workshop instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     sortby?: string; // Sort by this element: lastname, firstname, submissiontitle,
@@ -12044,7 +12044,7 @@ export type ModWorkshopGetGradesReportParams = {
 /**
  * Data returned by mod_workshop_get_grades_report WS.
  */
-export type ModWorkshopGetGradesReportResponse = {
+export type ModWorkshopGetGradesReportWSResponse = {
     report: {
         grades: {
             userid: number; // The id of the user being displayed in the report.
@@ -12091,7 +12091,7 @@ export type ModWorkshopGetGradesReportResponse = {
 /**
  * Params of mod_workshop_get_reviewer_assessments WS.
  */
-export type ModWorkshopGetReviewerAssessmentsParams = {
+export type ModWorkshopGetReviewerAssessmentsWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // User id who did the assessment review (empty or 0 for current user).
 };
@@ -12099,7 +12099,7 @@ export type ModWorkshopGetReviewerAssessmentsParams = {
 /**
  * Data returned by mod_workshop_get_reviewer_assessments WS.
  */
-export type ModWorkshopGetReviewerAssessmentsResponse = {
+export type ModWorkshopGetReviewerAssessmentsWSResponse = {
     assessments: {
         id: number; // The primary key of the record.
         submissionid: number; // The id of the assessed submission.
@@ -12155,14 +12155,14 @@ export type ModWorkshopGetReviewerAssessmentsResponse = {
 /**
  * Params of mod_workshop_get_submission WS.
  */
-export type ModWorkshopGetSubmissionParams = {
+export type ModWorkshopGetSubmissionWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_get_submission WS.
  */
-export type ModWorkshopGetSubmissionResponse = {
+export type ModWorkshopGetSubmissionWSResponse = {
     submission: {
         id: number; // The primary key of the record.
         workshopid: number; // The id of the workshop instance.
@@ -12216,14 +12216,14 @@ export type ModWorkshopGetSubmissionResponse = {
 /**
  * Params of mod_workshop_get_submission_assessments WS.
  */
-export type ModWorkshopGetSubmissionAssessmentsParams = {
+export type ModWorkshopGetSubmissionAssessmentsWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_get_submission_assessments WS.
  */
-export type ModWorkshopGetSubmissionAssessmentsResponse = {
+export type ModWorkshopGetSubmissionAssessmentsWSResponse = {
     assessments: {
         id: number; // The primary key of the record.
         submissionid: number; // The id of the assessed submission.
@@ -12279,7 +12279,7 @@ export type ModWorkshopGetSubmissionAssessmentsResponse = {
 /**
  * Params of mod_workshop_get_submissions WS.
  */
-export type ModWorkshopGetSubmissionsParams = {
+export type ModWorkshopGetSubmissionsWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // Get submissions done by this user. Use 0 or empty for the current user.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
@@ -12292,7 +12292,7 @@ export type ModWorkshopGetSubmissionsParams = {
 /**
  * Data returned by mod_workshop_get_submissions WS.
  */
-export type ModWorkshopGetSubmissionsResponse = {
+export type ModWorkshopGetSubmissionsWSResponse = {
     submissions: {
         id: number; // The primary key of the record.
         workshopid: number; // The id of the workshop instance.
@@ -12350,7 +12350,7 @@ export type ModWorkshopGetSubmissionsResponse = {
 /**
  * Params of mod_workshop_get_user_plan WS.
  */
-export type ModWorkshopGetUserPlanParams = {
+export type ModWorkshopGetUserPlanWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // User id (empty or 0 for current user).
 };
@@ -12358,7 +12358,7 @@ export type ModWorkshopGetUserPlanParams = {
 /**
  * Data returned by mod_workshop_get_user_plan WS.
  */
-export type ModWorkshopGetUserPlanResponse = {
+export type ModWorkshopGetUserPlanWSResponse = {
     userplan: {
         phases: {
             code: number; // Phase code.
@@ -12392,14 +12392,14 @@ export type ModWorkshopGetUserPlanResponse = {
 /**
  * Params of mod_workshop_get_workshop_access_information WS.
  */
-export type ModWorkshopGetWorkshopAccessInformationParams = {
+export type ModWorkshopGetWorkshopAccessInformationWSParams = {
     workshopid: number; // Workshop instance id.
 };
 
 /**
  * Data returned by mod_workshop_get_workshop_access_information WS.
  */
-export type ModWorkshopGetWorkshopAccessInformationResponse = {
+export type ModWorkshopGetWorkshopAccessInformationWSResponse = {
     creatingsubmissionallowed: boolean; // Is the given user allowed to create their submission?.
     modifyingsubmissionallowed: boolean; // Is the user allowed to modify his existing submission?.
     assessingallowed: boolean; // Is the user allowed to create/edit his assessments?.
@@ -12435,14 +12435,14 @@ export type ModWorkshopGetWorkshopAccessInformationResponse = {
 /**
  * Params of mod_workshop_get_workshops_by_courses WS.
  */
-export type ModWorkshopGetWorkshopsByCoursesParams = {
+export type ModWorkshopGetWorkshopsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_workshop_get_workshops_by_courses WS.
  */
-export type ModWorkshopGetWorkshopsByCoursesResponse = {
+export type ModWorkshopGetWorkshopsByCoursesWSResponse = {
     workshops: {
         id: number; // The primary key of the record.
         course: number; // Course id this workshop is part of.
@@ -12531,7 +12531,7 @@ export type ModWorkshopGetWorkshopsByCoursesResponse = {
 /**
  * Params of mod_workshop_update_assessment WS.
  */
-export type ModWorkshopUpdateAssessmentParams = {
+export type ModWorkshopUpdateAssessmentWSParams = {
     assessmentid: number; // Assessment id.
     data: { // Assessment data.
         name: string; // The assessment data (use WS get_assessment_form_definition for obtaining the data to sent).
@@ -12548,7 +12548,7 @@ export type ModWorkshopUpdateAssessmentParams = {
 /**
  * Data returned by mod_workshop_update_assessment WS.
  */
-export type ModWorkshopUpdateAssessmentResponse = {
+export type ModWorkshopUpdateAssessmentWSResponse = {
     status: boolean; // Status: true if the assessment was added or updated false otherwise.
     rawgrade?: number; // Raw percentual grade (0.00000 to 100.00000) for submission.
     warnings?: CoreWSExternalWarning[];
@@ -12557,7 +12557,7 @@ export type ModWorkshopUpdateAssessmentResponse = {
 /**
  * Params of mod_workshop_update_submission WS.
  */
-export type ModWorkshopUpdateSubmissionParams = {
+export type ModWorkshopUpdateSubmissionWSParams = {
     submissionid: number; // Submission id.
     title: string; // Submission title.
     content?: string; // Submission text content.
@@ -12569,36 +12569,36 @@ export type ModWorkshopUpdateSubmissionParams = {
 /**
  * Data returned by mod_workshop_update_submission WS.
  */
-export type ModWorkshopUpdateSubmissionResponse = CoreStatusWithWarningsResponse;
+export type ModWorkshopUpdateSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_view_submission WS.
  */
-export type ModWorkshopViewSubmissionParams = {
+export type ModWorkshopViewSubmissionWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_view_submission WS.
  */
-export type ModWorkshopViewSubmissionResponse = CoreStatusWithWarningsResponse;
+export type ModWorkshopViewSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_view_workshop WS.
  */
-export type ModWorkshopViewWorkshopParams = {
+export type ModWorkshopViewWorkshopWSParams = {
     workshopid: number; // Workshop instance id.
 };
 
 /**
  * Data returned by mod_workshop_view_workshop WS.
  */
-export type ModWorkshopViewWorkshopResponse = CoreStatusWithWarningsResponse;
+export type ModWorkshopViewWorkshopWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of report_insights_action_executed WS.
  */
-export type ReportInsightsActionExecutedParams = {
+export type ReportInsightsActionExecutedWSParams = {
     actionname: string; // The name of the action.
     predictionids: number[]; // Array of prediction ids.
 };
@@ -12606,21 +12606,21 @@ export type ReportInsightsActionExecutedParams = {
 /**
  * Data returned by report_insights_action_executed WS.
  */
-export type ReportInsightsActionExecutedResponse = {
+export type ReportInsightsActionExecutedWSResponse = {
     warnings?: CoreWSExternalWarning[];
 };
 
 /**
  * Params of report_insights_set_fixed_prediction WS.
  */
-export type ReportInsightsSetFixedPredictionParams = {
+export type ReportInsightsSetFixedPredictionWSParams = {
     predictionid: number; // The prediction id.
 };
 
 /**
  * Data returned by report_insights_set_fixed_prediction WS.
  */
-export type ReportInsightsSetFixedPredictionResponse = {
+export type ReportInsightsSetFixedPredictionWSResponse = {
     success: boolean; // True if the prediction was successfully flagged as fixed.
     warnings?: CoreWSExternalWarning[];
 };
@@ -12628,14 +12628,14 @@ export type ReportInsightsSetFixedPredictionResponse = {
 /**
  * Params of report_insights_set_notuseful_prediction WS.
  */
-export type ReportInsightsSetNotusefulPredictionParams = {
+export type ReportInsightsSetNotusefulPredictionWSParams = {
     predictionid: number; // The prediction id.
 };
 
 /**
  * Data returned by report_insights_set_notuseful_prediction WS.
  */
-export type ReportInsightsSetNotusefulPredictionResponse = {
+export type ReportInsightsSetNotusefulPredictionWSResponse = {
     success: boolean; // True if the prediction was successfully flagged as not useful.
     warnings?: CoreWSExternalWarning[];
 };
@@ -12643,7 +12643,7 @@ export type ReportInsightsSetNotusefulPredictionResponse = {
 /**
  * Params of tool_analytics_potential_contexts WS.
  */
-export type ToolAnalyticsPotentialContextsParams = {
+export type ToolAnalyticsPotentialContextsWSParams = {
     query?: string; // The model id.
     modelid?: number; // The model id.
 };
@@ -12651,7 +12651,7 @@ export type ToolAnalyticsPotentialContextsParams = {
 /**
  * Data returned by tool_analytics_potential_contexts WS.
  */
-export type ToolAnalyticsPotentialContextsResponse = {
+export type ToolAnalyticsPotentialContextsWSResponse = {
     id: number; // ID of the context.
     name: string; // The context name.
 }[];
@@ -12659,7 +12659,7 @@ export type ToolAnalyticsPotentialContextsResponse = {
 /**
  * Params of tool_lp_data_for_course_competencies_page WS.
  */
-export type ToolLpDataForCourseCompetenciesPageParams = {
+export type ToolLpDataForCourseCompetenciesPageWSParams = {
     courseid: number; // The course id.
     moduleid?: number; // The module id.
 };
@@ -12667,7 +12667,7 @@ export type ToolLpDataForCourseCompetenciesPageParams = {
 /**
  * Data returned by tool_lp_data_for_course_competencies_page WS.
  */
-export type ToolLpDataForCourseCompetenciesPageResponse = {
+export type ToolLpDataForCourseCompetenciesPageWSResponse = {
     courseid: number; // The current course id.
     pagecontextid: number; // The current page context ID.
     gradableuserid?: number; // Current user id, if the user is a gradable user.
@@ -12882,14 +12882,14 @@ export type ToolLpDataForCourseCompetenciesPageResponse = {
 /**
  * Params of tool_lp_data_for_plan_page WS.
  */
-export type ToolLpDataForPlanPageParams = {
+export type ToolLpDataForPlanPageWSParams = {
     planid: number; // The plan id.
 };
 
 /**
  * Data returned by tool_lp_data_for_plan_page WS.
  */
-export type ToolLpDataForPlanPageResponse = {
+export type ToolLpDataForPlanPageWSResponse = {
     plan: {
         name: string; // Name.
         description: string; // Description.
@@ -13084,14 +13084,14 @@ export type ToolLpDataForPlanPageResponse = {
 /**
  * Params of tool_lp_data_for_plans_page WS.
  */
-export type ToolLpDataForPlansPageParams = {
+export type ToolLpDataForPlansPageWSParams = {
     userid: number; // The user id.
 };
 
 /**
  * Data returned by tool_lp_data_for_plans_page WS.
  */
-export type ToolLpDataForPlansPageResponse = {
+export type ToolLpDataForPlansPageWSResponse = {
     userid: number; // The learning plan user id.
     plans: {
         name: string; // Name.
@@ -13192,7 +13192,7 @@ export type ToolLpDataForPlansPageResponse = {
 /**
  * Params of tool_lp_data_for_user_competency_summary WS.
  */
-export type ToolLpDataForUserCompetencySummaryParams = {
+export type ToolLpDataForUserCompetencySummaryWSParams = {
     userid: number; // Data base record id for the user.
     competencyid: number; // Data base record id for the competency.
 };
@@ -13200,7 +13200,7 @@ export type ToolLpDataForUserCompetencySummaryParams = {
 /**
  * Data returned by tool_lp_data_for_user_competency_summary WS.
  */
-export type ToolLpDataForUserCompetencySummaryResponse = {
+export type ToolLpDataForUserCompetencySummaryWSResponse = {
     showrelatedcompetencies: boolean; // Showrelatedcompetencies.
     cangrade: boolean; // Cangrade.
     competency: {
@@ -13447,7 +13447,7 @@ export type ToolLpDataForUserCompetencySummaryResponse = {
 /**
  * Params of tool_lp_data_for_user_competency_summary_in_course WS.
  */
-export type ToolLpDataForUserCompetencySummaryInCourseParams = {
+export type ToolLpDataForUserCompetencySummaryInCourseWSParams = {
     userid: number; // Data base record id for the user.
     competencyid: number; // Data base record id for the competency.
     courseid: number; // Data base record id for the course.
@@ -13456,7 +13456,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseParams = {
 /**
  * Data returned by tool_lp_data_for_user_competency_summary_in_course WS.
  */
-export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
+export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
     usercompetencysummary: {
         showrelatedcompetencies: boolean; // Showrelatedcompetencies.
         cangrade: boolean; // Cangrade.
@@ -13823,7 +13823,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseResponse = {
 /**
  * Params of tool_lp_data_for_user_competency_summary_in_plan WS.
  */
-export type ToolLpDataForUserCompetencySummaryInPlanParams = {
+export type ToolLpDataForUserCompetencySummaryInPlanWSParams = {
     competencyid: number; // Data base record id for the competency.
     planid: number; // Data base record id for the plan.
 };
@@ -13831,7 +13831,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanParams = {
 /**
  * Data returned by tool_lp_data_for_user_competency_summary_in_plan WS.
  */
-export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
+export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
     usercompetencysummary: {
         showrelatedcompetencies: boolean; // Showrelatedcompetencies.
         cangrade: boolean; // Cangrade.
@@ -14170,14 +14170,14 @@ export type ToolLpDataForUserCompetencySummaryInPlanResponse = {
 /**
  * Params of tool_lp_data_for_user_evidence_list_page WS.
  */
-export type ToolLpDataForUserEvidenceListPageParams = {
+export type ToolLpDataForUserEvidenceListPageWSParams = {
     userid: number; // The user ID.
 };
 
 /**
  * Data returned by tool_lp_data_for_user_evidence_list_page WS.
  */
-export type ToolLpDataForUserEvidenceListPageResponse = {
+export type ToolLpDataForUserEvidenceListPageWSResponse = {
     canmanage: boolean; // Can the current user manage the user's evidence.
     userid: number; // The user ID.
     pluginbaseurl: string; // Url to the tool_lp plugin folder on this Moodle site.
@@ -14285,14 +14285,14 @@ export type ToolLpDataForUserEvidenceListPageResponse = {
 /**
  * Params of tool_lp_data_for_user_evidence_page WS.
  */
-export type ToolLpDataForUserEvidencePageParams = {
+export type ToolLpDataForUserEvidencePageWSParams = {
     id: number; // The user evidence ID.
 };
 
 /**
  * Data returned by tool_lp_data_for_user_evidence_page WS.
  */
-export type ToolLpDataForUserEvidencePageResponse = {
+export type ToolLpDataForUserEvidencePageWSResponse = {
     userevidence: {
         userid: number; // Userid.
         name: string; // Name.
@@ -14397,7 +14397,7 @@ export type ToolLpDataForUserEvidencePageResponse = {
 /**
  * Params of tool_mobile_call_external_functions WS.
  */
-export type ToolMobileCallExternalFunctionsParams = {
+export type ToolMobileCallExternalFunctionsWSParams = {
     requests: {
         function: string; // Function name.
         arguments?: string; // JSON-encoded object with named arguments.
@@ -14411,7 +14411,7 @@ export type ToolMobileCallExternalFunctionsParams = {
 /**
  * Data returned by tool_mobile_call_external_functions WS.
  */
-export type ToolMobileCallExternalFunctionsResponse = {
+export type ToolMobileCallExternalFunctionsWSResponse = {
     responses: {
         error: boolean; // Whether an exception was thrown.
         data?: string; // JSON-encoded response data.
@@ -14422,14 +14422,14 @@ export type ToolMobileCallExternalFunctionsResponse = {
 /**
  * Params of tool_mobile_get_autologin_key WS.
  */
-export type ToolMobileGetAutologinKeyParams = {
+export type ToolMobileGetAutologinKeyWSParams = {
     privatetoken: string; // Private token, usually generated by login/token.php.
 };
 
 /**
  * Data returned by tool_mobile_get_autologin_key WS.
  */
-export type ToolMobileGetAutologinKeyResponse = {
+export type ToolMobileGetAutologinKeyWSResponse = {
     key: string; // Auto-login key for a single usage with time expiration.
     autologinurl: string; // Auto-login URL.
     warnings?: CoreWSExternalWarning[];
@@ -14438,14 +14438,14 @@ export type ToolMobileGetAutologinKeyResponse = {
 /**
  * Params of tool_mobile_get_config WS.
  */
-export type ToolMobileGetConfigParams = {
+export type ToolMobileGetConfigWSParams = {
     section?: string; // Settings section name.
 };
 
 /**
  * Data returned by tool_mobile_get_config WS.
  */
-export type ToolMobileGetConfigResponse = {
+export type ToolMobileGetConfigWSResponse = {
     settings: { // Settings.
         name: string; // The name of the setting.
         value: string; // The value of the setting.
@@ -14456,7 +14456,7 @@ export type ToolMobileGetConfigResponse = {
 /**
  * Params of tool_mobile_get_content WS.
  */
-export type ToolMobileGetContentParams = {
+export type ToolMobileGetContentWSParams = {
     component: string; // Component where the class is e.g. mod_assign.
     method: string; // Method to execute in class \$component\output\mobile.
     args?: { // Args for the method are optional.
@@ -14468,7 +14468,7 @@ export type ToolMobileGetContentParams = {
 /**
  * Data returned by tool_mobile_get_content WS.
  */
-export type ToolMobileGetContentResponse = {
+export type ToolMobileGetContentWSResponse = {
     templates: { // Templates required by the generated content.
         id: string; // ID of the template.
         html: string; // HTML code.
@@ -14489,13 +14489,13 @@ export type ToolMobileGetContentResponse = {
 /**
  * Params of tool_mobile_get_plugins_supporting_mobile WS.
  */
-export type ToolMobileGetPluginsSupportingMobileParams = {
+export type ToolMobileGetPluginsSupportingMobileWSParams = {
 };
 
 /**
  * Data returned by tool_mobile_get_plugins_supporting_mobile WS.
  */
-export type ToolMobileGetPluginsSupportingMobileResponse = {
+export type ToolMobileGetPluginsSupportingMobileWSResponse = {
     plugins: {
         component: string; // The plugin component name.
         version: string; // The plugin version number.
@@ -14515,13 +14515,13 @@ export type ToolMobileGetPluginsSupportingMobileResponse = {
 /**
  * Params of tool_mobile_get_public_config WS.
  */
-export type ToolMobileGetPublicConfigParams = {
+export type ToolMobileGetPublicConfigWSParams = {
 };
 
 /**
  * Data returned by tool_mobile_get_public_config WS.
  */
-export type ToolMobileGetPublicConfigResponse = {
+export type ToolMobileGetPublicConfigWSResponse = {
     wwwroot: string; // Site URL.
     httpswwwroot: string; // Site https URL (if httpslogin is enabled).
     sitename: string; // Site name.
@@ -14574,7 +14574,7 @@ export type ToolMobileGetPublicConfigResponse = {
 /**
  * Params of tool_mobile_get_tokens_for_qr_login WS.
  */
-export type ToolMobileGetTokensForQrLoginParams = {
+export type ToolMobileGetTokensForQrLoginWSParams = {
     qrloginkey: string; // The user key for validating the request.
     userid: number; // The user the key belongs to.
 };
@@ -14582,7 +14582,7 @@ export type ToolMobileGetTokensForQrLoginParams = {
 /**
  * Data returned by tool_mobile_get_tokens_for_qr_login WS.
  */
-export type ToolMobileGetTokensForQrLoginResponse = {
+export type ToolMobileGetTokensForQrLoginWSResponse = {
     token: string; // A valid WebService token for the official mobile app service.
     privatetoken: string; // Private token used for auto-login processes.
     warnings?: CoreWSExternalWarning[];
@@ -14591,14 +14591,14 @@ export type ToolMobileGetTokensForQrLoginResponse = {
 /**
  * Params of tool_mobile_validate_subscription_key WS.
  */
-export type ToolMobileValidateSubscriptionKeyParams = {
+export type ToolMobileValidateSubscriptionKeyWSParams = {
     key: string; // Site subscription temporary key.
 };
 
 /**
  * Data returned by tool_mobile_validate_subscription_key WS.
  */
-export type ToolMobileValidateSubscriptionKeyResponse = {
+export type ToolMobileValidateSubscriptionKeyWSResponse = {
     validated: boolean; // Whether the key is validated or not.
     warnings?: CoreWSExternalWarning[];
 };
@@ -14606,14 +14606,14 @@ export type ToolMobileValidateSubscriptionKeyResponse = {
 /**
  * Params of tool_moodlenet_search_courses WS.
  */
-export type ToolMoodlenetSearchCoursesParams = {
+export type ToolMoodlenetSearchCoursesWSParams = {
     searchvalue: string; // Search value.
 };
 
 /**
  * Data returned by tool_moodlenet_search_courses WS.
  */
-export type ToolMoodlenetSearchCoursesResponse = {
+export type ToolMoodlenetSearchCoursesWSResponse = {
     courses: {
         id: number; // Course id.
         fullname: string; // Course full name.
@@ -14627,7 +14627,7 @@ export type ToolMoodlenetSearchCoursesResponse = {
 /**
  * Params of tool_moodlenet_verify_webfinger WS.
  */
-export type ToolMoodlenetVerifyWebfingerParams = {
+export type ToolMoodlenetVerifyWebfingerWSParams = {
     profileurl: string; // The profile url that the user has given us.
     course: number; // The course we are adding to.
     section: number; // The section within the course we are adding to.
@@ -14636,7 +14636,7 @@ export type ToolMoodlenetVerifyWebfingerParams = {
 /**
  * Data returned by tool_moodlenet_verify_webfinger WS.
  */
-export type ToolMoodlenetVerifyWebfingerResponse = {
+export type ToolMoodlenetVerifyWebfingerWSResponse = {
     result: boolean; // Was the passed content a valid WebFinger?.
     message: string; // Our message for the user.
     domain?: string; // Domain to redirect the user to.
