@@ -1,6 +1,6 @@
 <form #messageForm>
     <textarea class="core-send-message-input" [core-auto-focus]="showKeyboard" [placeholder]="placeholder" rows="1" core-auto-rows [(ngModel)]="message" name="message" (onResize)="textareaResized()" (keydown.enter)="enterClicked($event)" (keydown.control.enter)="enterClicked($event, 'control')" (keydown.meta.enter)="enterClicked($event, 'meta')" aria-multiline="true"></textarea>
-    <ion-buttons slot="primary">
+    <ion-buttons slot="end">
         <ion-button slot="icon-only //TODO: mode to icon" fill="clear"="true" type="submit" [disabled]="!message || sendDisabled" [attr.aria-label]="'core.send' | translate" [core-suppress-events] (onClick)="submitForm($event)">
             <ion-icon name="send" color="dark"></ion-icon>
         </ion-button>

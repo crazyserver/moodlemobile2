@@ -9,7 +9,7 @@
 
         <ion-title>{{ title | translate }}</ion-title>
 
-        <ion-buttons slot="primary">
+        <ion-buttons slot="end">
             <ion-button *ngIf="hasCaptured" (click)="done()">{{ 'core.done' | translate }}</ion-button>
         </ion-buttons>
     </ion-toolbar>

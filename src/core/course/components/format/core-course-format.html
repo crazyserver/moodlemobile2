@@ -63,7 +63,7 @@
                 <core-infinite-loading [enabled]="canLoadMore" (action)="showMoreActivities($event)"></core-infinite-loading>
             </div>
 
-            <ion-buttons class="ion-padding" slot="primary" class="core-course-section-nav-buttons safe-class="ion-padding-horizontal"" *ngIf="displaySectionSelector && sections && sections.length">
+            <ion-buttons class="ion-padding" slot="end" class="core-course-section-nav-buttons safe-class="ion-padding-horizontal"" *ngIf="displaySectionSelector && sections && sections.length">
                 <ion-button *ngIf="previousSection" color="light" slot="icon-only //TODO: mode to icon" (click)="sectionChanged(previousSection)" title="{{ 'core.previous' | translate }}">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                     <core-format-text class="accesshide" [text]="previousSection.formattedName || previousSection.name" contextLevel="course" [contextInstanceId]="course.id"></core-format-text>

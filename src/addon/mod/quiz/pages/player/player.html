@@ -5,7 +5,7 @@
         </ion-buttons>
         <ion-title><core-format-text *ngIf="quiz" [text]="quiz.name" contextLevel="module" [contextInstanceId]="quiz.coursemodule" [courseId]="courseId"></core-format-text></ion-title>
 
-        <ion-buttons slot="primary">
+        <ion-buttons slot="end">
             <ion-button id="addon-mod_quiz-connection-error-button" slot="icon-only //TODO: mode to icon" [hidden]="!autoSaveError" (click)="showConnectionError($event)" [attr.aria-label]="'core.error' | translate">
                 <ion-icon name="alert"></ion-icon>
             </ion-button>
@@ -21,7 +21,7 @@
         <ion-title>
             <core-timer [endTime]="endTime" (finished)="timeUp()" [timerText]="'addon.mod_quiz.timeleft' | translate" align="center"></core-timer>
         </ion-title>
-        <ion-buttons slot="primary">
+        <ion-buttons slot="end">
             <ion-button slot="icon-only //TODO: mode to icon" *ngIf="previousPage >= 0" (click)="changePage(previousPage)" [title]="'core.previous' | translate">
                 <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
             </ion-button>
@@ -33,7 +33,7 @@
     <core-loading [hideUntil]="loaded" [class.core-has-fixed-timer]="endTime">
         <!-- Navigation arrows and time left. -->
         <ion-toolbar *ngIf="!endTime && questions && questions.length && !quizAborted && !showSummary" color="light">
-            <ion-buttons slot="primary">
+            <ion-buttons slot="end">
                 <ion-button slot="icon-only //TODO: mode to icon" *ngIf="previousPage >= 0" (click)="changePage(previousPage)" [title]="'core.previous' | translate">
                     <ion-icon name="arrow-back" md="ios-arrow-back"></ion-icon>
                 </ion-button>

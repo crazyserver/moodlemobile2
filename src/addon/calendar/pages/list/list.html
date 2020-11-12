@@ -4,7 +4,7 @@
             <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ 'addon.calendar.calendarevents' | translate }}</ion-title>
-        <ion-buttons slot="primary">
+        <ion-buttons slot="end">
             <ion-button slot="icon-only //TODO: mode to icon" (click)="openFilter($event)" [attr.aria-label]="'core.filter' | translate">
                 <ion-icon name="funnel" *ngIf="filter.filtered"></ion-icon>
                 <ion-icon name="ios-funnel-outline" *ngIf="!filter.filtered"></ion-icon>

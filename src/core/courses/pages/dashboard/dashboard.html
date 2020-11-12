@@ -8,7 +8,7 @@
             <img src="assets/img/login_logo.png" class="core-header-logo" [alt]="siteName">
         </ion-title>
 
-        <ion-buttons slot="primary">
+        <ion-buttons slot="end">
             <ion-button *ngIf="searchEnabled" slot="icon-only //TODO: mode to icon" (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
                 <ion-icon name="search"></ion-icon>
             </ion-button>
@@ -27,18 +27,6 @@
 </ion-header>
 <ion-content>
     <core-tabs [selectedIndex]="firstSelectedTab" [hideUntil]="tabsReady">
-        <!-- Site home tab. -->
-        <core-tab [show]="siteHomeEnabled" [title]="'core.sitehome.sitehome' | translate">
-            <ng-template>
-                <ion-content>
-                    <ion-refresher slot="fixed" [disabled]="//TODO negative !!siteHomeComponent && siteHomeComponent.dataLoaded"
-                        (ionRefresh)="siteHomeComponent.doRefresh($event)">
-                        <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
-                    </ion-refresher>
-                    <core-sitehome-index [downloadEnabled]="downloadEnabled"></core-sitehome-index>
-                </ion-content>
-            </ng-template>
-        </core-tab>
 
         <!-- Dashboard tab. -->
         <core-tab [show]="dashboardEnabled" [title]="'core.courses.mymoodle' | translate">

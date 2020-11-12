@@ -4,7 +4,7 @@
             <ion-back-button [attr.aria-label]="'core.back' | translate"></ion-back-button>
         </ion-buttons>
         <ion-title *ngIf="startingPost"><core-format-text [text]="startingPost.subject" contextLevel="module" [contextInstanceId]="cmId" [courseId]="courseId"></core-format-text></ion-title>
-        <ion-buttons slot="primary">
+        <ion-buttons slot="end">
             <!-- The context menu will be added in here. -->
         </ion-buttons>
     </ion-toolbar>
