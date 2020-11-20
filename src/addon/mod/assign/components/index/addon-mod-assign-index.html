@@ -1,5 +1,5 @@
 <!-- Buttons to add to the header. -->
-<core-navbar-buttons end>
+<core-navbar-buttons slot="end">
     <core-context-menu>
         <core-context-menu-item *ngIf="externalUrl" [priority]="900" [content]="'core.openinbrowser' | translate" [href]="externalUrl" [iconAction]="'open'"></core-context-menu-item>
         <core-context-menu-item *ngIf="assign && (description || (assign.introattachments && assign.introattachments.length))" [priority]="800" [content]="'core.moduleintro' | translate" (action)="expandDescription()" [iconAction]="'arrow-forward'"></core-context-menu-item>

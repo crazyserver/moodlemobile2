@@ -8,7 +8,7 @@
         <ion-buttons slot="end"></ion-buttons>
     </ion-toolbar>
 
-    <core-navbar-buttons end>
+    <core-navbar-buttons slot="end">
         <ion-button [hidden]="!canSaveGrades" fill="clear" (click)="submitGrade()" [attr.aria-label]="'core.done' | translate">
             {{ 'core.done' | translate }}
         </ion-button>

@@ -1,6 +1,6 @@
 
 <!-- Add buttons to the nav bar. -->
-<core-navbar-buttons end prepend>
+<core-navbar-buttons slot="end" prepend>
     <core-context-menu>
         <core-context-menu-item *ngIf="canNavigate && !isCurrentMonth && displayNavButtons" [priority]="900" [content]="'addon.calendar.currentmonth' | translate" [iconAction]="'fa-calendar-times-o'" (action)="goToCurrentMonth()"></core-context-menu-item>
     </core-context-menu>

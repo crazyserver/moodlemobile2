@@ -17,7 +17,7 @@
         </ion-title>
         <ion-buttons slot="end"></ion-buttons>
     </ion-toolbar>
-    <core-navbar-buttons end>
+    <core-navbar-buttons slot="end">
         <core-context-menu [aria-label]="'addon.messages.conversationactions' | translate">
             <core-context-menu-item [hidden]="isSelf || !showInfo || isGroup" [priority]="1000" [content]="'addon.messages.info' | translate" (action)="viewInfo()" iconAction="information-circle"></core-context-menu-item>
             <core-context-menu-item [hidden]="isSelf || !showInfo || !isGroup" [priority]="1000" [content]="'addon.messages.groupinfo' | translate" (action)="viewInfo()" iconAction="information-circle"></core-context-menu-item>

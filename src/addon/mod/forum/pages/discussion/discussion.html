@@ -9,7 +9,7 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<core-navbar-buttons end>
+<core-navbar-buttons slot="end">
     <core-context-menu>
         <core-context-menu-item [priority]="650" *ngIf="discussionLoaded && !postHasOffline && isOnline" [content]="'addon.mod_forum.refreshposts' | translate" (action)="doRefresh(null, $event)" [iconAction]="refreshIcon" [closeOnClick]="false"></core-context-menu-item>
         <core-context-menu-item [priority]="550" *ngIf="discussionLoaded && !isSplitViewOn && postHasOffline && isOnline" [content]="'core.settings.synchronizenow' | translate" (action)="doRefresh(null, $event, true)" [iconAction]="syncIcon" [closeOnClick]="false"></core-context-menu-item>

@@ -1,5 +1,5 @@
 <!-- Buttons to add to the header. -->
-<core-navbar-buttons end>
+<core-navbar-buttons slot="end">
     <core-context-menu>
         <core-context-menu-item [hidden]="!displayOpenInBrowser || !externalUrl || (content && content.compileComponent && content.compileComponent.componentInstance && content.compileComponent.componentInstance.displayOpenInBrowser === false)" [priority]="900" [content]="'core.openinbrowser' | translate" [href]="externalUrl" [iconAction]="'open'"></core-context-menu-item>
         <core-context-menu-item [hidden]="!displayDescription || !description || (content && content.compileComponent && content.compileComponent.componentInstance && content.compileComponent.componentInstance.displayDescription === false)" [priority]="800" [content]="'core.moduleintro' | translate" (action)="expandDescription()" [iconAction]="'arrow-forward'"></core-context-menu-item>

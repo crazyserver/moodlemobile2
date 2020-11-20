@@ -1,5 +1,5 @@
 <!-- Buttons to add to the header. -->
-<core-navbar-buttons end>
+<core-navbar-buttons slot="end">
     <!-- Select subwiki. -->
     <ion-button slot="icon-only //TODO: mode to icon" *ngIf="subwikiData.count > 1" (click)="showSubwikiPicker($event)" [attr.aria-label]="'addon.mod_wiki.subwiki' | translate">
         <ion-icon *ngIf="!groupWiki" name="person"></ion-icon>
