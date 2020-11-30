@@ -14,11 +14,10 @@
 
 // Code based on https://github.com/martinpritchardelevate/ionic-split-pane-demo
 
-import { Component, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Params, Route, Router, RouterModule, Routes } from '@angular/router';
+import { ActivatedRoute, ActivationStart, Params, Router } from '@angular/router';
 import { IonRouterOutlet } from '@ionic/angular';
-import { CoreSplitViewPlaceholderPage } from './placeholder/placeholder.page';
 
 /**
  * Directive to create a split view layout.
@@ -44,7 +43,7 @@ import { CoreSplitViewPlaceholderPage } from './placeholder/placeholder.page';
     templateUrl: 'core-split-view.html',
     styleUrls: ['split-view.scss'],
 })
-export class CoreSplitViewComponent implements AfterViewInit {
+export class CoreSplitViewComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild(IonRouterOutlet) detailNav!: IonRouterOutlet;
     @Input() when?: string | boolean = 'md';
@@ -60,6 +59,7 @@ export class CoreSplitViewComponent implements AfterViewInit {
     // protected audioCaptureSubscription: Subscription;
     // protected languageChangedSubscription: Subscription;
     // protected pushOngoing: boolean;
+    protected isNavigatingOnDetails = false;
     protected viewEventsSubscriptions: Subscription[] = [];
 
     // Empty placeholder for the 'detail' page.
@@ -77,6 +77,18 @@ export class CoreSplitViewComponent implements AfterViewInit {
      * Component being initialized.
      */
     ngAfterViewInit(): void {
+        this.viewEventsSubscriptions.push(this.router.events.subscribe(e => {
+            // We should deactivate detail outlet on leaving.
+            if (this.isEnabled &&
+                !this.isNavigatingOnDetails &&
+                e instanceof ActivationStart &&
+                e.snapshot.outlet === 'primary'
+            ) {
+                console.error('primary', e, this.router.url);
+                this.detailNav.deactivate();
+            }
+        }));
+
         // Get the master page name and set an empty page as a placeholder.
         this.masterPageName = this.getMasterNav().getLastUrl();
         this.emptyDetails();
@@ -150,6 +162,8 @@ export class CoreSplitViewComponent implements AfterViewInit {
      * Disabled the split view, show only one panel and do some magical navigation.
      */
     protected async deactivateSplitView(): Promise<boolean> {
+        this.detailNav.deactivate();
+
         if (this.loadDetailsPage) {
             const currentElement = this.detailNav.getLastRouteView()?.element.tagName;
 
@@ -162,14 +176,16 @@ export class CoreSplitViewComponent implements AfterViewInit {
         return true;
     }
 
-    protected async navigateOnMaster(page: string, params?: any): Promise<boolean> {
-        const pageAndParams = ['../'+page];
+    protected async navigateOnMaster(page: string, params?: Params): Promise<boolean> {
+        const pageAndParams = [page];
         if (params) {
-            pageAndParams.push(params);
+            // pageAndParams.push(params);
         }
-
-        const nav = await this.router.navigate(pageAndParams, { relativeTo: this.detailNav.parentOutlet?.activatedRoute });
-        console.error('master', page, params, nav, this.detailNav.parentOutlet?.activatedRoute.snapshot.url.toString());
+        this.isNavigatingOnDetails = false;
+        const nav = await this.router.navigate(
+            pageAndParams,
+            { relativeTo: this.activatedRoute },
+        );
         if (nav) {
             this.loadDetailsPage = [page];
             if (params) {
@@ -183,14 +199,13 @@ export class CoreSplitViewComponent implements AfterViewInit {
     protected async navigateOnDetails(page: string, params?: Params): Promise<boolean> {
         const pageAndParams = [page];
         if (params) {
-            pageAndParams.push(params);
+            // pageAndParams.push(params);
         }
-        console.error(this.router.config);
+        this.isNavigatingOnDetails = true;
         const nav = await this.router.navigate(
-            [{ outlets: { main: page } }],
+            [{ outlets: { main: pageAndParams } }],
             { replaceUrl: true, relativeTo: this.activatedRoute },
         );
-        console.error('details', page, params, nav, this.detailNav.parentOutlet?.activatedRoute.snapshot.url.toString());
 
         if (nav) {
             this.loadDetailsPage = pageAndParams;
@@ -206,11 +221,22 @@ export class CoreSplitViewComponent implements AfterViewInit {
      * @param params Any NavParams you want to pass along to the next view.
      * @param retrying Whether it's retrying.
      */
-    async push(page: string, params?: any, retrying: boolean = false): Promise<boolean> {
-        if (this.isEnabled) {
-            return await this.navigateOnDetails(page, params);
-        } else {
-            return await this.navigateOnMaster(page, params);
+    async push(page: string, params?: Params, retrying: boolean = false): Promise<boolean> {
+        try {
+            console.error(
+                this.isEnabled,
+                page,
+            );
+
+            if (this.isEnabled) {
+                return await this.navigateOnDetails(page, params);
+            } else {
+                return await this.navigateOnMaster(page, params);
+            }
+        } catch (error) {
+            console.error(error);
+
+            return false;
         }
     }
 
@@ -227,7 +253,23 @@ export class CoreSplitViewComponent implements AfterViewInit {
      * Set the details panel to default info.
      */
     async emptyDetails(): Promise<boolean> {
-        return await this.router.navigate([{ outlets: { main: 'empty' } }], { replaceUrl: true });
+        if (this.isEnabled && this.loadDetailsPage) {
+            this.loadDetailsPage = false;
+
+            return await this.router.navigate(
+                [{ outlets: { main: [''] } }],
+                { replaceUrl: true },
+            );
+        }
+
+        return false;
+    }
+
+    /**
+     * Component being destroyed.
+     */
+    ngOnDestroy(): void {
+        this.viewEventsSubscriptions.forEach((subscription) => subscription.unsubscribe());
     }
 
 }

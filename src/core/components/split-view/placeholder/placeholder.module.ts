@@ -16,7 +16,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Route, RouterModule, Routes, RoutesRecognized } from '@angular/router';
+import { Route, RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -25,7 +25,7 @@ import { CoreComponentsModule } from '../../components.module';
 import { CoreSplitViewPlaceholderPage } from './placeholder.page';
 
 const placeholderRoute: Route = {
-    path: 'empty',
+    path: '',
     component: CoreSplitViewPlaceholderPage,
     outlet: 'main',
 };
@@ -53,7 +53,10 @@ export const addSplitViewRoutes = (routes: Routes): Routes => {
         mainRoutes.push(mainRoute);
     });
 
-    routes.push(placeholderRoute);
+    routes.push({
+        path: '',
+        loadChildren: () => import('@components/split-view/placeholder/placeholder.module').then(m => m.CorePlaceholderPageModule),
+    });
 
     return routes;
 };
