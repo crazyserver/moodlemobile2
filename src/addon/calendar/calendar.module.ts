@@ -63,13 +63,13 @@ export class AddonCalendarModule {
         cronDelegate.register(syncHandler);
         contentLinksDelegate.registerHandler(viewLinkHandler);
 
-        initDelegate.ready().then(() => {
+        ApplicationInit.instance.donePromise.then(() => {
             calendarProvider.scheduleAllSitesEventsNotifications();
         });
 
         localNotificationsProvider.registerClick(AddonCalendarProvider.COMPONENT, (data) => {
             if (data.eventid) {
-                initDelegate.ready().then(() => {
+                ApplicationInit.instance.donePromise.then(() => {
                     calendarProvider.isDisabled(data.siteId).then((disabled) => {
                         if (disabled) {
                             // The calendar is disabled in the site, don't open it.

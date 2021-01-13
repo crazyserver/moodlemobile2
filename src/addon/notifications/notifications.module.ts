@@ -63,7 +63,7 @@ export class AddonNotificationsModule {
         if (appProvider.isDesktop()) {
             // Listen for clicks in simulated push notifications.
             localNotifications.registerClick(AddonNotificationsProvider.PUSH_SIMULATION_COMPONENT, (notification) => {
-                initDelegate.ready().then(() => {
+                ApplicationInit.instance.donePromise.then(() => {
                     pushNotificationsDelegate.clicked(notification);
                 });
             });

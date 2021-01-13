@@ -151,7 +151,7 @@ export class CoreSharedFilesHelperProvider {
      * @return Promise resolved when done.
      */
     searchIOSNewSharedFiles(path?: string): Promise<any> {
-        return this.initDelegate.ready().then(() => {
+        return this.ApplicationInit.instance.donePromise.then(() => {
             if (this.isChoosingSite()) {
                 // We're already treating a shared file. Abort.
                 return Promise.reject(null);

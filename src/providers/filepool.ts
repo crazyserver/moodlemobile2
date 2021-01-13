@@ -499,7 +499,7 @@ export class CoreFilepoolProvider {
 
         this.sitesProvider.registerSiteSchema(this.siteSchema);
 
-        initDelegate.ready().then(() => {
+        ApplicationInit.instance.donePromise.then(() => {
             // Waiting for the app to be ready to start processing the queue.
             this.checkQueueProcessing();
 

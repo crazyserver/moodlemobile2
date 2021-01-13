@@ -39,7 +39,7 @@ export class CoreLoginInitPage {
      */
     ngOnInit(): void {
         // Wait for the app to be ready.
-        this.initDelegate.ready().then(() => {
+        this.ApplicationInit.instance.donePromise.then(() => {
             // Check if there was a pending redirect.
             const redirectData = this.appProvider.getRedirect();
             if (redirectData.siteId) {

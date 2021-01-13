@@ -193,7 +193,7 @@ export class CoreLoginHelperProvider {
             modal;
 
         // Wait for app to be ready.
-        this.initDelegate.ready().then(() => {
+        this.ApplicationInit.instance.donePromise.then(() => {
             modal = this.domUtils.showModalLoading('core.login.authenticating', true);
 
             return this.validateBrowserSSOLogin(url);

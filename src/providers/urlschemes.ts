@@ -135,7 +135,7 @@ export class CoreCustomURLSchemesProvider {
         url = this.textUtils.decodeURIComponent(url);
 
         // Wait for app to be ready.
-        await this.initDelegate.ready();
+        await this.ApplicationInit.instance.donePromise;
 
         // Some platforms like Windows add a slash at the end. Remove it.
         // Some sites add a # at the end of the URL. If it's there, remove it.

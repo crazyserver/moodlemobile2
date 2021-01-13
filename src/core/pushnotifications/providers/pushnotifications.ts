@@ -442,7 +442,7 @@ export class CorePushNotificationsProvider {
      * @param notification Notification.
      */
     notificationClicked(notification: any): void {
-        this.initDelegate.ready().then(() => {
+        this.ApplicationInit.instance.donePromise.then(() => {
             this.pushNotificationsDelegate.clicked(notification);
         });
     }
@@ -544,7 +544,7 @@ export class CorePushNotificationsProvider {
                 }
 
                 // Trigger a notification received event.
-                this.initDelegate.ready().then(() => {
+                this.ApplicationInit.instance.donePromise.then(() => {
                     data.title = notification.title;
                     data.message = notification.message;
                     this.pushNotificationsDelegate.received(data);
