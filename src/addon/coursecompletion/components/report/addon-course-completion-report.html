@@ -16,12 +16,12 @@
         </ion-card>
         <ion-card *ngIf="completion && tracked">
             <ion-item-divider>{{ 'addon.coursecompletion.requiredcriteria' | translate }}</ion-item-divider>
-            <ion-item class="hidden-tablet ion-text-wrap" *ngFor="let criteria of completion.completions">
+            <ion-item class="ion-hide-md-up ion-text-wrap" *ngFor="let criteria of completion.completions">
                 <h2><core-format-text clean="true" [text]="criteria.details.criteria" [filter]="false"></core-format-text></h2>
                 <p><core-format-text clean="true" [text]="criteria.details.requirement" [filter]="false"></core-format-text></p>
                 <strong slot="end">{{ criteria.status }}</strong>
             </ion-item>
-            <ion-item class="hidden-phone ion-text-wrap">
+            <ion-item class="ion-hide-md-down ion-text-wrap">
                 <ion-row>
                     <ion-col><strong>{{ 'addon.coursecompletion.criteriagroup' | translate }}</strong></ion-col>
                     <ion-col><strong>{{ 'addon.coursecompletion.criteria' | translate }}</strong></ion-col>

@@ -83,7 +83,7 @@
             </ion-item>
             <ion-item class="ion-text-wrap">
                 <ion-label position="stacked" core-mark-required="true">{{ 'core.login.password' | translate }}</ion-label>
-                <core-show-password item-content [name]="'password'">
+                <core-show-password item-content name="password">
                     <ion-input type="password" name="password" placeholder="{{ 'core.login.password' | translate }}" formControlName="password" [clearOnEdit]="false"></ion-input>
                 </core-show-password>
                 <p *ngIf="settings.passwordpolicy" item-content class="core-input-footnote">

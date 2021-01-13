@@ -53,9 +53,9 @@
             <ion-col class="ion-text-center">#</ion-col>
             <ion-col class="ion-text-center" size="5" size-md="2">{{ 'core.date' | translate }}</ion-col>
             <ion-col class="ion-text-center">{{ 'addon.mod_h5pactivity.score' | translate }}</ion-col>
-            <ion-col class="ion-text-center hidden-phone">{{ 'addon.mod_h5pactivity.maxscore' | translate }}</ion-col>
-            <ion-col class="ion-text-center hidden-phone">{{ 'addon.mod_h5pactivity.duration' | translate }}</ion-col>
-            <ion-col class="ion-text-center hidden-phone">{{ 'addon.mod_h5pactivity.completion' | translate }}</ion-col>
+            <ion-col class="ion-text-center ion-hide-md-down">{{ 'addon.mod_h5pactivity.maxscore' | translate }}</ion-col>
+            <ion-col class="ion-text-center ion-hide-md-down">{{ 'addon.mod_h5pactivity.duration' | translate }}</ion-col>
+            <ion-col class="ion-text-center ion-hide-md-down">{{ 'addon.mod_h5pactivity.completion' | translate }}</ion-col>
             <ion-col class="ion-text-center">{{ 'core.success' | translate }}</ion-col>
         </ion-row>
     </ion-item>
@@ -66,11 +66,11 @@
             <ion-col class="ion-text-center">{{ attempt.attempt }}</ion-col>
             <ion-col class="ion-text-center" size="5" size-md="2">{{ attempt.timemodified | coreFormatDate:'strftimedatetimeshort' }}</ion-col>
             <ion-col class="ion-text-center">
-                {{ attempt.rawscore }}<span class="hidden-tablet"> / {{ attempt.maxscore }}</span>
+                {{ attempt.rawscore }}<span class="ion-hide-md-up"> / {{ attempt.maxscore }}</span>
             </ion-col>
-            <ion-col class="ion-text-center hidden-phone">{{ attempt.maxscore }}</ion-col>
-            <ion-col class="ion-text-center hidden-phone">{{ attempt.durationReadable }}</ion-col>
-            <ion-col class="ion-text-center hidden-phone">
+            <ion-col class="ion-text-center ion-hide-md-down">{{ attempt.maxscore }}</ion-col>
+            <ion-col class="ion-text-center ion-hide-md-down">{{ attempt.durationReadable }}</ion-col>
+            <ion-col class="ion-text-center ion-hide-md-down">
                 <img *ngIf="attempt.completion" src="assets/img/completion/completion-auto-y.svg" [alt]="'addon.mod_h5pactivity.attempt_completion_yes' | translate">
                 <img *ngIf="!attempt.completion" src="assets/img/completion/completion-auto-n.svg" [alt]="'addon.mod_h5pactivity.attempt_completion_no' | translate">
             </ion-col>

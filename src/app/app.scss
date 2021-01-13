@@ -47,14 +47,14 @@ ion-app.app-root {
   }
 
   @include media-breakpoint-down(sm) {
-    .hidden-phone {
+    .ion-hide-md-down {
       display: none !important;
       opacity: 0 !important;
     }
   }
 
   @include media-breakpoint-up(md) {
-    .hidden-tablet {
+    .ion-hide-md-up {
       display: none !important;
       opacity: 0 !important;
     }

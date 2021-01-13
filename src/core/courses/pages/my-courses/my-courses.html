@@ -11,7 +11,7 @@
             </ion-button>
             <core-context-menu *ngIf="mcComponent">
                 <core-context-menu-item [hidden]="!mcComponent.downloadAllCoursesEnabled || !mcComponent.courses || mcComponent.courses.length < 2" [priority]="800" [content]="'core.courses.downloadcourses' | translate" (action)="mcComponent.prefetchCourses()" [iconAction]="mcComponent.prefetchCoursesData.icon" [closeOnClick]="false" [badge]="mcComponent.prefetchCoursesData.badge"></core-context-menu-item>
-                <core-context-menu-item [hidden]="!mcComponent.courses || mcComponent.courses.length <= 5" [priority]="700" [content]="'core.courses.filtermycourses' | translate" (action)="mcComponent.switchFilter()" [iconAction]="'funnel'"></core-context-menu-item>
+                <core-context-menu-item [hidden]="!mcComponent.courses || mcComponent.courses.length <= 5" [priority]="700" [content]="'core.courses.filtermycourses' | translate" (action)="mcComponent.switchFilter()" iconAction="funnel"></core-context-menu-item>
             </core-context-menu>
         </ion-buttons>
     </ion-toolbar>

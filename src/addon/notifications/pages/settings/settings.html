@@ -48,13 +48,13 @@
                 <ion-item-divider class="ion-text-wrap">
                     <ion-row class="ion-no-padding">
                         <ion-col class="ion-no-padding">{{ component.displayname }}</ion-col>
-                        <ion-col size="2" class="ion-text-center ion-no-padding hidden-phone">{{ 'core.settings.loggedin' | translate }}</ion-col>
-                        <ion-col size="2" class="ion-text-center ion-no-padding hidden-phone">{{ 'core.settings.loggedoff' | translate }}</ion-col>
+                        <ion-col size="2" class="ion-text-center ion-no-padding ion-hide-md-down">{{ 'core.settings.loggedin' | translate }}</ion-col>
+                        <ion-col size="2" class="ion-text-center ion-no-padding ion-hide-md-down">{{ 'core.settings.loggedoff' | translate }}</ion-col>
                     </ion-row>
                 </ion-item-divider>
                 <ng-container *ngFor="let notification of component.notifications">
                     <!-- Tablet view -->
-                    <ion-row class="ion-text-wrap hidden-phone ion-align-items-center">
+                    <ion-row class="ion-text-wrap ion-hide-md-down ion-align-items-center">
                         <ion-col  class="ion-margin-horizontal">{{ notification.displayname }}</ion-col>
                         <ion-col size="2" class="ion-text-center" *ngFor="let state of ['loggedin', 'loggedoff']">
                             <!-- If notifications enabled, show toggle. -->
@@ -67,9 +67,9 @@
                         </ion-col>
                     </ion-row>
                     <!-- Phone view -->
-                    <ion-list-header class="ion-text-wrap ion-no-margin hidden-tablet">{{ notification.displayname }}</ion-list-header>
+                    <ion-list-header class="ion-text-wrap ion-no-margin ion-hide-md-up">{{ notification.displayname }}</ion-list-header>
                     <!-- If notifications enabled, show toggles. If notifications are disabled, show "Disabled" instead of toggle. -->
-                    <ion-item *ngFor="let state of ['loggedin', 'loggedoff']" class="ion-text-wrap hidden-tablet">
+                    <ion-item *ngFor="let state of ['loggedin', 'loggedoff']" class="ion-text-wrap ion-hide-md-up">
                         <ion-label>{{ 'core.settings.' + state | translate }}</ion-label>
                         <ion-spinner slot="end" *ngIf="preferences.enableall && (notification.currentProcessor[state] && notification.currentProcessor[state].updating)"></ion-spinner>
                         <ion-toggle slot="end" *ngIf="preferences.enableall && !notification.currentProcessor.locked" [(ngModel)]="notification.currentProcessor[state].checked" (ionChange)="changePreference(notification, state)" [disabled]="notification.currentProcessor[state].updating">

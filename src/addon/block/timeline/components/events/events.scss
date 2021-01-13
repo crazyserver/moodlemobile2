@@ -17,24 +17,24 @@ ion-app.app-root addon-block-timeline-events {
 
 ion-app.app-root core-courses-course-progress addon-block-timeline-events {
     @include media-breakpoint-up(md) {
-        .hidden-tablet {
+        .ion-hide-md-up {
             display: block !important;
             opacity: 1 !important;
             &.button[disabled] {
                 opacity: .4 !important;
             }
         }
-        .hidden-phone {
+        .ion-hide-md-down {
             display: none !important;
             opacity: 0 !important;
         }
     }
     @include media-breakpoint-up(lg) {
-        .hidden-tablet {
+        .ion-hide-md-up {
             display: none !important;
             opacity: 0 !important;
         }
-        .hidden-phone {
+        .ion-hide-md-down {
             display: block !important;
             opacity: 1 !important;
             &.button[disabled] {
