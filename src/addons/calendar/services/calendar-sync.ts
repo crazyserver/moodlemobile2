@@ -53,17 +53,17 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider<AddonCalenda
      * @return Promise resolved if sync is successful, rejected if sync fails.
      */
     async syncAllEvents(siteId?: string, force?: boolean): Promise<void> {
-        await this.syncOnSites('all calendar events', this.syncAllEventsFunc.bind(this, [force]), siteId);
+        await this.syncOnSites('all calendar events', this.syncAllEventsFunc.bind(this, !!force), siteId);
     }
 
     /**
      * Sync all events on a site.
      *
-     * @param siteId Site ID to sync.
      * @param force Wether to force sync not depending on last execution.
+     * @param siteId Site ID to sync.
      * @return Promise resolved if sync is successful, rejected if sync fails.
      */
-    protected async syncAllEventsFunc(siteId: string, force?: boolean): Promise<void> {
+    protected async syncAllEventsFunc(force: boolean, siteId: string): Promise<void> {
         const result = await (force ? this.syncEvents(siteId) : this.syncEventsIfNeeded(siteId));
 
         if (result && result.updated) {

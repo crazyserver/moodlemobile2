@@ -100,7 +100,7 @@ export class CoreSyncProvider {
     async getSyncRecord(component: string, id: string | number, siteId?: string): Promise<CoreSyncRecord> {
         const db = await CoreSites.instance.getSiteDb(siteId);
 
-        return await db.getRecord(SYNC_TABLE_NAME, { component: component, id: id });
+        return await db.getRecord(SYNC_TABLE_NAME, { component: component, id: String(id) });
     }
 
     /**
@@ -112,11 +112,16 @@ export class CoreSyncProvider {
      * @param siteId Site ID. If not defined, current site.
      * @return Promise resolved with done.
      */
-    async insertOrUpdateSyncRecord(component: string, id: string, data: Partial<CoreSyncRecord>, siteId?: string): Promise<void> {
+    async insertOrUpdateSyncRecord(
+        component: string,
+        id: string | number,
+        data: Partial<CoreSyncRecord>,
+        siteId?: string,
+    ): Promise<void> {
         const db = await CoreSites.instance.getSiteDb(siteId);
 
         data.component = component;
-        data.id = id;
+        data.id = String(id);
 
         await db.insertRecord(SYNC_TABLE_NAME, data);
     }
