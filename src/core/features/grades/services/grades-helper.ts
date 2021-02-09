@@ -325,7 +325,7 @@ export class CoreGradesHelperProvider {
         groupId?: number,
         siteId?: string,
         ignoreCache: boolean = false,
-    ): Promise<CoreGradesFormattedItem> {
+    ): Promise<CoreGradesFormattedItem[]> {
         const grades = await CoreGrades.instance.getGradeItems(courseId, userId, groupId, siteId, ignoreCache);
 
         if (!grades) {
