@@ -14,20 +14,25 @@
 
 import { NgModule } from '@angular/core';
 
-import { AddonModBookModule } from './book/book.module';
-import { AddonModLessonModule } from './lesson/lesson.module';
-import { AddonModPageModule } from './page/page.module';
-import { AddonModQuizModule } from './quiz/quiz.module';
+import { CoreSharedModule } from '@/core/shared.module';
+import { CoreCourseComponentsModule } from '@features/course/components/components.module';
+import { AddonModQuizConnectionErrorComponent } from './connection-error/connection-error';
+import { AddonModQuizIndexComponent } from './index/index';
 
 @NgModule({
-    declarations: [],
-    imports: [
-        AddonModBookModule,
-        AddonModLessonModule,
-        AddonModPageModule,
-        AddonModQuizModule,
+    declarations: [
+        AddonModQuizIndexComponent,
+        AddonModQuizConnectionErrorComponent,
     ],
-    providers: [],
-    exports: [],
+    imports: [
+        CoreSharedModule,
+        CoreCourseComponentsModule,
+    ],
+    providers: [
+    ],
+    exports: [
+        AddonModQuizIndexComponent,
+        AddonModQuizConnectionErrorComponent,
+    ],
 })
-export class AddonModModule { }
+export class AddonModQuizComponentsModule {}
