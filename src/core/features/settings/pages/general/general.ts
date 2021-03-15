@@ -72,14 +72,7 @@ export class CoreSettingsGeneralPage {
                 this.colorSchemes.push(CoreColorScheme.LIGHT);
                 this.selectedScheme = this.colorSchemes[0];
             } else {
-                this.colorSchemes.push(CoreColorScheme.LIGHT);
-                this.colorSchemes.push(CoreColorScheme.DARK);
-
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches ||
-                                    window.matchMedia('(prefers-color-scheme: light)').matches) {
-                    this.colorSchemes.push(CoreColorScheme.AUTO);
-                }
-
+                this.colorSchemes = CoreSettingsHelper.getAllowedColorSchemes();
                 this.selectedScheme = await CoreConfig.get(CoreConstants.SETTINGS_COLOR_SCHEME, CoreColorScheme.LIGHT);
             }
         }

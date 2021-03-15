@@ -466,3 +466,16 @@ ion-button.core-button-select {
         display: none !important;
     }
 }
+
+// Hide virtual utilities.
+.core-browser-copy-area {
+    display: none;
+}
+
+// This CSS is needed to check if CoreSettingsHelper.canIUsePrefersColorScheme
+body {
+    // This CSS is needed to check if CoreSettingsHelper.canIUsePrefersColorScheme
+    @media (prefers-color-scheme: dark), (prefers-color-scheme: light) {
+        --detect-color-scheme: '1'; // It should be a string to avoid typing problems.
+    }
+}

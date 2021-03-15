@@ -62,6 +62,7 @@ export class CoreSettingsHelperProvider {
 
     protected syncPromises: { [s: string]: Promise<void> } = {};
     protected prefersDark?: MediaQueryList;
+    protected colorSchemes: CoreColorScheme[] = [];
 
     constructor() {
         if (!CoreConstants.CONFIG.forceColorScheme) {
@@ -402,6 +403,30 @@ export class CoreSettingsHelperProvider {
     }
 
     /**
+     * Get system allowed color schemes.
+     *
+     * @return Allowed color schemes.
+     */
+    getAllowedColorSchemes(): CoreColorScheme[] {
+        if (this.colorSchemes.length > 0) {
+            return this.colorSchemes;
+        }
+
+        if (!CoreConstants.CONFIG.forceColorScheme) {
+            this.colorSchemes.push(CoreColorScheme.LIGHT);
+            this.colorSchemes.push(CoreColorScheme.DARK);
+
+            if (this.canIUsePrefersColorScheme()) {
+                this.colorSchemes.push(CoreColorScheme.AUTO);
+            }
+        } else {
+            this.colorSchemes = [CoreConstants.CONFIG.forceColorScheme];
+        }
+
+        return this.colorSchemes;
+    }
+
+    /**
      * Set body color scheme.
      *
      * @param colorScheme Name of the color scheme.
@@ -418,6 +443,24 @@ export class CoreSettingsHelperProvider {
 
             this.toggleDarkMode(colorScheme == CoreColorScheme.DARK);
         }
+    }
+
+    /**
+     * Check if device can detect color scheme system preference.
+     * https://caniuse.com/prefers-color-scheme
+     *
+     * @todo When we detect this is working properly, not check the isDevelopment flag.
+     *
+     * @returns if the color scheme system preference is avalaible.
+     */
+    canIUsePrefersColorScheme(): boolean {
+        // The following check may have false positives.
+        // return window.matchMedia('(prefers-color-scheme)').media !== 'not all';
+
+        // Checker would be a string or null.
+        const checker = getComputedStyle(document.body).getPropertyValue('--detect-color-scheme');
+
+        return !!checker;
     }
 
     /**
