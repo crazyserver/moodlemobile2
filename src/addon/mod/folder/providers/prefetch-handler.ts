@@ -28,7 +28,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch folders.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFolderPrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModFolder';
     modName = 'folder';
@@ -94,7 +94,7 @@ export class AddonModFolderPrefetchHandler extends CoreCourseResourcePrefetchHan
         const promises = [];
 
         promises.push(this.folderProvider.invalidateFolderData(courseId));
-        promises.push(this.courseProvider.invalidateModule(module.id));
+        promises.push(CoreCourse.invalidateModule(module.id));
 
         return Promise.all(promises);
     }

@@ -28,7 +28,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch URLs. URLs cannot be prefetched, but the handler will be used to invalidate some data on course PTR.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModUrlPrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModUrl';
     modName = 'url';
@@ -69,7 +69,7 @@ export class AddonModUrlPrefetchHandler extends CoreCourseResourcePrefetchHandle
      * @return Promise resolved when invalidated.
      */
     invalidateModule(module: any, courseId: number): Promise<any> {
-        return this.courseProvider.invalidateModule(module.id, undefined, this.modName);
+        return CoreCourse.invalidateModule(module.id, undefined, this.modName);
     }
 
     /**

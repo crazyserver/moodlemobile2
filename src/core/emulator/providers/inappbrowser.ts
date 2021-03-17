@@ -22,7 +22,7 @@ import { InAppBrowserObjectMock } from '../classes/inappbrowserobject';
 /**
  * Emulates the Cordova InAppBrowser plugin in desktop apps.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InAppBrowserMock extends InAppBrowser {
 
     constructor(private appProvider: CoreAppProvider, private fileProvider: CoreFileProvider,
@@ -46,7 +46,7 @@ export class InAppBrowserMock extends InAppBrowser {
             }).join(',');
         }
 
-        if (!this.appProvider.isDesktop()) {
+        if (!CoreApp.isDesktop()) {
             return super.create(url, target, options);
         }
 

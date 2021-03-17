@@ -67,13 +67,13 @@ export class CoreInputErrorsComponent implements OnInit, OnChanges {
     protected initErrorMessages(): void {
         this.errorMessages = this.errorMessages || {};
 
-        this.errorMessages.required = this.errorMessages.required || this.translate.instant('core.required');
-        this.errorMessages.email = this.errorMessages.email || this.translate.instant('core.login.invalidemail');
-        this.errorMessages.date = this.errorMessages.date || this.translate.instant('core.login.invaliddate');
-        this.errorMessages.datetime = this.errorMessages.datetime || this.translate.instant('core.login.invaliddate');
-        this.errorMessages.datetimelocal = this.errorMessages.datetimelocal || this.translate.instant('core.login.invaliddate');
-        this.errorMessages.time = this.errorMessages.time || this.translate.instant('core.login.invalidtime');
-        this.errorMessages.url = this.errorMessages.url || this.translate.instant('core.login.invalidurl');
+        this.errorMessages.required = this.errorMessages.required || Translate.instant('core.required');
+        this.errorMessages.email = this.errorMessages.email || Translate.instant('core.login.invalidemail');
+        this.errorMessages.date = this.errorMessages.date || Translate.instant('core.login.invaliddate');
+        this.errorMessages.datetime = this.errorMessages.datetime || Translate.instant('core.login.invaliddate');
+        this.errorMessages.datetimelocal = this.errorMessages.datetimelocal || Translate.instant('core.login.invaliddate');
+        this.errorMessages.time = this.errorMessages.time || Translate.instant('core.login.invalidtime');
+        this.errorMessages.url = this.errorMessages.url || Translate.instant('core.login.invalidurl');
 
         // Set empty values by default, the default error messages will be built in the template when needed.
         this.errorMessages.max = this.errorMessages.max || '';

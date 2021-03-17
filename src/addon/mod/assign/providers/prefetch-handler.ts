@@ -37,7 +37,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch assigns.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModAssign';
     modName = 'assign';
@@ -106,7 +106,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
      */
     getFiles(module: any, courseId: number, single?: boolean, siteId?: string): Promise<any[]> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.assignProvider.getAssignment(courseId, module.id, {siteId}).then((assign) => {
             // Get intro files and attachments.
@@ -145,7 +145,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
                     });
                 } else {
                     // Student, get only his/her submissions.
-                    const userId = this.sitesProvider.getCurrentSiteUserId();
+                    const userId = CoreSites.getCurrentSiteUserId();
 
                     return this.getSubmissionFiles(assign, userId, blindMarking, siteId).then((submissionFiles) => {
                         files = files.concat(submissionFiles);
@@ -264,10 +264,10 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
      * @return Promise resolved when done.
      */
     protected prefetchAssign(module: any, courseId: number, single: boolean, siteId: string): Promise<any> {
-        const userId = this.sitesProvider.getCurrentSiteUserId();
+        const userId = CoreSites.getCurrentSiteUserId();
         const promises = [];
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const options = {
             cmId: module.id,
@@ -281,18 +281,18 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
                 blindMarking = assign.blindmarking && !assign.revealidentities;
 
             if (blindMarking) {
-                subPromises.push(this.utils.ignoreErrors(this.assignProvider.getAssignmentUserMappings(assign.id, -1, options)));
+                subPromises.push(CoreUtils.ignoreErrors(this.assignProvider.getAssignmentUserMappings(assign.id, -1, options)));
             }
 
             subPromises.push(this.prefetchSubmissions(assign, courseId, module.id, userId, siteId));
 
-            subPromises.push(this.courseHelper.getModuleCourseIdByInstance(assign.id, 'assign', siteId));
+            subPromises.push(CoreCourseHelper.getModuleCourseIdByInstance(assign.id, 'assign', siteId));
 
             // Download intro files and attachments. Do not call getFiles because it'd call some WS twice.
             let files = assign.introattachments || [];
                 files = files.concat(this.getIntroFilesFromInstance(module, assign));
 
-            subPromises.push(this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id));
+            subPromises.push(CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id));
 
             return Promise.all(subPromises);
         }));
@@ -321,7 +321,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
         return this.assignProvider.getSubmissions(assign.id, options).then((data) => {
             const promises = [];
 
-            promises.push(this.groupsProvider.getActivityGroupInfo(assign.cmid, false, undefined, siteId).then((groupInfo) => {
+            promises.push(CoreGroups.getActivityGroupInfo(assign.cmid, false, undefined, siteId).then((groupInfo) => {
                 if (data.canviewsubmissions) {
                     // Teacher, prefetch all submissions.
                     const groupProms = [];
@@ -450,7 +450,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
                         // Prefetch the plugin files.
                         promises.push(this.submissionDelegate.getPluginFiles(assign, userSubmission, plugin, siteId)
                                 .then((files) => {
-                            return this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id);
+                            return CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id);
                         }).catch(() => {
                             // Ignore errors.
                         }));
@@ -466,7 +466,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
 
         // Prefetch grade items.
         if (userId) {
-            promises.push(this.courseProvider.getModuleBasicGradeInfo(moduleId, siteId).then((gradeInfo) => {
+            promises.push(CoreCourse.getModuleBasicGradeInfo(moduleId, siteId).then((gradeInfo) => {
                 if (gradeInfo) {
                     promises.push(this.gradesHelper.getGradeModuleItems(courseId, moduleId, userId, undefined, siteId, true));
                 }
@@ -488,7 +488,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
 
                     // Prefetch the plugin files.
                     promises.push(this.feedbackDelegate.getPluginFiles(assign, userSubmission, plugin, siteId).then((files) => {
-                        return this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id);
+                        return CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id);
                     }).catch(() => {
                         // Ignore errors.
                     }));

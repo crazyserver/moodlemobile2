@@ -73,9 +73,9 @@ export class CoreIframeComponent implements OnChanges {
 
         const iframe: HTMLIFrameElement = this.iframe && this.iframe.nativeElement;
 
-        this.iframeWidth = this.domUtils.formatPixelsSize(this.iframeWidth) || '100%';
-        this.iframeHeight = this.domUtils.formatPixelsSize(this.iframeHeight) || '100%';
-        this.allowFullscreen = this.utils.isTrueOrOne(this.allowFullscreen);
+        this.iframeWidth = CoreDomUtils.formatPixelsSize(this.iframeWidth) || '100%';
+        this.iframeHeight = CoreDomUtils.formatPixelsSize(this.iframeHeight) || '100%';
+        this.allowFullscreen = CoreUtils.isTrueOrOne(this.allowFullscreen);
 
         // Show loading only with external URLs.
         this.loading = !this.src || !this.urlUtils.isLocalFileUrl(this.src);
@@ -90,7 +90,7 @@ export class CoreIframeComponent implements OnChanges {
 
         iframe.addEventListener('error', () => {
             this.loading = false;
-            this.domUtils.showErrorModal('core.errorloadingcontent', true);
+            CoreDomUtils.showErrorModal('core.errorloadingcontent', true);
         });
 
         if (this.loading) {
@@ -107,7 +107,7 @@ export class CoreIframeComponent implements OnChanges {
         if (changes.src) {
             const url = this.urlUtils.getYoutubeEmbedUrl(changes.src.currentValue) || changes.src.currentValue;
 
-            if (CoreApp.instance.isIOS() && url && !this.urlUtils.isLocalFileUrl(url)) {
+            if (CoreApp.isIOS() && url && !this.urlUtils.isLocalFileUrl(url)) {
                 // Save a "fake" cookie for the iframe's domain to fix a bug in WKWebView.
                 try {
                     const win = <WKWebViewCookiesWindow> window;
@@ -126,7 +126,7 @@ export class CoreIframeComponent implements OnChanges {
                 }
             }
 
-            this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(CoreFile.instance.convertFileSrc(url));
+            this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(CoreFile.convertFileSrc(url));
 
             // Now that the URL has been set, initialize the iframe. Wait for the iframe to the added to the DOM.
             setTimeout(() => {

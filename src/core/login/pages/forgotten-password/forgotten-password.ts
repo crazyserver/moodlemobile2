@@ -67,12 +67,12 @@ export class CoreLoginForgottenPasswordPage {
             value = this.myForm.value.value;
 
         if (!value) {
-            this.domUtils.showErrorModal('core.login.usernameoremail', true);
+            CoreDomUtils.showErrorModal('core.login.usernameoremail', true);
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading('core.sending', true),
+        const modal = CoreDomUtils.showModalLoading('core.sending', true),
             isMail = field == 'email';
 
         this.loginHelper.requestPasswordReset(this.siteUrl, isMail ? '' : value, isMail ? value : '').then((response) => {
@@ -81,16 +81,16 @@ export class CoreLoginForgottenPasswordPage {
                 this.showError(isMail, response.warnings);
             } else if (response.status == 'emailpasswordconfirmnotsent' || response.status == 'emailpasswordconfirmnoemail') {
                 // Error, not found.
-                this.domUtils.showErrorModal(response.notice);
+                CoreDomUtils.showErrorModal(response.notice);
             } else {
                 // Success.
-                this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
+                CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true);
 
-                this.domUtils.showAlert(this.translate.instant('core.success'), response.notice);
+                CoreDomUtils.showAlert(Translate.instant('core.success'), response.notice);
                 this.navCtrl.pop();
             }
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             modal.dismiss();
         });
@@ -101,7 +101,7 @@ export class CoreLoginForgottenPasswordPage {
         for (let i = 0; i < warnings.length; i++) {
             const warning = warnings[i];
             if ((warning.item == 'email' && isMail) || (warning.item == 'username' && !isMail)) {
-                this.domUtils.showErrorModal(warning.message);
+                CoreDomUtils.showErrorModal(warning.message);
                 break;
             }
         }

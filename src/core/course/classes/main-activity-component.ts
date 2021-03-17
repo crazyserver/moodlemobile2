@@ -44,7 +44,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = this.appProvider.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
     }
@@ -57,7 +57,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
 
         this.hasOffline = false;
         this.syncIcon = 'spinner';
-        this.moduleName = this.courseProvider.translateModuleName(this.moduleName);
+        this.moduleName = CoreCourse.translateModuleName(this.moduleName);
 
         if (this.syncEventName) {
             // Refresh data if this discussion is synchronized automatically.
@@ -139,7 +139,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
         this.refreshIcon = 'spinner';
         this.syncIcon = 'spinner';
         this.loaded = false;
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
 
         return this.loadContent(false, sync, showErrors).finally(() => {
             this.refreshIcon = 'refresh';
@@ -158,7 +158,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
         this.refreshIcon = 'spinner';
         this.syncIcon = 'spinner';
         this.loaded = false;
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
 
         return this.refreshContent(sync, showErrors);
     }
@@ -184,7 +184,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
      * @return Promise resolved when done.
      */
     protected loadContent(refresh?: boolean, sync: boolean = false, showErrors: boolean = false): Promise<any> {
-        this.isOnline = this.appProvider.isOnline();
+        this.isOnline = CoreApp.isOnline();
 
         if (!this.module) {
             // This can happen if course format changes from single activity to weekly/topics.
@@ -211,7 +211,7 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
             }
 
             // Error getting data, fail.
-            this.domUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
+            CoreDomUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
         }).finally(() => {
             this.loaded = true;
             this.refreshIcon = 'refresh';
@@ -247,13 +247,13 @@ export class CoreCourseModuleMainActivityComponent extends CoreCourseModuleMainR
     protected syncActivity(showErrors: boolean = false): Promise<boolean> {
         return this.sync().then((result) => {
             if (result.warnings && result.warnings.length) {
-                this.domUtils.showErrorModal(result.warnings[0]);
+                CoreDomUtils.showErrorModal(result.warnings[0]);
             }
 
             return this.hasSyncSucceed(result);
         }).catch((error) => {
             if (showErrors) {
-                this.domUtils.showErrorModalDefault(error, 'core.errorsync', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errorsync', true);
             }
 
             return false;

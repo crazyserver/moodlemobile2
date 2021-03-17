@@ -114,7 +114,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.siteId = this.sitesProvider.getCurrentSiteId();
+        this.siteId = CoreSites.getCurrentSiteId();
         this.description = this.module.description;
         this.componentId = this.module.id;
         this.externalUrl = this.module.url;
@@ -238,7 +238,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
 
         return promise.catch((error) => {
             // Error getting data, fail.
-            this.domUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
+            CoreDomUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
         }).finally(() => {
             this.loaded = true;
             this.refreshIcon = 'refresh';
@@ -250,7 +250,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      */
     protected fillContextMenu(refresh: boolean = false): void {
         // All data obtained, now fill the context menu.
-        this.courseHelper.fillContextMenu(this, this.module, this.courseId, refresh, this.component);
+        CoreCourseHelper.fillContextMenu(this, this.module, this.courseId, refresh, this.component);
     }
 
     /**
@@ -265,7 +265,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      * Expand the description.
      */
     expandDescription(): void {
-        this.textUtils.viewText(this.translate.instant('core.description'), this.description, {
+        this.textUtils.viewText(Translate.instant('core.description'), this.description, {
             component: this.component,
             componentId: this.module.id,
             filter: true,
@@ -290,7 +290,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      * @param done Function to call when done.
      */
     prefetch(done?: () => void): void {
-        this.courseHelper.contextMenuPrefetch(this, this.module, this.courseId, done);
+        CoreCourseHelper.contextMenuPrefetch(this, this.module, this.courseId, done);
     }
 
     /**
@@ -300,12 +300,12 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      */
     removeFiles(done?: () => void): void {
         if (this.prefetchStatus == CoreConstants.DOWNLOADING) {
-            this.domUtils.showAlertTranslated(null, 'core.course.cannotdeletewhiledownloading');
+            CoreDomUtils.showAlertTranslated(null, 'core.course.cannotdeletewhiledownloading');
 
             return;
         }
 
-        this.courseHelper.confirmAndRemoveFiles(this.module, this.courseId, done);
+        CoreCourseHelper.confirmAndRemoveFiles(this.module, this.courseId, done);
     }
 
     /**
@@ -317,13 +317,13 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
     protected getErrorDownloadingSomeFilesMessage(error: string | CoreTextErrorObject, multiLine?: boolean): string {
         if (multiLine) {
             return this.textUtils.buildSeveralParagraphsMessage([
-                this.translate.instant('core.errordownloadingsomefiles'),
+                Translate.instant('core.errordownloadingsomefiles'),
                 error,
             ]);
         } else {
             error = this.textUtils.getErrorMessageFromError(error);
 
-            return this.translate.instant('core.errordownloadingsomefiles') + (error ? ' ' + error : '');
+            return Translate.instant('core.errordownloadingsomefiles') + (error ? ' ' + error : '');
         }
     }
 
@@ -333,7 +333,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      * @param error The specific error.
      */
     protected showErrorDownloadingSomeFiles(error: string | CoreTextErrorObject): void {
-        this.domUtils.showErrorModal(this.getErrorDownloadingSomeFilesMessage(error, true));
+        CoreDomUtils.showErrorModal(this.getErrorDownloadingSomeFilesMessage(error, true));
     }
 
     /**
@@ -408,14 +408,14 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
 
         if (!this.module.contents.length || (refresh && !contentsAlreadyLoaded)) {
             // Try to load the contents.
-            const ignoreCache = refresh && this.appProvider.isOnline();
+            const ignoreCache = refresh && CoreApp.isOnline();
 
             try {
-                await this.courseProvider.loadModuleContents(this.module, this.courseId, undefined, false, ignoreCache);
+                await CoreCourse.loadModuleContents(this.module, this.courseId, undefined, false, ignoreCache);
             } catch (error) {
                 // Error loading contents. If we ignored cache, try to get the cached value.
                 if (ignoreCache && !this.module.contents) {
-                    await this.courseProvider.loadModuleContents(this.module, this.courseId);
+                    await CoreCourse.loadModuleContents(this.module, this.courseId);
                 } else if (!this.module.contents) {
                     // Not able to load contents, throw the error.
                     throw error;

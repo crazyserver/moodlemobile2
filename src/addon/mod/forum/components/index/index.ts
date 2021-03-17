@@ -50,7 +50,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
     offlineDiscussions = [];
     selectedDiscussion = 0; // Disucssion ID or negative timecreated if it's an offline discussion.
     canAddDiscussion = false;
-    addDiscussionText = this.translate.instant('addon.mod_forum.addanewdiscussion');
+    addDiscussionText = Translate.instant('addon.mod_forum.addanewdiscussion');
     availabilityMessage: string;
 
     sortingAvailable: boolean;
@@ -154,7 +154,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                     this.forumProvider.invalidateDiscussionsList(this.forum.id);
                 }
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Listen for offline ratings saved and synced.
         this.ratingOfflineObserver = CoreEvents.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
@@ -187,7 +187,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
             }
 
             this.forumProvider.logView(this.forum.id, this.forum.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch((error) => {
                 // Ignore errors.
             });
@@ -211,7 +211,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
             this.forum = forum;
 
             this.description = forum.intro || this.description;
-            this.descriptionNote = this.translate.instant('addon.mod_forum.numdiscussions', {numdiscussions: forum.numdiscussions});
+            this.descriptionNote = Translate.instant('addon.mod_forum.numdiscussions', {numdiscussions: forum.numdiscussions});
             if (typeof forum.istracked != 'undefined') {
                 this.trackPosts = forum.istracked;
             }
@@ -222,13 +222,13 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
             switch (forum.type) {
                 case 'news':
                 case 'blog':
-                    this.addDiscussionText = this.translate.instant('addon.mod_forum.addanewtopic');
+                    this.addDiscussionText = Translate.instant('addon.mod_forum.addanewtopic');
                     break;
                 case 'qanda':
-                    this.addDiscussionText = this.translate.instant('addon.mod_forum.addanewquestion');
+                    this.addDiscussionText = Translate.instant('addon.mod_forum.addanewquestion');
                     break;
                 default:
-                    this.addDiscussionText = this.translate.instant('addon.mod_forum.addanewdiscussion');
+                    this.addDiscussionText = Translate.instant('addon.mod_forum.addanewdiscussion');
             }
 
             if (sync) {
@@ -238,16 +238,16 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                         // Sync successful, send event.
                         CoreEvents.trigger(AddonModForumSyncProvider.MANUAL_SYNCED, {
                             forumId: forum.id,
-                            userId: this.sitesProvider.getCurrentSiteUserId(),
+                            userId: CoreSites.getCurrentSiteUserId(),
                             source: 'index',
-                        }, this.sitesProvider.getCurrentSiteId());
+                        }, CoreSites.getCurrentSiteId());
                     }
                 });
             }
         }).then(() => {
             const promises = [];
             // Check if the activity uses groups.
-            promises.push(this.groupsProvider.getActivityGroupMode(this.forum.cmid).then((mode) => {
+            promises.push(CoreGroups.getActivityGroupMode(this.forum.cmid).then((mode) => {
                 this.usesGroups = (mode === CoreGroupsProvider.SEPARATEGROUPS || mode === CoreGroupsProvider.VISIBLEGROUPS);
             }));
             promises.push(this.forumProvider.getAccessInformation(this.forum.id, {cmId: this.module.id}).then((accessInfo) => {
@@ -287,7 +287,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                 return this.refreshContent(sync);
             }
 
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_forum.errorgetforum', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_forum.errorgetforum', true);
 
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
         }).finally(() => {
@@ -425,7 +425,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
      */
     fetchMoreDiscussions(infiniteComplete?: any): Promise<any> {
         return this.fetchDiscussions(false).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_forum.errorgetforum', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_forum.errorgetforum', true);
 
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
         }).finally(() => {
@@ -466,7 +466,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
 
         if (this.forum) {
             promises.push(this.forumProvider.invalidateDiscussionsList(this.forum.id));
-            promises.push(this.groupsProvider.invalidateActivityGroupMode(this.forum.cmid));
+            promises.push(CoreGroups.invalidateActivityGroupMode(this.forum.cmid));
             promises.push(this.forumProvider.invalidateAccessInformation(this.forum.id));
         }
 
@@ -504,7 +504,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
      */
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         return this.forum && syncEventData.source != 'index' && syncEventData.forumId == this.forum.id &&
-            syncEventData.userId == this.sitesProvider.getCurrentSiteUserId();
+            syncEventData.userId == CoreSites.getCurrentSiteUserId();
     }
 
     /**
@@ -541,7 +541,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
             });
 
             // Check completion since it could be configured to complete once the user adds a new discussion or replies.
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }
     }
 
@@ -600,7 +600,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                         .then(() => {
                     this.showLoadingAndFetch();
                 }).catch((error) => {
-                    this.domUtils.showErrorModalDefault(error, 'Error updating preference.');
+                    CoreDomUtils.showErrorModalDefault(error, 'Error updating preference.');
                 });
             }
         });

@@ -21,7 +21,7 @@ import { CoreGradesProvider } from './grades';
 /**
  * Handler to treat links to overview courses grades.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesOverviewLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreGradesOverviewLinkHandler';
     pattern = /\/grade\/report\/overview\/index.php/;

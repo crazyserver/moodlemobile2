@@ -23,7 +23,7 @@ import { AddonModFeedbackHelperProvider } from './helper';
 /**
  * Handler for feedback push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonModFeedbackPushClickHandler';
     priority = 200;
@@ -40,7 +40,7 @@ export class AddonModFeedbackPushClickHandler implements CorePushNotificationsCl
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_feedback' &&
+        if (CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_feedback' &&
                 (notification.name == 'submission' || notification.name == 'message')) {
 
             return this.feedbackProvider.isPluginEnabled(notification.site);
@@ -63,7 +63,7 @@ export class AddonModFeedbackPushClickHandler implements CorePushNotificationsCl
         if (notification.name == 'submission') {
             return this.feedbackHelper.handleShowEntriesLink(undefined, contextUrlParams, notification.site);
         } else {
-            return this.courseHelper.navigateToModule(moduleId, notification.site, courseId);
+            return CoreCourseHelper.navigateToModule(moduleId, notification.site, courseId);
         }
     }
 }

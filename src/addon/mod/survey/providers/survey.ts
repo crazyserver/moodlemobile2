@@ -27,7 +27,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for surveys.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyProvider {
     static COMPONENT = 'mmaModSurvey';
 
@@ -48,7 +48,7 @@ export class AddonModSurveyProvider {
      * @return Promise resolved when the questions are retrieved.
      */
     getQuestions(surveyId: number, options: CoreCourseCommonModWSOptions = {}): Promise<AddonModSurveyQuestion[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 surveyid: surveyId,
             };
@@ -57,7 +57,7 @@ export class AddonModSurveyProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModSurveyProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_survey_get_questions', params, preSets)
@@ -104,7 +104,7 @@ export class AddonModSurveyProvider {
     protected getSurveyDataByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModSurveySurvey> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -112,7 +112,7 @@ export class AddonModSurveyProvider {
                 cacheKey: this.getSurveyCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModSurveyProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_survey_get_surveys_by_courses', params, preSets)
@@ -165,7 +165,7 @@ export class AddonModSurveyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -179,9 +179,9 @@ export class AddonModSurveyProvider {
             return Promise.all(ps);
         }));
 
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModSurveyProvider.COMPONENT, moduleId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModSurveyProvider.COMPONENT, moduleId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -192,7 +192,7 @@ export class AddonModSurveyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateQuestions(surveyId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getQuestionsCacheKey(surveyId));
         });
     }
@@ -205,7 +205,7 @@ export class AddonModSurveyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSurveyData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getSurveyCacheKey(courseId));
         });
     }
@@ -223,7 +223,7 @@ export class AddonModSurveyProvider {
             surveyid: id
         };
 
-        return this.logHelper.logSingle('mod_survey_view_survey', params, AddonModSurveyProvider.COMPONENT, id, name, 'survey',
+        return CoreCourseLogHelper.logSingle('mod_survey_view_survey', params, AddonModSurveyProvider.COMPONENT, id, name, 'survey',
                 {}, siteId);
     }
 
@@ -246,9 +246,9 @@ export class AddonModSurveyProvider {
             });
         };
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the message.
             return storeOffline();
         }
@@ -259,7 +259,7 @@ export class AddonModSurveyProvider {
             return this.submitAnswersOnline(surveyId, answers, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // It's a WebService error, the user cannot send the message so don't store it.
                     return Promise.reject(error);
                 }
@@ -279,7 +279,7 @@ export class AddonModSurveyProvider {
      * @return Promise resolved when answers are successfully submitted.
      */
     submitAnswersOnline(surveyId: number, answers: any[], siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 surveyid: surveyId,
                 answers: answers
@@ -287,7 +287,7 @@ export class AddonModSurveyProvider {
 
             return site.write('mod_survey_submit_answers', params).then((response: AddonModSurveySubmitAnswersResult) => {
                 if (!response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
             });
         });

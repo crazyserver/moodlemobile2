@@ -26,7 +26,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for chats.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChatProvider {
     static COMPONENT = 'mmaModChat';
     static POLL_INTERVAL = 4000;
@@ -45,7 +45,7 @@ export class AddonModChatProvider {
      * @return Promise resolved when the chat is retrieved.
      */
     getChat(courseId: number, cmId: number, options: CoreSitesCommonWSOptions = {}): Promise<AddonModChatChat> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId]
             };
@@ -53,7 +53,7 @@ export class AddonModChatProvider {
                 cacheKey: this.getChatsCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModChatProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_chat_get_chats_by_courses', params, preSets)
@@ -82,7 +82,7 @@ export class AddonModChatProvider {
             chatid: chatId
         };
 
-        return this.sitesProvider.getCurrentSite().write('mod_chat_login_user', params)
+        return CoreSites.getCurrentSite().write('mod_chat_login_user', params)
                 .then((response: AddonModChatLoginUserResult): any => {
 
             if (response.chatsid) {
@@ -106,7 +106,7 @@ export class AddonModChatProvider {
             chatid: id
         };
 
-        return this.logHelper.logSingle('mod_chat_view_chat', params, AddonModChatProvider.COMPONENT, id, name, 'chat', {}, siteId);
+        return CoreCourseLogHelper.logSingle('mod_chat_view_chat', params, AddonModChatProvider.COMPONENT, id, name, 'chat', {}, siteId);
     }
 
     /**
@@ -124,7 +124,7 @@ export class AddonModChatProvider {
             beepid: beepUserId
         };
 
-        return this.sitesProvider.getCurrentSite().write('mod_chat_send_chat_message', params)
+        return CoreSites.getCurrentSite().write('mod_chat_send_chat_message', params)
                 .then((response: AddonModChatSendChatMessageResult): any => {
 
             if (response.messageid) {
@@ -150,7 +150,7 @@ export class AddonModChatProvider {
 
         /* We use write to not use cache. It doesn't make sense to store the messages in cache
            because we won't be able to retireve them if AddonModChatProvider.loginUser fails. */
-        return this.sitesProvider.getCurrentSite().write('mod_chat_get_chat_latest_messages', params);
+        return CoreSites.getCurrentSite().write('mod_chat_get_chat_latest_messages', params);
     }
 
     /**
@@ -169,7 +169,7 @@ export class AddonModChatProvider {
                 message.userprofileimageurl = user.profileimageurl;
             }).catch(() => {
                 // Error getting profile, most probably the user is deleted.
-                message.userfullname = this.translate.instant('core.deleteduser') + ' ' + message.userid;
+                message.userfullname = Translate.instant('core.deleteduser') + ' ' + message.userid;
             });
         });
 
@@ -189,14 +189,14 @@ export class AddonModChatProvider {
         // By default, always try to get the latest data.
         options.readingStrategy = options.readingStrategy || CoreSitesReadingStrategy.PreferNetwork;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 chatsid: sessionId,
             };
             const preSets = {
                 component: AddonModChatProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_chat_get_chat_users', params, preSets);
@@ -210,7 +210,7 @@ export class AddonModChatProvider {
      * @return Promise resolved with a boolean.
      */
     areSessionsAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('mod_chat_get_sessions') && site.wsAvailable('mod_chat_get_session_messages');
         });
     }
@@ -228,7 +228,7 @@ export class AddonModChatProvider {
     getSessions(chatId: number, groupId: number = 0, showAll: boolean = false, options: CoreCourseCommonModWSOptions = {}):
             Promise<AddonModChatSession[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 chatid: chatId,
                 groupid: groupId,
@@ -239,7 +239,7 @@ export class AddonModChatProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModChatProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_chat_get_sessions', params, preSets).then((response: AddonModChatGetSessionsResult): any => {
@@ -266,7 +266,7 @@ export class AddonModChatProvider {
     getSessionMessages(chatId: number, sessionStart: number, sessionEnd: number, groupId: number = 0,
             options: CoreCourseCommonModWSOptions = {}): Promise<AddonModChatSessionMessage[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 chatid: chatId,
                 sessionstart: sessionStart,
@@ -278,7 +278,7 @@ export class AddonModChatProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModChatProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_chat_get_session_messages', params, preSets)
@@ -300,7 +300,7 @@ export class AddonModChatProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateChats(courseId: number): Promise<any> {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
 
         return site.invalidateWsCacheForKey(this.getChatsCacheKey(courseId));
     }
@@ -314,7 +314,7 @@ export class AddonModChatProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSessions(chatId: number, groupId: number = 0, showAll: boolean = false): Promise<any> {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
 
         return site.invalidateWsCacheForKey(this.getSessionsCacheKey(chatId, groupId, showAll));
     }
@@ -326,7 +326,7 @@ export class AddonModChatProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllSessions(chatId: number): Promise<any> {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
 
         return site.invalidateWsCacheForKeyStartingWith(this.getSessionsCacheKeyPrefix(chatId));
     }
@@ -340,7 +340,7 @@ export class AddonModChatProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSessionMessages(chatId: number, sessionStart: number, groupId: number = 0): Promise<any> {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
 
         return site.invalidateWsCacheForKey(this.getSessionMessagesCacheKey(chatId, sessionStart, groupId));
     }
@@ -352,7 +352,7 @@ export class AddonModChatProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllSessionMessages(chatId: number): Promise<any> {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
 
         return site.invalidateWsCacheForKeyStartingWith(this.getSessionMessagesCacheKeyPrefix(chatId));
     }

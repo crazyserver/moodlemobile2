@@ -55,7 +55,7 @@ export class AddonModPageIndexComponent extends CoreCourseModuleMainResourceComp
 
         this.loadContent().then(() => {
             this.pageProvider.logView(this.module.instance, this.module.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -92,7 +92,7 @@ export class AddonModPageIndexComponent extends CoreCourseModuleMainResourceComp
             if (this.canGetPage) {
                 getPagePromise = this.pageProvider.getPageData(this.courseId, this.module.id);
             } else {
-                getPagePromise = this.courseProvider.getModule(this.module.id, this.courseId);
+                getPagePromise = CoreCourse.getModule(this.module.id, this.courseId);
             }
 
             promises.push(getPagePromise.then((page) => {
@@ -107,9 +107,9 @@ export class AddonModPageIndexComponent extends CoreCourseModuleMainResourceComp
                         if (this.page.displayoptions) {
                             const options = this.textUtils.unserialize(this.page.displayoptions) || {};
                             this.displayDescription = typeof options.printintro == 'undefined' ||
-                                    this.utils.isTrueOrOne(options.printintro);
+                                    CoreUtils.isTrueOrOne(options.printintro);
                             this.displayTimemodified = typeof options.printlastmodified == 'undefined' ||
-                                    this.utils.isTrueOrOne(options.printlastmodified);
+                                    CoreUtils.isTrueOrOne(options.printlastmodified);
                         } else {
                             this.displayDescription = true;
                             this.displayTimemodified = true;

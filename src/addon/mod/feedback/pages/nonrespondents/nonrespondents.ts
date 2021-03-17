@@ -75,13 +75,13 @@ export class AddonModFeedbackNonRespondentsPage {
         this.total = 0;
         this.users = [];
 
-        return this.groupsProvider.getActivityGroupInfo(this.moduleId).then((groupInfo) => {
+        return CoreGroups.getActivityGroupInfo(this.moduleId).then((groupInfo) => {
             this.groupInfo = groupInfo;
-            this.selectedGroup = this.groupsProvider.validateGroupId(this.selectedGroup, groupInfo);
+            this.selectedGroup = CoreGroups.validateGroupId(this.selectedGroup, groupInfo);
 
             return this.loadGroupUsers(this.selectedGroup);
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
 
             if (!refresh) {
                 // Some call failed on first fetch, go back.
@@ -137,7 +137,7 @@ export class AddonModFeedbackNonRespondentsPage {
      */
     loadAttempts(groupId?: number): void {
         this.loadGroupUsers(groupId).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
         });
     }
 
@@ -151,7 +151,7 @@ export class AddonModFeedbackNonRespondentsPage {
             const promises = [];
 
             promises.push(this.feedbackProvider.invalidateNonRespondentsData(this.feedbackId));
-            promises.push(this.groupsProvider.invalidateActivityGroupInfo(this.moduleId));
+            promises.push(CoreGroups.invalidateActivityGroupInfo(this.moduleId));
 
             Promise.all(promises).finally(() => {
                 return this.fetchData(true);

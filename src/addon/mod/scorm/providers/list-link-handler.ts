@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to SCORM list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModScormListLinkHandler';
 

@@ -21,7 +21,7 @@ import { AddonQtypeMultichoiceComponent } from '../component/multichoice';
 /**
  * Handler to support multichoice question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeMultichoiceHandler implements CoreQuestionHandler {
     name = 'AddonQtypeMultichoice';
     type = 'qtype_multichoice';
@@ -128,7 +128,7 @@ export class AddonQtypeMultichoiceHandler implements CoreQuestionHandler {
         for (const name in newAnswers) {
             if (name.indexOf('choice') != -1) {
                 isSingle = false;
-                if (!this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, name)) {
+                if (!CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, name)) {
                     isMultiSame = false;
                 }
             }
@@ -149,7 +149,7 @@ export class AddonQtypeMultichoiceHandler implements CoreQuestionHandler {
      * @return Whether they're the same.
      */
     isSameResponseSingle(prevAnswers: any, newAnswers: any): boolean {
-        return this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
+        return CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
     }
 
     /**

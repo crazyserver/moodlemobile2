@@ -23,7 +23,7 @@ import { CoreWSExternalWarning } from '@services/ws';
 /**
  * Service to handle course completion.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCourseCompletionProvider {
 
     protected ROOT_CACHE_KEY = 'mmaCourseCompletion:';
@@ -48,7 +48,7 @@ export class AddonCourseCompletionProvider {
         let selfCompletionActive = false,
             alreadyMarked = false;
 
-        if (this.sitesProvider.getCurrentSiteUserId() != userId) {
+        if (CoreSites.getCurrentSiteUserId() != userId) {
             return false;
         }
 
@@ -100,7 +100,7 @@ export class AddonCourseCompletionProvider {
     getCompletion(courseId: number, userId?: number, preSets?: any, siteId?: string)
             : Promise<AddonCourseCompletionCourseCompletionStatus> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
             preSets = preSets || {};
 
@@ -146,9 +146,9 @@ export class AddonCourseCompletionProvider {
      * @return Promise resolved when the list is invalidated.
      */
     invalidateCourseCompletion(courseId: number, userId?: number): Promise<any> {
-        userId = userId || this.sitesProvider.getCurrentSiteUserId();
+        userId = userId || CoreSites.getCurrentSiteUserId();
 
-        return this.sitesProvider.getCurrentSite().invalidateWsCacheForKey(this.getCompletionCacheKey(courseId, userId));
+        return CoreSites.getCurrentSite().invalidateWsCacheForKey(this.getCompletionCacheKey(courseId, userId));
     }
 
     /**
@@ -157,7 +157,7 @@ export class AddonCourseCompletionProvider {
      * @return True if plugin enabled, false otherwise.
      */
    isPluginViewEnabled(): boolean {
-       return this.sitesProvider.isLoggedIn();
+       return CoreSites.isLoggedIn();
    }
 
     /**
@@ -172,7 +172,7 @@ export class AddonCourseCompletionProvider {
             return Promise.reject(null);
         }
 
-        return this.coursesProvider.getUserCourse(courseId, preferCache).then((course) => {
+        return CoreCourses.getUserCourse(courseId, preferCache).then((course) => {
             if (course) {
                 if (typeof course.enablecompletion != 'undefined' && course.enablecompletion == 0) {
                     // Completion not enabled for the course.
@@ -198,12 +198,12 @@ export class AddonCourseCompletionProvider {
      */
     isPluginViewEnabledForUser(courseId: number, userId?: number): Promise<boolean> {
         // Check if user wants to view his own completion.
-        const currentUserId = this.sitesProvider.getCurrentSiteUserId();
+        const currentUserId = CoreSites.getCurrentSiteUserId();
         let promise;
 
         if (!userId || userId == currentUserId) {
             // Viewing own completion. Get the course to check if it has completion criteria.
-            promise = this.coursesProvider.getUserCourse(courseId, true).then((course): any => {
+            promise = CoreCourses.getUserCourse(courseId, true).then((course): any => {
                 // If the site is returning the completionhascriteria then the user can view his own completion.
                 // We already checked the value in isPluginViewEnabledForCourse.
                 if (course && typeof course.completionhascriteria != 'undefined') {
@@ -227,7 +227,7 @@ export class AddonCourseCompletionProvider {
             return this.getCompletion(courseId, userId, preSets).then(() => {
                 return true;
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WS returned an error, plugin is not enabled.
                     return false;
                 } else {
@@ -255,7 +255,7 @@ export class AddonCourseCompletionProvider {
             courseid: courseId
         };
 
-        return this.sitesProvider.getCurrentSite().write('core_completion_mark_course_self_completed', params)
+        return CoreSites.getCurrentSite().write('core_completion_mark_course_self_completed', params)
                 .then((response: AddonCourseCompletionMarkCourseSelfCompletedResult) => {
 
             if (!response.status) {

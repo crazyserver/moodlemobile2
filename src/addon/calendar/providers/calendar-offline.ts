@@ -19,7 +19,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 /**
  * Service to handle offline calendar events.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCalendarOfflineProvider {
 
     // Variables for database.
@@ -142,7 +142,7 @@ export class AddonCalendarOfflineProvider {
     };
 
     constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -153,7 +153,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteEvent(eventId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions: any = {
                 id: eventId
             };
@@ -175,7 +175,7 @@ export class AddonCalendarOfflineProvider {
         promises.push(this.getAllEditedEventsIds(siteId));
 
         return Promise.all(promises).then((result) => {
-            return this.utils.mergeArraysWithoutDuplicates(result[0], result[1]);
+            return CoreUtils.mergeArraysWithoutDuplicates(result[0], result[1]);
         });
     }
 
@@ -186,7 +186,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved with all the events deleted in offline.
      */
     getAllDeletedEvents(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonCalendarOfflineProvider.DELETED_EVENTS_TABLE);
         });
     }
@@ -212,7 +212,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved with events.
      */
     getAllEditedEvents(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonCalendarOfflineProvider.EVENTS_TABLE);
         });
     }
@@ -239,7 +239,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved with the deleted event.
      */
     getDeletedEvent(eventId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions: any = {
                 id: eventId
             };
@@ -256,7 +256,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved with the event.
      */
     getEvent(eventId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions: any = {
                 id: eventId
             };
@@ -317,7 +317,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved when done.
      */
     markDeleted(eventId: number, name: string, deleteAll?: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const event = {
                 id: eventId,
                 name: name || '',
@@ -339,7 +339,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved with the stored event.
      */
     saveEvent(eventId: number, data: any, timeCreated?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             timeCreated = timeCreated || Date.now();
 
             const event = {
@@ -378,7 +378,7 @@ export class AddonCalendarOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     unmarkDeleted(eventId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions: any = {
                 id: eventId
             };

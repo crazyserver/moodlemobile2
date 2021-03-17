@@ -20,7 +20,7 @@ import { CoreTagFeedComponent } from '@core/tag/components/feed/feed';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryTagAreaHandler implements CoreTagAreaHandler {
     name = 'AddonModGlossaryTagAreaHandler';
     type = 'mod_glossary/glossary_entries';

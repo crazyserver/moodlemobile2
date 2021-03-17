@@ -54,7 +54,7 @@ export class CoreSitePluginsCompileInitComponent {
             // Load first template.
             if (this.handlerSchema.methodTemplates && this.handlerSchema.methodTemplates.length) {
                 this.content = handler.handlerSchema.methodTemplates[0].html;
-                this.jsData.CONTENT_TEMPLATES = this.utils.objectToKeyValueMap(handler.handlerSchema.methodTemplates, 'id', 'html');
+                this.jsData.CONTENT_TEMPLATES = CoreUtils.objectToKeyValueMap(handler.handlerSchema.methodTemplates, 'id', 'html');
             }
 
             // Pass data from the method result to the component.

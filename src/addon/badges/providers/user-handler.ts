@@ -19,7 +19,7 @@ import { AddonBadgesProvider } from './badges';
 /**
  * Profile badges handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBadgesUserHandler implements CoreUserProfileHandler {
     name = 'AddonBadges';
     priority = 50;

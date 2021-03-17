@@ -19,7 +19,7 @@ import { AddonModQuizAccessRuleHandler } from '../../../providers/access-rules-d
 /**
  * Handler to support secure window access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessSecureWindowHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessSecureWindow';
     ruleName = 'quizaccess_securewindow';

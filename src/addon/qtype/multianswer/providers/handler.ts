@@ -22,7 +22,7 @@ import { AddonQtypeMultiAnswerComponent } from '../component/multianswer';
 /**
  * Handler to support multianswer question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeMultiAnswerHandler implements CoreQuestionHandler {
     name = 'AddonQtypeMultiAnswer';
     type = 'qtype_multianswer';

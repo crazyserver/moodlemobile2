@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to choice list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoiceListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModChoiceListLinkHandler';
 

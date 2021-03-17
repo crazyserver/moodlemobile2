@@ -25,7 +25,7 @@ import { CoreFilterDelegate } from './delegate';
 /**
  * Service to provide filter functionalities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFilterProvider {
 
     protected ROOT_CACHE_KEY = 'mmFilter:';
@@ -72,7 +72,7 @@ export class CoreFilterProvider {
      * @since 3.4
      */
     canGetAvailableInContext(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.canGetAvailableInContextInSite(site);
         });
     }
@@ -85,7 +85,7 @@ export class CoreFilterProvider {
      * @since 3.4
      */
     canGetAvailableInContextInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_filters_get_available_in_context');
     }
@@ -120,7 +120,7 @@ export class CoreFilterProvider {
      * @return Promise resolved with boolean: whether it's disabled.
      */
     async checkFiltersDisabled(siteId?: string): Promise<boolean> {
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         return this.checkFiltersDisabledInSite(site);
     }
@@ -132,7 +132,7 @@ export class CoreFilterProvider {
      * @return Whether it's disabled.
      */
     checkFiltersDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreFilterDelegate');
     }
@@ -224,7 +224,7 @@ export class CoreFilterProvider {
     getAvailableInContexts(contexts: {contextlevel: string, instanceid: number}[], siteId?: string)
             : Promise<CoreFilterClassifiedFilters> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
 
             const result = this.getFromMemoryCache(contexts, site);
@@ -348,7 +348,7 @@ export class CoreFilterProvider {
         if (this.contextsCache[site.getId()]) {
             // Check if we have the contexts in the memory cache.
             const siteContexts = this.contextsCache[site.getId()],
-                isOnline = this.appProvider.isOnline(),
+                isOnline = CoreApp.isOnline(),
                 result: CoreFilterClassifiedFilters = {};
             let allFound = true;
 
@@ -381,7 +381,7 @@ export class CoreFilterProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllAvailableInContext(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getAvailableInContextsPrefixCacheKey());
         });
     }
@@ -394,7 +394,7 @@ export class CoreFilterProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAvailableInContexts(contexts: {contextlevel: string, instanceid: number}[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAvailableInContextsCacheKey(contexts));
         });
     }

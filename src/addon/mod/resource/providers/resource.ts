@@ -25,7 +25,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 /**
  * Service that provides some features for resources.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourceProvider {
     static COMPONENT = 'mmaModResource';
 
@@ -60,7 +60,7 @@ export class AddonModResourceProvider {
     protected getResourceDataByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModResourceResource> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -68,7 +68,7 @@ export class AddonModResourceProvider {
                 cacheKey: this.getResourceCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModResourceProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_resource_get_resources_by_courses', params, preSets)
@@ -109,15 +109,15 @@ export class AddonModResourceProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
         promises.push(this.invalidateResourceData(courseId, siteId));
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModResourceProvider.COMPONENT, moduleId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId, 'resource'));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModResourceProvider.COMPONENT, moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId, 'resource'));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -128,7 +128,7 @@ export class AddonModResourceProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateResourceData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getResourceCacheKey(courseId));
         });
     }
@@ -140,7 +140,7 @@ export class AddonModResourceProvider {
      * @since 3.3
      */
     isGetResourceWSAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_resource_get_resources_by_courses');
+        return CoreSites.wsAvailableInCurrentSite('mod_resource_get_resources_by_courses');
     }
 
     /**
@@ -150,7 +150,7 @@ export class AddonModResourceProvider {
      * @return Promise resolved with true if plugin is enabled, rejected or resolved with false otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.canDownloadFiles();
         });
     }
@@ -168,7 +168,7 @@ export class AddonModResourceProvider {
             resourceid: id
         };
 
-        return this.logHelper.logSingle('mod_resource_view_resource', params, AddonModResourceProvider.COMPONENT, id, name,
+        return CoreCourseLogHelper.logSingle('mod_resource_view_resource', params, AddonModResourceProvider.COMPONENT, id, name,
                 'resource', {}, siteId);
     }
 }

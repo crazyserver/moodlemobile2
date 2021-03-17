@@ -26,7 +26,7 @@ import { AddonWorkshopAssessmentStrategyDelegate } from './assessment-strategy-d
 /**
  * Helper to gather some common functions for workshop.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopHelperProvider {
 
     constructor(
@@ -113,7 +113,7 @@ export class AddonModWorkshopHelperProvider {
      * @return Resolved with the submission, resolved with false if not found.
      */
     getUserSubmission(workshopId: number, options: AddonModWorkshopUserOptions = {}): Promise<any> {
-        const userId = options.userId || this.sitesProvider.getCurrentSiteUserId();
+        const userId = options.userId || CoreSites.getCurrentSiteUserId();
 
         return this.workshopProvider.getSubmissions(workshopId, options).then((submissions) => {
 
@@ -186,7 +186,7 @@ export class AddonModWorkshopHelperProvider {
      * @return Promise resolved when the workshop data is retrieved.
      */
     getReviewerAssessments(workshopId: number, options: AddonModWorkshopUserOptions = {}): Promise<any[]> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         return this.workshopProvider.getReviewerAssessments(workshopId, options).then((assessments) => {
             const promises = [];
@@ -467,7 +467,7 @@ export class AddonModWorkshopHelperProvider {
     prepareAssessmentData(workshop: any, selectedValues: any[], feedbackText: string, feedbackFiles: any[], form: any,
             attachmentsId: number): Promise<any> {
         if (workshop.overallfeedbackmode == 2 && !feedbackText) {
-            return Promise.reject({feedbackauthor: this.translate.instant('core.err_required')});
+            return Promise.reject({feedbackauthor: Translate.instant('core.err_required')});
         }
 
         return this.strategyDelegate.prepareAssessmentData(workshop.strategy, selectedValues, form).then((data) => {
@@ -495,7 +495,7 @@ export class AddonModWorkshopHelperProvider {
         } else {
             value = this.textUtils.roundToDecimals(max * value / 100, decimals);
 
-            return this.utils.formatFloat(value);
+            return CoreUtils.formatFloat(value);
         }
     }
 

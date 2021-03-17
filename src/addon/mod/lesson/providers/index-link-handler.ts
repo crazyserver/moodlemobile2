@@ -24,7 +24,7 @@ import { NavController } from '@ionic/angular';
 /**
  * Handler to treat links to lesson index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModLessonIndexLinkHandler';
 
@@ -54,7 +54,7 @@ export class AddonModLessonIndexLinkHandler extends CoreContentLinksModuleIndexH
                 if (params.userpassword) {
                     this.navigateToModuleWithPassword(parseInt(params.id, 10), courseId, params.userpassword, siteId, navCtrl);
                 } else {
-                    this.courseHelper.navigateToModule(parseInt(params.id, 10), siteId, courseId,
+                    CoreCourseHelper.navigateToModule(parseInt(params.id, 10), siteId, courseId,
                         undefined, undefined, undefined, navCtrl);
                 }
             }
@@ -87,22 +87,22 @@ export class AddonModLessonIndexLinkHandler extends CoreContentLinksModuleIndexH
      */
     protected navigateToModuleWithPassword(moduleId: number, courseId: number, password: string, siteId: string,
                                            navCtrl?: NavController): Promise<any> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Get the module.
-        return this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+        return CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
             courseId = courseId || module.course;
 
             // Store the password so it's automatically used.
             return this.lessonProvider.storePassword(parseInt(module.instance, 10), password, siteId).catch(() => {
                 // Ignore errors.
             }).then(() => {
-                return this.courseHelper.navigateToModule(moduleId, siteId, courseId, module.section,
+                return CoreCourseHelper.navigateToModule(moduleId, siteId, courseId, module.section,
                     undefined, undefined, navCtrl);
             });
         }).catch(() => {
             // Error, go to index page.
-            return this.courseHelper.navigateToModule(moduleId, siteId, courseId, undefined, undefined, undefined, navCtrl);
+            return CoreCourseHelper.navigateToModule(moduleId, siteId, courseId, undefined, undefined, undefined, navCtrl);
         }).finally(() => {
             modal.dismiss();
         });

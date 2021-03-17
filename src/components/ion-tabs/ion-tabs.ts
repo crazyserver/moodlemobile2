@@ -41,7 +41,7 @@ export class CoreIonTabsComponent extends Tabs implements OnDestroy {
      * Whether the tabs have been loaded. If defined, tabs won't be initialized until it's set to true.
      */
     @Input() set loaded(val: boolean) {
-        this._loaded = this.utils.isTrueOrOne(val);
+        this._loaded = CoreUtils.isTrueOrOne(val);
 
         if (this.viewInit && !this.initialized) {
             // Use a setTimeout to make sure the tabs have been loaded.
@@ -180,7 +180,7 @@ export class CoreIonTabsComponent extends Tabs implements OnDestroy {
      * Register back button action.
      */
     protected registerBackButtonAction(): void {
-        this.unregisterBackButtonAction = this.appProvider.registerBackButtonAction(() => {
+        this.unregisterBackButtonAction = CoreApp.registerBackButtonAction(() => {
             let tab = this.previousTab(true);
 
             if (tab) {
@@ -304,7 +304,7 @@ export class CoreIonTabsComponent extends Tabs implements OnDestroy {
             }
 
             // Don't resolve the Promise until the tab is really selected (tabs are initialized).
-            this.selectTabPromiseDefer = this.selectTabPromiseDefer || this.utils.promiseDefer();
+            this.selectTabPromiseDefer = this.selectTabPromiseDefer || CoreUtils.promiseDefer();
 
             return this.selectTabPromiseDefer.promise;
         }
@@ -340,7 +340,7 @@ export class CoreIonTabsComponent extends Tabs implements OnDestroy {
             this.selectedIndex = index;
 
             // Don't resolve the Promise until the tab is really selected (tabs are initialized).
-            this.selectTabPromiseDefer = this.selectTabPromiseDefer || this.utils.promiseDefer();
+            this.selectTabPromiseDefer = this.selectTabPromiseDefer || CoreUtils.promiseDefer();
 
             return this.selectTabPromiseDefer.promise;
         }
@@ -382,9 +382,9 @@ export class CoreIonTabsComponent extends Tabs implements OnDestroy {
             return Promise.resolve();
         } else {
             if (tab.tabTitle) {
-                return this.domUtils.showConfirm(this.translate.instant('core.confirmgotabroot', {name: tab.tabTitle}));
+                return CoreDomUtils.showConfirm(Translate.instant('core.confirmgotabroot', {name: tab.tabTitle}));
             } else {
-                return this.domUtils.showConfirm(this.translate.instant('core.confirmgotabrootdefault'));
+                return CoreDomUtils.showConfirm(Translate.instant('core.confirmgotabrootdefault'));
             }
         }
     }

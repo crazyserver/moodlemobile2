@@ -34,7 +34,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch quizzes.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModQuiz';
     modName = 'quiz';
@@ -115,8 +115,8 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
     protected getAttemptsFeedbackFiles(quiz: any, attempts: any[], siteId?: string): Promise<any[]> {
         // We have quiz data, now we'll get specific data for each attempt.
         const promises = [];
-        const getInlineFiles = this.sitesProvider.getCurrentSite() &&
-                this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.2');
+        const getInlineFiles = CoreSites.getCurrentSite() &&
+                CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.2');
         let files = [];
 
         attempts.forEach((attempt) => {
@@ -134,7 +134,7 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
                                 files = files.concat(feedback.feedbackinlinefiles);
                             } else if (feedback.feedbacktext && !getInlineFiles) {
                                 files = files.concat(
-                                    this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(feedback.feedbacktext));
+                                    CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(feedback.feedbacktext));
                             }
                     }));
                 }
@@ -219,12 +219,12 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Whether the module can be downloaded. The promise should never be rejected.
      */
     isDownloadable(module: any, courseId: number): boolean | Promise<boolean> {
-        if (this.sitesProvider.getCurrentSite().isOfflineDisabled()) {
+        if (CoreSites.getCurrentSite().isOfflineDisabled()) {
             // Don't allow downloading the quiz if offline is disabled to prevent wasting a lot of data when opening it.
             return false;
         }
 
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         return this.quizProvider.getQuiz(courseId, module.id, {siteId}).then((quiz) => {
             if (quiz.allowofflineattempts !== 1 || quiz.hasquestions === 0) {
@@ -318,14 +318,14 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
                 attempts = atts;
 
                 return this.getAttemptsFeedbackFiles(quiz, attempts, siteId).then((attemptFiles) => {
-                    return this.filepoolProvider.addFilesToQueue(siteId, attemptFiles, AddonModQuizProvider.COMPONENT, module.id);
+                    return CoreFilepool.addFilesToQueue(siteId, attemptFiles, AddonModQuizProvider.COMPONENT, module.id);
                 });
             }));
             promises.push(this.quizProvider.getAttemptAccessInformation(quiz.id, 0, modOptions).then((info) => {
                 attemptAccessInfo = info;
             }));
 
-            promises.push(this.filepoolProvider.addFilesToQueue(siteId, introFiles, AddonModQuizProvider.COMPONENT, module.id));
+            promises.push(CoreFilepool.addFilesToQueue(siteId, introFiles, AddonModQuizProvider.COMPONENT, module.id));
 
             return Promise.all(promises);
         }).then(() => {
@@ -361,13 +361,13 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
                     attempts = atts;
 
                     return this.getAttemptsFeedbackFiles(quiz, attempts, siteId).then((attemptFiles) => {
-                        return this.filepoolProvider.addFilesToQueue(siteId, attemptFiles, AddonModQuizProvider.COMPONENT,
+                        return CoreFilepool.addFilesToQueue(siteId, attemptFiles, AddonModQuizProvider.COMPONENT,
                             module.id);
                     });
                 }));
 
                 // Update the download time to prevent detecting the new attempt as an update.
-                promises.push(this.filepoolProvider.updatePackageDownloadTime(siteId, AddonModQuizProvider.COMPONENT, module.id)
+                promises.push(CoreFilepool.updatePackageDownloadTime(siteId, AddonModQuizProvider.COMPONENT, module.id)
                         .catch(() => {
                     // Ignore errors.
                 }));
@@ -512,7 +512,7 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Promise resolved when done.
      */
     prefetchQuizAndLastAttempt(quiz: any, askPreflight?: boolean, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
         const modOptions = {
@@ -582,7 +582,7 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Promise resolved when done.
      */
     setStatusAfterPrefetch(quiz: any, options: AddonModQuizSetStatusAfterPrefetchOptions = {}): Promise<any> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
         let status;
@@ -596,7 +596,7 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
         }
 
         // Check the current status of the quiz.
-        promises.push(this.filepoolProvider.getPackageStatus(options.siteId, this.component, quiz.coursemodule).then((stat) => {
+        promises.push(CoreFilepool.getPackageStatus(options.siteId, this.component, quiz.coursemodule).then((stat) => {
             status = stat;
         }));
 
@@ -609,7 +609,7 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
                     isLastFinished = !lastAttempt || this.quizProvider.isAttemptFinished(lastAttempt.state),
                     newStatus = isLastFinished ? CoreConstants.NOT_DOWNLOADED : CoreConstants.DOWNLOADED;
 
-                return this.filepoolProvider.storePackageStatus(options.siteId, newStatus, this.component, quiz.coursemodule);
+                return CoreFilepool.storePackageStatus(options.siteId, newStatus, this.component, quiz.coursemodule);
             }
         });
     }

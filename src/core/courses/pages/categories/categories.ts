@@ -40,7 +40,7 @@ export class CoreCoursesCategoriesPage {
             private domUtils: CoreDomUtilsProvider, private utils: CoreUtilsProvider, translate: TranslateService,
             private sitesProvider: CoreSitesProvider) {
         this.categoryId = navParams.get('categoryId') || 0;
-        this.title = translate.instant('core.courses.categories');
+        this.title = Translate.instant('core.courses.categories');
     }
 
     /**
@@ -58,7 +58,7 @@ export class CoreCoursesCategoriesPage {
      * @return Promise resolved when done.
      */
     protected fetchCategories(): Promise<any> {
-        return this.coursesProvider.getCategories(this.categoryId, true).then((cats) => {
+        return CoreCourses.getCategories(this.categoryId, true).then((cats) => {
             this.currentCategory = undefined;
 
             cats.forEach((cat, index) => {
@@ -78,19 +78,19 @@ export class CoreCoursesCategoriesPage {
                 return a.depth > b.depth ? 1 : -1;
             });
 
-            this.categories = this.utils.formatTree(cats, 'parent', 'id', this.categoryId);
+            this.categories = CoreUtils.formatTree(cats, 'parent', 'id', this.categoryId);
 
             if (this.currentCategory) {
                 this.title = this.currentCategory.name;
 
-                return this.coursesProvider.getCoursesByField('category', this.categoryId).then((courses) => {
+                return CoreCourses.getCoursesByField('category', this.categoryId).then((courses) => {
                     this.courses = courses;
                 }).catch((error) => {
-                    this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
                 });
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcategories', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.courses.errorloadcategories', true);
         });
     }
 
@@ -102,10 +102,10 @@ export class CoreCoursesCategoriesPage {
     refreshCategories(refresher: any): void {
         const promises = [];
 
-        promises.push(this.coursesProvider.invalidateUserCourses());
-        promises.push(this.coursesProvider.invalidateCategories(this.categoryId, true));
-        promises.push(this.coursesProvider.invalidateCoursesByField('category', this.categoryId));
-        promises.push(this.sitesProvider.getCurrentSite().invalidateConfig());
+        promises.push(CoreCourses.invalidateUserCourses());
+        promises.push(CoreCourses.invalidateCategories(this.categoryId, true));
+        promises.push(CoreCourses.invalidateCoursesByField('category', this.categoryId));
+        promises.push(CoreSites.getCurrentSite().invalidateConfig());
 
         Promise.all(promises).finally(() => {
             this.fetchCategories().finally(() => {

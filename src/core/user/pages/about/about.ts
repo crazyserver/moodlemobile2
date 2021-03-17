@@ -46,7 +46,7 @@ export class CoreUserAboutPage {
         this.userId = navParams.get('userId');
         this.courseId = navParams.get('courseId');
 
-        this.siteId = this.sitesProvider.getCurrentSite().getId();
+        this.siteId = CoreSites.getCurrentSite().getId();
     }
 
     /**
@@ -75,7 +75,7 @@ export class CoreUserAboutPage {
             this.user = user;
             this.title = user.fullname;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.user.errorloaduser', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.user.errorloaduser', true);
         });
     }
 

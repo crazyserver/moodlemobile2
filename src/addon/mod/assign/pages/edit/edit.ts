@@ -66,7 +66,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
         this.userId = sitesProvider.getCurrentSiteUserId(); // Right now we can only edit current user's submissions.
         this.isBlind = !!navParams.get('blindId');
 
-        this.editText = translate.instant('addon.mod_assign.editsubmission');
+        this.editText = Translate.instant('addon.mod_assign.editsubmission');
         this.title = this.editText;
     }
 
@@ -92,13 +92,13 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
         // Check if data has changed.
         const changed = await this.hasDataChanged();
         if (changed) {
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
         // Nothing has changed or user confirmed to leave. Clear temporary data from plugins.
         this.assignHelper.clearSubmissionPluginTmpData(this.assign, this.userSubmission, this.getInputData());
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -107,7 +107,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
      * @return Promise resolved when done.
      */
     protected fetchAssignment(): Promise<any> {
-        const currentUserId = this.sitesProvider.getCurrentSiteUserId();
+        const currentUserId = CoreSites.getCurrentSiteUserId();
 
         // Get assignment data.
         return this.assignProvider.getAssignment(this.courseId, this.moduleId).then((assign) => {
@@ -155,7 +155,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
             }).then((response) => {
                 if (!response.lastattempt.canedit) {
                     // Can't edit. Reject.
-                    return Promise.reject(this.translate.instant('core.nopermissions', {$a: this.editText}));
+                    return Promise.reject(Translate.instant('core.nopermissions', {$a: this.editText}));
                 }
 
                 this.userSubmission = this.assignProvider.getSubmissionObjectFromAttempt(this.assign, response.lastattempt);
@@ -177,7 +177,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
                 });
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting assigment data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting assigment data.');
 
             // Leave the player.
             this.leaveWithoutCheck();
@@ -190,7 +190,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
      * @return Input data.
      */
     protected getInputData(): any {
-        return this.domUtils.getDataFromForm(document.forms['addon-mod_assign-edit-form']);
+        return CoreDomUtils.getDataFromForm(document.forms['addon-mod_assign-edit-form']);
     }
 
     /**
@@ -206,7 +206,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
 
         setTimeout(() => {
             if (showModal) {
-                modal = this.domUtils.showModalLoading();
+                modal = CoreDomUtils.showModalLoading();
             }
         }, 100);
 
@@ -263,7 +263,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
                 this.saveSubmission().then(() => {
                     this.leaveWithoutCheck();
                 }).catch((error) => {
-                    this.domUtils.showErrorModalDefault(error, 'Error saving submission.');
+                    CoreDomUtils.showErrorModalDefault(error, 'Error saving submission.');
                 });
             } else {
                 // Nothing to save, just go back.
@@ -281,10 +281,10 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
         const inputData = this.getInputData();
 
         if (this.submissionStatement && (!inputData.submissionstatement || inputData.submissionstatement === 'false')) {
-            throw this.translate.instant('addon.mod_assign.acceptsubmissionstatement');
+            throw Translate.instant('addon.mod_assign.acceptsubmissionstatement');
         }
 
-        let modal = this.domUtils.showModalLoading();
+        let modal = CoreDomUtils.showModalLoading();
         let size;
 
         // Get size to ask for confirmation.
@@ -301,7 +301,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
             // Confirm action.
             await this.fileUploaderHelper.confirmUploadFile(size, true, this.allowOffline);
 
-            modal = this.domUtils.showModalLoading('core.sending', true);
+            modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             const pluginData = await this.prepareSubmissionData(inputData);
             if (!Object.keys(pluginData).length) {
@@ -330,7 +330,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
             }
 
             // Submission saved, trigger events.
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, sent, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, sent, CoreSites.getCurrentSiteId());
 
             const params = {
                 assignmentId: this.assign.id,
@@ -339,12 +339,12 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
             };
 
             CoreEvents.trigger(AddonModAssignProvider.SUBMISSION_SAVED_EVENT, params,
-                    this.sitesProvider.getCurrentSiteId());
+                    CoreSites.getCurrentSiteId());
 
             if (!this.assign.submissiondrafts) {
                 // No drafts allowed, so it was submitted. Trigger event.
                 CoreEvents.trigger(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, params,
-                        this.sitesProvider.getCurrentSiteId());
+                        CoreSites.getCurrentSiteId());
             }
         } finally {
             modal.dismiss();

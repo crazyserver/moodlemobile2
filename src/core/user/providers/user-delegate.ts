@@ -128,7 +128,7 @@ export interface CoreUserProfileHandlerToDisplay {
  * Service to interact with plugins to be shown in user profile. Provides functions to register a plugin
  * and notify an update in the data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserDelegate extends CoreDelegate {
     /**
      * User profile handler type for communication.
@@ -216,16 +216,16 @@ export class CoreUserDelegate extends CoreDelegate {
             navOptions,
             admOptions;
 
-        if (this.coursesProvider.canGetAdminAndNavOptions()) {
+        if (CoreCourses.canGetAdminAndNavOptions()) {
             // Get course options.
-            promise = this.coursesProvider.getUserCourses(true).then((courses) => {
+            promise = CoreCourses.getUserCourses(true).then((courses) => {
                 const courseIds = courses.map((course) => {
                     return course.id;
                 });
 
-                return this.coursesProvider.getCoursesAdminAndNavOptions(courseIds).then((options) => {
+                return CoreCourses.getCoursesAdminAndNavOptions(courseIds).then((options) => {
                     // For backwards compatibility we don't modify the courseId.
-                    const courseIdForOptions = courseId || this.sitesProvider.getCurrentSiteHomeId();
+                    const courseIdForOptions = courseId || CoreSites.getCurrentSiteHomeId();
 
                     navOptions = options.navOptions[courseIdForOptions];
                     admOptions = options.admOptions[courseIdForOptions];
@@ -269,7 +269,7 @@ export class CoreUserDelegate extends CoreDelegate {
                 }));
             }
 
-            return this.utils.allPromises(promises).then(() => {
+            return CoreUtils.allPromises(promises).then(() => {
                 // Sort them by priority.
                 userData.handlers.sort((a, b) => {
                     return b.priority - a.priority;

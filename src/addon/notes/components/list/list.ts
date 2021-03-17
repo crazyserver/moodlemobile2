@@ -66,7 +66,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
                 this.refreshIcon = 'spinner';
                 this.syncIcon = 'spinner';
 
-                this.domUtils.scrollToTop(this.content);
+                CoreDomUtils.scrollToTop(this.content);
                 this.fetchNotes(false);
             }
         }, sitesProvider.getCurrentSiteId());
@@ -124,7 +124,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
                 });
             });
         }).catch((message) => {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }).finally(() => {
             let canDelete = this.notes && this.notes.length > 0;
             if (canDelete && this.type == 'personal') {
@@ -209,15 +209,15 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
         e.preventDefault();
         e.stopPropagation();
 
-        this.domUtils.showDeleteConfirm('addon.notes.deleteconfirm').then(() => {
+        CoreDomUtils.showDeleteConfirm('addon.notes.deleteconfirm').then(() => {
             this.notesProvider.deleteNote(note, this.courseId).then(() => {
                 this.showDelete = false;
 
                 this.refreshNotes(false);
 
-                this.domUtils.showToast('addon.notes.eventnotedeleted', true, 3000);
+                CoreDomUtils.showToast('addon.notes.eventnotedeleted', true, 3000);
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'Delete note failed.');
+                CoreDomUtils.showErrorModalDefault(error, 'Delete note failed.');
             });
         }).catch(() => {
             // User cancelled, nothing to do.
@@ -257,7 +257,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
             this.showSyncWarnings(warnings);
         }).catch((error) => {
             if (showErrors) {
-                this.domUtils.showErrorModalDefault(error, 'core.errorsync', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errorsync', true);
             }
 
             return Promise.reject(null);
@@ -272,7 +272,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
     private showSyncWarnings(warnings: string[]): void {
         const message = this.textUtils.buildMessage(warnings);
         if (message) {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }
     }
 

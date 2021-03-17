@@ -53,10 +53,10 @@ export class CoreH5PIframeComponent implements OnChanges {
     constructor(public elementRef: ElementRef,
             protected pluginFileDelegate: CorePluginFileDelegate) {
 
-        this.logger = CoreLogger.instance.getInstance('CoreH5PIframeComponent');
-        this.site = CoreSites.instance.getCurrentSite();
+        this.logger = CoreLogger.getInstance('CoreH5PIframeComponent');
+        this.site = CoreSites.getCurrentSite();
         this.siteId = this.site.getId();
-        this.siteCanDownload = this.site.canDownloadFiles() && !CoreH5P.instance.isOfflineDisabledInSite();
+        this.siteCanDownload = this.site.canDownloadFiles() && !CoreH5P.isOfflineDisabledInSite();
     }
 
     /**
@@ -79,12 +79,12 @@ export class CoreH5PIframeComponent implements OnChanges {
         let state: string;
 
         if (this.fileUrl) {
-            state = await CoreFilepool.instance.getFileStateByUrl(this.siteId, this.fileUrl);
+            state = await CoreFilepool.getFileStateByUrl(this.siteId, this.fileUrl);
         } else {
             state = CoreConstants.NOT_DOWNLOADABLE;
         }
 
-        if (this.siteCanDownload && CoreFileHelper.instance.isStateDownloaded(state)) {
+        if (this.siteCanDownload && CoreFileHelper.isStateDownloaded(state)) {
             // Package is downloaded, use the local URL.
             localUrl = await this.getLocalUrl();
         }
@@ -94,7 +94,7 @@ export class CoreH5PIframeComponent implements OnChanges {
                 // Local package.
                 this.iframeSrc = localUrl;
             } else {
-                this.onlinePlayerUrl = this.onlinePlayerUrl || CoreH5P.instance.h5pPlayer.calculateOnlinePlayerUrl(
+                this.onlinePlayerUrl = this.onlinePlayerUrl || CoreH5P.h5pPlayer.calculateOnlinePlayerUrl(
                         this.site.getURL(), this.fileUrl, this.displayOptions, this.trackComponent);
 
                 // Never allow downloading in the app. This will only work if the user is allowed to change the params.
@@ -102,13 +102,13 @@ export class CoreH5PIframeComponent implements OnChanges {
                         CoreH5PCore.DISPLAY_OPTION_DOWNLOAD + '=0');
 
                 // Get auto-login URL so the user is automatically authenticated.
-                const url = await CoreSites.instance.getCurrentSite().getAutoLoginUrl(src, false);
+                const url = await CoreSites.getCurrentSite().getAutoLoginUrl(src, false);
 
                 // Add the preventredirect param so the user can authenticate.
-                this.iframeSrc = CoreUrlUtils.instance.addParamsToUrl(url, {preventredirect: false});
+                this.iframeSrc = CoreUrlUtils.addParamsToUrl(url, {preventredirect: false});
             }
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'Error loading H5P package.', true);
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading H5P package.', true);
 
         } finally {
             this.addResizerScript();
@@ -123,21 +123,21 @@ export class CoreH5PIframeComponent implements OnChanges {
      */
     protected async getLocalUrl(): Promise<string> {
         try {
-            const url = await CoreH5P.instance.h5pPlayer.getContentIndexFileUrl(this.fileUrl, this.displayOptions,
+            const url = await CoreH5P.h5pPlayer.getContentIndexFileUrl(this.fileUrl, this.displayOptions,
                     this.trackComponent, this.contextId, this.siteId);
 
             return url;
         } catch (error) {
             // Index file doesn't exist, probably deleted because a lib was updated. Try to create it again.
             try {
-                const path = await CoreFilepool.instance.getInternalUrlByUrl(this.siteId, this.fileUrl);
+                const path = await CoreFilepool.getInternalUrlByUrl(this.siteId, this.fileUrl);
 
-                const file = await CoreFile.instance.getFile(path);
+                const file = await CoreFile.getFile(path);
 
                 await CoreH5PHelper.saveH5P(this.fileUrl, file, this.siteId);
 
                 // File treated. Try to get the index file URL again.
-                const url = await CoreH5P.instance.h5pPlayer.getContentIndexFileUrl(this.fileUrl, this.displayOptions,
+                const url = await CoreH5P.h5pPlayer.getContentIndexFileUrl(this.fileUrl, this.displayOptions,
                         this.trackComponent, this.contextId, this.siteId);
 
                 return url;
@@ -160,7 +160,7 @@ export class CoreH5PIframeComponent implements OnChanges {
         const script = document.createElement('script');
         script.id = 'core-h5p-resizer-script';
         script.type = 'text/javascript';
-        script.src = CoreH5P.instance.h5pPlayer.getResizerScriptUrl();
+        script.src = CoreH5P.h5pPlayer.getResizerScriptUrl();
         document.head.appendChild(script);
     }
 

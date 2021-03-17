@@ -30,7 +30,7 @@ export class CoreViewerImagePage {
     componentId: string | number; // Component ID to use in external-content.
 
     constructor(private viewCtrl: ViewController, params: NavParams, translate: TranslateService) {
-        this.title = params.get('title') || translate.instant('core.imageviewer');
+        this.title = params.get('title') || Translate.instant('core.imageviewer');
         this.image = params.get('image');
         this.component = params.get('component');
         this.componentId = params.get('componentId');

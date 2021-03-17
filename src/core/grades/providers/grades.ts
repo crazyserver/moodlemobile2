@@ -21,7 +21,7 @@ import { CorePushNotificationsProvider } from '@core/pushnotifications/providers
 /**
  * Service to provide grade functionalities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesProvider {
 
     static TYPE_NONE = 0; // Moodle's GRADE_TYPE_NONE.
@@ -95,9 +95,9 @@ export class CoreGradesProvider {
      */
     getGradeItems(courseId: number, userId?: number, groupId?: number, siteId?: string, ignoreCache: boolean = false):
             Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return this.isGradeItemsAvalaible(siteId).then((enabled) => {
@@ -125,7 +125,7 @@ export class CoreGradesProvider {
      */
     getCourseGradesItems(courseId: number, userId?: number, groupId?: number, siteId?: string,
             ignoreCache: boolean = false): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
             groupId = groupId || 0;
 
@@ -165,7 +165,7 @@ export class CoreGradesProvider {
      * @return Promise to be resolved when the grades table is retrieved.
      */
     getCourseGradesTable(courseId: number, userId?: number, siteId?: string, ignoreCache: boolean = false): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug(`Get grades for course '${courseId}' and user '${userId}'`);
@@ -200,7 +200,7 @@ export class CoreGradesProvider {
      * @return Promise to be resolved when the grades are retrieved.
      */
     getCoursesGrades(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             this.logger.debug('Get course grades');
 
             const preSets = {
@@ -225,7 +225,7 @@ export class CoreGradesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllCourseGradesData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getCourseGradesPrefixCacheKey(courseId));
         });
     }
@@ -239,7 +239,7 @@ export class CoreGradesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourseGradesData(courseId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCourseGradesCacheKey(courseId, userId));
@@ -253,7 +253,7 @@ export class CoreGradesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCoursesGradesData(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCoursesGradesCacheKey());
         });
     }
@@ -268,7 +268,7 @@ export class CoreGradesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourseGradesItemsData(courseId: number, userId: number, groupId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCourseGradesItemsCacheKey(courseId, userId, groupId));
         });
     }
@@ -281,7 +281,7 @@ export class CoreGradesProvider {
      * @since  Moodle 3.2
      */
     isCourseGradesEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (!site.wsAvailable('gradereport_overview_get_course_grades')) {
                 return false;
             }
@@ -304,7 +304,7 @@ export class CoreGradesProvider {
             return Promise.reject(null);
         }
 
-        return this.coursesProvider.getUserCourse(courseId, true, siteId).then((course) => {
+        return CoreCourses.getUserCourse(courseId, true, siteId).then((course) => {
             return !(course && typeof course.showgrades != 'undefined' && course.showgrades == 0);
         });
     }
@@ -317,7 +317,7 @@ export class CoreGradesProvider {
      * @since  Moodle 3.2
      */
     isGradeItemsAvalaible(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('gradereport_user_get_grade_items');
         });
     }
@@ -331,12 +331,12 @@ export class CoreGradesProvider {
      * @return Promise resolved when done.
      */
     logCourseGradesView(courseId: number, userId: number, name?: string): Promise<any> {
-        userId = userId || this.sitesProvider.getCurrentSiteUserId();
+        userId = userId || CoreSites.getCurrentSiteUserId();
 
         const wsName = 'gradereport_user_view_grade_report';
 
         if (!name) {
-            this.coursesProvider.getUserCourse(courseId, true).catch(() => {
+            CoreCourses.getUserCourse(courseId, true).catch(() => {
                 return {};
             }).then((course) => {
                 this.pushNotificationsProvider.logViewEvent(courseId, course.fullname || '', 'grades', wsName, {userid: userId});
@@ -345,7 +345,7 @@ export class CoreGradesProvider {
             this.pushNotificationsProvider.logViewEvent(courseId, name, 'grades', wsName, {userid: userId});
         }
 
-        return this.sitesProvider.getCurrentSite().write(wsName, {
+        return CoreSites.getCurrentSite().write(wsName, {
             courseid: courseId,
             userid: userId
         });
@@ -359,7 +359,7 @@ export class CoreGradesProvider {
      */
     logCoursesGradesView(courseId?: number): Promise<any> {
         if (!courseId) {
-            courseId = this.sitesProvider.getCurrentSiteHomeId();
+            courseId = CoreSites.getCurrentSiteHomeId();
         }
 
         const params = {
@@ -368,6 +368,6 @@ export class CoreGradesProvider {
 
         this.pushNotificationsProvider.logViewListEvent('grades', 'gradereport_overview_view_grade_report', params);
 
-        return this.sitesProvider.getCurrentSite().write('gradereport_overview_view_grade_report', params);
+        return CoreSites.getCurrentSite().write('gradereport_overview_view_grade_report', params);
     }
 }

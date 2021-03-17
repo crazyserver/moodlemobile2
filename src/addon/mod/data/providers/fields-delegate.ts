@@ -99,7 +99,7 @@ export interface AddonModDataFieldHandler extends CoreDelegateHandler {
 /**
  * Delegate to register database fields handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldsDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';

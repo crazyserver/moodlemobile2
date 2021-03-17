@@ -25,7 +25,7 @@ import { AddonModH5PActivityIndexComponent } from '../components/index/index';
 /**
  * Handler to support H5P activities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivityModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModH5PActivity';
     modName = 'h5pactivity';
@@ -48,7 +48,7 @@ export class AddonModH5PActivityModuleHandler implements CoreCourseModuleHandler
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabled(): Promise<boolean> {
-        return AddonModH5PActivity.instance.isPluginEnabled();
+        return AddonModH5PActivity.isPluginEnabled();
     }
 
     /**
@@ -62,7 +62,7 @@ export class AddonModH5PActivityModuleHandler implements CoreCourseModuleHandler
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
 
         return {
-            icon: CoreCourse.instance.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_h5pactivity-handler',
             showDownloadButton: true,

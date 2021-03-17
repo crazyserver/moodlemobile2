@@ -59,7 +59,7 @@ export interface PromiseDefer {
 /*
  * "Utils" service with helper functions.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUtilsProvider {
     protected DONT_CLONE = ['[object FileEntry]', '[object DirectoryEntry]', '[object DOMFileSystem]'];
     protected logger: CoreLogger;
@@ -115,7 +115,7 @@ export class CoreUtilsProvider {
 
         if (!this.isWebServiceError(error)) {
             // Local error. Add an extra warning.
-             errorMessage += '<br><br>' + this.translate.instant('core.errorsomedatanotdownloaded');
+             errorMessage += '<br><br>' + Translate.instant('core.errorsomedatanotdownloaded');
         }
 
         return errorMessage;
@@ -284,7 +284,7 @@ export class CoreUtilsProvider {
     closeInAppBrowser(closeAll?: boolean): void {
         if (this.iabInstance) {
             this.iabInstance.close();
-            if (closeAll && CoreApp.instance.isDesktop()) {
+            if (closeAll && CoreApp.isDesktop()) {
                 require('electron').ipcRenderer.send('closeSecondaryWindows');
             }
         }
@@ -359,7 +359,7 @@ export class CoreUtilsProvider {
     copyToClipboard(text: string): Promise<any> {
         return this.clipboard.copy(text).then(() => {
             // Show toast using ionicLoading.
-            return this.domUtils.showToast('core.copiedtoclipboard', true);
+            return CoreDomUtils.showToast('core.copiedtoclipboard', true);
         }).catch(() => {
             // Ignore errors.
         });
@@ -548,7 +548,7 @@ export class CoreUtilsProvider {
             return '';
         }
 
-        const localeSeparator = this.translate.instant('core.decsep');
+        const localeSeparator = Translate.instant('core.decsep');
 
         // Convert float to string.
         float += '';
@@ -631,7 +631,7 @@ export class CoreUtilsProvider {
      */
     getCountryName(code: string): string {
         const countryKey = 'assets.countries.' + code,
-            countryName = this.translate.instant(countryKey);
+            countryName = Translate.instant(countryKey);
 
         return countryName !== countryKey ? countryName : code;
     }
@@ -650,7 +650,7 @@ export class CoreUtilsProvider {
             keys.forEach((key) => {
                 if (key.indexOf('assets.countries.') === 0) {
                     const code = key.replace('assets.countries.', '');
-                    countries[code] = this.translate.instant(key);
+                    countries[code] = Translate.instant(key);
                 }
             });
 
@@ -780,7 +780,7 @@ export class CoreUtilsProvider {
         for (let i = 0; i < files.length; i++) {
             const name = files[i].filename || files[i].name;
             if (names.indexOf(name) > -1) {
-                return this.translate.instant('core.filenameexist', { $a: name });
+                return Translate.instant('core.filenameexist', { $a: name });
             } else {
                 names.push(name);
             }
@@ -906,12 +906,12 @@ export class CoreUtilsProvider {
      */
     async openFile(path: string): Promise<void> {
         // Convert the path to a native path if needed.
-        path = CoreFile.instance.unconvertFileSrc(path);
+        path = CoreFile.unconvertFileSrc(path);
 
         const extension = this.mimetypeUtils.getFileExtension(path);
         const mimetype = this.mimetypeUtils.getMimeType(extension);
 
-        if (mimetype == 'text/html' && CoreApp.instance.isAndroid()) {
+        if (mimetype == 'text/html' && CoreApp.isAndroid()) {
             // Open HTML local files in InAppBrowser, in system browser some embedded files aren't loaded.
             this.openInApp(path);
 
@@ -933,9 +933,9 @@ export class CoreUtilsProvider {
 
             if (!extension || extension.indexOf('/') > -1 || extension.indexOf('\\') > -1) {
                 // Extension not found.
-                error = this.translate.instant('core.erroropenfilenoextension');
+                error = Translate.instant('core.erroropenfilenoextension');
             } else {
-                error = this.translate.instant('core.erroropenfilenoapp');
+                error = Translate.instant('core.erroropenfilenoapp');
             }
 
             throw error;
@@ -966,7 +966,7 @@ export class CoreUtilsProvider {
             options.allowInlineMediaPlayback = 'yes'; // Allow playing inline videos in iOS.
         }
 
-        if (!options.location && CoreApp.instance.isIOS() && url.indexOf('file://') === 0) {
+        if (!options.location && CoreApp.isIOS() && url.indexOf('file://') === 0) {
             // The URL uses file protocol, don't show it on iOS.
             // In Android we keep it because otherwise we lose the whole toolbar.
             options.location = 'no';
@@ -974,7 +974,7 @@ export class CoreUtilsProvider {
 
         this.iabInstance = this.iab.create(url, '_blank', options);
 
-        if (CoreApp.instance.isDesktop() || CoreApp.instance.isMobile()) {
+        if (CoreApp.isDesktop() || CoreApp.isMobile()) {
             let loadStopSubscription;
             const loadStartUrls = [];
 
@@ -992,7 +992,7 @@ export class CoreUtilsProvider {
                 });
             });
 
-            if (CoreApp.instance.isAndroid()) {
+            if (CoreApp.isAndroid()) {
                 // Load stop is needed with InAppBrowser v3. Custom URL schemes no longer trigger load start, simulate it.
                 loadStopSubscription = this.iabInstance.on('loadstop').subscribe((event) => {
                     // Execute the callback in the Angular zone, so change detection doesn't stop working.
@@ -1026,7 +1026,7 @@ export class CoreUtilsProvider {
      * @param url The URL to open.
      */
     openInBrowser(url: string): void {
-        if (CoreApp.instance.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             // It's a desktop app, use Electron shell library to open the browser.
             const shell = require('electron').shell;
             if (!shell.openExternal(url)) {
@@ -1046,14 +1046,14 @@ export class CoreUtilsProvider {
      * @return Promise resolved when opened.
      */
     openOnlineFile(url: string): Promise<void> {
-        if (CoreApp.instance.isAndroid()) {
+        if (CoreApp.isAndroid()) {
             // In Android we need the mimetype to open it.
             return this.getMimeTypeFromUrl(url).catch(() => {
                 // Error getting mimetype, return undefined.
             }).then((mimetype) => {
                 if (!mimetype) {
                     // Couldn't retrieve mimetype. Return error.
-                    return Promise.reject(this.translate.instant('core.erroropenfilenoextension'));
+                    return Promise.reject(Translate.instant('core.erroropenfilenoextension'));
                 }
 
                 const options = {
@@ -1066,7 +1066,7 @@ export class CoreUtilsProvider {
                     this.logger.error('Error opening online file ' + url + ' with mimetype ' + mimetype);
                     this.logger.error('Error: ', JSON.stringify(error));
 
-                    return Promise.reject(this.translate.instant('core.erroropenfilenoapp'));
+                    return Promise.reject(Translate.instant('core.erroropenfilenoapp'));
                 });
             });
         }
@@ -1414,7 +1414,7 @@ export class CoreUtilsProvider {
         }
 
         localeFloat = localeFloat.replace(' ', ''); // No spaces - those might be used as thousand separators.
-        localeFloat = localeFloat.replace(this.translate.instant('core.decsep'), '.');
+        localeFloat = localeFloat.replace(Translate.instant('core.decsep'), '.');
 
         const parsedFloat = parseFloat(localeFloat);
 
@@ -1478,7 +1478,7 @@ export class CoreUtilsProvider {
      * @return Whether the app can scan QR codes.
      */
     canScanQR(): boolean {
-        return CoreApp.instance.isMobile();
+        return CoreApp.isMobile();
     }
 
     /**
@@ -1507,7 +1507,7 @@ export class CoreUtilsProvider {
      * @return Promise resolved with the QR string, rejected if error or cancelled.
      */
     startScanQR(): Promise<string> {
-        if (!CoreApp.instance.isMobile()) {
+        if (!CoreApp.isMobile()) {
             return Promise.reject('QRScanner isn\'t available in desktop apps.');
         }
 
@@ -1578,7 +1578,7 @@ export class CoreUtilsProvider {
         } else if (typeof data != 'undefined') {
             this.qrScanData.deferred.resolve(data);
         } else {
-            this.qrScanData.deferred.reject(this.domUtils.createCanceledError());
+            this.qrScanData.deferred.reject(CoreDomUtils.createCanceledError());
         }
 
         delete this.qrScanData;

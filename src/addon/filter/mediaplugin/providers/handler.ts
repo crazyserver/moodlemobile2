@@ -22,7 +22,7 @@ import { CoreUrlUtilsProvider } from '@services/utils/url';
 /**
  * Handler to support the Multimedia filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterMediaPluginHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterMediaPluginHandler';
     filterName = 'mediaplugin';

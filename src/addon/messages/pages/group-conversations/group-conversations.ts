@@ -88,7 +88,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
             pushNotificationsDelegate: CorePushNotificationsDelegate, private messagesOffline: AddonMessagesOfflineProvider,
             private userProvider: CoreUserProvider) {
 
-        this.loadingString = translate.instant('core.loading');
+        this.loadingString = Translate.instant('core.loading');
         this.siteId = sitesProvider.getCurrentSiteId();
         this.currentUserId = sitesProvider.getCurrentSiteUserId();
         // Conversation to load.
@@ -127,7 +127,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
 
                 if (isNewer) {
                     // The last message is newer than the previous one, scroll to top to keep viewing the conversation.
-                    this.domUtils.scrollToTop(this.content);
+                    CoreDomUtils.scrollToTop(this.content);
                 }
             }
         }, this.siteId);
@@ -310,7 +310,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
             // Now load the data for the expanded option.
             return this.fetchDataForExpandedOption();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -502,7 +502,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
      */
     loadMoreConversations(option: AddonMessagesGroupConversationOption, infiniteComplete?: any): Promise<void> {
         return this.fetchDataForOption(option, true).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
             option.loadMoreError = true;
         }).finally(() => {
             infiniteComplete && infiniteComplete();
@@ -627,7 +627,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
             this.messagesProvider.invalidateContactRequestsCountCache(this.siteId)
         ];
 
-        return this.utils.allPromises(promises).finally(() => {
+        return CoreUtils.allPromises(promises).finally(() => {
             return this.fetchData(refreshUnreadCounts).finally(() => {
                 if (refresher) {
                     refresher?.detail.complete();
@@ -649,7 +649,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
         } else {
             // Pass getCounts=true to update the counts everytime the user expands an option.
             this.expandOption(option, true).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
             });
         }
     }

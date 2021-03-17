@@ -24,7 +24,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
  * Content links handler for feedback complete questions.
  * Match mod/feedback/complete.php with a valid feedback id.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackCompleteLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModFeedbackCompleteLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModFeedback';
@@ -48,10 +48,10 @@ export class AddonModFeedbackCompleteLinkHandler extends CoreContentLinksHandler
             CoreContentLinksAction[] | Promise<CoreContentLinksAction[]> {
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     moduleId = params.id;
 
-                this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+                CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
                     const stateParams = {
                         module: module,
                         moduleId: module.id,

@@ -19,7 +19,7 @@ import { AddonModScormSyncProvider } from './scorm-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormSyncCronHandler implements CoreCronHandler {
     name = 'AddonModScormSyncCronHandler';
 

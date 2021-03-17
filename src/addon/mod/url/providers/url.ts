@@ -26,7 +26,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 /**
  * Service that provides some features for urls.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModUrlProvider {
     static COMPONENT = 'mmaModUrl';
 
@@ -62,7 +62,7 @@ export class AddonModUrlProvider {
         }
 
         // Detect links to local moodle pages.
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
         if (currentSite && currentSite.containsUrl(url.externalurl)) {
             if (url.externalurl.indexOf('file.php') == -1 && url.externalurl.indexOf('.php') != -1) {
                 // Most probably our moodle page with navigation.
@@ -113,7 +113,7 @@ export class AddonModUrlProvider {
     protected getUrlDataByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModUrlUrl> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -121,7 +121,7 @@ export class AddonModUrlProvider {
                 cacheKey: this.getUrlCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModUrlProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_url_get_urls_by_courses', params, preSets)
@@ -189,14 +189,14 @@ export class AddonModUrlProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
         promises.push(this.invalidateUrlData(courseId, siteId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId, 'url'));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId, 'url'));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -207,7 +207,7 @@ export class AddonModUrlProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUrlData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUrlCacheKey(courseId));
         });
     }
@@ -219,7 +219,7 @@ export class AddonModUrlProvider {
      * @since 3.3
      */
     isGetUrlWSAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_url_get_urls_by_courses');
+        return CoreSites.wsAvailableInCurrentSite('mod_url_get_urls_by_courses');
     }
 
     /**
@@ -235,7 +235,7 @@ export class AddonModUrlProvider {
             urlid: id
         };
 
-        return this.logHelper.logSingle('mod_url_view_url', params, AddonModUrlProvider.COMPONENT, id, name, 'url', {}, siteId);
+        return CoreCourseLogHelper.logSingle('mod_url_view_url', params, AddonModUrlProvider.COMPONENT, id, name, 'url', {}, siteId);
     }
 }
 

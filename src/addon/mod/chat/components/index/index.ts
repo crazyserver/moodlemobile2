@@ -48,7 +48,7 @@ export class AddonModChatIndexComponent extends CoreCourseModuleMainActivityComp
 
         this.loadContent().then(() => {
             this.chatProvider.logView(this.chat.id, this.chat.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -68,13 +68,13 @@ export class AddonModChatIndexComponent extends CoreCourseModuleMainActivityComp
             this.chat = chat;
             this.description = chat.intro;
 
-            const now = this.timeUtils.timestamp();
+            const now = CoreTimeUtils.timestamp();
             const span = chat.chattime - now;
 
             if (chat.chattime && chat.schedule > 0 && span > 0) {
                 this.chatInfo = {
-                    date: this.timeUtils.userDate(chat.chattime * 1000),
-                    fromnow: this.timeUtils.formatTime(span)
+                    date: CoreTimeUtils.userDate(chat.chattime * 1000),
+                    fromnow: CoreTimeUtils.formatTime(span)
                 };
             } else {
                 this.chatInfo = false;

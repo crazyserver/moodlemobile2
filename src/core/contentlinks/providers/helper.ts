@@ -37,7 +37,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service that provides some features regarding content links.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreContentLinksHelperProvider {
     protected logger: CoreLogger;
 
@@ -63,7 +63,7 @@ export class CoreContentLinksHelperProvider {
         let promise;
 
         if (checkRoot) {
-            promise = this.sitesProvider.isStoredRootURL(url, username);
+            promise = CoreSites.isStoredRootURL(url, username);
         } else {
             promise = Promise.resolve({});
         }
@@ -111,13 +111,13 @@ export class CoreContentLinksHelperProvider {
      * @return Promise resolved when done.
      */
     goInSite(navCtrl: NavController, pageName: string, pageParams: any, siteId?: string, checkMenu?: boolean): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const deferred = this.utils.promiseDefer();
+        const deferred = CoreUtils.promiseDefer();
 
         // Execute the code in the Angular zone, so change detection doesn't stop working.
         this.zone.run(() => {
-            if (navCtrl && siteId == this.sitesProvider.getCurrentSiteId()) {
+            if (navCtrl && siteId == CoreSites.getCurrentSiteId()) {
                 if (checkMenu) {
                     // Check if the page is in the main menu.
                     this.mainMenuProvider.isCurrentMainMenuHandler(pageName, pageParams).catch(() => {
@@ -149,7 +149,7 @@ export class CoreContentLinksHelperProvider {
      * @param url URL to treat.
      */
     goToChooseSite(url: string): void {
-        this.appProvider.getRootNavController().setRoot('CoreContentLinksChooseSitePage', { url: url });
+        CoreApp.getRootNavController().setRoot('CoreContentLinksChooseSitePage', { url: url });
     }
 
     /**
@@ -168,7 +168,7 @@ export class CoreContentLinksHelperProvider {
         let promise;
 
         if (checkRoot) {
-            promise = this.sitesProvider.isStoredRootURL(url, username);
+            promise = CoreSites.isStoredRootURL(url, username);
         } else {
             promise = Promise.resolve({});
         }
@@ -185,19 +185,19 @@ export class CoreContentLinksHelperProvider {
             return this.contentLinksDelegate.getActionsFor(url, undefined, username).then((actions) => {
                 const action = this.getFirstValidAction(actions);
                 if (action) {
-                    if (!this.sitesProvider.isLoggedIn()) {
+                    if (!CoreSites.isLoggedIn()) {
                         // No current site. Perform the action if only 1 site found, choose the site otherwise.
                         if (action.sites.length == 1) {
                             action.action(action.sites[0], navCtrl);
                         } else {
                             this.goToChooseSite(url);
                         }
-                    } else if (action.sites.length == 1 && action.sites[0] == this.sitesProvider.getCurrentSiteId()) {
+                    } else if (action.sites.length == 1 && action.sites[0] == CoreSites.getCurrentSiteId()) {
                         // Current site.
                         action.action(action.sites[0], navCtrl);
                     } else {
                         // Not current site or more than one site. Ask for confirmation.
-                        this.domUtils.showConfirm(this.translate.instant('core.contentlinks.confirmurlothersite')).then(() => {
+                        CoreDomUtils.showConfirm(Translate.instant('core.contentlinks.confirmurlothersite')).then(() => {
                             if (action.sites.length == 1) {
                                 action.action(action.sites[0], navCtrl);
                             } else {
@@ -228,7 +228,7 @@ export class CoreContentLinksHelperProvider {
      * @return Promise resolved when done.
      */
     handleRootURL(site: CoreSite, openBrowserRoot?: boolean, checkToken?: boolean): Promise<any> {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         if (currentSite && currentSite.getURL() == site.getURL() && (!checkToken || currentSite.getToken() == site.getToken())) {
             // Already logged in.

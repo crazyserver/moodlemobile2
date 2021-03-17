@@ -19,7 +19,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Service that provides some features regarding course overview.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesDashboardProvider {
 
     constructor(private sitesProvider: CoreSitesProvider) { }
@@ -45,7 +45,7 @@ export class CoreCoursesDashboardProvider {
      * @since 3.6
      */
     getDashboardBlocks(userId?: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     returncontents: 1
                 },
@@ -72,7 +72,7 @@ export class CoreCoursesDashboardProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDashboardBlocks(userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getDashboardBlocksCacheKey(userId));
         });
     }
@@ -85,7 +85,7 @@ export class CoreCoursesDashboardProvider {
      * @since 3.6
      */
     isAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // First check if it's disabled.
             if (this.isDisabledInSite(site)) {
                 return false;
@@ -102,7 +102,7 @@ export class CoreCoursesDashboardProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isDisabledInSite(site);
         });
     }
@@ -114,7 +114,7 @@ export class CoreCoursesDashboardProvider {
      * @return Whether it's disabled.
      */
     isDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreMainMenuDelegate_CoreCoursesDashboard');
     }

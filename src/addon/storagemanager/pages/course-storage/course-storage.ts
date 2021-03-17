@@ -51,7 +51,7 @@ export class AddonStorageManagerCourseStoragePage {
      * View loaded.
      */
     ngOnInit(): void {
-        this.courseProvider.getSections(this.course.id, false, true).then((sections) => {
+        CoreCourse.getSections(this.course.id, false, true).then((sections) => {
             this.courseHelperProvider.addHandlerDataForModules(sections, this.course.id);
             this.sections = sections;
             this.totalSize = 0;
@@ -99,7 +99,7 @@ export class AddonStorageManagerCourseStoragePage {
      */
     async deleteForCourse(): Promise<void> {
         try {
-            await this.domUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
         } catch (error) {
             if (!error.coreCanceled) {
                 throw error;
@@ -129,7 +129,7 @@ export class AddonStorageManagerCourseStoragePage {
      */
     async deleteForSection(section: any): Promise<void> {
         try {
-            await this.domUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
         } catch (error) {
             if (!error.coreCanceled) {
                 throw error;
@@ -159,7 +159,7 @@ export class AddonStorageManagerCourseStoragePage {
         }
 
         try {
-            await this.domUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
         } catch (error) {
             if (!error.coreCanceled) {
                 throw error;
@@ -178,7 +178,7 @@ export class AddonStorageManagerCourseStoragePage {
      * @return Promise<void> Once deleting has finished
      */
     protected deleteModules(modules: any[]): Promise<void> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         const promises = [];
         modules.forEach((module) => {
@@ -197,7 +197,7 @@ export class AddonStorageManagerCourseStoragePage {
         }).catch((error) => {
             modal.dismiss();
 
-            this.domUtils.showErrorModalDefault(error, this.translate.instant('core.errordeletefile'));
+            CoreDomUtils.showErrorModalDefault(error, Translate.instant('core.errordeletefile'));
         }).finally(() => {
             // @TODO This is a workaround that should be more specific solving MOBILE-3305.
             // Also should take into account all modules are not downloaded.
@@ -217,6 +217,6 @@ export class AddonStorageManagerCourseStoragePage {
         // Also should take into account all modules are not downloaded.
         // Check after MOBILE-3188 is integrated.
 
-        this.courseProvider.setCourseStatus(this.course.id, CoreConstants.NOT_DOWNLOADED);
+        CoreCourse.setCourseStatus(this.course.id, CoreConstants.NOT_DOWNLOADED);
     }
 }

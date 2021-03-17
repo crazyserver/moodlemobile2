@@ -21,7 +21,7 @@ import { AddonBadgesProvider } from './badges';
 /**
  * Handler to treat links to user badges page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBadgesMyBadgesLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonBadgesMyBadgesLinkHandler';
     featureName = 'CoreUserDelegate_AddonBadges';

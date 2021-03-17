@@ -60,7 +60,7 @@ export class AddonBlockSiteMainMenuComponent extends CoreBlockBaseComponent impl
     protected invalidateContent(): Promise<any> {
         const promises = [];
 
-        promises.push(this.courseProvider.invalidateSections(this.siteHomeId));
+        promises.push(CoreCourse.invalidateSections(this.siteHomeId));
         promises.push(this.siteHomeProvider.invalidateNewsForum(this.siteHomeId));
 
         if (this.mainMenuBlock && this.mainMenuBlock.modules) {
@@ -77,15 +77,15 @@ export class AddonBlockSiteMainMenuComponent extends CoreBlockBaseComponent impl
      * @return Promise resolved when done.
      */
     protected fetchContent(): Promise<any> {
-        return this.courseProvider.getSections(this.siteHomeId, false, true).then((sections) => {
+        return CoreCourse.getSections(this.siteHomeId, false, true).then((sections) => {
             this.mainMenuBlock = sections.find((section) => section.section == 0);
 
             if (this.mainMenuBlock) {
-                this.mainMenuBlock.hasContent = this.courseHelper.sectionHasContent(this.mainMenuBlock);
-                this.courseHelper.addHandlerDataForModules([this.mainMenuBlock], this.siteHomeId, undefined, undefined, true);
+                this.mainMenuBlock.hasContent = CoreCourseHelper.sectionHasContent(this.mainMenuBlock);
+                CoreCourseHelper.addHandlerDataForModules([this.mainMenuBlock], this.siteHomeId, undefined, undefined, true);
 
                 // Check if Site Home displays announcements. If so, remove it from the main menu block.
-                const currentSite = this.sitesProvider.getCurrentSite(),
+                const currentSite = CoreSites.getCurrentSite(),
                     config = currentSite ? currentSite.getStoredConfig() || {} : {};
                 let hasNewsItem = false;
 

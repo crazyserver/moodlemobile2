@@ -78,7 +78,7 @@ export class CoreLoginCredentialsPage {
             password: ['', Validators.required]
         });
 
-        const canScanQR = CoreUtils.instance.canScanQR();
+        const canScanQR = CoreUtils.canScanQR();
         if (canScanQR) {
             if (typeof CoreConfigConstants['displayqroncredentialscreen'] == 'undefined') {
                 this.showScanQR = this.loginHelper.isFixedUrlSet();
@@ -127,7 +127,7 @@ export class CoreLoginCredentialsPage {
         // If the site is configured with http:// protocol we force that one, otherwise we use default mode.
         const protocol = siteUrl.indexOf('http://') === 0 ? 'http://' : undefined;
 
-        return this.sitesProvider.checkSite(siteUrl, protocol).then((result) => {
+        return CoreSites.checkSite(siteUrl, protocol).then((result) => {
 
             this.siteChecked = true;
             this.siteUrl = result.siteUrl;
@@ -136,7 +136,7 @@ export class CoreLoginCredentialsPage {
             this.treatSiteConfig();
 
             if (result && result.warning) {
-                this.domUtils.showErrorModal(result.warning, true, 4000);
+                CoreDomUtils.showErrorModal(result.warning, true, 4000);
             }
 
             if (this.loginHelper.isSSOLoginNeeded(result.code)) {
@@ -144,7 +144,7 @@ export class CoreLoginCredentialsPage {
                 this.isBrowserSSO = true;
 
                 // Check that there's no SSO authentication ongoing and the view hasn't changed.
-                if (!this.appProvider.isSSOAuthenticationOngoing() && !this.viewLeft) {
+                if (!CoreApp.isSSOAuthenticationOngoing() && !this.viewLeft) {
                     this.loginHelper.confirmAndOpenBrowserForSSOLogin(
                         result.siteUrl, result.code, result.service, result.config && result.config.launchurl);
                 }
@@ -153,7 +153,7 @@ export class CoreLoginCredentialsPage {
             }
 
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             this.pageLoaded = true;
         });
@@ -166,7 +166,7 @@ export class CoreLoginCredentialsPage {
         if (this.siteConfig) {
             this.siteName = CoreConstants.CONFIG.sitename ? CoreConstants.CONFIG.sitename : this.siteConfig.sitename;
             this.logoUrl = this.loginHelper.getLogoUrl(this.siteConfig);
-            this.authInstructions = this.siteConfig.authinstructions || this.translate.instant('core.login.loginsteps');
+            this.authInstructions = this.siteConfig.authinstructions || Translate.instant('core.login.loginsteps');
 
             const disabledFeatures = this.loginHelper.getDisabledFeatures(this.siteConfig);
             this.identityProviders = this.loginHelper.getValidIdentityProviders(this.siteConfig, disabledFeatures);
@@ -196,7 +196,7 @@ export class CoreLoginCredentialsPage {
             e.stopPropagation();
         }
 
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         // Get input data.
         const siteUrl = this.siteUrl,
@@ -216,27 +216,27 @@ export class CoreLoginCredentialsPage {
         }
 
         if (!username) {
-            this.domUtils.showErrorModal('core.login.usernamerequired', true);
+            CoreDomUtils.showErrorModal('core.login.usernamerequired', true);
 
             return;
         }
         if (!password) {
-            this.domUtils.showErrorModal('core.login.passwordrequired', true);
+            CoreDomUtils.showErrorModal('core.login.passwordrequired', true);
 
             return;
         }
 
-        if (!this.appProvider.isOnline()) {
-            this.domUtils.showErrorModal('core.networkerrormsg', true);
+        if (!CoreApp.isOnline()) {
+            CoreDomUtils.showErrorModal('core.networkerrormsg', true);
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Start the authentication process.
-        this.sitesProvider.getUserToken(siteUrl, username, password).then((data) => {
-            return this.sitesProvider.newSite(data.siteUrl, data.token, data.privateToken).then((id) => {
+        CoreSites.getUserToken(siteUrl, username, password).then((data) => {
+            return CoreSites.newSite(data.siteUrl, data.token, data.privateToken).then((id) => {
                 // Reset fields so the data is not in the view anymore.
                 this.credForm.controls['username'].reset();
                 this.credForm.controls['password'].reset();
@@ -256,7 +256,7 @@ export class CoreLoginCredentialsPage {
         }).finally(() => {
             modal.dismiss();
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true);
         });
     }
 
@@ -274,7 +274,7 @@ export class CoreLoginCredentialsPage {
      */
     oauthClicked(provider: any): void {
         if (!this.loginHelper.openBrowserForOAuthLogin(this.siteUrl, provider, this.siteConfig.launchurl)) {
-            this.domUtils.showErrorModal('Invalid data.');
+            CoreDomUtils.showErrorModal('Invalid data.');
         }
     }
 
@@ -290,17 +290,17 @@ export class CoreLoginCredentialsPage {
      */
     showInstructionsAndScanQR(): void {
         // Show some instructions first.
-        this.domUtils.showAlertWithOptions({
-            title: this.translate.instant('core.login.faqwhereisqrcode'),
-            message: this.translate.instant('core.login.faqwhereisqrcodeanswer',
+        CoreDomUtils.showAlertWithOptions({
+            title: Translate.instant('core.login.faqwhereisqrcode'),
+            message: Translate.instant('core.login.faqwhereisqrcodeanswer',
                 {$image: CoreLoginHelperProvider.FAQ_QRCODE_IMAGE_HTML}),
             buttons: [
                 {
-                    text: this.translate.instant('core.cancel'),
+                    text: Translate.instant('core.cancel'),
                     role: 'cancel'
                 },
                 {
-                    text: this.translate.instant('core.next'),
+                    text: Translate.instant('core.next'),
                     handler: (): void => {
                         this.scanQR();
                     }
@@ -316,22 +316,22 @@ export class CoreLoginCredentialsPage {
      */
     async scanQR(): Promise<void> {
         // Scan for a QR code.
-        const text = await CoreUtils.instance.scanQR();
+        const text = await CoreUtils.scanQR();
 
-        if (text && CoreCustomURLSchemes.instance.isCustomURL(text)) {
+        if (text && CoreCustomURLSchemes.isCustomURL(text)) {
             try {
-                await CoreCustomURLSchemes.instance.handleCustomURL(text);
+                await CoreCustomURLSchemes.handleCustomURL(text);
             } catch (error) {
-                CoreCustomURLSchemes.instance.treatHandleCustomURLError(error);
+                CoreCustomURLSchemes.treatHandleCustomURLError(error);
             }
         } else if (text) {
             // Not a custom URL scheme, check if it's a URL scheme to another app.
-            const scheme = CoreUrlUtils.instance.getUrlProtocol(text);
+            const scheme = CoreUrlUtils.getUrlProtocol(text);
 
             if (scheme && scheme != 'http' && scheme != 'https') {
-                this.domUtils.showErrorModal(this.translate.instant('core.errorurlschemeinvalidscheme', {$a: text}));
+                CoreDomUtils.showErrorModal(Translate.instant('core.errorurlschemeinvalidscheme', {$a: text}));
             } else {
-                this.domUtils.showErrorModal('core.login.errorqrnoscheme', true);
+                CoreDomUtils.showErrorModal('core.login.errorqrnoscheme', true);
             }
         }
     }

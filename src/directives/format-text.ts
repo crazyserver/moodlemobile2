@@ -179,7 +179,7 @@ export class CoreFormatTextDirective implements OnChanges {
             container.classList.add('atto_image_button_text-bottom');
         }
 
-        this.domUtils.wrapElement(img, container);
+        CoreDomUtils.wrapElement(img, container);
     }
 
     /**
@@ -211,7 +211,7 @@ export class CoreFormatTextDirective implements OnChanges {
             }
 
             const imgSrc = this.textUtils.escapeHTML(img.getAttribute('data-original-src') || img.getAttribute('src')),
-            label = this.translate.instant('core.openfullimage'),
+            label = Translate.instant('core.openfullimage'),
             anchor = document.createElement('a');
 
             anchor.classList.add('core-image-viewer-icon');
@@ -222,7 +222,7 @@ export class CoreFormatTextDirective implements OnChanges {
             anchor.addEventListener('click', (e: Event) => {
                 e.preventDefault();
                 e.stopPropagation();
-                this.domUtils.viewImage(imgSrc, img.getAttribute('alt'), this.component, this.componentId, true);
+                CoreDomUtils.viewImage(imgSrc, img.getAttribute('alt'), this.component, this.componentId, true);
             });
 
             img.parentNode.appendChild(anchor);
@@ -258,11 +258,11 @@ export class CoreFormatTextDirective implements OnChanges {
      * Display the "Show more" in the element.
      */
     protected displayShowMore(): void {
-        const expandInFullview = this.utils.isTrueOrOne(this.fullOnClick) || false,
+        const expandInFullview = CoreUtils.isTrueOrOne(this.fullOnClick) || false,
             showMoreDiv = document.createElement('div');
 
         showMoreDiv.classList.add('core-show-more');
-        showMoreDiv.innerHTML = this.translate.instant('core.showmore');
+        showMoreDiv.innerHTML = Translate.instant('core.showmore');
         this.element.appendChild(showMoreDiv);
 
         if (expandInFullview) {
@@ -286,7 +286,7 @@ export class CoreFormatTextDirective implements OnChanges {
             return;
         }
 
-        const expandInFullview = this.utils.isTrueOrOne(this.fullOnClick) || false;
+        const expandInFullview = CoreUtils.isTrueOrOne(this.fullOnClick) || false;
 
         if (!expandInFullview && !this.showMoreDisplayed) {
             // Nothing to do on click, just stop.
@@ -303,9 +303,9 @@ export class CoreFormatTextDirective implements OnChanges {
             return;
         } else {
             // Open a new state with the contents.
-            const filter = typeof this.filter != 'undefined' ? this.utils.isTrueOrOne(this.filter) : undefined;
+            const filter = typeof this.filter != 'undefined' ? CoreUtils.isTrueOrOne(this.filter) : undefined;
 
-            this.textUtils.viewText(this.fullTitle || this.translate.instant('core.description'), this.text, {
+            this.textUtils.viewText(this.fullTitle || Translate.instant('core.description'), this.text, {
                 component: this.component,
                 componentId: this.componentId,
                 filter: filter,
@@ -342,7 +342,7 @@ export class CoreFormatTextDirective implements OnChanges {
             this.element.setAttribute('maxHeight', String(this.maxHeight));
         }
         if (!this.element.getAttribute('singleLine')) {
-            this.element.setAttribute('singleLine', String(this.utils.isTrueOrOne(this.singleLine)));
+            this.element.setAttribute('singleLine', String(CoreUtils.isTrueOrOne(this.singleLine)));
         }
 
         this.text = this.text ? this.text.trim() : '';
@@ -356,7 +356,7 @@ export class CoreFormatTextDirective implements OnChanges {
                     (this.fullOnClick || (window.innerWidth < 576 || window.innerHeight < 576))) { // Don't collapse in big screens.
 
                 // Move the children to the current element to be able to calculate the height.
-                this.domUtils.moveChildren(result.div, this.element);
+                CoreDomUtils.moveChildren(result.div, this.element);
 
                 // Calculate the height now.
                 this.calculateHeight();
@@ -367,14 +367,14 @@ export class CoreFormatTextDirective implements OnChanges {
                 if (!this.loadingChangedListener) {
                     // Recalculate the height if a parent core-loading displays the content.
                     this.loadingChangedListener = CoreEvents.on(CoreEvents.CORE_LOADING_CHANGED, (data) => {
-                        if (data.loaded && this.domUtils.closest(this.element.parentElement, '#' + data.uniqueId)) {
+                        if (data.loaded && CoreDomUtils.closest(this.element.parentElement, '#' + data.uniqueId)) {
                             // The format-text is inside the loading, re-calculate the height.
                             this.calculateHeight();
                         }
                     });
                 }
             } else {
-                this.domUtils.moveChildren(result.div, this.element);
+                CoreDomUtils.moveChildren(result.div, this.element);
 
                 // Add magnifying glasses to images.
                 this.addMagnifyingGlasses();
@@ -408,7 +408,7 @@ export class CoreFormatTextDirective implements OnChanges {
         let site: CoreSite;
 
         // Retrieve the site since it might be needed later.
-        return this.sitesProvider.getSite(this.siteId).catch(() => {
+        return CoreSites.getSite(this.siteId).catch(() => {
             // Error getting the site. This probably means that there is no current site and no siteId was supplied.
         }).then((siteInstance: CoreSite) => {
             site = siteInstance;
@@ -422,14 +422,14 @@ export class CoreFormatTextDirective implements OnChanges {
             }
 
             const filter = typeof this.filter == 'undefined' ?
-                    !!(this.contextLevel && typeof this.contextInstanceId != 'undefined') : this.utils.isTrueOrOne(this.filter);
+                    !!(this.contextLevel && typeof this.contextInstanceId != 'undefined') : CoreUtils.isTrueOrOne(this.filter);
 
             result.options = {
-                clean: this.utils.isTrueOrOne(this.clean),
-                singleLine: this.utils.isTrueOrOne(this.singleLine),
+                clean: CoreUtils.isTrueOrOne(this.clean),
+                singleLine: CoreUtils.isTrueOrOne(this.singleLine),
                 highlight: this.highlight,
                 courseId: this.courseId,
-                wsNotFiltered: this.utils.isTrueOrOne(this.wsNotFiltered)
+                wsNotFiltered: CoreUtils.isTrueOrOne(this.wsNotFiltered)
             };
 
             if (filter) {
@@ -489,7 +489,7 @@ export class CoreFormatTextDirective implements OnChanges {
                         externalImages.push(externalImage);
                     }
 
-                    if (this.utils.isTrueOrOne(this.adaptImg) && !img.classList.contains('icon')) {
+                    if (CoreUtils.isTrueOrOne(this.adaptImg) && !img.classList.contains('icon')) {
                         this.adaptImage(img);
                     }
                 });
@@ -540,13 +540,13 @@ export class CoreFormatTextDirective implements OnChanges {
                 this.iframeUtils.treatFrame(frame, false, navCtrl);
             });
 
-            this.domUtils.handleBootstrapTooltips(div);
+            CoreDomUtils.handleBootstrapTooltips(div);
 
             // Wait for images to load.
             let promise: Promise<any> = null;
             if (externalImages.length) {
                 // Automatically reject the promise after 5 seconds to prevent blocking the user forever.
-                promise = this.utils.timeoutPromise(this.utils.allPromises(externalImages.map((externalImage): any => {
+                promise = CoreUtils.timeoutPromise(CoreUtils.allPromises(externalImages.map((externalImage): any => {
                     if (externalImage.loaded) {
                         // Image has already been loaded, no need to wait.
                         return Promise.resolve();
@@ -580,16 +580,16 @@ export class CoreFormatTextDirective implements OnChanges {
      * @return The width of the element in pixels. When 0 is returned it means the element is not visible.
      */
     protected getElementWidth(element: HTMLElement): number {
-        let width = this.domUtils.getElementWidth(element);
+        let width = CoreDomUtils.getElementWidth(element);
 
         if (!width) {
             // All elements inside are floating or inline. Change display mode to allow calculate the width.
-            const parentWidth = this.domUtils.getElementWidth(element.parentNode, true, false, false, true),
+            const parentWidth = CoreDomUtils.getElementWidth(element.parentNode, true, false, false, true),
                 previousDisplay = getComputedStyle(element, null).display;
 
             element.style.display = 'inline-block';
 
-            width = this.domUtils.getElementWidth(element);
+            width = CoreDomUtils.getElementWidth(element);
 
             // If width is incorrectly calculated use parent width instead.
             if (parentWidth > 0 && (!width || width > parentWidth)) {
@@ -609,7 +609,7 @@ export class CoreFormatTextDirective implements OnChanges {
      * @return The height of the element in pixels. When 0 is returned it means the element is not visible.
      */
     protected getElementHeight(element: HTMLElement): number {
-        return this.domUtils.getElementHeight(element) || 0;
+        return CoreDomUtils.getElementHeight(element) || 0;
     }
 
     /**
@@ -667,7 +667,7 @@ export class CoreFormatTextDirective implements OnChanges {
      */
     protected treatIframe(iframe: HTMLIFrameElement, site: CoreSite, canTreatVimeo: boolean, navCtrl: NavController): void {
         const src = iframe.src,
-            currentSite = this.sitesProvider.getCurrentSite();
+            currentSite = CoreSites.getCurrentSite();
 
         this.addMediaAdaptClass(iframe);
 

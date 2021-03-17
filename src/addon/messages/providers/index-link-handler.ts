@@ -22,7 +22,7 @@ import { AddonMessagesProvider } from './messages';
  * Content links handler for messaging index.
  * Match message index URL without params id, user1 or user2.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesIndexLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonMessagesIndexLinkHandler';
     pattern = /\/message\/index\.php((?![\?\&](id|user1|user2)=\d+).)*$/;

@@ -20,7 +20,7 @@ import { AddonModWorkshopAssessmentStrategyNumErrorsComponent } from '../compone
 /**
  * Handler for numerrors assessment strategy plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopAssessmentStrategyNumErrorsHandler implements AddonWorkshopAssessmentStrategyHandler {
     name = 'AddonModWorkshopAssessmentStrategyNumErrors';
     strategyName = 'numerrors';
@@ -57,7 +57,7 @@ export class AddonModWorkshopAssessmentStrategyNumErrorsHandler implements Addon
         const originalValues = [];
 
         form.fields.forEach((field, n) => {
-            field.dimtitle = this.translate.instant('addon.mod_workshop_assessment_numerrors.dimensionnumber', {$a: field.number});
+            field.dimtitle = Translate.instant('addon.mod_workshop_assessment_numerrors.dimensionnumber', {$a: field.number});
 
             if (!form.current[n]) {
                 form.current[n] = {};
@@ -111,7 +111,7 @@ export class AddonModWorkshopAssessmentStrategyNumErrorsHandler implements Addon
                 if (!isNaN(grade) && (grade == 1 || grade == -1)) {
                     data['grade__idx_' + idx] = grade;
                 } else {
-                    errors['grade_' + idx] = this.translate.instant('core.required');
+                    errors['grade_' + idx] = Translate.instant('core.required');
                     hasErrors = true;
                 }
 

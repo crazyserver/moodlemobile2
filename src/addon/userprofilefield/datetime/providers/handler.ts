@@ -20,7 +20,7 @@ import { AddonUserProfileFieldDatetimeComponent } from '../component/datetime';
 /**
  * Datetime user profile field handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonUserProfileFieldDatetimeHandler implements CoreUserProfileFieldHandler {
     name = 'AddonUserProfileFieldDatetime';
     type = 'datetime';
@@ -54,7 +54,7 @@ export class AddonUserProfileFieldDatetimeHandler implements CoreUserProfileFiel
             return {
                 type: 'datetime',
                 name: 'profile_field_' + field.shortname,
-                value: this.timeUtils.convertToTimestamp(formValues[name])
+                value: CoreTimeUtils.convertToTimestamp(formValues[name])
             };
         }
     }

@@ -20,7 +20,7 @@ import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 /**
  * Handler to support interactive question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourInteractiveHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourInteractive';
     type = 'interactive';

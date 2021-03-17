@@ -34,18 +34,18 @@ export class CoreViewerQRScannerPage {
             protected domUtils: CoreDomUtilsProvider,
             protected utils: CoreUtilsProvider) {
 
-        this.title = params.get('title') || translate.instant('core.scanqr');
+        this.title = params.get('title') || Translate.instant('core.scanqr');
 
-        this.utils.startScanQR().then((text) => {
+        CoreUtils.startScanQR().then((text) => {
             // Text captured, return it.
             text = typeof text == 'string' ? text.trim() : '';
 
             this.closeModal(text);
         }).catch((error) => {
-            if (!this.domUtils.isCanceledError(error)) {
+            if (!CoreDomUtils.isCanceledError(error)) {
                 // Show error and stop scanning.
-                this.domUtils.showErrorModalDefault(error, 'An error occurred.');
-                this.utils.stopScanQR();
+                CoreDomUtils.showErrorModalDefault(error, 'An error occurred.');
+                CoreUtils.stopScanQR();
             }
 
             this.closeModal();
@@ -56,7 +56,7 @@ export class CoreViewerQRScannerPage {
      * Cancel scanning.
      */
     cancel(): void {
-        this.utils.stopScanQR();
+        CoreUtils.stopScanQR();
     }
 
     /**
@@ -73,6 +73,6 @@ export class CoreViewerQRScannerPage {
      */
     ionViewWillLeave(): void {
         // If this code is reached and scan hasn't been stopped yet it means the user clicked the back button, cancel.
-        this.utils.stopScanQR();
+        CoreUtils.stopScanQR();
     }
 }

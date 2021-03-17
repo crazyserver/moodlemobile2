@@ -26,7 +26,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for feedbacks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackProvider {
     static COMPONENT = 'mmaModFeedback';
     static FORM_SUBMITTED = 'addon_mod_feedback_form_submitted';
@@ -156,7 +156,7 @@ export class AddonModFeedbackProvider {
 
                 // Merge all values into one array.
                 offlineValuesArray = offlineValuesArray.reduce((a, b) => {
-                    const responses = this.utils.objectToArrayOfObjects(b.responses, 'id', 'value');
+                    const responses = CoreUtils.objectToArrayOfObjects(b.responses, 'id', 'value');
 
                     return a.concat(responses);
                 }, []).map((a) => {
@@ -208,7 +208,7 @@ export class AddonModFeedbackProvider {
      */
     getAllNonRespondents(feedbackId: number, options: AddonModFeedbackGroupOptions = {}, previous?: any): Promise<any> {
 
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
         previous = previous || {
             page: 0,
             users: []
@@ -244,7 +244,7 @@ export class AddonModFeedbackProvider {
      */
     getAllResponsesAnalysis(feedbackId: number, options: AddonModFeedbackGroupOptions = {}, previous?: any): Promise<any> {
 
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
         previous = previous || {
             page: 0,
             attempts: [],
@@ -285,7 +285,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the feedback is retrieved.
      */
     getAnalysis(feedbackId: number, options: AddonModFeedbackGroupOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -293,7 +293,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getAnalysisDataCacheKey(feedbackId, options.groupId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             if (options.groupId) {
@@ -335,7 +335,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getAttempt(feedbackId: number, attemptId: number, options: CoreCourseCommonModWSOptions = {}, previous?: any): Promise<any> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
         previous = previous || {
             page: 0,
             attemptsLoaded: 0,
@@ -403,7 +403,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getCurrentCompletedTimeModified(feedbackId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -411,7 +411,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getCurrentCompletedTimeModifiedDataCacheKey(feedbackId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_current_completed_tmp', params, preSets).then((response) => {
@@ -445,7 +445,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getCurrentValues(feedbackId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -453,7 +453,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getCurrentValuesDataCacheKey(feedbackId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_unfinished_responses', params, preSets).then((response) => {
@@ -495,7 +495,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the feedback is retrieved.
      */
     getFeedbackAccessInformation(feedbackId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -503,7 +503,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getFeedbackAccessInformationDataCacheKey(feedbackId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_feedback_access_information', params, preSets);
@@ -552,7 +552,7 @@ export class AddonModFeedbackProvider {
     protected getFeedbackDataByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<any> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -560,7 +560,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getFeedbackCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModFeedbackProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_feedbacks_by_courses', params, preSets).then((response) => {
@@ -610,7 +610,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getItems(feedbackId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -619,7 +619,7 @@ export class AddonModFeedbackProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_items', params, preSets);
@@ -647,7 +647,7 @@ export class AddonModFeedbackProvider {
         options.groupId = options.groupId || 0;
         options.page = options.page || 0;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
                 groupid: options.groupId,
@@ -657,7 +657,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getNonRespondentsDataCacheKey(feedbackId, options.groupId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_non_respondents', params, preSets);
@@ -694,7 +694,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getPageItems(feedbackId: number, page: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     feedbackid: feedbackId,
                     page: page
@@ -713,7 +713,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getPageItemsWithValues(feedbackId: number, page: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         return this.getPageItems(feedbackId, page, options.siteId).then((response) => {
             return this.fillValues(feedbackId, response.items, options).then((items) => {
@@ -811,7 +811,7 @@ export class AddonModFeedbackProvider {
         options.groupId = options.groupId || 0;
         options.page = options.page || 0;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
                 groupid: options.groupId,
@@ -821,7 +821,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getResponsesAnalysisDataCacheKey(feedbackId, options.groupId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_get_responses_analysis', params, preSets);
@@ -857,7 +857,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getResumePage(feedbackId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -865,7 +865,7 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getResumePageDataCacheKey(feedbackId),
                 component: AddonModFeedbackProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_feedback_launch_feedback', params, preSets).then((response) => {
@@ -897,7 +897,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllFeedbackData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getFeedbackDataPrefixCacheKey(feedbackId));
         });
     }
@@ -910,7 +910,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAnalysisData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getAnalysisDataPrefixCacheKey(feedbackId));
         });
     }
@@ -925,7 +925,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -941,7 +941,7 @@ export class AddonModFeedbackProvider {
 
         promises.push(this.invalidateFiles(moduleId, siteId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -952,7 +952,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCurrentValuesData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCurrentValuesDataCacheKey(feedbackId));
         });
     }
@@ -965,7 +965,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateFeedbackAccessInformationData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getFeedbackAccessInformationDataCacheKey(feedbackId));
         });
     }
@@ -978,7 +978,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateFeedbackData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getFeedbackCacheKey(courseId));
         });
     }
@@ -991,7 +991,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the files are invalidated.
      */
     invalidateFiles(moduleId: number, siteId?: string): Promise<any> {
-        return this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModFeedbackProvider.COMPONENT, moduleId);
+        return CoreFilepool.invalidateFilesByComponent(siteId, AddonModFeedbackProvider.COMPONENT, moduleId);
     }
 
     /**
@@ -1002,7 +1002,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateNonRespondentsData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getNonRespondentsDataPrefixCacheKey(feedbackId));
 
         });
@@ -1016,7 +1016,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateResponsesAnalysisData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getResponsesAnalysisDataPrefixCacheKey(feedbackId));
 
         });
@@ -1030,7 +1030,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateResumePageData(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getResumePageDataCacheKey(feedbackId));
         });
     }
@@ -1043,7 +1043,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     isCompleted(feedbackId: number, options: CoreCourseCommonModWSOptions = {}): Promise<boolean> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 feedbackid: feedbackId,
             };
@@ -1051,10 +1051,10 @@ export class AddonModFeedbackProvider {
                 cacheKey: this.getCompletedDataCacheKey(feedbackId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModFeedbackProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
-            return this.utils.promiseWorks(site.read('mod_feedback_get_last_completed', params, preSets));
+            return CoreUtils.promiseWorks(site.read('mod_feedback_get_last_completed', params, preSets));
         });
     }
 
@@ -1066,7 +1066,7 @@ export class AddonModFeedbackProvider {
      * @since 3.3
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return  site.wsAvailable('mod_feedback_get_feedbacks_by_courses') &&
                     site.wsAvailable('mod_feedback_get_feedback_access_information');
         });
@@ -1087,7 +1087,7 @@ export class AddonModFeedbackProvider {
             moduleviewed: formViewed ? 1 : 0
         };
 
-        return this.logHelper.logSingle('mod_feedback_view_feedback', params, AddonModFeedbackProvider.COMPONENT, id, name,
+        return CoreCourseLogHelper.logSingle('mod_feedback_view_feedback', params, AddonModFeedbackProvider.COMPONENT, id, name,
                 'feedback', {moduleviewed: params.moduleviewed}, siteId);
     }
 
@@ -1101,7 +1101,7 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     processPage(feedbackId: number, page: number, responses: any, options: AddonModFeedbackProcessPageOptions = {}): Promise<any> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -1159,7 +1159,7 @@ export class AddonModFeedbackProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -1167,7 +1167,7 @@ export class AddonModFeedbackProvider {
         // If there's already a response to be sent to the server, discard it first.
         return this.feedbackOffline.deleteFeedbackPageResponses(feedbackId, page, options.siteId).then(() => {
             return this.processPageOnline(feedbackId, page, responses, options.goPrevious, options.siteId).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that responses cannot be submitted.
                     return Promise.reject(error);
                 }
@@ -1189,16 +1189,16 @@ export class AddonModFeedbackProvider {
      * @return Promise resolved when the info is retrieved.
      */
     processPageOnline(feedbackId: number, page: number, responses: any, goPrevious: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     feedbackid: feedbackId,
                     page: page,
-                    responses: this.utils.objectToArrayOfObjects(responses, 'name', 'value'),
+                    responses: CoreUtils.objectToArrayOfObjects(responses, 'name', 'value'),
                     goprevious: goPrevious ? 1 : 0
                 };
 
             return site.write('mod_feedback_process_page', params).catch((error) => {
-                return Promise.reject(this.utils.createFakeWSError(error));
+                return Promise.reject(CoreUtils.createFakeWSError(error));
             }).then((response) => {
                 // Invalidate and update current values because they will change.
                 return this.invalidateCurrentValuesData(feedbackId, site.getId()).then(() => {

@@ -19,7 +19,7 @@ import { CoreBlockDelegate } from '@core/block/providers/delegate';
 /**
  * Service that provides helper functions for blocks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreBlockHelperProvider {
 
     constructor(protected courseProvider: CoreCourseProvider, protected blockDelegate: CoreBlockDelegate) {}
@@ -30,7 +30,7 @@ export class CoreBlockHelperProvider {
      * @return true if enabled, false otherwise.
      */
     canGetCourseBlocks(): boolean {
-        return this.courseProvider.canGetCourseBlocks() && !this.blockDelegate.areBlocksDisabledInCourses();
+        return CoreCourse.canGetCourseBlocks() && !this.blockDelegate.areBlocksDisabledInCourses();
     }
 
     /**
@@ -46,7 +46,7 @@ export class CoreBlockHelperProvider {
             return Promise.resolve([]);
         }
 
-        return this.courseProvider.getCourseBlocks(courseId).then((blocks) => {
+        return CoreCourse.getCourseBlocks(courseId).then((blocks) => {
             const hasSupportedBlock = this.blockDelegate.hasSupportedBlock(blocks);
 
             if (!hasSupportedBlock) {

@@ -21,7 +21,7 @@ import { AddonModForumProvider } from './forum';
 /**
  * Service to handle offline forum.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumOfflineProvider {
 
     // Variables for database.
@@ -126,7 +126,7 @@ export class AddonModForumOfflineProvider {
     constructor(private fileProvider: CoreFileProvider,
             private sitesProvider: CoreSitesProvider,
             private textUtils: CoreTextUtilsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -139,7 +139,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteNewDiscussion(forumId: number, timeCreated: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 forumid: forumId,
                 userid: userId || site.getUserId(),
@@ -160,7 +160,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     getNewDiscussion(forumId: number, timeCreated: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 forumid: forumId,
                 userid: userId || site.getUserId(),
@@ -182,7 +182,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved with discussions.
      */
     getAllNewDiscussions(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModForumOfflineProvider.DISCUSSIONS_TABLE).then(this.parseRecordOptions.bind(this));
         });
     }
@@ -213,7 +213,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getNewDiscussions(forumId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 forumid: forumId,
                 userid: userId || site.getUserId(),
@@ -241,7 +241,7 @@ export class AddonModForumOfflineProvider {
      */
     addNewDiscussion(forumId: number, name: string, courseId: number, subject: string, message: string, options?: any,
             groupId?: number, timeCreated?: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 forumid: forumId,
                 name: name,
@@ -267,7 +267,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteReply(postId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 postid: postId,
                 userid: userId || site.getUserId(),
@@ -284,7 +284,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved with replies.
      */
     getAllReplies(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModForumOfflineProvider.REPLIES_TABLE).then(this.parseRecordOptions.bind(this));
         });
     }
@@ -315,7 +315,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved with replies.
      */
     getForumReplies(forumId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 forumid: forumId,
                 userid: userId || site.getUserId(),
@@ -352,7 +352,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved with discussions.
      */
     getDiscussionReplies(discussionId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 discussionid: discussionId,
                 userid: userId || site.getUserId(),
@@ -380,7 +380,7 @@ export class AddonModForumOfflineProvider {
      */
     replyPost(postId: number, discussionId: number, forumId: number, name: string, courseId: number, subject: string,
             message: string, options?: any, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 postid: postId,
                 discussionid: discussionId,
@@ -406,7 +406,7 @@ export class AddonModForumOfflineProvider {
      * @return Promise resolved with the path.
      */
     getForumFolder(forumId: number, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const siteFolderPath = this.fileProvider.getSiteFolder(site.getId());
 
             return this.textUtils.concatenatePaths(siteFolderPath, 'offlineforum/' + forumId);
@@ -438,7 +438,7 @@ export class AddonModForumOfflineProvider {
      */
     getReplyFolder(forumId: number, postId: number, siteId?: string, userId?: number): Promise<string> {
         return this.getForumFolder(forumId, siteId).then((folderPath) => {
-            return this.sitesProvider.getSite(siteId).then((site) => {
+            return CoreSites.getSite(siteId).then((site) => {
                 userId = userId || site.getUserId();
 
                 return this.textUtils.concatenatePaths(folderPath, 'reply_' + postId + '_' + userId);

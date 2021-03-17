@@ -21,7 +21,7 @@ import { CoreBlockBaseHandler } from '@core/block/classes/base-block-handler';
 /**
  * Block handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockRssClientHandler extends CoreBlockBaseHandler {
     name = 'AddonBlockRssClient';
     blockName = 'rss_client';

@@ -144,7 +144,7 @@ export class CoreChartComponent implements OnDestroy, OnInit, OnChanges {
             clean: true,
             singleLine: true,
             courseId: this.courseId,
-            wsNotFiltered: this.utils.isTrueOrOne(this.wsNotFiltered)
+            wsNotFiltered: CoreUtils.isTrueOrOne(this.wsNotFiltered)
         };
 
         return this.filterHelper.getFilters(this.contextLevel, this.contextInstanceId, options).then((filters) => {

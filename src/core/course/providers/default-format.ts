@@ -21,7 +21,7 @@ import { CoreCourseFormatHandler } from './format-delegate';
 /**
  * Default handler used when the course format doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseFormatDefaultHandler implements CoreCourseFormatHandler {
     name = 'CoreCourseFormatDefault';
     format = 'default';
@@ -121,12 +121,12 @@ export class CoreCourseFormatDefaultHandler implements CoreCourseFormatHandler {
         if (typeof course.marker != 'undefined') {
             // We already have it.
             promise = Promise.resolve(course.marker);
-        } else if (!this.coursesProvider.isGetCoursesByFieldAvailable()) {
+        } else if (!CoreCourses.isGetCoursesByFieldAvailable()) {
             // Cannot get the current section, return all of them.
             return sections[0];
         } else {
             // Try to retrieve the marker.
-            promise = this.coursesProvider.getCourseByField('id', course.id).catch(() => {
+            promise = CoreCourses.getCourseByField('id', course.id).catch(() => {
                 // Ignore errors.
             }).then((course) => {
                 return course && course.marker;
@@ -158,7 +158,7 @@ export class CoreCourseFormatDefaultHandler implements CoreCourseFormatHandler {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateData(course: any, sections: any[]): Promise<any> {
-        return this.coursesProvider.invalidateCoursesByField('id', course.id);
+        return CoreCourses.invalidateCoursesByField('id', course.id);
     }
 
     /**

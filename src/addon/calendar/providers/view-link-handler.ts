@@ -21,7 +21,7 @@ import { AddonCalendarProvider } from './calendar';
 /**
  * Content links handler for calendar view page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCalendarViewLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonCalendarViewLinkHandler';
     pattern = /\/calendar\/view\.php/;

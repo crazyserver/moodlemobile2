@@ -50,7 +50,7 @@ export interface CoreAlert extends Alert {
 /*
  * "Utils" service with helper functions for UI, DOM elements and HTML code.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreDomUtilsProvider {
     // List of input types that support keyboard.
     protected INPUT_SUPPORT_KEYBOARD = ['date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'password',
@@ -145,12 +145,12 @@ export class CoreDomUtilsProvider {
         const readableSize = this.textUtils.bytesToSize(size.size, 2);
 
         const getAvailableBytes = new Promise((resolve): void => {
-            if (CoreApp.instance.isDesktop()) {
+            if (CoreApp.isDesktop()) {
                 // Free space calculation is not supported on desktop.
                 resolve(null);
             } else {
                 this.fileProvider.calculateFreeSpace().then((availableBytes) => {
-                    if (CoreApp.instance.isAndroid()) {
+                    if (CoreApp.isAndroid()) {
                         return availableBytes;
                     } else {
                         // Space calculation is not accurate on iOS, but it gets more accurate when space is lower.
@@ -172,11 +172,11 @@ export class CoreDomUtilsProvider {
                 return '';
             } else {
                 const availableSize = this.textUtils.bytesToSize(availableBytes, 2);
-                if (CoreApp.instance.isAndroid() && size.size > availableBytes - CoreConstants.MINIMUM_FREE_SPACE) {
-                    return Promise.reject(this.translate.instant('core.course.insufficientavailablespace', { size: readableSize }));
+                if (CoreApp.isAndroid() && size.size > availableBytes - CoreConstants.MINIMUM_FREE_SPACE) {
+                    return Promise.reject(Translate.instant('core.course.insufficientavailablespace', { size: readableSize }));
                 }
 
-                return this.translate.instant('core.course.availablespace', {available: availableSize});
+                return Translate.instant('core.course.availablespace', {available: availableSize});
             }
         });
 
@@ -185,25 +185,25 @@ export class CoreDomUtilsProvider {
             limitedThreshold = typeof limitedThreshold == 'undefined' ? CoreConstants.DOWNLOAD_THRESHOLD : limitedThreshold;
 
             let wifiPrefix = '';
-            if (CoreApp.instance.isNetworkAccessLimited()) {
-                wifiPrefix = this.translate.instant('core.course.confirmlimiteddownload');
+            if (CoreApp.isNetworkAccessLimited()) {
+                wifiPrefix = Translate.instant('core.course.confirmlimiteddownload');
             }
 
             if (size.size < 0 || (size.size == 0 && !size.total)) {
                 // Seems size was unable to be calculated. Show a warning.
                 unknownMessage = unknownMessage || 'core.course.confirmdownloadunknownsize';
 
-                return this.showConfirm(wifiPrefix + this.translate.instant(unknownMessage, {availableSpace: availableSpace}));
+                return this.showConfirm(wifiPrefix + Translate.instant(unknownMessage, {availableSpace: availableSpace}));
             } else if (!size.total) {
                 // Filesize is only partial.
 
-                return this.showConfirm(wifiPrefix + this.translate.instant('core.course.confirmpartialdownloadsize',
+                return this.showConfirm(wifiPrefix + Translate.instant('core.course.confirmpartialdownloadsize',
                     { size: readableSize, availableSpace: availableSpace }));
             } else if (alwaysConfirm || size.size >= wifiThreshold ||
-                (CoreApp.instance.isNetworkAccessLimited() && size.size >= limitedThreshold)) {
+                (CoreApp.isNetworkAccessLimited() && size.size >= limitedThreshold)) {
                 message = message || (size.size === 0 ? 'core.course.confirmdownloadzerosize' : 'core.course.confirmdownload');
 
-                return this.showConfirm(wifiPrefix + this.translate.instant(message,
+                return this.showConfirm(wifiPrefix + Translate.instant(message,
                     { size: readableSize, availableSpace: availableSpace }));
             }
 
@@ -375,9 +375,9 @@ export class CoreDomUtilsProvider {
     focusElement(el: HTMLElement): void {
         if (el && el.focus) {
             el.focus();
-            if (CoreApp.instance.isAndroid() && this.supportsInputKeyboard(el)) {
+            if (CoreApp.isAndroid() && this.supportsInputKeyboard(el)) {
                 // On some Android versions the keyboard doesn't open automatically.
-                CoreApp.instance.openKeyboard();
+                CoreApp.openKeyboard();
             }
         }
     }
@@ -633,13 +633,13 @@ export class CoreDomUtilsProvider {
      * @return Title.
      */
     private getErrorTitle(message: string): any {
-        if (message == this.translate.instant('core.networkerrormsg') ||
-                message == this.translate.instant('core.fileuploader.errormustbeonlinetoupload')) {
+        if (message == Translate.instant('core.networkerrormsg') ||
+                message == Translate.instant('core.fileuploader.errormustbeonlinetoupload')) {
 
             return this.sanitizer.bypassSecurityTrustHtml(this.getConnectionWarningIconHtml());
         }
 
-        return this.textUtils.decodeHTML(this.translate.instant('core.error'));
+        return this.textUtils.decodeHTML(Translate.instant('core.error'));
     }
 
     /**
@@ -692,7 +692,7 @@ export class CoreDomUtilsProvider {
             return null;
         }
 
-        let message = this.textUtils.decodeHTML(needsTranslate ? this.translate.instant(error) : error);
+        let message = this.textUtils.decodeHTML(needsTranslate ? Translate.instant(error) : error);
 
         if (extraInfo) {
             message += extraInfo;
@@ -1151,7 +1151,7 @@ export class CoreDomUtilsProvider {
         return this.showAlertWithOptions({
             title: title,
             message,
-            buttons: [buttonText || this.translate.instant('core.ok')]
+            buttons: [buttonText || Translate.instant('core.ok')]
         }, autocloseTime);
     }
 
@@ -1234,9 +1234,9 @@ export class CoreDomUtilsProvider {
      * @return Promise resolved with the alert modal.
      */
     showAlertTranslated(title: string, message: string, buttonText?: string, autocloseTime?: number): Promise<Alert> {
-        title = title ? this.translate.instant(title) : title;
-        message = message ? this.translate.instant(message) : message;
-        buttonText = buttonText ? this.translate.instant(buttonText) : buttonText;
+        title = title ? Translate.instant(title) : title;
+        message = message ? Translate.instant(message) : message;
+        buttonText = buttonText ? Translate.instant(buttonText) : buttonText;
 
         return this.showAlert(title, message, buttonText, autocloseTime);
     }
@@ -1250,8 +1250,8 @@ export class CoreDomUtilsProvider {
      * @return Promise resolved if the user confirms and rejected with a canceled error if he cancels.
      */
     showDeleteConfirm(translateMessage: string = 'core.areyousure', translateArgs: any = {}, options?: any): Promise<any> {
-        return this.showConfirm(this.translate.instant(translateMessage, translateArgs), undefined,
-            this.translate.instant('core.delete'), undefined, options);
+        return this.showConfirm(Translate.instant(translateMessage, translateArgs), undefined,
+            Translate.instant('core.delete'), undefined, options);
     }
 
     /**
@@ -1272,14 +1272,14 @@ export class CoreDomUtilsProvider {
 
             options.buttons = [
                 {
-                    text: cancelText || this.translate.instant('core.cancel'),
+                    text: cancelText || Translate.instant('core.cancel'),
                     role: 'cancel',
                     handler: (): void => {
                         reject(this.createCanceledError());
                     }
                 },
                 {
-                    text: okText || this.translate.instant('core.ok'),
+                    text: okText || Translate.instant('core.ok'),
                     handler: (data: any): void => {
                         resolve(data);
                     }
@@ -1366,9 +1366,9 @@ export class CoreDomUtilsProvider {
      */
     showModalLoading(text?: string, needsTranslate?: boolean): Loading {
         if (!text) {
-            text = this.translate.instant('core.loading');
+            text = Translate.instant('core.loading');
         } else if (needsTranslate) {
-            text = this.translate.instant(text);
+            text = Translate.instant(text);
         }
 
         const loader = this.loadingCtrl.create({
@@ -1410,13 +1410,13 @@ export class CoreDomUtilsProvider {
      */
     showDownloadAppNoticeModal(message: string, link?: string): void {
         const buttons: any[] = [{
-            text: this.translate.instant('core.ok'),
+            text: Translate.instant('core.ok'),
             role: 'cancel'
         }];
 
         if (link) {
             buttons.push({
-                text: this.translate.instant('core.download'),
+                text: Translate.instant('core.download'),
                 handler: (): void => {
                     this.openInBrowser(link);
                 }
@@ -1429,7 +1429,7 @@ export class CoreDomUtilsProvider {
         });
 
         alert.present().then(() => {
-            const isDevice = CoreApp.instance.isAndroid() || CoreApp.instance.isIOS();
+            const isDevice = CoreApp.isAndroid() || CoreApp.isIOS();
             if (!isDevice) {
                 // Treat all anchors so they don't override the app.
                 const alertMessageEl: HTMLElement = alert.pageRef().nativeElement.querySelector('.alert-message');
@@ -1451,7 +1451,7 @@ export class CoreDomUtilsProvider {
     showPrompt(message: string, title?: string, placeholder?: string, type: string = 'password'): Promise<any> {
         return new Promise((resolve, reject): any => {
             placeholder = typeof placeholder == 'undefined' || placeholder == null ?
-                this.translate.instant('core.login.password') : placeholder;
+                Translate.instant('core.login.password') : placeholder;
 
             const options: AlertOptions = {
                 title,
@@ -1465,14 +1465,14 @@ export class CoreDomUtilsProvider {
                 ],
                 buttons: [
                     {
-                        text: this.translate.instant('core.cancel'),
+                        text: Translate.instant('core.cancel'),
                         role: 'cancel',
                         handler: (): void => {
                             reject();
                         }
                     },
                     {
-                        text: this.translate.instant('core.ok'),
+                        text: Translate.instant('core.ok'),
                         handler: (data): void => {
                             resolve(data.promptinput);
                         }
@@ -1520,7 +1520,7 @@ export class CoreDomUtilsProvider {
             dismissOnPageChange: boolean = true): Toast {
 
         if (needsTranslate) {
-            text = this.translate.instant(text);
+            text = Translate.instant(text);
         }
 
         const loader = this.toastCtrl.create({
@@ -1709,7 +1709,7 @@ export class CoreDomUtilsProvider {
 
     // We cannot use CoreUtilsProvider.openInBrowser due to circular dependencies.
     protected openInBrowser(url: string): void {
-        if (CoreApp.instance.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             // It's a desktop app, use Electron shell library to open the browser.
             const shell = require('electron').shell;
             if (!shell.openExternal(url)) {

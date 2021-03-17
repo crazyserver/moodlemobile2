@@ -20,7 +20,7 @@ import { CoreFileUploaderHelperProvider } from './helper';
 /**
  * Handler to take a picture to upload it.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderCameraHandler implements CoreFileUploaderHandler {
     name = 'CoreFileUploaderCamera';
     priority = 1800;
@@ -34,7 +34,7 @@ export class CoreFileUploaderCameraHandler implements CoreFileUploaderHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return this.appProvider.isMobile() || this.appProvider.canGetUserMedia();
+        return CoreApp.isMobile() || CoreApp.canGetUserMedia();
     }
 
     /**
@@ -45,7 +45,7 @@ export class CoreFileUploaderCameraHandler implements CoreFileUploaderHandler {
      */
     getSupportedMimetypes(mimetypes: string[]): string[] {
         // Camera only supports JPEG and PNG.
-        return this.utils.filterByRegexp(mimetypes, /^image\/(jpeg|png)$/);
+        return CoreUtils.filterByRegexp(mimetypes, /^image\/(jpeg|png)$/);
     }
 
     /**

@@ -21,7 +21,7 @@ import { AddonModBookProvider } from './book';
 /**
  * Handler to treat links to book list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModBookListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModBookListLinkHandler';
 

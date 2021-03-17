@@ -61,7 +61,7 @@ export class AddonBlockTimelineComponent extends CoreBlockBaseComponent implemen
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.currentSite = this.sitesProvider.getCurrentSite();
+        this.currentSite = CoreSites.getCurrentSite();
         this.currentSite.getLocalSiteConfig('AddonBlockTimelineFilter', this.filter).then((value) => {
             this.filter = value;
             this.switchFilter();
@@ -82,13 +82,13 @@ export class AddonBlockTimelineComponent extends CoreBlockBaseComponent implemen
 
         promises.push(this.timelineProvider.invalidateActionEventsByTimesort());
         promises.push(this.timelineProvider.invalidateActionEventsByCourses());
-        promises.push(this.coursesProvider.invalidateUserCourses());
+        promises.push(CoreCourses.invalidateUserCourses());
         promises.push(this.courseOptionsDelegate.clearAndInvalidateCoursesOptions());
         if (this.courseIds.length > 0) {
-            promises.push(this.coursesProvider.invalidateCoursesByField('ids', this.courseIds.join(',')));
+            promises.push(CoreCourses.invalidateCoursesByField('ids', this.courseIds.join(',')));
         }
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -113,7 +113,7 @@ export class AddonBlockTimelineComponent extends CoreBlockBaseComponent implemen
      */
     loadMoreTimeline(): Promise<any> {
         return this.fetchMyOverviewTimeline(this.timeline.canLoadMore).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, this.fetchContentDefaultError);
+            CoreDomUtils.showErrorModalDefault(error, this.fetchContentDefaultError);
         });
     }
 
@@ -128,7 +128,7 @@ export class AddonBlockTimelineComponent extends CoreBlockBaseComponent implemen
             course.events = course.events.concat(courseEvents.events);
             course.canLoadMore = courseEvents.canLoadMore;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, this.fetchContentDefaultError);
+            CoreDomUtils.showErrorModalDefault(error, this.fetchContentDefaultError);
         });
     }
 
@@ -151,8 +151,8 @@ export class AddonBlockTimelineComponent extends CoreBlockBaseComponent implemen
      * @return Promise resolved when done.
      */
     protected fetchMyOverviewTimelineByCourses(): Promise<any> {
-        return this.coursesHelper.getUserCoursesWithOptions().then((courses) => {
-            const today = this.timeUtils.timestamp();
+        return CoreCoursesHelper.getUserCoursesWithOptions().then((courses) => {
+            const today = CoreTimeUtils.timestamp();
             courses = courses.filter((course) => {
                 return course.startdate <= today && (!course.enddate || course.enddate >= today);
             });

@@ -21,7 +21,7 @@ import { AddonQtypeShortAnswerComponent } from '../component/shortanswer';
 /**
  * Handler to support short answer question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeShortAnswerHandler implements CoreQuestionHandler {
     name = 'AddonQtypeShortAnswer';
     type = 'qtype_shortanswer';
@@ -81,6 +81,6 @@ export class AddonQtypeShortAnswerHandler implements CoreQuestionHandler {
      * @return Whether they're the same.
      */
     isSameResponse(question: any, prevAnswers: any, newAnswers: any): boolean {
-        return this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
+        return CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
     }
 }

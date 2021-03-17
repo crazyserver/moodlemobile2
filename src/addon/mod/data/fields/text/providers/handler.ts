@@ -19,7 +19,7 @@ import { AddonModDataFieldTextComponent } from '../component/text';
 /**
  * Handler for number data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldTextHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataFieldTextHandler';
     type = 'text';
@@ -99,7 +99,7 @@ export class AddonModDataFieldTextHandler implements AddonModDataFieldHandler {
      */
     getFieldsNotifications(field: any, inputData: any): string | false {
         if (field.required && (!inputData || !inputData.length || !inputData[0].value)) {
-            return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+            return Translate.instant('addon.mod_data.errormustsupplyvalue');
         }
 
         return false;

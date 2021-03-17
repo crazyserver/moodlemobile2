@@ -22,7 +22,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support choice modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoiceModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModChoice';
     modName = 'choice';
@@ -60,7 +60,7 @@ export class AddonModChoiceModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_choice-handler',
             showDownloadButton: true,

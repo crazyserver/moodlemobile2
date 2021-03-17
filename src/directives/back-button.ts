@@ -59,8 +59,8 @@ export class CoreBackButtonDirective implements OnInit, OnDestroy {
      * Set the trasnlated back button text in iOS.
      */
     protected setTranslatedBackButtonText(): void {
-        if (this.host && CoreApp.instance.isIOS()) {
-            this.host.setBackButtonText(this.translate.instant('core.back'));
+        if (this.host && CoreApp.isIOS()) {
+            this.host.setBackButtonText(Translate.instant('core.back'));
         }
     }
 }

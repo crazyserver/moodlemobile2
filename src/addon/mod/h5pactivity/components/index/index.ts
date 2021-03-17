@@ -74,8 +74,8 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
             @Optional() protected content: Content) {
         super(injector, content);
 
-        this.site = this.sitesProvider.getCurrentSite();
-        this.siteCanDownload = this.site.canDownloadFiles() && !CoreH5P.instance.isOfflineDisabledInSite();
+        this.site = CoreSites.getCurrentSite();
+        this.siteCanDownload = this.site.canDownloadFiles() && !CoreH5P.isOfflineDisabledInSite();
 
         // Listen for messages from the iframe.
         this.messageListenerFunction = this.onIframeMessage.bind(this);
@@ -95,7 +95,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * Check the completion.
      */
     protected checkCompletion(): void {
-        this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+        CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
     }
 
     /**
@@ -108,7 +108,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      */
     protected async fetchContent(refresh: boolean = false, sync: boolean = false, showErrors: boolean = false): Promise<void> {
         try {
-            this.h5pActivity = await AddonModH5PActivity.instance.getH5PActivity(this.courseId, this.module.id, {
+            this.h5pActivity = await AddonModH5PActivity.getH5PActivity(this.courseId, this.module.id, {
                 siteId: this.siteId,
             });
 
@@ -130,7 +130,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
 
             if (this.h5pActivity.package && this.h5pActivity.package[0]) {
                 // The online player should use the original file, not the trusted one.
-                this.onlinePlayerUrl = CoreH5P.instance.h5pPlayer.calculateOnlinePlayerUrl(
+                this.onlinePlayerUrl = CoreH5P.h5pPlayer.calculateOnlinePlayerUrl(
                             this.site.getURL(), this.h5pActivity.package[0].fileurl, this.displayOptions, this.trackComponent);
             }
 
@@ -139,7 +139,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
                 this.play();
 
             } else if ((this.state == CoreConstants.NOT_DOWNLOADED || this.state == CoreConstants.OUTDATED) &&
-                    CoreFilepool.instance.shouldDownload(this.deployedFile.filesize) && CoreApp.instance.isOnline()) {
+                    CoreFilepool.shouldDownload(this.deployedFile.filesize) && CoreApp.isOnline()) {
                 // Package is small, download it automatically. Don't block this function for this.
                 this.downloadAutomatically();
             }
@@ -154,7 +154,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * @return Promise resolved when done.
      */
     protected async checkHasOffline(): Promise<void> {
-        this.hasOffline = await CoreXAPIOffline.instance.contextHasStatements(this.h5pActivity.context, this.siteId);
+        this.hasOffline = await CoreXAPIOffline.contextHasStatements(this.h5pActivity.context, this.siteId);
     }
 
     /**
@@ -163,7 +163,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * @return Promise resolved when done.
      */
     protected async fetchAccessInfo(): Promise<void> {
-        this.accessInfo = await AddonModH5PActivity.instance.getAccessInformation(this.h5pActivity.id, {
+        this.accessInfo = await AddonModH5PActivity.getAccessInformation(this.h5pActivity.id, {
             cmId: this.module.id,
             siteId: this.siteId,
         });
@@ -180,7 +180,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
             return;
         }
 
-        this.deployedFile = await AddonModH5PActivity.instance.getDeployedFile(this.h5pActivity, {
+        this.deployedFile = await AddonModH5PActivity.getDeployedFile(this.h5pActivity, {
             displayOptions: this.displayOptions,
             siteId: this.siteId,
         });
@@ -188,10 +188,10 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
         this.fileUrl = this.deployedFile.fileurl;
 
         // Listen for changes in the state.
-        const eventName = await CoreFilepool.instance.getFileEventNameByUrl(this.siteId, this.deployedFile.fileurl);
+        const eventName = await CoreFilepool.getFileEventNameByUrl(this.siteId, this.deployedFile.fileurl);
 
         if (!this.observer) {
-            this.observer = CoreEvents.instance.on(eventName, () => {
+            this.observer = CoreEvents.on(eventName, () => {
                 this.calculateFileState();
             });
         }
@@ -205,7 +205,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * @return Promise resolved when done.
      */
     protected async calculateFileState(): Promise<void> {
-        this.state = await CoreFilepool.instance.getFileStateByUrl(this.siteId, this.deployedFile.fileurl,
+        this.state = await CoreFilepool.getFileStateByUrl(this.siteId, this.deployedFile.fileurl,
                 this.deployedFile.timemodified);
 
         this.showFileState();
@@ -217,7 +217,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * @return Resolved when done.
      */
     protected invalidateContent(): Promise<any> {
-       return AddonModH5PActivity.instance.invalidateActivityData(this.courseId);
+       return AddonModH5PActivity.invalidateActivityData(this.courseId);
     }
 
     /**
@@ -256,15 +256,15 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
         e && e.preventDefault();
         e && e.stopPropagation();
 
-        if (!CoreApp.instance.isOnline()) {
-            CoreDomUtils.instance.showErrorModal('core.networkerrormsg', true);
+        if (!CoreApp.isOnline()) {
+            CoreDomUtils.showErrorModal('core.networkerrormsg', true);
 
             return;
         }
 
         try {
             // Confirm the download if needed.
-            await CoreDomUtils.instance.confirmDownloadSize({ size: this.deployedFile.filesize, total: true });
+            await CoreDomUtils.confirmDownloadSize({ size: this.deployedFile.filesize, total: true });
 
             await this.downloadDeployedFile();
 
@@ -273,12 +273,12 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
             }
 
         } catch (error) {
-            if (CoreDomUtils.instance.isCanceledError(error) || this.isDestroyed) {
+            if (CoreDomUtils.isCanceledError(error) || this.isDestroyed) {
                 // User cancelled or view destroyed, stop.
                 return;
             }
 
-            CoreDomUtils.instance.showErrorModalDefault(error, 'core.errordownloading', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
         }
     }
 
@@ -295,7 +295,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
                 this.play();
             }
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'core.errordownloading', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
         }
     }
 
@@ -309,7 +309,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
         this.progressMessage = 'core.downloading';
 
         try {
-            await CoreFilepool.instance.downloadUrl(this.siteId, this.deployedFile.fileurl, false, this.component, this.componentId,
+            await CoreFilepool.downloadUrl(this.siteId, this.deployedFile.fileurl, false, this.component, this.componentId,
                     this.deployedFile.timemodified, (data) => {
 
                 if (!data) {
@@ -349,7 +349,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
         this.playing = true;
 
         // Mark the activity as viewed.
-        AddonModH5PActivity.instance.logView(this.h5pActivity.id, this.h5pActivity.name, this.siteId);
+        AddonModH5PActivity.logView(this.h5pActivity.id, this.h5pActivity.name, this.siteId);
     }
 
     /**
@@ -375,7 +375,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * @return Promise resolved when done.
      */
     protected async onIframeMessage(event: MessageEvent): Promise<void> {
-        if (!event.data || !CoreXAPI.instance.canPostStatementsInSite(this.site) || !this.isCurrentXAPIPost(event.data)) {
+        if (!event.data || !CoreXAPI.canPostStatementsInSite(this.site) || !this.isCurrentXAPIPost(event.data)) {
             return;
         }
 
@@ -387,7 +387,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
                 siteId: this.site.getId(),
             };
 
-            const sent = await CoreXAPI.instance.postStatements(this.h5pActivity.context, event.data.component,
+            const sent = await CoreXAPI.postStatements(this.h5pActivity.context, event.data.component,
                     JSON.stringify(event.data.statements), options);
 
             this.hasOffline = !sent;
@@ -395,13 +395,13 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
             if (sent) {
                 try {
                     // Invalidate attempts.
-                    await AddonModH5PActivity.instance.invalidateUserAttempts(this.h5pActivity.id, undefined, this.siteId);
+                    await AddonModH5PActivity.invalidateUserAttempts(this.h5pActivity.id, undefined, this.siteId);
                 } catch (error) {
                     // Ignore errors.
                 }
             }
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'Error sending tracking data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error sending tracking data.');
         }
     }
 
@@ -438,7 +438,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
      * @return Promise resolved when done.
      */
     protected sync(): Promise<any> {
-        return AddonModH5PActivitySync.instance.syncActivity(this.h5pActivity.context, this.site.getId());
+        return AddonModH5PActivitySync.syncActivity(this.h5pActivity.context, this.site.getId());
     }
 
     /**

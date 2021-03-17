@@ -102,7 +102,7 @@ export interface AddonModQuizAccessRuleHandler extends CoreDelegateHandler {
 /**
  * Delegate to register access rules for quiz module.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessRuleDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'ruleName';
@@ -144,7 +144,7 @@ export class AddonModQuizAccessRuleDelegate extends CoreDelegate {
             ));
         });
 
-        return this.utils.allPromises(promises).catch(() => {
+        return CoreUtils.allPromises(promises).catch(() => {
             // Never reject.
         });
     }
@@ -193,7 +193,7 @@ export class AddonModQuizAccessRuleDelegate extends CoreDelegate {
             }));
         });
 
-        return this.utils.allPromises(promises).then(() => {
+        return CoreUtils.allPromises(promises).then(() => {
             return isRequired;
         }).catch(() => {
             // Never reject.
@@ -237,7 +237,7 @@ export class AddonModQuizAccessRuleDelegate extends CoreDelegate {
             ));
         });
 
-        return this.utils.allPromises(promises).catch(() => {
+        return CoreUtils.allPromises(promises).catch(() => {
             // Never reject.
         });
     }
@@ -264,7 +264,7 @@ export class AddonModQuizAccessRuleDelegate extends CoreDelegate {
             ));
         });
 
-        return this.utils.allPromises(promises).catch(() => {
+        return CoreUtils.allPromises(promises).catch(() => {
             // Never reject.
         });
     }

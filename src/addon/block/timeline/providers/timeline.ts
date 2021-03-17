@@ -21,7 +21,7 @@ import * as moment from 'moment';
 /**
  * Service that provides some features regarding course overview.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockTimelineProvider {
     static EVENTS_LIMIT = 20;
     static EVENTS_LIMIT_PER_COURSE = 10;
@@ -41,7 +41,7 @@ export class AddonBlockTimelineProvider {
     getActionEventsByCourse(courseId: number, afterEventId?: number, siteId?: string):
             Promise<{ events: AddonCalendarEvent[], canLoadMore: number }> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const time = moment().subtract(14, 'days').unix(), // Check two weeks ago.
                 data: any = {
                     timesortfrom: time,
@@ -88,7 +88,7 @@ export class AddonBlockTimelineProvider {
     getActionEventsByCourses(courseIds: number[], siteId?: string): Promise<{ [courseId: string]:
             { events: AddonCalendarEvent[], canLoadMore: number } }> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const time = moment().subtract(14, 'days').unix(), // Check two weeks ago.
                 data = {
                     timesortfrom: time,
@@ -136,7 +136,7 @@ export class AddonBlockTimelineProvider {
     getActionEventsByTimesort(afterEventId: number, siteId?: string):
             Promise<{ events: AddonCalendarEvent[], canLoadMore: number }> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const time = moment().subtract(14, 'days').unix(), // Check two weeks ago.
                 data: any = {
                     timesortfrom: time,
@@ -204,7 +204,7 @@ export class AddonBlockTimelineProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateActionEventsByCourses(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getActionEventsByCoursesCacheKey());
         });
     }
@@ -216,7 +216,7 @@ export class AddonBlockTimelineProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateActionEventsByTimesort(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getActionEventsByTimesortPrefixCacheKey());
         });
     }
@@ -228,7 +228,7 @@ export class AddonBlockTimelineProvider {
      * @return Promise resolved with true if available, resolved with false or rejected otherwise.
      */
     isAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // First check if dashboard is disabled.
             if (this.dashboardProvider.isDisabledInSite(site)) {
                 return false;

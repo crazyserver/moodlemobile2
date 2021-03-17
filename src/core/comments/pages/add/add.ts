@@ -63,21 +63,21 @@ export class CoreCommentsAddPage {
         e.preventDefault();
         e.stopPropagation();
 
-        this.appProvider.closeKeyboard();
-        const loadingModal = this.domUtils.showModalLoading('core.sending', true);
+        CoreApp.closeKeyboard();
+        const loadingModal = CoreDomUtils.showModalLoading('core.sending', true);
         // Freeze the add comment button.
         this.processing = true;
         this.commentsProvider.addComment(this.content, this.contextLevel, this.instanceId, this.componentName, this.itemId,
                 this.area).then((commentsResponse) => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!commentsResponse, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!commentsResponse, CoreSites.getCurrentSiteId());
 
             this.viewCtrl.dismiss({comments: commentsResponse}).finally(() => {
-                this.domUtils.showToast(commentsResponse ? 'core.comments.eventcommentcreated' : 'core.datastoredoffline', true,
+                CoreDomUtils.showToast(commentsResponse ? 'core.comments.eventcommentcreated' : 'core.datastoredoffline', true,
                     3000);
             });
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
             this.processing = false;
         }).finally(() => {
             loadingModal.dismiss();
@@ -88,7 +88,7 @@ export class CoreCommentsAddPage {
      * Close modal.
      */
     closeModal(): void {
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
         this.viewCtrl.dismiss();
     }
 }

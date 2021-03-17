@@ -38,10 +38,10 @@ export class CoreH5PStorage {
      * @return Promise resolved when done.
      */
     protected async saveLibraries(librariesJsonData: any, folderName: string, siteId?: string): Promise<void> {
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // First of all, try to create the dir where the libraries are stored. This way we don't have to do it for each lib.
-        await CoreFile.instance.createDir(this.h5pCore.h5pFS.getLibrariesFolderPath(siteId));
+        await CoreFile.createDir(this.h5pCore.h5pFS.getLibrariesFolderPath(siteId));
 
         const libraryIds = [];
 
@@ -104,7 +104,7 @@ export class CoreH5PStorage {
                     await this.h5pCore.h5pFS.deleteCachedAssets(removedEntries, siteId);
                 }
 
-                await CoreUtils.instance.allPromises(promises);
+                await CoreUtils.allPromises(promises);
             }
         }));
 
@@ -186,8 +186,8 @@ export class CoreH5PStorage {
             await this.h5pCore.saveContent(content, folderName, fileUrl, siteId);
 
             // Save the content files in their right place in FS.
-            const destFolder = CoreTextUtils.instance.concatenatePaths(CoreFileProvider.TMPFOLDER, 'h5p/' + folderName);
-            const contentPath = CoreTextUtils.instance.concatenatePaths(destFolder, 'content');
+            const destFolder = CoreTextUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, 'h5p/' + folderName);
+            const contentPath = CoreTextUtils.concatenatePaths(destFolder, 'content');
 
             try {
                 await this.h5pCore.h5pFS.saveContent(contentPath, folderName, siteId);

@@ -65,13 +65,13 @@ export class CoreAttachmentsComponent implements OnInit {
         this.maxSize = !isNaN(this.maxSize) && this.maxSize > 0 ? this.maxSize : -1;
 
         if (this.maxSize == -1) {
-            this.maxSizeReadable = this.translate.instant('core.unknown');
+            this.maxSizeReadable = Translate.instant('core.unknown');
         } else {
             this.maxSizeReadable = this.textUtils.bytesToSize(this.maxSize, 2);
         }
 
         if (typeof this.maxSubmissions == 'undefined' || this.maxSubmissions < 0) {
-            this.maxSubmissionsReadable = this.translate.instant('core.unknown');
+            this.maxSubmissionsReadable = Translate.instant('core.unknown');
             this.unlimitedFiles = true;
         } else {
             this.maxSubmissionsReadable = String(this.maxSubmissions);
@@ -80,7 +80,7 @@ export class CoreAttachmentsComponent implements OnInit {
         this.acceptedTypes = this.acceptedTypes && this.acceptedTypes.trim();
 
         if (this.acceptedTypes && this.acceptedTypes != '*') {
-            this.fileTypes = this.fileUploaderProvider.prepareFiletypeList(this.acceptedTypes);
+            this.fileTypes = CoreFileUploader.prepareFiletypeList(this.acceptedTypes);
         }
     }
 
@@ -90,15 +90,15 @@ export class CoreAttachmentsComponent implements OnInit {
     add(): void {
         const allowOffline = this.allowOffline && this.allowOffline !== 'false';
 
-        if (!allowOffline && !this.appProvider.isOnline()) {
-            this.domUtils.showErrorModal('core.fileuploader.errormustbeonlinetoupload', true);
+        if (!allowOffline && !CoreApp.isOnline()) {
+            CoreDomUtils.showErrorModal('core.fileuploader.errormustbeonlinetoupload', true);
         } else {
             const mimetypes = this.fileTypes && this.fileTypes.mimetypes;
 
             this.fileUploaderHelper.selectFile(this.maxSize, allowOffline, undefined, mimetypes).then((result) => {
                 this.files.push(result);
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'Error selecting file.');
+                CoreDomUtils.showErrorModalDefault(error, 'Error selecting file.');
             });
         }
     }
@@ -113,7 +113,7 @@ export class CoreAttachmentsComponent implements OnInit {
         let promise;
 
         if (askConfirm) {
-            promise = this.domUtils.showDeleteConfirm('core.confirmdeletefile');
+            promise = CoreDomUtils.showDeleteConfirm('core.confirmdeletefile');
         } else {
             promise = Promise.resolve();
         }

@@ -31,7 +31,7 @@ import { AddonCalendarHelperProvider } from './helper';
 /**
  * Service to sync calendar.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_calendar_autom_synced';
@@ -97,7 +97,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved when the events are synced or if it doesn't need to be synced.
      */
     syncEventsIfNeeded(siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.isSyncNeeded(AddonCalendarSyncProvider.SYNC_ID, siteId).then((needed) => {
             if (needed) {
@@ -113,7 +113,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncEvents(siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isSyncing(AddonCalendarSyncProvider.SYNC_ID, siteId)) {
             // There's already a sync ongoing for this site, return the promise.
@@ -141,7 +141,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
             if (!eventIds.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
                 return Promise.reject(null);
             }
@@ -152,7 +152,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
                 promises.push(this.syncOfflineEvent(eventId, result, siteId));
             });
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         }).then(() => {
             if (result.updated) {
 
@@ -193,8 +193,8 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
         if (this.syncProvider.isBlocked(AddonCalendarProvider.COMPONENT, eventId, siteId)) {
             this.logger.debug('Cannot sync event ' + eventId + ' because it is blocked.');
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked',
-                    {$a: this.translate.instant('addon.calendar.calendarevent')}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked',
+                    {$a: Translate.instant('addon.calendar.calendarevent')}));
         }
 
         // First of all, check if the event has been deleted.
@@ -225,7 +225,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
                 return Promise.all(promises);
             }).catch((error) => {
 
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that the event cannot be created. Delete it.
                     result.updated = true;
 
@@ -238,8 +238,8 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
 
                     return Promise.all(promises).then(() => {
                         // Event deleted, add a warning.
-                        result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
-                            component: this.translate.instant('addon.calendar.calendarevent'),
+                        result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
+                            component: Translate.instant('addon.calendar.calendarevent'),
                             name: data.name,
                             error: this.textUtils.getErrorMessageFromError(error)
                         }));
@@ -254,7 +254,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
             // Not deleted. Now get the event data.
             return this.calendarOffline.getEvent(eventId, siteId).then((event) => {
                 // Try to send the data.
-                const data = this.utils.clone(event); // Clone the object because it will be modified in the submit function.
+                const data = CoreUtils.clone(event); // Clone the object because it will be modified in the submit function.
 
                 data.description = {
                     text: data.description,
@@ -277,14 +277,14 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
                     // Event sent, delete the offline data.
                     return this.calendarOffline.deleteEvent(event.id, siteId);
                 }).catch((error) => {
-                    if (this.utils.isWebServiceError(error)) {
+                    if (CoreUtils.isWebServiceError(error)) {
                         // The WebService has thrown an error, this means that the event cannot be created. Delete it.
                         result.updated = true;
 
                         return this.calendarOffline.deleteEvent(event.id, siteId).then(() => {
                             // Event deleted, add a warning.
-                            result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
-                                component: this.translate.instant('addon.calendar.calendarevent'),
+                            result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
+                                component: Translate.instant('addon.calendar.calendarevent'),
                                 name: event.name,
                                 error: this.textUtils.getErrorMessageFromError(error)
                             }));

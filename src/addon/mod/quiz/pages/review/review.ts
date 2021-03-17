@@ -107,10 +107,10 @@ export class AddonModQuizReviewPage implements OnInit {
         }
 
         this.loaded = false;
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
 
         this.loadPage(page).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);
         }).finally(() => {
             this.loaded = true;
 
@@ -143,7 +143,7 @@ export class AddonModQuizReviewPage implements OnInit {
                 });
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquiz', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquiz', true);
         });
     }
 
@@ -223,7 +223,7 @@ export class AddonModQuizReviewPage implements OnInit {
      * @param slot Slot of the question to scroll to.
      */
     protected scrollToQuestion(slot: number): void {
-        this.domUtils.scrollToElementBySelector(this.content, '#addon-mod_quiz-question-' + slot);
+        CoreDomUtils.scrollToElementBySelector(this.content, '#addon-mod_quiz-question-' + slot);
     }
 
     /**
@@ -242,11 +242,11 @@ export class AddonModQuizReviewPage implements OnInit {
             const timeTaken = this.attempt.timefinish - this.attempt.timestart;
             if (timeTaken) {
                 // Format time taken.
-                this.attempt.timeTaken = this.timeUtils.formatTime(timeTaken);
+                this.attempt.timeTaken = CoreTimeUtils.formatTime(timeTaken);
 
                 // Calculate overdue time.
                 if (this.quiz.timelimit && timeTaken > this.quiz.timelimit + 60) {
-                    this.attempt.overTime = this.timeUtils.formatTime(timeTaken - this.quiz.timelimit);
+                    this.attempt.overTime = CoreTimeUtils.formatTime(timeTaken - this.quiz.timelimit);
                 }
             }
 
@@ -259,7 +259,7 @@ export class AddonModQuizReviewPage implements OnInit {
                 } else {
                     // Show raw marks only if they are different from the grade (like on the entry page).
                     if (this.quiz.grade != this.quiz.sumgrades) {
-                        this.attempt.readableMark = this.translate.instant('addon.mod_quiz.outofshort', {$a: {
+                        this.attempt.readableMark = Translate.instant('addon.mod_quiz.outofshort', {$a: {
                             grade: this.quizProvider.formatGrade(this.attempt.sumgrades, this.quiz.decimalpoints),
                             maxgrade: this.quizProvider.formatGrade(this.quiz.sumgrades, this.quiz.decimalpoints)
                         }});
@@ -273,9 +273,9 @@ export class AddonModQuizReviewPage implements OnInit {
 
                     if (this.quiz.grade != 100) {
                         gradeObject.percent = this.textUtils.roundToDecimals(this.attempt.sumgrades * 100 / this.quiz.sumgrades, 0);
-                        this.attempt.readableGrade = this.translate.instant('addon.mod_quiz.outofpercent', {$a: gradeObject});
+                        this.attempt.readableGrade = Translate.instant('addon.mod_quiz.outofpercent', {$a: gradeObject});
                     } else {
-                        this.attempt.readableGrade = this.translate.instant('addon.mod_quiz.outof', {$a: gradeObject});
+                        this.attempt.readableGrade = Translate.instant('addon.mod_quiz.outof', {$a: gradeObject});
                     }
                 }
             }
@@ -283,7 +283,7 @@ export class AddonModQuizReviewPage implements OnInit {
             // Treat additional data.
             this.additionalData.forEach((data) => {
                 // Remove help links from additional data.
-                data.content = this.domUtils.removeElementFromHtml(data.content, '.helptooltip');
+                data.content = CoreDomUtils.removeElementFromHtml(data.content, '.helptooltip');
             });
         }
     }

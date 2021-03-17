@@ -20,7 +20,7 @@ import { CoreCourseProvider } from '@core/course/providers/course';
 /**
  * Log cron handler. It will update last access of the user while app is open.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseLogCronHandler implements CoreCronHandler {
     name = 'CoreCourseLogCronHandler';
 
@@ -35,8 +35,8 @@ export class CoreCourseLogCronHandler implements CoreCronHandler {
      * @return Promise resolved when done, rejected if failure.
      */
     execute(siteId?: string, force?: boolean): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-           return this.courseProvider.logView(site.getSiteHomeId(), undefined, site.getId(), site.getInfo().sitename);
+        return CoreSites.getSite(siteId).then((site) => {
+           return CoreCourse.logView(site.getSiteHomeId(), undefined, site.getId(), site.getInfo().sitename);
         });
     }
 

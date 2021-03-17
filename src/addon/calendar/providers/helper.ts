@@ -25,7 +25,7 @@ import * as moment from 'moment';
 /**
  * Service that provides some features regarding lists of courses and categories.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCalendarHelperProvider {
     protected logger: CoreLogger;
 
@@ -133,7 +133,7 @@ export class AddonCalendarHelperProvider {
     formatEventData(e: any): void {
         e.eventIcon = AddonCalendarHelperProvider.EVENTICONS[e.eventtype] || '';
         if (!e.eventIcon) {
-            e.eventIcon = this.courseProvider.getModuleIconSrc(e.modulename);
+            e.eventIcon = CoreCourse.getModuleIconSrc(e.modulename);
             e.moduleIcon = e.eventIcon;
         }
 
@@ -219,7 +219,7 @@ export class AddonCalendarHelperProvider {
      * @return Promise resolved with the response.
      */
     getOfflineMonthWeeks(year: number, month: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Get starting week day user preference, fallback to site configuration.
             const startWeekDay = site.getStoredConfig('calendar_startwday');
 
@@ -386,7 +386,7 @@ export class AddonCalendarHelperProvider {
         const eventCourse = (event.course && event.course.id) || event.courseid;
 
         // Show the event if it is from site home or if it matches the selected course.
-        return eventCourse && (eventCourse == this.sitesProvider.getCurrentSiteHomeId() || eventCourse == courseId);
+        return eventCourse && (eventCourse == CoreSites.getCurrentSiteHomeId() || eventCourse == courseId);
     }
 
     /**
@@ -398,7 +398,7 @@ export class AddonCalendarHelperProvider {
      * @return Resolved when done.
      */
     refreshAfterChangeEvents(events: {event: any, repeated: number}[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const fetchTimestarts = [],
                 invalidateTimestarts = [];
 
@@ -408,7 +408,7 @@ export class AddonCalendarHelperProvider {
             });
 
             // Invalidate the events and get the timestarts so we can invalidate months & days.
-            return this.utils.allPromises([upcomingPromise].concat(events.map((eventData) => {
+            return CoreUtils.allPromises([upcomingPromise].concat(events.map((eventData) => {
 
                 if (eventData.repeated > 1) {
                     if (eventData.event.repeatid) {
@@ -426,7 +426,7 @@ export class AddonCalendarHelperProvider {
                         return this.calendarProvider.getLocalEventsByRepeatIdFromLocalDb(eventData.event.repeatid, site.id)
                                 .then((events) => {
 
-                            return this.utils.allPromises(events.map((event) => {
+                            return CoreUtils.allPromises(events.map((event) => {
                                 return this.calendarProvider.invalidateEvent(event.id);
                             }));
                         });
@@ -454,11 +454,11 @@ export class AddonCalendarHelperProvider {
                 const treatedMonths = {},
                     treatedDays = {};
 
-                return this.utils.allPromises([
+                return CoreUtils.allPromises([
                     this.calendarProvider.invalidateAllUpcomingEvents(),
 
                     // Fetch or invalidate months and days.
-                    this.utils.allPromises(fetchTimestarts.concat(invalidateTimestarts).map((time, index) => {
+                    CoreUtils.allPromises(fetchTimestarts.concat(invalidateTimestarts).map((time, index) => {
                         const promises = [],
                             day = moment(new Date(time * 1000)),
                             monthId = this.getMonthId(day.year(), day.month() + 1),
@@ -495,7 +495,7 @@ export class AddonCalendarHelperProvider {
                             }
                         }
 
-                        return this.utils.allPromises(promises);
+                        return CoreUtils.allPromises(promises);
                     }))
                 ]);
             });

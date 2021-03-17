@@ -54,7 +54,7 @@ export class AddonModQuizPreflightModalPage implements OnInit {
             protected domUtils: CoreDomUtilsProvider,
            ) {
 
-        this.title = params.get('title') || translate.instant('addon.mod_quiz.startattempt');
+        this.title = params.get('title') || Translate.instant('addon.mod_quiz.startattempt');
         this.quiz = params.get('quiz');
         this.attempt = params.get('attempt');
         this.prefetch = params.get('prefetch');
@@ -97,7 +97,7 @@ export class AddonModQuizPreflightModalPage implements OnInit {
         });
 
         Promise.all(promises).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading rules');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading rules');
         }).finally(() => {
             this.loaded = true;
         });
@@ -114,12 +114,12 @@ export class AddonModQuizPreflightModalPage implements OnInit {
 
         if (!this.preflightForm.valid) {
             // Form not valid. Scroll to the first element with errors.
-            if (!this.domUtils.scrollToInputError(this.content)) {
+            if (!CoreDomUtils.scrollToInputError(this.content)) {
                 // Input not found, show an error modal.
-                this.domUtils.showErrorModal('core.errorinvalidform', true);
+                CoreDomUtils.showErrorModal('core.errorinvalidform', true);
             }
         } else {
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.siteId);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, this.siteId);
 
             this.viewCtrl.dismiss(this.preflightForm.value);
         }
@@ -129,7 +129,7 @@ export class AddonModQuizPreflightModalPage implements OnInit {
      * Close modal.
      */
     closeModal(): void {
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
 
         this.viewCtrl.dismiss();
     }

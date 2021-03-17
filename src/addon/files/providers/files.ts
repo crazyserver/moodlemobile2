@@ -21,7 +21,7 @@ import { CoreWSExternalWarning } from '@services/ws';
 /**
  * Service to handle my files and site files.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilesProvider {
     protected ROOT_CACHE_KEY = 'mmaFiles:';
     static PRIVATE_FILES_COMPONENT = 'mmaFilesMy';
@@ -35,7 +35,7 @@ export class AddonFilesProvider {
      * @return Whether the WS is available, false otherwise.
      */
     canGetPrivateFilesInfo(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_user_get_private_files_info');
+        return CoreSites.wsAvailableInCurrentSite('core_user_get_private_files_info');
     }
 
     /**
@@ -44,7 +44,7 @@ export class AddonFilesProvider {
      * @return Whether the user can view his private files.
      */
     canViewPrivateFiles(): boolean {
-        return this.sitesProvider.getCurrentSite().canAccessMyFiles() && !this.isPrivateFilesDisabledInSite();
+        return CoreSites.getCurrentSite().canAccessMyFiles() && !this.isPrivateFilesDisabledInSite();
     }
 
     /**
@@ -62,7 +62,7 @@ export class AddonFilesProvider {
      * @return Whether the user can upload private files.
      */
     canUploadFiles(): boolean {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         return currentSite.canAccessMyFiles() && currentSite.canUploadFiles() && !this.isUploadDisabledInSite();
     }
@@ -76,7 +76,7 @@ export class AddonFilesProvider {
      */
     getFiles(params: any, siteId?: string): Promise<AddonFilesFile[]> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                 cacheKey: this.getFilesListCacheKey(params),
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES
@@ -151,7 +151,7 @@ export class AddonFilesProvider {
             component: 'user',
             filearea: 'private',
             contextlevel: 'user',
-            instanceid: this.sitesProvider.getCurrentSite().getUserId(),
+            instanceid: CoreSites.getCurrentSite().getUserId(),
             itemid: 0,
             filepath: '',
             filename: ''
@@ -166,7 +166,7 @@ export class AddonFilesProvider {
      * @return Promise resolved with the info.
      */
     getPrivateFilesInfo(userId?: number, siteId?: string): Promise<AddonFilesGetUserPrivateFilesInfoResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const params = {
@@ -245,7 +245,7 @@ export class AddonFilesProvider {
             params = path;
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getFilesListCacheKey(params));
         });
     }
@@ -257,7 +257,7 @@ export class AddonFilesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidatePrivateFilesInfo(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getPrivateFilesInfoCommonCacheKey());
         });
     }
@@ -270,7 +270,7 @@ export class AddonFilesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidatePrivateFilesInfoForUser(userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getPrivateFilesInfoCacheKey(userId));
@@ -284,7 +284,7 @@ export class AddonFilesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isDisabledInSite(site);
         });
     }
@@ -296,7 +296,7 @@ export class AddonFilesProvider {
      * @return Whether it's disabled.
      */
     isDisabledInSite(site: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreMainMenuDelegate_AddonFiles');
     }
@@ -317,7 +317,7 @@ export class AddonFilesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isPrivateFilesDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isPrivateFilesDisabledInSite(site);
         });
     }
@@ -329,7 +329,7 @@ export class AddonFilesProvider {
      * @return Whether it's disabled.
      */
     isPrivateFilesDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('AddonFilesPrivateFiles');
     }
@@ -341,7 +341,7 @@ export class AddonFilesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isSiteFilesDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isSiteFilesDisabledInSite(site);
         });
     }
@@ -353,7 +353,7 @@ export class AddonFilesProvider {
      * @return Whether it's disabled.
      */
     isSiteFilesDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('AddonFilesSiteFiles');
     }
@@ -365,7 +365,7 @@ export class AddonFilesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isUploadDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isUploadDisabledInSite(site);
         });
     }
@@ -377,7 +377,7 @@ export class AddonFilesProvider {
      * @return Whether it's disabled.
      */
     isUploadDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('AddonFilesUpload');
     }
@@ -397,7 +397,7 @@ export class AddonFilesProvider {
                 responseExpected: false
             };
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.write('core_user_add_user_private_files', params, preSets);
         });
     }
@@ -409,7 +409,7 @@ export class AddonFilesProvider {
      * @return Promise resolved with true if WS is working, false otherwise.
      */
     versionCanUploadFiles(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Upload private files doesn't work for Moodle 3.1.0 due to a bug.
             return site.isVersionGreaterEqualThan('3.1.1');
         });

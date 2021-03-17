@@ -46,7 +46,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
     constructor(private viewCtrl: ViewController, navParams: NavParams, private sharedFilesProvider: CoreSharedFilesProvider,
             private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider, private translate: TranslateService,
             private fileProvider: CoreFileProvider, private navCtrl: NavController) {
-        this.siteId = navParams.get('siteId') || this.sitesProvider.getCurrentSiteId();
+        this.siteId = navParams.get('siteId') || CoreSites.getCurrentSiteId();
         this.mimetypes = navParams.get('mimetypes');
         this.isModal = !!navParams.get('isModal');
         this.manage = !!navParams.get('manage');
@@ -82,7 +82,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
         if (this.path) {
             this.title = this.fileProvider.getFileAndDirectoryFromPath(this.path).name;
         } else {
-            this.title = this.translate.instant('core.sharedfiles.sharedfiles');
+            this.title = Translate.instant('core.sharedfiles.sharedfiles');
         }
 
         return this.sharedFilesProvider.getSiteSharedFiles(this.siteId, this.path, this.mimetypes).then((files) => {

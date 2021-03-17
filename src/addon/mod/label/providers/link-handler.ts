@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to label.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLabelLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModLabelLinkHandler';
 

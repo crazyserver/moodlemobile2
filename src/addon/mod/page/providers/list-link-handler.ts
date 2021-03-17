@@ -21,7 +21,7 @@ import { AddonModPageProvider } from './page';
 /**
  * Handler to treat links to page list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModPageListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModPageListLinkHandler';
 

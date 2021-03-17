@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to forum index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModForumIndexLinkHandler';
 

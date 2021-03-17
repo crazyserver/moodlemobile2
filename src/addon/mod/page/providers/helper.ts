@@ -25,7 +25,7 @@ import { CoreWSProvider } from '@services/ws';
 /**
  * Service that provides some features for page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModPageHelperProvider {
 
     protected logger: CoreLogger;
@@ -76,11 +76,11 @@ export class AddonModPageHelperProvider {
             promise = Promise.reject(null);
         } else if (this.fileProvider.isAvailable()) {
             // The file system is available.
-            promise = this.filepoolProvider.downloadUrl(this.sitesProvider.getCurrentSiteId(), indexUrl, false,
+            promise = CoreFilepool.downloadUrl(CoreSites.getCurrentSiteId(), indexUrl, false,
                 AddonModPageProvider.COMPONENT, moduleId);
         } else {
             // We return the live URL.
-            promise = this.sitesProvider.getCurrentSite().checkAndFixPluginfileURL(indexUrl);
+            promise = CoreSites.getCurrentSite().checkAndFixPluginfileURL(indexUrl);
         }
 
         return promise.then(async (url) => {
@@ -88,7 +88,7 @@ export class AddonModPageHelperProvider {
 
             // Now that we have the content, we update the SRC to point back to the external resource.
             // That will be caught by core-format-text.
-            return this.domUtils.restoreSourcesInHtml(content, paths);
+            return CoreDomUtils.restoreSourcesInHtml(content, paths);
         });
     }
 

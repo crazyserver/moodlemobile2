@@ -24,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Profile block/unblock contact handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHandler, OnDestroy {
     /**
      * Update handler information event.
@@ -66,7 +66,7 @@ export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHand
      * @return Promise resolved with true if enabled, resolved with false otherwise.
      */
     isEnabledForUser(user: any, courseId: number, navOptions?: any, admOptions?: any): boolean | Promise<boolean> {
-        return user.id != this.sitesProvider.getCurrentSiteUserId();
+        return user.id != CoreSites.getCurrentSiteUserId();
     }
 
     /**
@@ -95,22 +95,22 @@ export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHand
 
                 this.messagesProvider.isBlocked(user.id).then((isBlocked) => {
                     if (isBlocked) {
-                        const template = this.translate.instant('addon.messages.unblockuserconfirm', {$a: user.fullname});
-                        const okText = this.translate.instant('addon.messages.unblockuser');
+                        const template = Translate.instant('addon.messages.unblockuserconfirm', {$a: user.fullname});
+                        const okText = Translate.instant('addon.messages.unblockuser');
 
-                        return this.domUtils.showConfirm(template, undefined, okText).then(() => {
+                        return CoreDomUtils.showConfirm(template, undefined, okText).then(() => {
                             return this.messagesProvider.unblockContact(user.id);
                         });
                     } else {
-                        const template = this.translate.instant('addon.messages.blockuserconfirm', {$a: user.fullname});
-                        const okText = this.translate.instant('addon.messages.blockuser');
+                        const template = Translate.instant('addon.messages.blockuserconfirm', {$a: user.fullname});
+                        const okText = Translate.instant('addon.messages.blockuser');
 
-                        return this.domUtils.showConfirm(template, undefined, okText).then(() => {
+                        return CoreDomUtils.showConfirm(template, undefined, okText).then(() => {
                             return this.messagesProvider.blockContact(user.id);
                         });
                     }
                 }).catch((error) => {
-                    this.domUtils.showErrorModalDefault(error, 'core.error', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
                 }).finally(() => {
                     CoreEvents.trigger(AddonMessagesBlockContactUserHandler.UPDATED_EVENT, {userId: user.id});
                     this.checkButton(user.id).finally(() => {

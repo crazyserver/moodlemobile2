@@ -23,7 +23,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
  * Content links handler for forum new discussion.
  * Match mod/forum/post.php?forum=6 with a valid data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumPostLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModForumPostLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModForum';
@@ -48,10 +48,10 @@ export class AddonModForumPostLinkHandler extends CoreContentLinksHandlerBase {
 
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     forumId = parseInt(params.forum, 10);
 
-                this.courseProvider.getModuleBasicInfoByInstance(forumId, 'forum', siteId).then((module) => {
+                CoreCourse.getModuleBasicInfoByInstance(forumId, 'forum', siteId).then((module) => {
                     const pageParams = {
                         courseId: module.course,
                         cmId: module.id,

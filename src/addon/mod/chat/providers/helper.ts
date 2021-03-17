@@ -21,7 +21,7 @@ import { AddonModChatMessageWithUserData, AddonModChatSessionMessageWithUserData
 /**
  * Helper service that provides some features for chat.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChatHelperProvider {
 
     static patternto = new RegExp(/^To\s([^:]+):(.*)/);
@@ -56,7 +56,7 @@ export class AddonModChatHelperProvider {
 
         if (!message.special && message.message.match(AddonModChatHelperProvider.patternto)) {
             const matches = message.message.match(AddonModChatHelperProvider.patternto);
-            message.message = '<b>' + this.translate.instant('addon.mod_chat.saidto') +
+            message.message = '<b>' + Translate.instant('addon.mod_chat.saidto') +
                 '</b> <i>' + matches[1] + '</i>: ' + matches[2];
         }
 

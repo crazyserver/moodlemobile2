@@ -20,7 +20,7 @@ import { AddonModQuizAccessTimeLimitComponent } from '../component/timelimit';
 /**
  * Handler to support time limit access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessTimeLimitHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessTimeLimit';
     ruleName = 'quizaccess_timelimit';

@@ -20,7 +20,7 @@ import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 /**
  * Handler to support adaptive no penalty question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourAdaptiveNoPenaltyHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourAdaptiveNoPenalty';
     type = 'adaptivenopenalty';

@@ -56,7 +56,7 @@ export class AddonBlockActivityModulesComponent extends CoreBlockBaseComponent i
      * @return Resolved when done.
      */
     protected invalidateContent(): Promise<any> {
-        return this.courseProvider.invalidateSections(this.instanceId);
+        return CoreCourse.invalidateSections(this.instanceId);
     }
 
     /**
@@ -65,7 +65,7 @@ export class AddonBlockActivityModulesComponent extends CoreBlockBaseComponent i
      * @return Promise resolved when done.
      */
     protected fetchContent(): Promise<any> {
-        return this.courseProvider.getSections(this.getCourseId(), false, true).then((sections) => {
+        return CoreCourse.getSections(this.getCourseId(), false, true).then((sections) => {
             this.entries = [];
 
             const archetypes = {},
@@ -78,7 +78,7 @@ export class AddonBlockActivityModulesComponent extends CoreBlockBaseComponent i
                 }
 
                 section.modules.forEach((mod) => {
-                    if (mod.uservisible === false || !this.courseProvider.moduleHasView(mod) ||
+                    if (mod.uservisible === false || !CoreCourse.moduleHasView(mod) ||
                             typeof modFullNames[mod.modname] != 'undefined') {
                         // Ignore this module.
                         return;
@@ -94,7 +94,7 @@ export class AddonBlockActivityModulesComponent extends CoreBlockBaseComponent i
                     if (archetypes[mod.modname] == CoreConstants.MOD_ARCHETYPE_RESOURCE) {
                         // All resources are gathered in a single "Resources" option.
                         if (!modFullNames['resources']) {
-                            modFullNames['resources'] = this.translate.instant('core.resources');
+                            modFullNames['resources'] = Translate.instant('core.resources');
                         }
                     } else {
                         modFullNames[mod.modname] = mod.modplural;
@@ -104,13 +104,13 @@ export class AddonBlockActivityModulesComponent extends CoreBlockBaseComponent i
             });
 
             // Sort the modnames alphabetically.
-            modFullNames = this.utils.sortValues(modFullNames);
+            modFullNames = CoreUtils.sortValues(modFullNames);
 
             for (const modName in modFullNames) {
                 let icon;
 
                 if (modName === 'resources') {
-                    icon = this.courseProvider.getModuleIconSrc('page', modIcons['page']);
+                    icon = CoreCourse.getModuleIconSrc('page', modIcons['page']);
                 } else {
                     icon = this.moduleDelegate.getModuleIconSrc(modName, modIcons[modName]);
                 }
@@ -134,7 +134,7 @@ export class AddonBlockActivityModulesComponent extends CoreBlockBaseComponent i
             case ContextLevel.COURSE:
                 return this.instanceId;
             default:
-                return this.sitesProvider.getCurrentSiteHomeId();
+                return CoreSites.getCurrentSiteHomeId();
         }
     }
 }

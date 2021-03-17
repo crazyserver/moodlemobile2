@@ -23,7 +23,7 @@ import { AddonModLessonProvider } from './lesson';
 /**
  * Service to handle offline lesson.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonOfflineProvider {
 
     protected logger: CoreLogger;
@@ -132,7 +132,7 @@ export class AddonModLessonOfflineProvider {
             private textUtils: CoreTextUtilsProvider, private utils: CoreUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonModLessonOfflineProvider');
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -146,7 +146,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved when done.
      */
     deleteAttempt(lessonId: number, retake: number, pageId: number, timemodified: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE, {
                 lessonid: lessonId,
                 retake: retake,
@@ -164,7 +164,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved when done.
      */
     deleteRetake(lessonId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonModLessonOfflineProvider.RETAKES_TABLE, {lessonid: lessonId});
         });
     }
@@ -179,7 +179,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved when done.
      */
     deleteRetakeAttemptsForPage(lessonId: number, retake: number, pageId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE, {lessonid: lessonId,
                     retake: retake, pageid: pageId});
         });
@@ -199,12 +199,12 @@ export class AddonModLessonOfflineProvider {
     finishRetake(lessonId: number, courseId: number, retake: number, finished?: boolean, outOfTime?: boolean, siteId?: string)
             : Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Get current stored retake (if any). If not found, it will create a new one.
             return this.getRetakeWithFallback(lessonId, courseId, retake, site.id).then((entry) => {
                 entry.finished = finished ? 1 : 0;
                 entry.outoftime = outOfTime ? 1 : 0;
-                entry.timemodified = this.timeUtils.timestamp();
+                entry.timemodified = CoreTimeUtils.timestamp();
 
                 return site.getDb().insertRecord(AddonModLessonOfflineProvider.RETAKES_TABLE, entry);
             });
@@ -218,7 +218,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved when the offline attempts are retrieved.
      */
     getAllAttempts(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getAllRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE);
         }).then((attempts) => {
             return this.parsePageAttempts(attempts);
@@ -250,7 +250,7 @@ export class AddonModLessonOfflineProvider {
         }));
 
         return Promise.all(promises).then(() => {
-            return this.utils.objectToArray(lessons);
+            return CoreUtils.objectToArray(lessons);
         });
     }
 
@@ -261,7 +261,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved when the offline retakes are retrieved.
      */
     getAllRetakes(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getAllRecords(AddonModLessonOfflineProvider.RETAKES_TABLE);
         });
     }
@@ -275,7 +275,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved with the attempt (undefined if no attempts).
      */
     getLastQuestionPageAttempt(lessonId: number, retake: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getRetakeWithFallback(lessonId, 0, retake, siteId).then((retakeData) => {
             if (!retakeData.lastquestionpage) {
@@ -302,7 +302,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved with the attempts.
      */
     getLessonAttempts(lessonId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE, {lessonid: lessonId});
         }).then((attempts) => {
             return this.parsePageAttempts(attempts);
@@ -366,7 +366,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved with the retake.
      */
     getRetake(lessonId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonModLessonOfflineProvider.RETAKES_TABLE, {lessonid: lessonId});
         });
     }
@@ -380,7 +380,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved with the retake attempts.
      */
     getRetakeAttempts(lessonId: number, retake: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE, {lessonid: lessonId, retake: retake});
         }).then((attempts) => {
             return this.parsePageAttempts(attempts);
@@ -397,7 +397,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved with the retake attempts.
      */
     getRetakeAttemptsForPage(lessonId: number, retake: number, pageId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE, {lessonid: lessonId, retake: retake,
                     pageid: pageId});
         }).then((attempts) => {
@@ -415,7 +415,7 @@ export class AddonModLessonOfflineProvider {
      * @return Promise resolved with the retake attempts.
      */
     getRetakeAttemptsForType(lessonId: number, retake: number, type: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModLessonOfflineProvider.PAGE_ATTEMPTS_TABLE, {lessonid: lessonId, retake: retake,
                     type: type});
         }).then((attempts) => {
@@ -556,12 +556,12 @@ export class AddonModLessonOfflineProvider {
     processPage(lessonId: number, courseId: number, retake: number, page: any, data: any, newPageId: number, answerId?: number,
             correct?: boolean, userAnswer?: any, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 lessonid: lessonId,
                 retake: retake,
                 pageid: page.id,
-                timemodified: this.timeUtils.timestamp(),
+                timemodified: CoreTimeUtils.timestamp(),
                 courseid: courseId,
                 data: data ? JSON.stringify(data) : null,
                 type: page.type,
@@ -593,11 +593,11 @@ export class AddonModLessonOfflineProvider {
     setLastQuestionPageAttempted(lessonId: number, courseId: number, retake: number, lastPage: number, siteId?: string)
             : Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Get current stored retake (if any). If not found, it will create a new one.
             return this.getRetakeWithFallback(lessonId, courseId, retake, site.id).then((entry) => {
                 entry.lastquestionpage = lastPage;
-                entry.timemodified = this.timeUtils.timestamp();
+                entry.timemodified = CoreTimeUtils.timestamp();
 
                 return site.getDb().insertRecord(AddonModLessonOfflineProvider.RETAKES_TABLE, entry);
             });

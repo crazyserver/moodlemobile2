@@ -22,7 +22,7 @@ import { AddonQtypeDdMarkerComponent } from '../component/ddmarker';
 /**
  * Handler to support drag-and-drop markers question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeDdMarkerHandler implements CoreQuestionHandler {
     name = 'AddonQtypeDdMarker';
     type = 'qtype_ddmarker';

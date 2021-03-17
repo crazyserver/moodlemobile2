@@ -24,7 +24,7 @@ import { AddonQbehaviourDeferredCBMComponent } from '../component/deferredcbm';
 /**
  * Handler to support deferred CBM question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourDeferredCBMHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourDeferredCBM';
     type = 'deferredcbm';

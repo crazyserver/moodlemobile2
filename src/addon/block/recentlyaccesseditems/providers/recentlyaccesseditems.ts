@@ -20,7 +20,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 /**
  * Service that provides some features regarding recently accessed items.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockRecentlyAccessedItemsProvider {
     protected ROOT_CACHE_KEY = 'AddonBlockRecentlyAccessedItems:';
 
@@ -44,7 +44,7 @@ export class AddonBlockRecentlyAccessedItemsProvider {
      */
     getRecentItems(siteId?: string): Promise<AddonBlockRecentlyAccessedItemsItem[]> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                     cacheKey: this.getRecentItemsCacheKey()
                 };
@@ -53,8 +53,8 @@ export class AddonBlockRecentlyAccessedItemsProvider {
                     .then((items: AddonBlockRecentlyAccessedItemsItem[]) => {
 
                 return items.map((item) => {
-                    const modicon = item.icon && this.domUtils.getHTMLElementAttribute(item.icon, 'src');
-                    item.iconUrl = this.courseProvider.getModuleIconSrc(item.modname, modicon);
+                    const modicon = item.icon && CoreDomUtils.getHTMLElementAttribute(item.icon, 'src');
+                    item.iconUrl = CoreCourse.getModuleIconSrc(item.modname, modicon);
 
                     return item;
                 });
@@ -69,7 +69,7 @@ export class AddonBlockRecentlyAccessedItemsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateRecentItems(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getRecentItemsCacheKey());
         });
     }

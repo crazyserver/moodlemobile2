@@ -20,7 +20,7 @@ import { CoreLogger } from '@singletons/logger';
 /**
  * Emulates the Cordova QR Scanner plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QRScannerMock extends QRScanner {
     protected logger: CoreLogger;
 

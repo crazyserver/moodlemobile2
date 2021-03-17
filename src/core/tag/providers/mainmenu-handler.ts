@@ -20,7 +20,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 /**
  * Handler to inject an option into main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreTagMainMenuHandler implements CoreMainMenuHandler {
     name = 'CoreTag';
     priority = 300;
@@ -33,13 +33,13 @@ export class CoreTagMainMenuHandler implements CoreMainMenuHandler {
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return this.tagProvider.areTagsAvailable().then((available) => {
+        return CoreTag.areTagsAvailable().then((available) => {
             if (!available) {
                 return false;
             }
 
             // The only way to check whether tags are enabled on web is to perform a WS call.
-            return this.utils.promiseWorks(this.tagProvider.getTagCollections());
+            return CoreUtils.promiseWorks(CoreTag.getTagCollections());
         });
     }
 

@@ -21,7 +21,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Emulates the Cordova Zip plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ZipMock extends Zip {
 
     constructor(private file: File, private textUtils: CoreTextUtilsProvider) {

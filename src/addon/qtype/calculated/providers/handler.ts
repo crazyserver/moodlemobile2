@@ -22,7 +22,7 @@ import { AddonQtypeCalculatedComponent } from '../component/calculated';
 /**
  * Handler to support calculated question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeCalculatedHandler implements CoreQuestionHandler {
     name = 'AddonQtypeCalculated';
     type = 'qtype_calculated';
@@ -96,8 +96,8 @@ export class AddonQtypeCalculatedHandler implements CoreQuestionHandler {
      * @return Whether they're the same.
      */
     isSameResponse(question: any, prevAnswers: any, newAnswers: any): boolean {
-        return this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer') &&
-            this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'unit');
+        return CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer') &&
+            CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'unit');
     }
 
     /**
@@ -117,7 +117,7 @@ export class AddonQtypeCalculatedHandler implements CoreQuestionHandler {
      * @return Whether the question requires units.
      */
     requiresUnits(question: any): boolean {
-        const element = this.domUtils.convertToElement(question.html);
+        const element = CoreDomUtils.convertToElement(question.html);
 
         return !!(element.querySelector('select[name*=unit]') || element.querySelector('input[type="radio"]'));
     }

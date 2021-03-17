@@ -26,7 +26,7 @@ import { SQLiteDB } from '@classes/sqlitedb';
 /**
  * Service to handle offline SCORM.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormOfflineProvider {
 
     protected logger: CoreLogger;
@@ -126,7 +126,7 @@ export class AddonModScormOfflineProvider {
             private userProvider: CoreUserProvider) {
         this.logger = CoreLogger.getInstance('AddonModScormOfflineProvider');
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -143,7 +143,7 @@ export class AddonModScormOfflineProvider {
      */
     changeAttemptNumber(scormId: number, attempt: number, newAttempt: number, siteId?: string, userId?: number): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Change attempt number from ' + attempt + ' to ' + newAttempt + ' in SCORM ' + scormId);
@@ -154,7 +154,7 @@ export class AddonModScormOfflineProvider {
                 newAttemptConditions = {scormid: scormId, userid: userId, attempt: newAttempt};
             let newData: any = {
                     attempt: newAttempt,
-                    timemodified: this.timeUtils.timestamp()
+                    timemodified: CoreTimeUtils.timestamp()
                 };
 
             // Block the SCORM so it can't be synced.
@@ -196,7 +196,7 @@ export class AddonModScormOfflineProvider {
      */
     createNewAttempt(scorm: any, attempt: number, userData: any, snapshot?: any, siteId?: string, userId?: number): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Creating new offline attempt ' + attempt + ' in SCORM ' + scorm.id);
@@ -211,8 +211,8 @@ export class AddonModScormOfflineProvider {
                     userid: userId,
                     attempt: attempt,
                     courseid: scorm.course,
-                    timecreated: this.timeUtils.timestamp(),
-                    timemodified: this.timeUtils.timestamp(),
+                    timecreated: CoreTimeUtils.timestamp(),
+                    timemodified: CoreTimeUtils.timestamp(),
                     snapshot: null
                 };
 
@@ -255,7 +255,7 @@ export class AddonModScormOfflineProvider {
      * @return Promise resolved when all the data has been deleted.
      */
     deleteAttempt(scormId: number, attempt: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Delete offline attempt ' + attempt + ' in SCORM ' + scormId);
@@ -338,7 +338,7 @@ export class AddonModScormOfflineProvider {
      * @return Promise resolved when the offline attempts are retrieved.
      */
     getAllAttempts(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getAllRecords(AddonModScormOfflineProvider.ATTEMPTS_TABLE);
         }).then((attempts) => {
             attempts.forEach((attempt) => {
@@ -359,7 +359,7 @@ export class AddonModScormOfflineProvider {
      * @return Promise resolved with the attempt.
      */
     getAttempt(scormId: number, attempt: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecord(AddonModScormOfflineProvider.ATTEMPTS_TABLE, {scormid: scormId, userid: userId,
@@ -397,7 +397,7 @@ export class AddonModScormOfflineProvider {
      * @return Promise resolved when the offline attempts are retrieved.
      */
     getAttempts(scormId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecords(AddonModScormOfflineProvider.ATTEMPTS_TABLE, {scormid: scormId, userid: userId});
@@ -463,7 +463,7 @@ export class AddonModScormOfflineProvider {
             return Promise.resolve([]);
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const conditions: any = {
@@ -505,7 +505,7 @@ export class AddonModScormOfflineProvider {
         let fullName = '',
             userName = '';
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             // Get username and fullname.
@@ -641,7 +641,7 @@ export class AddonModScormOfflineProvider {
     protected insertTrack(scormId: number, scoId: number, attempt: number, element: string, value: any, forceCompleted?: boolean,
             scoData?: any, siteId?: string, userId?: number): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
             scoData = scoData || {};
 
@@ -712,7 +712,7 @@ export class AddonModScormOfflineProvider {
             attempt: attempt,
             element: element,
             value: typeof value == 'undefined' ? null : JSON.stringify(value),
-            timemodified: this.timeUtils.timestamp(),
+            timemodified: CoreTimeUtils.timestamp(),
             synced: 0
         };
 
@@ -744,15 +744,15 @@ export class AddonModScormOfflineProvider {
     protected insertTrackSync(scormId: number, scoId: number, attempt: number, element: string, value: any,
             forceCompleted?: boolean, scoData?: any, userId?: number): boolean {
         scoData = scoData || {};
-        userId = userId || this.sitesProvider.getCurrentSiteUserId();
+        userId = userId || CoreSites.getCurrentSiteUserId();
 
-        if (!this.sitesProvider.isLoggedIn()) {
+        if (!CoreSites.isLoggedIn()) {
             // Not logged in, we can't get the site DB. User logged out or session expired while an operation was ongoing.
             return false;
         }
 
         const scoUserData = scoData.userdata || {},
-            db = this.sitesProvider.getCurrentSite().getDb();
+            db = CoreSites.getCurrentSite().getDb();
         let lessonStatusInserted = false;
 
         if (forceCompleted) {
@@ -799,7 +799,7 @@ export class AddonModScormOfflineProvider {
      * @return Promise resolved when marked.
      */
     markAsSynced(scormId: number, attempt: number, scoId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Mark SCO ' + scoId + ' as synced for attempt ' + attempt + ' in SCORM ' + scormId);
@@ -821,7 +821,7 @@ export class AddonModScormOfflineProvider {
      * @return User data without default data.
      */
     protected removeDefaultData(userData: any): any {
-        const result = this.utils.clone(userData);
+        const result = CoreUtils.clone(userData);
 
         for (const key in result) {
             delete result[key].defaultdata;
@@ -845,7 +845,7 @@ export class AddonModScormOfflineProvider {
     saveTracks(scorm: any, scoId: number, attempt: number, tracks: any[], userData: any, siteId?: string, userId?: number)
             : Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             // Block the SCORM so it can't be synced.
@@ -878,7 +878,7 @@ export class AddonModScormOfflineProvider {
      *         has been stored, this function can return true but the insertion can still fail somehow.
      */
     saveTracksSync(scorm: any, scoId: number, attempt: number, tracks: any[], userData: any, userId?: number): boolean {
-        userId = userId || this.sitesProvider.getCurrentSiteUserId();
+        userId = userId || CoreSites.getCurrentSiteUserId();
         let success = true;
 
         tracks.forEach((track) => {
@@ -920,13 +920,13 @@ export class AddonModScormOfflineProvider {
      */
     setAttemptSnapshot(scormId: number, attempt: number, userData: any, siteId?: string, userId?: number): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Set snapshot for attempt ' + attempt + ' in SCORM ' + scormId);
 
             const newData = {
-                timemodified: this.timeUtils.timestamp(),
+                timemodified: CoreTimeUtils.timestamp(),
                 snapshot: JSON.stringify(this.removeDefaultData(userData))
             };
 

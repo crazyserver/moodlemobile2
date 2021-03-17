@@ -19,7 +19,7 @@ import { AddonModAssignBaseFeedbackHandler } from '../classes/base-feedback-hand
 /**
  * Default handler used when a feedback plugin doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignDefaultFeedbackHandler extends AddonModAssignBaseFeedbackHandler {
     name = 'AddonModAssignDefaultFeedbackHandler';
     type = 'default';

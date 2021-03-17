@@ -126,9 +126,9 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
      * Detect changes on input properties.
      */
     ngOnChanges(changes: {[name: string]: SimpleChange}): void {
-        this.canNavigate = typeof this.canNavigate == 'undefined' ? true : this.utils.isTrueOrOne(this.canNavigate);
+        this.canNavigate = typeof this.canNavigate == 'undefined' ? true : CoreUtils.isTrueOrOne(this.canNavigate);
         this.displayNavButtons = typeof this.displayNavButtons == 'undefined' ? true :
-                this.utils.isTrueOrOne(this.displayNavButtons);
+                CoreUtils.isTrueOrOne(this.displayNavButtons);
     }
 
     /**
@@ -188,7 +188,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
         return Promise.all(promises).then(() => {
             return this.fetchEvents();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -202,7 +202,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
     fetchEvents(): Promise<any> {
         // Don't pass courseId and categoryId, we'll filter them locally.
         return this.calendarProvider.getMonthlyEvents(this.year, this.month).catch((error) => {
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // Allow navigating to non-cached months in offline (behave as if using emergency cache).
                 return this.calendarHelper.getOfflineMonthWeeks(this.year, this.month);
             } else {
@@ -210,7 +210,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
             }
         }).then((result) => {
             // Calculate the period name. We don't use the one in result because it's in server's language.
-            this.periodName = this.timeUtils.userDate(new Date(this.year, this.month - 1).getTime(), 'core.strftimemonthyear');
+            this.periodName = CoreTimeUtils.userDate(new Date(this.year, this.month - 1).getTime(), 'core.strftimemonthyear');
 
             this.weekDays = this.calendarProvider.getWeekDays(result.daynames[0].dayno);
             this.weeks = result.weeks;
@@ -255,7 +255,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
             return Promise.resolve();
         }
 
-        return this.coursesProvider.getCategories(0, true).then((cats) => {
+        return CoreCourses.getCategories(0, true).then((cats) => {
             this.categoriesRetrieved = true;
             this.categories = {};
 
@@ -295,7 +295,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
         if (!afterChange) {
             promises.push(this.calendarProvider.invalidateMonthlyEvents(this.year, this.month));
         }
-        promises.push(this.coursesProvider.invalidateCategories(0, true));
+        promises.push(CoreCourses.invalidateCategories(0, true));
         promises.push(this.calendarProvider.invalidateTimeFormat());
 
         this.categoriesRetrieved = false; // Get categories again.
@@ -314,7 +314,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
         this.loaded = false;
 
         this.fetchEvents().catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
             this.decreaseMonth();
         }).finally(() => {
             this.loaded = true;
@@ -330,7 +330,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
         this.loaded = false;
 
         this.fetchEvents().catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
             this.increaseMonth();
         }).finally(() => {
             this.loaded = true;
@@ -363,7 +363,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
     calculateIsCurrentMonth(): void {
         const now = new Date();
 
-        this.currentTime = this.timeUtils.timestamp();
+        this.currentTime = CoreTimeUtils.timestamp();
 
         this.isCurrentMonth = this.year == now.getFullYear() && this.month == now.getMonth() + 1;
         this.isPastMonth = this.year < now.getFullYear() || (this.year == now.getFullYear() && this.month < now.getMonth() + 1);
@@ -385,7 +385,7 @@ export class AddonCalendarCalendarComponent implements OnInit, OnChanges, DoChec
         this.fetchEvents().then(() => {
             this.isCurrentMonth = true;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
             this.year = initialYear;
             this.month = initialMonth;
         }).finally(() => {

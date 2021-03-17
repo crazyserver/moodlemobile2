@@ -36,7 +36,7 @@ import { makeSingleton } from '@singletons/core.singletons';
  * See https://angular.io/guide/dependency-injection for more info on providers
  * and Angular DI.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreLocalNotificationsProvider {
     // Variables for the database.
     protected SITES_TABLE = 'notification_sites'; // Store to asigne unique codes to each site.
@@ -167,7 +167,7 @@ export class CoreLocalNotificationsProvider {
             // Create the default channel for local notifications.
             this.createDefaultChannel();
 
-            translate.onLangChange.subscribe((event: any) => {
+            Translate.onLangChange.subscribe((event: any) => {
                 // Update the channel name.
                 this.createDefaultChannel();
             });
@@ -237,7 +237,7 @@ export class CoreLocalNotificationsProvider {
      */
     canDisableSound(): boolean {
         // Only allow disabling sound in Android 7 or lower. In iOS and Android 8+ it can easily be done with system settings.
-        return this.isAvailable() && !CoreApp.instance.isDesktop() && CoreApp.instance.isAndroid() &&
+        return this.isAvailable() && !CoreApp.isDesktop() && CoreApp.isAndroid() &&
                 this.platform.version().major < 8;
     }
 
@@ -247,13 +247,13 @@ export class CoreLocalNotificationsProvider {
      * @return Promise resolved when done.
      */
     protected createDefaultChannel(): Promise<any> {
-        if (!CoreApp.instance.isAndroid()) {
+        if (!CoreApp.isAndroid()) {
             return Promise.resolve();
         }
 
         return this.push.createChannel({
             id: 'default-channel-id',
-            description: this.translate.instant('addon.calendar.calendarreminders'),
+            description: Translate.instant('addon.calendar.calendarreminders'),
             importance: 4
         }).catch((error) => {
             this.logger.error('Error changing channel name', error);
@@ -377,7 +377,7 @@ export class CoreLocalNotificationsProvider {
     isAvailable(): boolean {
         const win = <any> window;
 
-        return CoreApp.instance.isDesktop() || !!(win.cordova && win.cordova.plugins && win.cordova.plugins.notification &&
+        return CoreApp.isDesktop() || !!(win.cordova && win.cordova.plugins && win.cordova.plugins.notification &&
                 win.cordova.plugins.notification.local);
     }
 
@@ -554,7 +554,7 @@ export class CoreLocalNotificationsProvider {
      * @return Promise resolved when the code is retrieved.
      */
     protected requestCode(table: string, id: string): Promise<number> {
-        const deferred = this.utils.promiseDefer(),
+        const deferred = CoreUtils.promiseDefer(),
             key = table + '#' + id,
             isQueueEmpty = Object.keys(this.codeRequestsQueue).length == 0;
 
@@ -618,7 +618,7 @@ export class CoreLocalNotificationsProvider {
         notification.data.component = component;
         notification.data.siteId = siteId;
 
-        if (CoreApp.instance.isAndroid()) {
+        if (CoreApp.isAndroid()) {
             notification.icon = notification.icon || 'res://icon';
             notification.smallIcon = notification.smallIcon || 'res://smallicon';
             notification.color = notification.color || CoreConstants.CONFIG.notificoncolor;
@@ -754,7 +754,7 @@ export class CoreLocalNotificationsProvider {
                 cssClass: 'core-inapp-notification',
                 enableBackdropDismiss: false,
                 buttons: [{
-                    text: this.translate.instant('core.dismiss'),
+                    text: Translate.instant('core.dismiss'),
                     role: 'cancel',
                     handler: (): void => {
                         clearAlert(true);

@@ -84,7 +84,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
         this.newAttempt = !!navParams.get('newAttempt');
         this.organizationId = navParams.get('organizationId');
         this.initialScoId = navParams.get('scoId');
-        this.siteId = this.sitesProvider.getCurrentSiteId();
+        this.siteId = CoreSites.getCurrentSiteId();
 
         // We use SCORM name at start, later we'll use the SCO title.
         this.title = this.scorm.name;
@@ -121,7 +121,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
                 const promise = this.newAttempt ? this.setStartTime(this.currentSco.id) : Promise.resolve();
 
                 return promise.catch((error) => {
-                    CoreDomUtils.instance.showErrorModalDefault(error, 'addon.mod_scorm.errorgetscorm', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'addon.mod_scorm.errorgetscorm', true);
                 }).finally(() => {
                     // Load SCO.
                     this.loadSco(this.currentSco);
@@ -162,7 +162,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
                 // Wait a bit to prevent collisions between this store and SCORM API's store.
                 setTimeout(() => {
                     this.scormHelper.convertAttemptToOffline(this.scorm, this.attempt).catch((error) => {
-                        CoreDomUtils.instance.showErrorModalDefault(error, 'core.error', true);
+                        CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
                     }).then(() => {
                         this.refreshToc();
                     });
@@ -268,7 +268,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
                     return Promise.all(promises);
                 });
             }).catch((error) => {
-                CoreDomUtils.instance.showErrorModalDefault(error, 'addon.mod_scorm.errorgetscorm', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.mod_scorm.errorgetscorm', true);
             });
         });
     }
@@ -406,7 +406,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
 
                                 return this.scormProvider.saveTracks(sco.id, this.attempt, tracks, this.scorm, true);
                             }).catch((error) => {
-                                CoreDomUtils.instance.showErrorModalDefault(error, 'core.error', true);
+                                CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
                             });
                         }
                     });
@@ -466,7 +466,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
         }).then(() => {
             return this.fetchToc();
         }).catch((error) => {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'addon.mod_scorm.errorgetscorm', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_scorm.errorgetscorm', true);
         });
     }
 
@@ -479,7 +479,7 @@ export class AddonModScormPlayerPage implements OnInit, OnDestroy {
     protected setStartTime(scoId: number): Promise<any> {
         const tracks = [{
             element: 'x.start.time',
-            value: this.timeUtils.timestamp()
+            value: CoreTimeUtils.timestamp()
         }];
 
         return this.scormProvider.saveTracks(scoId, this.attempt, tracks, this.scorm, this.offline).then(() => {

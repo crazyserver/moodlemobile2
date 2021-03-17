@@ -59,7 +59,7 @@ export class CoreMainMenuPage implements OnDestroy {
             protected linksHelper: CoreContentLinksHelperProvider,
             ) {
 
-        this.mainMenuId = CoreApp.instance.getMainMenuId();
+        this.mainMenuId = CoreApp.getMainMenuId();
 
         // Check if the menu was loaded with a redirect.
         const redirectPage = navParams.get('redirectPage');
@@ -77,7 +77,7 @@ export class CoreMainMenuPage implements OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        if (!this.sitesProvider.isLoggedIn()) {
+        if (!CoreSites.isLoggedIn()) {
             this.navCtrl.setRoot('CoreLoginInitPage');
 
             return;
@@ -116,7 +116,7 @@ export class CoreMainMenuPage implements OnDestroy {
 
         window.addEventListener('resize', this.initHandlers.bind(this));
 
-        if (CoreApp.instance.isIOS()) {
+        if (CoreApp.isIOS()) {
             // In iOS, the resize event is triggered before the keyboard is opened/closed and not triggered again once done.
             // Init handlers again once keyboard is closed since the resize event doesn't have the updated height.
             this.keyboardObserver = CoreEvents.on(CoreEvents.KEYBOARD_CHANGE, (kbHeight) => {
@@ -131,7 +131,7 @@ export class CoreMainMenuPage implements OnDestroy {
             });
         }
 
-        CoreApp.instance.setMainMenuOpen(this.mainMenuId, true);
+        CoreApp.setMainMenuOpen(this.mainMenuId, true);
     }
 
     /**
@@ -241,7 +241,7 @@ export class CoreMainMenuPage implements OnDestroy {
         this.subscription && this.subscription.unsubscribe();
         this.redirectObs && this.redirectObs.off();
         window.removeEventListener('resize', this.initHandlers.bind(this));
-        CoreApp.instance.setMainMenuOpen(this.mainMenuId, false);
+        CoreApp.setMainMenuOpen(this.mainMenuId, false);
         this.keyboardObserver && this.keyboardObserver.off();
     }
 }

@@ -256,8 +256,8 @@ export class CoreDelegate {
      * @return Resolved when done.
      */
     protected updateHandler(handler: CoreDelegateHandler, time: number): Promise<void> {
-        const siteId = this.sitesProvider.getCurrentSiteId(),
-            currentSite = this.sitesProvider.getCurrentSite();
+        const siteId = CoreSites.getCurrentSiteId(),
+            currentSite = CoreSites.getCurrentSite();
         let promise;
 
         if (this.updatePromises[siteId] && this.updatePromises[siteId][handler.name]) {
@@ -267,7 +267,7 @@ export class CoreDelegate {
             this.updatePromises[siteId] = {};
         }
 
-        if (!this.sitesProvider.isLoggedIn()) {
+        if (!CoreSites.isLoggedIn()) {
             promise = Promise.reject(null);
         } else if (this.isFeatureDisabled(handler, currentSite)) {
             promise = Promise.resolve(false);
@@ -280,7 +280,7 @@ export class CoreDelegate {
             return false;
         }).then((enabled: boolean) => {
             // Check that site hasn't changed since the check started.
-            if (this.sitesProvider.getCurrentSiteId() === siteId) {
+            if (CoreSites.getCurrentSiteId() === siteId) {
                 const key = handler[this.handlerNameProperty] || handler.name;
 
                 if (enabled) {

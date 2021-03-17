@@ -56,7 +56,7 @@ export class AddonModResourceIndexComponent extends CoreCourseModuleMainResource
 
         this.loadContent().then(() => {
             this.resourceProvider.logView(this.module.instance, this.module.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -80,9 +80,9 @@ export class AddonModResourceIndexComponent extends CoreCourseModuleMainResource
      */
     protected fetchContent(refresh?: boolean): Promise<any> {
         // Load module contents if needed. Passing refresh is needed to force reloading contents.
-        return this.courseProvider.loadModuleContents(this.module, this.courseId, null, false, refresh).then(() => {
+        return CoreCourse.loadModuleContents(this.module, this.courseId, null, false, refresh).then(() => {
             if (!this.module.contents || !this.module.contents.length) {
-                return Promise.reject(this.utils.createFakeWSError('core.filenotfound', true));
+                return Promise.reject(CoreUtils.createFakeWSError('core.filenotfound', true));
             }
 
             // Get the resource instance to get the latest name/description and to know if it's embedded.
@@ -92,7 +92,7 @@ export class AddonModResourceIndexComponent extends CoreCourseModuleMainResource
                 });
             }
 
-            return this.courseProvider.getModule(this.module.id, this.courseId).catch(() => {
+            return CoreCourse.getModule(this.module.id, this.courseId).catch(() => {
                 // Ignore errors.
             });
         }).then((resource) => {
@@ -163,6 +163,6 @@ export class AddonModResourceIndexComponent extends CoreCourseModuleMainResource
         }
 
         // The resource cannot be downloaded, open the activity in browser.
-        return this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(this.module.url);
+        return CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(this.module.url);
     }
 }

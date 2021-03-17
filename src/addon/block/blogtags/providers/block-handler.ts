@@ -21,7 +21,7 @@ import { CoreBlockBaseHandler } from '@core/block/classes/base-block-handler';
 /**
  * Block handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockBlogTagsHandler extends CoreBlockBaseHandler {
     name = 'AddonBlockBlogTags';
     blockName = 'blog_tags';

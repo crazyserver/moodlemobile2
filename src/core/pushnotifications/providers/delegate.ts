@@ -58,7 +58,7 @@ export interface CorePushNotificationsClickHandler {
 /**
  * Service to handle push notifications actions to perform when clicked and received.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CorePushNotificationsDelegate {
 
     protected logger: CoreLogger;
@@ -101,7 +101,7 @@ export class CorePushNotificationsDelegate {
             }));
         }
 
-        return this.utils.allPromises(promises).catch(() => {
+        return CoreUtils.allPromises(promises).catch(() => {
             // Ignore errors.
         }).then(() => {
             // Sort by priority.
@@ -126,7 +126,7 @@ export class CorePushNotificationsDelegate {
     protected isFeatureDisabled(handler: CorePushNotificationsClickHandler, siteId: string): Promise<boolean> {
         if (handler.featureName) {
             // Check if the feature is disabled.
-            return this.sitesProvider.isFeatureDisabled(handler.featureName, siteId);
+            return CoreSites.isFeatureDisabled(handler.featureName, siteId);
         } else {
             return Promise.resolve(false);
         }

@@ -31,7 +31,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch forums.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModForum';
     modName = 'forum';
@@ -87,8 +87,8 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
      */
     protected getPostsFiles(posts: any[]): any[] {
         let files = [];
-        const getInlineFiles = this.sitesProvider.getCurrentSite() &&
-                this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.2');
+        const getInlineFiles = CoreSites.getCurrentSite() &&
+                CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.2');
 
         posts.forEach((post) => {
             if (post.attachments && post.attachments.length) {
@@ -97,7 +97,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
             if (getInlineFiles && post.messageinlinefiles && post.messageinlinefiles.length) {
                 files = files.concat(post.messageinlinefiles);
             } else if (post.message && !getInlineFiles) {
-                files = files.concat(this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(post.message));
+                files = files.concat(CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(post.message));
             }
         });
 
@@ -179,7 +179,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
         const promises = [];
 
         promises.push(this.forumProvider.invalidateForumData(courseId));
-        promises.push(this.courseProvider.invalidateModule(module.id));
+        promises.push(CoreCourse.invalidateModule(module.id));
 
         return Promise.all(promises);
     }
@@ -225,7 +225,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
                 const promises = [];
 
                 const files = this.getIntroFilesFromInstance(module, forum).concat(this.getPostsFiles(posts));
-                promises.push(this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id));
+                promises.push(CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id));
 
                 // Prefetch groups data.
                 promises.push(this.prefetchGroupsInfo(forum, courseId, forum.cancreatediscussions, siteId));
@@ -264,7 +264,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
         };
 
         // Check group mode.
-        return this.groupsProvider.getActivityGroupMode(forum.cmid, siteId).then((mode) => {
+        return CoreGroups.getActivityGroupMode(forum.cmid, siteId).then((mode) => {
             if (mode !== CoreGroupsProvider.SEPARATEGROUPS && mode !== CoreGroupsProvider.VISIBLEGROUPS) {
                 // Activity doesn't use groups. Prefetch canAddDiscussionToAll to determine if user can pin/attach.
                 return this.forumProvider.canAddDiscussionToAll(forum.id, options).catch(() => {
@@ -273,7 +273,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
             }
 
             // Activity uses groups, prefetch allowed groups.
-            return this.groupsProvider.getActivityAllowedGroups(forum.cmid, undefined, siteId).then((result) => {
+            return CoreGroups.getActivityAllowedGroups(forum.cmid, undefined, siteId).then((result) => {
                 if (mode === CoreGroupsProvider.SEPARATEGROUPS) {
                     // Groups are already filtered by WS. Prefetch canAddDiscussionToAll to determine if user can pin/attach.
                     return this.forumProvider.canAddDiscussionToAll(forum.id, options).catch(() => {

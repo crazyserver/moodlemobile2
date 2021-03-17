@@ -20,7 +20,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 /**
  * Helper service with some features to capture media (image, audio, video).
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreEmulatorCaptureHelperProvider {
     protected possibleAudioMimeTypes = {
         'audio/webm': 'weba',
@@ -53,7 +53,7 @@ export class CoreEmulatorCaptureHelperProvider {
 
         try {
             // Build the params to send to the modal.
-            const deferred = this.utils.promiseDefer(),
+            const deferred = CoreUtils.promiseDefer(),
                 params: any = {
                     type: type
                 };
@@ -173,7 +173,7 @@ export class CoreEmulatorCaptureHelperProvider {
             if (nav.getUserMedia) {
                 // Deprecated function exists, support the new function using the deprecated one.
                 navigator.mediaDevices.getUserMedia = (constraints): Promise<any> => {
-                    const deferred = this.utils.promiseDefer();
+                    const deferred = CoreUtils.promiseDefer();
                     nav.getUserMedia(constraints, deferred.resolve, deferred.reject);
 
                     return deferred.promise;

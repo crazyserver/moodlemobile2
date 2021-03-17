@@ -34,7 +34,7 @@ import { WKUserScriptWindow, WKUserScriptInjectionTime } from 'cordova-plugin-wk
 /*
  * "Utils" service with helper functions for iframes, embed and similar.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreIframeUtilsProvider {
     static FRAME_TAGS = ['iframe', 'frame', 'object', 'embed'];
 
@@ -88,7 +88,7 @@ export class CoreIframeUtilsProvider {
     checkOnlineFrameInOffline(element: any, isSubframe?: boolean): boolean {
         const src = element.src || element.data;
 
-        if (src && src != 'about:blank' && !this.urlUtils.isLocalFileUrl(src) && !CoreApp.instance.isOnline()) {
+        if (src && src != 'about:blank' && !this.urlUtils.isLocalFileUrl(src) && !CoreApp.isOnline()) {
             if (element.classList.contains('core-iframe-offline-disabled')) {
                 // Iframe already hidden, stop.
                 return true;
@@ -101,7 +101,7 @@ export class CoreIframeUtilsProvider {
             div.setAttribute('padding', '');
             div.classList.add('core-iframe-offline-warning');
 
-            const site = this.sitesProvider.getCurrentSite();
+            const site = CoreSites.getCurrentSite();
             const username = site ? site.getInfo().username : undefined;
             this.contentLinksHelper.canHandleLink(src, undefined, username).then((canHandleLink) => {
                 if (canHandleLink) {
@@ -123,7 +123,7 @@ export class CoreIframeUtilsProvider {
                                 'button-block', 'button-block-' + mode);
                     }
 
-                    const message = this.translate.instant('core.viewembeddedcontent');
+                    const message = Translate.instant('core.viewembeddedcontent');
                     link.innerHTML = isSubframe ? message : '<span class="button-inner">' + message + '</span>';
 
                     link.onclick = (event: Event): void => {
@@ -133,8 +133,8 @@ export class CoreIframeUtilsProvider {
 
                     div.appendChild(link);
                 } else {
-                    div.innerHTML = (isSubframe ?  '' : this.domUtils.getConnectionWarningIconHtml()) +
-                        '<p>' + this.translate.instant('core.networkerroriframemsg') + '</p>';
+                    div.innerHTML = (isSubframe ?  '' : CoreDomUtils.getConnectionWarningIconHtml()) +
+                        '<p>' + Translate.instant('core.networkerroriframemsg') + '</p>';
                 }
 
                 element.parentElement.insertBefore(div, element);
@@ -166,7 +166,7 @@ export class CoreIframeUtilsProvider {
             element.data = element.data;
 
             // Remove the warning and show the iframe
-            this.domUtils.removeElement(element.parentElement, 'div.core-iframe-offline-warning');
+            CoreDomUtils.removeElement(element.parentElement, 'div.core-iframe-offline-warning');
             element.classList.remove('core-iframe-offline-disabled');
 
             if (isSubframe) {
@@ -393,18 +393,18 @@ export class CoreIframeUtilsProvider {
             // It's a local file.
             const filename = url.substr(url.lastIndexOf('/') + 1);
 
-            if (!CoreFileHelper.instance.isOpenableInApp({ filename })) {
+            if (!CoreFileHelper.isOpenableInApp({ filename })) {
                 try {
-                    await CoreFileHelper.instance.showConfirmOpenUnsupportedFile();
+                    await CoreFileHelper.showConfirmOpenUnsupportedFile();
                 } catch (error) {
                     return; // Cancelled, stop.
                 }
             }
 
             try {
-                await this.utils.openFile(url);
+                await CoreUtils.openFile(url);
             } catch (error) {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
             }
         } else {
             // It's an external link, check if it can be opened in the app.
@@ -454,10 +454,10 @@ export class CoreIframeUtilsProvider {
             }
 
             // The frame is local or the link needs to be opened in a new window. Open in browser.
-            if (!this.sitesProvider.isLoggedIn()) {
-                this.utils.openInBrowser(link.href);
+            if (!CoreSites.isLoggedIn()) {
+                CoreUtils.openInBrowser(link.href);
             } else {
-                await this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(link.href);
+                await CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(link.href);
             }
         } else if (link.target == '_parent' || link.target == '_top' || link.target == '_blank') {
             // Opening links with _parent, _top or _blank can break the app. We'll open it in InAppBrowser.
@@ -465,20 +465,20 @@ export class CoreIframeUtilsProvider {
 
             const filename = link.href.substr(link.href.lastIndexOf('/') + 1);
 
-            if (!CoreFileHelper.instance.isOpenableInApp({ filename })) {
+            if (!CoreFileHelper.isOpenableInApp({ filename })) {
                 try {
-                    await CoreFileHelper.instance.showConfirmOpenUnsupportedFile();
+                    await CoreFileHelper.showConfirmOpenUnsupportedFile();
                 } catch (error) {
                     return; // Cancelled, stop.
                 }
             }
 
             try {
-                await this.utils.openFile(link.href);
+                await CoreUtils.openFile(link.href);
             } catch (error) {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
             }
-        } else if (CoreApp.instance.isIOS() && (!link.target || link.target == '_self') && element) {
+        } else if (CoreApp.isIOS() && (!link.target || link.target == '_self') && element) {
             // In cordova ios 4.1.0 links inside iframes stopped working. We'll manually treat them.
             event && event.preventDefault();
             if (element.tagName.toLowerCase() == 'object') {

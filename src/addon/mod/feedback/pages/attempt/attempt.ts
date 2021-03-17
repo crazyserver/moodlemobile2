@@ -83,7 +83,7 @@ export class AddonModFeedbackAttemptPage {
             });
 
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
             // Some call failed on first fetch, go back.
             this.navCtrl.pop();
 

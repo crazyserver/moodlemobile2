@@ -19,7 +19,7 @@ import { CoreCommentsSyncProvider } from './sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCommentsSyncCronHandler implements CoreCronHandler {
     name = 'CoreCommentsSyncCronHandler';
 

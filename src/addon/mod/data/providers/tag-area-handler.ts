@@ -21,7 +21,7 @@ import { AddonModDataProvider } from './data';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataTagAreaHandler implements CoreTagAreaHandler {
     name = 'AddonModDataTagAreaHandler';
     type = 'mod_data/data_records';
@@ -33,7 +33,7 @@ export class AddonModDataTagAreaHandler implements CoreTagAreaHandler {
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return this.dataProvider.isPluginEnabled();
+        return AddonModData.isPluginEnabled();
     }
 
     /**

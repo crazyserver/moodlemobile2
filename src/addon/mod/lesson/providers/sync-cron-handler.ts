@@ -19,7 +19,7 @@ import { AddonModLessonSyncProvider } from './lesson-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonSyncCronHandler implements CoreCronHandler {
     name = 'AddonModLessonSyncCronHandler';
 

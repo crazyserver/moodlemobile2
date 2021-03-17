@@ -23,7 +23,7 @@ import { AddonModWikiProvider } from './wiki';
 /**
  * Handler to treat links to a wiki page or the wiki map.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiPageOrMapLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModWikiPageOrMapLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModWiki';
@@ -50,7 +50,7 @@ export class AddonModWikiPageOrMapLinkHandler extends CoreContentLinksHandlerBas
 
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     pageId = parseInt(params.pageid, 10),
                     action = url.indexOf('mod/wiki/map.php') != -1 ? 'map' : 'page';
 
@@ -60,7 +60,7 @@ export class AddonModWikiPageOrMapLinkHandler extends CoreContentLinksHandlerBas
                     if (courseId) {
                         promise = Promise.resolve(courseId);
                     } else {
-                        promise = this.courseHelper.getModuleCourseIdByInstance(page.wikiid, 'wiki', siteId);
+                        promise = CoreCourseHelper.getModuleCourseIdByInstance(page.wikiid, 'wiki', siteId);
                     }
 
                     return promise.then((courseId) => {
@@ -77,7 +77,7 @@ export class AddonModWikiPageOrMapLinkHandler extends CoreContentLinksHandlerBas
                     });
                 }).catch((error) => {
 
-                    this.domUtils.showErrorModalDefault(error, 'addon.mod_wiki.errorloadingpage', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'addon.mod_wiki.errorloadingpage', true);
                 }).finally(() => {
                     modal.dismiss();
                 });

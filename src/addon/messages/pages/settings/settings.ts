@@ -104,7 +104,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
             this.contactablePrivacy = preferences.blocknoncontacts;
             this.previousContactableValue = this.contactablePrivacy;
         }).catch((message) => {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }).finally(() => {
             this.preferencesLoaded = true;
         });
@@ -143,7 +143,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
             return;
         }
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         if (!this.advancedContactable) {
             // Convert from boolean to number.
@@ -156,7 +156,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
             this.previousContactableValue = this.contactablePrivacy;
         }).catch((message) => {
             // Show error and revert change.
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
             this.contactablePrivacy = this.previousContactableValue;
         }).finally(() => {
             modal.dismiss();
@@ -199,7 +199,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
                 this.updatePreferencesAfterDelay();
             }).catch((error) => {
                 // Show error and revert change.
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
                 processor.checked = !processor.checked;
             }).finally(() => {
                 notification.updating = false;
@@ -231,7 +231,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
                 this.updatePreferencesAfterDelay();
             }).catch((message) => {
                 // Show error and revert change.
-                this.domUtils.showErrorModal(message);
+                CoreDomUtils.showErrorModal(message);
                 processorState.checked = !processorState.checked;
             }).finally(() => {
                 notification.updating[state] = false;
@@ -258,7 +258,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
 
         // Notify the app.
         CoreEvents.trigger(CoreEvents.SEND_ON_ENTER_CHANGED, {sendOnEnter: !!this.sendOnEnter},
-                this.sitesProvider.getCurrentSiteId());
+                CoreSites.getCurrentSiteId());
     }
 
     /**

@@ -48,7 +48,7 @@ export interface CoreRatingItemSet {
 /**
  * Service to handle offline data for rating.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreRatingOfflineProvider {
 
     // Variables for database.
@@ -111,7 +111,7 @@ export class CoreRatingOfflineProvider {
     };
 
     constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -127,7 +127,7 @@ export class CoreRatingOfflineProvider {
      */
     getRating(contextLevel: string, instanceId: number, component: string, ratingArea: string, itemId: number,  siteId?: string):
             Promise<CoreRatingOfflineRating> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -160,7 +160,7 @@ export class CoreRatingOfflineProvider {
     addRating(component: string, ratingArea: string, contextLevel: string, instanceId: number, itemId: number, itemSetId: number,
             courseId: number, scaleId: number, rating: number, ratedUserId: number, aggregateMethod: number, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data: CoreRatingOfflineRating = {
                 component: component,
                 ratingarea: ratingArea,
@@ -191,7 +191,7 @@ export class CoreRatingOfflineProvider {
      */
     deleteRating(component: string, ratingArea: string, contextLevel: string, instanceId: number, itemId: number, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 component: component,
                 ratingarea: ratingArea,
@@ -217,7 +217,7 @@ export class CoreRatingOfflineProvider {
      */
     getItemSets(component: string, ratingArea: string, contextLevel?: string, instanceId?: number, itemSetId?: number,
             siteId?: string): Promise<CoreRatingItemSet[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const fields = 'DISTINCT contextlevel, instanceid, itemsetid, courseid';
             const conditions: any = {
                 component,
@@ -260,7 +260,7 @@ export class CoreRatingOfflineProvider {
      */
     getRatings(component: string, ratingArea: string, contextLevel: string, instanceId: number, itemSetId: number, siteId?: string):
             Promise<CoreRatingOfflineRating[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 component,
                 ratingarea: ratingArea,
@@ -286,7 +286,7 @@ export class CoreRatingOfflineProvider {
      */
     hasRatings(component: string, ratingArea: string, contextLevel?: string, instanceId?: number, itemSetId?: number,
             siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions: any = {
                 component,
                 ratingarea: ratingArea
@@ -299,7 +299,7 @@ export class CoreRatingOfflineProvider {
                 conditions.itemsetid = itemSetId;
             }
 
-            return this.utils.promiseWorks(site.getDb().recordExists(CoreRatingOfflineProvider.RATINGS_TABLE, conditions));
+            return CoreUtils.promiseWorks(site.getDb().recordExists(CoreRatingOfflineProvider.RATINGS_TABLE, conditions));
         });
     }
 }

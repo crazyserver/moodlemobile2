@@ -225,7 +225,7 @@ export interface CoreCourseModuleHandlerButton {
 /**
  * Delegate to register module handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseModuleDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreCourseModuleDelegate_';
     protected handlerNameProperty = 'modName';
@@ -273,7 +273,7 @@ export class CoreCourseModuleDelegate extends CoreDelegate {
      * @return Promise resolved with boolean: whether module is disabled.
      */
     isModuleDisabled(modname: string, siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isModuleDisabledInSite(modname, site);
         });
     }
@@ -289,7 +289,7 @@ export class CoreCourseModuleDelegate extends CoreDelegate {
         const handler = this.getHandler(modname, false);
 
         if (handler) {
-            site = site || this.sitesProvider.getCurrentSite();
+            site = site || CoreSites.getCurrentSite();
 
             return this.isFeatureDisabled(handler, site);
         }
@@ -316,7 +316,7 @@ export class CoreCourseModuleDelegate extends CoreDelegate {
      * @return The icon src.
      */
     getModuleIconSrc(modname: string, modicon?: string): string {
-        return this.executeFunctionOnEnabled(modname, 'getIconSrc') || this.courseProvider.getModuleIconSrc(modname, modicon);
+        return this.executeFunctionOnEnabled(modname, 'getIconSrc') || CoreCourse.getModuleIconSrc(modname, modicon);
     }
 
     /**

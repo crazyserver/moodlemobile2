@@ -25,7 +25,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for workshops.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopProvider {
     static COMPONENT = 'mmaModWorkshop';
     static PER_PAGE = 10;
@@ -191,7 +191,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved with true if plugin is enabled, rejected or resolved with false otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return  site.wsAvailable('mod_workshop_get_workshops_by_courses') &&
                 site.wsAvailable('mod_workshop_get_workshop_access_information');
         });
@@ -207,7 +207,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop is retrieved.
      */
     protected getWorkshopByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -215,7 +215,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getWorkshopDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModWorkshopProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_workshops_by_courses', params, preSets).then((response) => {
@@ -276,7 +276,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop is invalidated.
      */
     invalidateWorkshopData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getWorkshopDataCacheKey(courseId));
         });
     }
@@ -289,7 +289,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop is invalidated.
      */
     invalidateWorkshopWSData(workshopId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getWorkshopDataPrefixCacheKey(workshopId));
         });
     }
@@ -302,7 +302,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop is retrieved.
      */
     getWorkshopAccessInformation(workshopId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 workshopid: workshopId,
             };
@@ -310,7 +310,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getWorkshopAccessInformationDataCacheKey(workshopId),
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_workshop_access_information', params, preSets);
@@ -325,7 +325,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateWorkshopAccessInformationData(workshopId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getWorkshopAccessInformationDataCacheKey(workshopId));
         });
     }
@@ -338,7 +338,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop data is retrieved.
      */
     getUserPlanPhases(workshopId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 workshopid: workshopId
             };
@@ -347,12 +347,12 @@ export class AddonModWorkshopProvider {
                 updateFrequency: CoreSite.FREQUENCY_OFTEN,
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_user_plan', params, preSets).then((response) => {
                 if (response && response.userplan && response.userplan.phases) {
-                    return this.utils.arrayToObject(response.userplan.phases, 'code');
+                    return CoreUtils.arrayToObject(response.userplan.phases, 'code');
                 }
 
                 return Promise.reject(null);
@@ -368,7 +368,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserPlanPhasesData(workshopId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserPlanDataCacheKey(workshopId));
         });
     }
@@ -384,7 +384,7 @@ export class AddonModWorkshopProvider {
         const userId = options.userId || 0;
         const groupId = options.groupId || 0;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 workshopid: workshopId,
                 userid: userId,
@@ -395,7 +395,7 @@ export class AddonModWorkshopProvider {
                 updateFrequency: CoreSite.FREQUENCY_OFTEN,
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_submissions', params, preSets).then((response) => {
@@ -418,7 +418,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSubmissionsData(workshopId: number, userId: number = 0, groupId: number = 0, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getSubmissionsDataCacheKey(workshopId, userId, groupId));
         });
     }
@@ -432,7 +432,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop submission data is retrieved.
      */
     getSubmission(workshopId: number, submissionId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 submissionid: submissionId,
             };
@@ -440,7 +440,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getSubmissionDataCacheKey(workshopId, submissionId),
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_submission', params, preSets).then((response) => {
@@ -462,7 +462,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSubmissionData(workshopId: number, submissionId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getSubmissionDataCacheKey(workshopId, submissionId));
         });
     }
@@ -475,7 +475,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop grades data is retrieved.
      */
     getGrades(workshopId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 workshopid: workshopId
             };
@@ -483,7 +483,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getGradesDataCacheKey(workshopId),
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_grades', params, preSets);
@@ -498,7 +498,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateGradesData(workshopId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getGradesDataCacheKey(workshopId));
         });
     }
@@ -512,7 +512,7 @@ export class AddonModWorkshopProvider {
      */
     getGradesReport(workshopId: number, options: AddonModWorkshopGetGradesReportOptions = {}): Promise<any> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 workshopid: workshopId,
                 groupid: options.groupId,
@@ -524,7 +524,7 @@ export class AddonModWorkshopProvider {
                 updateFrequency: CoreSite.FREQUENCY_OFTEN,
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_grades_report', params, preSets).then((response) => {
@@ -549,7 +549,7 @@ export class AddonModWorkshopProvider {
             ...options, // Include all options.
             page: 0,
             perPage: options.perPage || AddonModWorkshopProvider.PER_PAGE,
-            siteId: options.siteId || this.sitesProvider.getCurrentSiteId(),
+            siteId: options.siteId || CoreSites.getCurrentSiteId(),
         });
     }
 
@@ -587,7 +587,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateGradeReportData(workshopId: number, groupId: number = 0, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getGradesReportDataCacheKey(workshopId, groupId));
         });
     }
@@ -601,7 +601,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop data is retrieved.
      */
     getSubmissionAssessments(workshopId: number, submissionId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 submissionid: submissionId,
             };
@@ -609,7 +609,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getSubmissionAssessmentsDataCacheKey(workshopId, submissionId),
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_submission_assessments', params, preSets).then((response) => {
@@ -631,7 +631,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSubmissionAssesmentsData(workshopId: number, submissionId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getSubmissionAssessmentsDataCacheKey(workshopId, submissionId));
         });
     }
@@ -651,7 +651,7 @@ export class AddonModWorkshopProvider {
      */
     addSubmission(workshopId: number, courseId: number, title: string, content: string, attachmentsId?: number, siteId?: string,
             timecreated?: number, allowOffline: boolean = false): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -666,13 +666,13 @@ export class AddonModWorkshopProvider {
             timecreated ? this.workshopOffline.deleteSubmissionAction(workshopId, timecreated, 'add', siteId) : Promise.resolve();
 
         return discardPromise.then(() => {
-            if (!this.appProvider.isOnline() && allowOffline) {
+            if (!CoreApp.isOnline() && allowOffline) {
                 // App is offline, store the action.
                 return storeOffline();
             }
 
             return this.addSubmissionOnline(workshopId, title, content, attachmentsId, siteId).catch((error) => {
-                if (allowOffline && !this.utils.isWebServiceError(error)) {
+                if (allowOffline && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -695,7 +695,7 @@ export class AddonModWorkshopProvider {
      */
     addSubmissionOnline(workshopId: number, title: string, content: string, attachmentsId: number, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 workshopid: workshopId,
                 title: title,
@@ -706,7 +706,7 @@ export class AddonModWorkshopProvider {
             return site.write('mod_workshop_add_submission', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.submissionid) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 return response.submissionid;
@@ -729,7 +729,7 @@ export class AddonModWorkshopProvider {
      */
     updateSubmission(workshopId: number, submissionId: number, courseId: number, title: string, content: string,
             attachmentsId?: number, siteId?: string, allowOffline: boolean = false): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -741,13 +741,13 @@ export class AddonModWorkshopProvider {
 
         // If we are editing an offline discussion, discard previous first.
         return this.workshopOffline.deleteSubmissionAction(workshopId, submissionId, 'update', siteId).then(() => {
-            if (!this.appProvider.isOnline() && allowOffline) {
+            if (!CoreApp.isOnline() && allowOffline) {
                 // App is offline, store the action.
                 return storeOffline();
             }
 
             return this.updateSubmissionOnline(submissionId, title, content, attachmentsId, siteId).catch((error) => {
-                if (allowOffline && !this.utils.isWebServiceError(error)) {
+                if (allowOffline && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -770,7 +770,7 @@ export class AddonModWorkshopProvider {
      */
     updateSubmissionOnline(submissionId: number, title: string, content: string, attachmentsId?: number, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 submissionid: submissionId,
                 title: title,
@@ -781,7 +781,7 @@ export class AddonModWorkshopProvider {
             return site.write('mod_workshop_update_submission', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Return submissionId to be consistent with addSubmission.
@@ -800,7 +800,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved with submission ID if sent online, resolved with false if stored offline.
      */
     deleteSubmission(workshopId: number, submissionId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -811,13 +811,13 @@ export class AddonModWorkshopProvider {
 
         // If we are editing an offline discussion, discard previous first.
         return this.workshopOffline.deleteSubmissionAction(workshopId, submissionId, 'delete', siteId).then(() => {
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // App is offline, store the action.
                 return storeOffline();
             }
 
             return this.deleteSubmissionOnline(submissionId, siteId).catch((error) => {
-                if (!this.utils.isWebServiceError(error)) {
+                if (!CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -836,7 +836,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the submission is deleted.
      */
     deleteSubmissionOnline(submissionId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 submissionid: submissionId
             };
@@ -844,7 +844,7 @@ export class AddonModWorkshopProvider {
             return site.write('mod_workshop_delete_submission', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Return submissionId to be consistent with addSubmission.
@@ -861,7 +861,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop data is retrieved.
      */
     getReviewerAssessments(workshopId: number, options: AddonModWorkshopUserOptions = {}): Promise<any[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params: any = {
                 workshopid: workshopId,
             };
@@ -869,7 +869,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getReviewerAssessmentsDataCacheKey(workshopId, options.userId),
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             if (options.userId) {
@@ -895,7 +895,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateReviewerAssesmentsData(workshopId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getReviewerAssessmentsDataCacheKey(workshopId, userId));
         });
     }
@@ -909,7 +909,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the workshop data is retrieved.
      */
     getAssessment(workshopId: number, assessmentId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 assessmentid: assessmentId,
             };
@@ -917,7 +917,7 @@ export class AddonModWorkshopProvider {
                 cacheKey: this.getAssessmentDataCacheKey(workshopId, assessmentId),
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_assessment', params, preSets).then((response) => {
@@ -939,7 +939,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAssessmentData(workshopId: number, assessmentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAssessmentDataCacheKey(workshopId, assessmentId));
         });
     }
@@ -956,7 +956,7 @@ export class AddonModWorkshopProvider {
             : Promise<any> {
         const mode = options.mode || 'assessment';
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 assessmentid: assessmentId,
                 mode: mode,
@@ -966,13 +966,13 @@ export class AddonModWorkshopProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModWorkshopProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_workshop_get_assessment_form_definition', params, preSets).then((response) => {
                 if (response) {
                     response.fields = this.parseFields(response.fields);
-                    response.options = this.utils.objectToKeyValueMap(response.options, 'name', 'value');
+                    response.options = CoreUtils.objectToKeyValueMap(response.options, 'name', 'value');
                     response.current = this.parseFields(response.current);
 
                     return response;
@@ -1035,7 +1035,7 @@ export class AddonModWorkshopProvider {
      */
     invalidateAssessmentFormData(workshopId: number, assessmentId: number, mode: string = 'assessment', siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAssessmentFormDataCacheKey(workshopId, assessmentId, mode));
         });
     }
@@ -1054,7 +1054,7 @@ export class AddonModWorkshopProvider {
      */
     updateAssessment(workshopId: number, assessmentId: number, courseId: number, inputData: any, siteId?: any,
             allowOffline: boolean = false): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -1065,13 +1065,13 @@ export class AddonModWorkshopProvider {
 
         // If we are editing an offline discussion, discard previous first.
         return this.workshopOffline.deleteAssessment(workshopId, assessmentId, siteId).then(() => {
-            if (!this.appProvider.isOnline() && allowOffline) {
+            if (!CoreApp.isOnline() && allowOffline) {
                 // App is offline, store the action.
                 return storeOffline();
             }
 
             return this.updateAssessmentOnline(assessmentId, inputData, siteId).catch((error) => {
-                if (allowOffline && !this.utils.isWebServiceError(error)) {
+                if (allowOffline && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1091,16 +1091,16 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved with the grade of the submission.
      */
     updateAssessmentOnline(assessmentId: number, inputData: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 assessmentid: assessmentId,
-                data: this.utils.objectToArrayOfObjects(inputData, 'name', 'value')
+                data: CoreUtils.objectToArrayOfObjects(inputData, 'name', 'value')
             };
 
             return site.write('mod_workshop_update_assessment', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Return rawgrade for submission
@@ -1124,7 +1124,7 @@ export class AddonModWorkshopProvider {
      */
     evaluateSubmission(workshopId: number, submissionId: number, courseId: number, feedbackText: string, published: boolean,
             gradeOver: any, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -1136,13 +1136,13 @@ export class AddonModWorkshopProvider {
 
         // If we are editing an offline discussion, discard previous first.
         return this.workshopOffline.deleteEvaluateSubmission(workshopId, submissionId, siteId).then(() => {
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // App is offline, store the action.
                 return storeOffline();
             }
 
             return this.evaluateSubmissionOnline(submissionId, feedbackText, published, gradeOver, siteId).catch((error) => {
-                if (!this.utils.isWebServiceError(error)) {
+                if (!CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1166,7 +1166,7 @@ export class AddonModWorkshopProvider {
      */
     evaluateSubmissionOnline(submissionId: number, feedbackText: string, published: boolean, gradeOver: any,
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 submissionid: submissionId,
                 feedbacktext: feedbackText || '',
@@ -1178,7 +1178,7 @@ export class AddonModWorkshopProvider {
             return site.write('mod_workshop_evaluate_submission', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Return if worked.
@@ -1202,7 +1202,7 @@ export class AddonModWorkshopProvider {
      */
     evaluateAssessment(workshopId: number, assessmentId: number, courseId: number, feedbackText: string, weight: number,
             gradingGradeOver: any, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -1214,13 +1214,13 @@ export class AddonModWorkshopProvider {
 
         // If we are editing an offline discussion, discard previous first.
         return this.workshopOffline.deleteEvaluateAssessment(workshopId, assessmentId, siteId).then(() => {
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // App is offline, store the action.
                 return storeOffline();
             }
 
             return this.evaluateAssessmentOnline(assessmentId, feedbackText, weight, gradingGradeOver, siteId).catch((error) => {
-                if (!this.utils.isWebServiceError(error)) {
+                if (!CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1243,7 +1243,7 @@ export class AddonModWorkshopProvider {
      */
     evaluateAssessmentOnline(assessmentId: number, feedbackText: string, weight: number, gradingGradeOver: any, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 assessmentid: assessmentId,
                 feedbacktext: feedbackText || '',
@@ -1255,7 +1255,7 @@ export class AddonModWorkshopProvider {
             return site.write('mod_workshop_evaluate_assessment', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Return if worked.
@@ -1274,7 +1274,7 @@ export class AddonModWorkshopProvider {
      * @return Promised resolved when content is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getWorkshop(courseId, moduleId, {
             readingStrategy: CoreSitesReadingStrategy.PreferCache,
@@ -1294,7 +1294,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when content is invalidated.
      */
     invalidateContentById(workshopId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [
             // Do not invalidate workshop data before getting workshop info, we need it!
@@ -1313,7 +1313,7 @@ export class AddonModWorkshopProvider {
      * @return Promise resolved when the files are invalidated.
      */
     invalidateFiles(moduleId: number, siteId?: string): Promise<any> {
-        return this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModWorkshopProvider.COMPONENT, moduleId);
+        return CoreFilepool.invalidateFilesByComponent(siteId, AddonModWorkshopProvider.COMPONENT, moduleId);
     }
 
     /**
@@ -1329,7 +1329,7 @@ export class AddonModWorkshopProvider {
             workshopid: id
         };
 
-        return this.logHelper.logSingle('mod_workshop_view_workshop', params, AddonModWorkshopProvider.COMPONENT, id, name,
+        return CoreCourseLogHelper.logSingle('mod_workshop_view_workshop', params, AddonModWorkshopProvider.COMPONENT, id, name,
                 'workshop', siteId);
     }
 
@@ -1347,7 +1347,7 @@ export class AddonModWorkshopProvider {
             submissionid: id
         };
 
-        return this.logHelper.logSingle('mod_workshop_view_submission', params, AddonModWorkshopProvider.COMPONENT, workshopId,
+        return CoreCourseLogHelper.logSingle('mod_workshop_view_submission', params, AddonModWorkshopProvider.COMPONENT, workshopId,
                 name, 'workshop', params, siteId);
     }
 }

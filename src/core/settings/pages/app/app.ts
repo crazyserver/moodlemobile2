@@ -31,7 +31,7 @@ export class CoreAppSettingsPage {
     selectedPage: string;
 
     constructor(navParams: NavParams) {
-        this.isIOS = CoreApp.instance.isIOS();
+        this.isIOS = CoreApp.isIOS();
 
         this.selectedPage = navParams.get('page') || false;
     }

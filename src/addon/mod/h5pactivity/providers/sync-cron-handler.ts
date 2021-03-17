@@ -19,7 +19,7 @@ import { AddonModH5PActivitySync } from './sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivitySyncCronHandler implements CoreCronHandler {
     name = 'AddonModH5PActivitySyncCronHandler';
 
@@ -32,7 +32,7 @@ export class AddonModH5PActivitySyncCronHandler implements CoreCronHandler {
      * @return Promise resolved when done, rejected if failure.
      */
     execute(siteId?: string, force?: boolean): Promise<any> {
-        return AddonModH5PActivitySync.instance.syncAllActivities(siteId, force);
+        return AddonModH5PActivitySync.syncAllActivities(siteId, force);
     }
 
     /**
@@ -41,6 +41,6 @@ export class AddonModH5PActivitySyncCronHandler implements CoreCronHandler {
      * @return Time between consecutive executions (in ms).
      */
     getInterval(): number {
-        return AddonModH5PActivitySync.instance.syncInterval;
+        return AddonModH5PActivitySync.syncInterval;
     }
 }

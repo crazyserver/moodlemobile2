@@ -627,7 +627,7 @@ export class CoreSite {
         const initialToken = this.token;
         data = data || {};
 
-        if (!this.appProvider.isOnline() && this.offlineDisabled) {
+        if (!CoreApp.isOnline() && this.offlineDisabled) {
             return Promise.reject(this.wsProvider.createFakeWSError('core.errorofflinedisabled', true));
         }
 
@@ -641,7 +641,7 @@ export class CoreSite {
             } else {
                 this.logger.error(`WS function '${method}' is not available, even in compatibility mode.`);
 
-                return Promise.reject(this.utils.createFakeWSError('core.wsfunctionnotavailable', true));
+                return Promise.reject(CoreUtils.createFakeWSError('core.wsfunctionnotavailable', true));
             }
         }
 
@@ -655,7 +655,7 @@ export class CoreSite {
 
         if (wsPreSets.cleanUnicode && this.textUtils.hasUnicodeData(data)) {
             // Data will be cleaned, notify the user.
-            this.domUtils.showToast('core.unicodenotsupported', true, 3000);
+            CoreDomUtils.showToast('core.unicodenotsupported', true, 3000);
         } else {
             // No need to clean data in this call.
             wsPreSets.cleanUnicode = false;
@@ -678,7 +678,7 @@ export class CoreSite {
         data = this.wsProvider.convertValuesToString(data, wsPreSets.cleanUnicode);
         if (data == null) {
             // Empty cleaned text found.
-            return Promise.reject(this.utils.createFakeWSError('core.unicodenotsupportedcleanerror', true));
+            return Promise.reject(CoreUtils.createFakeWSError('core.unicodenotsupportedcleanerror', true));
         }
 
         const cacheId = this.getCacheId(method, data);
@@ -687,7 +687,7 @@ export class CoreSite {
         if (preSets.getFromCache && this.ongoingRequests[cacheId]) {
             return this.ongoingRequests[cacheId].then((response) => {
                 // Clone the data, this may prevent errors if in the callback the object is modified.
-                return this.utils.clone(response);
+                return CoreUtils.clone(response);
             });
         }
 
@@ -713,9 +713,9 @@ export class CoreSite {
                         preSets.getFromCache = false; // Don't check cache now. Also, it will skip ongoingRequests.
 
                         return this.request(method, data, preSets, true);
-                    } else if (this.appProvider.isSSOAuthenticationOngoing()) {
+                    } else if (CoreApp.isSSOAuthenticationOngoing()) {
                         // There's an SSO authentication ongoing, wait for it to finish and try again.
-                        return this.appProvider.waitForSSOAuthentication().then(() => {
+                        return CoreApp.waitForSSOAuthentication().then(() => {
                             return this.request(method, data, preSets, true);
                         });
                     }
@@ -723,27 +723,27 @@ export class CoreSite {
                     // Session expired, trigger event.
                     CoreEvents.trigger(CoreEvents.SESSION_EXPIRED, {}, this.id);
                     // Change error message. Try to get data from cache, the event will handle the error.
-                    error.message = this.translate.instant('core.lostconnection');
+                    error.message = Translate.instant('core.lostconnection');
                 } else if (error.errorcode === 'userdeleted') {
                     // User deleted, trigger event.
                     CoreEvents.trigger(CoreEvents.USER_DELETED, { params: data }, this.id);
-                    error.message = this.translate.instant('core.userdeleted');
+                    error.message = Translate.instant('core.userdeleted');
 
                     return Promise.reject(error);
                 } else if (error.errorcode === 'forcepasswordchangenotice') {
                     // Password Change Forced, trigger event. Try to get data from cache, the event will handle the error.
                     CoreEvents.trigger(CoreEvents.PASSWORD_CHANGE_FORCED, {}, this.id);
-                    error.message = this.translate.instant('core.forcepasswordchangenotice');
+                    error.message = Translate.instant('core.forcepasswordchangenotice');
 
                 } else if (error.errorcode === 'usernotfullysetup') {
                     // User not fully setup, trigger event. Try to get data from cache, the event will handle the error.
                     CoreEvents.trigger(CoreEvents.USER_NOT_FULLY_SETUP, {}, this.id);
-                    error.message = this.translate.instant('core.usernotfullysetup');
+                    error.message = Translate.instant('core.usernotfullysetup');
 
                 } else if (error.errorcode === 'sitepolicynotagreed') {
                     // Site policy not agreed, trigger event.
                     CoreEvents.trigger(CoreEvents.SITE_POLICY_NOT_AGREED, {}, this.id);
-                    error.message = this.translate.instant('core.login.sitepolicynotagreederror');
+                    error.message = Translate.instant('core.login.sitepolicynotagreederror');
 
                     return Promise.reject(error);
                 } else if (error.errorcode === 'dmlwriteexception' && this.textUtils.hasUnicodeData(data)) {
@@ -754,16 +754,16 @@ export class CoreSite {
                         return this.request(method, data, preSets);
                     }
                     // This should not happen.
-                    error.message = this.translate.instant('core.unicodenotsupported');
+                    error.message = Translate.instant('core.unicodenotsupported');
 
                     return Promise.reject(error);
                 } else if (error.exception === 'required_capability_exception' || error.errorcode === 'nopermission' ||
                         error.errorcode === 'notingroup') {
                     // Translate error messages with missing strings.
                     if (error.message === 'error/nopermission') {
-                        error.message = this.translate.instant('core.nopermissionerror');
+                        error.message = Translate.instant('core.nopermissionerror');
                     } else if (error.message === 'error/notingroup') {
-                        error.message = this.translate.instant('core.notingroup');
+                        error.message = Translate.instant('core.notingroup');
                     }
 
                     // Save the error instead of deleting the cache entry so the same content is displayed in offline.
@@ -781,7 +781,7 @@ export class CoreSite {
                     return Promise.reject(error);
                 }
 
-                if (preSets.deleteCacheIfWSError && this.utils.isWebServiceError(error)) {
+                if (preSets.deleteCacheIfWSError && CoreUtils.isWebServiceError(error)) {
                     // Delete the cache entry and return the entry. Don't block the user with the delete.
                     this.deleteFromCache(method, data, preSets).catch(() => {
                         // Ignore errors.
@@ -817,7 +817,7 @@ export class CoreSite {
             }
         }).then((response) => {
             // We pass back a clone of the original object, this may prevent errors if in the callback the object is modified.
-            return this.utils.clone(response);
+            return CoreUtils.clone(response);
         });
     }
 
@@ -1005,7 +1005,7 @@ export class CoreSite {
      * @return Cache ID.
      */
     protected getCacheId(method: string, data: any): string {
-        return <string> Md5.hashAsciiStr(method + ':' + this.utils.sortAndStringify(data));
+        return <string> Md5.hashAsciiStr(method + ':' + CoreUtils.sortAndStringify(data));
     }
 
     /**
@@ -1073,7 +1073,7 @@ export class CoreSite {
             const now = Date.now();
             let expirationTime;
 
-            preSets.omitExpires = preSets.omitExpires || preSets.forceOffline || !this.appProvider.isOnline();
+            preSets.omitExpires = preSets.omitExpires || preSets.forceOffline || !CoreApp.isOnline();
 
             if (!preSets.omitExpires) {
                 expirationTime = entry.expirationTime + this.getExpirationDelay(preSets.updateFrequency);
@@ -1486,18 +1486,18 @@ export class CoreSite {
             switch (code) {
                 case 1:
                     // Site in maintenance mode.
-                    throw this.translate.instant('core.login.siteinmaintenance');
+                    throw Translate.instant('core.login.siteinmaintenance');
                 case 2:
                     // Web services not enabled.
-                    throw this.translate.instant('core.login.webservicesnotenabled');
+                    throw Translate.instant('core.login.webservicesnotenabled');
                 case 3:
                     // Extended service not enabled, but the official is enabled.
                     return { code: 0 };
                 case 4:
                     // Neither extended or official services enabled.
-                    throw this.translate.instant('core.login.mobileservicesnotenabled');
+                    throw Translate.instant('core.login.mobileservicesnotenabled');
                 default:
-                    throw this.translate.instant('core.unexpectederror');
+                    throw Translate.instant('core.unexpectederror');
             }
         } else {
             return { code: code, service: service, coreSupported: !!data.coresupported };
@@ -1665,23 +1665,23 @@ export class CoreSite {
             if (!alertMessage) {
                 // Just open the URL.
                 if (inApp) {
-                    return this.utils.openInApp(url, options);
+                    return CoreUtils.openInApp(url, options);
                 } else {
-                    return this.utils.openInBrowser(url);
+                    return CoreUtils.openInBrowser(url);
                 }
             }
 
             // Show an alert first.
-            return this.domUtils.showAlert(this.translate.instant('core.notice'), alertMessage, undefined, 3000).then((alert) => {
+            return CoreDomUtils.showAlert(Translate.instant('core.notice'), alertMessage, undefined, 3000).then((alert) => {
 
                 return new Promise<InAppBrowserObject | void>((resolve, reject): void => {
                     const subscription = alert.didDismiss.subscribe(() => {
                         subscription && subscription.unsubscribe();
 
                         if (inApp) {
-                            resolve(this.utils.openInApp(url, options));
+                            resolve(CoreUtils.openInApp(url, options));
                         } else {
-                            resolve(this.utils.openInBrowser(url));
+                            resolve(CoreUtils.openInBrowser(url));
                         }
                     });
                 });
@@ -1704,9 +1704,9 @@ export class CoreSite {
             return this.openWithAutoLogin(inApp, url, options, alertMessage);
         } else {
             if (inApp) {
-                this.utils.openInApp(url, options);
+                CoreUtils.openInApp(url, options);
             } else {
-                this.utils.openInBrowser(url);
+                CoreUtils.openInBrowser(url);
             }
 
             return Promise.resolve(null);
@@ -1881,7 +1881,7 @@ export class CoreSite {
     getAutoLoginUrl(url: string, showModal: boolean = true): Promise<string> {
 
         if (!this.privateToken || !this.wsAvailable('tool_mobile_get_autologin_key') ||
-                (this.lastAutoLogin && this.timeUtils.timestamp() - this.lastAutoLogin < CoreConstants.SECONDS_MINUTE * 6)) {
+                (this.lastAutoLogin && CoreTimeUtils.timestamp() - this.lastAutoLogin < CoreConstants.SECONDS_MINUTE * 6)) {
             // No private token, WS not available or last auto-login was less than 6 minutes ago. Don't change the URL.
 
             return Promise.resolve(url);
@@ -1894,7 +1894,7 @@ export class CoreSite {
         let modal;
 
         if (showModal) {
-            modal = this.domUtils.showModalLoading();
+            modal = CoreDomUtils.showModalLoading();
         }
 
         // Use write to not use cache.
@@ -1905,7 +1905,7 @@ export class CoreSite {
                 return url;
             }
 
-            this.lastAutoLogin = this.timeUtils.timestamp();
+            this.lastAutoLogin = CoreTimeUtils.timestamp();
 
             return data.autologinurl + '?userid=' + userId + '&key=' + data.key + '&urltogo=' + encodeURIComponent(url);
         }).catch(() => {
@@ -2034,7 +2034,7 @@ export class CoreSite {
     getExpirationDelay(updateFrequency?: number): number {
         let expirationDelay = this.UPDATE_FREQUENCIES[updateFrequency] || this.UPDATE_FREQUENCIES[CoreSite.FREQUENCY_USUALLY];
 
-        if (this.appProvider.isNetworkAccessLimited()) {
+        if (CoreApp.isNetworkAccessLimited()) {
             // Not WiFi, increase the expiration delay a 50% to decrease the data usage in this case.
             expirationDelay *= 1.5;
         }
@@ -2058,7 +2058,7 @@ export class CoreSite {
         } else if (this.tokenPluginFileWorksPromise) {
             // Check ongoing, use the same promise.
             return this.tokenPluginFileWorksPromise;
-        } else if (!this.appProvider.isOnline()) {
+        } else if (!CoreApp.isOnline()) {
             // Not online, cannot check it. Assume it's working, but don't save the result.
             return Promise.resolve(true);
         }

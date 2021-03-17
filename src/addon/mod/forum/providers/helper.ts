@@ -27,7 +27,7 @@ import { AddonModForumOfflineProvider } from './offline';
 /**
  * Service that provides some features for forums.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumHelperProvider {
     constructor(private translate: TranslateService,
             private fileProvider: CoreFileProvider,
@@ -58,7 +58,7 @@ export class AddonModForumHelperProvider {
     addNewDiscussion(forumId: number, name: string, courseId: number, subject: string, message: string, attachments?: any[],
             options?: any, groupIds?: number[], timeCreated?: number, siteId?: string): Promise<number[]> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         groupIds = groupIds && groupIds.length > 0 ? groupIds : [0];
 
         let saveOffline = false;
@@ -111,7 +111,7 @@ export class AddonModForumHelperProvider {
             }
 
             return discardPromise.then(() => {
-                if (saveOffline || !this.appProvider.isOnline()) {
+                if (saveOffline || !CoreApp.isOnline()) {
                     return storeOffline();
                 }
 
@@ -119,7 +119,7 @@ export class AddonModForumHelperProvider {
                 const discussionIds = [];
 
                 const promises = groupIds.map((groupId, index) => {
-                    const grouOptions = this.utils.clone(options);
+                    const grouOptions = CoreUtils.clone(options);
                     if (attachmentsIds[index]) {
                         grouOptions.attachmentsid = attachmentsIds[index];
                     }
@@ -136,7 +136,7 @@ export class AddonModForumHelperProvider {
                     if (errors.length == groupIds.length) {
                         // All requests have failed.
                         for (let i = 0; i < errors.length; i++) {
-                            if (this.utils.isWebServiceError(errors[i]) || attachments.length > 0) {
+                            if (CoreUtils.isWebServiceError(errors[i]) || attachments.length > 0) {
                                 // The WebService has thrown an error or offline not supported, reject.
                                 return Promise.reject(errors[i]);
                             }
@@ -249,15 +249,15 @@ export class AddonModForumHelperProvider {
      */
     getAvailabilityMessage(forum: any): string {
         if (this.isCutoffDateReached(forum)) {
-            return this.translate.instant('addon.mod_forum.cutoffdatereached');
+            return Translate.instant('addon.mod_forum.cutoffdatereached');
         } else if (this.isDueDateReached(forum)) {
-            const dueDate = this.timeUtils.userDate(forum.duedate * 1000);
+            const dueDate = CoreTimeUtils.userDate(forum.duedate * 1000);
 
-            return this.translate.instant('addon.mod_forum.thisforumisdue', {$a: dueDate});
+            return Translate.instant('addon.mod_forum.thisforumisdue', {$a: dueDate});
         } else if (forum.duedate > 0) {
-            const dueDate = this.timeUtils.userDate(forum.duedate * 1000);
+            const dueDate = CoreTimeUtils.userDate(forum.duedate * 1000);
 
-            return this.translate.instant('addon.mod_forum.thisforumhasduedate', {$a: dueDate});
+            return Translate.instant('addon.mod_forum.thisforumhasduedate', {$a: dueDate});
         } else {
             return null;
         }
@@ -275,7 +275,7 @@ export class AddonModForumHelperProvider {
      * @return Promise resolved with the discussion data.
      */
     getDiscussionById(forumId: number, cmId: number, discussionId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const findDiscussion = (page: number): Promise<any> => {
             return this.forumProvider.getDiscussions(forumId, {

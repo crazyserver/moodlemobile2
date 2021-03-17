@@ -60,8 +60,8 @@ export class AddonMessagesContactsComponent {
 
         this.currentUserId = sitesProvider.getCurrentSiteUserId();
         this.siteId = sitesProvider.getCurrentSiteId();
-        this.searchingMessages = translate.instant('core.searching');
-        this.loadingMessages = translate.instant('core.loading');
+        this.searchingMessages = Translate.instant('core.searching');
+        this.loadingMessages = Translate.instant('core.loading');
         this.loadingMessage = this.loadingMessages;
 
         this.discussionUserId = navParams.get('discussionUserId') || false;
@@ -146,7 +146,7 @@ export class AddonMessagesContactsComponent {
 
             this.clearSearch();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingcontacts', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingcontacts', true);
         });
     }
 
@@ -188,7 +188,7 @@ export class AddonMessagesContactsComponent {
      * @return Resolved when done.
      */
     search(query: string): Promise<any> {
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         this.loaded = false;
         this.loadingMessage = this.searchingMessages;
@@ -212,7 +212,7 @@ export class AddonMessagesContactsComponent {
 
             this.contacts.search = this.sortUsers(result);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingcontacts', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingcontacts', true);
         });
     }
 

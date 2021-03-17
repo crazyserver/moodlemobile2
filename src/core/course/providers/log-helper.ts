@@ -25,7 +25,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Helper to manage logging to Moodle.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseLogHelperProvider {
 
     // Variables for database.
@@ -66,7 +66,7 @@ export class CoreCourseLogHelperProvider {
     constructor(protected sitesProvider: CoreSitesProvider, protected timeUtils: CoreTimeUtilsProvider,
             protected textUtils: CoreTextUtilsProvider, protected utils: CoreUtilsProvider,
             protected appProvider: CoreAppProvider, protected pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -78,7 +78,7 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved when deleted, rejected if failure.
      */
     protected deleteLogs(component: string, componentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().deleteRecords(CoreCourseLogHelperProvider.ACTIVITY_LOG_TABLE,
                 {component: component, componentid: componentId});
@@ -95,7 +95,7 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved when deleted, rejected if failure.
      */
     protected deleteWSLogsByComponent(component: string, componentId: number, ws: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().deleteRecords(CoreCourseLogHelperProvider.ACTIVITY_LOG_TABLE,
                 {component: component, componentid: componentId, ws: ws});
@@ -111,10 +111,10 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved when deleted, rejected if failure.
      */
     protected deleteWSLogs(ws: string, data: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().deleteRecords(CoreCourseLogHelperProvider.ACTIVITY_LOG_TABLE,
-                {ws: ws, data: this.utils.sortAndStringify(data)});
+                {ws: ws, data: CoreUtils.sortAndStringify(data)});
         });
     }
 
@@ -125,7 +125,7 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved with the list of offline logs.
      */
     protected getAllLogs(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().getAllRecords(CoreCourseLogHelperProvider.ACTIVITY_LOG_TABLE);
         });
@@ -140,7 +140,7 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved with the list of offline logs.
      */
     protected getLogs(component: string, componentId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().getRecords(CoreCourseLogHelperProvider.ACTIVITY_LOG_TABLE,
                 {component: component, componentid: componentId});
@@ -158,14 +158,14 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved when done.
      */
     log(ws: string, data: any, component: string, componentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            if (!this.appProvider.isOnline()) {
+        return CoreSites.getSite(siteId).then((site) => {
+            if (!CoreApp.isOnline()) {
                 // App is offline, store the action.
                 return this.storeOffline(ws, data, component, componentId, site.getId());
             }
 
             return this.logOnline(ws, data, site.getId()).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that responses cannot be submitted.
                     return Promise.reject(error);
                 }
@@ -186,13 +186,13 @@ export class CoreCourseLogHelperProvider {
      *         the error message (if any) and a boolean indicating if the error was returned by WS.
      */
     protected logOnline(ws: string, data: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Clone to have an unmodified data object.
             const wsData = Object.assign({}, data);
 
             return site.write(ws, wsData).then((response) => {
                 if (!response.status) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Remove all the logs performed.
@@ -255,13 +255,13 @@ export class CoreCourseLogHelperProvider {
      */
     protected storeOffline(ws: string, data: any, component: string, componentId: number, siteId?: string):
             Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const log = {
                     ws: ws,
-                    data: this.utils.sortAndStringify(data),
+                    data: CoreUtils.sortAndStringify(data),
                     component: component,
                     componentid: componentId,
-                    time: this.timeUtils.timestamp()
+                    time: CoreTimeUtils.timestamp()
                 };
 
             return site.getDb().insertRecord(CoreCourseLogHelperProvider.ACTIVITY_LOG_TABLE, log);
@@ -275,7 +275,7 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved when done.
      */
     syncSite(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const siteId = site.getId();
 
             return this.getAllLogs(siteId).then((logs) => {
@@ -308,7 +308,7 @@ export class CoreCourseLogHelperProvider {
      * @return Promise resolved when done.
      */
     syncIfNeeded(component: string, componentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const siteId = site.getId();
 
             return this.getLogs(component, componentId, siteId).then((logs) => {
@@ -343,7 +343,7 @@ export class CoreCourseLogHelperProvider {
             const data = this.textUtils.parseJSON(log.data);
 
             return this.logOnline(log.ws, data, siteId).catch((error) => {
-                const promise = this.utils.isWebServiceError(error) ? this.deleteWSLogs(log.ws, data, siteId) : Promise.resolve();
+                const promise = CoreUtils.isWebServiceError(error) ? this.deleteWSLogs(log.ws, data, siteId) : Promise.resolve();
 
                 return promise.catch(() => {
                     // Ignore errors.

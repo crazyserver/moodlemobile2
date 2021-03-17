@@ -19,7 +19,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support label modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLabelModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModLabel';
     modName = 'label';

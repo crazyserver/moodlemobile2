@@ -20,7 +20,7 @@ import { CoreTagFeedComponent } from '@core/tag/components/feed/feed';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiTagAreaHandler implements CoreTagAreaHandler {
     name = 'AddonModWikiTagAreaHandler';
     type = 'mod_wiki/wiki_pages';

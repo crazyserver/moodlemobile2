@@ -35,7 +35,7 @@ export class CoreGeolocationError extends CoreError {
 
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGeolocationProvider {
 
     /**
@@ -48,7 +48,7 @@ export class CoreGeolocationProvider {
             await this.authorizeLocation();
             await this.enableLocation();
 
-            const result = await Geolocation.instance.getCurrentPosition({
+            const result = await Geolocation.getCurrentPosition({
                 enableHighAccuracy: true,
                 timeout: 30000,
             });
@@ -78,18 +78,18 @@ export class CoreGeolocationProvider {
      * @throws {CoreGeolocationError}
      */
     async enableLocation(): Promise<void> {
-        let locationEnabled = await Diagnostic.instance.isLocationEnabled();
+        let locationEnabled = await Diagnostic.isLocationEnabled();
 
         if (locationEnabled) {
             // Location is enabled.
             return;
         }
 
-        if (!CoreApp.instance.isIOS()) {
-            await Diagnostic.instance.switchToLocationSettings();
-            await CoreApp.instance.waitForResume(30000);
+        if (!CoreApp.isIOS()) {
+            await Diagnostic.switchToLocationSettings();
+            await CoreApp.waitForResume(30000);
 
-            locationEnabled = await Diagnostic.instance.isLocationEnabled();
+            locationEnabled = await Diagnostic.isLocationEnabled();
         }
 
         if (!locationEnabled) {
@@ -104,7 +104,7 @@ export class CoreGeolocationProvider {
      * @throws {CoreGeolocationError}
      */
     protected async doAuthorizeLocation(failOnDeniedOnce: boolean = false): Promise<void> {
-        const authorizationStatus = await Diagnostic.instance.getLocationAuthorizationStatus();
+        const authorizationStatus = await Diagnostic.getLocationAuthorizationStatus();
 
         switch (authorizationStatus) {
             // This constant is hard-coded because it is not declared in @ionic-native/diagnostic v4.
@@ -113,17 +113,17 @@ export class CoreGeolocationProvider {
                     throw new CoreGeolocationError(CoreGeolocationErrorReason.PermissionDenied);
                 }
             // Fall through.
-            case Diagnostic.instance.permissionStatus.NOT_REQUESTED:
-                await Diagnostic.instance.requestLocationAuthorization();
-                await CoreApp.instance.waitForResume(500);
+            case Diagnostic.permissionStatus.NOT_REQUESTED:
+                await Diagnostic.requestLocationAuthorization();
+                await CoreApp.waitForResume(500);
                 await this.doAuthorizeLocation(true);
 
                 return;
-            case Diagnostic.instance.permissionStatus.GRANTED:
-            case Diagnostic.instance.permissionStatus.GRANTED_WHEN_IN_USE:
+            case Diagnostic.permissionStatus.GRANTED:
+            case Diagnostic.permissionStatus.GRANTED_WHEN_IN_USE:
                 // Location is authorized.
                 return;
-            case Diagnostic.instance.permissionStatus.DENIED:
+            case Diagnostic.permissionStatus.DENIED:
             default:
                 throw new CoreGeolocationError(CoreGeolocationErrorReason.PermissionDenied);
         }

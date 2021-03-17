@@ -38,7 +38,7 @@ export interface AddonModDataOfflineAction {
 /**
  * Service to handle Offline data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataOfflineProvider {
 
     protected logger: CoreLogger;
@@ -105,7 +105,7 @@ export class AddonModDataOfflineProvider {
             private fileProvider: CoreFileProvider, private fileUploaderProvider: CoreFileUploaderProvider,
             private utils: CoreUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonModDataOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -138,7 +138,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteEntry(dataId: number, entryId: number, action: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.deleteEntryFiles(dataId, entryId, action, site.id).then(() => {
                 return site.getDb().deleteRecords(AddonModDataOfflineProvider.DATA_ENTRY_TABLE, {dataid: dataId, entryid: entryId,
                     action: action});
@@ -156,7 +156,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     protected deleteEntryFiles(dataId: number, entryId: number, action: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.getEntry(dataId, entryId, action, site.id).then((entry) => {
                 if (!entry.fields) {
                     return;
@@ -171,9 +171,9 @@ export class AddonModDataOfflineProvider {
                     }
 
                     const promise = this.getEntryFieldFolder(dataId, entryId, field.fieldid, site.id).then((folderPath) => {
-                        return this.fileUploaderProvider.getStoredFiles(folderPath);
+                        return CoreFileUploader.getStoredFiles(folderPath);
                     }).then((files) => {
-                        return this.fileUploaderProvider.clearTmpFiles(files);
+                        return CoreFileUploader.clearTmpFiles(files);
                     }).catch(() => {
                         // Files not found, ignore.
                     });
@@ -195,7 +195,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved with entries.
      */
     getAllEntries(siteId?: string): Promise<AddonModDataOfflineAction[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonModDataOfflineProvider.DATA_ENTRY_TABLE);
         }).then((entries) => {
             return entries.map(this.parseRecord.bind(this));
@@ -210,7 +210,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved with entries.
      */
     getDatabaseEntries(dataId: number, siteId?: string): Promise<AddonModDataOfflineAction[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModDataOfflineProvider.DATA_ENTRY_TABLE, {dataid: dataId}, 'timemodified');
         }).then((entries) => {
             return entries.map(this.parseRecord.bind(this));
@@ -227,7 +227,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved with entry.
      */
     getEntry(dataId: number, entryId: number, action: string, siteId?: string): Promise<AddonModDataOfflineAction> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonModDataOfflineProvider.DATA_ENTRY_TABLE, {dataid: dataId, entryid: entryId,
                     action: action});
         }).then((entry) => {
@@ -244,7 +244,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved with entry actions.
      */
     getEntryActions(dataId: number, entryId: number, siteId?: string): Promise<AddonModDataOfflineAction[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModDataOfflineProvider.DATA_ENTRY_TABLE, {dataid: dataId, entryid: entryId});
         }).then((entries) => {
             return entries.map(this.parseRecord.bind(this));
@@ -259,8 +259,8 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved with boolean: true if has offline answers, false otherwise.
      */
     hasOfflineData(dataId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            return this.utils.promiseWorks(
+        return CoreSites.getSite(siteId).then((site) => {
+            return CoreUtils.promiseWorks(
                 site.getDb().recordExists(AddonModDataOfflineProvider.DATA_ENTRY_TABLE, {dataid: dataId})
             );
         });
@@ -274,7 +274,7 @@ export class AddonModDataOfflineProvider {
      * @return Promise resolved with the path.
      */
     protected getDatabaseFolder(dataId: number, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const siteFolderPath = this.fileProvider.getSiteFolder(site.getId()),
                 folderPath = 'offlinedatabase/' + dataId;
@@ -326,7 +326,7 @@ export class AddonModDataOfflineProvider {
     saveEntry(dataId: number, entryId: number, action: string, courseId: number, groupId?: number,
             fields?: AddonModDataSubfieldData[], timemodified?: number, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             timemodified = timemodified || new Date().getTime();
             entryId = typeof entryId == 'undefined' || entryId === null ? -timemodified : entryId;
             const entry = {

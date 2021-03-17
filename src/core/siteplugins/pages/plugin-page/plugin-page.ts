@@ -45,7 +45,7 @@ export class CoreSitePluginsPluginPage {
         this.initResult = params.get('initResult');
         this.jsData = params.get('jsData');
         this.preSets = params.get('preSets');
-        this.ptrEnabled = !CoreUtils.instance.isFalseOrZero(params.get('ptrEnabled'));
+        this.ptrEnabled = !CoreUtils.isFalseOrZero(params.get('ptrEnabled'));
     }
 
     /**

@@ -21,7 +21,7 @@ import { CoreCourseProvider } from './course';
 /**
  * Default handler used when the module doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseModuleDefaultHandler implements CoreCourseModuleHandler {
     name = 'CoreCourseModuleDefault';
     modName = 'default';
@@ -48,7 +48,7 @@ export class CoreCourseModuleDefaultHandler implements CoreCourseModuleHandler {
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         // Return the default data.
         const defaultData: CoreCourseModuleHandlerData = {
-            icon: this.courseProvider.getModuleIconSrc(module.modname, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(module.modname, module.modicon),
             title: module.name,
             class: 'core-course-default-handler core-course-module-' + module.modname + '-handler',
             action: (event: Event, navCtrl: NavController, module: any, courseId: number, options?: NavOptions): void => {
@@ -67,7 +67,7 @@ export class CoreCourseModuleDefaultHandler implements CoreCourseModuleHandler {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(module.url);
+                    CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(module.url);
                 }
             }];
         }

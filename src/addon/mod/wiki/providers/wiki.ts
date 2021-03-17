@@ -55,7 +55,7 @@ export interface AddonModWikiSubwikiListData {
 /**
  * Service that provides some features for wikis.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiProvider {
     static COMPONENT = 'mmaModWiki';
     static PAGE_CREATED_EVENT = 'addon_mod_wiki_page_created';
@@ -99,7 +99,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved with the page ID.
      */
     editPage(pageId: number, content: string, section?: string, siteId?: string): Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {
                     pageid: pageId,
                     content: content
@@ -123,7 +123,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved with the page data.
      */
     getPageContents(pageId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 pageid: pageId,
             };
@@ -132,7 +132,7 @@ export class AddonModWikiProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModWikiProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_wiki_get_page_contents', params, preSets).then((response) => {
@@ -162,7 +162,7 @@ export class AddonModWikiProvider {
      */
     getPageForEditing(pageId: number, section?: string, lockOnly?: boolean, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {
                     pageid: pageId
                 };
@@ -191,7 +191,7 @@ export class AddonModWikiProvider {
      */
     getSubwikiFiles(wikiId: number, options: AddonModWikiGetSubwikiFilesOptions = {}): Promise<any[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const groupId = options.groupId || -1;
             const userId = options.userId || 0;
 
@@ -205,7 +205,7 @@ export class AddonModWikiProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModWikiProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_wiki_get_subwiki_files', params, preSets).then((response) => {
@@ -255,7 +255,7 @@ export class AddonModWikiProvider {
      */
     getSubwikiPages(wikiId: number, options: AddonModWikiGetSubwikiPagesOptions = {}): Promise<any[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const groupId = options.groupId || -1;
             const userId = options.userId || 0;
             const sortBy = options.sortBy || 'title';
@@ -276,7 +276,7 @@ export class AddonModWikiProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModWikiProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_wiki_get_subwiki_pages', params, preSets).then((response) => {
@@ -315,7 +315,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved with subwikis.
      */
     getSubwikis(wikiId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 wikiid: wikiId,
             };
@@ -324,7 +324,7 @@ export class AddonModWikiProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModWikiProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_wiki_get_subwikis', params, preSets).then((response) => {
@@ -366,7 +366,7 @@ export class AddonModWikiProvider {
      */
     protected getWikiByField(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {}): Promise<any> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -374,7 +374,7 @@ export class AddonModWikiProvider {
                 cacheKey: this.getWikiDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModWikiProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_wiki_get_wikis_by_courses', params, preSets).then((response) => {
@@ -423,7 +423,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved with the list of files.
      */
     getWikiFileList(wiki: any, options: CoreSitesCommonWSOptions = {}): Promise<any[]> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         let files = [];
         const modOptions = {
@@ -460,7 +460,7 @@ export class AddonModWikiProvider {
      * @return Page list.
      */
     getWikiPageList(wiki: any, options: CoreSitesCommonWSOptions = {}): Promise<any[]> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         let pages = [];
         const modOptions = {
@@ -497,7 +497,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved when done.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getWiki(courseId, moduleId, {siteId}).then((wiki) => {
             const promises = [];
@@ -519,7 +519,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved when the files are invalidated.
      */
     invalidateFiles(moduleId: number, siteId?: string): Promise<any> {
-        return this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModWikiProvider.COMPONENT, moduleId);
+        return CoreFilepool.invalidateFilesByComponent(siteId, AddonModWikiProvider.COMPONENT, moduleId);
     }
 
     /**
@@ -530,7 +530,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidatePage(pageId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getPageContentsCacheKey(pageId));
         });
     }
@@ -543,7 +543,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSubwikiFiles(wikiId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getSubwikiFilesCacheKeyPrefix(wikiId));
         });
     }
@@ -556,7 +556,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSubwikiPages(wikiId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getSubwikiPagesCacheKeyPrefix(wikiId));
         });
     }
@@ -571,7 +571,7 @@ export class AddonModWikiProvider {
     invalidateSubwikis(wikiId: number, siteId?: string): Promise<any> {
         this.clearSubwikiList(wikiId);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getSubwikisCacheKey(wikiId));
         });
     }
@@ -584,7 +584,7 @@ export class AddonModWikiProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateWikiData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getWikiDataCacheKey(courseId));
         });
     }
@@ -641,7 +641,7 @@ export class AddonModWikiProvider {
             pageid: id
         };
 
-        return this.logHelper.logSingle('mod_wiki_view_page', params, AddonModWikiProvider.COMPONENT, wikiId, name, 'wiki',
+        return CoreCourseLogHelper.logSingle('mod_wiki_view_page', params, AddonModWikiProvider.COMPONENT, wikiId, name, 'wiki',
                 params, siteId);
     }
 
@@ -658,7 +658,7 @@ export class AddonModWikiProvider {
             wikiid: id
         };
 
-        return this.logHelper.logSingle('mod_wiki_view_wiki', params, AddonModWikiProvider.COMPONENT, id, name, 'wiki', {},
+        return CoreCourseLogHelper.logSingle('mod_wiki_view_wiki', params, AddonModWikiProvider.COMPONENT, id, name, 'wiki', {},
                 siteId);
     }
 
@@ -672,7 +672,7 @@ export class AddonModWikiProvider {
      */
     newPage(title: string, content: string, options: AddonModWikiNewPageOptions = {}): Promise<number> {
 
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a new page to be synchronized later.
         const storeOffline = (): Promise<number> => {
@@ -689,7 +689,7 @@ export class AddonModWikiProvider {
                     return false;
                 }).then((used) => {
                     if (used) {
-                        return Promise.reject(this.translate.instant('addon.mod_wiki.pageexists'));
+                        return Promise.reject(Translate.instant('addon.mod_wiki.pageexists'));
                     }
                 });
             } else {
@@ -704,7 +704,7 @@ export class AddonModWikiProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -714,7 +714,7 @@ export class AddonModWikiProvider {
                 options.siteId).then(() => {
             // Try to create it in online.
             return this.newPageOnline(title, content, options).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that the page cannot be added.
                     return Promise.reject(error);
                 } else {
@@ -735,7 +735,7 @@ export class AddonModWikiProvider {
      */
     newPageOnline(title: string, content: string, options: AddonModWikiNewPageOnlineOptions = {}): Promise<number> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params: any = {
                 title: title,
                 content: content,

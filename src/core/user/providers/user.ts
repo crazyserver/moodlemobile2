@@ -27,7 +27,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service to provide user functionalities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserProvider {
     static PARTICIPANTS_LIST_LIMIT = 50; // Max of participants to retrieve in each WS call.
     static PROFILE_REFRESHED = 'CoreUserProfileRefreshed';
@@ -68,7 +68,7 @@ export class CoreUserProvider {
             private filepoolProvider: CoreFilepoolProvider, private appProvider: CoreAppProvider,
             private userOffline: CoreUserOfflineProvider, private pushNotificationsProvider: CorePushNotificationsProvider) {
         this.logger = CoreLogger.getInstance('CoreUserProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -79,7 +79,7 @@ export class CoreUserProvider {
      * @since 3.8
      */
     canSearchParticipants(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.canSearchParticipantsInSite(site);
         });
     }
@@ -92,7 +92,7 @@ export class CoreUserProvider {
      * @since 3.8
      */
     canSearchParticipantsInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_enrol_search_users');
     }
@@ -111,7 +111,7 @@ export class CoreUserProvider {
             userid: userId
         };
 
-        return this.sitesProvider.getCurrentSite().write('core_user_update_picture', data).then((result) => {
+        return CoreSites.getCurrentSite().write('core_user_update_picture', data).then((result) => {
             if (!result.success) {
                 return Promise.reject(null);
             }
@@ -134,12 +134,12 @@ export class CoreUserProvider {
 
         const promises = [];
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Invalidate WS calls.
         promises.push(this.invalidateUserCache(userId, siteId));
 
-        promises.push(this.sitesProvider.getSite(siteId).then((site) => {
+        promises.push(CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(this.USERS_TABLE, { id: userId });
         }));
 
@@ -159,7 +159,7 @@ export class CoreUserProvider {
     getParticipants(courseId: number, limitFrom: number = 0, limitNumber: number = CoreUserProvider.PARTICIPANTS_LIST_LIMIT,
             siteId?: string, ignoreCache?: boolean): Promise<{participants: any[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             this.logger.debug(`Get participants for course '${courseId}' starting at '${limitFrom}'`);
 
             const data = {
@@ -217,7 +217,7 @@ export class CoreUserProvider {
      * @return Promise resolved with the user data.
      */
     getProfile(userId: number, courseId?: number, forceLocal: boolean = false, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (forceLocal) {
             return this.getUserFromLocalDb(userId, siteId).catch(() => {
@@ -248,7 +248,7 @@ export class CoreUserProvider {
      * @return Promise resolve when the user is retrieved.
      */
     protected getUserFromLocalDb(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(this.USERS_TABLE, { id: userId });
         });
     }
@@ -262,7 +262,7 @@ export class CoreUserProvider {
      * @return Promise resolve when the user is retrieved.
      */
     protected getUserFromWS(userId: number, courseId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const presets = {
                     cacheKey: this.getUserCacheKey(userId),
                     updateFrequency: CoreSite.FREQUENCY_RARELY
@@ -297,7 +297,7 @@ export class CoreUserProvider {
 
                 const user = users.shift();
                 if (user.country) {
-                    user.country = this.utils.getCountryName(user.country);
+                    user.country = CoreUtils.getCountryName(user.country);
                 }
                 this.storeUser(user.id, user.fullname, user.profileimageurl);
 
@@ -315,12 +315,12 @@ export class CoreUserProvider {
      * @return Preference value or null if preference not set.
      */
     getUserPreference(name: string, siteId?: string): Promise<string> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.userOffline.getPreference(name, siteId).catch(() => {
             return null;
         }).then((preference) => {
-            if (preference && !this.appProvider.isOnline()) {
+            if (preference && !CoreApp.isOnline()) {
                 // Offline, return stored value.
                 return preference.value;
             }
@@ -356,7 +356,7 @@ export class CoreUserProvider {
      * @return Preference value or null if preference not set.
      */
     getUserPreferenceOnline(name: string, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = { name };
             const preSets: CoreSiteWSPreSets = {
                 cacheKey: this.getUserPreferenceCacheKey(data.name),
@@ -377,7 +377,7 @@ export class CoreUserProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserCache(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserCacheKey(userId));
         });
     }
@@ -390,7 +390,7 @@ export class CoreUserProvider {
      * @return Promise resolved when the list is invalidated.
      */
     invalidateParticipantsList(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getParticipantsListCacheKey(courseId));
         });
     }
@@ -403,7 +403,7 @@ export class CoreUserProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserPreference(name: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserPreferenceCacheKey(name));
         });
     }
@@ -415,7 +415,7 @@ export class CoreUserProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isParticipantsDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isParticipantsDisabledInSite(site);
         });
     }
@@ -427,7 +427,7 @@ export class CoreUserProvider {
      * @return Whether it's disabled.
      */
     isParticipantsDisabledInSite(site?: any): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreCourseOptionsDelegate_CoreUserParticipants');
     }
@@ -445,7 +445,7 @@ export class CoreUserProvider {
         }
 
         // Retrieving one participant will fail if browsing users is disabled by capabilities.
-        return this.utils.promiseWorks(this.getParticipants(courseId, 0, 1, siteId));
+        return CoreUtils.promiseWorks(this.getParticipants(courseId, 0, 1, siteId));
     }
 
     /**
@@ -455,7 +455,7 @@ export class CoreUserProvider {
      * @return True if disabled, false otherwise.
      */
     isUpdatePictureDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreUserDelegate_picture');
     }
@@ -479,7 +479,7 @@ export class CoreUserProvider {
 
         this.pushNotificationsProvider.logViewEvent(userId, name, 'user', wsName, {courseid: courseId});
 
-        return this.sitesProvider.getCurrentSite().write(wsName, params);
+        return CoreSites.getCurrentSite().write(wsName, params);
     }
 
     /**
@@ -494,7 +494,7 @@ export class CoreUserProvider {
 
         this.pushNotificationsProvider.logViewListEvent('user', 'core_user_view_user_list', params);
 
-        return this.sitesProvider.getCurrentSite().write('core_user_view_user_list', params);
+        return CoreSites.getCurrentSite().write('core_user_view_user_list', params);
     }
 
     /**
@@ -506,7 +506,7 @@ export class CoreUserProvider {
      * @return Promise resolved when prefetched.
      */
     prefetchProfiles(userIds: number[], courseId?: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const treated = {},
             promises = [];
@@ -524,7 +524,7 @@ export class CoreUserProvider {
 
                 promises.push(this.getProfile(userId, courseId, false, siteId).then((profile) => {
                     if (profile.profileimageurl) {
-                        return this.filepoolProvider.addToQueueByUrl(siteId, profile.profileimageurl);
+                        return CoreFilepool.addToQueueByUrl(siteId, profile.profileimageurl);
                     }
                 }).catch((error) => {
                     this.logger.warn(`Ignore error when prefetching user ${userId}`, error);
@@ -544,7 +544,7 @@ export class CoreUserProvider {
      * @return Promise resolved when prefetched.
      */
     async prefetchUserAvatars(entries: any[], propertyName: string, siteId?: string): Promise<void> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const treated = {};
 
@@ -559,7 +559,7 @@ export class CoreUserProvider {
             treated[imageUrl] = true;
 
             try {
-                await this.filepoolProvider.addToQueueByUrl(siteId, imageUrl);
+                await CoreFilepool.addToQueueByUrl(siteId, imageUrl);
             } catch (ex) {
                 this.logger.warn(`Ignore error when prefetching user avatar ${imageUrl}`, entry, ex);
             }
@@ -584,7 +584,7 @@ export class CoreUserProvider {
             perPage: number = CoreUserProvider.PARTICIPANTS_LIST_LIMIT, siteId?: string)
             : Promise<{participants: any[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const data = {
                     courseid: courseId,
@@ -615,7 +615,7 @@ export class CoreUserProvider {
      * @return Promise resolve when the user is stored.
      */
     protected storeUser(userId: number, fullname: string, avatar: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const userRecord = {
                 id: userId,
                 fullname: fullname,
@@ -654,9 +654,9 @@ export class CoreUserProvider {
      * @return Promise resolved on success.
      */
     setUserPreference(name: string, value: string, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        let isOnline = this.appProvider.isOnline();
+        let isOnline = CoreApp.isOnline();
         let promise: Promise<any>;
 
         if (isOnline) {
@@ -715,7 +715,7 @@ export class CoreUserProvider {
      */
     updateUserPreferences(preferences: {type: string, value: string}[], disableNotifications?: boolean, userId?: number,
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const data = {

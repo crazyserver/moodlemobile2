@@ -21,7 +21,7 @@ import { makeSingleton } from '@singletons/core.singletons';
  * Factory to provide access to dynamic and permanent config and settings.
  * It should not be abused into a temporary storage.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreConfigProvider {
     protected appDB: SQLiteDB;
     protected TABLE_NAME = 'core_config';

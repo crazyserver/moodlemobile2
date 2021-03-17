@@ -24,7 +24,7 @@ import { AddonQtypeEssayComponent } from '../component/essay';
 /**
  * Handler to support essay question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeEssayHandler implements CoreQuestionHandler {
     name = 'AddonQtypeEssay';
     type = 'qtype_essay';
@@ -64,7 +64,7 @@ export class AddonQtypeEssayHandler implements CoreQuestionHandler {
      * @return Prevent submit message. Undefined or empty if can be submitted.
      */
     getPreventSubmitMessage(question: any): string {
-        const element = this.domUtils.convertToElement(question.html);
+        const element = CoreDomUtils.convertToElement(question.html);
 
         if (element.querySelector('div[id*=filemanager]')) {
             // The question allows attachments. Since the app cannot attach files yet we will prevent submitting the question.
@@ -84,7 +84,7 @@ export class AddonQtypeEssayHandler implements CoreQuestionHandler {
      * @return 1 if complete, 0 if not complete, -1 if cannot determine.
      */
     isCompleteResponse(question: any, answers: any): number {
-        const element = this.domUtils.convertToElement(question.html);
+        const element = CoreDomUtils.convertToElement(question.html);
 
         const hasInlineText = answers['answer'] && answers['answer'] !== '',
             allowsAttachments = !!element.querySelector('div[id*=filemanager]');
@@ -127,7 +127,7 @@ export class AddonQtypeEssayHandler implements CoreQuestionHandler {
      * @return Whether they're the same.
      */
     isSameResponse(question: any, prevAnswers: any, newAnswers: any): boolean {
-        return this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
+        return CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
     }
 
     /**
@@ -140,7 +140,7 @@ export class AddonQtypeEssayHandler implements CoreQuestionHandler {
      * @return Return a promise resolved when done if async, void if sync.
      */
     prepareAnswers(question: any, answers: any, offline: boolean, siteId?: string): void | Promise<any> {
-        const element = this.domUtils.convertToElement(question.html);
+        const element = CoreDomUtils.convertToElement(question.html);
 
         // Search the textarea to get its name.
         const textarea = <HTMLTextAreaElement> element.querySelector('textarea[name*=_answer]');

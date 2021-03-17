@@ -20,7 +20,7 @@ import { AddonModQuizProvider } from '../../../providers/quiz';
 /**
  * Handler to support open/close date access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessOpenCloseDateHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessOpenCloseDate';
     ruleName = 'quizaccess_openclosedate';

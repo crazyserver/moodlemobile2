@@ -20,7 +20,7 @@ import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 /**
  * Service to handle tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreTagProvider {
 
     static SEARCH_LIMIT = 150;
@@ -37,7 +37,7 @@ export class CoreTagProvider {
      * @since 3.7
      */
     areTagsAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.areTagsAvailableInSite(site);
         });
     }
@@ -49,7 +49,7 @@ export class CoreTagProvider {
      * @return True if available.
      */
     areTagsAvailableInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_tag_get_tagindex_per_area') &&
                 site.wsAvailable('core_tag_get_tag_cloud') &&
@@ -77,7 +77,7 @@ export class CoreTagProvider {
             Promise<CoreTagCloud> {
         limit = limit || CoreTagProvider.SEARCH_LIMIT;
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 tagcollid: collectionId,
                 isstandard: isStandard,
@@ -106,7 +106,7 @@ export class CoreTagProvider {
      * @since 3.7
      */
     getTagCollections(siteId?: string): Promise<CoreTagCollection[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets: CoreSiteWSPreSets = {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 cacheKey: this.getTagCollectionsKey()
@@ -139,7 +139,7 @@ export class CoreTagProvider {
      */
     getTagIndexPerArea(id: number, name: string = '', collectionId: number = 0, areaId: number = 0, fromContextId: number = 0,
             contextId: number = 0, recursive: boolean = true, page: number = 0, siteId?: string): Promise<CoreTagIndex[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 tagindex: {
                     id: id,
@@ -161,7 +161,7 @@ export class CoreTagProvider {
             return site.read('core_tag_get_tagindex_per_area', params, preSets).catch((error) => {
                 // Workaround for WS not passing parameter to error string.
                 if (error && error.errorcode == 'notagsfound') {
-                    error.message = this.translate.instant('core.tag.notagsfound', {$a: name || id || ''});
+                    error.message = Translate.instant('core.tag.notagsfound', {$a: name || id || ''});
                 }
 
                 return Promise.reject(error);
@@ -189,7 +189,7 @@ export class CoreTagProvider {
      */
     invalidateTagCloud(collectionId: number = 0, isStandard: boolean = false, sort: string = 'name', search: string = '',
             fromContextId: number = 0, contextId: number = 0, recursive: boolean = true, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getTagCloudKey(collectionId, isStandard, sort, search, fromContextId, contextId, recursive);
 
             return site.invalidateWsCacheForKey(key);
@@ -202,7 +202,7 @@ export class CoreTagProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateTagCollections(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getTagCollectionsKey();
 
             return site.invalidateWsCacheForKey(key);
@@ -223,7 +223,7 @@ export class CoreTagProvider {
      */
     invalidateTagIndexPerArea(id: number, name: string = '', collectionId: number = 0, areaId: number = 0,
             fromContextId: number = 0, contextId: number = 0, recursive: boolean = true, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getTagIndexPerAreaKey(id, name, collectionId, areaId, fromContextId, contextId, recursive);
 
             return site.invalidateWsCacheForKey(key);

@@ -23,7 +23,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support feedback modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModFeedback';
     modName = 'feedback';
@@ -61,7 +61,7 @@ export class AddonModFeedbackModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_feedback-handler',
             showDownloadButton: true,

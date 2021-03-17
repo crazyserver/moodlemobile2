@@ -71,7 +71,7 @@ export class CoreGradesCourseComponent {
         return this.gradesProvider.getCourseGradesTable(this.courseId, this.userId).then((table) => {
             this.gradesTable = this.gradesHelper.formatGradesTable(table);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading grades');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading grades');
         });
     }
 
@@ -108,7 +108,7 @@ export class CoreGradesCourseComponent {
                     pageName = 'CoreGradesCourseSplitPage';
                 }
             } else {
-                if (this.appProvider.isWide()) {
+                if (CoreApp.isWide()) {
                     // Table is full screen and large. Load here.
                     whereToPush = this.navCtrl;
                     pageName = 'CoreGradesCourseSplitPage';

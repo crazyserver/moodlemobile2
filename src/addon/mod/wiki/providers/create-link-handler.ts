@@ -25,7 +25,7 @@ import { AddonModWikiProvider } from './wiki';
 /**
  * Handler to treat links to create a wiki page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiCreateLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModWikiCreateLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModWiki';
@@ -100,7 +100,7 @@ export class AddonModWikiCreateLinkHandler extends CoreContentLinksHandlerBase {
 
         return [{
             action: (siteId, navCtrl?: NavController): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     subwikiId = parseInt(params.swid, 10),
                     activeView = navCtrl && navCtrl.getActive();
 
@@ -112,7 +112,7 @@ export class AddonModWikiCreateLinkHandler extends CoreContentLinksHandlerBase {
                             // We already have it in the params.
                             return activeView.data.module;
                         } else if (activeView && activeView.data.wikiId) {
-                            return this.courseProvider.getModuleBasicInfoByInstance(activeView.data.wikiId, 'wiki', siteId)
+                            return CoreCourse.getModuleBasicInfoByInstance(activeView.data.wikiId, 'wiki', siteId)
                                     .catch(() => {
                                 // Not found.
                             });

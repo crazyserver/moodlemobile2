@@ -21,7 +21,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 /**
  * Service to handle Offline feedback.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackOfflineProvider {
 
     protected logger: CoreLogger;
@@ -64,7 +64,7 @@ export class AddonModFeedbackOfflineProvider {
     constructor(private sitesProvider: CoreSitesProvider,
         private textUtils: CoreTextUtilsProvider, private timeUtils: CoreTimeUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonModFeedbackOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -76,7 +76,7 @@ export class AddonModFeedbackOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteFeedbackPageResponses(feedbackId: number, page: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE, {feedbackid: feedbackId, page: page});
         });
     }
@@ -88,7 +88,7 @@ export class AddonModFeedbackOfflineProvider {
      * @return Promise resolved with entries.
      */
     getAllFeedbackResponses(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE).then((entries) => {
                 entries.forEach((entry) => {
                     entry.responses = this.textUtils.parseJSON(entry.responses);
@@ -107,7 +107,7 @@ export class AddonModFeedbackOfflineProvider {
      * @return Promise resolved with responses.
      */
     getFeedbackResponses(feedbackId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE, {feedbackid: feedbackId});
         }).then((entries) => {
             entries.forEach((entry) => {
@@ -127,7 +127,7 @@ export class AddonModFeedbackOfflineProvider {
      * @return Promise resolved with responses.
      */
     getFeedbackPageResponses(feedbackId: number, page: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE, {feedbackid: feedbackId, page: page});
         }).then((entry) => {
             entry.responses = this.textUtils.parseJSON(entry.responses);
@@ -160,13 +160,13 @@ export class AddonModFeedbackOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     saveResponses(feedbackId: number, page: number, responses: any, courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                     feedbackid: feedbackId,
                     page: page,
                     courseid: courseId,
                     responses: JSON.stringify(responses),
-                    timemodified: this.timeUtils.timestamp()
+                    timemodified: CoreTimeUtils.timestamp()
                 };
 
             return site.getDb().insertRecord(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE, entry);

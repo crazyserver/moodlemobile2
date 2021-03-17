@@ -85,7 +85,7 @@ export interface AddonModWikiSyncWikiResult {
 /**
  * Service to sync wikis.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_wiki_autom_synced';
@@ -225,7 +225,7 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
     syncSubwiki(subwikiId: number, wikiId?: number, userId?: number, groupId?: number, siteId?: string)
             : Promise<AddonModWikiSyncSubwikiResult> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const result: AddonModWikiSyncSubwikiResult = {
                 warnings: [],
@@ -244,7 +244,7 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
         if (this.syncProvider.isBlocked(AddonModWikiProvider.COMPONENT, subwikiBlockId, siteId)) {
             this.logger.debug('Cannot sync subwiki ' + subwikiBlockId + ' because it is blocked.');
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         this.logger.debug('Try to sync subwiki ' + subwikiBlockId);
@@ -257,9 +257,9 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
             if (!pages || !pages.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
-                return Promise.reject(this.translate.instant('core.networkerrormsg'));
+                return Promise.reject(Translate.instant('core.networkerrormsg'));
             }
 
             const promises = [];
@@ -285,7 +285,7 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
                     // Delete the local page.
                     return this.wikiOfflineProvider.deleteNewPage(page.title, subwikiId, wikiId, userId, groupId, siteId);
                 }).catch((error) => {
-                    if (this.utils.isWebServiceError(error)) {
+                    if (CoreUtils.isWebServiceError(error)) {
                         // The WebService has thrown an error, this means that the page cannot be submitted. Delete it.
                         return this.wikiOfflineProvider.deleteNewPage(page.title, subwikiId, wikiId, userId, groupId, siteId)
                                 .then(() => {
@@ -293,8 +293,8 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
                             result.updated = true;
 
                             // Page deleted, add the page to discarded pages and add a warning.
-                            const warning = this.translate.instant('core.warningofflinedatadeleted', {
-                                component: this.translate.instant('addon.mod_wiki.wikipage'),
+                            const warning = Translate.instant('core.warningofflinedatadeleted', {
+                                component: Translate.instant('addon.mod_wiki.wikipage'),
                                 name: page.title,
                                 error: this.textUtils.getErrorMessageFromError(error)
                             });
@@ -337,10 +337,10 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncWiki(wikiId: number, courseId?: number, cmId?: number, siteId?: string): Promise<AddonModWikiSyncWikiResult> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Sync offline logs.
-        return this.logHelper.syncIfNeeded(AddonModWikiProvider.COMPONENT, wikiId, siteId).catch(() => {
+        return CoreCourseLogHelper.syncIfNeeded(AddonModWikiProvider.COMPONENT, wikiId, siteId).catch(() => {
             // Ignore errors.
          }).then(() => {
             // Sync is done at subwiki level, get all the subwikis.
@@ -381,8 +381,8 @@ export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
                         promises.push(this.wikiProvider.invalidateWikiData(courseId));
                     }
                     if (cmId) {
-                        promises.push(this.groupsProvider.invalidateActivityAllowedGroups(cmId));
-                        promises.push(this.groupsProvider.invalidateActivityGroupMode(cmId));
+                        promises.push(CoreGroups.invalidateActivityAllowedGroups(cmId));
+                        promises.push(CoreGroups.invalidateActivityGroupMode(cmId));
                     }
                 }
 

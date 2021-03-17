@@ -21,7 +21,7 @@ import { AddonNotesListComponent } from '../components/list/list';
 /**
  * Handler to inject an option into the course main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotesCourseOptionHandler implements CoreCourseOptionsHandler {
     name = 'AddonNotes';
     priority = 200;

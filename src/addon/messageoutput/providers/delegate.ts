@@ -69,7 +69,7 @@ export interface AddonMessageOutputHandlerData {
 /**
  * Delegate to register processors (message/output) to be used in places like notification preferences.
  */
- @Injectable()
+ @Injectable({ providedIn: 'root' })
  export class AddonMessageOutputDelegate extends CoreDelegate {
 
      protected handlerNameProperty = 'processorName';

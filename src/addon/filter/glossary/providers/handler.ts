@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Glossary auto-link filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterGlossaryHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterGlossaryHandler';
     filterName = 'glossary';

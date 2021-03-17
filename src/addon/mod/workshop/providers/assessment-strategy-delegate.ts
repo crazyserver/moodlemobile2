@@ -68,7 +68,7 @@ export interface AddonWorkshopAssessmentStrategyHandler extends CoreDelegateHand
  * Delegate to register workshop assessment strategy handlers.
  * You can use this service to register your own assessment strategy handlers to be used in a workshop.
  */
- @Injectable()
+ @Injectable({ providedIn: 'root' })
  export class AddonWorkshopAssessmentStrategyDelegate extends CoreDelegate {
 
      protected handlerNameProperty = 'strategyName';

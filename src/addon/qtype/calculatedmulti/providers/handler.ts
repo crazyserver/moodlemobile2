@@ -21,7 +21,7 @@ import { AddonQtypeMultichoiceComponent } from '@addon/qtype/multichoice/compone
 /**
  * Handler to support calculated multi question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeCalculatedMultiHandler implements CoreQuestionHandler {
     name = 'AddonQtypeCalculatedMulti';
     type = 'qtype_calculatedmulti';

@@ -20,7 +20,7 @@ import { AddonModFeedbackProvider } from './feedback';
 /**
  * Handler to treat links to feedback.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModFeedbackLinkHandler';
 

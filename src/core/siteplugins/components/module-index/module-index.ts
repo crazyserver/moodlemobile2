@@ -91,12 +91,12 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
                     courseId: this.courseId
                 };
 
-                this.displayOpenInBrowser = !this.utils.isFalseOrZero(handler.handlerSchema.displayopeninbrowser);
-                this.displayDescription = !this.utils.isFalseOrZero(handler.handlerSchema.displaydescription);
-                this.displayRefresh = !this.utils.isFalseOrZero(handler.handlerSchema.displayrefresh);
-                this.displayPrefetch = !this.utils.isFalseOrZero(handler.handlerSchema.displayprefetch);
-                this.displaySize = !this.utils.isFalseOrZero(handler.handlerSchema.displaysize);
-                this.ptrEnabled = !this.utils.isFalseOrZero(handler.handlerSchema.ptrenabled);
+                this.displayOpenInBrowser = !CoreUtils.isFalseOrZero(handler.handlerSchema.displayopeninbrowser);
+                this.displayDescription = !CoreUtils.isFalseOrZero(handler.handlerSchema.displaydescription);
+                this.displayRefresh = !CoreUtils.isFalseOrZero(handler.handlerSchema.displayrefresh);
+                this.displayPrefetch = !CoreUtils.isFalseOrZero(handler.handlerSchema.displayprefetch);
+                this.displaySize = !CoreUtils.isFalseOrZero(handler.handlerSchema.displaysize);
+                this.ptrEnabled = !CoreUtils.isFalseOrZero(handler.handlerSchema.ptrenabled);
             }
 
             // Get the data for the context menu.
@@ -136,7 +136,7 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
 
         // Check if there is a prefetch handler for this type of module.
         if (this.prefetchDelegate.getPrefetchHandlerFor(this.module)) {
-            this.courseHelper.fillContextMenu(this, this.module, this.courseId, refresh, this.component);
+            CoreCourseHelper.fillContextMenu(this, this.module, this.courseId, refresh, this.component);
         }
     }
 
@@ -151,7 +151,7 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
      * Expand the description.
      */
     expandDescription(): void {
-        this.textUtils.viewText(this.translate.instant('core.description'), this.description, {
+        this.textUtils.viewText(Translate.instant('core.description'), this.description, {
             component: this.component,
             componentId: this.module.id,
             filter: true,
@@ -165,14 +165,14 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
      * Prefetch the module.
      */
     prefetch(): void {
-        this.courseHelper.contextMenuPrefetch(this, this.module, this.courseId);
+        CoreCourseHelper.contextMenuPrefetch(this, this.module, this.courseId);
     }
 
     /**
      * Confirm and remove downloaded files.
      */
     removeFiles(): void {
-        this.courseHelper.confirmAndRemoveFiles(this.module, this.courseId);
+        CoreCourseHelper.confirmAndRemoveFiles(this.module, this.courseId);
     }
 
     /**

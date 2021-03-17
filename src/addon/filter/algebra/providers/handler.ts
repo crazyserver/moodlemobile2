@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Algebra notation filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterAlgebraHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterAlgebraHandler';
     filterName = 'algebra';

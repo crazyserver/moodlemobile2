@@ -89,7 +89,7 @@ export class CoreUserParticipantsComponent implements OnInit {
             }
             this.canLoadMore = data.canLoadMore;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading participants');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading participants');
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
         }).finally(() => {
             this.participantsLoaded = true;
@@ -145,7 +145,7 @@ export class CoreUserParticipantsComponent implements OnInit {
 
         if (this.showSearchBox) {
             // Make search bar visible.
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
         } else if (!this.showSearchBox && this.displaySearchResults) {
             this.clearSearch();
         }
@@ -178,7 +178,7 @@ export class CoreUserParticipantsComponent implements OnInit {
      * @return Resolved when done.
      */
     search(query: string, loadMore?: boolean): Promise<any> {
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         this.disableSearch = true;
         this.participantsLoaded = loadMore;
@@ -214,7 +214,7 @@ export class CoreUserParticipantsComponent implements OnInit {
             }
 
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error searching users.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error searching users.');
             this.loadMoreError = true;
 
         }).finally(() => {

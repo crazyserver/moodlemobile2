@@ -21,7 +21,7 @@ import { AddonMessagesProvider } from './messages';
 /**
  * Content links handler for a contact requests.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesContactRequestLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonMessagesContactRequestLinkHandler';
     pattern = /\/message\/pendingcontactrequests\.php/;

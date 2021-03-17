@@ -65,7 +65,7 @@ export class CoreH5PValidator {
                 return;
             }
 
-            const libDirPath = CoreTextUtils.instance.concatenatePaths(packagePath, entry.name);
+            const libDirPath = CoreTextUtils.concatenatePaths(packagePath, entry.name);
 
             const libraryData = await this.getLibraryData(<DirectoryEntry> entry, libDirPath);
 
@@ -83,11 +83,11 @@ export class CoreH5PValidator {
      * @return Promise resolved with boolean: whether the library has an icon file.
      */
     protected async libraryHasIcon(libPath: string): Promise<boolean> {
-        const path = CoreTextUtils.instance.concatenatePaths(libPath, 'icon.svg');
+        const path = CoreTextUtils.concatenatePaths(libPath, 'icon.svg');
 
         try {
             // Check if the file exists.
-            await CoreFile.instance.getFile(path);
+            await CoreFile.getFile(path);
 
             return true;
         } catch (error) {
@@ -128,9 +128,9 @@ export class CoreH5PValidator {
      * @return Promise resolved with the parsed file contents.
      */
     protected readH5PContentJsonFile(packagePath: string): Promise<any> {
-        const path = CoreTextUtils.instance.concatenatePaths(packagePath, 'content/content.json');
+        const path = CoreTextUtils.concatenatePaths(packagePath, 'content/content.json');
 
-        return CoreFile.instance.readFile(path, CoreFileProvider.FORMATJSON);
+        return CoreFile.readFile(path, CoreFileProvider.FORMATJSON);
     }
 
     /**
@@ -140,9 +140,9 @@ export class CoreH5PValidator {
      * @return Promise resolved with the parsed file contents.
      */
     protected readH5PJsonFile(packagePath: string): Promise<any> {
-        const path = CoreTextUtils.instance.concatenatePaths(packagePath, 'h5p.json');
+        const path = CoreTextUtils.concatenatePaths(packagePath, 'h5p.json');
 
-        return CoreFile.instance.readFile(path, CoreFileProvider.FORMATJSON);
+        return CoreFile.readFile(path, CoreFileProvider.FORMATJSON);
     }
 
     /**
@@ -152,9 +152,9 @@ export class CoreH5PValidator {
      * @return Promise resolved with the parsed file contents.
      */
     protected readLibraryJsonFile(libPath: string): Promise<any> {
-        const path = CoreTextUtils.instance.concatenatePaths(libPath, 'library.json');
+        const path = CoreTextUtils.concatenatePaths(libPath, 'library.json');
 
-        return CoreFile.instance.readFile(path, CoreFileProvider.FORMATJSON);
+        return CoreFile.readFile(path, CoreFileProvider.FORMATJSON);
     }
 
     /**
@@ -165,17 +165,17 @@ export class CoreH5PValidator {
      */
     protected async readLibraryLanguageFiles(libPath: string): Promise<{[code: string]: any}> {
         try {
-            const path = CoreTextUtils.instance.concatenatePaths(libPath, 'language');
+            const path = CoreTextUtils.concatenatePaths(libPath, 'language');
             const langIndex: {[code: string]: any} = {};
 
             // Read all the files in the language directory.
-            const entries = await CoreFile.instance.getDirectoryContents(path);
+            const entries = await CoreFile.getDirectoryContents(path);
 
             await Promise.all(entries.map(async (entry) => {
-                const langFilePath = CoreTextUtils.instance.concatenatePaths(path, entry.name);
+                const langFilePath = CoreTextUtils.concatenatePaths(path, entry.name);
 
                 try {
-                    const langFileData = await CoreFile.instance.readFile(langFilePath, CoreFileProvider.FORMATJSON);
+                    const langFileData = await CoreFile.readFile(langFilePath, CoreFileProvider.FORMATJSON);
 
                     const parts = entry.name.split('.'); // The language code is in parts[0].
                     langIndex[parts[0]] = langFileData;
@@ -199,9 +199,9 @@ export class CoreH5PValidator {
      */
     protected async readLibrarySemanticsFile(libPath: string): Promise<any> {
         try {
-            const path = CoreTextUtils.instance.concatenatePaths(libPath, 'semantics.json');
+            const path = CoreTextUtils.concatenatePaths(libPath, 'semantics.json');
 
-            const result = await CoreFile.instance.readFile(path, CoreFileProvider.FORMATJSON);
+            const result = await CoreFile.readFile(path, CoreFileProvider.FORMATJSON);
 
             return result;
         } catch (error) {

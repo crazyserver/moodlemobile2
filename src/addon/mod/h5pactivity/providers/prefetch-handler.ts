@@ -32,7 +32,7 @@ import { AddonModH5PActivity, AddonModH5PActivityProvider, AddonModH5PActivityDa
 /**
  * Handler to prefetch h5p activity.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModH5PActivity';
     modName = 'h5pactivity';
@@ -63,11 +63,11 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
      */
     async getFiles(module: any, courseId: number, single?: boolean): Promise<CoreWSExternalFile[]> {
 
-        const h5pActivity = await AddonModH5PActivity.instance.getH5PActivity(courseId, module.id);
+        const h5pActivity = await AddonModH5PActivity.getH5PActivity(courseId, module.id);
 
         const displayOptions = CoreH5PHelper.decodeDisplayOptions(h5pActivity.displayoptions);
 
-        const deployedFile = await AddonModH5PActivity.instance.getDeployedFile(h5pActivity, {
+        const deployedFile = await AddonModH5PActivity.getDeployedFile(h5pActivity, {
             displayOptions: displayOptions,
         });
 
@@ -94,7 +94,7 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
      * @return Whether the module can be downloaded. The promise should never be rejected.
      */
     isDownloadable(module: any, courseId: number): boolean | Promise<boolean> {
-        return this.sitesProvider.getCurrentSite().canDownloadFiles() && !CoreH5P.instance.isOfflineDisabledInSite();
+        return CoreSites.getCurrentSite().canDownloadFiles() && !CoreH5P.isOfflineDisabledInSite();
     }
 
     /**
@@ -103,7 +103,7 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
      * @return A boolean, or a promise resolved with a boolean, indicating if the handler is enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return AddonModH5PActivity.instance.isPluginEnabled();
+        return AddonModH5PActivity.isPluginEnabled();
     }
 
     /**
@@ -130,7 +130,7 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
      */
     protected async prefetchActivity(module: any, courseId: number, single: boolean, siteId: string): Promise<void> {
 
-        const h5pActivity = await AddonModH5PActivity.instance.getH5PActivity(courseId, module.id, {
+        const h5pActivity = await AddonModH5PActivity.getH5PActivity(courseId, module.id, {
             readingStrategy: CoreSitesReadingStrategy.OnlyNetwork,
             siteId,
         });
@@ -139,7 +139,7 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
 
         await Promise.all([
             this.prefetchWSData(h5pActivity, siteId),
-            this.filepoolProvider.addFilesToQueue(siteId, introFiles, AddonModH5PActivityProvider.COMPONENT, module.id),
+            CoreFilepool.addFilesToQueue(siteId, introFiles, AddonModH5PActivityProvider.COMPONENT, module.id),
             this.prefetchMainFile(module, h5pActivity, siteId),
         ]);
     }
@@ -156,13 +156,13 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
 
         const displayOptions = CoreH5PHelper.decodeDisplayOptions(h5pActivity.displayoptions);
 
-        const deployedFile = await AddonModH5PActivity.instance.getDeployedFile(h5pActivity, {
+        const deployedFile = await AddonModH5PActivity.getDeployedFile(h5pActivity, {
             displayOptions: displayOptions,
             ignoreCache: true,
             siteId: siteId,
         });
 
-        await this.filepoolProvider.addFilesToQueue(siteId, [deployedFile], AddonModH5PActivityProvider.COMPONENT, module.id);
+        await CoreFilepool.addFilesToQueue(siteId, [deployedFile], AddonModH5PActivityProvider.COMPONENT, module.id);
     }
 
     /**
@@ -174,7 +174,7 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
      */
     protected async prefetchWSData(h5pActivity: AddonModH5PActivityData, siteId: string): Promise<void> {
 
-        const accessInfo = await AddonModH5PActivity.instance.getAccessInformation(h5pActivity.id, {
+        const accessInfo = await AddonModH5PActivity.getAccessInformation(h5pActivity.id, {
             cmId: h5pActivity.coursemodule,
             readingStrategy: CoreSitesReadingStrategy.PreferCache,
             siteId,
@@ -182,7 +182,7 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
 
         if (!accessInfo.canreviewattempts) {
             // Not a teacher, prefetch user attempts and the current user profile.
-            const site = await this.sitesProvider.getSite(siteId);
+            const site = await CoreSites.getSite(siteId);
 
             const options = {
                 cmId: h5pActivity.coursemodule,
@@ -191,8 +191,8 @@ export class AddonModH5PActivityPrefetchHandler extends CoreCourseActivityPrefet
             };
 
             await Promise.all([
-                AddonModH5PActivity.instance.getAllAttemptsResults(h5pActivity.id, options),
-                CoreUser.instance.prefetchProfiles([site.getUserId()], h5pActivity.course, siteId),
+                AddonModH5PActivity.getAllAttemptsResults(h5pActivity.id, options),
+                CoreUser.prefetchProfiles([site.getUserId()], h5pActivity.course, siteId),
             ]);
         }
     }

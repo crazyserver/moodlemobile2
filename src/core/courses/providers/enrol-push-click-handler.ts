@@ -22,7 +22,7 @@ import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 /**
  * Handler for enrol push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesEnrolPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'CoreCoursesEnrolPushClickHandler';
     priority = 200;
@@ -37,7 +37,7 @@ export class CoreCoursesEnrolPushClickHandler implements CorePushNotificationsCl
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        return this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent.indexOf('enrol_') === 0 &&
+        return CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent.indexOf('enrol_') === 0 &&
                 notification.name == 'expiry_notification';
     }
 
@@ -49,9 +49,9 @@ export class CoreCoursesEnrolPushClickHandler implements CorePushNotificationsCl
      */
     handleClick(notification: any): Promise<any> {
         const courseId = Number(notification.courseid),
-            modal = this.domUtils.showModalLoading();
+            modal = CoreDomUtils.showModalLoading();
 
-        return this.courseHelper.getCourse(courseId, notification.site).then((result) => {
+        return CoreCourseHelper.getCourse(courseId, notification.site).then((result) => {
             const params: any = {
                 course: result.course
             };
@@ -71,7 +71,7 @@ export class CoreCoursesEnrolPushClickHandler implements CorePushNotificationsCl
 
             return this.loginHelper.redirect(page, params, notification.site);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting course.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting course.');
         }).finally(() => {
             modal.dismiss();
         });

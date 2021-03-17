@@ -23,7 +23,7 @@ import { CoreSitesProvider } from '@services/sites';
  * Content links handler for a discussion.
  * Match message index URL with params id, user1 or user2.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesDiscussionLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonMessagesDiscussionLinkHandler';
     pattern = /\/message\/index\.php.*([\?\&](id|user1|user2)=\d+)/;
@@ -77,7 +77,7 @@ export class AddonMessagesDiscussionLinkHandler extends CoreContentLinksHandlerB
 
             if (typeof params.user1 != 'undefined') {
                 // Check if user1 is the current user, since the app only supports current user.
-                return this.sitesProvider.getSite(siteId).then((site) => {
+                return CoreSites.getSite(siteId).then((site) => {
                     return parseInt(params.user1, 10) == site.getUserId();
                 });
             }

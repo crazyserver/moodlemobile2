@@ -79,10 +79,10 @@ export class AddonBlockRecentlyAccessedItemsComponent extends CoreBlockBaseCompo
         e.stopPropagation();
 
         const url = this.textUtils.decodeHTMLEntities(item.viewurl);
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         this.contentLinksHelper.handleLink(url, undefined, this.navCtrl).then((treated) => {
             if (!treated) {
-                return this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
+                return CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
             }
         }).finally(() => {
             modal.dismiss();

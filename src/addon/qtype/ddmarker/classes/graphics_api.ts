@@ -57,16 +57,16 @@ export class AddonQtypeDdMarkerGraphicsApi {
      * Clear the shapes.
      */
     clear(): void {
-        const bgImg = this.instance.doc.bgImg(),
-            position = this.domUtils.getElementXY(bgImg, null, 'ddarea'),
-            dropZones = <HTMLElement> this.instance.doc.topNode().querySelector('div.ddarea div.dropzones');
+        const bgImg = this.doc.bgImg(),
+            position = CoreDomUtils.getElementXY(bgImg, null, 'ddarea'),
+            dropZones = <HTMLElement> this.doc.topNode().querySelector('div.ddarea div.dropzones');
 
         dropZones.style.left = position[0] + 'px';
         dropZones.style.top = position[1] + 'px';
         dropZones.style.width = bgImg.width + 'px';
         dropZones.style.height = bgImg.height + 'px';
 
-        const markerTexts = this.instance.doc.markerTexts();
+        const markerTexts = this.doc.markerTexts();
         markerTexts.style.left = position[0] + 'px';
         markerTexts.style.top = position[1] + 'px';
         markerTexts.style.width = bgImg.width + 'px';
@@ -85,6 +85,6 @@ export class AddonQtypeDdMarkerGraphicsApi {
         this.dropZone.style.width = bgImg.width + 'px';
         this.dropZone.style.height = bgImg.height + 'px';
 
-        this.instance.shapes = [];
+        this.shapes = [];
     }
 }

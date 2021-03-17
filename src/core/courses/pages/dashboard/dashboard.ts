@@ -69,20 +69,20 @@ export class CoreCoursesDashboardPage implements OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();
-        this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
-        this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
+        this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
+        this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
+        this.downloadCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
         // Refresh the enabled flags if site is updated.
         this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
-            this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();
-            this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
-            this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
+            this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
+            this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
+            this.downloadCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
             this.switchDownload(this.downloadEnabled);
 
             this.loadSiteName();
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         const promises = [];
 
@@ -95,7 +95,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
         // Decide which tab to load first.
         Promise.all(promises).finally(() => {
             if (this.siteHomeEnabled && this.dashboardEnabled) {
-                const site = this.sitesProvider.getCurrentSite(),
+                const site = CoreSites.getCurrentSite(),
                     displaySiteHome = site.getInfo() && site.getInfo().userhomepage === 0;
 
                 this.firstSelectedTab = displaySiteHome ? 0 : 1;
@@ -139,7 +139,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
      * Load the site name.
      */
     protected loadSiteName(): void {
-        this.siteName = this.sitesProvider.getCurrentSite().getSiteName();
+        this.siteName = CoreSites.getCurrentSite().getSiteName();
     }
 
     /**
@@ -150,12 +150,12 @@ export class CoreCoursesDashboardPage implements OnDestroy {
     protected loadDashboardContent(): Promise<any> {
         return this.dashboardProvider.isAvailable().then((available) => {
             if (available) {
-                this.userId = this.sitesProvider.getCurrentSiteUserId();
+                this.userId = CoreSites.getCurrentSiteUserId();
 
                 return this.dashboardProvider.getDashboardBlocks().then((blocks) => {
                     this.blocks = blocks;
                 }).catch((error) => {
-                    this.domUtils.showErrorModal(error);
+                    CoreDomUtils.showErrorModal(error);
 
                     // Cannot get the blocks, just show dashboard if needed.
                     this.loadFallbackBlocks();

@@ -29,7 +29,7 @@ import { AddonModAssignSubmissionOnlineTextComponent } from '../component/online
 /**
  * Handler for online text submission plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignSubmissionOnlineTextHandler implements AddonModAssignSubmissionHandler {
     name = 'AddonModAssignSubmissionOnlineTextHandler';
     type = 'onlinetext';
@@ -223,7 +223,7 @@ export class AddonModAssignSubmissionOnlineTextHandler implements AddonModAssign
     isEnabledForEdit(): boolean | Promise<boolean> {
         // There's a bug in Moodle 3.1.0 that doesn't allow submitting HTML, so we'll disable this plugin in that case.
         // Bug was fixed in 3.1.1 minor release and in 3.2.
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         return currentSite && (currentSite.isVersionGreaterEqualThan('3.1.1') || currentSite.checkIfAppUsesLocalMobile());
     }
@@ -254,7 +254,7 @@ export class AddonModAssignSubmissionOnlineTextHandler implements AddonModAssign
             const wordlimit = parseInt(configs.wordlimit, 10);
             if (words > wordlimit) {
                 const params = {$a: {count: words, limit: wordlimit}};
-                const message = this.translate.instant('addon.mod_assign_submission_onlinetext.wordlimitexceeded', params);
+                const message = Translate.instant('addon.mod_assign_submission_onlinetext.wordlimitexceeded', params);
 
                 return Promise.reject(message);
             }

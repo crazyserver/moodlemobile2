@@ -110,7 +110,7 @@ export interface CoreMainMenuHandlerToDisplay extends CoreMainMenuHandlerData {
  * Service to interact with plugins to be shown in the main menu. Provides functions to register a plugin
  * and notify an update in the data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreMainMenuDelegate extends CoreDelegate {
     protected loaded = false;
     protected siteHandlers: Subject<CoreMainMenuHandlerToDisplay[]> = new BehaviorSubject<CoreMainMenuHandlerToDisplay[]>([]);

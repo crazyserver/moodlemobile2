@@ -36,12 +36,12 @@ export class CoreH5PHelper {
      */
     static decodeDisplayOptions(displayOptions: number): CoreH5PDisplayOptions {
         const config: any = {};
-        const displayOptionsObject = CoreH5P.instance.h5pCore.getDisplayOptionsAsObject(displayOptions);
+        const displayOptionsObject = CoreH5P.h5pCore.getDisplayOptionsAsObject(displayOptions);
 
         config.export = false; // Don't allow downloading in the app.
-        config.embed = CoreUtils.instance.notNullOrUndefined(displayOptionsObject[CoreH5PCore.DISPLAY_OPTION_EMBED]) ?
+        config.embed = CoreUtils.notNullOrUndefined(displayOptionsObject[CoreH5PCore.DISPLAY_OPTION_EMBED]) ?
                 displayOptionsObject[CoreH5PCore.DISPLAY_OPTION_EMBED] : false;
-        config.copyright = CoreUtils.instance.notNullOrUndefined(displayOptionsObject[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT]) ?
+        config.copyright = CoreUtils.notNullOrUndefined(displayOptionsObject[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT]) ?
                 displayOptionsObject[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT] : false;
 
         return config;
@@ -64,7 +64,7 @@ export class CoreH5PHelper {
         settings.loadedJs = [];
         settings.loadedCss = [];
 
-        const libUrl = CoreH5P.instance.h5pCore.h5pFS.getCoreH5PPath();
+        const libUrl = CoreH5P.h5pCore.h5pFS.getCoreH5PPath();
         const cssRequires: string[] = [];
         const jsRequires: string[] = [];
 
@@ -91,37 +91,37 @@ export class CoreH5PHelper {
      */
     static async getCoreSettings(siteId?: string): Promise<any> {
 
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
         let user;
 
         try {
-            user = await CoreUser.instance.getProfile(site.getUserId(), undefined, false, siteId);
+            user = await CoreUser.getProfile(site.getUserId(), undefined, false, siteId);
         } catch (error) {
             // Ignore errors.
         }
 
         if (!user || !user.email) {
-            throw Translate.instance.instant('core.h5p.errorgetemail');
+            throw Translate.instant('core.h5p.errorgetemail');
         }
 
-        const basePath = CoreFile.instance.getBasePathInstant();
+        const basePath = CoreFile.getBasePathInstant();
         const ajaxPaths = {
             xAPIResult: '',
             contentUserData: '',
         };
 
         return {
-            baseUrl: CoreFile.instance.getWWWPath(),
-            url: CoreFile.instance.convertFileSrc(CoreTextUtils.instance.concatenatePaths(
-                    basePath, CoreH5P.instance.h5pCore.h5pFS.getExternalH5PFolderPath(site.getId()))),
-            urlLibraries: CoreFile.instance.convertFileSrc(CoreTextUtils.instance.concatenatePaths(
-                    basePath, CoreH5P.instance.h5pCore.h5pFS.getLibrariesFolderPath(site.getId()))),
+            baseUrl: CoreFile.getWWWPath(),
+            url: CoreFile.convertFileSrc(CoreTextUtils.concatenatePaths(
+                    basePath, CoreH5P.h5pCore.h5pFS.getExternalH5PFolderPath(site.getId()))),
+            urlLibraries: CoreFile.convertFileSrc(CoreTextUtils.concatenatePaths(
+                    basePath, CoreH5P.h5pCore.h5pFS.getLibrariesFolderPath(site.getId()))),
             postUserStatistics: false,
             ajax: ajaxPaths,
             saveFreq: false,
             siteUrl: site.getURL(),
             l10n: {
-                H5P: CoreH5P.instance.h5pCore.getLocalization(),
+                H5P: CoreH5P.h5pCore.getLocalization(),
             },
             user: {name: site.getInfo().fullname, mail: user.email},
             hubIsEnabled: false,
@@ -129,7 +129,7 @@ export class CoreH5PHelper {
             crossorigin: null,
             libraryConfig: null,
             pluginCacheBuster: '',
-            libraryUrl: CoreTextUtils.instance.concatenatePaths(CoreH5P.instance.h5pCore.h5pFS.getCoreH5PPath(), 'js'),
+            libraryUrl: CoreTextUtils.concatenatePaths(CoreH5P.h5pCore.h5pFS.getCoreH5PPath(), 'js'),
         };
     }
 
@@ -144,14 +144,14 @@ export class CoreH5PHelper {
      * @return Promise resolved when done.
      */
     static async saveH5P(fileUrl: string, file: FileEntry, siteId?: string, onProgress?: (event: any) => any): Promise<void> {
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Notify that the unzip is starting.
         onProgress && onProgress({message: 'core.unzipping'});
 
         const queueId = siteId + ':saveH5P:' + fileUrl;
 
-        await CoreH5P.instance.queueRunner.run(queueId, () => CoreH5PHelper.performSave(fileUrl, file, siteId, onProgress));
+        await CoreH5P.queueRunner.run(queueId, () => CoreH5PHelper.performSave(fileUrl, file, siteId, onProgress));
     }
 
     /**
@@ -166,33 +166,33 @@ export class CoreH5PHelper {
     protected static async performSave(fileUrl: string, file: FileEntry, siteId?: string, onProgress?: (event: any) => any)
             : Promise<void> {
 
-        const folderName = CoreMimetypeUtils.instance.removeExtension(file.name);
-        const destFolder = CoreTextUtils.instance.concatenatePaths(CoreFileProvider.TMPFOLDER, 'h5p/' + folderName);
+        const folderName = CoreMimetypeUtils.removeExtension(file.name);
+        const destFolder = CoreTextUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, 'h5p/' + folderName);
 
         // Unzip the file.
-        await CoreFile.instance.unzipFile(file.toURL(), destFolder, onProgress);
+        await CoreFile.unzipFile(file.toURL(), destFolder, onProgress);
 
         try {
             // Notify that the unzip is starting.
             onProgress && onProgress({message: 'core.storingfiles'});
 
             // Read the contents of the unzipped dir, process them and store them.
-            const contents = await CoreFile.instance.getDirectoryContents(destFolder);
+            const contents = await CoreFile.getDirectoryContents(destFolder);
 
-            const filesData = await CoreH5P.instance.h5pValidator.processH5PFiles(destFolder, contents);
+            const filesData = await CoreH5P.h5pValidator.processH5PFiles(destFolder, contents);
 
-            const content = await CoreH5P.instance.h5pStorage.savePackage(filesData, folderName, fileUrl, false, siteId);
+            const content = await CoreH5P.h5pStorage.savePackage(filesData, folderName, fileUrl, false, siteId);
 
             // Create the content player.
-            const contentData = await CoreH5P.instance.h5pCore.loadContent(content.id, undefined, siteId);
+            const contentData = await CoreH5P.h5pCore.loadContent(content.id, undefined, siteId);
 
             const embedType = CoreH5PCore.determineEmbedType(contentData.embedType, contentData.library.embedTypes);
 
-            await CoreH5P.instance.h5pPlayer.createContentIndex(content.id, fileUrl, contentData, embedType, siteId);
+            await CoreH5P.h5pPlayer.createContentIndex(content.id, fileUrl, contentData, embedType, siteId);
         } finally {
             // Remove tmp folder.
             try {
-                await CoreFile.instance.removeDir(destFolder);
+                await CoreFile.removeDir(destFolder);
             } catch (error) {
                 // Ignore errors, it will be deleted eventually.
             }

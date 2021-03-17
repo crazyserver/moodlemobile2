@@ -28,7 +28,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for glossaries.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryProvider {
     static COMPONENT = 'mmaModGlossary';
     static LIMIT_ENTRIES = 25;
@@ -76,7 +76,7 @@ export class AddonModGlossaryProvider {
             private glossaryOffline: AddonModGlossaryOfflineProvider,
             private logHelper: CoreCourseLogHelperProvider) {
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -97,7 +97,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved with the glossaries.
      */
     getCourseGlossaries(courseId: number, options: CoreSitesCommonWSOptions = {}): Promise<any[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -105,7 +105,7 @@ export class AddonModGlossaryProvider {
                 cacheKey: this.getCourseGlossariesCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModGlossaryProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_glossaries_by_courses', params, preSets).then((result) => {
@@ -122,7 +122,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved when data is invalidated.
      */
     invalidateCourseGlossaries(courseId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getCourseGlossariesCacheKey(courseId);
 
             return site.invalidateWsCacheForKey(key);
@@ -155,7 +155,7 @@ export class AddonModGlossaryProvider {
     getEntriesByAuthor(glossaryId: number, letter: string, field: string, sort: string,
             options: AddonModGlossaryGetEntriesOptions = {}): Promise<any[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 id: glossaryId,
                 letter: letter,
@@ -169,7 +169,7 @@ export class AddonModGlossaryProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModGlossaryProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_entries_by_author', params, preSets);
@@ -187,7 +187,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved when data is invalidated.
      */
     invalidateEntriesByAuthor(glossaryId: number, letter: string, field: string, sort: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getEntriesByAuthorCacheKey(glossaryId, letter, field, sort);
 
             return site.invalidateWsCacheForKey(key);
@@ -205,7 +205,7 @@ export class AddonModGlossaryProvider {
      */
     getEntriesByCategory(glossaryId: number, categoryId: number, options: AddonModGlossaryGetEntriesOptions = {}): Promise<any[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 id: glossaryId,
                 categoryid: categoryId,
@@ -217,7 +217,7 @@ export class AddonModGlossaryProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModGlossaryProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_entries_by_category', params, preSets);
@@ -234,7 +234,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved when data is invalidated.
      */
     invalidateEntriesByCategory(glossaryId: number, categoryId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getEntriesByCategoryCacheKey(glossaryId, categoryId);
 
             return site.invalidateWsCacheForKey(key);
@@ -277,7 +277,7 @@ export class AddonModGlossaryProvider {
     getEntriesByDate(glossaryId: number, order: string, sort: string, options: AddonModGlossaryGetEntriesOptions = {})
             : Promise<any[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 id: glossaryId,
                 order: order,
@@ -290,7 +290,7 @@ export class AddonModGlossaryProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModGlossaryProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_entries_by_date', params, preSets);
@@ -307,7 +307,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved when data is invalidated.
      */
     invalidateEntriesByDate(glossaryId: number, order: string, sort: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getEntriesByDateCacheKey(glossaryId, order, sort);
 
             return site.invalidateWsCacheForKey(key);
@@ -337,7 +337,7 @@ export class AddonModGlossaryProvider {
         options.from = options.from || 0;
         options.limit = options.limit || AddonModGlossaryProvider.LIMIT_ENTRIES;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 id: glossaryId,
                 letter: letter,
@@ -349,7 +349,7 @@ export class AddonModGlossaryProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModGlossaryProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_entries_by_letter', params, preSets).then((result) => {
@@ -375,7 +375,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved when data is invalidated.
      */
     invalidateEntriesByLetter(glossaryId: number, letter: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getEntriesByLetterCacheKey(glossaryId, letter);
 
             return site.invalidateWsCacheForKey(key);
@@ -415,7 +415,7 @@ export class AddonModGlossaryProvider {
     getEntriesBySearch(glossaryId: number, query: string, fullSearch: boolean, order: string, sort: string,
             options: AddonModGlossaryGetEntriesOptions = {}): Promise<any[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 id: glossaryId,
                 query: query,
@@ -430,7 +430,7 @@ export class AddonModGlossaryProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModGlossaryProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_entries_by_search', params, preSets);
@@ -450,7 +450,7 @@ export class AddonModGlossaryProvider {
      */
     invalidateEntriesBySearch(glossaryId: number, query: string, fullSearch: boolean, order: string, sort: string, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getEntriesBySearchCacheKey(glossaryId, query, fullSearch, order, sort);
 
             return site.invalidateWsCacheForKey(key);
@@ -475,7 +475,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved with the categories if supported or empty array if not.
      */
     getAllCategories(glossaryId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             return this.getCategories(glossaryId, [], site, options);
         });
     }
@@ -505,7 +505,7 @@ export class AddonModGlossaryProvider {
             updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
             component: AddonModGlossaryProvider.COMPONENT,
             componentId: options.cmId,
-            ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
         return site.read('mod_glossary_get_categories', params, preSets).then((response) => {
@@ -529,7 +529,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved when categories data has been invalidated,
      */
     invalidateCategories(glossaryId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCategoriesCacheKey(glossaryId));
         });
     }
@@ -554,7 +554,7 @@ export class AddonModGlossaryProvider {
     getEntry(entryId: number, options: CoreCourseCommonModWSOptions = {})
             : Promise<{entry: any, ratinginfo: CoreRatingInfo, from?: number}> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 id: entryId,
             };
@@ -563,7 +563,7 @@ export class AddonModGlossaryProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModGlossaryProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_glossary_get_entry_by_id', params, preSets).then((response) => {
@@ -634,7 +634,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved with the glossary ID and the "from".
      */
     getStoredDataForEntry(entryId: number, siteId?: string): Promise<{glossaryId: number, from: number}> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 entryid: entryId
             };
@@ -672,7 +672,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved with all entrries.
      */
     fetchAllEntries(fetchFunction: Function, fetchArguments: any[], options: CoreCourseCommonModWSOptions = {}): Promise<any[]> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         const entries = [];
 
@@ -698,7 +698,7 @@ export class AddonModGlossaryProvider {
      * @return Resolved when data is invalidated.
      */
     invalidateEntry(entryId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getEntryCacheKey(entryId));
         });
     }
@@ -716,7 +716,7 @@ export class AddonModGlossaryProvider {
             keys.push(this.getEntryCacheKey(entry.id));
         });
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateMultipleWsCacheForKey(keys);
         });
     }
@@ -732,7 +732,7 @@ export class AddonModGlossaryProvider {
      invalidateContent(moduleId: number, courseId: number): Promise<any> {
         return this.getGlossary(courseId, moduleId).then((glossary) => {
             return this.invalidateGlossaryEntries(glossary).finally(() => {
-                return this.utils.allPromises([
+                return CoreUtils.allPromises([
                     this.invalidateCourseGlossaries(courseId),
                     this.invalidateCategories(glossary.id)
                 ]);
@@ -750,7 +750,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateGlossaryEntries(glossary: any, onlyEntriesList?: boolean, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -784,7 +784,7 @@ export class AddonModGlossaryProvider {
             }
         });
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -795,7 +795,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved when the files are invalidated.
      */
     protected invalidateFiles(moduleId: number, siteId?: string): Promise<any> {
-        return this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModGlossaryProvider.COMPONENT, moduleId);
+        return CoreFilepool.invalidateFilesByComponent(siteId, AddonModGlossaryProvider.COMPONENT, moduleId);
     }
 
     /**
@@ -853,7 +853,7 @@ export class AddonModGlossaryProvider {
      */
     addEntry(glossaryId: number, concept: string, definition: string, courseId: number, entryOptions: any, attach: any,
             otherOptions: AddonModGlossaryAddEntryOptions = {}): Promise<number | false> {
-        otherOptions.siteId = otherOptions.siteId || this.sitesProvider.getCurrentSiteId();
+        otherOptions.siteId = otherOptions.siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a new entry to be synchronized later.
         const storeOffline = (): Promise<number | false> => {
@@ -873,7 +873,7 @@ export class AddonModGlossaryProvider {
             // Check if the entry is duplicated in online or offline mode.
             return duplicatesPromise.then((used) => {
                 if (used) {
-                    return Promise.reject(this.translate.instant('addon.mod_glossary.errconceptalreadyexists'));
+                    return Promise.reject(Translate.instant('addon.mod_glossary.errconceptalreadyexists'));
                 }
 
                 return this.glossaryOffline.addNewEntry(glossaryId, concept, definition, courseId, attach, entryOptions,
@@ -883,7 +883,7 @@ export class AddonModGlossaryProvider {
             });
         };
 
-        if (!this.appProvider.isOnline() && otherOptions.allowOffline) {
+        if (!CoreApp.isOnline() && otherOptions.allowOffline) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -903,7 +903,7 @@ export class AddonModGlossaryProvider {
                     .then((entryId) => {
                 return entryId;
             }).catch((error) => {
-                if (otherOptions.allowOffline && !this.utils.isWebServiceError(error)) {
+                if (otherOptions.allowOffline && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -927,13 +927,13 @@ export class AddonModGlossaryProvider {
      */
     addEntryOnline(glossaryId: number, concept: string, definition: string, options?: any, attachId?: number, siteId?: string):
             Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 glossaryid: glossaryId,
                 concept: concept,
                 definition: definition,
                 definitionformat: 1,
-                options: this.utils.objectToArrayOfObjects(options || {}, 'name', 'value')
+                options: CoreUtils.objectToArrayOfObjects(options || {}, 'name', 'value')
             };
 
             if (attachId) {
@@ -953,7 +953,7 @@ export class AddonModGlossaryProvider {
                     return response.entryid;
                 }
 
-                return Promise.reject(this.utils.createFakeWSError(''));
+                return Promise.reject(CoreUtils.createFakeWSError(''));
             });
         });
     }
@@ -996,7 +996,7 @@ export class AddonModGlossaryProvider {
      * @return Whether the glossary editing is available or not.
      */
     isPluginEnabledForEditing(): boolean {
-        return  this.sitesProvider.getCurrentSite().wsAvailable('mod_glossary_add_entry');
+        return  CoreSites.getCurrentSite().wsAvailable('mod_glossary_add_entry');
     }
 
     /**
@@ -1014,7 +1014,7 @@ export class AddonModGlossaryProvider {
             mode: mode
         };
 
-        return this.logHelper.logSingle('mod_glossary_view_glossary', params, AddonModGlossaryProvider.COMPONENT, glossaryId, name,
+        return CoreCourseLogHelper.logSingle('mod_glossary_view_glossary', params, AddonModGlossaryProvider.COMPONENT, glossaryId, name,
                 'glossary', {mode: mode}, siteId);
     }
 
@@ -1032,7 +1032,7 @@ export class AddonModGlossaryProvider {
             id: entryId
         };
 
-        return this.logHelper.logSingle('mod_glossary_view_entry', params, AddonModGlossaryProvider.COMPONENT, glossaryId, name,
+        return CoreCourseLogHelper.logSingle('mod_glossary_view_entry', params, AddonModGlossaryProvider.COMPONENT, glossaryId, name,
                 'glossary', {entryid: entryId}, siteId);
     }
 
@@ -1065,7 +1065,7 @@ export class AddonModGlossaryProvider {
      * @return Promise resolved when done.
      */
     protected storeEntryId(glossaryId: number, entryId: number, from: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 entryid: entryId,
                 glossaryid: glossaryId,

@@ -69,7 +69,7 @@ export class CoreLocalFileComponent implements OnInit {
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.manage = this.utils.isTrueOrOne(this.manage);
+        this.manage = CoreUtils.isTrueOrOne(this.manage);
 
         this.loadFileBasicData();
 
@@ -79,7 +79,7 @@ export class CoreLocalFileComponent implements OnInit {
                 this.size = this.textUtils.bytesToSize(metadata.size, 2);
             }
 
-            this.timemodified = this.timeUtils.userDate(metadata.modificationTime.getTime(), 'core.strftimedatetimeshort');
+            this.timemodified = CoreTimeUtils.userDate(metadata.modificationTime.getTime(), 'core.strftimedatetimeshort');
         });
     }
 
@@ -112,18 +112,18 @@ export class CoreLocalFileComponent implements OnInit {
         e.preventDefault();
         e.stopPropagation();
 
-        if (this.utils.isTrueOrOne(this.overrideClick) && this.onClick.observers.length) {
+        if (CoreUtils.isTrueOrOne(this.overrideClick) && this.onClick.observers.length) {
             this.onClick.emit();
         } else {
-            if (!CoreFileHelper.instance.isOpenableInApp(this.file)) {
+            if (!CoreFileHelper.isOpenableInApp(this.file)) {
                 try {
-                    await CoreFileHelper.instance.showConfirmOpenUnsupportedFile();
+                    await CoreFileHelper.showConfirmOpenUnsupportedFile();
                 } catch (error) {
                     return; // Cancelled, stop.
                 }
             }
 
-            this.utils.openFile(this.file.toURL());
+            CoreUtils.openFile(this.file.toURL());
         }
     }
 
@@ -152,31 +152,31 @@ export class CoreLocalFileComponent implements OnInit {
         if (newName == this.file.name) {
             // Name hasn't changed, stop.
             this.editMode = false;
-            this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading(),
+        const modal = CoreDomUtils.showModalLoading(),
             fileAndDir = this.fileProvider.getFileAndDirectoryFromPath(this.relativePath),
             newPath = this.textUtils.concatenatePaths(fileAndDir.directory, newName);
 
         // Check if there's a file with this name.
         this.fileProvider.getFile(newPath).then(() => {
             // There's a file with this name, show error and stop.
-            this.domUtils.showErrorModal('core.errorfileexistssamename', true);
+            CoreDomUtils.showErrorModal('core.errorfileexistssamename', true);
         }).catch(() => {
             // File doesn't exist, move it.
             return this.fileProvider.moveFile(this.relativePath, newPath).then((fileEntry) => {
 
-                this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+                CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
                 this.editMode = false;
                 this.file = fileEntry;
                 this.loadFileBasicData();
                 this.onRename.emit({ file: this.file });
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'core.errorrenamefile', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errorrenamefile', true);
             });
         }).finally(() => {
             modal.dismiss();
@@ -193,8 +193,8 @@ export class CoreLocalFileComponent implements OnInit {
         e.stopPropagation();
 
         // Ask confirmation.
-        this.domUtils.showDeleteConfirm('core.confirmdeletefile').then(() => {
-            const modal = this.domUtils.showModalLoading('core.deleting', true);
+        CoreDomUtils.showDeleteConfirm('core.confirmdeletefile').then(() => {
+            const modal = CoreDomUtils.showModalLoading('core.deleting', true);
 
             return this.fileProvider.removeFile(this.relativePath).then(() => {
                 this.onDelete.emit();
@@ -202,7 +202,7 @@ export class CoreLocalFileComponent implements OnInit {
                 modal.dismiss();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.errordeletefile', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errordeletefile', true);
         });
     }
 }

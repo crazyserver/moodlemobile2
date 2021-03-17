@@ -44,7 +44,7 @@ export class CoreCoursesSearchPage {
         this.courses = undefined;
         this.page = 0;
 
-        const modal = this.domUtils.showModalLoading('core.searching', true);
+        const modal = CoreDomUtils.showModalLoading('core.searching', true);
         this.searchCourses().finally(() => {
             modal.dismiss();
         });
@@ -81,7 +81,7 @@ export class CoreCoursesSearchPage {
     protected searchCourses(): Promise<any> {
         this.loadMoreError = false;
 
-        return this.coursesProvider.search(this.currentSearch, this.page).then((response) => {
+        return CoreCourses.search(this.currentSearch, this.page).then((response) => {
             if (this.page === 0) {
                 this.courses = response.courses;
             } else {
@@ -93,7 +93,7 @@ export class CoreCoursesSearchPage {
             this.canLoadMore = this.courses.length < this.total;
         }).catch((error) => {
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
-            this.domUtils.showErrorModalDefault(error, 'core.courses.errorsearching', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.courses.errorsearching', true);
         });
     }
 }

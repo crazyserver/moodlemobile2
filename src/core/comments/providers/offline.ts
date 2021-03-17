@@ -19,7 +19,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 /**
  * Service to handle offline comments.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCommentsOfflineProvider {
 
     // Variables for database.
@@ -101,7 +101,7 @@ export class CoreCommentsOfflineProvider {
     };
 
     constructor( private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -111,7 +111,7 @@ export class CoreCommentsOfflineProvider {
      * @return Promise resolved with comments.
      */
     getAllComments(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return Promise.all([site.getDb().getRecords(CoreCommentsOfflineProvider.COMMENTS_TABLE),
                 site.getDb().getRecords(CoreCommentsOfflineProvider.COMMENTS_DELETED_TABLE)]).then((results) => {
                     return [].concat.apply([], results);
@@ -132,7 +132,7 @@ export class CoreCommentsOfflineProvider {
      */
     getComment(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(CoreCommentsOfflineProvider.COMMENTS_TABLE, {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -160,7 +160,7 @@ export class CoreCommentsOfflineProvider {
             siteId?: string): Promise<any> {
         let comments = [];
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getComment(contextLevel, instanceId, component, itemId, area, siteId).then((comment) => {
             comments = comment ? [comment] : [];
@@ -180,7 +180,7 @@ export class CoreCommentsOfflineProvider {
      * @return Promise resolved with comments.
      */
     getAllDeletedComments(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(CoreCommentsOfflineProvider.COMMENTS_DELETED_TABLE);
         });
     }
@@ -198,7 +198,7 @@ export class CoreCommentsOfflineProvider {
      */
     getDeletedComments(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(CoreCommentsOfflineProvider.COMMENTS_DELETED_TABLE, {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -224,7 +224,7 @@ export class CoreCommentsOfflineProvider {
      */
     removeComment(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(CoreCommentsOfflineProvider.COMMENTS_TABLE, {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -248,7 +248,7 @@ export class CoreCommentsOfflineProvider {
      */
     removeDeletedComments(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(CoreCommentsOfflineProvider.COMMENTS_DELETED_TABLE, {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -273,8 +273,8 @@ export class CoreCommentsOfflineProvider {
      */
     saveComment(content: string, contextLevel: string, instanceId: number, component: string, itemId: number,
             area: string = '', siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            const now = this.timeUtils.timestamp();
+        return CoreSites.getSite(siteId).then((site) => {
+            const now = CoreTimeUtils.timestamp();
             const data = {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -305,8 +305,8 @@ export class CoreCommentsOfflineProvider {
      */
     deleteComment(commentId: number, contextLevel: string, instanceId: number, component: string, itemId: number,
             area: string = '', siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            const now = this.timeUtils.timestamp();
+        return CoreSites.getSite(siteId).then((site) => {
+            const now = CoreTimeUtils.timestamp();
             const data = {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -331,7 +331,7 @@ export class CoreCommentsOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     undoDeleteComment(commentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(CoreCommentsOfflineProvider.COMMENTS_DELETED_TABLE, { commentid: commentId });
         });
     }

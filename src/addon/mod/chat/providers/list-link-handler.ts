@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to chat list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChatListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModChatListLinkHandler';
 

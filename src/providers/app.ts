@@ -136,7 +136,7 @@ export interface CoreAppSchema {
  *     this.appDB.createTableFromSchema(this.tableSchema);
  * }
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreAppProvider {
     protected DBNAME = 'MoodleMobile';
     protected db: SQLiteDB;

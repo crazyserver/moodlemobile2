@@ -109,7 +109,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
             }
 
             this.workshopProvider.logView(this.workshop.id, this.workshop.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch((error) => {
                 // Ignore errors.
             });
@@ -126,7 +126,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
             this.showLoadingAndRefresh(true);
 
             // Check completion since it could be configured to complete once the user adds a new discussion or replies.
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }
     }
 
@@ -147,8 +147,8 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
             }
             if (this.access.canviewallsubmissions) {
                 promises.push(this.workshopProvider.invalidateGradeReportData(this.workshop.id));
-                promises.push(this.groupsProvider.invalidateActivityAllowedGroups(this.workshop.coursemodule));
-                promises.push(this.groupsProvider.invalidateActivityGroupMode(this.workshop.coursemodule));
+                promises.push(CoreGroups.invalidateActivityAllowedGroups(this.workshop.coursemodule));
+                promises.push(CoreGroups.invalidateActivityGroupMode(this.workshop.coursemodule));
             }
             if (this.canAssess) {
                 promises.push(this.workshopProvider.invalidateReviewerAssesmentsData(this.workshop.id));
@@ -169,7 +169,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (this.workshop && syncEventData.workshopId == this.workshop.id) {
             // Refresh the data.
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             return true;
         }
@@ -203,9 +203,9 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
             this.access = accessData;
 
             if (accessData.canviewallsubmissions) {
-                return this.groupsProvider.getActivityGroupInfo(this.workshop.coursemodule).then((groupInfo) => {
+                return CoreGroups.getActivityGroupInfo(this.workshop.coursemodule).then((groupInfo) => {
                     this.groupInfo = groupInfo;
-                    this.group = this.groupsProvider.validateGroupId(this.group, groupInfo);
+                    this.group = CoreGroups.validateGroupId(this.group, groupInfo);
                 });
             }
         }).then(() => {
@@ -280,7 +280,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
         if (task.code == 'submit') {
             this.gotoSubmit();
         } else if (task.link) {
-            this.utils.openInBrowser(task.link);
+            CoreUtils.openInBrowser(task.link);
         }
     }
 
@@ -307,7 +307,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
     viewPhaseInfo(): void {
         if (this.phases) {
             const modal = this.modalCtrl.create('AddonModWorkshopPhaseInfoPage', {
-                    phases: this.utils.objectToArray(this.phases),
+                    phases: CoreUtils.objectToArray(this.phases),
                     workshopPhase: this.workshop.phase,
                     externalUrl: this.externalUrl,
                     showSubmit: this.showSubmit

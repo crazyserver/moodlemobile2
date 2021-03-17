@@ -20,7 +20,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /*
  * Service that provides some features regarding synchronization.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSyncProvider {
 
     // Variables for the database.
@@ -60,7 +60,7 @@ export class CoreSyncProvider {
     protected blockedItems: { [siteId: string]: { [blockId: string]: { [operation: string]: boolean } } } = {};
 
     constructor(private sitesProvider: CoreSitesProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
 
         // Unblock all blocks on logout.
         CoreEvents.on(CoreEvents.LOGOUT, (data) => {
@@ -77,7 +77,7 @@ export class CoreSyncProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     blockOperation(component: string, id: string | number, operation?: string, siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const uniqueId = this.getUniqueSyncBlockId(component, id);
 
@@ -115,7 +115,7 @@ export class CoreSyncProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     clearBlocks(component: string, id: string | number, siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const uniqueId = this.getUniqueSyncBlockId(component, id);
         if (this.blockedItems[siteId]) {
@@ -131,7 +131,7 @@ export class CoreSyncProvider {
      * @return Record if found or reject.
      */
     getSyncRecord(component: string, id: string | number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getRecord(this.SYNC_TABLE, { component: component, id: id });
         });
     }
@@ -145,7 +145,7 @@ export class CoreSyncProvider {
      * @return Promise resolved with done.
      */
     insertOrUpdateSyncRecord(component: string, id: string | number, data: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             data.component = component;
             data.id = id;
 
@@ -174,7 +174,7 @@ export class CoreSyncProvider {
      * @return Whether it's blocked.
      */
     isBlocked(component: string, id: string | number, siteId?: string): boolean {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (!this.blockedItems[siteId]) {
             return false;
@@ -198,7 +198,7 @@ export class CoreSyncProvider {
      */
     unblockOperation(component: string, id: string | number, operation?: string, siteId?: string): void {
         operation = operation || '-';
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const uniqueId = this.getUniqueSyncBlockId(component, id);
 

@@ -43,18 +43,18 @@ export class AddonModDataFieldDateComponent extends AddonModDataFieldPluginCompo
         let val;
 
         // Calculate format to use.
-        this.format = this.timeUtils.fixFormatForDatetime(this.timeUtils.convertPHPToMoment(
-                this.translate.instant('core.strftimedate')));
+        this.format = CoreTimeUtils.fixFormatForDatetime(CoreTimeUtils.convertPHPToMoment(
+                Translate.instant('core.strftimedate')));
 
         if (this.mode == 'search') {
             this.addControl('f_' + this.field.id + '_z');
             val = this.search['f_' + this.field.id + '_y'] ? new Date(this.search['f_' + this.field.id + '_y'] + '-' +
                 this.search['f_' + this.field.id + '_m'] + '-' + this.search['f_' + this.field.id + '_d']) : new Date();
 
-            this.search['f_' + this.field.id] = this.timeUtils.toDatetimeFormat(val.getTime());
+            this.search['f_' + this.field.id] = CoreTimeUtils.toDatetimeFormat(val.getTime());
         } else {
             val = this.value && this.value.content ? new Date(parseInt(this.value.content, 10) * 1000) : new Date();
-            val = this.timeUtils.toDatetimeFormat(val.getTime());
+            val = CoreTimeUtils.toDatetimeFormat(val.getTime());
         }
 
         this.addControl('f_' + this.field.id, val);

@@ -85,7 +85,7 @@ export class AddonModDataSearchPage {
             lastname: [this.search.advanced['lastname'] || '']
         });
 
-        this.fieldsArray = this.utils.objectToArray(this.fields);
+        this.fieldsArray = CoreUtils.objectToArray(this.fields);
         this.advancedSearch = this.renderAdvancedSearchFields();
     }
 
@@ -101,7 +101,7 @@ export class AddonModDataSearchPage {
             search: this.search.advanced
         };
 
-        let template = this.dataHelper.getTemplate(this.data, 'asearchtemplate', this.fieldsArray),
+        let template = AddonModDataHelper.getTemplate(this.data, 'asearchtemplate', this.fieldsArray),
             replace, render;
 
         // Replace the fields found on template.
@@ -132,7 +132,7 @@ export class AddonModDataSearchPage {
         // Searching by tags is not supported.
         replace = new RegExp('##tags##', 'gi');
         const message = '<p class="item-dimmed">{{ \'addon.mod_data.searchbytagsnotsupported\' | translate }}</p>';
-        template = template.replace(replace, this.tagProvider.areTagsAvailableInSite() ? message : '');
+        template = template.replace(replace, CoreTag.areTagsAvailableInSite() ? message : '');
 
         return template;
     }
@@ -186,9 +186,9 @@ export class AddonModDataSearchPage {
      */
     closeModal(data?: any): void {
         if (typeof data == 'undefined') {
-            this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
         } else {
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
         }
 
         this.viewCtrl.dismiss(data);

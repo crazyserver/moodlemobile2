@@ -21,7 +21,7 @@ import { AddonQtypeDdwtosComponent } from '../component/ddwtos';
 /**
  * Handler to support drag-and-drop words into sentences question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeDdwtosHandler implements CoreQuestionHandler {
     name = 'AddonQtypeDdwtos';
     type = 'qtype_ddwtos';

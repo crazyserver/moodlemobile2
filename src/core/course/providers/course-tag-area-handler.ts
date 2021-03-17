@@ -20,7 +20,7 @@ import { CoreCourseTagAreaComponent } from '../components/tag-area/tag-area';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseTagAreaHandler implements CoreTagAreaHandler {
     name = 'CoreCourseTagAreaHandler';
     type = 'core/course';
@@ -43,7 +43,7 @@ export class CoreCourseTagAreaHandler implements CoreTagAreaHandler {
      */
     parseContent(content: string): any[] | Promise<any[]> {
         const items = [];
-        const element = this.domUtils.convertToElement(content);
+        const element = CoreDomUtils.convertToElement(content);
 
         Array.from(element.querySelectorAll('div.coursebox')).forEach((coursebox) => {
             const courseId = parseInt(coursebox.getAttribute('data-courseid'), 10);

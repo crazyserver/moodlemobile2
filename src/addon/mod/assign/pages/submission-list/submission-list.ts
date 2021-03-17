@@ -70,12 +70,12 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
 
         if (this.selectedStatus) {
             if (this.selectedStatus == AddonModAssignProvider.NEED_GRADING) {
-                this.title = this.translate.instant('addon.mod_assign.numberofsubmissionsneedgrading');
+                this.title = Translate.instant('addon.mod_assign.numberofsubmissionsneedgrading');
             } else {
-                this.title = this.translate.instant('addon.mod_assign.submissionstatus_' + this.selectedStatus);
+                this.title = Translate.instant('addon.mod_assign.submissionstatus_' + this.selectedStatus);
             }
         } else {
-            this.title = this.translate.instant('addon.mod_assign.numberofparticipants');
+            this.title = Translate.instant('addon.mod_assign.numberofparticipants');
         }
 
         // Update data if some grade changes.
@@ -103,7 +103,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
             this.refreshAllData(false).finally(() => {
                 this.loaded = true;
             });
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -136,7 +136,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
             if (sync) {
                 try {
                     // Try to synchronize data.
-                    const result = await AddonModAssignSync.instance.syncAssign(this.assign.id);
+                    const result = await AddonModAssignSync.syncAssign(this.assign.id);
 
                     if (result && result.updated) {
                         CoreEvents.trigger(AddonModAssignSyncProvider.MANUAL_SYNCED, {
@@ -144,7 +144,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
                             warnings: result.warnings,
                             gradesBlocked: result.gradesBlocked,
                             context: 'submission-list',
-                        }, this.sitesProvider.getCurrentSiteId());
+                        }, CoreSites.getCurrentSiteId());
                     }
                 } catch (error) {
                     // Ignore errors, probably user is offline or sync is blocked.
@@ -160,11 +160,11 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
             }
 
             // Check if groupmode is enabled to avoid showing wrong numbers.
-            this.groupInfo = await this.groupsProvider.getActivityGroupInfo(this.assign.cmid, false);
+            this.groupInfo = await CoreGroups.getActivityGroupInfo(this.assign.cmid, false);
 
-            await this.setGroup(this.groupsProvider.validateGroupId(this.groupId, this.groupInfo));
+            await this.setGroup(CoreGroups.validateGroupId(this.groupId, this.groupInfo));
         } catch (error) {
-            this.domUtils.showErrorModalDefault(error, 'Error getting assigment data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting assigment data.');
         }
     }
 
@@ -179,7 +179,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
 
         this.haveAllParticipants = true;
 
-        if (!this.sitesProvider.getCurrentSite().wsAvailable('mod_assign_list_participants')) {
+        if (!CoreSites.getCurrentSite().wsAvailable('mod_assign_list_participants')) {
             // Submissions are not displayed in Moodle 3.1 without the local plugin, see MOBILE-2968.
             this.haveAllParticipants = false;
             this.submissions = [];
@@ -244,7 +244,7 @@ export class AddonModAssignSubmissionListPage implements OnInit, OnDestroy {
 
                             // Show submission status if not submitted for grading.
                             if (submission.statusColor != 'success' || !submission.gradingstatus) {
-                                submission.statusTranslated = this.translate.instant('addon.mod_assign.submissionstatus_' +
+                                submission.statusTranslated = Translate.instant('addon.mod_assign.submissionstatus_' +
                                     submission.status);
                             } else {
                                 submission.statusTranslated = '';

@@ -63,7 +63,7 @@ export class AddonCompetencyCourseComponent {
                 this.user = user;
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting course competencies data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting course competencies data.');
         });
     }
 
@@ -73,7 +73,7 @@ export class AddonCompetencyCourseComponent {
      * @param competencyId
      */
     openCompetency(competencyId: number): void {
-        if (this.appProvider.isWide()) {
+        if (CoreApp.isWide()) {
             this.navCtrl.push('AddonCompetencyCompetenciesPage', {competencyId, courseId: this.courseId, userId: this.userId});
         } else {
             this.navCtrl.push('AddonCompetencyCompetencyPage', {competencyId, courseId: this.courseId, userId: this.userId});

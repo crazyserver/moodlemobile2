@@ -22,7 +22,7 @@ import { CoreBlockBaseHandler } from '@core/block/classes/base-block-handler';
 /**
  * Block  handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockMyOverviewHandler extends CoreBlockBaseHandler {
     name = 'AddonBlockMyOverview';
     blockName = 'myoverview';
@@ -37,8 +37,8 @@ export class AddonBlockMyOverviewHandler extends CoreBlockBaseHandler {
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return (this.sitesProvider.getCurrentSite() && this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.6')) ||
-            !this.coursesProvider.isMyCoursesDisabledInSite();
+        return (CoreSites.getCurrentSite() && CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.6')) ||
+            !CoreCourses.isMyCoursesDisabledInSite();
     }
 
     /**

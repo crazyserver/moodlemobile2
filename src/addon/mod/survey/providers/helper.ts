@@ -19,7 +19,7 @@ import { AddonModSurveyQuestion } from './survey';
 /**
  * Service that provides helper functions for surveys.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyHelperProvider {
 
     constructor(private translate: TranslateService) { }
@@ -69,9 +69,9 @@ export class AddonModSurveyHelperProvider {
      */
     formatQuestions(questions: AddonModSurveyQuestion[]): AddonModSurveyQuestionFormatted[] {
 
-        const strIPreferThat = this.translate.instant('addon.mod_survey.ipreferthat'),
-            strIFoundThat = this.translate.instant('addon.mod_survey.ifoundthat'),
-            strChoose = this.translate.instant('core.choose'),
+        const strIPreferThat = Translate.instant('addon.mod_survey.ipreferthat'),
+            strIFoundThat = Translate.instant('addon.mod_survey.ifoundthat'),
+            strChoose = Translate.instant('core.choose'),
             formatted: AddonModSurveyQuestionFormatted[] = [],
             parents = this.getParentQuestions(questions);
 

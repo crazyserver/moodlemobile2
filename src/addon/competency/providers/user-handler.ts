@@ -23,7 +23,7 @@ import { AddonCompetencyProvider } from './competency';
 /**
  * Profile competencies handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyUserHandler implements CoreUserProfileHandler {
     name = 'AddonCompetency:learningPlan';
     priority = 900;

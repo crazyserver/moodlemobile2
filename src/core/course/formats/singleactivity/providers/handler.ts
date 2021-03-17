@@ -20,7 +20,7 @@ import { CoreCourseFormatSingleActivityComponent } from '../components/singleact
 /**
  * Handler to support singleactivity course format.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseFormatSingleActivityHandler implements CoreCourseFormatHandler {
     name = 'CoreCourseFormatSingleActivity';
     format = 'singleactivity';

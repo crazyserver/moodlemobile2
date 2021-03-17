@@ -24,7 +24,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
  * Content links handler for feedback show non respondents.
  * Match mod/feedback/show_nonrespondents.php with a valid feedback id.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackShowNonRespondentsLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModFeedbackShowNonRespondentsLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModFeedback';
@@ -48,10 +48,10 @@ export class AddonModFeedbackShowNonRespondentsLinkHandler extends CoreContentLi
             CoreContentLinksAction[] | Promise<CoreContentLinksAction[]> {
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     moduleId = params.id;
 
-                this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+                CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
                     const stateParams = {
                         module: module,
                         moduleId: module.id,

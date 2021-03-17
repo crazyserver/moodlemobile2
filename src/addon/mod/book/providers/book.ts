@@ -48,7 +48,7 @@ export const enum AddonModBookNavStyle {
 /**
  * Service that provides some features for books.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModBookProvider {
     static COMPONENT = 'mmaModBook';
 
@@ -92,7 +92,7 @@ export class AddonModBookProvider {
     protected getBookByField(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModBookBook> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId]
             };
@@ -100,7 +100,7 @@ export class AddonModBookProvider {
                 cacheKey: this.getBookDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModBookProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_book_get_books_by_courses', params, preSets)
@@ -139,7 +139,7 @@ export class AddonModBookProvider {
      */
     getChapterContent(contentsMap: AddonModBookContentsMap, chapterId: string, moduleId: number): Promise<string> {
         const indexUrl = contentsMap[chapterId] ? contentsMap[chapterId].indexUrl : undefined,
-            siteId = this.sitesProvider.getCurrentSiteId();
+            siteId = CoreSites.getCurrentSiteId();
         let promise;
 
         if (!indexUrl) {
@@ -150,17 +150,17 @@ export class AddonModBookProvider {
         }
 
         if (this.fileProvider.isAvailable()) {
-            promise = this.filepoolProvider.downloadUrl(siteId, indexUrl, false, AddonModBookProvider.COMPONENT, moduleId);
+            promise = CoreFilepool.downloadUrl(siteId, indexUrl, false, AddonModBookProvider.COMPONENT, moduleId);
         } else {
             // We return the live URL.
-            return this.sitesProvider.getCurrentSite().checkAndFixPluginfileURL(indexUrl);
+            return CoreSites.getCurrentSite().checkAndFixPluginfileURL(indexUrl);
         }
 
         return promise.then(async (url) => {
             const content = await this.wsProvider.getText(url);
 
             // Now that we have the content, we update the SRC to point back to the external resource.
-            return this.domUtils.restoreSourcesInHtml(content, contentsMap[chapterId].paths);
+            return CoreDomUtils.restoreSourcesInHtml(content, contentsMap[chapterId].paths);
         });
     }
 
@@ -344,7 +344,7 @@ export class AddonModBookProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateBookData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getBookDataCacheKey(courseId));
         });
     }
@@ -358,15 +358,15 @@ export class AddonModBookProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
         promises.push(this.invalidateBookData(courseId, siteId));
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModBookProvider.COMPONENT, moduleId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModBookProvider.COMPONENT, moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -386,7 +386,7 @@ export class AddonModBookProvider {
      * @return Promise resolved with true if plugin is enabled, rejected or resolved with false otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.canDownloadFiles();
         });
     }
@@ -406,7 +406,7 @@ export class AddonModBookProvider {
             chapterid: chapterId
         };
 
-        return this.logHelper.logSingle('mod_book_view_book', params, AddonModBookProvider.COMPONENT, id, name, 'book',
+        return CoreCourseLogHelper.logSingle('mod_book_view_book', params, AddonModBookProvider.COMPONENT, id, name, 'book',
                 {chapterid: chapterId}, siteId);
     }
 }

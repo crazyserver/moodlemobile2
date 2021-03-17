@@ -65,7 +65,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
      * @param locked True to lock the discussion, false to unlock.
      */
     setLockState(locked: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.forumProvider.setLockState(this.forumId, this.discussion.discussion, locked).then((response) => {
             this.viewCtrl.dismiss({action: 'lock', value: locked});
@@ -76,11 +76,11 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
                 cmId: this.cmId,
                 locked: response.locked
             };
-            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.showToast('addon.mod_forum.lockupdated', true);
+            CoreDomUtils.showToast('addon.mod_forum.lockupdated', true);
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
             this.viewCtrl.dismiss();
         }).finally(() => {
             modal.dismiss();
@@ -93,7 +93,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
      * @param pinned True to pin the discussion, false to unpin it.
      */
     setPinState(pinned: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.forumProvider.setPinState(this.discussion.discussion, pinned).then(() => {
             this.viewCtrl.dismiss({action: 'pin', value: pinned});
@@ -104,11 +104,11 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
                 cmId: this.cmId,
                 pinned: pinned
             };
-            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.showToast('addon.mod_forum.pinupdated', true);
+            CoreDomUtils.showToast('addon.mod_forum.pinupdated', true);
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
             this.viewCtrl.dismiss();
         }).finally(() => {
             modal.dismiss();
@@ -121,7 +121,7 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
      * @param starred True to star the discussion, false to unstar it.
      */
     toggleFavouriteState(starred: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.forumProvider.toggleFavouriteState(this.discussion.discussion, starred).then(() => {
             this.viewCtrl.dismiss({action: 'star', value: starred});
@@ -132,11 +132,11 @@ export class AddonForumDiscussionOptionsMenuComponent implements OnInit {
                 cmId: this.cmId,
                 starred: starred
             };
-            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.showToast('addon.mod_forum.favouriteupdated', true);
+            CoreDomUtils.showToast('addon.mod_forum.favouriteupdated', true);
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
             this.viewCtrl.dismiss();
         }).finally(() => {
             modal.dismiss();

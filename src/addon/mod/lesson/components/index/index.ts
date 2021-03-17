@@ -100,7 +100,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
         this.reportLoaded = false;
 
         this.setGroup(groupId).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting report.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting report.');
         }).finally(() => {
             this.reportLoaded = true;
         });
@@ -224,10 +224,10 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
      * @return Promise resolved when done.
      */
     protected fetchReportData(): Promise<any> {
-        return this.groupsProvider.getActivityGroupInfo(this.module.id).then((groupInfo) => {
+        return CoreGroups.getActivityGroupInfo(this.module.id).then((groupInfo) => {
             this.groupInfo = groupInfo;
 
-            return this.setGroup(this.groupsProvider.validateGroupId(this.group, groupInfo));
+            return this.setGroup(CoreGroups.validateGroupId(this.group, groupInfo));
         }).finally(() => {
             this.reportLoaded = true;
         });
@@ -242,7 +242,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
     protected hasSyncSucceed(result: any): boolean {
         if (result.updated || this.dataSent) {
             // Check completion status if something was sent.
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }
 
         this.dataSent = false;
@@ -311,7 +311,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
             promises.push(this.lessonProvider.invalidateContentPagesViewed(this.lesson.id));
             promises.push(this.lessonProvider.invalidateQuestionsAttempts(this.lesson.id));
             promises.push(this.lessonProvider.invalidateRetakesOverview(this.lesson.id));
-            promises.push(this.groupsProvider.invalidateActivityGroupInfo(this.module.id));
+            promises.push(CoreGroups.invalidateActivityGroupInfo(this.module.id));
         }
 
         return Promise.all(promises);
@@ -347,7 +347,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
      */
     protected logView(): void {
         this.lessonProvider.logViewLesson(this.lesson.id, this.password, this.lesson.name).then(() => {
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }).catch((error) => {
             // Ignore errors.
         });
@@ -402,7 +402,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
 
         if (!this.groupInfo) {
             this.fetchReportData().catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'Error getting report.');
+                CoreDomUtils.showErrorModalDefault(error, 'Error getting report.');
             });
         }
     }
@@ -457,15 +457,15 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
             // Format times and grades.
             if (data && data.avetime != null && data.numofattempts) {
                 data.avetime = Math.floor(data.avetime / data.numofattempts);
-                data.avetimeReadable = this.timeUtils.formatTime(data.avetime);
+                data.avetimeReadable = CoreTimeUtils.formatTime(data.avetime);
             }
 
             if (data && data.hightime != null) {
-                data.hightimeReadable = this.timeUtils.formatTime(data.hightime);
+                data.hightimeReadable = CoreTimeUtils.formatTime(data.hightime);
             }
 
             if (data && data.lowtime != null) {
-                data.lowtimeReadable = this.timeUtils.formatTime(data.lowtime);
+                data.lowtimeReadable = CoreTimeUtils.formatTime(data.lowtime);
             }
 
             if (data && data.lessonscored) {
@@ -493,7 +493,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
                 });
             }
 
-            return this.utils.allPromises(promises).catch(() => {
+            return CoreUtils.allPromises(promises).catch(() => {
                 // Shouldn't happen.
             }).then(() => {
                 this.overview = data;
@@ -536,7 +536,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
                         // Error downloading but there is something offline, allow continuing it.
                         this.playLesson(continueLast);
                     } else {
-                        this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                        CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
                     }
                 }).finally(() => {
                     this.showSpinner = false;
@@ -562,7 +562,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
 
         const password = passwordEl && passwordEl.value;
         if (!password) {
-            this.domUtils.showErrorModal('addon.mod_lesson.emptypassword', true);
+            CoreDomUtils.showErrorModal('addon.mod_lesson.emptypassword', true);
 
             return;
         }
@@ -586,13 +586,13 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
             // Log view now that we have the password.
             this.logView();
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             this.loaded = true;
             this.refreshIcon = 'refresh';
             this.syncIcon = 'sync';
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, true, this.siteId);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true, this.siteId);
         });
     }
 

@@ -25,7 +25,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service that provides some helper functions for LTI.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLtiHelperProvider {
 
     protected pendingCheckCompletion: {[moduleId: string]: {courseId: number, module: any}} = {};
@@ -37,12 +37,12 @@ export class AddonModLtiHelperProvider {
             for (const moduleId in this.pendingCheckCompletion) {
                 const data = this.pendingCheckCompletion[moduleId];
 
-                CoreCourse.instance.checkModuleCompletion(data.courseId, data.module.completiondata);
+                CoreCourse.checkModuleCompletion(data.courseId, data.module.completiondata);
             }
         });
 
         // Clear pending completion on logout.
-        CoreEvents.instance.on(CoreEvents.LOGOUT, () => {
+        CoreEvents.on(CoreEvents.LOGOUT, () => {
             this.pendingCheckCompletion = {};
         });
     }
@@ -57,15 +57,15 @@ export class AddonModLtiHelperProvider {
      * @return Promise resolved when done.
      */
     async getDataAndLaunch(courseId: number, module: any, lti?: AddonModLtiLti, siteId?: string): Promise<void> {
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const modal = CoreDomUtils.instance.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         try {
-            const openInBrowser = await AddonModLti.instance.isOpenInAppBrowserDisabled(siteId);
+            const openInBrowser = await AddonModLti.isOpenInAppBrowserDisabled(siteId);
 
             if (openInBrowser) {
-                const site = await CoreSites.instance.getSite(siteId);
+                const site = await CoreSites.getSite(siteId);
 
                 // The view event is triggered by the browser, mark the module as pending to check completion.
                 this.pendingCheckCompletion[module.id] = {
@@ -77,19 +77,19 @@ export class AddonModLtiHelperProvider {
             } else {
                 // Open in app.
                 if (!lti) {
-                    lti = await AddonModLti.instance.getLti(courseId, module.id);
+                    lti = await AddonModLti.getLti(courseId, module.id);
                 }
 
-                const launchData = await AddonModLti.instance.getLtiLaunchData(lti.id);
+                const launchData = await AddonModLti.getLtiLaunchData(lti.id);
 
                 // "View" LTI without blocking the UI.
                 this.logViewAndCheckCompletion(courseId, module, lti.id, lti.name, siteId);
 
                 // Launch LTI.
-                return AddonModLti.instance.launch(launchData.endpoint, launchData.parameters);
+                return AddonModLti.launch(launchData.endpoint, launchData.parameters);
             }
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'addon.mod_lti.errorgetlti', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_lti.errorgetlti', true);
         } finally {
             modal.dismiss();
         }
@@ -107,9 +107,9 @@ export class AddonModLtiHelperProvider {
      */
     async logViewAndCheckCompletion(courseId: number, module: any, ltiId: number, name?: string, siteId?: string): Promise<void> {
         try {
-            await AddonModLti.instance.logView(ltiId, name);
+            await AddonModLti.logView(ltiId, name);
 
-            CoreCourse.instance.checkModuleCompletion(courseId, module.completiondata);
+            CoreCourse.checkModuleCompletion(courseId, module.completiondata);
         } catch (error) {
             // Ignore errors.
         }

@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Service to handle badges.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBadgesProvider {
     protected logger: CoreLogger;
     protected ROOT_CACHE_KEY = 'mmaBadges:';
@@ -41,7 +41,7 @@ export class AddonBadgesProvider {
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (!site.canUseAdvancedFeature('enablebadges')) {
                 return false;
             } else if (!site.wsAvailable('core_course_get_user_navigation_options')) {
@@ -75,7 +75,7 @@ export class AddonBadgesProvider {
 
         this.logger.debug('Get badges for course ' + courseId);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const data = {
                     courseid : courseId,
@@ -117,7 +117,7 @@ export class AddonBadgesProvider {
      */
     invalidateUserBadges(courseId: number, userId: number, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getBadgesCacheKey(courseId, userId));
         });
     }

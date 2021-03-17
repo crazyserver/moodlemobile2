@@ -136,18 +136,18 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
     protected invalidateContent(): Promise<any> {
         const promises = [];
 
-        promises.push(this.dataProvider.invalidateDatabaseData(this.courseId));
+        promises.push(AddonModData.invalidateDatabaseData(this.courseId));
         if (this.data) {
-            promises.push(this.dataProvider.invalidateDatabaseAccessInformationData(this.data.id));
-            promises.push(this.groupsProvider.invalidateActivityGroupInfo(this.data.coursemodule));
-            promises.push(this.dataProvider.invalidateEntriesData(this.data.id));
-            promises.push(this.dataProvider.invalidateFieldsData(this.data.id));
+            promises.push(AddonModData.invalidateDatabaseAccessInformationData(this.data.id));
+            promises.push(CoreGroups.invalidateActivityGroupInfo(this.data.coursemodule));
+            promises.push(AddonModData.invalidateEntriesData(this.data.id));
+            promises.push(AddonModData.invalidateFieldsData(this.data.id));
 
             if (this.hasComments) {
                 CoreEvents.trigger(CoreCommentsProvider.REFRESH_COMMENTS_EVENT, {
                     contextLevel: 'module',
                     instanceId: this.data.coursemodule
-                }, this.sitesProvider.getCurrentSiteId());
+                }, CoreSites.getCurrentSiteId());
             }
         }
 
@@ -164,7 +164,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         if (this.data && syncEventData.dataId == this.data.id && typeof syncEventData.entryId == 'undefined') {
             this.loaded = false;
             // Refresh the data.
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             return true;
         }
@@ -184,7 +184,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         let canAdd = false,
             canSearch = false;
 
-        this.data = await this.dataProvider.getDatabase(this.courseId, this.module.id);
+        this.data = await AddonModData.getDatabase(this.courseId, this.module.id);
         this.hasComments = this.data.comments;
 
         this.description = this.data.intro || this.data.description;
@@ -199,23 +199,23 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             }
         }
 
-        this.groupInfo = await this.groupsProvider.getActivityGroupInfo(this.data.coursemodule);
-        this.selectedGroup = this.groupsProvider.validateGroupId(this.selectedGroup, this.groupInfo);
+        this.groupInfo = await CoreGroups.getActivityGroupInfo(this.data.coursemodule);
+        this.selectedGroup = CoreGroups.validateGroupId(this.selectedGroup, this.groupInfo);
 
-        this.access = await this.dataProvider.getDatabaseAccessInformation(this.data.id, {
+        this.access = await AddonModData.getDatabaseAccessInformation(this.data.id, {
             cmId: this.module.id,
             groupId: this.selectedGroup || undefined
         });
 
         if (!this.access.timeavailable) {
-            const time = this.timeUtils.timestamp();
+            const time = CoreTimeUtils.timestamp();
 
             this.timeAvailableFrom = this.data.timeavailablefrom && time < this.data.timeavailablefrom ?
                 parseInt(this.data.timeavailablefrom, 10) * 1000 : false;
-            this.timeAvailableFromReadable = this.timeAvailableFrom ? this.timeUtils.userDate(this.timeAvailableFrom) : false;
+            this.timeAvailableFromReadable = this.timeAvailableFrom ? CoreTimeUtils.userDate(this.timeAvailableFrom) : false;
             this.timeAvailableTo = this.data.timeavailableto && time > this.data.timeavailableto ?
                 parseInt(this.data.timeavailableto, 10) * 1000 : false;
-            this.timeAvailableToReadable = this.timeAvailableTo ? this.timeUtils.userDate(this.timeAvailableTo) : false;
+            this.timeAvailableToReadable = this.timeAvailableTo ? CoreTimeUtils.userDate(this.timeAvailableTo) : false;
 
             this.isEmpty = true;
             this.groupInfo = null;
@@ -224,11 +224,11 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             canAdd = this.access.canaddentry;
         }
 
-        const fields = await this.dataProvider.getFields(this.data.id, {cmId: this.module.id});
+        const fields = await AddonModData.getFields(this.data.id, {cmId: this.module.id});
         this.search.advanced = [];
 
-        this.fields = this.utils.arrayToObject(fields, 'id');
-        this.fieldsArray = this.utils.objectToArray(this.fields);
+        this.fields = CoreUtils.arrayToObject(fields, 'id');
+        this.fieldsArray = CoreUtils.objectToArray(this.fields);
         if (this.fieldsArray.length == 0) {
             canSearch = false;
             canAdd = false;
@@ -253,7 +253,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         const search = this.search.searching && !this.search.searchingAdvanced ? this.search.text : undefined;
         const advSearch = this.search.searching && this.search.searchingAdvanced ? this.search.advanced : undefined;
 
-        return this.dataHelper.fetchEntries(this.data, this.fieldsArray, {
+        return AddonModDataHelper.fetchEntries(this.data, this.fieldsArray, {
             groupId: this.selectedGroup,
             search,
             advSearch,
@@ -284,28 +284,28 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             if (!this.isEmpty) {
                 this.entries = entries.offlineEntries.concat(entries.entries);
 
-                let entriesHTML = this.dataHelper.getTemplate(this.data, 'listtemplateheader', this.fieldsArray);
+                let entriesHTML = AddonModDataHelper.getTemplate(this.data, 'listtemplateheader', this.fieldsArray);
 
                 // Get first entry from the whole list.
                 if (!this.search.searching || !this.firstEntry) {
                     this.firstEntry = this.entries[0].id;
                 }
 
-                const template = this.dataHelper.getTemplate(this.data, 'listtemplate', this.fieldsArray);
+                const template = AddonModDataHelper.getTemplate(this.data, 'listtemplate', this.fieldsArray);
 
                 const entriesById = {};
                 this.entries.forEach((entry, index) => {
                     entriesById[entry.id] = entry;
 
-                    const actions = this.dataHelper.getActions(this.data, this.access, entry);
+                    const actions = AddonModDataHelper.getActions(this.data, this.access, entry);
                     const offset = this.search.searching ? undefined :
                             this.search.page * AddonModDataProvider.PER_PAGE + index - numOfflineEntries;
 
-                    entriesHTML += this.dataHelper.displayShowFields(template, this.fieldsArray, entry, offset, 'list',  actions);
+                    entriesHTML += AddonModDataHelper.displayShowFields(template, this.fieldsArray, entry, offset, 'list',  actions);
                 });
-                entriesHTML += this.dataHelper.getTemplate(this.data, 'listtemplatefooter', this.fieldsArray);
+                entriesHTML += AddonModDataHelper.getTemplate(this.data, 'listtemplatefooter', this.fieldsArray);
 
-                this.entriesRendered = this.domUtils.fixHtml(entriesHTML);
+                this.entriesRendered = CoreDomUtils.fixHtml(entriesHTML);
 
                 // Pass the input data to the component.
                 this.jsData = {
@@ -356,7 +356,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             // Log activity view for coherence with Moodle web.
             return this.logView();
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -388,7 +388,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         // Only update canAdd if there's any field, otheerwise, canAdd will remain false.
         if (this.fieldsArray.length > 0) {
             // Update values for current group.
-            this.access = await this.dataProvider.getDatabaseAccessInformation(this.data.id, {
+            this.access = await AddonModData.getDatabaseAccessInformation(this.data.id, {
                 groupId: this.selectedGroup,
                 cmId: this.module.id,
             });
@@ -402,7 +402,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             // Log activity view for coherence with Moodle web.
             return this.logView();
         } catch (error) {
-            this.domUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
         }
     }
 
@@ -472,9 +472,9 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             return Promise.resolve();
         }
 
-        return this.dataProvider.logView(this.data.id, this.data.name).then(() => {
+        return AddonModData.logView(this.data.id, this.data.name).then(() => {
             if (checkCompletion) {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }
         }).catch(() => {
             // Ignore errors, the user could be offline.

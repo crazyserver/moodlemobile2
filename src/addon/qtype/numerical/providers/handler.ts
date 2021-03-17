@@ -20,7 +20,7 @@ import { AddonQtypeCalculatedHandler } from '@addon/qtype/calculated/providers/h
  * Handler to support numerical question type.
  * This question type depends on calculated question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeNumericalHandler extends AddonQtypeCalculatedHandler {
     name = 'AddonQtypeNumerical';
     type = 'qtype_numerical';

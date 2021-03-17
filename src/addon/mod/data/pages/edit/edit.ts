@@ -107,19 +107,19 @@ export class AddonModDataEditPage {
 
         const inputData = this.editForm.value;
 
-        let changed = await this.dataHelper.hasEditDataChanged(inputData, this.fieldsArray, this.data.id, this.entry.contents);
+        let changed = await AddonModDataHelper.hasEditDataChanged(inputData, this.fieldsArray, this.data.id, this.entry.contents);
         changed = changed || (!this.isEditing && this.initialSelectedGroup != this.selectedGroup);
 
         if (changed) {
             // Show confirmation if some data has been modified.
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
         // Delete the local files from the tmp folder.
-        const files = await this.dataHelper.getEditTmpFiles(inputData, this.fieldsArray, this.data.id, this.entry.contents);
-        this.fileUploaderProvider.clearTmpFiles(files);
+        const files = await AddonModDataHelper.getEditTmpFiles(inputData, this.fieldsArray, this.data.id, this.entry.contents);
+        CoreFileUploader.clearTmpFiles(files);
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
     }
 
     /**
@@ -130,14 +130,14 @@ export class AddonModDataEditPage {
      */
     protected async fetchEntryData(refresh: boolean = false): Promise<void> {
         try {
-            this.data = await this.dataProvider.getDatabase(this.courseId, this.module.id);
+            this.data = await AddonModData.getDatabase(this.courseId, this.module.id);
             this.title = this.data.name || this.title;
             this.cssClass = 'addon-data-entries-' + this.data.id;
 
-            this.fieldsArray = await this.dataProvider.getFields(this.data.id, {cmId: this.module.id});
-            this.fields = this.utils.arrayToObject(this.fieldsArray, 'id');
+            this.fieldsArray = await AddonModData.getFields(this.data.id, {cmId: this.module.id});
+            this.fields = CoreUtils.arrayToObject(this.fieldsArray, 'id');
 
-            const entry = await this.dataHelper.fetchEntry(this.data, this.fieldsArray, this.entryId);
+            const entry = await AddonModDataHelper.fetchEntry(this.data, this.fieldsArray, this.entryId);
 
             this.entry = entry.entry;
 
@@ -149,8 +149,8 @@ export class AddonModDataEditPage {
                 let haveAccess = false;
 
                 if (refresh) {
-                    this.groupInfo = await this.groupsProvider.getActivityGroupInfo(this.data.coursemodule);
-                    this.selectedGroup = this.groupsProvider.validateGroupId(this.selectedGroup, this.groupInfo);
+                    this.groupInfo = await CoreGroups.getActivityGroupInfo(this.data.coursemodule);
+                    this.selectedGroup = CoreGroups.validateGroupId(this.selectedGroup, this.groupInfo);
                     this.initialSelectedGroup = this.selectedGroup;
                 }
 
@@ -159,7 +159,7 @@ export class AddonModDataEditPage {
                         const canAddGroup = {};
 
                         await Promise.all(this.groupInfo.groups.map(async (group) => {
-                            const accessData = await this.dataProvider.getDatabaseAccessInformation(this.data.id, {
+                            const accessData = await AddonModData.getDatabaseAccessInformation(this.data.id, {
                                 cmId: this.module.id, groupId: group.id});
 
                             canAddGroup[group.id] = accessData.canaddentry;
@@ -175,13 +175,13 @@ export class AddonModDataEditPage {
                         haveAccess = true;
                     }
                 } else {
-                    const accessData = await this.dataProvider.getDatabaseAccessInformation(this.data.id, {cmId: this.module.id});
+                    const accessData = await AddonModData.getDatabaseAccessInformation(this.data.id, {cmId: this.module.id});
                     haveAccess = accessData.canaddentry;
                 }
 
                 if (!haveAccess) {
                     // You shall not pass, go back.
-                    this.domUtils.showErrorModal('addon.mod_data.noaccess', true);
+                    CoreDomUtils.showErrorModal('addon.mod_data.noaccess', true);
 
                     // Go back to entry list.
                     this.forceLeave = true;
@@ -193,7 +193,7 @@ export class AddonModDataEditPage {
 
             this.editFormRender = this.displayEditFields();
         } catch (message) {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
         }
 
         this.loaded = true;
@@ -211,7 +211,7 @@ export class AddonModDataEditPage {
 
         const inputData = this.editForm.value;
 
-        return this.dataHelper.hasEditDataChanged(inputData, this.fieldsArray, this.data.id,
+        return AddonModDataHelper.hasEditDataChanged(inputData, this.fieldsArray, this.data.id,
                 this.entry.contents).then((changed) => {
 
             changed = changed || (!this.isEditing && this.initialSelectedGroup != this.selectedGroup);
@@ -224,18 +224,18 @@ export class AddonModDataEditPage {
                 return Promise.reject('addon.mod_data.emptyaddform');
             }
 
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             // Create an ID to assign files.
             const entryTemp = this.entryId ? this.entryId : - (new Date().getTime());
 
-            return this.dataHelper.getEditDataFromForm(inputData, this.fieldsArray, this.data.id, entryTemp, this.entry.contents,
+            return AddonModDataHelper.getEditDataFromForm(inputData, this.fieldsArray, this.data.id, entryTemp, this.entry.contents,
                 this.offline).catch((e) => {
                     if (!this.offline) {
                         // Cannot submit in online, prepare for offline usage.
                         this.offline = true;
 
-                        return this.dataHelper.getEditDataFromForm(inputData, this.fieldsArray, this.data.id, entryTemp,
+                        return AddonModDataHelper.getEditDataFromForm(inputData, this.fieldsArray, this.data.id, entryTemp,
                             this.entry.contents, this.offline);
                     }
 
@@ -243,11 +243,11 @@ export class AddonModDataEditPage {
             }).then((editData) => {
                 if (editData.length > 0) {
                     if (this.isEditing) {
-                        return this.dataProvider.editEntry(this.data.id, this.entryId, this.courseId, editData, this.fields,
+                        return AddonModData.editEntry(this.data.id, this.entryId, this.courseId, editData, this.fields,
                             undefined, this.offline);
                     }
 
-                    return this.dataProvider.addEntry(this.data.id, entryTemp, this.courseId, editData, this.selectedGroup,
+                    return AddonModData.addEntry(this.data.id, entryTemp, this.courseId, editData, this.selectedGroup,
                         this.fields, undefined, this.offline);
                 }
 
@@ -261,7 +261,7 @@ export class AddonModDataEditPage {
                 // This is done if entry is updated when editing or creating if not.
                 if ((this.isEditing && result.updated) || (!this.isEditing && result.newentryid)) {
 
-                    this.domUtils.triggerFormSubmittedEvent(this.formElement, result.sent, this.siteId);
+                    CoreDomUtils.triggerFormSubmittedEvent(this.formElement, result.sent, this.siteId);
 
                     const promises = [];
 
@@ -269,9 +269,9 @@ export class AddonModDataEditPage {
                         CoreEvents.trigger(CoreEventsProvider.ACTIVITY_DATA_SENT, { module: 'data' });
 
                         if (this.isEditing) {
-                            promises.push(this.dataProvider.invalidateEntryData(this.data.id, this.entryId, this.siteId));
+                            promises.push(AddonModData.invalidateEntryData(this.data.id, this.entryId, this.siteId));
                         }
-                        promises.push(this.dataProvider.invalidateEntriesData(this.data.id, this.siteId));
+                        promises.push(AddonModData.invalidateEntriesData(this.data.id, this.siteId));
                     }
 
                     return Promise.all(promises).then(() => {
@@ -300,7 +300,7 @@ export class AddonModDataEditPage {
                 modal.dismiss();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Cannot edit entry', true);
+            CoreDomUtils.showErrorModalDefault(error, 'Cannot edit entry', true);
         });
     }
 
@@ -325,7 +325,7 @@ export class AddonModDataEditPage {
     protected displayEditFields(): string {
         this.jsData = {
             fields: this.fields,
-            contents: this.utils.clone(this.entry.contents),
+            contents: CoreUtils.clone(this.entry.contents),
             form: this.editForm,
             data: this.data,
             errors: this.errors
@@ -333,7 +333,7 @@ export class AddonModDataEditPage {
 
         let replace,
             render,
-            template = this.dataHelper.getTemplate(this.data, 'addtemplate', this.fieldsArray);
+            template = AddonModDataHelper.getTemplate(this.data, 'addtemplate', this.fieldsArray);
 
         // Replace the fields found on template.
         this.fieldsArray.forEach((field) => {
@@ -358,7 +358,7 @@ export class AddonModDataEditPage {
         // Editing tags is not supported.
         replace = new RegExp('##tags##', 'gi');
         const message = '<p class="item-dimmed">{{ \'addon.mod_data.edittagsnotsupported\' | translate }}</p>';
-        template = template.replace(replace, this.tagProvider.areTagsAvailableInSite() ? message : '');
+        template = template.replace(replace, CoreTag.areTagsAvailableInSite() ? message : '');
 
         return template;
     }
@@ -371,9 +371,9 @@ export class AddonModDataEditPage {
     protected returnToEntryList(): Promise<void> {
         const inputData = this.editForm.value;
 
-        return this.dataHelper.getEditTmpFiles(inputData, this.fieldsArray, this.data.id,
+        return AddonModDataHelper.getEditTmpFiles(inputData, this.fieldsArray, this.data.id,
                 this.entry.contents).then((files) => {
-            this.fileUploaderProvider.clearTmpFiles(files);
+            CoreFileUploader.clearTmpFiles(files);
         }).finally(() => {
             // Go back to entry list.
             this.forceLeave = true;
@@ -385,8 +385,8 @@ export class AddonModDataEditPage {
      * Scroll to first error or to the top if not found.
      */
     protected scrollToFirstError(): void {
-        if (!this.domUtils.scrollToElementBySelector(this.content, '.addon-data-error')) {
-            this.domUtils.scrollToTop(this.content);
+        if (!CoreDomUtils.scrollToElementBySelector(this.content, '.addon-data-error')) {
+            CoreDomUtils.scrollToTop(this.content);
         }
     }
 }

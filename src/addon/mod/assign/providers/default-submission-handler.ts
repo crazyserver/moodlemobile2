@@ -19,7 +19,7 @@ import { AddonModAssignBaseSubmissionHandler } from '../classes/base-submission-
 /**
  * Default handler used when a submission plugin doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignDefaultSubmissionHandler extends AddonModAssignBaseSubmissionHandler {
     name = 'AddonModAssignDefaultSubmissionHandler';
     type = 'default';

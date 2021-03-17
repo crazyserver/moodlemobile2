@@ -20,7 +20,7 @@ import { AddonModWorkshopAssessmentStrategyRubricComponent } from '../component/
 /**
  * Handler for rubric assessment strategy plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopAssessmentStrategyRubricHandler implements AddonWorkshopAssessmentStrategyHandler {
     name = 'AddonModWorkshopAssessmentStrategyRubric';
     strategyName = 'rubric';
@@ -57,7 +57,7 @@ export class AddonModWorkshopAssessmentStrategyRubricHandler implements AddonWor
         const originalValues = [];
 
         form.fields.forEach((field, n) => {
-            field.dimtitle = this.translate.instant('addon.mod_workshop_assessment_rubric.dimensionnumber', {$a: field.number});
+            field.dimtitle = Translate.instant('addon.mod_workshop_assessment_rubric.dimensionnumber', {$a: field.number});
 
             if (!form.current[n]) {
                 form.current[n] = {};
@@ -107,7 +107,7 @@ export class AddonModWorkshopAssessmentStrategyRubricHandler implements AddonWor
                 if (!isNaN(id) && id >= 0) {
                     data['chosenlevelid__idx_' + idx] = id;
                 } else {
-                    errors['chosenlevelid_' + idx] = this.translate.instant('addon.mod_workshop_assessment_rubric.mustchooseone');
+                    errors['chosenlevelid_' + idx] = Translate.instant('addon.mod_workshop_assessment_rubric.mustchooseone');
                     hasErrors = true;
                 }
 

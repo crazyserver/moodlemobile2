@@ -26,7 +26,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Helper service to provide filter functionalities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFilterHelperProvider {
 
     protected logger: CoreLogger;
@@ -75,7 +75,7 @@ export class CoreFilterHelperProvider {
      */
     getBlocksContexts(courseId: number, siteId?: string): Promise<{contextlevel: string, instanceid: number}[]> {
 
-        return this.courseProvider.getCourseBlocks(courseId, siteId).then((blocks) => {
+        return CoreCourse.getCourseBlocks(courseId, siteId).then((blocks) => {
             const contexts: {contextlevel: string, instanceid: number}[] = [];
 
             blocks.forEach((block) => {
@@ -128,7 +128,7 @@ export class CoreFilterHelperProvider {
      */
     getCourseContexts(courseId: number, siteId?: string): Promise<{contextlevel: string, instanceid: number}[]> {
 
-        return this.coursesProvider.getCourseIdsIfEnrolled(courseId, siteId).then((courseIds) => {
+        return CoreCourses.getCourseIdsIfEnrolled(courseId, siteId).then((courseIds) => {
             const contexts: {contextlevel: string, instanceid: number}[] = [];
 
             courseIds.forEach((courseId) => {
@@ -151,7 +151,7 @@ export class CoreFilterHelperProvider {
      */
     getCourseModulesContexts(courseId: number, siteId?: string): Promise<{contextlevel: string, instanceid: number}[]> {
 
-        return this.courseProvider.getSections(courseId, false, true, undefined, siteId).then((sections) => {
+        return CoreCourse.getSections(courseId, false, true, undefined, siteId).then((sections) => {
             const contexts: {contextlevel: string, instanceid: number}[] = [];
 
             sections.forEach((section) => {
@@ -190,7 +190,7 @@ export class CoreFilterHelperProvider {
         options.instanceId = instanceId;
         options.filter = false;
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
 
             return this.filterProvider.canGetFilters(siteId).then((canGet) => {
@@ -226,7 +226,7 @@ export class CoreFilterHelperProvider {
                             const getFilters = this.getCourseContexts.bind(this, instanceId, siteId);
 
                             return this.getCacheableFilters(contextLevel, instanceId, getFilters, options, site);
-                        } else if (contextLevel == 'block' && options.courseId && this.courseProvider.canGetCourseBlocks(site)) {
+                        } else if (contextLevel == 'block' && options.courseId && CoreCourse.canGetCourseBlocks(site)) {
                             // Get all the course blocks filters with a single call to decrease number of WS calls.
                             const getFilters = this.getBlocksContexts.bind(this, options.courseId, siteId);
 
@@ -285,7 +285,7 @@ export class CoreFilterHelperProvider {
 
             const cachedData = this.moduleContextsCache[siteId][courseId][contextLevel];
 
-            if (!this.appProvider.isOnline() ||
+            if (!CoreApp.isOnline() ||
                     Date.now() <= cachedData.time + site.getExpirationDelay(CoreSite.FREQUENCY_RARELY)) {
 
                 // We can use cache, return the filters if found.
@@ -304,7 +304,7 @@ export class CoreFilterHelperProvider {
     siteHasFiltersToTreat(options?: CoreFilterFormatTextOptions, siteId?: string): Promise<boolean> {
         options = options || {};
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             // Get filters at site level.
             return this.filterProvider.getAvailableInContext('system', 0, site.getId()).then((filters) => {

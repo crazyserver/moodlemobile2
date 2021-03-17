@@ -25,7 +25,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the MathJax filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterMathJaxLoaderHandler';
     filterName = 'mathjaxloader';
@@ -118,7 +118,7 @@ export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
     filter(text: string, filter: CoreFilterFilter, options: CoreFilterFormatTextOptions, siteId?: string)
             : string | Promise<string> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             // Don't apply this filter if Moodle is 3.7 or higher and the WS already filtered the content.
             if (!options.wsNotFiltered && site.isVersionGreaterEqualThan('3.7')) {
@@ -292,7 +292,7 @@ export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
      */
     shouldBeApplied(options: CoreFilterFormatTextOptions, site?: CoreSite): boolean {
         // Only apply the filter if logged in and we're filtering current site.
-        return site && site.getId() == this.sitesProvider.getCurrentSiteId();
+        return site && site.getId() == CoreSites.getCurrentSiteId();
     }
 
     /**
@@ -307,7 +307,7 @@ export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
             return Promise.resolve();
         }
 
-        const deferred = this.utils.promiseDefer();
+        const deferred = CoreUtils.promiseDefer();
 
         setTimeout(() => {
             return this.waitForReady(retries + 1).finally(() => {

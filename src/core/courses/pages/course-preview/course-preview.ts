@@ -84,7 +84,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
         this.avoidOpenCourse = navParams.get('avoidOpenCourse');
         this.isMobile = appProvider.isMobile();
         this.isDesktop = appProvider.isDesktop();
-        this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
+        this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
 
         if (this.downloadCourseEnabled) {
             // Listen for status change in course.
@@ -92,7 +92,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
                 if (data.courseId == this.course.id || data.courseId == CoreCourseProvider.ALL_COURSES_CLEARED) {
                     this.updateCourseStatus(data.status);
                 }
-            }, this.sitesProvider.getCurrentSiteId());
+            }, CoreSites.getCurrentSiteId());
         }
     }
 
@@ -100,11 +100,11 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        const currentSite = this.sitesProvider.getCurrentSite(),
+        const currentSite = CoreSites.getCurrentSite(),
             currentSiteUrl = currentSite && currentSite.getURL();
 
         this.paypalEnabled = this.course.enrollmentmethods && this.course.enrollmentmethods.indexOf('paypal') > -1;
-        this.guestWSAvailable = this.coursesProvider.isGuestWSAvailable();
+        this.guestWSAvailable = CoreCourses.isGuestWSAvailable();
         this.enrolUrl = this.textUtils.concatenatePaths(currentSiteUrl, 'enrol/index.php?id=' + this.course.id);
         this.courseUrl = this.textUtils.concatenatePaths(currentSiteUrl, 'course/view.php?id=' + this.course.id);
         this.paypalReturnUrl = this.textUtils.concatenatePaths(currentSiteUrl, 'enrol/paypal/return.php');
@@ -127,23 +127,23 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
             }
 
             // Determine course prefetch icon.
-            this.courseHelper.getCourseStatusIconAndTitle(this.course.id).then((data) => {
+            CoreCourseHelper.getCourseStatusIconAndTitle(this.course.id).then((data) => {
                 this.prefetchCourseData.prefetchCourseIcon = data.icon;
                 this.prefetchCourseData.title = data.title;
 
                 if (data.icon == 'spinner') {
                     // Course is being downloaded. Get the download promise.
-                    const promise = this.courseHelper.getCourseDownloadPromise(this.course.id);
+                    const promise = CoreCourseHelper.getCourseDownloadPromise(this.course.id);
                     if (promise) {
                         // There is a download promise. If it fails, show an error.
                         promise.catch((error) => {
                             if (!this.pageDestroyed) {
-                                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
                             }
                         });
                     } else {
                         // No download, this probably means that the app was closed while downloading. Set previous status.
-                        this.courseProvider.setCoursePreviousStatus(this.course.id);
+                        CoreCourse.setCoursePreviousStatus(this.course.id);
                     }
                 }
             });
@@ -183,7 +183,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
         }
 
         if (this.guestInstanceId) {
-            return this.coursesProvider.getCourseGuestEnrolmentInfo(this.guestInstanceId).then((info) => {
+            return CoreCourses.getCourseGuestEnrolmentInfo(this.guestInstanceId).then((info) => {
                 if (!info.status) {
                     // Not active, reject.
                     return Promise.reject(null);
@@ -205,7 +205,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
         // Get course enrolment methods.
         this.selfEnrolInstances = [];
 
-        return this.coursesProvider.getCourseEnrolmentMethods(this.course.id).then((methods) => {
+        return CoreCourses.getCourseEnrolmentMethods(this.course.id).then((methods) => {
             this.enrollmentMethods = methods;
 
             this.enrollmentMethods.forEach((method) => {
@@ -216,10 +216,10 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
                 }
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting enrolment data');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting enrolment data');
         }).then(() => {
             // Check if user is enrolled in the course.
-            return this.coursesProvider.getUserCourse(this.course.id).then((course) => {
+            return CoreCourses.getUserCourse(this.course.id).then((course) => {
                 this.isEnrolled = true;
 
                 return course;
@@ -227,7 +227,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
                 // The user is not enrolled in the course. Use getCourses to see if it's an admin/manager and can see the course.
                 this.isEnrolled = false;
 
-                return this.coursesProvider.getCourse(this.course.id);
+                return CoreCourses.getCourse(this.course.id);
             }).then((course) => {
                 // Success retrieving the course, we can assume the user has permissions to view it.
                 this.course.fullname = course.fullname || this.course.fullname;
@@ -242,10 +242,10 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
                 });
             });
         }).finally(() => {
-            if (this.sitesProvider.getCurrentSite() && !this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.7')) {
-                return this.coursesProvider.isGetCoursesByFieldAvailableInSite().then((available) => {
+            if (CoreSites.getCurrentSite() && !CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.7')) {
+                return CoreCourses.isGetCoursesByFieldAvailableInSite().then((available) => {
                     if (available) {
-                        return this.coursesProvider.getCourseByField('id', this.course.id).then((course) => {
+                        return CoreCourses.getCourseByField('id', this.course.id).then((course) => {
                             this.course.customfields = course.customfields;
                         });
                     }
@@ -267,7 +267,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
             return;
         }
 
-        this.courseHelper.openCourse(this.navCtrl, this.course);
+        CoreCourseHelper.openCourse(this.navCtrl, this.course);
     }
 
     /**
@@ -308,7 +308,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
             };
 
         // Open the enrolment page in InAppBrowser.
-        this.sitesProvider.getCurrentSite().openInAppWithAutoLogin(this.enrolUrl).then((w) => {
+        CoreSites.getCurrentSite().openInAppWithAutoLogin(this.enrolUrl).then((w) => {
             window = w;
 
             if (this.isDesktop || this.isMobile) {
@@ -346,7 +346,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
      * @param instanceId The instance ID of the enrolment method.
      */
     selfEnrolClicked(instanceId: number): void {
-        this.domUtils.showConfirm(this.translate.instant('core.courses.confirmselfenrol')).then(() => {
+        CoreDomUtils.showConfirm(Translate.instant('core.courses.confirmselfenrol')).then(() => {
             this.selfEnrolInCourse('', instanceId);
         }).catch(() => {
             // User cancelled.
@@ -361,9 +361,9 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
      * @return Promise resolved when self enrolled.
      */
     selfEnrolInCourse(password: string, instanceId: number): Promise<any> {
-        const modal = this.domUtils.showModalLoading('core.loading', true);
+        const modal = CoreDomUtils.showModalLoading('core.loading', true);
 
-        return this.coursesProvider.selfEnrol(this.course.id, password, instanceId).then(() => {
+        return CoreCourses.selfEnrol(this.course.id, password, instanceId).then(() => {
             // Close modal and refresh data.
             this.isEnrolled = true;
             this.dataLoaded = false;
@@ -376,7 +376,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
                         courseId: this.course.id,
                         course: this.course,
                         action: CoreCoursesProvider.ACTION_ENROL,
-                    }, this.sitesProvider.getCurrentSiteId());
+                    }, CoreSites.getCurrentSiteId());
                 });
             });
         }).catch((error) => {
@@ -391,7 +391,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
                 }
             }
 
-            this.domUtils.showErrorModalDefault(error, 'core.courses.errorselfenrol', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.courses.errorselfenrol', true);
         }).finally(() => {
             modal.dismiss();
         });
@@ -405,15 +405,15 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
     refreshData(refresher?: any): Promise<any> {
         const promises = [];
 
-        promises.push(this.coursesProvider.invalidateUserCourses());
-        promises.push(this.coursesProvider.invalidateCourse(this.course.id));
-        promises.push(this.coursesProvider.invalidateCourseEnrolmentMethods(this.course.id));
+        promises.push(CoreCourses.invalidateUserCourses());
+        promises.push(CoreCourses.invalidateCourse(this.course.id));
+        promises.push(CoreCourses.invalidateCourseEnrolmentMethods(this.course.id));
         promises.push(this.courseOptionsDelegate.clearAndInvalidateCoursesOptions(this.course.id));
-        if (this.sitesProvider.getCurrentSite() && !this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.7')) {
-            promises.push(this.coursesProvider.invalidateCoursesByField('id', this.course.id));
+        if (CoreSites.getCurrentSite() && !CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.7')) {
+            promises.push(CoreCourses.invalidateCoursesByField('id', this.course.id));
         }
         if (this.guestInstanceId) {
-            promises.push(this.coursesProvider.invalidateCourseGuestEnrolmentInfo(this.guestInstanceId));
+            promises.push(CoreCourses.invalidateCourseGuestEnrolmentInfo(this.guestInstanceId));
         }
 
         return Promise.all(promises).finally(() => {
@@ -431,7 +431,7 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
      * @param status Status to show.
      */
     protected updateCourseStatus(status: string): void {
-        const statusData = this.courseHelper.getCourseStatusIconAndTitleFromStatus(status);
+        const statusData = CoreCourseHelper.getCourseStatusIconAndTitleFromStatus(status);
 
         this.prefetchCourseData.prefetchCourseIcon = statusData.icon;
         this.prefetchCourseData.title = statusData.title;
@@ -449,10 +449,10 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
         }
 
         // Check if user is enrolled in the course.
-        return this.coursesProvider.invalidateUserCourses().catch(() => {
+        return CoreCourses.invalidateUserCourses().catch(() => {
             // Ignore errors.
         }).then(() => {
-            return this.coursesProvider.getUserCourse(this.course.id);
+            return CoreCourses.getUserCourse(this.course.id);
         }).catch(() => {
             // Not enrolled, wait a bit and try again.
             if (this.pageDestroyed || (Date.now() - this.waitStart > 60000)) {
@@ -477,9 +477,9 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
      * Prefetch the course.
      */
     prefetchCourse(): void {
-        this.courseHelper.confirmAndPrefetchCourse(this.prefetchCourseData, this.course).catch((error) => {
+        CoreCourseHelper.confirmAndPrefetchCourse(this.prefetchCourseData, this.course).catch((error) => {
             if (!this.pageDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
             }
         });
     }

@@ -21,7 +21,7 @@ import { AddonBlogProvider } from './blog';
 /**
  * Handler to treat links to blog page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlogIndexLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonBlogIndexLinkHandler';
     featureName = 'CoreUserDelegate_AddonBlog:blogs';

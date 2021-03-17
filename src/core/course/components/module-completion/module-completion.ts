@@ -70,10 +70,10 @@ export class CoreCourseModuleCompletionComponent implements OnChanges {
             e.preventDefault();
             e.stopPropagation();
 
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
 
             this.completion.state = this.completion.state === 1 ? 0 : 1;
-            this.courseProvider.markCompletedManually(this.completion.cmid, this.completion.state,
+            CoreCourse.markCompletedManually(this.completion.cmid, this.completion.state,
                     this.completion.courseId, this.completion.courseName).then((response) => {
 
                 if (!response.status) {
@@ -89,7 +89,7 @@ export class CoreCourseModuleCompletionComponent implements OnChanges {
                 this.completionChanged.emit(this.completion);
             }).catch((error) => {
                 this.completion.state = this.completion.state === 1 ? 0 : 1;
-                this.domUtils.showErrorModalDefault(error, 'core.errorchangecompletion', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errorchangecompletion', true);
             }).finally(() => {
                 modal.dismiss();
             });
@@ -158,7 +158,7 @@ export class CoreCourseModuleCompletionComponent implements OnChanges {
                 }
 
                 return promise.then((translateParams) => {
-                    this.completionDescription = this.translate.instant(langKey, { $a: translateParams });
+                    this.completionDescription = Translate.instant(langKey, { $a: translateParams });
                 });
             });
         }

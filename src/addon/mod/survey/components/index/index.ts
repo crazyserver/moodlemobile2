@@ -56,11 +56,11 @@ export class AddonModSurveyIndexComponent extends CoreCourseModuleMainActivityCo
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.userId = this.sitesProvider.getCurrentSiteUserId();
+        this.userId = CoreSites.getCurrentSiteUserId();
 
         this.loadContent(false, true).then(() => {
             this.surveyProvider.logView(this.survey.id, this.survey.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -179,9 +179,9 @@ export class AddonModSurveyIndexComponent extends CoreCourseModuleMainActivityCo
      * Save options selected.
      */
     submit(): void {
-        this.domUtils.showConfirm(this.translate.instant('core.areyousure')).then(() => {
+        CoreDomUtils.showConfirm(Translate.instant('core.areyousure')).then(() => {
             const answers = [],
-                modal = this.domUtils.showModalLoading('core.sending', true);
+                modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             for (const x in this.answers) {
                 answers.push({
@@ -191,7 +191,7 @@ export class AddonModSurveyIndexComponent extends CoreCourseModuleMainActivityCo
             }
 
             return this.surveyProvider.submitAnswers(this.survey.id, this.survey.name, this.courseId, answers).then((online) => {
-                CoreEvents.instance.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
+                CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
 
                 if (online && this.isPrefetched()) {
                     // The survey is downloaded, update the data.
@@ -210,7 +210,7 @@ export class AddonModSurveyIndexComponent extends CoreCourseModuleMainActivityCo
                 modal.dismiss();
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_survey.cannotsubmitsurvey', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_survey.cannotsubmitsurvey', true);
         });
     }
 

@@ -46,10 +46,10 @@ export class CoreDownloadFileDirective implements OnInit {
             ev.preventDefault();
             ev.stopPropagation();
 
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
 
             this.fileHelper.downloadAndOpenFile(this.file, this.component, this.componentId).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
             }).finally(() => {
                 modal.dismiss();
             });

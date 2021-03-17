@@ -60,6 +60,6 @@ export class CoreViewerTextPage {
      * Copy the text to clipboard.
      */
     copyText(): void {
-        CoreUtils.instance.copyToClipboard(this.content);
+        CoreUtils.copyToClipboard(this.content);
     }
 }

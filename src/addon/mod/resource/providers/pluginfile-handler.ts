@@ -18,7 +18,7 @@ import { CorePluginFileHandler } from '@services/plugin-file-delegate';
 /**
  * Handler to treat links to resource.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourcePluginFileHandler implements CorePluginFileHandler {
     name = 'AddonModResourcePluginFileHandler';
     component = 'mod_resource';

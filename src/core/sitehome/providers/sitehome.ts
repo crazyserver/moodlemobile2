@@ -22,7 +22,7 @@ import { AddonModForumProvider } from '@addon/mod/forum/providers/forum';
 /**
  * Service that provides some features regarding site home.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSiteHomeProvider {
     protected logger: CoreLogger;
 
@@ -66,7 +66,7 @@ export class CoreSiteHomeProvider {
      * @return Promise resolved with boolean: whether it's available.
      */
     isAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // First check if it's disabled.
             if (this.isDisabledInSite(site)) {
                 return false;
@@ -78,7 +78,7 @@ export class CoreSiteHomeProvider {
 
             this.logger.debug('Using WS call to check if site home is available.');
 
-            return this.courseProvider.getSections(siteHomeId, false, true, preSets, site.id).then((sections): any => {
+            return CoreCourse.getSections(siteHomeId, false, true, preSets, site.id).then((sections): any => {
                 if (!sections || !sections.length) {
                     return Promise.reject(null);
                 }
@@ -116,7 +116,7 @@ export class CoreSiteHomeProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isDisabledInSite(site);
         });
     }
@@ -128,7 +128,7 @@ export class CoreSiteHomeProvider {
      * @return Whether it's disabled.
      */
     isDisabledInSite(site: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreMainMenuDelegate_CoreSiteHome');
     }

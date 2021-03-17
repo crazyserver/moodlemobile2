@@ -21,7 +21,7 @@ import { AddonCourseCompletionProvider } from './coursecompletion';
 /**
  * Profile course completion handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCourseCompletionUserHandler implements CoreUserProfileHandler {
     name = 'AddonCourseCompletion';
     type = CoreUserDelegate.TYPE_NEW_PAGE;

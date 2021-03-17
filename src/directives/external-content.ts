@@ -103,7 +103,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
         newSource.setAttribute('src', url);
 
         if (type) {
-            if (CoreApp.instance.isAndroid() && type == 'video/quicktime') {
+            if (CoreApp.isAndroid() && type == 'video/quicktime') {
                 // Fix for VideoJS/Chrome bug https://github.com/videojs/video.js/issues/423 .
                 newSource.setAttribute('type', 'video/mp4');
             } else {
@@ -117,7 +117,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
      * Get the URL that should be handled and, if valid, handle it.
      */
     protected checkAndHandleExternalContent(): void {
-        const currentSite = this.sitesProvider.getCurrentSite(),
+        const currentSite = CoreSites.getCurrentSite(),
             siteId = this.siteId || (currentSite && currentSite.getId()),
             tagName = this.element.tagName.toUpperCase();
         let targetAttr,
@@ -197,7 +197,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
                     const track = <TextTrack> event.track;
                     if (track) {
                         track.oncuechange = (): void => {
-                            const line = this.platform.is('tablet') || CoreApp.instance.isAndroid() ? 90 : 80;
+                            const line = this.platform.is('tablet') || CoreApp.isAndroid() ? 90 : 80;
                             // Position all subtitles to a percentage of video height.
                             Array.from(track.cues).forEach((cue: any) => {
                                 cue.snapToLines = false;
@@ -225,7 +225,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
             throw 'Non-downloadable URL';
         }
 
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         if (!site.canDownloadFiles() && this.urlUtils.isPluginFileUrl(url)) {
             this.element.parentElement.removeChild(this.element); // Remove element since it'll be broken.
@@ -238,11 +238,11 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
         let finalUrl: string;
 
         if (targetAttr === 'src' && tagName !== 'SOURCE' && tagName !== 'TRACK' && tagName !== 'VIDEO' && tagName !== 'AUDIO') {
-            finalUrl = await this.filepoolProvider.getSrcByUrl(siteId, url, this.component, this.componentId, 0, true, dwnUnknown);
+            finalUrl = await CoreFilepool.getSrcByUrl(siteId, url, this.component, this.componentId, 0, true, dwnUnknown);
         } else {
-            finalUrl = await this.filepoolProvider.getUrlByUrl(siteId, url, this.component, this.componentId, 0, true, dwnUnknown);
+            finalUrl = await CoreFilepool.getUrlByUrl(siteId, url, this.component, this.componentId, 0, true, dwnUnknown);
 
-            finalUrl = CoreFile.instance.convertFileSrc(finalUrl);
+            finalUrl = CoreFile.convertFileSrc(finalUrl);
         }
 
         if (!this.urlUtils.isLocalFileUrl(finalUrl)) {
@@ -271,7 +271,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
             let clickableEl = this.element;
 
             if (tagName == 'SOURCE') {
-                clickableEl = <HTMLElement> this.domUtils.closest(this.element, 'video,audio');
+                clickableEl = <HTMLElement> CoreDomUtils.closest(this.element, 'video,audio');
                 if (!clickableEl) {
                     return;
                 }
@@ -280,9 +280,9 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
             clickableEl.addEventListener(eventName, () => {
                 // User played media or opened a downloadable link.
                 // Download the file if in wifi and it hasn't been downloaded already (for big files).
-                if (CoreApp.instance.isWifi()) {
+                if (CoreApp.isWifi()) {
                     // We aren't using the result, so it doesn't matter which of the 2 functions we call.
-                    this.filepoolProvider.getUrlByUrl(siteId, url, this.component, this.componentId, 0, false);
+                    CoreFilepool.getUrlByUrl(siteId, url, this.component, this.componentId, 0, false);
                 }
             });
         }
@@ -307,10 +307,10 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
         }
 
         const promises = [];
-        urls = this.utils.uniqueArray(urls); // Remove duplicates.
+        urls = CoreUtils.uniqueArray(urls); // Remove duplicates.
 
         urls.forEach((url) => {
-            promises.push(this.filepoolProvider.getUrlByUrl(siteId, url, this.component, this.componentId, 0, true, true)
+            promises.push(CoreFilepool.getUrlByUrl(siteId, url, this.component, this.componentId, 0, true, true)
                     .then((finalUrl) => {
 
                 this.logger.debug('Using URL ' + finalUrl + ' for ' + url + ' in inline styles');
@@ -318,7 +318,7 @@ export class CoreExternalContentDirective implements AfterViewInit, OnChanges {
             }));
         });
 
-        return this.utils.allPromises(promises).then(() => {
+        return CoreUtils.allPromises(promises).then(() => {
             this.element.setAttribute('style', inlineStyles);
         });
     }

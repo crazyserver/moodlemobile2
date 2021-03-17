@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Emoticon filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterEmoticonHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterEmoticonHandler';
     filterName = 'emoticon';

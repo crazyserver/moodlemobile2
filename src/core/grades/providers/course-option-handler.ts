@@ -22,7 +22,7 @@ import { CoreGradesCourseComponent } from '../components/course/course';
 /**
  * Course nav handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesCourseOptionHandler implements CoreCourseOptionsHandler {
     name = 'CoreGrades';
     priority = 400;
@@ -43,7 +43,7 @@ export class CoreGradesCourseOptionHandler implements CoreCourseOptionsHandler {
             return Promise.resolve();
         }
 
-        return this.coursesProvider.invalidateUserCourses();
+        return CoreCourses.invalidateUserCourses();
     }
 
     /**

@@ -60,13 +60,13 @@ export class AddonStorageManagerCoursesStoragePage {
      * View loaded.
      */
     async ngOnInit(): Promise<void> {
-        this.userCourses = await CoreCourses.instance.getUserCourses();
-        this.courseStatusObserver = CoreEvents.instance.on(
+        this.userCourses = await CoreCourses.getUserCourses();
+        this.courseStatusObserver = CoreEvents.on(
             CoreEvents.COURSE_STATUS_CHANGED,
             ({ courseId, status }) => this.onCourseUpdated(courseId, status),
         );
 
-        const downloadedCourseIds = await CoreCourse.instance.getDownloadedCourseIds();
+        const downloadedCourseIds = await CoreCourse.getDownloadedCourseIds();
         const downloadedCourses = await Promise.all(
             this.userCourses
                 .filter((course) => downloadedCourseIds.indexOf(course.id) !== -1)
@@ -90,7 +90,7 @@ export class AddonStorageManagerCoursesStoragePage {
      */
     async deleteCompletelyDownloadedCourses(): Promise<void> {
         try {
-            await CoreDomUtils.instance.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
         } catch (error) {
             if (!error.coreCanceled) {
                 throw error;
@@ -99,15 +99,15 @@ export class AddonStorageManagerCoursesStoragePage {
             return;
         }
 
-        const modal = CoreDomUtils.instance.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         const deletedCourseIds = this.completelyDownloadedCourses.map((course) => course.id);
 
         try {
-            await Promise.all(deletedCourseIds.map((courseId) => CoreCourseHelper.instance.deleteCourseFiles(courseId)));
+            await Promise.all(deletedCourseIds.map((courseId) => CoreCourseHelper.deleteCourseFiles(courseId)));
 
             this.setDownloadedCourses(this.downloadedCourses.filter((course) => !CoreArray.contains(deletedCourseIds, course.id)));
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, Translate.instance.instant('core.errordeletefile'));
+            CoreDomUtils.showErrorModalDefault(error, Translate.instant('core.errordeletefile'));
         } finally {
             modal.dismiss();
         }
@@ -120,7 +120,7 @@ export class AddonStorageManagerCoursesStoragePage {
      */
     async deleteCourse(course: DownloadedCourse): Promise<void> {
         try {
-            await CoreDomUtils.instance.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
         } catch (error) {
             if (!error.coreCanceled) {
                 throw error;
@@ -129,14 +129,14 @@ export class AddonStorageManagerCoursesStoragePage {
             return;
         }
 
-        const modal = CoreDomUtils.instance.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         try {
-            await CoreCourseHelper.instance.deleteCourseFiles(course.id);
+            await CoreCourseHelper.deleteCourseFiles(course.id);
 
             this.setDownloadedCourses(CoreArray.withoutItem(this.downloadedCourses, course));
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, Translate.instance.instant('core.errordeletefile'));
+            CoreDomUtils.showErrorModalDefault(error, Translate.instant('core.errordeletefile'));
         } finally {
             modal.dismiss();
         }
@@ -185,7 +185,7 @@ export class AddonStorageManagerCoursesStoragePage {
      */
     private async getDownloadedCourse(course: Course): Promise<DownloadedCourse> {
         const totalSize = await this.calculateDownloadedCourseSize(course.id);
-        const status = await CoreCourse.instance.getCourseStatus(course.id);
+        const status = await CoreCourse.getCourseStatus(course.id);
 
         return {
             ...course,
@@ -201,10 +201,10 @@ export class AddonStorageManagerCoursesStoragePage {
      * @return Promise to be resolved with the course size.
      */
     private async calculateDownloadedCourseSize(courseId: number): Promise<number> {
-        const sections = await CoreCourse.instance.getSections(courseId);
+        const sections = await CoreCourse.getSections(courseId);
         const modules = CoreArray.flatten(sections.map((section) => section.modules));
         const promisedModuleSizes = modules.map(async (module) => {
-            const size = await CoreCourseModulePrefetch.instance.getModuleStoredSize(module, courseId);
+            const size = await CoreCourseModulePrefetch.getModuleStoredSize(module, courseId);
 
             return isNaN(size) ? 0 : size;
         });

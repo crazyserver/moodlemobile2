@@ -39,6 +39,6 @@ export class CoreCourseUnsupportedModuleComponent implements OnInit {
     ngOnInit(): void {
         this.isDisabledInSite = this.moduleDelegate.isModuleDisabledInSite(this.module.modname);
         this.isSupportedByTheApp = this.moduleDelegate.hasHandler(this.module.modname);
-        this.moduleName = this.courseProvider.translateModuleName(this.module.modname);
+        this.moduleName = CoreCourse.translateModuleName(this.module.modname);
     }
 }

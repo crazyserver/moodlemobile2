@@ -22,7 +22,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support folder modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFolderModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModFolder';
     modName = 'folder';
@@ -60,7 +60,7 @@ export class AddonModFolderModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_folder-handler',
             showDownloadButton: true,

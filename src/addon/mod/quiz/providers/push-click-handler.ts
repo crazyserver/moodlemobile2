@@ -23,7 +23,7 @@ import { AddonModQuizHelperProvider } from './helper';
 /**
  * Handler for quiz push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonModQuizPushClickHandler';
     priority = 200;
@@ -42,7 +42,7 @@ export class AddonModQuizPushClickHandler implements CorePushNotificationsClickH
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        return this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_quiz' &&
+        return CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_quiz' &&
                 this.SUPPORTED_NAMES.indexOf(notification.name) != -1;
     }
 
@@ -68,7 +68,7 @@ export class AddonModQuizPushClickHandler implements CorePushNotificationsClickH
             return this.quizProvider.invalidateContent(moduleId, courseId, notification.site).catch(() => {
                 // Ignore errors.
             }).then(() => {
-                return this.courseHelper.navigateToModule(moduleId, notification.site, courseId);
+                return CoreCourseHelper.navigateToModule(moduleId, notification.site, courseId);
             });
         }
     }

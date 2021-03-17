@@ -28,7 +28,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Service that provides helper functions for resources.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourceHelperProvider {
 
     /* Constants to determine how a resource should be displayed in Moodle. */
@@ -58,7 +58,7 @@ export class AddonModResourceHelperProvider {
      * @return Promise resolved with the HTML.
      */
     getEmbeddedHtml(module: any, courseId: number): Promise<any> {
-        return this.courseHelper.downloadModuleWithMainFileIfNeeded(module, courseId, AddonModResourceProvider.COMPONENT,
+        return CoreCourseHelper.downloadModuleWithMainFileIfNeeded(module, courseId, AddonModResourceProvider.COMPONENT,
                 module.id, module.contents).then((result) => {
             return this.mimetypeUtils.getEmbeddedHtml(module.contents[0], result.path);
         });
@@ -82,14 +82,14 @@ export class AddonModResourceHelperProvider {
             mainFilePath = mainFile.filepath.substr(1) + mainFilePath;
         }
 
-        return this.filepoolProvider.getPackageDirUrlByUrl(this.sitesProvider.getCurrentSiteId(), module.url).then((dirPath) => {
+        return CoreFilepool.getPackageDirUrlByUrl(CoreSites.getCurrentSiteId(), module.url).then((dirPath) => {
             // This URL is going to be injected in an iframe, we need trustAsResourceUrl to make it work in a browser.
             return this.textUtils.concatenatePaths(dirPath, mainFilePath);
         }).catch(() => {
             // Error getting directory, there was an error downloading or we're in browser. Return online URL.
-            if (this.appProvider.isOnline() && mainFile.fileurl) {
+            if (CoreApp.isOnline() && mainFile.fileurl) {
                 // This URL is going to be injected in an iframe, we need this to make it work.
-                return this.sitesProvider.getCurrentSite().checkAndFixPluginfileURL(mainFile.fileurl);
+                return CoreSites.getCurrentSite().checkAndFixPluginfileURL(mainFile.fileurl);
             }
 
             return Promise.reject(null);
@@ -104,7 +104,7 @@ export class AddonModResourceHelperProvider {
      * @return Whether the resource should be displayed embeded.
      */
     isDisplayedEmbedded(module: any, display: number): boolean {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         if ((!module.contents.length && !module.contentsinfo) || !this.fileProvider.isAvailable() ||
                 (currentSite && !currentSite.isVersionGreaterEqualThan('3.7') && this.isNextcloudFile(module))) {
@@ -153,13 +153,13 @@ export class AddonModResourceHelperProvider {
      * @return Promise resolved with boolean: whether main file is downloadable.
      */
     isMainFileDownloadable(module: any, siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const mainFile = module.contents[0];
         const fileUrl = this.fileHelper.getFileUrl(mainFile);
         const timemodified = this.fileHelper.getFileTimemodified(mainFile);
 
-        return this.filepoolProvider.isFileDownloadable(siteId, fileUrl, timemodified);
+        return CoreFilepool.isFileDownloadable(siteId, fileUrl, timemodified);
     }
 
     /**
@@ -184,18 +184,18 @@ export class AddonModResourceHelperProvider {
      * @return Resolved when done.
      */
     openModuleFile(module: any, courseId: number): Promise<any> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Download and open the file from the resource contents.
-        return this.courseHelper.downloadModuleAndOpenFile(module, courseId, AddonModResourceProvider.COMPONENT, module.id,
+        return CoreCourseHelper.downloadModuleAndOpenFile(module, courseId, AddonModResourceProvider.COMPONENT, module.id,
                 module.contents).then(() => {
             this.resourceProvider.logView(module.instance, module.name).then(() => {
-                this.courseProvider.checkModuleCompletion(courseId, module.completiondata);
+                CoreCourse.checkModuleCompletion(courseId, module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_resource.errorwhileloadingthecontent', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_resource.errorwhileloadingthecontent', true);
         }).finally(() => {
             modal.dismiss();
         });

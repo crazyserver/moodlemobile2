@@ -19,7 +19,7 @@ import { AddonModWikiSyncProvider } from './wiki-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiSyncCronHandler implements CoreCronHandler {
     name = 'AddonModWikiSyncCronHandler';
 

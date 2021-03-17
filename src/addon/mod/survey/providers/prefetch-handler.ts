@@ -30,7 +30,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch surveys.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModSurvey';
     modName = 'survey';
@@ -133,7 +133,7 @@ export class AddonModSurveyPrefetchHandler extends CoreCourseActivityPrefetchHan
                 files = this.getIntroFilesFromInstance(module, survey);
 
             // Prefetch files.
-            promises.push(this.filepoolProvider.addFilesToQueue(siteId, files, AddonModSurveyProvider.COMPONENT, module.id));
+            promises.push(CoreFilepool.addFilesToQueue(siteId, files, AddonModSurveyProvider.COMPONENT, module.id));
 
             // If survey isn't answered, prefetch the questions.
             if (!survey.surveydone) {

@@ -130,7 +130,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
 
             this.load().then(() => {
                 this.obsInvalidated = CoreEvents.on(AddonModWorkshopProvider.ASSESSMENT_INVALIDATED,
-                        this.load.bind(this), this.sitesProvider.getCurrentSiteId());
+                        this.load.bind(this), CoreSites.getCurrentSiteId());
             }).finally(() => {
                 this.assessmentStrategyLoaded = true;
             });
@@ -168,7 +168,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
 
                     // Override assessment plugins values.
                     assessmentData.form.current = this.workshopProvider.parseFields(
-                        this.utils.objectToArrayOfObjects(offlineData, 'name', 'value'));
+                        CoreUtils.objectToArrayOfObjects(offlineData, 'name', 'value'));
 
                     // Override offline files.
                     if (offlineData) {
@@ -216,7 +216,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
                         .then((values) => {
                     this.data.selectedValues = values;
                 }).finally(() => {
-                    this.originalData.selectedValues = this.utils.clone(this.data.selectedValues);
+                    this.originalData.selectedValues = CoreUtils.clone(this.data.selectedValues);
                     if (this.edit) {
                         this.fileSessionProvider.setFiles(AddonModWorkshopProvider.COMPONENT,
                             this.workshop.id + '_' + this.assessmentId, assessmentData.feedbackattachmentfiles);
@@ -270,7 +270,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
         let saveOffline = false;
         let allowOffline = !files.length;
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.data.fieldErrors = {};
 
@@ -289,7 +289,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
                     this.data.assessment.form, attachmentsId).catch((errors) => {
                 this.data.fieldErrors = errors;
 
-                return Promise.reject(this.translate.instant('core.errorinvalidform'));
+                return Promise.reject(Translate.instant('core.errorinvalidform'));
             });
         }).then((assessmentData) => {
             if (saveOffline) {
@@ -306,7 +306,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
                 assessmentData, false, allowOffline);
         }).then((grade) => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!grade, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!grade, CoreSites.getCurrentSiteId());
 
             const promises = [];
 
@@ -323,8 +323,8 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
                 CoreEvents.trigger(AddonModWorkshopProvider.ASSESSMENT_SAVED, {
                     workshopId: this.workshop.id,
                     assessmentId: this.assessmentId,
-                    userId: this.sitesProvider.getCurrentSiteUserId(),
-                }, this.sitesProvider.getCurrentSiteId());
+                    userId: CoreSites.getCurrentSiteUserId(),
+                }, CoreSites.getCurrentSiteId());
 
                 if (files) {
                     // Delete the local files from the tmp folder.
@@ -332,7 +332,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
                 }
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error saving assessment.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error saving assessment.');
 
             return Promise.reject(null);
         }).finally(() => {

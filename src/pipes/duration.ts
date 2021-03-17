@@ -47,6 +47,6 @@ export class CoreDurationPipe implements PipeTransform {
             seconds = numberSeconds;
         }
 
-        return this.timeUtils.formatTime(seconds);
+        return CoreTimeUtils.formatTime(seconds);
     }
 }

@@ -28,7 +28,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch labels.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLabelPrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModLabel';
     modName = 'label';
@@ -97,8 +97,8 @@ export class AddonModLabelPrefetchHandler extends CoreCourseResourcePrefetchHand
         const promises = [];
 
         promises.push(this.labelProvider.invalidateLabelData(courseId));
-        promises.push(this.courseProvider.invalidateModule(module.id));
+        promises.push(CoreCourse.invalidateModule(module.id));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 }

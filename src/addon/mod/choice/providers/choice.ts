@@ -26,7 +26,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for choices.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoiceProvider {
     static COMPONENT = 'mmaModChoice';
 
@@ -74,7 +74,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved with boolean: true if response was sent to server, false if stored in device.
      */
     deleteResponses(choiceId: number, name: string, courseId: number, responses?: number[], siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         responses = responses || [];
 
         // Convenience function to store a message to be synchronized later.
@@ -84,7 +84,7 @@ export class AddonModChoiceProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -94,7 +94,7 @@ export class AddonModChoiceProvider {
             return this.deleteResponsesOnline(choiceId, responses, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that responses cannot be submitted.
                     return Promise.reject(error);
                 }
@@ -114,7 +114,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved when responses are successfully deleted.
      */
     deleteResponsesOnline(choiceId: number, responses?: number[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 choiceid: choiceId,
                 responses: responses
@@ -125,7 +125,7 @@ export class AddonModChoiceProvider {
 
                 // Other errors ocurring.
                 if (!response || response.status === false) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 }
 
                 // Invalidate related data.
@@ -183,7 +183,7 @@ export class AddonModChoiceProvider {
     protected getChoiceByDataKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModChoiceChoice> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId]
             };
@@ -191,7 +191,7 @@ export class AddonModChoiceProvider {
                 cacheKey: this.getChoiceDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModChoiceProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_choice_get_choices_by_courses', params, preSets)
@@ -241,7 +241,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved with choice options.
      */
     getOptions(choiceId: number, options: CoreCourseCommonModWSOptions = {}): Promise<AddonModChoiceOption[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 choiceid: choiceId
             };
@@ -250,7 +250,7 @@ export class AddonModChoiceProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModChoiceProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_choice_get_choice_options', params, preSets)
@@ -273,7 +273,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved with choice results.
      */
     getResults(choiceId: number, options: CoreCourseCommonModWSOptions = {}): Promise<AddonModChoiceResult[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 choiceid: choiceId
             };
@@ -281,7 +281,7 @@ export class AddonModChoiceProvider {
                 cacheKey: this.getChoiceOptionsCacheKey(choiceId),
                 component: AddonModChoiceProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_choice_get_choice_results', params, preSets)
@@ -304,7 +304,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateChoiceData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(null).then((site) => {
+        return CoreSites.getSite(null).then((site) => {
             return site.invalidateWsCacheForKey(this.getChoiceDataCacheKey(courseId));
         });
     }
@@ -318,7 +318,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -330,9 +330,9 @@ export class AddonModChoiceProvider {
             ]);
         }));
 
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModChoiceProvider.COMPONENT, moduleId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModChoiceProvider.COMPONENT, moduleId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -343,7 +343,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateOptions(choiceId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
            return site.invalidateWsCacheForKey(this.getChoiceOptionsCacheKey(choiceId));
        });
    }
@@ -356,7 +356,7 @@ export class AddonModChoiceProvider {
     * @return Promise resolved when the data is invalidated.
     */
    invalidateResults(choiceId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getChoiceResultsCacheKey(choiceId));
         });
     }
@@ -374,7 +374,7 @@ export class AddonModChoiceProvider {
             choiceid: id
         };
 
-        return this.logHelper.logSingle('mod_choice_view_choice', params, AddonModChoiceProvider.COMPONENT, id, name, 'choice',
+        return CoreCourseLogHelper.logSingle('mod_choice_view_choice', params, AddonModChoiceProvider.COMPONENT, id, name, 'choice',
                 {}, siteId);
     }
 
@@ -389,7 +389,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved with boolean: true if response was sent to server, false if stored in device.
      */
     submitResponse(choiceId: number, name: string, courseId: number, responses: number[], siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -398,7 +398,7 @@ export class AddonModChoiceProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -408,7 +408,7 @@ export class AddonModChoiceProvider {
             return this.submitResponseOnline(choiceId, responses, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that responses cannot be submitted.
                     return Promise.reject(error);
                 } else {
@@ -428,7 +428,7 @@ export class AddonModChoiceProvider {
      * @return Promise resolved when responses are successfully submitted.
      */
     submitResponseOnline(choiceId: number, responses: number[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 choiceid: choiceId,
                 responses: responses

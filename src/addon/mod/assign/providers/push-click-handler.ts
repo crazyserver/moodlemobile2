@@ -22,7 +22,7 @@ import { AddonModAssignProvider } from './assign';
 /**
  * Handler for assign push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonModAssignPushClickHandler';
     priority = 200;
@@ -38,7 +38,7 @@ export class AddonModAssignPushClickHandler implements CorePushNotificationsClic
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        return this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_assign' &&
+        return CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_assign' &&
                 notification.name == 'assign_notification';
     }
 
@@ -56,7 +56,7 @@ export class AddonModAssignPushClickHandler implements CorePushNotificationsClic
         return this.assignProvider.invalidateContent(moduleId, courseId, notification.site).catch(() => {
             // Ignore errors.
         }).then(() => {
-            return this.courseHelper.navigateToModule(moduleId, notification.site, courseId);
+            return CoreCourseHelper.navigateToModule(moduleId, notification.site, courseId);
         });
     }
 }

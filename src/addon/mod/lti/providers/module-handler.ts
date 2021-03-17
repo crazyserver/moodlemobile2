@@ -28,7 +28,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support LTI modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLtiModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModLti';
     modName = 'lti';
@@ -70,7 +70,7 @@ export class AddonModLtiModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         const data: CoreCourseModuleHandlerData = {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_lti-handler',
             action(event: Event, navCtrl: NavController, module: any, courseId: number, options: NavOptions, params?: any): void {
@@ -85,7 +85,7 @@ export class AddonModLtiModuleHandler implements CoreCourseModuleHandler {
                 label: 'addon.mod_lti.launchactivity',
                 action: (event: Event, navCtrl: NavController, module: any, courseId: number): void => {
                     // Launch the LTI.
-                    AddonModLtiHelper.instance.getDataAndLaunch(courseId, module);
+                    AddonModLtiHelper.getDataAndLaunch(courseId, module);
                 }
             }]
         };
@@ -94,15 +94,15 @@ export class AddonModLtiModuleHandler implements CoreCourseModuleHandler {
         this.ltiProvider.getLti(courseId, module.id).then((ltiData) => {
             const icon = ltiData.secureicon || ltiData.icon;
             if (icon) {
-                const siteId = this.sitesProvider.getCurrentSiteId();
-                this.filepoolProvider.downloadUrl(siteId,  icon, false, AddonModLtiProvider.COMPONENT, module.id).then(() => {
+                const siteId = CoreSites.getCurrentSiteId();
+                CoreFilepool.downloadUrl(siteId,  icon, false, AddonModLtiProvider.COMPONENT, module.id).then(() => {
                     // Get the internal URL.
-                    return this.filepoolProvider.getSrcByUrl(siteId, icon, AddonModLtiProvider.COMPONENT, module.id);
+                    return CoreFilepool.getSrcByUrl(siteId, icon, AddonModLtiProvider.COMPONENT, module.id);
                 }).then((url) => {
                     data.icon = this.sanitizer.bypassSecurityTrustUrl(url);
                 }).catch(() => {
                     // Error downloading. If we're online we'll set the online url.
-                    if (this.appProvider.isOnline()) {
+                    if (CoreApp.isOnline()) {
                         data.icon = this.sanitizer.bypassSecurityTrustUrl(icon);
                     }
                 });

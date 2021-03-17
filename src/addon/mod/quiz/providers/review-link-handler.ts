@@ -21,7 +21,7 @@ import { AddonModQuizHelperProvider } from './helper';
 /**
  * Handler to treat links to quiz review.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizReviewLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModQuizReviewLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModQuiz';

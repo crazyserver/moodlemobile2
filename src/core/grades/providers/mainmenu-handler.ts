@@ -19,7 +19,7 @@ import { CoreMainMenuHandler, CoreMainMenuHandlerData } from '@core/mainmenu/pro
 /**
  * Handler to inject an option into main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesMainMenuHandler implements CoreMainMenuHandler {
     name = 'CoreGrades';
     priority = 600;

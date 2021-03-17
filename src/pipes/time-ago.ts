@@ -48,6 +48,6 @@ export class CoreTimeAgoPipe implements PipeTransform {
             timestamp = numberTimestamp;
         }
 
-        return this.translate.instant('core.ago', {$a: moment(timestamp * 1000).fromNow(true)});
+        return Translate.instant('core.ago', {$a: moment(timestamp * 1000).fromNow(true)});
     }
 }

@@ -23,7 +23,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Multilang filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterMultilangHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterMultilangHandler';
     filterName = 'multilang';
@@ -45,7 +45,7 @@ export class AddonFilterMultilangHandler extends CoreFilterDefaultHandler {
     filter(text: string, filter: CoreFilterFilter, options: CoreFilterFormatTextOptions, siteId?: string)
             : string | Promise<string> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return this.langProvider.getCurrentLanguage().then((language) => {
                 // Match the current language.

@@ -46,14 +46,14 @@ export class CoreCoursesAvailableCoursesPage {
      * @return Promise resolved when done.
      */
     protected loadCourses(): Promise<any> {
-        const frontpageCourseId = this.sitesProvider.getCurrentSite().getSiteHomeId();
+        const frontpageCourseId = CoreSites.getCurrentSite().getSiteHomeId();
 
-        return this.coursesProvider.getCoursesByField().then((courses) => {
+        return CoreCourses.getCoursesByField().then((courses) => {
             this.courses = courses.filter((course) => {
                 return course.id != frontpageCourseId;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
         });
     }
 
@@ -65,8 +65,8 @@ export class CoreCoursesAvailableCoursesPage {
     refreshCourses(refresher: any): void {
         const promises = [];
 
-        promises.push(this.coursesProvider.invalidateUserCourses());
-        promises.push(this.coursesProvider.invalidateCoursesByField());
+        promises.push(CoreCourses.invalidateUserCourses());
+        promises.push(CoreCourses.invalidateCoursesByField());
 
         Promise.all(promises).finally(() => {
             this.loadCourses().finally(() => {

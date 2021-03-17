@@ -29,7 +29,7 @@ import { AddonModAssignSubmissionFileComponent } from '../component/file';
 /**
  * Handler for file submission plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignSubmissionFileHandler implements AddonModAssignSubmissionHandler {
     static FOLDER_NAME = 'submission_file';
 
@@ -86,7 +86,7 @@ export class AddonModAssignSubmissionFileHandler implements AddonModAssignSubmis
         this.fileSessionProvider.clearFiles(AddonModAssignProvider.COMPONENT, assign.id);
 
         // Now delete the local files from the tmp folder.
-        this.fileUploaderProvider.clearTmpFiles(files);
+        CoreFileUploader.clearTmpFiles(files);
     }
 
     /**
@@ -278,7 +278,7 @@ export class AddonModAssignSubmissionFileHandler implements AddonModAssignSubmis
         if (this.hasDataChanged(assign, submission, plugin, inputData)) {
             // Data has changed, we need to upload new files and re-upload all the existing files.
             const currentFiles = this.fileSessionProvider.getFiles(AddonModAssignProvider.COMPONENT, assign.id),
-                error = this.utils.hasRepeatedFilenames(currentFiles);
+                error = CoreUtils.hasRepeatedFilenames(currentFiles);
 
             if (error) {
                 return Promise.reject(error);

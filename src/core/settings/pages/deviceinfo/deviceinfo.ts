@@ -148,7 +148,7 @@ export class CoreSettingsDeviceInfoPage {
                     this.deviceOsTranslated = matches[1];
                 } else {
                     this.deviceInfo.deviceOs = 'unknown';
-                    this.deviceOsTranslated = this.translate.instant('core.unknown');
+                    this.deviceOsTranslated = Translate.instant('core.unknown');
                 }
             }
         } else {
@@ -169,7 +169,7 @@ export class CoreSettingsDeviceInfoPage {
                     this.deviceOsTranslated = matches[1];
                 } else {
                     this.deviceInfo.deviceOs = 'unknown';
-                    this.deviceOsTranslated = this.translate.instant('core.unknown');
+                    this.deviceOsTranslated = Translate.instant('core.unknown');
                 }
             }
         }
@@ -212,7 +212,7 @@ export class CoreSettingsDeviceInfoPage {
      * Copies device info into the clipboard.
      */
     copyInfo(): void {
-        this.utils.copyToClipboard(JSON.stringify(this.deviceInfo));
+        CoreUtils.copyToClipboard(JSON.stringify(this.deviceInfo));
     }
 
     /**
@@ -224,7 +224,7 @@ export class CoreSettingsDeviceInfoPage {
         e.preventDefault();
 
         const el = <Element> e.target;
-        this.utils.copyToClipboard(el.closest('ion-item').textContent.trim());
+        CoreUtils.copyToClipboard(el.closest('ion-item').textContent.trim());
     }
 
     /**

@@ -129,7 +129,7 @@ export class CoreQueueRunner {
         const item = {
             id,
             fn,
-            deferred: CoreUtils.instance.promiseDefer(),
+            deferred: CoreUtils.promiseDefer(),
         };
 
         this.queue[id] = item;

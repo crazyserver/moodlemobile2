@@ -33,7 +33,7 @@ export type CoreTextErrorObject = {
 /*
  * "Utils" service with helper functions for text.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreTextUtilsProvider {
 
     // List of regular expressions to convert the old nomenclature to new nomenclature for disabled features.
@@ -144,7 +144,7 @@ export class CoreTextUtilsProvider {
      * @return URL to view the address.
      */
     buildAddressURL(address: string): SafeUrl {
-        return this.sanitizer.bypassSecurityTrustUrl((CoreApp.instance.isAndroid() ? 'geo:0,0?q=' : 'http://maps.google.com?q=') +
+        return this.sanitizer.bypassSecurityTrustUrl((CoreApp.isAndroid() ? 'geo:0,0?q=' : 'http://maps.google.com?q=') +
                 encodeURIComponent(address));
     }
 
@@ -192,7 +192,7 @@ export class CoreTextUtilsProvider {
         let builtMessage = messages[0];
 
         for (let i = 1; i < messages.length; i++) {
-            builtMessage = this.translate.instant('core.twoparagraphs', { p1: builtMessage, p2: messages[i] });
+            builtMessage = Translate.instant('core.twoparagraphs', { p1: builtMessage, p2: messages[i] });
         }
 
         return builtMessage;
@@ -208,7 +208,7 @@ export class CoreTextUtilsProvider {
     bytesToSize(bytes: number, precision: number = 2): string {
 
         if (typeof bytes == 'undefined' || bytes === null || bytes < 0) {
-            return this.translate.instant('core.notapplicable');
+            return Translate.instant('core.notapplicable');
         }
 
         if (precision < 0) {
@@ -216,7 +216,7 @@ export class CoreTextUtilsProvider {
         }
 
         const keys = ['core.sizeb', 'core.sizekb', 'core.sizemb', 'core.sizegb', 'core.sizetb'],
-            units = this.translate.instant(keys);
+            units = Translate.instant(keys);
         let pos = 0;
 
         if (bytes >= 1024) {
@@ -228,7 +228,7 @@ export class CoreTextUtilsProvider {
             bytes = Number(Math.round(parseFloat(bytes + 'e+' + precision)) + 'e-' + precision);
         }
 
-        return this.translate.instant('core.humanreadablesize', { size: bytes, unit: units[keys[pos]] });
+        return Translate.instant('core.humanreadablesize', { size: bytes, unit: units[keys[pos]] });
     }
 
     /**

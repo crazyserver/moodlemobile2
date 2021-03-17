@@ -33,7 +33,7 @@ import { CoreWSExternalFile } from '@services/ws';
 /**
  * Handler to prefetch feedbacks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModFeedback';
     modName = 'feedback';
@@ -146,7 +146,7 @@ export class AddonModFeedbackPrefetchHandler extends CoreCourseActivityPrefetchH
         return this.feedbackProvider.getFeedback(courseId, module.id, {
             readingStrategy: CoreSitesReadingStrategy.PreferCache,
         }).then((feedback) => {
-            const now = this.timeUtils.timestamp();
+            const now = CoreTimeUtils.timestamp();
 
             // Check time first if available.
             if (feedback.timeopen && feedback.timeopen > now) {
@@ -212,7 +212,7 @@ export class AddonModFeedbackPrefetchHandler extends CoreCourseActivityPrefetchH
                 if (accessData.canedititems || accessData.canviewreports) {
                     // Get all groups analysis.
                     p2.push(this.feedbackProvider.getAnalysis(feedback.id, modOptions));
-                    p2.push(this.groupsProvider.getActivityGroupInfo(feedback.coursemodule, true, undefined, siteId, true)
+                    p2.push(CoreGroups.getActivityGroupInfo(feedback.coursemodule, true, undefined, siteId, true)
                             .then((groupInfo) => {
                         const p3 = [];
 
@@ -242,7 +242,7 @@ export class AddonModFeedbackPrefetchHandler extends CoreCourseActivityPrefetchH
                         files = files.concat(item.itemfiles);
                     });
 
-                    return this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id);
+                    return CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id);
                 }));
 
                 if (accessData.cancomplete && accessData.cansubmit && !accessData.isempty) {

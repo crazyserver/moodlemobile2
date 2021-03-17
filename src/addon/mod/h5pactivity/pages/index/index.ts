@@ -59,6 +59,6 @@ export class AddonModH5PActivityIndexPage {
             return;
         }
 
-        return CoreDomUtils.instance.showConfirm(Translate.instance.instant('core.confirmleaveunknownchanges'));
+        return CoreDomUtils.showConfirm(Translate.instant('core.confirmleaveunknownchanges'));
     }
 }

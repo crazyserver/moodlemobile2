@@ -28,7 +28,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch IMSCPs.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModImscpPrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModImscp';
     modName = 'imscp';
@@ -61,9 +61,9 @@ export class AddonModImscpPrefetchHandler extends CoreCourseResourcePrefetchHand
      * @return Promise resolved when all content is downloaded. Data returned is not reliable.
      */
     downloadOrPrefetch(module: any, courseId: number, prefetch?: boolean, dirPath?: string): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.getPackageDirPathByUrl(siteId, module.url).then((dirPath) => {
+        return CoreFilepool.getPackageDirPathByUrl(siteId, module.url).then((dirPath) => {
             const promises = [];
 
             promises.push(super.downloadOrPrefetch(module, courseId, prefetch, dirPath));
@@ -113,7 +113,7 @@ export class AddonModImscpPrefetchHandler extends CoreCourseResourcePrefetchHand
         const promises = [];
 
         promises.push(this.imscpProvider.invalidateImscpData(courseId));
-        promises.push(this.courseProvider.invalidateModule(module.id));
+        promises.push(CoreCourse.invalidateModule(module.id));
 
         return Promise.all(promises);
     }

@@ -52,7 +52,7 @@ export class CoreCourseListModTypePage {
      * View loaded.
      */
     ngOnInit(): void {
-        this.downloadEnabled = !this.sitesProvider.getCurrentSite().isOfflineDisabled();
+        this.downloadEnabled = !CoreSites.getCurrentSite().isOfflineDisabled();
 
         this.fetchData().finally(() => {
             this.loaded = true;
@@ -66,7 +66,7 @@ export class CoreCourseListModTypePage {
      */
     protected fetchData(): Promise<any> {
         // Get all the modules in the course.
-        return this.courseProvider.getSections(this.courseId, false, true).then((sections) => {
+        return CoreCourse.getSections(this.courseId, false, true).then((sections) => {
 
             this.sections = sections.filter((section) => {
                 if (!section.modules) {
@@ -74,7 +74,7 @@ export class CoreCourseListModTypePage {
                 }
 
                 section.modules = section.modules.filter((mod) => {
-                    if (mod.uservisible === false || !this.courseProvider.moduleHasView(mod)) {
+                    if (mod.uservisible === false || !CoreCourse.moduleHasView(mod)) {
                         // Ignore this module.
                         return false;
                     }
@@ -98,9 +98,9 @@ export class CoreCourseListModTypePage {
                 return section.modules.length > 0;
             });
 
-            this.courseHelper.addHandlerDataForModules(this.sections, this.courseId);
+            CoreCourseHelper.addHandlerDataForModules(this.sections, this.courseId);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting data');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting data');
         });
     }
 
@@ -110,7 +110,7 @@ export class CoreCourseListModTypePage {
      * @param refresher Refresher.
      */
     refreshData(refresher: any): void {
-        this.courseProvider.invalidateSections(this.courseId).finally(() => {
+        CoreCourse.invalidateSections(this.courseId).finally(() => {
             return this.fetchData().finally(() => {
                 refresher?.detail.complete();
             });

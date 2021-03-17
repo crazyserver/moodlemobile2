@@ -22,7 +22,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support quiz modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModQuiz';
     modName = 'quiz';
@@ -62,7 +62,7 @@ export class AddonModQuizModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_quiz-handler',
             showDownloadButton: true,

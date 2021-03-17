@@ -21,7 +21,7 @@ import { AddonCompetencyProvider } from './competency';
 /**
  * Handler to treat links to user plans.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyPlansLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonCompetencyPlansLinkHandler';
     pattern = /\/admin\/tool\/lp\/plans\.php/;

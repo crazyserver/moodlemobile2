@@ -19,7 +19,7 @@ import { CoreSitesProvider } from '@services/sites';
 /**
  * Cron handler to log out sites when does not meet the app requirements.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreLoginCronHandler implements CoreCronHandler {
     name = 'CoreLoginCronHandler';
 
@@ -33,18 +33,18 @@ export class CoreLoginCronHandler implements CoreCronHandler {
      * @return Promise resolved when done, rejected if failure.
      */
     execute(siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         if (!siteId) {
             return Promise.resolve();
         }
 
         // Check logged in site minimun required version.
         // Do not check twice in the same 10 minutes.
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getPublicConfig().catch(() => {
                 return {};
             }).then((config) => {
-                this.sitesProvider.checkApplication(config).catch(() => {
+                CoreSites.checkApplication(config).catch(() => {
                     // Ignore errors.
 
                 });

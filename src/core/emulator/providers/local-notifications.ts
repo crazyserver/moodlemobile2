@@ -26,7 +26,7 @@ import { Subject, Observable } from 'rxjs';
 /**
  * Emulates the Local Notifications plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalNotificationsMock extends LocalNotifications {
     // Variables for Windows notifications.
     protected winNotif; // Library for Windows notifications.
@@ -546,7 +546,7 @@ export class LocalNotificationsMock extends LocalNotifications {
      * Get all the notification ids.
      */
     getIds(): Promise<Array<number>> {
-        let ids = this.utils.mergeArraysWithoutDuplicates(Object.keys(this.scheduled), Object.keys(this.triggered));
+        let ids = CoreUtils.mergeArraysWithoutDuplicates(Object.keys(this.scheduled), Object.keys(this.triggered));
         ids = ids.map((id) => {
             return Number(id);
         });
@@ -754,11 +754,11 @@ export class LocalNotificationsMock extends LocalNotifications {
      * @return Promise resolved when done.
      */
     load(): Promise<any> {
-        if (!this.appProvider.isDesktop()) {
+        if (!CoreApp.isDesktop()) {
             return Promise.resolve();
         }
 
-        if (this.appProvider.isWindows()) {
+        if (CoreApp.isWindows()) {
             try {
                 this.winNotif = require('electron-windows-notifications');
             } catch (ex) {

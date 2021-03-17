@@ -58,19 +58,19 @@ export class AddonNotesAddPage {
         e.preventDefault();
         e.stopPropagation();
 
-        this.appProvider.closeKeyboard();
-        const loadingModal = this.domUtils.showModalLoading('core.sending', true);
+        CoreApp.closeKeyboard();
+        const loadingModal = CoreDomUtils.showModalLoading('core.sending', true);
         // Freeze the add note button.
         this.processing = true;
         this.notesProvider.addNote(this.userId, this.courseId, this.type, this.text).then((sent) => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, sent, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, sent, CoreSites.getCurrentSiteId());
 
             this.viewCtrl.dismiss({type: this.type, sent: true}).finally(() => {
-                this.domUtils.showToast(sent ? 'addon.notes.eventnotecreated' : 'core.datastoredoffline', true, 3000);
+                CoreDomUtils.showToast(sent ? 'addon.notes.eventnotecreated' : 'core.datastoredoffline', true, 3000);
             });
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
             this.processing = false;
         }).finally(() => {
             loadingModal.dismiss();
@@ -81,7 +81,7 @@ export class AddonNotesAddPage {
      * Close modal.
      */
     closeModal(): void {
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
 
         this.viewCtrl.dismiss({type: this.type});
     }

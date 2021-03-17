@@ -22,7 +22,7 @@ import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploa
 /**
  * Handler for picture data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldPictureHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataFieldPictureHandler';
     type = 'picture';
@@ -123,7 +123,7 @@ export class AddonModDataFieldPictureHandler implements AddonModDataFieldHandler
                 originalFiles = [];
             }
 
-        return altText != originalAltText || this.fileUploaderProvider.areFileListDifferent(files, originalFiles);
+        return altText != originalAltText || CoreFileUploader.areFileListDifferent(files, originalFiles);
     }
 
     /**
@@ -136,7 +136,7 @@ export class AddonModDataFieldPictureHandler implements AddonModDataFieldHandler
     getFieldsNotifications(field: any, inputData: any): string | false {
         if (field.required) {
             if (!inputData || !inputData.length) {
-                return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+                return Translate.instant('addon.mod_data.errormustsupplyvalue');
             }
 
             const found = inputData.some((input) => {
@@ -148,7 +148,7 @@ export class AddonModDataFieldPictureHandler implements AddonModDataFieldHandler
             });
 
             if (!found) {
-                return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+                return Translate.instant('addon.mod_data.errormustsupplyvalue');
             }
         }
 

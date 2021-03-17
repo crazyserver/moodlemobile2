@@ -49,12 +49,12 @@ export class CoreCourseResourcePrefetchHandlerBase extends CoreCourseModulePrefe
      * @return Promise resolved when all content is downloaded. Data returned is not reliable.
      */
     downloadOrPrefetch(module: any, courseId: number, prefetch?: boolean, dirPath?: string): Promise<any> {
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // Cannot download in offline.
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         }
 
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         if (this.isDownloading(module.id, siteId)) {
             // There's already a download ongoing for this module, return the promise.
@@ -62,21 +62,21 @@ export class CoreCourseResourcePrefetchHandlerBase extends CoreCourseModulePrefe
         }
 
         // Get module info to be able to handle links.
-        const prefetchPromise = this.courseProvider.getModuleBasicInfo(module.id, siteId).then(() => {
+        const prefetchPromise = CoreCourse.getModuleBasicInfo(module.id, siteId).then(() => {
             // Load module contents (ignore cache so we always have the latest data).
             return this.loadContents(module, courseId, true);
         }).then(() => {
             // Get the intro files.
             return this.getIntroFiles(module, courseId, true);
         }).then((introFiles) => {
-            const downloadFn = prefetch ? this.filepoolProvider.prefetchPackage.bind(this.filepoolProvider) :
-                        this.filepoolProvider.downloadPackage.bind(this.filepoolProvider),
+            const downloadFn = prefetch ? CoreFilepool.prefetchPackage.bind(this.filepoolProvider) :
+                        CoreFilepool.downloadPackage.bind(this.filepoolProvider),
                 contentFiles = this.getContentDownloadableFiles(module),
                 promises = [];
 
             if (dirPath) {
                 // Download intro files in filepool root folder.
-                promises.push(this.filepoolProvider.downloadOrPrefetchFiles(siteId, introFiles, prefetch, false,
+                promises.push(CoreFilepool.downloadOrPrefetchFiles(siteId, introFiles, prefetch, false,
                     this.component, module.id));
 
                 // Download content files inside dirPath.
@@ -121,10 +121,10 @@ export class CoreCourseResourcePrefetchHandlerBase extends CoreCourseModulePrefe
      */
     invalidateContent(moduleId: number, courseId: number): Promise<any> {
         const promises = [],
-            siteId = this.sitesProvider.getCurrentSiteId();
+            siteId = CoreSites.getCurrentSiteId();
 
-        promises.push(this.courseProvider.invalidateModule(moduleId));
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, this.component, moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, this.component, moduleId));
 
         return Promise.all(promises);
     }
@@ -138,7 +138,7 @@ export class CoreCourseResourcePrefetchHandlerBase extends CoreCourseModulePrefe
      * @return Promise resolved when loaded.
      */
     loadContents(module: any, courseId: number, ignoreCache?: boolean): Promise<void> {
-        return this.courseProvider.loadModuleContents(module, courseId, undefined, false, ignoreCache);
+        return CoreCourse.loadModuleContents(module, courseId, undefined, false, ignoreCache);
     }
 
     /**

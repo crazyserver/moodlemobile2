@@ -19,7 +19,7 @@ import { CoreEmulatorCaptureHelperProvider } from './capture-helper';
 /**
  * Emulates the Cordova MediaCapture plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MediaCaptureMock extends MediaCapture {
 
     constructor(private captureHelper: CoreEmulatorCaptureHelperProvider) {

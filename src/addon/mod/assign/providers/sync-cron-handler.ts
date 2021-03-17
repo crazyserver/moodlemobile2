@@ -19,7 +19,7 @@ import { AddonModAssignSyncProvider } from './assign-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignSyncCronHandler implements CoreCronHandler {
     name = 'AddonModAssignSyncCronHandler';
 

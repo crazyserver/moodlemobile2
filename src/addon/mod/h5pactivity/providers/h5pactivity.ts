@@ -29,7 +29,7 @@ import { makeSingleton, Translate } from '@singletons/core.singletons';
 /**
  * Service that provides some features for H5P activity.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivityProvider {
     static COMPONENT = 'mmaModH5PActivity';
     static TRACK_COMPONENT = 'mod_h5pactivity'; // Component for tracking.
@@ -52,8 +52,8 @@ export class AddonModH5PActivityProvider {
             formattedAttempt.durationReadable = '-';
             formattedAttempt.durationCompact = '-';
         } else {
-            formattedAttempt.durationReadable = CoreTimeUtils.instance.formatTime(attempt.duration);
-            formattedAttempt.durationCompact = CoreTimeUtils.instance.formatDurationShort(attempt.duration);
+            formattedAttempt.durationReadable = CoreTimeUtils.formatTime(attempt.duration);
+            formattedAttempt.durationCompact = CoreTimeUtils.formatDurationShort(attempt.duration);
         }
 
         return formattedAttempt;
@@ -127,7 +127,7 @@ export class AddonModH5PActivityProvider {
      */
     async getAccessInformation(id: number, options: CoreCourseCommonModWSOptions = {}): Promise<AddonModH5PActivityAccessInfo> {
 
-        const site = await CoreSites.instance.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         const params = {
             h5pactivityid: id,
@@ -137,7 +137,7 @@ export class AddonModH5PActivityProvider {
             updateFrequency: CoreSite.FREQUENCY_OFTEN,
             component: AddonModH5PActivityProvider.COMPONENT,
             componentId: options.cmId,
-            ...CoreSites.instance.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
         return site.read('mod_h5pactivity_get_h5pactivity_access_information', params, preSets);
@@ -153,7 +153,7 @@ export class AddonModH5PActivityProvider {
     async getAllAttemptsResults(id: number, options?: AddonModH5PActivityGetAttemptResultsOptions)
             : Promise<AddonModH5PActivityAttemptsResults> {
 
-        const userAttempts = await AddonModH5PActivity.instance.getUserAttempts(id, options);
+        const userAttempts = await AddonModH5PActivity.getUserAttempts(id, options);
 
         const attemptIds = userAttempts.attempts.map((attempt) => {
             return attempt.id;
@@ -161,7 +161,7 @@ export class AddonModH5PActivityProvider {
 
         if (attemptIds.length) {
             // Get all the attempts with a single call.
-            return AddonModH5PActivity.instance.getAttemptsResults(id, attemptIds, options);
+            return AddonModH5PActivity.getAttemptsResults(id, attemptIds, options);
         } else {
             // No attempts.
             return {
@@ -206,7 +206,7 @@ export class AddonModH5PActivityProvider {
 
         options = options || {};
 
-        const site = await CoreSites.instance.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         const params = {
             h5pactivityid: id,
@@ -217,7 +217,7 @@ export class AddonModH5PActivityProvider {
             updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
             component: AddonModH5PActivityProvider.COMPONENT,
             componentId: options.cmId,
-            ...CoreSites.instance.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
         try {
@@ -229,7 +229,7 @@ export class AddonModH5PActivityProvider {
 
             return this.formatAttemptResults(response.attempts[0]);
         } catch (error) {
-            if (CoreUtils.instance.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 throw error;
             }
 
@@ -239,7 +239,7 @@ export class AddonModH5PActivityProvider {
                 readingStrategy: CoreSitesReadingStrategy.OnlyCache,
             };
 
-            const attemptsResults = await AddonModH5PActivity.instance.getAllAttemptsResults(id, cacheOptions);
+            const attemptsResults = await AddonModH5PActivity.getAllAttemptsResults(id, cacheOptions);
 
             const attempt = attemptsResults.attempts.find((attempt) => {
                 return attempt.id == attemptId;
@@ -266,7 +266,7 @@ export class AddonModH5PActivityProvider {
 
         options = options || {};
 
-        const site = await CoreSites.instance.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         const params = {
             h5pactivityid: id,
@@ -277,7 +277,7 @@ export class AddonModH5PActivityProvider {
             updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
             component: AddonModH5PActivityProvider.COMPONENT,
             componentId: options.cmId,
-            ...CoreSites.instance.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
         const response: AddonModH5PActivityGetResultsResult = await site.read('mod_h5pactivity_get_results', params, preSets);
@@ -311,7 +311,7 @@ export class AddonModH5PActivityProvider {
             options = options || {};
 
             // Deploy the file in the server.
-            return CoreH5P.instance.getTrustedH5PFile(h5pActivity.package[0].fileurl, options.displayOptions,
+            return CoreH5P.getTrustedH5PFile(h5pActivity.package[0].fileurl, options.displayOptions,
                     options.ignoreCache, options.siteId);
         }
     }
@@ -338,7 +338,7 @@ export class AddonModH5PActivityProvider {
     protected async getH5PActivityByField(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModH5PActivityData> {
 
-        const site = await CoreSites.instance.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         const params = {
             courseids: [courseId],
@@ -347,7 +347,7 @@ export class AddonModH5PActivityProvider {
             cacheKey: this.getH5PActivityDataCacheKey(courseId),
             updateFrequency: CoreSite.FREQUENCY_RARELY,
             component: AddonModH5PActivityProvider.COMPONENT,
-            ...CoreSites.instance.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
         const response: AddonModH5PActivityGetByCoursesResult =
@@ -363,7 +363,7 @@ export class AddonModH5PActivityProvider {
             }
         }
 
-        throw Translate.instance.instant('addon.mod_h5pactivity.errorgetactivity');
+        throw Translate.instant('addon.mod_h5pactivity.errorgetactivity');
     }
 
     /**
@@ -434,7 +434,7 @@ export class AddonModH5PActivityProvider {
     async getUserAttempts(id: number, options: AddonModH5PActivityGetAttemptsOptions = {})
             : Promise<AddonModH5PActivityUserAttempts> {
 
-        const site = await CoreSites.instance.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         const params = {
             h5pactivityid: id,
@@ -445,7 +445,7 @@ export class AddonModH5PActivityProvider {
             updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
             component: AddonModH5PActivityProvider.COMPONENT,
             componentId: options.cmId,
-            ...CoreSites.instance.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
         const response: AddonModH5PActivityGetAttemptsResult = await site.read('mod_h5pactivity_get_attempts', params, preSets);
@@ -466,7 +466,7 @@ export class AddonModH5PActivityProvider {
      */
     async invalidateAccessInformation(id: number, siteId?: string): Promise<void> {
 
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         await site.invalidateWsCacheForKey(this.getAccessInformationCacheKey(id));
     }
@@ -479,7 +479,7 @@ export class AddonModH5PActivityProvider {
      * @return Promise resolved when the data is invalidated.
      */
     async invalidateActivityData(courseId: number, siteId?: string): Promise<void> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         await site.invalidateWsCacheForKey(this.getH5PActivityDataCacheKey(courseId));
     }
@@ -492,7 +492,7 @@ export class AddonModH5PActivityProvider {
      * @return Promise resolved when the data is invalidated.
      */
     async invalidateAllResults(id: number, siteId?: string): Promise<void> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         await site.invalidateWsCacheForKey(this.getAttemptResultsCommonCacheKey(id));
     }
@@ -506,7 +506,7 @@ export class AddonModH5PActivityProvider {
      * @return Promise resolved when the data is invalidated.
      */
     async invalidateAttemptResults(id: number, attemptId: number, siteId?: string): Promise<void> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         await site.invalidateWsCacheForKey(this.getAttemptResultsCacheKey(id, [attemptId]));
     }
@@ -519,7 +519,7 @@ export class AddonModH5PActivityProvider {
      * @return Promise resolved when the data is invalidated.
      */
     async invalidateAllUserAttempts(id: number, siteId?: string): Promise<void> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         await site.invalidateWsCacheForKey(this.getUserAttemptsCommonCacheKey(id));
     }
@@ -533,7 +533,7 @@ export class AddonModH5PActivityProvider {
      * @return Promise resolved when the data is invalidated.
      */
     async invalidateUserAttempts(id: number, userId?: number, siteId?: string): Promise<void> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         userId = userId || site.getUserId();
 
@@ -546,7 +546,7 @@ export class AddonModH5PActivityProvider {
      * @return Promise resolved when the launcher file is deleted.
      */
     async isPluginEnabled(siteId?: string): Promise<boolean> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         return site.wsAvailable('mod_h5pactivity_get_h5pactivities_by_courses');
     }
@@ -564,7 +564,7 @@ export class AddonModH5PActivityProvider {
             h5pactivityid: id,
         };
 
-        return CoreCourseLogHelper.instance.logSingle(
+        return CoreCourseLogHelper.logSingle(
             'mod_h5pactivity_view_h5pactivity',
             params,
             AddonModH5PActivityProvider.COMPONENT,

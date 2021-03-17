@@ -24,7 +24,7 @@ import { AddonModH5PActivity } from './h5pactivity';
 /**
  * Handler to treat links to H5P activity report.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivityReportLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModH5PActivityReportLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModH5PActivity';
@@ -64,7 +64,7 @@ export class AddonModH5PActivityReportLinkHandler extends CoreContentLinksHandle
                         this.openUserAttempts(id, courseId, siteId, userId, navCtrl);
                     }
                 } catch (error) {
-                    CoreDomUtils.instance.showErrorModalDefault(error, 'Error processing link.');
+                    CoreDomUtils.showErrorModalDefault(error, 'Error processing link.');
                 }
             }
         }];
@@ -78,10 +78,10 @@ export class AddonModH5PActivityReportLinkHandler extends CoreContentLinksHandle
      * @return Promise resolved with course ID.
      */
     protected async getCourseId(id: number, siteId: string): Promise<number> {
-        const modal = CoreDomUtils.instance.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         try {
-            const module = await CoreCourse.instance.getModuleBasicInfoByInstance(id, 'h5pactivity', siteId);
+            const module = await CoreCourse.getModuleBasicInfoByInstance(id, 'h5pactivity', siteId);
 
             return module.course;
         } finally {
@@ -100,7 +100,7 @@ export class AddonModH5PActivityReportLinkHandler extends CoreContentLinksHandle
      * @return Whether the handler is enabled for the URL and site.
      */
     async isEnabled(siteId: string, url: string, params: any, courseId?: number): Promise<boolean> {
-        return AddonModH5PActivity.instance.isPluginEnabled();
+        return AddonModH5PActivity.isPluginEnabled();
     }
 
     /**
@@ -121,7 +121,7 @@ export class AddonModH5PActivityReportLinkHandler extends CoreContentLinksHandle
             attemptId: attemptId,
         };
 
-        CoreContentLinksHelper.instance.goInSite(navCtrl, 'AddonModH5PActivityAttemptResultsPage', pageParams, siteId);
+        CoreContentLinksHelper.goInSite(navCtrl, 'AddonModH5PActivityAttemptResultsPage', pageParams, siteId);
     }
 
     /**
@@ -142,6 +142,6 @@ export class AddonModH5PActivityReportLinkHandler extends CoreContentLinksHandle
             userId: userId,
         };
 
-        CoreContentLinksHelper.instance.goInSite(navCtrl, 'AddonModH5PActivityUserAttemptsPage', pageParams, siteId);
+        CoreContentLinksHelper.goInSite(navCtrl, 'AddonModH5PActivityUserAttemptsPage', pageParams, siteId);
     }
 }

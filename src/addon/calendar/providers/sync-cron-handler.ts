@@ -19,7 +19,7 @@ import { AddonCalendarSyncProvider } from './calendar-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCalendarSyncCronHandler implements CoreCronHandler {
     name = 'AddonCalendarSyncCronHandler';
 

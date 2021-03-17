@@ -22,7 +22,7 @@ import { AddonModQuizProvider } from './quiz';
 /**
  * Handler to treat links to quiz grade.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizGradeLinkHandler extends CoreContentLinksModuleGradeHandler {
     name = 'AddonModQuizGradeLinkHandler';
     canReview = false;

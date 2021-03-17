@@ -28,7 +28,7 @@ import { CoreSyncProvider } from '@services/sync';
 /**
  * Service to sync user preferences.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'core_user_autom_synced';
@@ -59,7 +59,7 @@ export class CoreUserSyncProvider extends CoreSyncBaseProvider {
      * @param Promise resolved if sync is successful, rejected if sync fails.
      */
     protected syncPreferencesFunc(siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = 'preferences';
 
@@ -73,7 +73,7 @@ export class CoreUserSyncProvider extends CoreSyncBaseProvider {
         this.logger.debug(`Try to sync user preferences`);
 
         const syncPromise = this.userOffline.getChangedPreferences(siteId).then((preferences) => {
-            return this.utils.allPromises(preferences.map((preference) => {
+            return CoreUtils.allPromises(preferences.map((preference) => {
                 return this.userProvider.getUserPreferenceOnline(preference.name, siteId).then((onlineValue) => {
                     if (preference.onlinevalue != onlineValue) {
                         // Prefernce was changed on web while the app was offline, do not sync.
@@ -81,7 +81,7 @@ export class CoreUserSyncProvider extends CoreSyncBaseProvider {
                     }
 
                     return this.userProvider.setUserPreference(preference.name, preference.value, siteId).catch((error) => {
-                        if (this.utils.isWebServiceError(error)) {
+                        if (CoreUtils.isWebServiceError(error)) {
                             warnings.push(this.textUtils.getErrorMessageFromError(error));
                         } else {
                             // Couldn't connect to server, reject.

@@ -43,7 +43,7 @@ export type isSameResponseFunction = (question: any, prevAnswers: any, prevBasic
 /**
  * Handler to support manual graded question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourManualGradedHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourManualGraded';
     type = 'manualgraded';

@@ -18,7 +18,7 @@ import { CorePluginFileHandler } from '@services/plugin-file-delegate';
 /**
  * Handler to treat links to page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModPagePluginFileHandler implements CorePluginFileHandler {
     name = 'AddonModPagePluginFileHandler';
     component = 'mod_page';

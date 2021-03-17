@@ -67,10 +67,10 @@ export class AddonModAssignEditFeedbackModalPage {
 
         const changed = await this.hasDataChanged();
         if (changed) {
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -91,7 +91,7 @@ export class AddonModAssignEditFeedbackModalPage {
         e.preventDefault();
         e.stopPropagation();
 
-        this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
         // Close the modal, sending the input data.
         this.forceLeave = true;
@@ -104,7 +104,7 @@ export class AddonModAssignEditFeedbackModalPage {
      * @return Object with the data.
      */
     protected getInputData(): any {
-        return this.domUtils.getDataFromForm(document.forms['addon-mod_assign-edit-feedback-form']);
+        return CoreDomUtils.getDataFromForm(document.forms['addon-mod_assign-edit-feedback-form']);
     }
 
     /**

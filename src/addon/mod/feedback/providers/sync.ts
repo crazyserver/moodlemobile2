@@ -33,7 +33,7 @@ import { AddonModFeedbackPrefetchHandler } from './prefetch-handler';
 /**
  * Service to sync feedbacks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_feedback_autom_synced';
@@ -115,7 +115,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
             }
 
             // Promises will be an object so, convert to an array first;
-            return Promise.all(this.utils.objectToArray(promises));
+            return Promise.all(CoreUtils.objectToArray(promises));
         });
     }
 
@@ -127,7 +127,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
      * @return Promise resolved when the feedback is synced or if it doesn't need to be synced.
      */
     syncFeedbackIfNeeded(feedbackId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.isSyncNeeded(feedbackId, siteId).then((needed) => {
             if (needed) {
@@ -144,7 +144,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncFeedback(feedbackId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = feedbackId;
 
@@ -157,7 +157,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
         if (this.syncProvider.isBlocked(AddonModFeedbackProvider.COMPONENT, syncId, siteId)) {
             this.logger.debug(`Cannot sync feedback '${syncId}' because it is blocked.`);
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         const result = {
@@ -171,7 +171,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
         this.logger.debug(`Try to sync feedback '${feedbackId}' in site ${siteId}'`);
 
         // Sync offline logs.
-        const syncPromise = this.logHelper.syncIfNeeded(AddonModFeedbackProvider.COMPONENT, feedbackId, siteId).catch(() => {
+        const syncPromise = CoreCourseLogHelper.syncIfNeeded(AddonModFeedbackProvider.COMPONENT, feedbackId, siteId).catch(() => {
             // Ignore errors.
         }).then(() => {
             // Get offline responses to be sent.
@@ -185,7 +185,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
                 return;
             }
 
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
                 return Promise.reject(null);
             }
@@ -211,10 +211,10 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
                     });
 
                     result.updated = true;
-                    result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                    result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                         component: this.componentTranslate,
                         name: feedback.name,
-                        error: this.translate.instant('addon.mod_feedback.this_feedback_is_already_submitted')
+                        error: Translate.instant('addon.mod_feedback.this_feedback_is_already_submitted')
                     }));
 
                     return Promise.all(promises);
@@ -238,13 +238,13 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
                     });
 
                     // Execute all the processes in order to solve dependencies.
-                    return this.utils.executeOrderedPromises(responses);
+                    return CoreUtils.executeOrderedPromises(responses);
                 });
             });
         }).then(() => {
             if (result.updated) {
                 // Data has been sent to server, update data.
-                return this.courseProvider.getModuleBasicInfoByInstance(feedbackId, 'feedback', siteId).then((module) => {
+                return CoreCourse.getModuleBasicInfoByInstance(feedbackId, 'feedback', siteId).then((module) => {
                     return this.prefetchAfterUpdate(module, courseId, undefined, siteId);
                 }).catch(() => {
                     // Ignore errors.
@@ -287,7 +287,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
 
                 return this.feedbackOffline.deleteFeedbackPageResponses(feedback.id, data.page, siteId).then(() => {
                     // Responses deleted, add a warning.
-                    result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                    result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                         component: this.componentTranslate,
                         name: feedback.name,
                         error: this.textUtils.getErrorMessageFromError(error)

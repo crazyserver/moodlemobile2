@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to folder list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFolderListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModFolderListLinkHandler';
 

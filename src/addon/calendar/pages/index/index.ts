@@ -167,7 +167,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = this.appProvider.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
     }
@@ -194,7 +194,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
     fetchData(sync?: boolean, showErrors?: boolean): Promise<any> {
 
         this.syncIcon = 'spinner';
-        this.isOnline = this.appProvider.isOnline();
+        this.isOnline = CoreApp.isOnline();
 
         let promise;
 
@@ -202,7 +202,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
             // Try to synchronize offline events.
             promise = this.calendarSync.syncEvents().then((result) => {
                 if (result.warnings && result.warnings.length) {
-                    this.domUtils.showErrorModal(result.warnings[0]);
+                    CoreDomUtils.showErrorModal(result.warnings[0]);
                 }
 
                 if (result.updated) {
@@ -213,7 +213,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
                 }
             }).catch((error) => {
                 if (showErrors) {
-                    this.domUtils.showErrorModalDefault(error, 'core.errorsync', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.errorsync', true);
                 }
             });
         } else {
@@ -226,7 +226,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
             this.hasOffline = false;
 
             // Load courses for the popover.
-            promises.push(this.coursesHelper.getCoursesForPopover(this.filter.courseId).then((data) => {
+            promises.push(CoreCoursesHelper.getCoursesForPopover(this.filter.courseId).then((data) => {
                 this.courses = data.courses;
             }));
 
@@ -242,7 +242,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
 
             return Promise.all(promises);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
         }).finally(() => {
             this.loaded = true;
             this.syncIcon = 'sync';

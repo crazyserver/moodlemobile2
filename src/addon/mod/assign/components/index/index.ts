@@ -77,11 +77,11 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.userId = this.sitesProvider.getCurrentSiteUserId();
+        this.userId = CoreSites.getCurrentSiteUserId();
 
         this.loadContent(false, true).then(() => {
             this.assignProvider.logView(this.assign.id, this.assign.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -110,7 +110,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
         this.submittedObserver = CoreEvents.on(AddonModAssignProvider.SUBMITTED_FOR_GRADING_EVENT, (data) => {
             if (this.assign && data.assignmentId == this.assign.id && data.userId == this.userId) {
                 // Assignment submitted, check completion.
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
 
                 // Reload data since it can have offline data now.
                 this.showLoadingAndRefresh(true, false);
@@ -133,7 +133,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
         ev && ev.stopPropagation();
 
         if (this.assign && (this.description || this.assign.introattachments)) {
-            this.textUtils.viewText(this.translate.instant('core.description'), this.description, {
+            this.textUtils.viewText(Translate.instant('core.description'), this.description, {
                 component: this.component,
                 componentId: this.module.id,
                 files: this.assign.introattachments,
@@ -176,7 +176,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
 
             // Get assignment submissions.
             return this.assignProvider.getSubmissions(this.assign.id, {cmId: this.module.id}).then((data) => {
-                const time = this.timeUtils.timestamp();
+                const time = CoreTimeUtils.timestamp();
 
                 this.canViewAllSubmissions = data.canviewsubmissions;
 
@@ -185,16 +185,16 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
                     // Calculate the messages to display about time remaining and late submissions.
                     if (this.assign.duedate > 0) {
                         if (this.assign.duedate - time <= 0) {
-                            this.timeRemaining = this.translate.instant('addon.mod_assign.assignmentisdue');
+                            this.timeRemaining = Translate.instant('addon.mod_assign.assignmentisdue');
                         } else {
-                            this.timeRemaining = this.timeUtils.formatDuration(this.assign.duedate - time, 3);
+                            this.timeRemaining = CoreTimeUtils.formatDuration(this.assign.duedate - time, 3);
 
                             if (this.assign.cutoffdate) {
                                 if (this.assign.cutoffdate > time) {
-                                    this.lateSubmissions = this.translate.instant('addon.mod_assign.latesubmissionsaccepted',
-                                            {$a: this.timeUtils.userDate(this.assign.cutoffdate * 1000)});
+                                    this.lateSubmissions = Translate.instant('addon.mod_assign.latesubmissionsaccepted',
+                                            {$a: CoreTimeUtils.userDate(this.assign.cutoffdate * 1000)});
                                 } else {
-                                    this.lateSubmissions = this.translate.instant('addon.mod_assign.nomoresubmissionsaccepted');
+                                    this.lateSubmissions = Translate.instant('addon.mod_assign.nomoresubmissionsaccepted');
                                 }
                             } else {
                                 this.lateSubmissions = '';
@@ -206,13 +206,13 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
                     }
 
                     // Check if groupmode is enabled to avoid showing wrong numbers.
-                    return this.groupsProvider.getActivityGroupInfo(this.assign.cmid, false).then((groupInfo) => {
-                        const currentSite = this.sitesProvider.getCurrentSite();
+                    return CoreGroups.getActivityGroupInfo(this.assign.cmid, false).then((groupInfo) => {
+                        const currentSite = CoreSites.getCurrentSite();
                         this.groupInfo = groupInfo;
                         this.showNumbers = groupInfo.groups.length == 0 ||
                             (currentSite && currentSite.isVersionGreaterEqualThan('3.5'));
 
-                        return this.setGroup(this.groupsProvider.validateGroupId(this.group, groupInfo));
+                        return this.setGroup(CoreGroups.validateGroupId(this.group, groupInfo));
                     });
                 }
 
@@ -262,7 +262,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
                 }
             }
 
-            const currentSite = this.sitesProvider.getCurrentSite();
+            const currentSite = CoreSites.getCurrentSite();
 
             this.needsGradingAvalaible = response.gradingsummary && response.gradingsummary.submissionsneedgradingcount > 0 &&
                     currentSite && currentSite.isVersionGreaterEqualThan('3.2');
@@ -359,7 +359,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
         if (this.assign && syncEventData.assignId == this.assign.id) {
             if (syncEventData.warnings && syncEventData.warnings.length) {
                 // Show warnings.
-                this.domUtils.showErrorModal(syncEventData.warnings[0]);
+                CoreDomUtils.showErrorModal(syncEventData.warnings[0]);
             }
 
             return true;

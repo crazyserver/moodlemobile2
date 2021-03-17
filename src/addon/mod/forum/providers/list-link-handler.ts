@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to forum list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModForumListLinkHandler';
 

@@ -65,7 +65,7 @@ export class CoreBlockCourseBlocksComponent implements OnInit {
         const promises = [];
 
         if (this.blockHelper.canGetCourseBlocks()) {
-            promises.push(this.courseProvider.invalidateCourseBlocks(this.courseId));
+            promises.push(CoreCourse.invalidateCourseBlocks(this.courseId));
         }
 
         // Invalidate the blocks.
@@ -87,7 +87,7 @@ export class CoreBlockCourseBlocksComponent implements OnInit {
         return this.blockHelper.getCourseBlocks(this.courseId).then((blocks) => {
             this.blocks = blocks;
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
 
             this.blocks = [];
         }).finally(() => {

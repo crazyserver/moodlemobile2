@@ -20,7 +20,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 /**
  * Handler for date data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldDateHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataFieldDateHandler';
     type = 'date';
@@ -130,7 +130,7 @@ export class AddonModDataFieldDateHandler implements AddonModDataFieldHandler {
             input = inputData[fieldName] && inputData[fieldName].substr(0, 10) || '';
 
         originalFieldData = (originalFieldData && originalFieldData.content &&
-                this.timeUtils.toDatetimeFormat(originalFieldData.content * 1000).substr(0, 10)) || '';
+                CoreTimeUtils.toDatetimeFormat(originalFieldData.content * 1000).substr(0, 10)) || '';
 
         return input != originalFieldData;
     }
@@ -146,7 +146,7 @@ export class AddonModDataFieldDateHandler implements AddonModDataFieldHandler {
         if (field.required &&
                 (!inputData || inputData.length < 2 || !inputData[0].value || !inputData[1].value || !inputData[2].value)) {
 
-            return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+            return Translate.instant('addon.mod_data.errormustsupplyvalue');
         }
 
         return false;

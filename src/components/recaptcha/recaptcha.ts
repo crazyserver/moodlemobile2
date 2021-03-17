@@ -49,7 +49,7 @@ export class CoreRecaptchaComponent {
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.siteUrl = this.siteUrl || this.sitesProvider.getCurrentSite().getURL();
+        this.siteUrl = this.siteUrl || CoreSites.getCurrentSite().getURL();
     }
 
     /**

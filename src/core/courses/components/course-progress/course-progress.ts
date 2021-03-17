@@ -68,7 +68,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
-        this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
+        this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
 
         if (this.downloadCourseEnabled) {
             this.initPrefetchCourse();
@@ -81,13 +81,13 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
         this.siteUpdatedObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             const wasEnabled = this.downloadCourseEnabled;
 
-            this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
+            this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
 
             if (!wasEnabled && this.downloadCourseEnabled) {
                 // Download course is enabled now, initialize it.
                 this.initPrefetchCourse();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -104,11 +104,11 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
             if (data.courseId == this.course.id || data.courseId == CoreCourseProvider.ALL_COURSES_CLEARED) {
                 this.updateCourseStatus(data.status);
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Determine course prefetch icon.
-        this.courseProvider.getCourseStatus(this.course.id).then((status) => {
-            const data = this.courseHelper.getCourseStatusIconAndTitleFromStatus(status);
+        CoreCourse.getCourseStatus(this.course.id).then((status) => {
+            const data = CoreCourseHelper.getCourseStatusIconAndTitleFromStatus(status);
 
             this.courseStatus = status;
             this.prefetchCourseData.prefetchCourseIcon = data.icon;
@@ -116,17 +116,17 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
 
             if (data.icon == 'spinner') {
                 // Course is being downloaded. Get the download promise.
-                const promise = this.courseHelper.getCourseDownloadPromise(this.course.id);
+                const promise = CoreCourseHelper.getCourseDownloadPromise(this.course.id);
                 if (promise) {
                     // There is a download promise. If it fails, show an error.
                     promise.catch((error) => {
                         if (!this.isDestroyed) {
-                            this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                            CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
                         }
                     });
                 } else {
                     // No download, this probably means that the app was closed while downloading. Set previous status.
-                    this.courseProvider.setCoursePreviousStatus(this.course.id);
+                    CoreCourse.setCoursePreviousStatus(this.course.id);
                 }
             }
         });
@@ -139,7 +139,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
      * @param course The course to open.
      */
     openCourse(course: any): void {
-        this.courseHelper.openCourse(this.navCtrl, course);
+        CoreCourseHelper.openCourse(this.navCtrl, course);
     }
 
     /**
@@ -151,9 +151,9 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
         e.preventDefault();
         e.stopPropagation();
 
-        this.courseHelper.confirmAndPrefetchCourse(this.prefetchCourseData, this.course).catch((error) => {
+        CoreCourseHelper.confirmAndPrefetchCourse(this.prefetchCourseData, this.course).catch((error) => {
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
             }
         });
     }
@@ -163,7 +163,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
      */
     async deleteCourse(): Promise<void> {
         try {
-            await this.domUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
         } catch (error) {
             if (!error.coreCanceled) {
                 throw error;
@@ -172,12 +172,12 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         try {
-            await this.courseHelper.deleteCourseFiles(this.course.id);
+            await CoreCourseHelper.deleteCourseFiles(this.course.id);
         } catch (error) {
-            this.domUtils.showErrorModalDefault(error, Translate.instance.instant('core.errordeletefile'));
+            CoreDomUtils.showErrorModalDefault(error, Translate.instant('core.errordeletefile'));
         } finally {
             modal.dismiss();
         }
@@ -189,7 +189,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
      * @param status Status to show.
      */
     protected updateCourseStatus(status: string): void {
-        const statusData = this.courseHelper.getCourseStatusIconAndTitleFromStatus(status);
+        const statusData = CoreCourseHelper.getCourseStatusIconAndTitleFromStatus(status);
 
         this.courseStatus = status;
         this.prefetchCourseData.prefetchCourseIcon = statusData.icon;
@@ -262,10 +262,10 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
                 action: CoreCoursesProvider.ACTION_STATE_CHANGED,
                 state: CoreCoursesProvider.STATE_HIDDEN,
                 value: hide,
-            }, this.sitesProvider.getCurrentSiteId());
+            }, CoreSites.getCurrentSiteId());
         }).catch((error) => {
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'Error changing course visibility.');
+                CoreDomUtils.showErrorModalDefault(error, 'Error changing course visibility.');
             }
         }).finally(() => {
             this.showSpinner = false;
@@ -280,7 +280,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
     protected setCourseFavourite(favourite: boolean): void {
         this.showSpinner = true;
 
-        this.coursesProvider.setFavouriteCourse(this.course.id, favourite).then(() => {
+        CoreCourses.setFavouriteCourse(this.course.id, favourite).then(() => {
             this.course.isfavourite = favourite;
             CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
                 courseId: this.course.id,
@@ -288,10 +288,10 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
                 action: CoreCoursesProvider.ACTION_STATE_CHANGED,
                 state: CoreCoursesProvider.STATE_FAVOURITE,
                 value: favourite,
-            }, this.sitesProvider.getCurrentSiteId());
+            }, CoreSites.getCurrentSiteId());
         }).catch((error) => {
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'Error changing course favourite attribute.');
+                CoreDomUtils.showErrorModalDefault(error, 'Error changing course favourite attribute.');
             }
         }).finally(() => {
             this.showSpinner = false;

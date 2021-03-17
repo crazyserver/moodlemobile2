@@ -33,7 +33,7 @@ import { AddonModChoicePrefetchHandler } from './prefetch-handler';
 /**
  * Service to sync choices.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_choice_autom_synced';
@@ -132,7 +132,7 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncChoice(choiceId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
             siteId = site.getId();
 
@@ -151,7 +151,7 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
             };
 
             // Sync offline logs.
-            const syncPromise = this.logHelper.syncIfNeeded(AddonModChoiceProvider.COMPONENT, choiceId, siteId).catch(() => {
+            const syncPromise = CoreCourseLogHelper.syncIfNeeded(AddonModChoiceProvider.COMPONENT, choiceId, siteId).catch(() => {
                 // Ignore errors.
             }).then(() => {
                 return this.choiceOffline.getResponse(choiceId, siteId, userId).catch(() => {
@@ -164,7 +164,7 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
                     return;
                 }
 
-                if (!this.appProvider.isOnline()) {
+                if (!CoreApp.isOnline()) {
                     // Cannot sync in offline.
                     return Promise.reject(null);
                 }
@@ -187,13 +187,13 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
 
                     return this.choiceOffline.deleteResponse(choiceId, siteId, userId);
                 }).catch((error) => {
-                    if (this.utils.isWebServiceError(error)) {
+                    if (CoreUtils.isWebServiceError(error)) {
                         // The WebService has thrown an error, this means that responses cannot be submitted. Delete them.
                         result.updated = true;
 
                         return this.choiceOffline.deleteResponse(choiceId, siteId, userId).then(() => {
                             // Responses deleted, add a warning.
-                            result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                            result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: this.componentTranslate,
                                 name: data.name,
                                 error: this.textUtils.getErrorMessageFromError(error)
@@ -207,7 +207,7 @@ export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvid
             }).then(() => {
                 if (courseId) {
                     // Data has been sent to server, prefetch choice if needed.
-                    return this.courseProvider.getModuleBasicInfoByInstance(choiceId, 'choice', siteId).then((module) => {
+                    return CoreCourse.getModuleBasicInfoByInstance(choiceId, 'choice', siteId).then((module) => {
                         return this.prefetchAfterUpdate(module, courseId, undefined, siteId);
                     }).catch(() => {
                         // Ignore errors.

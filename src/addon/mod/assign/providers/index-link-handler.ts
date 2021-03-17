@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to assign index page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModAssignIndexLinkHandler';
 

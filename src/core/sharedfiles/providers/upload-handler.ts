@@ -19,7 +19,7 @@ import { CoreSharedFilesHelperProvider } from './helper';
 /**
  * Handler to upload files from the album.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSharedFilesUploadHandler implements CoreFileUploaderHandler {
     name = 'CoreSharedFilesUpload';
     priority = 1300;
@@ -32,7 +32,7 @@ export class CoreSharedFilesUploadHandler implements CoreFileUploaderHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return CoreApp.instance.isIOS();
+        return CoreApp.isIOS();
     }
 
     /**

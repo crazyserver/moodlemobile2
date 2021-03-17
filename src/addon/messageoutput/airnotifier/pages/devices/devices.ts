@@ -59,7 +59,7 @@ export class AddonMessageOutputAirnotifierDevicesPage implements OnDestroy {
 
             this.devices = devices;
         }).catch((message) => {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }).finally(() => {
             this.devicesLoaded = true;
         });
@@ -116,7 +116,7 @@ export class AddonMessageOutputAirnotifierDevicesPage implements OnDestroy {
             this.updateDevicesAfterDelay();
         }).catch((message) => {
             // Show error and revert change.
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
             device.enable = !device.enable;
         }).finally(() => {
             device.updating = false;

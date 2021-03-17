@@ -52,7 +52,7 @@ export class AddonModLtiIndexComponent extends CoreCourseModuleMainActivityCompo
      * Check the completion.
      */
     protected checkCompletion(): void {
-        this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+        CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
     }
 
     /**
@@ -93,6 +93,6 @@ export class AddonModLtiIndexComponent extends CoreCourseModuleMainActivityCompo
      * Launch the LTI.
      */
     launch(): void {
-        AddonModLtiHelper.instance.getDataAndLaunch(this.courseId, this.module, this.lti);
+        AddonModLtiHelper.getDataAndLaunch(this.courseId, this.module, this.lti);
     }
 }

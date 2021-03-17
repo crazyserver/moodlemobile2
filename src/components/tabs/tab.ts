@@ -121,7 +121,7 @@ export class CoreTabComponent implements OnInit, OnDestroy {
         this.showHideNavBarButtons(true);
 
         // Setup tab scrolling.
-        this.domUtils.waitElementToExist(() => this.content ? this.content.getScrollElement() :
+        CoreDomUtils.waitElementToExist(() => this.content ? this.content.getScrollElement() :
                 this.element.querySelector('ion-content > .scroll-content')).then((scroll) => {
             scroll.addEventListener('scroll', (e): void => {
                 this.tabs.showHideTabs(e.target);
@@ -155,7 +155,7 @@ export class CoreTabComponent implements OnInit, OnDestroy {
             instances: CoreNavBarButtonsComponent[] = [];
 
         for (let i = 0; i < elements.length; i++) {
-            const instance = this.domUtils.getInstanceByElement(elements[i]);
+            const instance = CoreDomUtils.getInstanceByElement(elements[i]);
             if (instance) {
                 instances.push(instance);
             }

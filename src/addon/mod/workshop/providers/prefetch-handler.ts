@@ -32,7 +32,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch workshops.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModWorkshop';
     modName = 'workshop';
@@ -91,7 +91,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
             ...options, // Include all options.
         };
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const userId = site.getUserId();
 
             return this.workshopProvider.getWorkshop(courseId, module.id, options).then((data) => {
@@ -102,7 +102,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
                 return this.workshopProvider.getWorkshopAccessInformation(workshop.id, modOptions).then((accessData) => {
                     access = accessData;
                     if (access.canviewallsubmissions) {
-                        return this.groupsProvider.getActivityGroupInfo(module.id, false, undefined, options.siteId)
+                        return CoreGroups.getActivityGroupInfo(module.id, false, undefined, options.siteId)
                                 .then((groupInfo) => {
                             if (!groupInfo.groups || groupInfo.groups.length == 0) {
                                 groupInfo.groups = [{id: 0}];
@@ -264,7 +264,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
                 });
             });
 
-            return this.utils.objectToArray(uniqueGrades);
+            return CoreUtils.objectToArray(uniqueGrades);
         });
     }
 
@@ -279,7 +279,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
      */
     protected prefetchWorkshop(module: any, courseId: number, single: boolean, siteId: string): Promise<any> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const userIds = [];
         const commonOptions = {
@@ -291,7 +291,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
             ...commonOptions, // Include all common options.
         };
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const currentUserId = site.getUserId();
 
              // Prefetch the workshop data.
@@ -300,7 +300,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
                     promises = [],
                     assessments = [];
 
-                promises.push(this.filepoolProvider.addFilesToQueue(siteId, info.files, this.component, module.id));
+                promises.push(CoreFilepool.addFilesToQueue(siteId, info.files, this.component, module.id));
                 promises.push(this.workshopProvider.getWorkshopAccessInformation(workshop.id, modOptions).then((access) => {
                     return this.workshopProvider.getUserPlanPhases(workshop.id, modOptions).then((phases) => {
 
@@ -364,7 +364,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
                                                     .concat(assessment.submission.contentfiles || []);
                                     });
 
-                                    promises.push(this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id));
+                                    promises.push(CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id));
 
                                     return Promise.all(promises);
                                 });
@@ -391,8 +391,8 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
                     });
                 }));
                 // Add Basic Info to manage links.
-                promises.push(this.courseProvider.getModuleBasicInfoByInstance(workshop.id, 'workshop', siteId));
-                promises.push(this.courseProvider.getModuleBasicGradeInfo(module.id, siteId));
+                promises.push(CoreCourse.getModuleBasicInfoByInstance(workshop.id, 'workshop', siteId));
+                promises.push(CoreCourse.getModuleBasicGradeInfo(module.id, siteId));
 
                 return Promise.all(promises);
             });

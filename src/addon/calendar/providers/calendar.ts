@@ -37,7 +37,7 @@ import * as moment from 'moment';
 /**
  * Service to handle calendar events.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCalendarProvider {
     static DAYS_INTERVAL = 30;
     static COMPONENT = 'AddonCalendarEvents';
@@ -336,7 +336,7 @@ export class AddonCalendarProvider {
             private userProvider: CoreUserProvider) {
 
         this.logger = CoreLogger.getInstance('AddonCalendarProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -347,7 +347,7 @@ export class AddonCalendarProvider {
      * @since 3.3
      */
     canDeleteEvents(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.canDeleteEventsInSite(site);
         }).catch(() => {
             return false;
@@ -362,7 +362,7 @@ export class AddonCalendarProvider {
      * @since 3.3
      */
     canDeleteEventsInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_calendar_delete_calendar_events');
     }
@@ -375,7 +375,7 @@ export class AddonCalendarProvider {
      * @since 3.7.1
      */
     canEditEvents(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.canEditEventsInSite(site);
         }).catch(() => {
             return false;
@@ -390,7 +390,7 @@ export class AddonCalendarProvider {
      * @since 3.7.1
      */
     canEditEventsInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         // The WS to create/edit events requires a fix that was integrated in 3.7.1.
         return site && site.isVersionGreaterEqualThan('3.7.1');
@@ -404,7 +404,7 @@ export class AddonCalendarProvider {
      * @since 3.4
      */
     canViewMonth(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.canViewMonthInSite(site);
         }).catch(() => {
             return false;
@@ -419,7 +419,7 @@ export class AddonCalendarProvider {
      * @since 3.4
      */
     canViewMonthInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_calendar_get_calendar_monthly_view');
     }
@@ -431,14 +431,14 @@ export class AddonCalendarProvider {
      * @return Promise resolved when done.
      */
     cleanExpiredEvents(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (this.canViewMonthInSite(site)) {
                 // Site supports monthly view, don't clean expired events because user can see past events.
                 return;
             }
 
             return site.getDb().getRecordsSelect(AddonCalendarProvider.EVENTS_TABLE, 'timestart + timeduration < ?',
-                    [this.timeUtils.timestamp()]).then((events) => {
+                    [CoreTimeUtils.timestamp()]).then((events) => {
                 return Promise.all(events.map((event) => {
                     return this.deleteLocalEvent(event.id, siteId);
                 }));
@@ -458,7 +458,7 @@ export class AddonCalendarProvider {
      */
     deleteEvent(eventId: number, name: string, deleteAll?: boolean, forceOffline?: boolean, siteId?: string): Promise<boolean> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Function to store the submission to be synchronized later.
         const storeOffline = (): Promise<boolean> => {
@@ -467,7 +467,7 @@ export class AddonCalendarProvider {
             });
         };
 
-        if (forceOffline || !this.appProvider.isOnline()) {
+        if (forceOffline || !CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -477,7 +477,7 @@ export class AddonCalendarProvider {
             return this.deleteEventOnline(eventId, deleteAll, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (error && !this.utils.isWebServiceError(error)) {
+                if (error && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -497,7 +497,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when done.
      */
     deleteEventOnline(eventId: number, deleteAll?: boolean, siteId?: string): Promise<null> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const params = {
                     events: [
@@ -523,7 +523,7 @@ export class AddonCalendarProvider {
      * @return Resolved when done.
      */
     protected deleteLocalEvent(eventId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
 
             const promises = [];
@@ -565,16 +565,16 @@ export class AddonCalendarProvider {
             if (moment(start).isSame(end, 'day')) {
                 // Event starts and ends the same day.
                 if (event.timeduration == CoreConstants.SECONDS_DAY) {
-                    time = this.translate.instant('addon.calendar.allday');
+                    time = Translate.instant('addon.calendar.allday');
                 } else {
-                    time = this.timeUtils.userDate(start, format) + ' <strong>&raquo;</strong> ' +
-                            this.timeUtils.userDate(end, format);
+                    time = CoreTimeUtils.userDate(start, format) + ' <strong>&raquo;</strong> ' +
+                            CoreTimeUtils.userDate(end, format);
                 }
 
             } else {
                 // Event lasts more than one day.
-                const timeStart = this.timeUtils.userDate(start, format),
-                    timeEnd = this.timeUtils.userDate(end, format),
+                const timeStart = CoreTimeUtils.userDate(start, format),
+                    timeEnd = CoreTimeUtils.userDate(end, format),
                     promises = [];
 
                 // Don't use common words when the event lasts more than one day.
@@ -599,7 +599,7 @@ export class AddonCalendarProvider {
             }
         } else {
             // There is no time duration.
-            time = this.timeUtils.userDate(start, format);
+            time = CoreTimeUtils.userDate(start, format);
         }
 
         if (!showTime) {
@@ -627,7 +627,7 @@ export class AddonCalendarProvider {
      * @since 3.7
      */
     getAccessInformation(courseId?: number, siteId?: string): Promise<AddonCalendarGetAccessInfoResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {},
                 preSets = {
                     cacheKey: this.getAccessInformationCacheKey(courseId)
@@ -658,7 +658,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with all the events.
      */
     getAllEventsFromLocalDb(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonCalendarProvider.EVENTS_TABLE);
         });
     }
@@ -672,7 +672,7 @@ export class AddonCalendarProvider {
      * @since 3.7
      */
     getAllowedEventTypes(courseId?: number, siteId?: string): Promise<{[name: string]: boolean}> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {},
                 preSets = {
                     cacheKey: this.getAllowedEventTypesCacheKey(courseId)
@@ -715,7 +715,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with the look ahead (number of days).
      */
     getCalendarLookAhead(siteId?: string): Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.userProvider.getUserPreference('calendar_lookahead').catch((error) => {
                 // Ignore errors.
             }).then((value): any => {
@@ -735,7 +735,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with the format.
      */
     getCalendarTimeFormat(siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.userProvider.getUserPreference('calendar_timeformat').catch((error) => {
                 // Ignore errors.
             }).then((format) => {
@@ -745,12 +745,12 @@ export class AddonCalendarProvider {
                 }
 
                 if (format === AddonCalendarProvider.CALENDAR_TF_12) {
-                    format = this.translate.instant('core.strftimetime12');
+                    format = Translate.instant('core.strftimetime12');
                 } else if (format === AddonCalendarProvider.CALENDAR_TF_24) {
-                    format = this.translate.instant('core.strftimetime24');
+                    format = Translate.instant('core.strftimetime24');
                 }
 
-                return format && format !== '0' ? format : this.translate.instant('core.strftimetime');
+                return format && format !== '0' ? format : Translate.instant('core.strftimetime');
             });
         });
     }
@@ -766,23 +766,23 @@ export class AddonCalendarProvider {
 
         if (!useCommonWords) {
             // We don't want words, just a date.
-            return this.timeUtils.userDate(time, 'core.strftimedayshort');
+            return CoreTimeUtils.userDate(time, 'core.strftimedayshort');
         }
 
         const date = moment(time),
             today = moment();
 
         if (date.isSame(today, 'day')) {
-            return this.translate.instant('addon.calendar.today');
+            return Translate.instant('addon.calendar.today');
 
         } else if (date.isSame(today.clone().subtract(1, 'days'), 'day')) {
-            return this.translate.instant('addon.calendar.yesterday');
+            return Translate.instant('addon.calendar.yesterday');
 
         } else if (date.isSame(today.clone().add(1, 'days'), 'day')) {
-            return this.translate.instant('addon.calendar.tomorrow');
+            return Translate.instant('addon.calendar.tomorrow');
 
         } else {
-            return this.timeUtils.userDate(time, 'core.strftimedayshort');
+            return CoreTimeUtils.userDate(time, 'core.strftimedayshort');
         }
     }
 
@@ -793,7 +793,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with the default time.
      */
     getDefaultNotificationTime(siteId?: string): Promise<number> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const key = AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_SETTING + '#' + siteId;
 
@@ -808,7 +808,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the event data is retrieved.
      */
     getEvent(id: number, siteId?: string): Promise<AddonCalendarGetEventsEvent> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                     cacheKey: this.getEventCacheKey(id),
                     updateFrequency: CoreSite.FREQUENCY_RARELY
@@ -846,7 +846,7 @@ export class AddonCalendarProvider {
      * @since 3.4
      */
     getEventById(id: number, siteId?: string): Promise<AddonCalendarEvent> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                     cacheKey: this.getEventCacheKey(id),
                     updateFrequency: CoreSite.FREQUENCY_RARELY
@@ -884,7 +884,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the event data is retrieved.
      */
     getEventFromLocalDb(id: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonCalendarProvider.EVENTS_TABLE, { id: id }).then((event) => {
                 if (this.isGetEventByIdAvailableInSite(site)) {
                     // Calculate data to match the new WS.
@@ -911,7 +911,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the notification is updated.
      */
     addEventReminder(event: AddonCalendarAnyEvent, time: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const reminder = {
                 eventid: event.id,
                 time: time
@@ -946,7 +946,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the notification is updated.
      */
     deleteEventReminder(id: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (this.localNotificationsProvider.isAvailable()) {
                 this.localNotificationsProvider.cancel(id, AddonCalendarProvider.COMPONENT, site.getId());
             }
@@ -970,7 +970,7 @@ export class AddonCalendarProvider {
     getDayEvents(year: number, month: number, day: number, courseId?: number, categoryId?: number, ignoreCache?: boolean,
             siteId?: string): Promise<AddonCalendarCalendarDay> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const data: any = {
                 year: year,
@@ -1047,7 +1047,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the event data is retrieved.
      */
     getEventReminders(id: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonCalendarProvider.REMINDERS_TABLE, {eventid: id}, 'time ASC');
         });
     }
@@ -1068,18 +1068,18 @@ export class AddonCalendarProvider {
     getEventsList(initialTime?: number, daysToStart: number = 0, daysInterval: number = AddonCalendarProvider.DAYS_INTERVAL,
             siteId?: string): Promise<AddonCalendarGetEventsEvent[]> {
 
-        initialTime = initialTime || this.timeUtils.timestamp();
+        initialTime = initialTime || CoreTimeUtils.timestamp();
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
             const promises = [];
             let courses, groups;
 
-            promises.push(this.coursesProvider.getUserCourses(false, siteId).then((data) => {
+            promises.push(CoreCourses.getUserCourses(false, siteId).then((data) => {
                 courses = data;
                 courses.push({ id: site.getSiteHomeId() }); // Add front page.
             }));
-            promises.push(this.groupsProvider.getAllUserGroups(siteId).then((data) => {
+            promises.push(CoreGroups.getAllUserGroups(siteId).then((data) => {
                 groups = data;
             }));
 
@@ -1156,7 +1156,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with all the events.
      */
     getLocalEventsByRepeatIdFromLocalDb(repeatId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonCalendarProvider.EVENTS_TABLE, {repeatid: repeatId});
         });
     }
@@ -1174,7 +1174,7 @@ export class AddonCalendarProvider {
     getMonthlyEvents(year: number, month: number, courseId?: number, categoryId?: number, ignoreCache?: boolean, siteId?: string)
             : Promise<AddonCalendarMonth> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const data: any = {
                 year: year,
@@ -1214,7 +1214,7 @@ export class AddonCalendarProvider {
                 });
 
                 // Store starting week day preference, we need it in offline to show months that are not in cache.
-                if (this.appProvider.isOnline()) {
+                if (CoreApp.isOnline()) {
                     this.configProvider.set(AddonCalendarProvider.STARTING_WEEK_DAY, response.daynames[0].dayno);
                 }
 
@@ -1269,7 +1269,7 @@ export class AddonCalendarProvider {
     getUpcomingEvents(courseId?: number, categoryId?: number, ignoreCache?: boolean, siteId?: string)
             : Promise<AddonCalendarUpcoming> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const data: any = {};
 
@@ -1328,7 +1328,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with the URL.x
      */
     getViewUrl(view: string, time?: number, courseId?: string, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             let url = this.textUtils.concatenatePaths(site.getURL(), 'calendar/view.php?view=' + view);
 
             if (time) {
@@ -1363,7 +1363,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAccessInformation(courseId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAccessInformationCacheKey(courseId));
         });
     }
@@ -1376,7 +1376,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllowedEventTypes(courseId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAllowedEventTypesCacheKey(courseId));
         });
     }
@@ -1388,7 +1388,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllDayEvents(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getDayEventsPrefixCacheKey());
         });
     }
@@ -1402,7 +1402,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDayEvents(year: number, month: number, day: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getDayEventsDayPrefixCacheKey(year, month, day));
         });
     }
@@ -1414,13 +1414,13 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the list is invalidated.
      */
     invalidateEventsList(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
 
             const promises = [];
 
-            promises.push(this.coursesProvider.invalidateUserCourses(siteId));
-            promises.push(this.groupsProvider.invalidateAllUserGroups(siteId));
+            promises.push(CoreCourses.invalidateUserCourses(siteId));
+            promises.push(CoreGroups.invalidateAllUserGroups(siteId));
             promises.push(site.invalidateWsCacheForKeyStartingWith(this.getEventsListPrefixCacheKey()));
 
             return Promise.all(promises);
@@ -1435,7 +1435,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the list is invalidated.
      */
     invalidateEvent(eventId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getEventCacheKey(eventId));
         });
     }
@@ -1447,7 +1447,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllMonthlyEvents(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getMonthlyEventsPrefixCacheKey());
         });
     }
@@ -1460,7 +1460,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateMonthlyEvents(year: number, month: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getMonthlyEventsMonthPrefixCacheKey(year, month));
         });
     }
@@ -1472,7 +1472,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllUpcomingEvents(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getUpcomingEventsPrefixCacheKey());
         });
     }
@@ -1486,7 +1486,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUpcomingEvents(courseId?: number, categoryId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getUpcomingEventsCacheKey(courseId, categoryId));
         });
     }
@@ -1518,7 +1518,7 @@ export class AddonCalendarProvider {
      * @return Whether it's disabled.
      */
     isCalendarDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreMainMenuDelegate_AddonCalendar');
     }
@@ -1530,7 +1530,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isCalendarDisabledInSite(site);
         });
     }
@@ -1543,7 +1543,7 @@ export class AddonCalendarProvider {
      * @since 3.4
      */
     isGetEventByIdAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isGetEventByIdAvailableInSite(site);
         }).catch(() => {
             return false;
@@ -1558,7 +1558,7 @@ export class AddonCalendarProvider {
      * @since 3.4
      */
     isGetEventByIdAvailableInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_calendar_get_calendar_event_by_id');
     }
@@ -1573,7 +1573,7 @@ export class AddonCalendarProvider {
     scheduleAllSitesEventsNotifications(): Promise<any[]> {
         const notificationsEnabled = this.localNotificationsProvider.isAvailable();
 
-        return this.sitesProvider.getSitesIds().then((siteIds) => {
+        return CoreSites.getSitesIds().then((siteIds) => {
             const promises = [];
 
             siteIds.forEach((siteId) => {
@@ -1613,7 +1613,7 @@ export class AddonCalendarProvider {
             return;
         }
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (time === 0) {
             // Cancel if it was scheduled.
@@ -1642,7 +1642,7 @@ export class AddonCalendarProvider {
         const notification: ILocalNotification = {
                 id: reminderId,
                 title: event.name,
-                text: this.timeUtils.userDate(event.timestart * 1000, 'core.strftimedaydatetime', true),
+                text: CoreTimeUtils.userDate(event.timestart * 1000, 'core.strftimedaydatetime', true),
                 icon: 'file://assets/img/icons/calendar.png',
                 trigger: {
                     at: new Date(time)
@@ -1669,7 +1669,7 @@ export class AddonCalendarProvider {
     scheduleEventsNotifications(events: AddonCalendarAnyEvent[], siteId?: string): Promise<any[]> {
 
         if (this.localNotificationsProvider.isAvailable()) {
-            siteId = siteId || this.sitesProvider.getCurrentSiteId();
+            siteId = siteId || CoreSites.getCurrentSiteId();
 
             return Promise.all(events.map((event) => {
                 const timeEnd = (event.timestart + event.timeduration) * 1000;
@@ -1698,7 +1698,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when stored.
      */
     setDefaultNotificationTime(time: number, siteId?: string): Promise<any[]> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const key = AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_SETTING + '#' + siteId;
 
@@ -1713,7 +1713,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when stored.
      */
     storeEventInLocalDb(event: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
 
             // If event does not exist on the DB, schedule the reminder.
@@ -1779,7 +1779,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the events are stored.
      */
     protected storeEventsInLocalDB(events: any[], siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.getId();
 
             return Promise.all(events.map((event) => {
@@ -1802,7 +1802,7 @@ export class AddonCalendarProvider {
     submitEvent(eventId: number, formData: any, timeCreated?: number, forceOffline?: boolean, siteId?: string):
             Promise<{sent: boolean, event: AddonCalendarEvent}> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Function to store the event to be synchronized later.
         const storeOffline = (): Promise<{sent: boolean, event: any}> => {
@@ -1811,7 +1811,7 @@ export class AddonCalendarProvider {
             });
         };
 
-        if (forceOffline || !this.appProvider.isOnline()) {
+        if (forceOffline || !CoreApp.isOnline()) {
             // App is offline, store the event.
             return storeOffline();
         }
@@ -1821,7 +1821,7 @@ export class AddonCalendarProvider {
             return this.submitEventOnline(eventId, formData, siteId).then((event) => {
                 return {sent: true, event: event};
             }).catch((error) => {
-                if (error && !this.utils.isWebServiceError(error)) {
+                if (error && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1841,7 +1841,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when done.
      */
     submitEventOnline(eventId: number, formData: any, siteId?: string): Promise<AddonCalendarEvent> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Add data that is "hidden" in web.
             formData.id = eventId || 0;
             formData.userid = site.getUserId();
@@ -1855,7 +1855,7 @@ export class AddonCalendarProvider {
             }
 
             const params = {
-                formdata: this.utils.objectToGetParams(formData)
+                formdata: CoreUtils.objectToGetParams(formData)
             };
 
             return site.write('core_calendar_submit_create_update_form', params)
@@ -1864,7 +1864,7 @@ export class AddonCalendarProvider {
                 if (result.validationerror) {
                     // Simulate a WS error.
                     return <any> Promise.reject({
-                        message: this.translate.instant('core.invalidformdata'),
+                        message: Translate.instant('core.invalidformdata'),
                         errorcode: 'validationerror'
                     });
                 }

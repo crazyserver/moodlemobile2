@@ -56,7 +56,7 @@ export class AddonModFolderIndexComponent extends CoreCourseModuleMainResourceCo
         } else {
             this.loadContent().then(() => {
                 this.folderProvider.logView(this.module.instance, this.module.name).then(() => {
-                    this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                    CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
                 }).catch(() => {
                     // Ignore errors.
                 });
@@ -104,7 +104,7 @@ export class AddonModFolderIndexComponent extends CoreCourseModuleMainResourceCo
 
         if (this.canGetFolder) {
             promise = this.folderProvider.getFolder(this.courseId, this.module.id).then((folder) => {
-                return this.courseProvider.loadModuleContents(this.module, this.courseId, undefined, false, refresh).then(() => {
+                return CoreCourse.loadModuleContents(this.module, this.courseId, undefined, false, refresh).then(() => {
                     folderContents = this.module.contents;
                     this.folderInstance = folder;
 
@@ -112,8 +112,8 @@ export class AddonModFolderIndexComponent extends CoreCourseModuleMainResourceCo
                 });
             });
         } else {
-            promise = this.courseProvider.getModule(this.module.id, this.courseId).then((module) => {
-                if (!module.contents.length && this.module.contents.length && !this.appProvider.isOnline()) {
+            promise = CoreCourse.getModule(this.module.id, this.courseId).then((module) => {
+                if (!module.contents.length && this.module.contents.length && !CoreApp.isOnline()) {
                     // The contents might be empty due to a cached data. Use the old ones.
                     module.contents = this.module.contents;
                 }

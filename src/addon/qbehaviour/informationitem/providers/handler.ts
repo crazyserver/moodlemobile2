@@ -22,7 +22,7 @@ import { AddonQbehaviourInformationItemComponent } from '../component/informatio
 /**
  * Handler to support information item question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourInformationItemHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourInformationItem';
     type = 'informationitem';

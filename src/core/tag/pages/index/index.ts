@@ -80,7 +80,7 @@ export class CoreTagIndexPage {
      * @return Resolved when done.
      */
     fetchData(): Promise<any> {
-        return this.tagProvider.getTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
+        return CoreTag.getTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
                 this.contextId, this.recursive, 0).then((areas) => {
             this.areas = [];
             this.hasUnsupportedAreas = false;
@@ -108,7 +108,7 @@ export class CoreTagIndexPage {
                 this.areas = areas.filter((area) => area != null);
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading tag index');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading tag index');
         });
     }
 
@@ -118,7 +118,7 @@ export class CoreTagIndexPage {
      * @param refresher Refresher.
      */
     refreshData(refresher: any): void {
-        this.tagProvider.invalidateTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
+        CoreTag.invalidateTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
                 this.contextId, this.recursive).finally(() => {
             this.fetchData().finally(() => {
                 refresher?.detail.complete();

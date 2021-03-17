@@ -44,7 +44,7 @@ export class CoreH5PModule {
 
         // Delete content indexes if language changes, to update the strings.
         CoreEvents.on(CoreEvents.LANGUAGE_CHANGED, () => {
-            CoreH5P.instance.h5pPlayer.deleteAllContentIndexes();
+            CoreH5P.h5pPlayer.deleteAllContentIndexes();
         });
     }
 }

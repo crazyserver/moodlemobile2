@@ -77,7 +77,7 @@ export interface CoreRatingItemRating {
 /**
  * Service to handle ratings.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreRatingProvider {
 
     static AGGREGATE_NONE = 0; // No ratings.
@@ -108,7 +108,7 @@ export class CoreRatingProvider {
      * @since 3.2
      */
     isAddRatingWSAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_rating_add_rating');
+        return CoreSites.wsAvailableInCurrentSite('core_rating_add_rating');
     }
 
     /**
@@ -132,7 +132,7 @@ export class CoreRatingProvider {
     addRating(component: string, ratingArea: string, contextLevel: string, instanceId: number, itemId: number, itemSetId: number,
             courseId: number, scaleId: number, rating: number, ratedUserId: number, aggregateMethod: number, siteId?: string):
             Promise<CoreRatingItemRating[]> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a rating to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -151,7 +151,7 @@ export class CoreRatingProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -160,7 +160,7 @@ export class CoreRatingProvider {
             return this.addRatingOnline(component, ratingArea, contextLevel, instanceId, itemId, scaleId, rating, ratedUserId,
                     aggregateMethod, siteId).catch((error) => {
 
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error or offline not supported, reject.
                     return Promise.reject(error);
                 }
@@ -191,7 +191,7 @@ export class CoreRatingProvider {
             scaleId: number, rating: number, ratedUserId: number, aggregateMethod: number, siteId?: string):
             Promise<CoreRatingItemRating> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -240,7 +240,7 @@ export class CoreRatingProvider {
     getItemRatings(contextLevel: string, instanceId: number, component: string, ratingArea: string, itemId: number,
             scaleId: number, sort: string = 'timemodified', courseId?: number, siteId?: string, ignoreCache: boolean = false):
             Promise<CoreRatingItemRating[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -296,7 +296,7 @@ export class CoreRatingProvider {
      */
     invalidateRatingItems(contextLevel: string, instanceId: number, component: string, ratingArea: string,
             itemId: number, scaleId: number, sort: string = 'timemodified', siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const key = this.getItemRatingsCacheKey(contextLevel, instanceId, component, ratingArea, itemId, scaleId, sort);
 
             return site.invalidateWsCacheForKey(key);
@@ -310,7 +310,7 @@ export class CoreRatingProvider {
      * @return Whether it's disabled.
      */
     isRatingDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('NoDelegate_CoreRating');
     }
@@ -322,7 +322,7 @@ export class CoreRatingProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isRatingDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isRatingDisabledInSite(site);
         });
     }
@@ -358,8 +358,8 @@ export class CoreRatingProvider {
         });
 
         if (result) {
-            result.scales = this.utils.objectToArray(scales);
-            result.ratings = this.utils.objectToArray(ratings);
+            result.scales = CoreUtils.objectToArray(scales);
+            result.ratings = CoreUtils.objectToArray(ratings);
         }
 
         return result;
@@ -383,7 +383,7 @@ export class CoreRatingProvider {
             return Promise.resolve();
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = ratingInfo.ratings.map((item) => {
                 return this.getItemRatings(contextLevel, instanceId, ratingInfo.component, ratingInfo.ratingarea, item.itemid,
                         scaleId, undefined, courseId, site.id, true).then((ratings) => {

@@ -81,7 +81,7 @@ export class CoreLoginSiteOnboardingPage {
 
         this.saveOnboardingDone();
 
-        CoreUtils.instance.openInBrowser('https://moodle.com/getstarted/');
+        CoreUtils.openInBrowser('https://moodle.com/getstarted/');
 
         this.viewCtrl.dismiss();
     }
@@ -90,6 +90,6 @@ export class CoreLoginSiteOnboardingPage {
      * Saves the onboarding has finished.
      */
     protected saveOnboardingDone(): void {
-        CoreConfig.instance.set(CoreLoginHelperProvider.ONBOARDING_DONE, 1);
+        CoreConfig.set(CoreLoginHelperProvider.ONBOARDING_DONE, 1);
     }
 }

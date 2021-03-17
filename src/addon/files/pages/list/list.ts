@@ -52,7 +52,7 @@ export class AddonFilesListPage implements OnDestroy {
             private domUtils: CoreDomUtilsProvider, private translate: TranslateService, private appProvider: CoreAppProvider,
             private filesProvider: AddonFilesProvider, private filesHelper: AddonFilesHelperProvider,
             private textUtils: CoreTextUtilsProvider) {
-        this.title = navParams.get('title') || this.translate.instant('addon.files.files');
+        this.title = navParams.get('title') || Translate.instant('addon.files.files');
         this.root = navParams.get('root');
         this.path = navParams.get('path');
 
@@ -67,7 +67,7 @@ export class AddonFilesListPage implements OnDestroy {
      */
     ngOnInit(): void {
         this.setVisibility();
-        this.userQuota = this.sitesProvider.getCurrentSite().getInfo().userquota;
+        this.userQuota = CoreSites.getCurrentSite().getInfo().userquota;
 
         if (!this.root) {
             // Load private files by default.
@@ -114,9 +114,9 @@ export class AddonFilesListPage implements OnDestroy {
     uploadFile(): void {
         this.filesProvider.versionCanUploadFiles().then((canUpload) => {
             if (!canUpload) {
-                this.domUtils.showAlertTranslated('core.notice', 'addon.files.erroruploadnotworking');
-            } else if (!this.appProvider.isOnline()) {
-                this.domUtils.showErrorModal('core.fileuploader.errormustbeonlinetoupload', true);
+                CoreDomUtils.showAlertTranslated('core.notice', 'addon.files.erroruploadnotworking');
+            } else if (!CoreApp.isOnline()) {
+                CoreDomUtils.showErrorModal('core.fileuploader.errormustbeonlinetoupload', true);
             } else {
                 this.filesHelper.uploadPrivateFile(this.filesInfo).then(() => {
                     // File uploaded, refresh the list.
@@ -151,10 +151,10 @@ export class AddonFilesListPage implements OnDestroy {
         if (!this.path) {
             // The path is unknown, the user must be requesting a root.
             if (this.root == 'site') {
-                this.title = this.translate.instant('addon.files.sitefiles');
+                this.title = Translate.instant('addon.files.sitefiles');
                 promise = this.filesProvider.getSiteFiles();
             } else if (this.root == 'my') {
-                this.title = this.translate.instant('addon.files.files');
+                this.title = Translate.instant('addon.files.files');
 
                 promise = this.filesProvider.getPrivateFiles().then((files) => {
                     if (this.showUpload && this.filesProvider.canGetPrivateFilesInfo() && this.userQuota > 0) {
@@ -185,7 +185,7 @@ export class AddonFilesListPage implements OnDestroy {
         return promise.then((files) => {
             this.files = files;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.files.couldnotloadfiles', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.files.couldnotloadfiles', true);
         });
     }
 

@@ -102,7 +102,7 @@ export class CoreTabsComponent implements OnInit, AfterViewInit, OnChanges, OnDe
         this.direction = platform.isRTL ? 'rtl' : 'ltr';
 
         // Change the side when the language changes.
-        this.languageChangedSubscription = translate.onLangChange.subscribe((event: any) => {
+        this.languageChangedSubscription = Translate.onLangChange.subscribe((event: any) => {
             setTimeout(() => {
                 this.direction = platform.isRTL ? 'rtl' : 'ltr';
             });
@@ -166,7 +166,7 @@ export class CoreTabsComponent implements OnInit, AfterViewInit, OnChanges, OnDe
      * Register back button action.
      */
     protected registerBackButtonAction(): void {
-        this.unregisterBackButtonAction = this.appProvider.registerBackButtonAction(() => {
+        this.unregisterBackButtonAction = CoreApp.registerBackButtonAction(() => {
             // The previous page in history is not the last one, we need the previous one.
             if (this.selectHistory.length > 1) {
                 const tab = this.selectHistory[this.selectHistory.length - 2];
@@ -408,7 +408,7 @@ export class CoreTabsComponent implements OnInit, AfterViewInit, OnChanges, OnDe
         return new Promise<void>((resolve, reject): void => {
             this.maxSlides = 3;
             if (this.slides) {
-                const width = this.domUtils.getElementWidth(this.slides.getNativeElement()) || this.slides.renderedWidth;
+                const width = CoreDomUtils.getElementWidth(this.slides.getNativeElement()) || this.slides.renderedWidth;
                 if (width) {
                     this.configProvider.get(CoreConstants.SETTINGS_FONT_SIZE, CoreConstants.CONFIG.font_sizes[0].toString()).
                         then((fontSize) => {

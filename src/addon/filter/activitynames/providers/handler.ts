@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Activity names filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterActivityNamesHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterActivityNamesHandler';
     filterName = 'activitynames';

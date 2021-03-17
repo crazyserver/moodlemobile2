@@ -26,7 +26,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support url modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModUrlModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModUrl';
     modName = 'url';
@@ -68,7 +68,7 @@ export class AddonModUrlModuleHandler implements CoreCourseModuleHandler {
         // tslint:disable: no-this-assignment
         const handler = this;
         const handlerData = {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_url-handler',
             showDownloadButton: false,
@@ -131,7 +131,7 @@ export class AddonModUrlModuleHandler implements CoreCourseModuleHandler {
             if (module.contents && module.contents[0]) {
                 // Calculate the icon to use.
                 handlerData.icon = this.urlProvider.guessIcon(module.contents[0].fileurl) ||
-                    this.courseProvider.getModuleIconSrc(this.modName, module.modicon);
+                    CoreCourse.getModuleIconSrc(this.modName, module.modicon);
             }
         });
 
@@ -146,7 +146,7 @@ export class AddonModUrlModuleHandler implements CoreCourseModuleHandler {
      * @return Resolved when done.
      */
     protected hideLinkButton(module: any, courseId: number): Promise<boolean> {
-        return this.courseProvider.loadModuleContents(module, courseId, undefined, false, false, undefined, this.modName)
+        return CoreCourse.loadModuleContents(module, courseId, undefined, false, false, undefined, this.modName)
                 .then(() => {
             return !(module.contents && module.contents[0] && module.contents[0].fileurl);
         }).catch(() => {
@@ -175,7 +175,7 @@ export class AddonModUrlModuleHandler implements CoreCourseModuleHandler {
      */
     protected openUrl(module: any, courseId: number): void {
         this.urlProvider.logView(module.instance, module.name).then(() => {
-            this.courseProvider.checkModuleCompletion(courseId, module.completiondata);
+            CoreCourse.checkModuleCompletion(courseId, module.completiondata);
         }).catch(() => {
             // Ignore errors.
         });

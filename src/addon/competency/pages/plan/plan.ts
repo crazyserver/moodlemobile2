@@ -63,7 +63,7 @@ export class AddonCompetencyPlanPage {
 
             this.plan = plan;
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting learning plan data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting learning plan data.');
         });
     }
 
@@ -74,7 +74,7 @@ export class AddonCompetencyPlanPage {
      */
     openCompetency(competencyId: number): void {
         const navCtrl = this.svComponent ? this.svComponent.getMasterNav() : this.navCtrl;
-        if (this.appProvider.isWide()) {
+        if (CoreApp.isWide()) {
             navCtrl.push('AddonCompetencyCompetenciesPage', {competencyId, planId: this.planId});
         } else {
             navCtrl.push('AddonCompetencyCompetencyPage', {competencyId, planId: this.planId});

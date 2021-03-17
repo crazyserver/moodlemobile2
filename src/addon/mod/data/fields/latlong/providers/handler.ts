@@ -19,7 +19,7 @@ import { AddonModDataFieldLatlongComponent } from '../component/latlong';
 /**
  * Handler for latlong data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldLatlongHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataFieldLatlongHandler';
     type = 'latlong';
@@ -119,9 +119,9 @@ export class AddonModDataFieldLatlongHandler implements AddonModDataFieldHandler
 
         // If we get here then only one field has been filled in.
         if (valueCount == 1) {
-            return this.translate.instant('addon.mod_data.latlongboth');
+            return Translate.instant('addon.mod_data.latlongboth');
         } else if (field.required && valueCount == 0) {
-            return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+            return Translate.instant('addon.mod_data.errormustsupplyvalue');
         }
 
         return false;

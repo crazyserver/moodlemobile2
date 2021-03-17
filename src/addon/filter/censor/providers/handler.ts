@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Word censorship filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterCensorHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterCensorHandler';
     filterName = 'censor';

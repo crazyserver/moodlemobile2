@@ -22,7 +22,7 @@ import { AddonCompetencyProvider } from './competency';
 /**
  * Handler for competencies push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonCompetencyPushClickHandler';
     priority = 200;
@@ -37,7 +37,7 @@ export class AddonCompetencyPushClickHandler implements CorePushNotificationsCli
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
+        if (CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
                 (notification.name == 'competencyplancomment' || notification.name == 'competencyusercompcomment')) {
             // If all competency features are disabled, don't handle the click.
             return this.competencyProvider.allCompetenciesDisabled(notification.site).then((disabled) => {

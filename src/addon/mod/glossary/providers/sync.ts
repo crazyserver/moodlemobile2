@@ -34,7 +34,7 @@ import { CoreRatingSyncProvider } from '@core/rating/providers/sync';
 /**
  * Service to sync glossaries.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_glossary_autom_synced';
@@ -83,7 +83,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected if sync fails.
      */
     protected syncAllGlossariesFunc(siteId: string, force?: boolean): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -115,7 +115,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
             }
 
             // Promises will be an object so, convert to an array first;
-            return Promise.all(this.utils.objectToArray(promises));
+            return Promise.all(CoreUtils.objectToArray(promises));
         }));
 
         promises.push(this.syncRatings(undefined, force, siteId));
@@ -132,7 +132,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved when the glossary is synced or if it doesn't need to be synced.
      */
     syncGlossaryEntriesIfNeeded(glossaryId: number, userId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getGlossarySyncId(glossaryId, userId);
 
@@ -152,8 +152,8 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncGlossaryEntries(glossaryId: number, userId?: number, siteId?: string): Promise<any> {
-        userId = userId || this.sitesProvider.getCurrentSiteUserId();
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        userId = userId || CoreSites.getCurrentSiteUserId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getGlossarySyncId(glossaryId, userId);
         if (this.isSyncing(syncId, siteId)) {
@@ -165,7 +165,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
         if (this.syncProvider.isBlocked(AddonModGlossaryProvider.COMPONENT, syncId, siteId)) {
             this.logger.debug('Cannot sync glossary ' + glossaryId + ' because it is blocked.');
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         this.logger.debug('Try to sync glossary ' + glossaryId + ' for user ' + userId);
@@ -177,7 +177,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
         };
 
         // Sync offline logs.
-        const syncPromise = this.logHelper.syncIfNeeded(AddonModGlossaryProvider.COMPONENT, glossaryId, siteId).catch(() => {
+        const syncPromise = CoreCourseLogHelper.syncIfNeeded(AddonModGlossaryProvider.COMPONENT, glossaryId, siteId).catch(() => {
             // Ignore errors.
         }).then(() => {
             // Get offline responses to be sent.
@@ -189,7 +189,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
             if (!entries.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
                 return Promise.reject(null);
             }
@@ -213,13 +213,13 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
 
                     return this.deleteAddEntry(glossaryId, data.concept, data.timecreated, siteId);
                 }).catch((error) => {
-                    if (this.utils.isWebServiceError(error)) {
+                    if (CoreUtils.isWebServiceError(error)) {
                         // The WebService has thrown an error, this means that responses cannot be submitted. Delete them.
                         result.updated = true;
 
                         return this.deleteAddEntry(glossaryId, data.concept, data.timecreated, siteId).then(() => {
                             // Responses deleted, add a warning.
-                            result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                            result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: this.componentTranslate,
                                 name: data.concept,
                                 error: this.textUtils.getErrorMessageFromError(error)
@@ -264,7 +264,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncRatings(cmId?: number, force?: boolean, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
          return this.ratingSync.syncRatings('mod_glossary', 'entry', 'module', cmId, 0, force, siteId).then((results) => {
             let updated = false;
@@ -284,7 +284,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
                     promises.push(this.glossaryProvider.getGlossary(result.itemSet.courseId, result.itemSet.instanceId, {siteId})
                             .then((glossary) => {
                         result.warnings.forEach((warning) => {
-                            warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                            warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: this.componentTranslate,
                                 name: glossary.name,
                                 error: warning
@@ -294,7 +294,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
                 }
             });
 
-            return this.utils.allPromises(promises).then(() => {
+            return CoreUtils.allPromises(promises).then(() => {
                 return { updated, warnings };
             });
         });
@@ -362,7 +362,7 @@ export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
      * @return Sync ID.
      */
     protected getGlossarySyncId(glossaryId: number, userId?: number): string {
-        userId = userId || this.sitesProvider.getCurrentSiteUserId();
+        userId = userId || CoreSites.getCurrentSiteUserId();
 
         return 'glossary#' + glossaryId + '#' + userId;
     }

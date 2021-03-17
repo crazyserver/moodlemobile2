@@ -17,7 +17,7 @@ import { AddonModDataFieldHandler } from './fields-delegate';
 /**
  * Default handler used when a field plugin doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataDefaultFieldHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataDefaultFieldHandler';
     type = 'default';

@@ -21,7 +21,7 @@ import { CoreTagProvider } from './tag';
 /**
  * Handler to treat links to tag index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreTagIndexLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreTagIndexLinkHandler';
     pattern = /\/tag\/index\.php/;
@@ -76,6 +76,6 @@ export class CoreTagIndexLinkHandler extends CoreContentLinksHandlerBase {
      * @return Whether the handler is enabled for the URL and site.
      */
     isEnabled(siteId: string, url: string, params: any, courseId?: number): boolean | Promise<boolean> {
-        return this.tagProvider.areTagsAvailable(siteId);
+        return CoreTag.areTagsAvailable(siteId);
     }
 }

@@ -23,7 +23,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /*
  * "Utils" service with helper functions for mimetypes and extensions.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreMimetypeUtilsProvider {
     protected logger: CoreLogger;
     protected extToMime = {}; // Object to map extensions -> mimetypes.
@@ -166,7 +166,7 @@ export class CoreMimetypeUtilsProvider {
         if (this.canBeEmbedded(ext)) {
             file.embedType = this.getExtensionType(ext);
 
-            path = CoreFile.instance.convertFileSrc(path || file.fileurl || file.url || (file.toURL && file.toURL()));
+            path = CoreFile.convertFileSrc(path || file.fileurl || file.url || (file.toURL && file.toURL()));
 
             if (file.embedType == 'image') {
                 return '<img src="' + path + '">';
@@ -428,9 +428,9 @@ export class CoreMimetypeUtilsProvider {
         // MIME types may include + symbol but this is not permitted in string ids.
         const safeMimetype = mimetype.replace(/\+/g, '_'),
             safeMimetypeStr = mimetypeStr.replace(/\+/g, '_'),
-            safeMimetypeTrns = this.translate.instant(langPrefix + safeMimetype, { $a: translateParams }),
-            safeMimetypeStrTrns = this.translate.instant(langPrefix + safeMimetypeStr, { $a: translateParams }),
-            defaultTrns = this.translate.instant(langPrefix + 'default', { $a: translateParams });
+            safeMimetypeTrns = Translate.instant(langPrefix + safeMimetype, { $a: translateParams }),
+            safeMimetypeStrTrns = Translate.instant(langPrefix + safeMimetypeStr, { $a: translateParams }),
+            defaultTrns = Translate.instant(langPrefix + 'default', { $a: translateParams });
         let result = mimetype;
 
         if (safeMimetypeTrns != langPrefix + safeMimetype) {
@@ -502,7 +502,7 @@ export class CoreMimetypeUtilsProvider {
      */
     getTranslatedGroupName(name: string): string {
         const key = 'assets.mimetypes.group:' + name,
-            translated = this.translate.instant(key);
+            translated = Translate.instant(key);
 
         return translated != key ? translated : name;
     }

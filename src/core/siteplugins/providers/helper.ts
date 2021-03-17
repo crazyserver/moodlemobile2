@@ -79,7 +79,7 @@ import { CoreSitePluginsBlockHandler } from '@core/siteplugins/classes/handlers/
  * @todo: Support ViewChild and similar in site plugins. Possible solution: make components and directives inject the instance
  * inside the host DOM element?
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSitePluginsHelperProvider {
     protected HANDLER_DISABLED = 'core_site_plugins_helper_handler_disabled';
 
@@ -127,7 +127,7 @@ export class CoreSitePluginsHelperProvider {
         CoreEvents.on(CoreEvents.LOGIN, (data) => {
             this.fetchSitePlugins(data.siteId).then((plugins) => {
                 // Plugins fetched, check that site hasn't changed.
-                if (data.siteId == this.sitesProvider.getCurrentSiteId() && plugins.length) {
+                if (data.siteId == CoreSites.getCurrentSiteId() && plugins.length) {
                     // Site is still the same. Load the plugins and trigger the event.
                     this.loadSitePlugins(plugins).catch((error) => {
                         this.logger.error(error);
@@ -152,7 +152,7 @@ export class CoreSitePluginsHelperProvider {
 
         // Re-load plugins restricted for courses when the list of user courses changes.
         CoreEvents.on(CoreCoursesProvider.EVENT_MY_COURSES_CHANGED, (data) => {
-            if (data && data.siteId && data.siteId == this.sitesProvider.getCurrentSiteId() && data.added && data.added.length) {
+            if (data && data.siteId && data.siteId == CoreSites.getCurrentSiteId() && data.added && data.added.length) {
                 this.reloadCourseRestrictHandlers();
             }
         });
@@ -169,7 +169,7 @@ export class CoreSitePluginsHelperProvider {
      */
     downloadStyles(plugin: any, handlerName: string, handlerSchema: any, siteId?: string): Promise<string> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Get the absolute URL. If it's a relative URL, add the site URL to it.
             let url = handlerSchema.styles && handlerSchema.styles.url;
             if (url && !this.urlUtils.isAbsoluteURL(url)) {
@@ -185,11 +185,11 @@ export class CoreSitePluginsHelperProvider {
                 componentId = uniqueName + '#main';
 
             // Remove the CSS files for this handler that aren't used anymore. Don't block the call for this.
-            this.filepoolProvider.getFilesByComponent(site.id, CoreSitePluginsProvider.COMPONENT, componentId).then((files) => {
+            CoreFilepool.getFilesByComponent(site.id, CoreSitePluginsProvider.COMPONENT, componentId).then((files) => {
                 files.forEach((file) => {
                     if (file.url != url) {
                         // It's not the current file, delete it.
-                        this.filepoolProvider.removeFileByUrl(site.id, file.url).catch(() => {
+                        CoreFilepool.removeFileByUrl(site.id, file.url).catch(() => {
                             // Ignore errors.
                         });
                     }
@@ -204,7 +204,7 @@ export class CoreSitePluginsHelperProvider {
             }
 
             // Download the file if not downloaded or the version changed.
-            return this.filepoolProvider.downloadUrl(site.id, url, false, CoreSitePluginsProvider.COMPONENT, componentId, 0,
+            return CoreFilepool.downloadUrl(site.id, url, false, CoreSitePluginsProvider.COMPONENT, componentId, 0,
                    undefined, undefined, undefined, handlerSchema.styles.version).then((url) => {
 
                 // File is downloaded, get the contents.
@@ -239,14 +239,14 @@ export class CoreSitePluginsHelperProvider {
      *         the JS (if any).
      */
     protected executeMethodAndJS(plugin: any, method: string, isInit?: boolean): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId(),
+        const siteId = CoreSites.getCurrentSiteId(),
             preSets = {
                 getFromCache: false, // Try to ignore cache.
                 deleteCacheIfWSError: isInit // If the init WS call returns an exception we won't use cached data.
             };
 
         return this.sitePluginsProvider.getContent(plugin.component, method, {}, preSets).then((result) => {
-            if (!result.javascript || this.sitesProvider.getCurrentSiteId() != siteId) {
+            if (!result.javascript || CoreSites.getCurrentSiteId() != siteId) {
                 // No javascript or site has changed, stop.
                 return result;
             }
@@ -284,7 +284,7 @@ export class CoreSitePluginsHelperProvider {
     fetchSitePlugins(siteId?: string): Promise<any[]> {
         const plugins = [];
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (!this.sitePluginsProvider.isGetContentAvailable(site)) {
                 // Cannot load site plugins, so there's no point to fetch them.
                 return plugins;
@@ -397,7 +397,7 @@ export class CoreSitePluginsHelperProvider {
             promises.push(this.registerHandler(plugin, name, plugin.parsedHandlers[name]));
         }
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -416,7 +416,7 @@ export class CoreSitePluginsHelperProvider {
             this.sitePluginsProvider.registerSitePluginPromise(plugin.component, pluginPromise);
         });
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -430,7 +430,7 @@ export class CoreSitePluginsHelperProvider {
      * @param siteId Site ID. If not provided, current site.
      */
     loadStyles(plugin: any, handlerName: string, fileUrl: string, cssCode: string, version?: number, siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Create the style and add it to the header.
         const styleEl = document.createElement('style'),
@@ -442,7 +442,7 @@ export class CoreSitePluginsHelperProvider {
         document.head.appendChild(styleEl);
 
         // Styles have been loaded, now treat the CSS.
-        this.filepoolProvider.treatCSSCode(siteId, fileUrl, cssCode, CoreSitePluginsProvider.COMPONENT, uniqueName, version)
+        CoreFilepool.treatCSSCode(siteId, fileUrl, cssCode, CoreSitePluginsProvider.COMPONENT, uniqueName, version)
                 .catch(() => {
             // Ignore errors.
         });
@@ -460,7 +460,7 @@ export class CoreSitePluginsHelperProvider {
 
         // Wait for the init JS to be executed and for the styles to be downloaded.
         const promises = [],
-            siteId = this.sitesProvider.getCurrentSiteId();
+            siteId = CoreSites.getCurrentSiteId();
         let result,
             cssCode;
 

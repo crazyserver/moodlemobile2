@@ -31,7 +31,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Service to sync messages.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_messages_autom_synced';
@@ -139,7 +139,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved with the list of warnings if sync is successful, rejected otherwise.
      */
     syncDiscussion(conversationId: number, userId: number, siteId?: string): Promise<string[]> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getSyncId(conversationId, userId);
 
@@ -176,7 +176,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
         if (!messages.length) {
             // Nothing to sync.
             return [];
-        } else if (!this.appProvider.isOnline()) {
+        } else if (!CoreApp.isOnline()) {
             // Cannot sync in offline. Mark messages as device offline.
             this.messagesOffline.setMessagesDeviceOffline(messages, true);
 
@@ -206,9 +206,9 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                     await this.messagesProvider.sendMessageOnline(userId, message.smallmessage, siteId);
                 }
             } catch (error) {
-                if (!this.utils.isWebServiceError(error)) {
+                if (!CoreUtils.isWebServiceError(error)) {
                     // Error sending, stop execution.
-                    if (this.appProvider.isOnline()) {
+                    if (CoreApp.isOnline()) {
                         // App is online, unmark deviceoffline if marked.
                         this.messagesOffline.setMessagesDeviceOffline(messages, false);
                     }
@@ -232,7 +232,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
             // In some Moodle versions, wait 1 second to make sure timecreated is different.
             // This is because there was a bug where messages with the same timecreated had a wrong order.
             if (!groupMessagingEnabled && i < messages.length - 1) {
-                await this.utils.wait(1000);
+                await CoreUtils.wait(1000);
             }
         }
 
@@ -252,7 +252,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved with the messages texts.
      */
     protected async getMessagesSentAfter(time: number, conversationId: number, userId: number, siteId: string): Promise<string[]> {
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         const siteCurrentUserId = site.getUserId();
 
@@ -315,7 +315,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                     return <AddonMessagesConversationFormatted> {};
                 }).then((conversation) => {
                     errors.forEach((error) => {
-                        warnings.push(this.translate.instant('addon.messages.warningconversationmessagenotsent', {
+                        warnings.push(Translate.instant('addon.messages.warningconversationmessagenotsent', {
                             conversation: conversation.name ? conversation.name : conversationId,
                             error: this.textUtils.getErrorMessageFromError(error)
                         }));
@@ -329,7 +329,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                     return {};
                 }).then((user) => {
                     errors.forEach((error) => {
-                        warnings.push(this.translate.instant('addon.messages.warningmessagenotsent', {
+                        warnings.push(Translate.instant('addon.messages.warningmessagenotsent', {
                             user: user.fullname ? user.fullname : userId,
                             error: this.textUtils.getErrorMessageFromError(error)
                         }));

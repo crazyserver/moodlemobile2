@@ -23,7 +23,7 @@ import { AddonModAssignFeedbackFileComponent } from '../component/file';
 /**
  * Handler for file feedback plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignFeedbackFileHandler implements AddonModAssignFeedbackHandler {
     name = 'AddonModAssignFeedbackFileHandler';
     type = 'file';

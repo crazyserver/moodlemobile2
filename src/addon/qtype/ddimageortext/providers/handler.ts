@@ -21,7 +21,7 @@ import { AddonQtypeDdImageOrTextComponent } from '../component/ddimageortext';
 /**
  * Handler to support drag-and-drop onto image question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeDdImageOrTextHandler implements CoreQuestionHandler {
     name = 'AddonQtypeDdImageOrText';
     type = 'qtype_ddimageortext';

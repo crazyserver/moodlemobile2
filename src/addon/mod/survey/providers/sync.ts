@@ -33,7 +33,7 @@ import { AddonModSurveyPrefetchHandler } from './prefetch-handler';
 /**
  * Service to sync surveys.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_survey_autom_synced';
@@ -115,7 +115,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
      * @return Promise resolved when the survey is synced or if it doesn't need to be synced.
      */
     syncSurveyIfNeeded(surveyId: number, userId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getSyncId(surveyId, userId);
 
@@ -135,7 +135,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncSurvey(surveyId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
             siteId = site.getId();
 
@@ -154,7 +154,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
             };
 
             // Sync offline logs.
-            const syncPromise = this.logHelper.syncIfNeeded(AddonModSurveyProvider.COMPONENT, surveyId, siteId).catch(() => {
+            const syncPromise = CoreCourseLogHelper.syncIfNeeded(AddonModSurveyProvider.COMPONENT, surveyId, siteId).catch(() => {
                 // Ignore errors.
             }).then(() => {
                 // Get answers to be sent.
@@ -168,7 +168,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
                     return;
                 }
 
-                if (!this.appProvider.isOnline()) {
+                if (!CoreApp.isOnline()) {
                     // Cannot sync in offline.
                     return Promise.reject(null);
                 }
@@ -182,14 +182,14 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
                     // Answers sent, delete them.
                     return this.surveyOffline.deleteSurveyAnswers(surveyId, siteId, userId);
                 }).catch((error) => {
-                    if (this.utils.isWebServiceError(error)) {
+                    if (CoreUtils.isWebServiceError(error)) {
 
                         // The WebService has thrown an error, this means that answers cannot be submitted. Delete them.
                         result.answersSent = true;
 
                         return this.surveyOffline.deleteSurveyAnswers(surveyId, siteId, userId).then(() => {
                             // Answers deleted, add a warning.
-                            result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                            result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: this.componentTranslate,
                                 name: data.name,
                                 error: this.textUtils.getErrorMessageFromError(error)
@@ -204,7 +204,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
                 if (courseId) {
                     return this.surveyProvider.invalidateSurveyData(courseId, siteId).then(() => {
                         // Data has been sent to server, update survey data.
-                        return this.courseProvider.getModuleBasicInfoByInstance(surveyId, 'survey', siteId).then((module) => {
+                        return CoreCourse.getModuleBasicInfoByInstance(surveyId, 'survey', siteId).then((module) => {
                             return this.prefetchAfterUpdate(module, courseId, undefined, siteId);
                         });
                     }).catch(() => {

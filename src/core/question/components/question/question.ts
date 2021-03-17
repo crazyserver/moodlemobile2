@@ -65,7 +65,7 @@ export class CoreQuestionComponent implements OnInit {
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.offlineEnabled = this.utils.isTrueOrOne(this.offlineEnabled);
+        this.offlineEnabled = CoreUtils.isTrueOrOne(this.offlineEnabled);
 
         if (!this.question || (this.question.type != 'random' && !this.questionDelegate.isQuestionSupported(this.question.type))) {
             this.loaded = true;
@@ -101,7 +101,7 @@ export class CoreQuestionComponent implements OnInit {
                     // Behaviour not supported, abort.
                     this.logger.warn('Aborting question because the behaviour is not supported.', this.question.name);
                     this.questionHelper.showComponentError(this.onAbort,
-                        this.translate.instant('addon.mod_quiz.errorbehaviournotsupported') + ' ' + behaviour);
+                        Translate.instant('addon.mod_quiz.errorbehaviournotsupported') + ' ' + behaviour);
 
                     return;
                 }
@@ -135,7 +135,7 @@ export class CoreQuestionComponent implements OnInit {
                             .then((comps) => {
                         this.behaviourComponents = comps;
                     }).finally(() => {
-                        this.question.html = this.domUtils.removeElementFromHtml(this.question.html, '.im-controls');
+                        this.question.html = CoreDomUtils.removeElementFromHtml(this.question.html, '.im-controls');
                         this.loaded = true;
                     });
 

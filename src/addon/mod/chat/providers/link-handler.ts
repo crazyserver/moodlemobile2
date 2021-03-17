@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to chat.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChatLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModChatLinkHandler';
 

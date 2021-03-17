@@ -21,7 +21,7 @@ import { CoreSettingsHandler, CoreSettingsHandlerData } from '@core/settings/pro
 /**
  * Notifications settings handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotificationsSettingsHandler implements CoreSettingsHandler {
     name = 'AddonNotifications';
     priority = 500;
@@ -38,7 +38,7 @@ export class AddonNotificationsSettingsHandler implements CoreSettingsHandler {
     isEnabled(): boolean | Promise<boolean> {
         // Preferences or notification sound setting available.
         return (this.notificationsProvider.isNotificationPreferencesEnabled() ||
-            this.localNotificationsProvider.isAvailable() && !this.appProvider.isDesktop());
+            this.localNotificationsProvider.isAvailable() && !CoreApp.isDesktop());
     }
 
     /**

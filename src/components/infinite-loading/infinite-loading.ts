@@ -125,7 +125,7 @@ export class CoreInfiniteLoadingComponent implements OnChanges {
      */
     protected getElementHeight(element: ElementRef): number {
         if (element && element.nativeElement) {
-            return this.domUtils.getElementHeight(element.nativeElement, true, true, true);
+            return CoreDomUtils.getElementHeight(element.nativeElement, true, true, true);
         }
 
         return 0;

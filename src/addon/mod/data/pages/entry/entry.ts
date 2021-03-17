@@ -87,7 +87,7 @@ export class AddonModDataEntryPage implements OnDestroy {
         this.siteId = sitesProvider.getCurrentSiteId();
 
         this.title = this.module.name;
-        this.moduleName = this.courseProvider.translateModuleName('data');
+        this.moduleName = CoreCourse.translateModuleName('data');
     }
 
     /**
@@ -137,30 +137,30 @@ export class AddonModDataEntryPage implements OnDestroy {
     protected fetchEntryData(refresh?: boolean, isPtr?: boolean): Promise<any> {
         this.isPullingToRefresh = isPtr;
 
-        return this.dataProvider.getDatabase(this.courseId, this.module.id).then((data) => {
+        return AddonModData.getDatabase(this.courseId, this.module.id).then((data) => {
             this.title = data.name || this.title;
             this.data = data;
 
-            return this.dataProvider.getFields(this.data.id, {cmId: this.module.id}).then((fieldsData) => {
-                this.fields = this.utils.arrayToObject(fieldsData, 'id');
+            return AddonModData.getFields(this.data.id, {cmId: this.module.id}).then((fieldsData) => {
+                this.fields = CoreUtils.arrayToObject(fieldsData, 'id');
                 this.fieldsArray = fieldsData;
             });
         }).then(() => {
             return this.setEntryFromOffset().then(() => {
-                return this.dataProvider.getDatabaseAccessInformation(this.data.id, {cmId: this.module.id});
+                return AddonModData.getDatabaseAccessInformation(this.data.id, {cmId: this.module.id});
             });
         }).then((accessData) => {
             this.access = accessData;
 
-            return this.groupsProvider.getActivityGroupInfo(this.data.coursemodule).then((groupInfo) => {
+            return CoreGroups.getActivityGroupInfo(this.data.coursemodule).then((groupInfo) => {
                 this.groupInfo = groupInfo;
-                this.selectedGroup = this.groupsProvider.validateGroupId(this.selectedGroup, groupInfo);
+                this.selectedGroup = CoreGroups.validateGroupId(this.selectedGroup, groupInfo);
             });
         }).then(() => {
-            const actions = this.dataHelper.getActions(this.data, this.access, this.entry);
+            const actions = AddonModDataHelper.getActions(this.data, this.access, this.entry);
 
-            const template = this.dataHelper.getTemplate(this.data, 'singletemplate', this.fieldsArray);
-            this.entryHtml = this.dataHelper.displayShowFields(template, this.fieldsArray, this.entry, this.offset, 'show',
+            const template = AddonModDataHelper.getTemplate(this.data, 'singletemplate', this.fieldsArray);
+            this.entryHtml = AddonModDataHelper.displayShowFields(template, this.fieldsArray, this.entry, this.offset, 'show',
                     actions);
             this.showComments = actions.comments;
 
@@ -181,9 +181,9 @@ export class AddonModDataEntryPage implements OnDestroy {
                 return this.refreshAllData(isPtr);
             }
 
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
         }).finally(() => {
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
             this.entryLoaded = true;
         });
     }
@@ -214,12 +214,12 @@ export class AddonModDataEntryPage implements OnDestroy {
     protected refreshAllData(isPtr?: boolean): Promise<any> {
         const promises = [];
 
-        promises.push(this.dataProvider.invalidateDatabaseData(this.courseId));
+        promises.push(AddonModData.invalidateDatabaseData(this.courseId));
         if (this.data) {
-            promises.push(this.dataProvider.invalidateEntryData(this.data.id, this.entryId));
-            promises.push(this.groupsProvider.invalidateActivityGroupInfo(this.data.coursemodule));
-            promises.push(this.dataProvider.invalidateEntriesData(this.data.id));
-            promises.push(this.dataProvider.invalidateFieldsData(this.data.id));
+            promises.push(AddonModData.invalidateEntryData(this.data.id, this.entryId));
+            promises.push(CoreGroups.invalidateActivityGroupInfo(this.data.coursemodule));
+            promises.push(AddonModData.invalidateEntriesData(this.data.id));
+            promises.push(AddonModData.invalidateFieldsData(this.data.id));
 
             if (this.data.comments && this.entry && this.entry.id > 0 && this.commentsEnabled && this.comments) {
                 // Refresh comments. Don't add it to promises because we don't want the comments fetch to block the entry fetch.
@@ -280,7 +280,7 @@ export class AddonModDataEntryPage implements OnDestroy {
             this.nextOffset = null;
             this.previousOffset = null;
 
-            return this.dataHelper.fetchEntry(this.data, this.fieldsArray, this.entryId).then((entry) => {
+            return AddonModDataHelper.fetchEntry(this.data, this.fieldsArray, this.entryId).then((entry) => {
                 this.entry = entry.entry;
                 this.ratingInfo = entry.ratinginfo;
             });
@@ -289,7 +289,7 @@ export class AddonModDataEntryPage implements OnDestroy {
         const perPage = AddonModDataProvider.PER_PAGE;
         const page = !emptyOffset && this.offset >= 0 ? Math.floor(this.offset / perPage) : 0;
 
-        return this.dataHelper.fetchEntries(this.data, this.fieldsArray, {
+        return AddonModDataHelper.fetchEntries(this.data, this.fieldsArray, {
             groupId: this.selectedGroup,
             sort: 0,
             order: 'DESC',
@@ -325,7 +325,7 @@ export class AddonModDataEntryPage implements OnDestroy {
                 this.nextOffset = null;
             } else {
                 // Last entry of the page, check if there are more pages.
-                promise = this.dataProvider.getEntries(this.data.id, {
+                promise = AddonModData.getEntries(this.data.id, {
                     groupId: this.selectedGroup,
                     page: page + 1,
                     perPage: perPage,
@@ -337,7 +337,7 @@ export class AddonModDataEntryPage implements OnDestroy {
             return Promise.resolve(promise).then(() => {
                 if (this.entryId > 0) {
                     // Online entry, we need to fetch the the rating info.
-                    return this.dataProvider.getEntry(this.data.id, this.entryId, {cmId: this.module.id}).then((entry) => {
+                    return AddonModData.getEntry(this.data.id, this.entryId, {cmId: this.module.id}).then((entry) => {
                         this.ratingInfo = entry.ratinginfo;
                     });
                 }
@@ -373,7 +373,7 @@ export class AddonModDataEntryPage implements OnDestroy {
      * Function called when rating is updated online.
      */
     ratingUpdated(): void {
-        this.dataProvider.invalidateEntryData(this.data.id, this.entryId);
+        AddonModData.invalidateEntryData(this.data.id, this.entryId);
     }
 
     /**
@@ -386,7 +386,7 @@ export class AddonModDataEntryPage implements OnDestroy {
             return Promise.resolve();
         }
 
-        return this.dataProvider.logView(this.data.id, this.data.name).catch(() => {
+        return AddonModData.logView(this.data.id, this.data.name).catch(() => {
             // Ignore errors, the user could be offline.
         });
     }

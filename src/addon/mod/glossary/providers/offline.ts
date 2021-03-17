@@ -21,7 +21,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Service to handle offline glossary.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryOfflineProvider {
 
     // Variables for database.
@@ -80,7 +80,7 @@ export class AddonModGlossaryOfflineProvider {
             private sitesProvider: CoreSitesProvider,
             private textUtils: CoreTextUtilsProvider,
             private utils: CoreUtilsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -93,7 +93,7 @@ export class AddonModGlossaryOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteNewEntry(glossaryId: number, concept: string, timeCreated: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 glossaryid: glossaryId,
                 concept: concept,
@@ -111,7 +111,7 @@ export class AddonModGlossaryOfflineProvider {
      * @return Promise resolved with entries.
      */
     getAllNewEntries(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModGlossaryOfflineProvider.ENTRIES_TABLE).then((records: any[]) => {
                 return records.map(this.parseRecord.bind(this));
             });
@@ -128,7 +128,7 @@ export class AddonModGlossaryOfflineProvider {
      * @return Promise resolved with entry.
      */
     getNewEntry(glossaryId: number, concept: string, timeCreated: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 glossaryid: glossaryId,
                 concept: concept,
@@ -149,7 +149,7 @@ export class AddonModGlossaryOfflineProvider {
      * @return Promise resolved with entries.
      */
     getGlossaryNewEntries(glossaryId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 glossaryid: glossaryId,
                 userId: userId || site.getUserId(),
@@ -171,7 +171,7 @@ export class AddonModGlossaryOfflineProvider {
      * @return Promise resolved with true if concept is found, false otherwise.
      */
     isConceptUsed(glossaryId: number, concept: string, timeCreated?: number, siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 glossaryid: glossaryId,
                 concept: concept,
@@ -187,7 +187,7 @@ export class AddonModGlossaryOfflineProvider {
                 }
 
                 // If there's only one entry, check that is not the one we are editing.
-                return this.utils.promiseFails(this.getNewEntry(glossaryId, concept, timeCreated, siteId));
+                return CoreUtils.promiseFails(this.getNewEntry(glossaryId, concept, timeCreated, siteId));
             });
         }).catch(() => {
             // No offline data found, return false.
@@ -212,7 +212,7 @@ export class AddonModGlossaryOfflineProvider {
      */
     addNewEntry(glossaryId: number, concept: string, definition: string, courseId: number, options?: any, attachments?: any,
             timeCreated?: number, siteId?: string, userId?: number, discardEntry?: any): Promise<false> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 glossaryid: glossaryId,
                 courseid: courseId,
@@ -247,7 +247,7 @@ export class AddonModGlossaryOfflineProvider {
      * @return Promise resolved with the path.
      */
     getGlossaryFolder(glossaryId: number, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const siteFolderPath = this.fileProvider.getSiteFolder(site.getId());
             const folderPath = 'offlineglossary/' + glossaryId;
 

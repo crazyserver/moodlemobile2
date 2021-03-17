@@ -83,7 +83,7 @@ export class AddonModChatSessionMessagesPage {
                 }
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.errorloadingcontent', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errorloadingcontent', true);
         }).finally(() => {
             this.loaded = true;
         });

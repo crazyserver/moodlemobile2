@@ -19,7 +19,7 @@ import { CorePushNotificationsProvider } from './pushnotifications';
 /**
  * Cron handler to force a register on a Moodle site when a site is manually synchronized.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CorePushNotificationsRegisterCronHandler implements CoreCronHandler {
     name = 'CorePushNotificationsRegisterCronHandler';
 

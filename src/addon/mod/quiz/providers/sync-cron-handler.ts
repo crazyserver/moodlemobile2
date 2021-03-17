@@ -19,7 +19,7 @@ import { AddonModQuizSyncProvider } from './quiz-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizSyncCronHandler implements CoreCronHandler {
     name = 'AddonModQuizSyncCronHandler';
 

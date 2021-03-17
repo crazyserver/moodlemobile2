@@ -22,7 +22,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support glossary modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModGlossary';
     modName = 'glossary';
@@ -62,7 +62,7 @@ export class AddonModGlossaryModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_glossary-handler',
             showDownloadButton: true,

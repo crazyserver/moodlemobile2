@@ -20,7 +20,7 @@ import { CoreConstants } from '../../../../constants';
 /**
  * Handler to support weeks course format.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseFormatWeeksHandler implements CoreCourseFormatHandler {
     name = 'CoreCourseFormatWeeks';
     format = 'weeks';
@@ -44,7 +44,7 @@ export class CoreCourseFormatWeeksHandler implements CoreCourseFormatHandler {
      * @return Current section (or promise resolved with current section).
      */
     getCurrentSection(course: any, sections: any[]): any | Promise<any> {
-        const now = this.timeUtils.timestamp();
+        const now = CoreTimeUtils.timestamp();
 
         if (now < course.startdate || (course.enddate && now > course.enddate)) {
             // Course hasn't started yet or it has ended already. Return all sections.

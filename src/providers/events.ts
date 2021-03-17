@@ -30,7 +30,7 @@ export interface CoreEventObserver {
 /*
  * Service to send and listen to events.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreEventsProvider {
     static SESSION_EXPIRED = 'session_expired';
     static PASSWORD_CHANGE_FORCED = 'password_change_forced';

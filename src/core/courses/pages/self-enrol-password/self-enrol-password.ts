@@ -38,7 +38,7 @@ export class CoreCoursesSelfEnrolPasswordPage {
      * Close help modal.
      */
     close(): void {
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
         this.viewCtrl.dismiss();
     }
 
@@ -52,7 +52,7 @@ export class CoreCoursesSelfEnrolPasswordPage {
         e.preventDefault();
         e.stopPropagation();
 
-        this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
         this.viewCtrl.dismiss(password);
     }

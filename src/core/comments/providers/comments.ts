@@ -22,7 +22,7 @@ import { CoreCommentsOfflineProvider } from './offline';
 /**
  * Service that provides some features regarding comments.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCommentsProvider {
 
     static REFRESH_COMMENTS_EVENT = 'core_comments_refresh_comments';
@@ -49,7 +49,7 @@ export class CoreCommentsProvider {
      */
     addComment(content: string, contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a comment to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -58,7 +58,7 @@ export class CoreCommentsProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the comment.
             return storeOffline();
         }
@@ -67,7 +67,7 @@ export class CoreCommentsProvider {
         return this.addCommentOnline(content, contextLevel, instanceId, component, itemId, area, siteId).then((comments) => {
             return comments;
         }).catch((error) => {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // It's a WebService error, the user cannot send the message so don't store it.
                 return Promise.reject(error);
             }
@@ -125,7 +125,7 @@ export class CoreCommentsProvider {
             return Promise.resolve();
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 comments: comments
             };
@@ -141,7 +141,7 @@ export class CoreCommentsProvider {
      * @return Whether it's disabled.
      */
     areCommentsDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('NoDelegate_CoreComments');
     }
@@ -153,7 +153,7 @@ export class CoreCommentsProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     areCommentsDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.areCommentsDisabledInSite(site);
         });
     }
@@ -167,7 +167,7 @@ export class CoreCommentsProvider {
      *         doesn't mean that comments have been deleted, the resolve param can contain errors for comments not deleted.
      */
     deleteComment(comment: any, siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Offline comment, just delete it.
         if (!comment.id) {
@@ -185,7 +185,7 @@ export class CoreCommentsProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the comment.
             return storeOffline();
         }
@@ -195,7 +195,7 @@ export class CoreCommentsProvider {
                 comment.area, siteId).then(() => {
             return true;
         }).catch((error) => {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // It's a WebService error, the user cannot send the comment so don't store it.
                 return Promise.reject(error);
             }
@@ -220,7 +220,7 @@ export class CoreCommentsProvider {
      */
     deleteCommentsOnline(commentIds: number[], contextLevel: string, instanceId: number, component: string, itemId: number,
             area: string = '', siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 comments: commentIds
             };
@@ -242,7 +242,7 @@ export class CoreCommentsProvider {
      * @since 3.8
      */
     isAddCommentsAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // First check if it's disabled.
             if (this.areCommentsDisabledInSite(site)) {
                 return false;
@@ -292,7 +292,7 @@ export class CoreCommentsProvider {
      */
     getComments(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '', page: number = 0,
             siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {
                 contextlevel: contextLevel,
                 instanceid: instanceId,
@@ -336,7 +336,7 @@ export class CoreCommentsProvider {
     getCommentsCount(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<string> {
 
-        siteId = siteId ? siteId : this.sitesProvider.getCurrentSiteId();
+        siteId = siteId ? siteId : CoreSites.getCurrentSiteId();
         let trueCount = false;
 
         // Convenience function to get comments number on a page.
@@ -393,9 +393,9 @@ export class CoreCommentsProvider {
      */
     invalidateCommentsData(contextLevel: string, instanceId: number, component: string, itemId: number,
             area: string = '', siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
-            return this.utils.allPromises([
+            return CoreUtils.allPromises([
                 // This is done with starting with to avoid conflicts with previous keys that were including page.
                 site.invalidateWsCacheForKeyStartingWith(this.getCommentsCacheKey(contextLevel, instanceId, component, itemId,
                     area) + ':'),
@@ -414,7 +414,7 @@ export class CoreCommentsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCommentsByInstance(contextLevel: string, instanceId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getCommentsPrefixCacheKey(contextLevel, instanceId));
         });
     }

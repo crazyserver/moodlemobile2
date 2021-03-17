@@ -53,7 +53,7 @@ export interface CoreSitePluginsHandler {
 /**
  * Service to provide functionalities regarding site plugins.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSitePluginsProvider {
     static COMPONENT = 'CoreSitePlugins';
 
@@ -83,9 +83,9 @@ export class CoreSitePluginsProvider {
         });
 
         // Initialize deferred at start and on logout.
-        this.fetchPluginsDeferred = this.utils.promiseDefer();
+        this.fetchPluginsDeferred = CoreUtils.promiseDefer();
         CoreEvents.on(CoreEvents.LOGOUT, () => {
-            this.fetchPluginsDeferred = this.utils.promiseDefer();
+            this.fetchPluginsDeferred = CoreUtils.promiseDefer();
         });
     }
 
@@ -98,12 +98,12 @@ export class CoreSitePluginsProvider {
      */
     protected addDefaultArgs(args: any, site?: CoreSite): Promise<any> {
         args = args || {};
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return this.langProvider.getCurrentLanguage().then((lang) => {
 
             // Clone the object so the original one isn't modified.
-            const argsToSend = this.utils.clone(args);
+            const argsToSend = CoreUtils.clone(args);
 
             argsToSend.userid = args.userid || site.getUserId();
             argsToSend.appid = CoreConstants.CONFIG.app_id;
@@ -111,20 +111,20 @@ export class CoreSitePluginsProvider {
             argsToSend.appversionname = CoreConstants.CONFIG.versionname;
             argsToSend.applang = lang;
             argsToSend.appcustomurlscheme = CoreConstants.CONFIG.customurlscheme;
-            argsToSend.appisdesktop = CoreApp.instance.isDesktop();
-            argsToSend.appismobile = CoreApp.instance.isMobile();
-            argsToSend.appiswide = CoreApp.instance.isWide();
+            argsToSend.appisdesktop = CoreApp.isDesktop();
+            argsToSend.appismobile = CoreApp.isMobile();
+            argsToSend.appiswide = CoreApp.isWide();
 
             if (argsToSend.appisdevice) {
-                if (CoreApp.instance.isIOS()) {
+                if (CoreApp.isIOS()) {
                     argsToSend.appplatform = 'ios';
                 } else {
                     argsToSend.appplatform = 'android';
                 }
             } else if (argsToSend.appisdesktop) {
-                if (CoreApp.instance.isMac()) {
+                if (CoreApp.isMac()) {
                     argsToSend.appplatform = 'mac';
-                } else if (CoreApp.instance.isLinux()) {
+                } else if (CoreApp.isLinux()) {
                     argsToSend.appplatform = 'linux';
                 } else {
                     argsToSend.appplatform = 'windows';
@@ -147,7 +147,7 @@ export class CoreSitePluginsProvider {
      * @return Promise resolved with the response.
      */
     callWS(method: string, data: any, preSets?: CoreSiteWSPreSets, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             preSets = preSets || {};
             preSets.cacheKey = preSets.cacheKey || this.getCallWSCacheKey(method, data);
 
@@ -174,13 +174,13 @@ export class CoreSitePluginsProvider {
             }
 
             // Now add some data returned by the init WS call.
-            data.INIT_TEMPLATES = this.utils.objectToKeyValueMap(initResult.templates, 'id', 'html');
+            data.INIT_TEMPLATES = CoreUtils.objectToKeyValueMap(initResult.templates, 'id', 'html');
             data.INIT_OTHERDATA = initResult.otherdata;
         }
 
         if (contentResult) {
             // Now add the data returned by the content WS call.
-            data.CONTENT_TEMPLATES = this.utils.objectToKeyValueMap(contentResult.templates, 'id', 'html');
+            data.CONTENT_TEMPLATES = CoreUtils.objectToKeyValueMap(contentResult.templates, 'id', 'html');
             data.CONTENT_OTHERDATA = contentResult.otherdata;
         }
 
@@ -195,7 +195,7 @@ export class CoreSitePluginsProvider {
      * @return Cache key.
      */
     getCallWSCacheKey(method: string, data: any): string {
-        return this.getCallWSCommonCacheKey(method) + ':' + this.utils.sortAndStringify(data);
+        return this.getCallWSCommonCacheKey(method) + ':' + CoreUtils.sortAndStringify(data);
     }
 
     /**
@@ -221,7 +221,7 @@ export class CoreSitePluginsProvider {
     getContent(component: string, method: string, args: any, preSets?: CoreSiteWSPreSets, siteId?: string): Promise<any> {
         this.logger.debug(`Get content for component '${component}' and method '${method}'`);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             // Add some params that will always be sent.
             return this.addDefaultArgs(args, site).then((argsToSend) => {
@@ -229,7 +229,7 @@ export class CoreSitePluginsProvider {
                 const data = {
                         component: component,
                         method: method,
-                        args: this.utils.objectToArrayOfObjects(argsToSend, 'name', 'value', true)
+                        args: CoreUtils.objectToArrayOfObjects(argsToSend, 'name', 'value', true)
                     };
 
                 preSets = preSets || {};
@@ -237,10 +237,10 @@ export class CoreSitePluginsProvider {
                 preSets.updateFrequency = typeof preSets.updateFrequency != 'undefined' ? preSets.updateFrequency :
                         CoreSite.FREQUENCY_OFTEN;
 
-                return this.sitesProvider.getCurrentSite().read('tool_mobile_get_content', data, preSets);
+                return CoreSites.getCurrentSite().read('tool_mobile_get_content', data, preSets);
             }).then((result) => {
                 if (result.otherdata) {
-                    result.otherdata = this.utils.objectToKeyValueMap(result.otherdata, 'name', 'value');
+                    result.otherdata = CoreUtils.objectToKeyValueMap(result.otherdata, 'name', 'value');
 
                     // Try to parse all properties that could be JSON encoded strings.
                     for (const name in result.otherdata) {
@@ -268,7 +268,7 @@ export class CoreSitePluginsProvider {
      * @return Cache key.
      */
     protected getContentCacheKey(component: string, method: string, args: any): string {
-        return this.ROOT_CACHE_KEY + 'content:' + component + ':' + method + ':' + this.utils.sortAndStringify(args);
+        return this.ROOT_CACHE_KEY + 'content:' + component + ':' + method + ':' + CoreUtils.sortAndStringify(args);
     }
 
     /**
@@ -324,7 +324,7 @@ export class CoreSitePluginsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllCallWSForMethod(method: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getCallWSCommonCacheKey(method));
         });
     }
@@ -339,7 +339,7 @@ export class CoreSitePluginsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCallWS(method: string, data: any, preSets?: CoreSiteWSPreSets, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             preSets = preSets || {};
 
             return site.invalidateWsCacheForKey(preSets.cacheKey || this.getCallWSCacheKey(method, data));
@@ -356,7 +356,7 @@ export class CoreSitePluginsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(component: string, callback: string, args: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getContentCacheKey(component, callback, args));
         });
     }
@@ -367,7 +367,7 @@ export class CoreSitePluginsProvider {
      * @param site The site to check. If not defined, current site.
      */
     isGetContentAvailable(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('tool_mobile_get_content');
     }
@@ -388,7 +388,7 @@ export class CoreSitePluginsProvider {
 
         if (restrictEnrolled || typeof restrictEnrolled == 'undefined') {
             // Only enabled for courses the user is enrolled to. Check if the user is enrolled in the course.
-            return this.coursesProvider.getUserCourse(courseId, true).then(() => {
+            return CoreCourses.getUserCourse(courseId, true).then(() => {
                 return true;
             }).catch(() => {
                 return false;
@@ -407,7 +407,7 @@ export class CoreSitePluginsProvider {
      * @return Whether the handler is enabled.
      */
     isHandlerEnabledForUser(userId: number, restrictCurrent?: boolean, restrict?: any): boolean {
-        if (restrictCurrent && userId != this.sitesProvider.getCurrentSite().getUserId()) {
+        if (restrictCurrent && userId != CoreSites.getCurrentSite().getUserId()) {
             // Only enabled for current user.
             return false;
         }
@@ -435,7 +435,7 @@ export class CoreSitePluginsProvider {
         if (!args) {
             args = {};
         } else {
-            args = this.utils.clone(args);
+            args = CoreUtils.clone(args);
         }
 
         otherData = otherData || {};
@@ -485,7 +485,7 @@ export class CoreSitePluginsProvider {
      */
     prefetchFunctions(component: string, args: any, handlerSchema: any, courseId?: number, module?: any, prefetch?: boolean,
             dirPath?: string, site?: CoreSite): Promise<any> {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         const promises = [];
 
@@ -530,7 +530,7 @@ export class CoreSitePluginsProvider {
 
                     // Prefetch the files in the content.
                     if (result.files && result.files.length) {
-                        subPromises.push(this.filepoolProvider.downloadOrPrefetchFiles(site.id, result.files, prefetch, false,
+                        subPromises.push(CoreFilepool.downloadOrPrefetchFiles(site.id, result.files, prefetch, false,
                             component, module.id, dirPath));
                     }
 

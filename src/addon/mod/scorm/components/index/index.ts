@@ -96,7 +96,7 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
      * Check the completion.
      */
     protected checkCompletion(): void {
-        this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+        CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
     }
 
     /**
@@ -324,8 +324,8 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
             this.scorm.grade = this.scormProvider.calculateScormGrade(this.scorm, onlineAttempts);
 
             // Add the attempts to the SCORM in array format in ASC order, and format the grades.
-            this.scorm.onlineAttempts = this.utils.objectToArray(onlineAttempts);
-            this.scorm.offlineAttempts = this.utils.objectToArray(offlineAttempts);
+            this.scorm.onlineAttempts = CoreUtils.objectToArray(onlineAttempts);
+            this.scorm.offlineAttempts = CoreUtils.objectToArray(offlineAttempts);
             this.scorm.onlineAttempts.sort((a, b) => {
                 return a.number - b.number;
             });
@@ -445,7 +445,7 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
      */
     loadOrganization(): void {
         this.loadOrganizationToc(this.currentOrganization.identifier).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
+            CoreDomUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
         });
     }
 
@@ -520,7 +520,7 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
                         }
                     }).catch((error) => {
                         if (!this.isDestroyed) {
-                            this.domUtils.showErrorModalDefault(error, this.translate.instant(
+                            CoreDomUtils.showErrorModalDefault(error, Translate.instant(
                                     'addon.mod_scorm.errordownloadscorm', {name: this.scorm.name}));
                         }
                     });

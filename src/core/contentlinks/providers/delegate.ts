@@ -133,7 +133,7 @@ export interface CoreContentLinksHandlerActions {
 /**
  * Delegate to register handlers to handle links.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreContentLinksDelegate {
     protected logger: CoreLogger;
     protected handlers: { [s: string]: CoreContentLinksHandler } = {}; // All registered handlers.
@@ -158,7 +158,7 @@ export class CoreContentLinksDelegate {
         }
 
         // Get the list of sites the URL belongs to.
-        return this.sitesProvider.getSiteIdsFromUrl(url, true, username).then((siteIds) => {
+        return CoreSites.getSiteIdsFromUrl(url, true, username).then((siteIds) => {
             const linkActions: CoreContentLinksHandlerActions[] = [],
                 promises = [],
                 params = this.urlUtils.extractUrlParams(url);
@@ -174,7 +174,7 @@ export class CoreContentLinksDelegate {
                 }
 
                 // Filter the site IDs using the isEnabled function.
-                promises.push(this.utils.filterEnabledSites(siteIds, isEnabledFn, checkAll).then((siteIds) => {
+                promises.push(CoreUtils.filterEnabledSites(siteIds, isEnabledFn, checkAll).then((siteIds) => {
                     if (!siteIds.length) {
                         // No sites supported, no actions.
                         return;
@@ -199,7 +199,7 @@ export class CoreContentLinksDelegate {
                 }));
             }
 
-            return this.utils.allPromises(promises).catch(() => {
+            return CoreUtils.allPromises(promises).catch(() => {
                 // Ignore errors.
             }).then(() => {
                 // Sort link actions by priority.
@@ -246,7 +246,7 @@ export class CoreContentLinksDelegate {
 
         if (handler.featureName) {
             // Check if the feature is disabled.
-            promise = this.sitesProvider.isFeatureDisabled(handler.featureName, siteId);
+            promise = CoreSites.isFeatureDisabled(handler.featureName, siteId);
         } else {
             promise = Promise.resolve(false);
         }

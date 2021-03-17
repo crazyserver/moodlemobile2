@@ -36,11 +36,11 @@ export class CoreLoginSiteHelpPage {
             protected translate: TranslateService,
             protected utils: CoreUtilsProvider) {
 
-        this.canScanQR = this.utils.canScanQR();
+        this.canScanQR = CoreUtils.canScanQR();
         this.urlImageHtml = CoreLoginHelperProvider.FAQ_URL_IMAGE_HTML;
         this.qrCodeImageHtml = CoreLoginHelperProvider.FAQ_QRCODE_IMAGE_HTML;
         this.setupLinkHtml = '<a href="https://moodle.com/getstarted/" title="' +
-                this.translate.instant('core.login.faqsetupsitelinktitle') + '">https://moodle.com/getstarted/</a>';
+                Translate.instant('core.login.faqsetupsitelinktitle') + '">https://moodle.com/getstarted/</a>';
     }
 
     /**

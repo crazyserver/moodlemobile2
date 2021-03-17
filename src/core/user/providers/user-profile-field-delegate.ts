@@ -65,7 +65,7 @@ export interface CoreUserProfileFieldHandlerData {
 /**
  * Service to interact with user profile fields. Provides functions to register a plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserProfileFieldDelegate extends CoreDelegate {
     protected handlerNameProperty = 'type';
 

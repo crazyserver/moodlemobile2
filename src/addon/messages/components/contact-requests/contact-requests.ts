@@ -96,7 +96,7 @@ export class AddonMessagesContactRequestsComponent implements OnInit, OnDestroy 
             this.canLoadMore = result.canLoadMore;
         }).catch((error) => {
             this.loadMoreError = true;
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingcontacts', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingcontacts', true);
         });
     }
 

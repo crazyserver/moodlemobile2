@@ -35,7 +35,7 @@ export class FileTransferErrorMock implements FileTransferError {
 /**
  * Emulates the Cordova FileTransfer plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FileTransferMock extends FileTransfer {
 
     constructor(private appProvider: CoreAppProvider, private fileProvider: CoreFileProvider) {
@@ -89,7 +89,7 @@ export class FileTransferObjectMock extends FileTransferObject {
             // Use XMLHttpRequest instead of HttpClient to support onprogress and abort.
             const basicAuthHeader = this.getBasicAuthHeader(source),
                 xhr = new XMLHttpRequest(),
-                isDesktop = this.appProvider.isDesktop();
+                isDesktop = CoreApp.isDesktop();
             let headers = null;
 
             this.xhr = xhr;

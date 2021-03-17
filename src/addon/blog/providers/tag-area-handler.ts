@@ -21,7 +21,7 @@ import { AddonBlogProvider } from './blog';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlogTagAreaHandler implements CoreTagAreaHandler {
     name = 'AddonBlogTagAreaHandler';
     type = 'core/post';

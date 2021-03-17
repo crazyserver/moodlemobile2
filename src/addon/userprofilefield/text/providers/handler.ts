@@ -20,7 +20,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Text user profile field handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonUserProfileFieldTextHandler implements CoreUserProfileFieldHandler {
     name = 'AddonUserProfileFieldText';
     type = 'text';

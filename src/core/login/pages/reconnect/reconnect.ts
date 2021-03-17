@@ -61,7 +61,7 @@ export class CoreLoginReconnectPage {
             protected domUtils: CoreDomUtilsProvider,
            ) {
 
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         this.infoSiteUrl = navParams.get('infoSiteUrl');
         this.pageName = navParams.get('pageName');
@@ -84,7 +84,7 @@ export class CoreLoginReconnectPage {
             this.getDataFromConfig(this.siteConfig);
         }
 
-        this.sitesProvider.getSite(this.siteId).then((site) => {
+        CoreSites.getSite(this.siteId).then((site) => {
             this.site = {
                 id: site.id,
                 fullname: site.infos.fullname,
@@ -102,7 +102,7 @@ export class CoreLoginReconnectPage {
             this.showSiteAvatar = this.site.avatar && !this.loginHelper.getFixedSites();
 
             return site.getPublicConfig().then((config) => {
-                return this.sitesProvider.checkApplication(config).then(() => {
+                return CoreSites.checkApplication(config).then(() => {
                     // Check logoURL if user avatar is not set.
                     if (this.site.avatar.startsWith(site.infos.siteurl + '/theme/image.php')) {
                         this.showSiteAvatar = false;
@@ -158,7 +158,7 @@ export class CoreLoginReconnectPage {
             e.stopPropagation();
         }
 
-        this.sitesProvider.logout();
+        CoreSites.logout();
     }
 
     /**
@@ -170,7 +170,7 @@ export class CoreLoginReconnectPage {
         e.preventDefault();
         e.stopPropagation();
 
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         // Get input data.
         const siteUrl = this.siteUrl,
@@ -178,27 +178,27 @@ export class CoreLoginReconnectPage {
             password = this.credForm.value.password;
 
         if (!password) {
-            this.domUtils.showErrorModal('core.login.passwordrequired', true);
+            CoreDomUtils.showErrorModal('core.login.passwordrequired', true);
 
             return;
         }
 
-        if (!this.appProvider.isOnline()) {
-            this.domUtils.showErrorModal('core.networkerrormsg', true);
+        if (!CoreApp.isOnline()) {
+            CoreDomUtils.showErrorModal('core.networkerrormsg', true);
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Start the authentication process.
-        this.sitesProvider.getUserToken(siteUrl, username, password).then((data) => {
-            return this.sitesProvider.updateSiteToken(this.infoSiteUrl, username, data.token, data.privateToken).then(() => {
+        CoreSites.getUserToken(siteUrl, username, password).then((data) => {
+            return CoreSites.updateSiteToken(this.infoSiteUrl, username, data.token, data.privateToken).then(() => {
 
-                this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
+                CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true);
 
                 // Update site info too because functions might have changed (e.g. unisntall local_mobile).
-                return this.sitesProvider.updateSiteInfoByUrl(this.infoSiteUrl, username).then(() => {
+                return CoreSites.updateSiteInfoByUrl(this.infoSiteUrl, username).then(() => {
                     // Reset fields so the data is not in the view anymore.
                     this.credForm.controls['password'].reset();
 
@@ -208,7 +208,7 @@ export class CoreLoginReconnectPage {
                     if (error.loggedout) {
                         this.loginHelper.treatUserTokenError(siteUrl, error, username, password);
                     } else {
-                        this.domUtils.showErrorModalDefault(error, 'core.login.errorupdatesite', true);
+                        CoreDomUtils.showErrorModalDefault(error, 'core.login.errorupdatesite', true);
                     }
 
                     // Error, go back to login page.
@@ -243,7 +243,7 @@ export class CoreLoginReconnectPage {
      */
     oauthClicked(provider: any): void {
         if (!this.loginHelper.openBrowserForOAuthLogin(this.siteUrl, provider, this.siteConfig.launchurl)) {
-            this.domUtils.showErrorModal('Invalid data.');
+            CoreDomUtils.showErrorModal('Invalid data.');
         }
     }
 }

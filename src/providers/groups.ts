@@ -47,7 +47,7 @@ export interface CoreGroupInfo {
 /*
  * Service to handle groups.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGroupsProvider {
     // Group mode constants.
     static NOGROUPS = 0;
@@ -84,7 +84,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the groups are retrieved.
      */
     getActivityAllowedGroups(cmId: number, userId?: number, siteId?: string, ignoreCache?: boolean): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const params = {
@@ -132,7 +132,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the groups are retrieved. If not allowed, empty array will be returned.
      */
     getActivityAllowedGroupsIfEnabled(cmId: number, userId?: number, siteId?: string, ignoreCache?: boolean): Promise<any[]> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Get real groupmode, in case it's forced by the course.
         return this.activityHasGroups(cmId, siteId, ignoreCache).then((hasGroups) => {
@@ -184,7 +184,7 @@ export class CoreGroupsProvider {
             } else {
                 // The "canaccessallgroups" field was added in 3.4. Add all participants for visible groups in previous versions.
                 if (result.canaccessallgroups || (typeof result.canaccessallgroups == 'undefined' && groupInfo.visibleGroups)) {
-                    groupInfo.groups.push({ id: 0, name: this.translate.instant('core.allparticipants') });
+                    groupInfo.groups.push({ id: 0, name: Translate.instant('core.allparticipants') });
                     groupInfo.defaultGroupId = 0;
                 } else {
                     groupInfo.defaultGroupId = result.groups[0].id;
@@ -206,7 +206,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the group mode is retrieved.
      */
     getActivityGroupMode(cmId: number, siteId?: string, ignoreCache?: boolean): Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     cmid: cmId
                 },
@@ -247,14 +247,14 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the groups are retrieved.
      */
     getAllUserGroups(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = siteId || site.getId();
 
             if (site.isVersionGreaterEqualThan('3.6')) {
                 return this.getUserGroupsInCourse(0, siteId);
             }
 
-            return this.coursesProvider.getUserCourses(false, siteId).then((courses) => {
+            return CoreCourses.getUserCourses(false, siteId).then((courses) => {
                 courses.push({ id: site.getSiteHomeId() }); // Add front page.
 
                 return this.getUserGroups(courses, siteId);
@@ -292,7 +292,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the groups are retrieved.
      */
     getUserGroupsInCourse(courseId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
             const data = {
                     userid: userId,
@@ -342,7 +342,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateActivityAllowedGroups(cmId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getActivityAllowedGroupsCacheKey(cmId, userId));
@@ -357,7 +357,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateActivityGroupMode(cmId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getActivityGroupModeCacheKey(cmId));
         });
     }
@@ -385,7 +385,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllUserGroups(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (site.isVersionGreaterEqualThan('3.6')) {
                 return this.invalidateUserGroupsInCourse(0, siteId);
             }
@@ -403,7 +403,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserGroups(courses: any[], siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const promises = courses.map((course) => {
@@ -425,7 +425,7 @@ export class CoreGroupsProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserGroupsInCourse(courseId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getUserGroupsInCourseCacheKey(courseId, userId));

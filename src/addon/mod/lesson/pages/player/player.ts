@@ -142,12 +142,12 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
 
         if (this.question && !this.eolData && !this.processData && this.originalData) {
             // Question shown. Check if there is any change.
-            if (!this.utils.basicLeftCompare(this.questionForm.getRawValue(), this.originalData, 3)) {
-                 await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            if (!CoreUtils.basicLeftCompare(this.questionForm.getRawValue(), this.originalData, 3)) {
+                 await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
             }
         }
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -177,7 +177,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
     protected callFunction(func: Function, args: any[], options: any): Promise<any> {
         return func.apply(func, args).catch((error) => {
             if (!this.offline && !this.review && this.lessonProvider.isLessonOffline(this.lesson) &&
-                    !this.utils.isWebServiceError(error)) {
+                    !CoreUtils.isWebServiceError(error)) {
                 // If it fails, go offline.
                 this.offline = true;
 
@@ -217,7 +217,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
         this.messages = [];
 
         this.loadPage(pageId).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading page');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading page');
         }).finally(() => {
             this.loaded = true;
         });
@@ -241,7 +241,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
         }).then((offlineMode) => {
             this.offline = offlineMode;
 
-            if (!offlineMode && !this.appProvider.isOnline() && this.lessonProvider.isLessonOffline(this.lesson) && !this.review) {
+            if (!offlineMode && !CoreApp.isOnline() && this.lessonProvider.isLessonOffline(this.lesson) && !this.review) {
                 // Lesson doesn't have offline data, but it allows offline and the device is offline. Use offline mode.
                 this.offline = true;
             }
@@ -272,7 +272,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
 
             if (this.review && this.navParams.get('retake') != info.attemptscount - 1) {
                 // Reviewing a retake that isn't the last one. Error.
-                return Promise.reject(this.translate.instant('addon.mod_lesson.errorreviewretakenotlast'));
+                return Promise.reject(Translate.instant('addon.mod_lesson.errorreviewretakenotlast'));
             }
 
             if (this.password) {
@@ -302,8 +302,8 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
         }).then(() => {
             this.mediaFile = this.lesson.mediafiles && this.lesson.mediafiles[0];
 
-            this.lessonWidth = this.lesson.slideshow ? this.domUtils.formatPixelsSize(this.lesson.mediawidth) : '';
-            this.lessonHeight = this.lesson.slideshow ? this.domUtils.formatPixelsSize(this.lesson.mediaheight) : '';
+            this.lessonWidth = this.lesson.slideshow ? CoreDomUtils.formatPixelsSize(this.lesson.mediawidth) : '';
+            this.lessonHeight = this.lesson.slideshow ? CoreDomUtils.formatPixelsSize(this.lesson.mediaheight) : '';
 
             return this.launchRetake(this.currentPage);
         }).then(() => {
@@ -312,7 +312,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
             // An error occurred.
             let promise;
 
-            if (this.review && this.navParams.get('retake') && this.utils.isWebServiceError(error)) {
+            if (this.review && this.navParams.get('retake') && CoreUtils.isWebServiceError(error)) {
                 // The user cannot review the retake. Unmark the retake as being finished in sync.
                 promise = this.lessonSync.deleteRetakeFinishedInSync(this.lessonId);
             } else {
@@ -320,7 +320,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
             }
 
             return promise.then(() => {
-                this.domUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
                 this.forceLeave = true;
                 this.navCtrl.pop();
 
@@ -340,7 +340,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
 
         this.messages = [];
 
-        if (this.offline && this.appProvider.isOnline()) {
+        if (this.offline && CoreApp.isOnline()) {
             // Offline mode but the app is online. Try to sync the data.
             promise = this.lessonSync.syncLesson(this.lesson.id, true, true).then((result) => {
                 if (result.warnings && result.warnings.length) {
@@ -360,7 +360,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
 
                         // Retake hasn't changed, show the warning and finish the retake in offline.
                         this.offline = false;
-                        this.domUtils.showErrorModal(error);
+                        CoreDomUtils.showErrorModal(error);
                     });
                 }
 
@@ -506,7 +506,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
                 return entry.page;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading menu.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading menu.');
         }).finally(() => {
             this.loadingMenu = false;
         });
@@ -598,7 +598,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
 
         return this.callFunction(this.lessonProvider.processPage.bind(this.lessonProvider), args, options).then((result) => {
             if (formSubmitted) {
-                this.domUtils.triggerFormSubmittedEvent(this.formElement, result.sent, this.sitesProvider.getCurrentSiteId());
+                CoreDomUtils.triggerFormSubmittedEvent(this.formElement, result.sent, CoreSites.getCurrentSiteId());
             }
 
             if (!this.offline && !this.review && this.lessonProvider.isLessonOffline(this.lesson)) {
@@ -656,7 +656,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
                 }
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error processing page');
+            CoreDomUtils.showErrorModalDefault(error, 'Error processing page');
         }).finally(() => {
             this.loaded = true;
         });
@@ -673,7 +673,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
         this.offline = false; // Don't allow offline mode in review.
 
         this.loadPage(pageId).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading page');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading page');
         }).finally(() => {
             this.loaded = true;
         });
@@ -707,7 +707,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
         this.loaded = false;
 
         this.finishRetake(true).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error finishing attempt');
+            CoreDomUtils.showErrorModalDefault(error, 'Error finishing attempt');
         }).finally(() => {
             this.loaded = true;
         });

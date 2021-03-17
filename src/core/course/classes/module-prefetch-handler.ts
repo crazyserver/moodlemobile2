@@ -81,7 +81,7 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
      * @return Promise of the current download.
      */
     addOngoingDownload(id: number, promise: Promise<any>, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const uniqueId = this.getUniqueId(id);
 
@@ -154,9 +154,9 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
      * @return Size, or promise resolved with the size.
      */
     getDownloadedSize(module: any, courseId: number): number | Promise<number> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.getFilesSizeByComponent(siteId, this.component, module.id);
+        return CoreFilepool.getFilesSizeByComponent(siteId, this.component, module.id);
     }
 
     /**
@@ -196,12 +196,12 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
             if (typeof instance.introfiles != 'undefined') {
                 return instance.introfiles;
             } else if (instance.intro) {
-                return this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(instance.intro);
+                return CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(instance.intro);
             }
         }
 
         if (module.description) {
-            return this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(module.description);
+            return CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(module.description);
         }
 
         return [];
@@ -215,7 +215,7 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
      * @return Promise of the current download.
      */
     getOngoingDownload(id: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isDownloading(id, siteId)) {
             // There's already a download ongoing, return the promise.
@@ -256,7 +256,7 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
      * @return Promise resolved when invalidated.
      */
     invalidateModule(module: any, courseId: number): Promise<any> {
-        return this.courseProvider.invalidateModule(module.id);
+        return CoreCourse.invalidateModule(module.id);
     }
 
     /**
@@ -279,7 +279,7 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
      * @return True if downloading, false otherwise.
      */
     isDownloading(id: number, siteId?: string): boolean {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return !!(this.downloadPromises[siteId] && this.downloadPromises[siteId][this.getUniqueId(id)]);
     }
@@ -338,6 +338,6 @@ export class CoreCourseModulePrefetchHandlerBase implements CoreCourseModulePref
      * @return Promise resolved when done.
      */
     removeFiles(module: any, courseId: number): Promise<any> {
-        return this.filepoolProvider.removeFilesByComponent(this.sitesProvider.getCurrentSiteId(), this.component, module.id);
+        return CoreFilepool.removeFilesByComponent(CoreSites.getCurrentSiteId(), this.component, module.id);
     }
 }

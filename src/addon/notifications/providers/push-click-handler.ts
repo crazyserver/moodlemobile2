@@ -23,7 +23,7 @@ import { AddonNotificationsProvider } from './notifications';
 /**
  * Handler for non-messaging push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotificationsPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonNotificationsPushClickHandler';
     priority = 0; // Low priority so it's used as a fallback if no other handler treats the notification.
@@ -39,7 +39,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif)) {
+        if (CoreUtils.isTrueOrOne(notification.notif)) {
             // Notification clicked, mark as read. Don't block for this.
             const notifId = notification.savedmessageid || notification.id;
 
@@ -65,7 +65,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
 
         if (notification.customdata.extendedtext) {
             // Display the text in a modal.
-            return CoreTextUtils.instance.viewText(notification.title, notification.customdata.extendedtext, {
+            return CoreTextUtils.viewText(notification.title, notification.customdata.extendedtext, {
                 displayCopyButton: true,
                 modalOptions: { cssClass: 'core-modal-fullscreen' },
             });
@@ -75,12 +75,12 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
         if (notification.customdata && notification.customdata.appurl) {
             switch (notification.customdata.appurlopenin) {
                 case 'inappbrowser':
-                    this.utils.openInApp(notification.customdata.appurl);
+                    CoreUtils.openInApp(notification.customdata.appurl);
 
                     return;
 
                 case 'browser':
-                    return this.utils.openInBrowser(notification.customdata.appurl);
+                    return CoreUtils.openInBrowser(notification.customdata.appurl);
 
                 default:
                     if (this.linkHelper.handleLink(notification.customdata.appurl, undefined, undefined, true)) {
@@ -99,7 +99,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
         }
 
         // No contexturl or cannot be handled by the app. Open the notifications page.
-        await this.utils.ignoreErrors(this.notificationsProvider.invalidateNotificationsList(notification.site));
+        await CoreUtils.ignoreErrors(this.notificationsProvider.invalidateNotificationsList(notification.site));
 
         await this.linkHelper.goInSite(undefined, 'AddonNotificationsListPage', undefined, notification.site);
     }

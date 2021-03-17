@@ -19,7 +19,7 @@ import { Observable, Subject } from 'rxjs';
 /**
  * Emulates the Ionic Network plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NetworkMock extends Network {
     type: null;
 

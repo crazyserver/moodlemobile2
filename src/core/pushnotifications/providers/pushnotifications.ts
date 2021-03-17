@@ -79,7 +79,7 @@ export interface CorePushNotificationsRegisterData {
 /**
  * Service to handle push notifications.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CorePushNotificationsProvider {
     protected logger: CoreLogger;
     protected pushID: string;
@@ -203,13 +203,13 @@ export class CorePushNotificationsProvider {
         this.dbReady = appProvider.createTablesFromSchema(this.appTablesSchema).catch(() => {
             // Ignore errors.
         });
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
 
         platform.ready().then(() => {
             // Create the default channel.
             this.createDefaultChannel();
 
-            translate.onLangChange.subscribe((event: any) => {
+            Translate.onLangChange.subscribe((event: any) => {
                 // Update the channel name.
                 this.createDefaultChannel();
             });
@@ -222,7 +222,7 @@ export class CorePushNotificationsProvider {
      * @return Whether the device can be registered in Moodle.
      */
     canRegisterOnMoodle(): boolean {
-        return this.pushID && CoreApp.instance.isMobile();
+        return this.pushID && CoreApp.isMobile();
     }
 
     /**
@@ -247,13 +247,13 @@ export class CorePushNotificationsProvider {
      * @return Promise resolved when done.
      */
     protected createDefaultChannel(): Promise<any> {
-        if (!CoreApp.instance.isAndroid()) {
+        if (!CoreApp.isAndroid()) {
             return Promise.resolve();
         }
 
         return this.push.createChannel({
             id: 'PushPluginChannel',
-            description: this.translate.instant('core.misc'),
+            description: Translate.instant('core.misc'),
             importance: 4
         }).catch((error) => {
             this.logger.error('Error changing push channel name', error);
@@ -395,9 +395,9 @@ export class CorePushNotificationsProvider {
         data = data || {};
 
         // Add "moodle" to the name of all extra params.
-        data = this.utils.prefixKeys(data, 'moodle');
+        data = CoreUtils.prefixKeys(data, 'moodle');
         data['moodleaction'] = wsName;
-        data['moodlesiteid'] = siteId || this.sitesProvider.getCurrentSiteId();
+        data['moodlesiteid'] = siteId || CoreSites.getCurrentSiteId();
 
         if (itemId) {
             data['item_id'] = itemId;
@@ -425,9 +425,9 @@ export class CorePushNotificationsProvider {
         data = data || {};
 
         // Add "moodle" to the name of all extra params.
-        data = this.utils.prefixKeys(data, 'moodle');
+        data = CoreUtils.prefixKeys(data, 'moodle');
         data['moodleaction'] = wsName;
-        data['moodlesiteid'] = siteId || this.sitesProvider.getCurrentSiteId();
+        data['moodlesiteid'] = siteId || CoreSites.getCurrentSiteId();
 
         if (itemCategory) {
             data['item_category'] = itemCategory;
@@ -442,7 +442,7 @@ export class CorePushNotificationsProvider {
      * @param notification Notification.
      */
     notificationClicked(notification: any): void {
-        this.ApplicationInit.instance.donePromise.then(() => {
+        this.ApplicationInit.donePromise.then(() => {
             this.pushNotificationsDelegate.clicked(notification);
         });
     }
@@ -457,13 +457,13 @@ export class CorePushNotificationsProvider {
     onMessageReceived(notification: any): void {
         const data = notification ? notification.additionalData : {};
 
-        this.sitesProvider.getSite(data.site).then((site) => {
+        CoreSites.getSite(data.site).then((site) => {
 
             if (typeof data.customdata == 'string') {
                 data.customdata = this.textUtils.parseJSON(data.customdata, {});
             }
 
-            if (this.utils.isTrueOrOne(data.foreground)) {
+            if (CoreUtils.isTrueOrOne(data.foreground)) {
                 // If the app is in foreground when the notification is received, it's not shown. Let's show it ourselves.
                 if (this.localNotificationsProvider.isAvailable()) {
                     const localNotif: ILocalNotification = {
@@ -480,8 +480,8 @@ export class CorePushNotificationsProvider {
                             instanceId: 0,
                             filter: true
                         },
-                        isAndroid = CoreApp.instance.isAndroid(),
-                        extraFeatures = this.utils.isTrueOrOne(data.extrafeatures);
+                        isAndroid = CoreApp.isAndroid(),
+                        extraFeatures = CoreUtils.isTrueOrOne(data.extrafeatures);
 
                     // Get the filters to apply to text and message. Don't use FIlterHelper to prevent circular dependencies.
                     this.filterProvider.canGetFilters(site.getId()).then((canGet) => {
@@ -509,7 +509,7 @@ export class CorePushNotificationsProvider {
                             // Error formatting, use the original message.
                             return notification.message;
                         }).then((formattedMessage) => {
-                            if (extraFeatures && isAndroid && this.utils.isFalseOrZero(data.notif)) {
+                            if (extraFeatures && isAndroid && CoreUtils.isFalseOrZero(data.notif)) {
                                 // It's a message, use messaging style. Ionic Native doesn't specify this option.
                                 (<any> localNotif).text = [
                                     {
@@ -544,7 +544,7 @@ export class CorePushNotificationsProvider {
                 }
 
                 // Trigger a notification received event.
-                this.ApplicationInit.instance.donePromise.then(() => {
+                this.ApplicationInit.donePromise.then(() => {
                     data.title = notification.title;
                     data.message = notification.message;
                     this.pushNotificationsDelegate.received(data);
@@ -563,7 +563,7 @@ export class CorePushNotificationsProvider {
      * @return Promise resolved when device is unregistered.
      */
     async unregisterDeviceOnMoodle(site: CoreSite): Promise<any> {
-        if (!site || !CoreApp.instance.isMobile()) {
+        if (!site || !CoreApp.isMobile()) {
             return Promise.reject(null);
         }
 
@@ -596,7 +596,7 @@ export class CorePushNotificationsProvider {
                 // Ignore errors.
             });
         } catch (error) {
-            if (!this.utils.isWebServiceError(error)) {
+            if (!CoreUtils.isWebServiceError(error)) {
                 // Store the pending unregister so it's retried again later.
                 await this.appDB.insertRecord(CorePushNotificationsProvider.PENDING_UNREGISTER_TABLE, {
                     siteid: site.id,
@@ -621,7 +621,7 @@ export class CorePushNotificationsProvider {
      */
     updateAddonCounter(addon: string, value: number, siteId?: string): Promise<any> {
         if (this.pushNotificationsDelegate.isCounterHandlerRegistered(addon)) {
-            siteId = siteId || this.sitesProvider.getCurrentSiteId();
+            siteId = siteId || CoreSites.getCurrentSiteId();
 
             return this.saveAddonBadge(value, siteId, addon).then(() => {
                 return this.updateSiteCounter(siteId).then(() => {
@@ -639,7 +639,7 @@ export class CorePushNotificationsProvider {
      * @return Promise resolved with the stored badge counter for the site.
      */
     updateAppCounter(): Promise<any> {
-        return this.sitesProvider.getSitesIds().then((sites) => {
+        return CoreSites.getSitesIds().then((sites) => {
             const promises = [];
             sites.forEach((siteId) => {
                 promises.push(this.getAddonBadge(siteId));
@@ -651,7 +651,7 @@ export class CorePushNotificationsProvider {
                     return previous + parseInt(counter, 10);
                 }, 0);
 
-                if (!CoreApp.instance.isDesktop() && !CoreApp.instance.isMobile()) {
+                if (!CoreApp.isDesktop() && !CoreApp.isMobile()) {
                     // Browser doesn't have an app badge, stop.
                     return total;
                 }
@@ -725,7 +725,7 @@ export class CorePushNotificationsProvider {
                     // Execute the callback in the Angular zone, so change detection doesn't stop working.
                     this.zone.run(() => {
                         this.pushID = data.registrationId;
-                        if (this.sitesProvider.isLoggedIn()) {
+                        if (CoreSites.isLoggedIn()) {
                             this.registerDeviceOnMoodle().catch((error) => {
                                 this.logger.warn('Can\'t register device', error);
                             });
@@ -767,7 +767,7 @@ export class CorePushNotificationsProvider {
         const data = this.getRegisterData();
         let result;
 
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         try {
 
@@ -787,7 +787,7 @@ export class CorePushNotificationsProvider {
 
             if (result.register) {
                 // Now register the device.
-                await site.write('core_user_add_user_device', this.utils.clone(data));
+                await site.write('core_user_add_user_device', CoreUtils.clone(data));
 
                 // Insert the device in the local DB.
                 try {
@@ -862,7 +862,7 @@ export class CorePushNotificationsProvider {
     protected async saveAddonBadge(value: number, siteId?: string, addon: string = 'site'): Promise<any> {
         await this.dbReady;
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const entry = {
             siteid: siteId,

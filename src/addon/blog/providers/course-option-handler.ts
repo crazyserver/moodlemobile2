@@ -26,7 +26,7 @@ import { CoreWSExternalFile } from '@services/ws';
 /**
  * Course nav handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlogCourseOptionHandler implements CoreCourseOptionsHandler {
     name = 'AddonBlog';
     priority = 100;
@@ -44,7 +44,7 @@ export class AddonBlogCourseOptionHandler implements CoreCourseOptionsHandler {
      * @return Promise resolved when done.
      */
     invalidateEnabledForCourse(courseId: number, navOptions?: any, admOptions?: any): Promise<any> {
-        return this.courseProvider.invalidateCourseBlocks(courseId);
+        return CoreCourse.invalidateCourseBlocks(courseId);
     }
 
     /**
@@ -66,7 +66,7 @@ export class AddonBlogCourseOptionHandler implements CoreCourseOptionsHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabledForCourse(courseId: number, accessData: any, navOptions?: any, admOptions?: any): boolean | Promise<boolean> {
-        return this.courseHelper.hasABlockNamed(courseId, 'blog_menu').then((enabled) => {
+        return CoreCourseHelper.hasABlockNamed(courseId, 'blog_menu').then((enabled) => {
             if (enabled && navOptions && typeof navOptions.blogs != 'undefined') {
                 return navOptions.blogs;
             }
@@ -97,7 +97,7 @@ export class AddonBlogCourseOptionHandler implements CoreCourseOptionsHandler {
      * @return Promise resolved when done.
      */
     prefetch(course: any): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         return this.blogProvider.getEntries({courseid: course.id}).then((result) => {
             return result.entries.map((entry) => {
@@ -111,7 +111,7 @@ export class AddonBlogCourseOptionHandler implements CoreCourseOptionsHandler {
                 }
 
                 if (files.length > 0) {
-                    return this.filepoolProvider.addFilesToQueue(siteId, files, entry.module, entry.id);
+                    return CoreFilepool.addFilesToQueue(siteId, files, entry.module, entry.id);
                 }
 
                 return Promise.resolve();

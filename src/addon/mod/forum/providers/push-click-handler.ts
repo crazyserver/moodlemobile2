@@ -22,7 +22,7 @@ import { AddonModForumProvider } from './forum';
 /**
  * Handler for forum push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonModForumPushClickHandler';
     priority = 200;
@@ -38,7 +38,7 @@ export class AddonModForumPushClickHandler implements CorePushNotificationsClick
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        return this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_forum' &&
+        return CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_forum' &&
                 notification.name == 'posts';
     }
 

@@ -21,7 +21,7 @@ import { AddonMessagesProvider } from './messages';
 /**
  * Handler for messaging push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonMessagesPushClickHandler';
     priority = 200;
@@ -37,7 +37,7 @@ export class AddonMessagesPushClickHandler implements CorePushNotificationsClick
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.name != 'messagecontactrequests') {
+        if (CoreUtils.isTrueOrOne(notification.notif) && notification.name != 'messagecontactrequests') {
             return false;
         }
 

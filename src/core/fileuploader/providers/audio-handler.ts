@@ -20,7 +20,7 @@ import { CoreFileUploaderHelperProvider } from './helper';
 /**
  * Handler to record an audio to upload it.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderAudioHandler implements CoreFileUploaderHandler {
     name = 'CoreFileUploaderAudio';
     priority = 1600;
@@ -36,7 +36,7 @@ export class CoreFileUploaderAudioHandler implements CoreFileUploaderHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return CoreApp.instance.isMobile() || (CoreApp.instance.canGetUserMedia() && CoreApp.instance.canRecordMedia());
+        return CoreApp.isMobile() || (CoreApp.canGetUserMedia() && CoreApp.canRecordMedia());
     }
 
     /**
@@ -46,12 +46,12 @@ export class CoreFileUploaderAudioHandler implements CoreFileUploaderHandler {
      * @return Supported mimetypes.
      */
     getSupportedMimetypes(mimetypes: string[]): string[] {
-        if (CoreApp.instance.isIOS()) {
+        if (CoreApp.isIOS()) {
             // In iOS it's recorded as WAV.
-            return this.utils.filterByRegexp(mimetypes, /^audio\/wav$/);
-        } else if (CoreApp.instance.isAndroid()) {
+            return CoreUtils.filterByRegexp(mimetypes, /^audio\/wav$/);
+        } else if (CoreApp.isAndroid()) {
             // In Android we don't know the format the audio will be recorded, so accept any audio mimetype.
-            return this.utils.filterByRegexp(mimetypes, /^audio\//);
+            return CoreUtils.filterByRegexp(mimetypes, /^audio\//);
         } else {
             // In desktop, support audio formats that are supported by MediaRecorder.
             const mediaRecorder = (<any> window).MediaRecorder;

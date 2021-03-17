@@ -19,7 +19,7 @@ import { CoreEmulatorCaptureHelperProvider } from './capture-helper';
 /**
  * Emulates the Cordova Camera plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CameraMock extends Camera {
 
     constructor(private captureHelper: CoreEmulatorCaptureHelperProvider) {

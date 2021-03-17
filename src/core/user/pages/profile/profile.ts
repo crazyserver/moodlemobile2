@@ -60,7 +60,7 @@ export class CoreUserProfilePage {
         this.userId = navParams.get('userId');
         this.courseId = navParams.get('courseId');
 
-        this.site = this.sitesProvider.getCurrentSite();
+        this.site = CoreSites.getCurrentSite();
 
         // Allow to change the profile image only in the app profile page.
         this.canChangeProfilePicture =
@@ -132,7 +132,7 @@ export class CoreUserProfilePage {
             if (this.userId == this.site.getUserId() && user.profileimageurl != this.site.getInfo().userpictureurl) {
                 // The current user image received is different than the one stored in site info. Assume the image was updated.
                 // Update the site info to get the right avatar in there.
-                return this.sitesProvider.updateSiteInfo(this.site.getId()).then(() => {
+                return CoreSites.updateSiteInfo(this.site.getId()).then(() => {
                     if (user.profileimageurl != this.site.getInfo().userpictureurl) {
                         // The image is still different, this means that the good one is the one in site info.
                         return this.refreshUser();
@@ -155,7 +155,7 @@ export class CoreUserProfilePage {
         }).catch((error) => {
             // Error is null for deleted users, do not show the modal.
             if (error) {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
             }
         });
     }
@@ -165,25 +165,25 @@ export class CoreUserProfilePage {
      */
     changeProfilePicture(): Promise<any> {
         const maxSize = -1,
-            title = this.translate.instant('core.user.newpicture'),
+            title = Translate.instant('core.user.newpicture'),
             mimetypes = this.mimetypeUtils.getGroupMimeInfo('image', 'mimetypes');
 
         return this.fileUploaderHelper.selectAndUploadFile(maxSize, title, mimetypes).then((result) => {
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             return this.userProvider.changeProfilePicture(result.itemid, this.userId).then((profileImageURL) => {
                 CoreEvents.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
                     userId: this.userId,
                     picture: profileImageURL
                 }, this.site.getId());
-                this.sitesProvider.updateSiteInfo(this.site.getId());
+                CoreSites.updateSiteInfo(this.site.getId());
                 this.refreshUser();
             }).finally(() => {
                 modal.dismiss();
             });
         }).catch((message) => {
             if (message) {
-                this.domUtils.showErrorModal(message);
+                CoreDomUtils.showErrorModal(message);
             }
         });
     }
@@ -197,8 +197,8 @@ export class CoreUserProfilePage {
         const promises = [];
 
         promises.push(this.userProvider.invalidateUserCache(this.userId));
-        promises.push(this.coursesProvider.invalidateUserNavigationOptions());
-        promises.push(this.coursesProvider.invalidateUserAdministrationOptions());
+        promises.push(CoreCourses.invalidateUserNavigationOptions());
+        promises.push(CoreCourses.invalidateUserAdministrationOptions());
 
         Promise.all(promises).finally(() => {
             this.fetchUser().finally(() => {

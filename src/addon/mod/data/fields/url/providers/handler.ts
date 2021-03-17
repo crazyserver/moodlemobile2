@@ -19,7 +19,7 @@ import { AddonModDataFieldUrlComponent } from '../component/url';
 /**
  * Handler for url data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldUrlHandler extends AddonModDataFieldTextHandler {
     name = 'AddonModDataFieldUrlHandler';
     type = 'url';
@@ -68,7 +68,7 @@ export class AddonModDataFieldUrlHandler extends AddonModDataFieldTextHandler {
      */
     getFieldsNotifications(field: any, inputData: any): string | false {
         if (field.required && (!inputData || !inputData.length || !inputData[0].value)) {
-            return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+            return Translate.instant('addon.mod_data.errormustsupplyvalue');
         }
 
         return false;

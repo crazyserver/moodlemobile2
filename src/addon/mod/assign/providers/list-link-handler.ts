@@ -21,7 +21,7 @@ import { AddonModAssignProvider } from './assign';
 /**
  * Handler to treat links to assign list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModAssignListLinkHandler';
 

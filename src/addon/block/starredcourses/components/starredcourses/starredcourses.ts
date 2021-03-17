@@ -62,15 +62,15 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
     ngOnInit(): void {
 
         // Refresh the enabled flags if enabled.
-        this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
-        this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
+        this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
+        this.downloadCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
         // Refresh the enabled flags if site is updated.
         this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
-            this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
-            this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
+            this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
+            this.downloadCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         this.coursesObserver = CoreEvents.on(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED,
                 (data: CoreCoursesMyCoursesUpdatedEventData) => {
@@ -79,7 +79,7 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
                 this.refreshCourseList();
             }
             this.refreshContent();
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         super.ngOnInit();
     }
@@ -102,19 +102,19 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
     protected invalidateContent(): Promise<any> {
         const promises = [];
 
-        promises.push(this.coursesProvider.invalidateUserCourses().finally(() => {
+        promises.push(CoreCourses.invalidateUserCourses().finally(() => {
             // Invalidate course completion data.
-            return this.utils.allPromises(this.courseIds.map((courseId) => {
+            return CoreUtils.allPromises(this.courseIds.map((courseId) => {
                 return this.courseCompletionProvider.invalidateCourseCompletion(courseId);
              }));
         }));
 
         promises.push(this.courseOptionsDelegate.clearAndInvalidateCoursesOptions());
         if (this.courseIds.length > 0) {
-            promises.push(this.coursesProvider.invalidateCoursesByField('ids', this.courseIds.join(',')));
+            promises.push(CoreCourses.invalidateCoursesByField('ids', this.courseIds.join(',')));
         }
 
-        return this.utils.allPromises(promises).finally(() => {
+        return CoreUtils.allPromises(promises).finally(() => {
             this.prefetchIconsInitialized = false;
         });
     }
@@ -128,7 +128,7 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
         const showCategories = this.block.configs && this.block.configs.displaycategories &&
             this.block.configs.displaycategories.value == '1';
 
-        return this.coursesHelper.getUserCoursesWithOptions('timemodified', 0, 'isfavourite', showCategories).then((courses) => {
+        return CoreCoursesHelper.getUserCoursesWithOptions('timemodified', 0, 'isfavourite', showCategories).then((courses) => {
             this.courses = courses;
 
             this.initPrefetchCoursesIcons();
@@ -144,7 +144,7 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
         CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_REFRESHED);
 
         try {
-            await this.coursesProvider.invalidateUserCourses();
+            await CoreCourses.invalidateUserCourses();
         } catch (error) {
             // Ignore errors.
         }
@@ -184,7 +184,7 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
 
         this.prefetchIconsInitialized = true;
 
-        this.courseHelper.initPrefetchCoursesIcons(this.courses, this.prefetchCoursesData).then((prefetch) => {
+        CoreCourseHelper.initPrefetchCoursesIcons(this.courses, this.prefetchCoursesData).then((prefetch) => {
             this.prefetchCoursesData = prefetch;
         });
     }
@@ -197,9 +197,9 @@ export class AddonBlockStarredCoursesComponent extends CoreBlockBaseComponent im
     prefetchCourses(): Promise<any> {
         const initialIcon = this.prefetchCoursesData.icon;
 
-        return this.courseHelper.prefetchCourses(this.courses, this.prefetchCoursesData).catch((error) => {
+        return CoreCourseHelper.prefetchCourses(this.courses, this.prefetchCoursesData).catch((error) => {
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
                 this.prefetchCoursesData.icon = initialIcon;
             }
         });

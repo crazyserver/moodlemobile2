@@ -30,7 +30,7 @@ import { CoreSyncProvider } from '@services/sync';
 /**
  * Service to sync notes.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_notes_autom_synced';
@@ -120,7 +120,7 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncNotes(courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isSyncing(courseId, siteId)) {
             // There's already a sync ongoing for notes, return the promise.
@@ -139,9 +139,9 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
             if (!notes.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
-                return Promise.reject(this.translate.instant('core.networkerrormsg'));
+                return Promise.reject(Translate.instant('core.networkerrormsg'));
             }
 
             const errors = [];
@@ -167,7 +167,7 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
                 });
 
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // It's a WebService error, this means the user cannot send notes.
                     errors.push(error);
                 } else {
@@ -189,9 +189,9 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
             if (!notes.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
-                return Promise.reject(this.translate.instant('core.networkerrormsg'));
+                return Promise.reject(Translate.instant('core.networkerrormsg'));
             }
 
             // Format the notes to be sent.
@@ -201,7 +201,7 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
 
             // Delete the notes.
             return this.notesProvider.deleteNotesOnline(notesToDelete, courseId, siteId).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // It's a WebService error, this means the user cannot send notes.
                     errors.push(error);
                 } else {
@@ -228,12 +228,12 @@ export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
         }).then(() => {
             if (errors && errors.length) {
                 // At least an error occurred, get course name and add errors to warnings array.
-                return this.coursesProvider.getUserCourse(courseId, true, siteId).catch(() => {
+                return CoreCourses.getUserCourse(courseId, true, siteId).catch(() => {
                     // Ignore errors.
                     return {};
                 }).then((course) => {
                     errors.forEach((error) => {
-                        warnings.push(this.translate.instant('addon.notes.warningnotenotsent', {
+                        warnings.push(Translate.instant('addon.notes.warningnotenotsent', {
                             course: course.fullname ? course.fullname : courseId,
                             error: error
                         }));

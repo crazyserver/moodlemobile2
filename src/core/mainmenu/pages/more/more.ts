@@ -66,8 +66,8 @@ export class CoreMainMenuMorePage implements OnDestroy {
         this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, this.loadSiteInfo.bind(this),
             sitesProvider.getCurrentSiteId());
         this.loadSiteInfo();
-        this.showScanQR = this.utils.canScanQR() &&
-                !this.sitesProvider.getCurrentSite().isFeatureDisabled('CoreMainMenuDelegate_QrReader');
+        this.showScanQR = CoreUtils.canScanQR() &&
+                !CoreSites.getCurrentSite().isFeatureDisabled('CoreMainMenuDelegate_QrReader');
     }
 
     /**
@@ -120,7 +120,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
      * Load the site info required by the view.
      */
     protected loadSiteInfo(): void {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         this.siteInfo = currentSite.getInfo();
         this.siteName = currentSite.getSiteName();
@@ -175,7 +175,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
      */
     scanQR(): void {
         // Scan for a QR code.
-        this.utils.scanQR().then((text) => {
+        CoreUtils.scanQR().then((text) => {
             if (text) {
                 if (this.urlSchemesProvider.isCustomURL(text)) {
                     // Is a custom URL scheme, handle it.
@@ -187,12 +187,12 @@ export class CoreMainMenuMorePage implements OnDestroy {
                     this.linkHelper.handleLink(text, undefined, this.navCtrl, true, true).then((treated) => {
                         if (!treated) {
                             // Can't handle it, open it in browser.
-                            this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(text);
+                            CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(text);
                         }
                     });
                 } else {
                     // It's not a URL, open it in a modal so the user can see it and copy it.
-                    this.textUtils.viewText(this.translate.instant('core.qrscanner'), text, {
+                    this.textUtils.viewText(Translate.instant('core.qrscanner'), text, {
                         displayCopyButton: true,
                     });
                 }
@@ -204,6 +204,6 @@ export class CoreMainMenuMorePage implements OnDestroy {
      * Logout the user.
      */
     logout(): void {
-        this.sitesProvider.logout();
+        CoreSites.logout();
     }
 }

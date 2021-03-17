@@ -45,7 +45,7 @@ export class CoreLoginSitesPage {
      * View loaded.
      */
     ngOnInit(): void {
-        this.sitesProvider.getSortedSites().then((sites) => {
+        CoreSites.getSortedSites().then((sites) => {
             if (sites.length == 0) {
                 this.loginHelper.goToAddSite(true);
             }
@@ -88,20 +88,20 @@ export class CoreLoginSitesPage {
 
         this.filterProvider.formatText(siteName, {clean: true, singleLine: true, filter: false}, [], site.id).then((siteName) => {
 
-            this.domUtils.showDeleteConfirm('core.login.confirmdeletesite', { sitename: siteName }).then(() => {
-                this.sitesProvider.deleteSite(site.id).then(() => {
+            CoreDomUtils.showDeleteConfirm('core.login.confirmdeletesite', { sitename: siteName }).then(() => {
+                CoreSites.deleteSite(site.id).then(() => {
                     this.sites.splice(index, 1);
                     this.showDelete = false;
 
                     // If there are no sites left, go to add site.
-                    this.sitesProvider.hasSites().then((hasSites) => {
+                    CoreSites.hasSites().then((hasSites) => {
                         if (!hasSites) {
                             this.loginHelper.goToAddSite(true, true);
                         }
                     });
                 }).catch((error) => {
                     this.logger.error('Error deleting site ' + site.id, error);
-                    this.domUtils.showErrorModalDefault(error, 'core.login.errordeletesite', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.login.errordeletesite', true);
                 });
             }).catch(() => {
                 // User cancelled, nothing to do.
@@ -115,15 +115,15 @@ export class CoreLoginSitesPage {
      * @param siteId The site ID.
      */
     login(siteId: string): void {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
-        this.sitesProvider.loadSite(siteId).then((loggedIn) => {
+        CoreSites.loadSite(siteId).then((loggedIn) => {
             if (loggedIn) {
                 return this.loginHelper.goToSiteInitialPage();
             }
         }).catch((error) => {
             this.logger.error('Error loading site ' + siteId, error);
-            this.domUtils.showErrorModalDefault(error, 'Error loading site.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading site.');
         }).finally(() => {
             modal.dismiss();
         });

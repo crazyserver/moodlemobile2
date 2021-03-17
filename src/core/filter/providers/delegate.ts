@@ -71,7 +71,7 @@ export interface CoreFilterHandler extends CoreDelegateHandler {
 /**
  * Delegate to register filters.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFilterDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreFilterDelegate_';
     protected handlerNameProperty = 'filterName';
@@ -97,7 +97,7 @@ export class CoreFilterDelegate extends CoreDelegate {
         // Wait for filters to be initialized.
         return this.handlersInitPromise.then(() => {
 
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((site) => {
 
             let promise: Promise<string> = Promise.resolve(text);
@@ -174,7 +174,7 @@ export class CoreFilterDelegate extends CoreDelegate {
         // Wait for filters to be initialized.
         return this.handlersInitPromise.then(() => {
 
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((site) => {
 
             let promise: Promise<any> = Promise.resolve();

@@ -20,7 +20,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Default handler used when the module doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFilterDefaultHandler implements CoreFilterHandler {
     name = 'CoreFilterDefaultHandler';
     filterName = 'default';

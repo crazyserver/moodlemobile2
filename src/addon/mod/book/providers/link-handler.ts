@@ -20,7 +20,7 @@ import { AddonModBookProvider } from './book';
 /**
  * Handler to treat links to book.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModBookLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModBookLinkHandler';
 

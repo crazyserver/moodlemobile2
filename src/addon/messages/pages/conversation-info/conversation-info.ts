@@ -64,7 +64,7 @@ export class AddonMessagesConversationInfoPage implements OnInit {
             // Now get the members.
             return this.fetchMembers();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting members.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting members.');
         });
     }
 
@@ -98,7 +98,7 @@ export class AddonMessagesConversationInfoPage implements OnInit {
      */
     loadMoreMembers(infiniteComplete?: any): Promise<any> {
         return this.fetchMembers(true).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting members.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting members.');
             this.loadMoreError = true;
         }).finally(() => {
             infiniteComplete && infiniteComplete();

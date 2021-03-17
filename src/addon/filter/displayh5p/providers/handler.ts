@@ -21,7 +21,7 @@ import { CoreH5PPlayerComponent } from '@core/h5p/components/h5p-player/h5p-play
 /**
  * Handler to support the Display H5P filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterDisplayH5PHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterDisplayH5PHandler';
     filterName = 'displayh5p';
@@ -87,12 +87,12 @@ export class AddonFilterDisplayH5PHandler extends CoreFilterDefaultHandler {
             const factory = this.factoryResolver.resolveComponentFactory(CoreH5PPlayerComponent),
                 componentRef = viewContainerRef.createComponent(factory);
 
-            componentRef.instance.src = url;
-            componentRef.instance.component = component;
-            componentRef.instance.componentId = componentId;
+            componentRef.src = url;
+            componentRef.component = component;
+            componentRef.componentId = componentId;
 
             // Move the component to its right position.
-            placeholder.parentElement.replaceChild(componentRef.instance.elementRef.nativeElement, placeholder);
+            placeholder.parentElement.replaceChild(componentRef.elementRef.nativeElement, placeholder);
         });
     }
 }

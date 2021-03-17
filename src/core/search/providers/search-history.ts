@@ -29,7 +29,7 @@ export interface CoreSearchHistoryItem {
 /**
  * Service that enables adding a history to a search box.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSearchHistoryProvider {
 
     protected static HISTORY_TABLE = 'seach_history';
@@ -70,7 +70,7 @@ export class CoreSearchHistoryProvider {
 
     constructor(protected sitesProvider: CoreSitesProvider) {
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -81,7 +81,7 @@ export class CoreSearchHistoryProvider {
      * @return Promise resolved with the list of items when done.
      */
     async getSearchHistory(searchArea: string, siteId?: string): Promise<CoreSearchHistoryItem[]> {
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
         const conditions: any = {
             searcharea: searchArea,
         };
@@ -154,7 +154,7 @@ export class CoreSearchHistoryProvider {
      * @return Resolved when done.
      */
     async insertOrUpdateSearchText(searchArea: string, text: string, siteId?: string): Promise<void> {
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
         const db = site.getDb();
 
         const exists = await this.updateExistingItem(searchArea, text, db);

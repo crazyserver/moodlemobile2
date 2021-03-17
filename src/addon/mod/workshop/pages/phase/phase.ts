@@ -66,7 +66,7 @@ export class AddonModWorkshopPhaseInfoPage {
             // This will close the modal and go to the submit.
             this.viewCtrl.dismiss(true);
         } else if (task.link) {
-            this.utils.openInBrowser(task.link);
+            CoreUtils.openInBrowser(task.link);
         }
     }
 }

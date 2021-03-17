@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the TeX notation filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterTexHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterTexHandler';
     filterName = 'tex';

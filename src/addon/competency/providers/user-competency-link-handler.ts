@@ -21,7 +21,7 @@ import { AddonCompetencyProvider } from './competency';
 /**
  * Handler to treat links to a usr competency.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyUserCompetencyLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonCompetencyUserCompetencyLinkHandler';
     pattern = /\/admin\/tool\/lp\/user_competency\.php.*([\?\&]id=\d+)/;

@@ -31,7 +31,7 @@ export class CoreSitePluginsBlockHandler extends CoreSitePluginsBaseHandler impl
             protected initResult: any, protected blockDelegate: CoreBlockDelegate) {
         super(name);
 
-        this.logger = CoreLogger.instance.getInstance('CoreSitePluginsBlockHandler');
+        this.logger = CoreLogger.getInstance('CoreSitePluginsBlockHandler');
     }
 
     /**

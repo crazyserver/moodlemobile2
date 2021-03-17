@@ -19,7 +19,7 @@ import { CoreAppProvider } from '@services/app';
 /**
  * Emulates the FileOpener plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FileOpenerMock extends FileOpener {
 
     constructor(private appProvider: CoreAppProvider) {
@@ -44,7 +44,7 @@ export class FileOpenerMock extends FileOpener {
      * @return Promise resolved when done.
      */
     open(filePath: string, fileMIMEType: string): Promise<any> {
-        if (this.appProvider.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             // It's a desktop app, send an event so the file is opened.
             // Opening the file from here (renderer process) doesn't focus the opened app, that's why an event is needed.
             // Use sendSync so we can receive the result.

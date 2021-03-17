@@ -22,7 +22,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 /**
  * Service to handle offline assign.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignOfflineProvider {
 
     protected logger: CoreLogger;
@@ -132,7 +132,7 @@ export class AddonModAssignOfflineProvider {
     constructor(private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider,
             private fileProvider: CoreFileProvider, private timeUtils: CoreTimeUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonModAssignOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -144,7 +144,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteSubmission(assignId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().deleteRecords(AddonModAssignOfflineProvider.SUBMISSIONS_TABLE,
@@ -161,7 +161,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteSubmissionGrade(assignId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().deleteRecords(AddonModAssignOfflineProvider.SUBMISSIONS_GRADES_TABLE,
@@ -206,7 +206,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with submissions.
      */
     protected getAllSubmissions(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getAllRecords(AddonModAssignOfflineProvider.SUBMISSIONS_TABLE);
         }).then((submissions) => {
 
@@ -226,7 +226,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with submissions grades.
      */
     protected getAllSubmissionsGrade(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getAllRecords(AddonModAssignOfflineProvider.SUBMISSIONS_GRADES_TABLE);
         }).then((submissions) => {
 
@@ -248,7 +248,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with submissions.
      */
     getAssignSubmissions(assignId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getRecords(AddonModAssignOfflineProvider.SUBMISSIONS_TABLE, {assignid: assignId});
         }).then((submissions) => {
 
@@ -269,7 +269,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with submissions grades.
      */
     getAssignSubmissionsGrade(assignId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getRecords(AddonModAssignOfflineProvider.SUBMISSIONS_GRADES_TABLE, {assignid: assignId});
         }).then((submissions) => {
 
@@ -292,7 +292,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with submission.
      */
     getSubmission(assignId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecord(AddonModAssignOfflineProvider.SUBMISSIONS_TABLE, {assignid: assignId, userid: userId});
@@ -314,7 +314,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with the path.
      */
     getSubmissionFolder(assignId: number, userId?: number, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const siteFolderPath = this.fileProvider.getSiteFolder(site.getId()),
@@ -334,7 +334,7 @@ export class AddonModAssignOfflineProvider {
      * @return Promise resolved with submission grade.
      */
     getSubmissionGrade(assignId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecord(AddonModAssignOfflineProvider.SUBMISSIONS_GRADES_TABLE,
@@ -408,13 +408,13 @@ export class AddonModAssignOfflineProvider {
     markSubmitted(assignId: number, courseId: number, submitted: boolean, acceptStatement: boolean, timemodified: number,
             userId?: number, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             // Check if there's a submission stored.
             return this.getSubmission(assignId, userId, site.getId()).catch(() => {
                 // No submission, create an empty one.
-                const now = this.timeUtils.timestamp();
+                const now = CoreTimeUtils.timestamp();
 
                 return {
                     assignid: assignId,
@@ -450,10 +450,10 @@ export class AddonModAssignOfflineProvider {
     saveSubmission(assignId: number, courseId: number, pluginData: any, timemodified: number, submitted: boolean, userId?: number,
             siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
-            const now = this.timeUtils.timestamp(),
+            const now = CoreTimeUtils.timestamp(),
                 entry = {
                     assignid: assignId,
                     courseid: courseId,
@@ -488,8 +488,8 @@ export class AddonModAssignOfflineProvider {
     submitGradingForm(assignId: number, userId: number, courseId: number, grade: number, attemptNumber: number, addAttempt: boolean,
             workflowState: string, applyToAll: boolean, outcomes: any, pluginData: any, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            const now = this.timeUtils.timestamp(),
+        return CoreSites.getSite(siteId).then((site) => {
+            const now = CoreTimeUtils.timestamp(),
                 entry = {
                     assignid: assignId,
                     userid: userId,

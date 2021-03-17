@@ -20,7 +20,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service to handle offline xAPI.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreXAPIOfflineProvider {
 
     // Variables for database.
@@ -71,7 +71,7 @@ export class CoreXAPIOfflineProvider {
     protected dbReady: Promise<any>; // Promise resolved when the DB schema is ready.
 
     constructor() {
-        this.dbReady = CoreSites.instance.registerSiteSchema(this.siteSchema);
+        this.dbReady = CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -186,7 +186,7 @@ export class CoreXAPIOfflineProvider {
     protected async getSiteDB(siteId: string): Promise<SQLiteDB> {
         await this.dbReady;
 
-        return CoreSites.instance.getSiteDb(siteId);
+        return CoreSites.getSiteDb(siteId);
     }
 }
 

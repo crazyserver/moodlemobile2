@@ -29,7 +29,7 @@ import { CoreEvents } from '@singletons/events';
 /**
  * Service to sync ratings.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
 
     static SYNCED_EVENT = 'core_rating_synced';
@@ -65,7 +65,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
      */
     syncRatings(component: string, ratingArea: string, contextLevel?: string, instanceId?: number, itemSetId?: number,
             force?: boolean, siteId?: string): Promise<{itemSet: CoreRatingItemSet, updated: number[], warnings: string[]}[]> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.ratingOffline.getItemSets(component, ratingArea, contextLevel, instanceId, itemSetId, siteId)
                 .then((itemSets) => {
@@ -107,7 +107,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
      */
     protected syncItemSetIfNeeded(component: string, ratingArea: string,  contextLevel: string, instanceId: number,
             itemSetId: number, siteId?: string): Promise<{updated: number[], warnings: string[]}> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getItemSetSyncId(component, ratingArea, contextLevel, instanceId, itemSetId);
 
@@ -132,7 +132,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
     protected syncItemSet(component: string, ratingArea: string, contextLevel: string, instanceId: number, itemSetId: number,
             siteId?: string): Promise<{updated: number[], warnings: string[]}> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getItemSetSyncId(component, ratingArea, contextLevel, instanceId, itemSetId);
         if (this.isSyncing(syncId, siteId)) {
@@ -150,7 +150,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
             if (!ratings.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
                 return Promise.reject(null);
             }
@@ -159,7 +159,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
                 return this.ratingProvider.addRatingOnline(component, ratingArea, rating.contextlevel, rating.instanceid,
                         rating.itemid, rating.scaleid, rating.rating, rating.rateduserid, rating.aggregation, siteId)
                         .catch((error) => {
-                    if (this.utils.isWebServiceError(error)) {
+                    if (CoreUtils.isWebServiceError(error)) {
                         warnings.push(this.textUtils.getErrorMessageFromError(error));
                     } else {
                         // Couldn't connect to server, reject.

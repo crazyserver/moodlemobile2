@@ -19,7 +19,7 @@ import { AddonMessageOutputAirnotifierProvider } from './airnotifier';
 /**
  * Airnotifier message output handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessageOutputAirnotifierHandler implements AddonMessageOutputHandler {
     name = 'AddonMessageOutputAirnotifier';
     processorName = 'airnotifier';

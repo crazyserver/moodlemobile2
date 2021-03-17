@@ -33,7 +33,7 @@ export type CoreCoursesMyCoursesUpdatedEventData = {
 /**
  * Service that provides some features regarding lists of courses and categories.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesProvider {
     static SEARCH_PER_PAGE = 20;
     static ENROL_INVALID_KEY = 'CoreCoursesEnrolInvalidKey';
@@ -65,8 +65,8 @@ export class CoreCoursesProvider {
      * @return Whether current site supports getting course options.
      */
     canGetAdminAndNavOptions(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_course_get_user_navigation_options') &&
-                this.sitesProvider.wsAvailableInCurrentSite('core_course_get_user_administration_options');
+        return CoreSites.wsAvailableInCurrentSite('core_course_get_user_navigation_options') &&
+                CoreSites.wsAvailableInCurrentSite('core_course_get_user_administration_options');
     }
 
     /**
@@ -78,7 +78,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with the categories.
      */
     getCategories(categoryId: number, addSubcategories?: boolean, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Get parent when id is the root category.
             const criteriaKey = categoryId == 0 ? 'parent' : 'id',
                 data = {
@@ -115,7 +115,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with the list of course IDs.
      */
     protected getCourseIdsForAdminAndNavOptions(courseIds: number[], siteId?: string): Promise<number[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const siteHomeId = site.getSiteHomeId();
 
             if (courseIds.length == 1) {
@@ -145,7 +145,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with the list of course IDs.
      */
     getCourseIdsIfEnrolled(courseId: number, siteId?: string): Promise<number[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const siteHomeId = site.getSiteHomeId();
 
             // Check if user is enrolled in the course.
@@ -193,7 +193,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isDownloadCourseDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isDownloadCoursesDisabledInSite(site);
         });
     }
@@ -205,7 +205,7 @@ export class CoreCoursesProvider {
      * @return Whether it's disabled.
      */
     isDownloadCourseDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isOfflineDisabled() || site.isFeatureDisabled('NoDelegate_CoreCourseDownload');
     }
@@ -217,7 +217,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isDownloadCoursesDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isDownloadCoursesDisabledInSite(site);
         });
     }
@@ -229,7 +229,7 @@ export class CoreCoursesProvider {
      * @return Whether it's disabled.
      */
     isDownloadCoursesDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isOfflineDisabled() || site.isFeatureDisabled('NoDelegate_CoreCoursesDownload');
     }
@@ -241,7 +241,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isMyCoursesDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isMyCoursesDisabledInSite(site);
         });
     }
@@ -253,7 +253,7 @@ export class CoreCoursesProvider {
      * @return Whether it's disabled.
      */
     isMyCoursesDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreMainMenuDelegate_CoreCourses');
     }
@@ -265,7 +265,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     isSearchCoursesDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isSearchCoursesDisabledInSite(site);
         });
     }
@@ -277,7 +277,7 @@ export class CoreCoursesProvider {
      * @return Whether it's disabled.
      */
     isSearchCoursesDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreCourseOptionsDelegate_search');
     }
@@ -307,7 +307,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with the methods.
      */
     getCourseEnrolmentMethods(id: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     courseid: id
                 },
@@ -338,7 +338,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the info is retrieved.
      */
     getCourseGuestEnrolmentInfo(instanceId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     instanceid: instanceId
                 },
@@ -379,7 +379,7 @@ export class CoreCoursesProvider {
             return Promise.resolve([]);
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                     options: {
                         ids: ids
@@ -472,7 +472,7 @@ export class CoreCoursesProvider {
      * @since 3.2
      */
     getCoursesByField(field?: string, value?: any, siteId?: string): Promise<any[]> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const originalValue = value;
         let hasChanged = false;
@@ -482,7 +482,7 @@ export class CoreCoursesProvider {
             field = result.field;
             value = result.value;
 
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((site) => {
             const data = {
                     field: field || '',
@@ -560,7 +560,7 @@ export class CoreCoursesProvider {
      * @since 3.8
      */
     getEnrolledCoursesByCustomField(customFieldName: string, customFieldValue: string, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                     classification: 'customfield',
                     customfieldname: customFieldName,
@@ -588,7 +588,7 @@ export class CoreCoursesProvider {
      * @since 3.2
      */
     isGetCoursesByFieldAvailable(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_course_get_courses_by_field');
     }
@@ -601,7 +601,7 @@ export class CoreCoursesProvider {
      * @since 3.2
      */
     isGetCoursesByFieldAvailableInSite(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isGetCoursesByFieldAvailable(site);
         });
     }
@@ -614,7 +614,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved with the options for each course.
      */
     getCoursesAdminAndNavOptions(courseIds: number[], siteId?: string): Promise<{ navOptions: any, admOptions: any }> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Get the list of courseIds to use based on the param.
         return this.getCourseIdsForAdminAndNavOptions(courseIds, siteId).then((courseIds) => {
@@ -674,7 +674,7 @@ export class CoreCoursesProvider {
             return Promise.resolve({});
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     courseids: courseIds
                 },
@@ -721,7 +721,7 @@ export class CoreCoursesProvider {
             return Promise.resolve({});
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     courseids: courseIds
                 },
@@ -796,14 +796,14 @@ export class CoreCoursesProvider {
      * @return Promise resolved with the courses.
      */
     getUserCourses(preferCache?: boolean, siteId?: string, strategy?: CoreSitesReadingStrategy): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const userId = site.getUserId(),
                 data: any = {
                     userid: userId
                 },
                 strategyPreSets = strategy
-                    ? this.sitesProvider.getReadingStrategyPreSets(strategy)
+                    ? CoreSites.getReadingStrategyPreSets(strategy)
                     : { omitExpires: !!preferCache },
                 preSets = {
                     cacheKey: this.getUserCoursesCacheKey(),
@@ -884,7 +884,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCategories(categoryId: number, addSubcategories?: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCategoriesCacheKey(categoryId, addSubcategories));
         });
     }
@@ -908,7 +908,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourseEnrolmentMethods(id: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCourseEnrolmentMethodsCacheKey(id));
         });
     }
@@ -921,7 +921,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourseGuestEnrolmentInfo(instanceId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCourseGuestEnrolmentInfoCacheKey(instanceId));
         });
     }
@@ -934,7 +934,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCoursesAdminAndNavOptions(courseIds: number[], siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getCourseIdsForAdminAndNavOptions(courseIds, siteId).then((ids) => {
             const promises = [];
@@ -954,7 +954,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourses(ids: number[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCoursesCacheKey(ids));
         });
     }
@@ -968,13 +968,13 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCoursesByField(field?: string, value?: any, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.fixCoursesByFieldParams(field, value, siteId).then((result) => {
             field = result.field;
             value = result.value;
 
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((site) => {
             return site.invalidateWsCacheForKey(this.getCoursesByFieldCacheKey(field, value));
         });
@@ -987,7 +987,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserAdministrationOptions(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getUserAdministrationOptionsCommonCacheKey());
         });
     }
@@ -1000,7 +1000,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserAdministrationOptionsForCourses(courseIds: number[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserAdministrationOptionsCacheKey(courseIds));
         });
     }
@@ -1012,7 +1012,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserCourses(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserCoursesCacheKey());
         });
     }
@@ -1024,7 +1024,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserNavigationOptions(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getUserNavigationOptionsCommonCacheKey());
         });
     }
@@ -1037,7 +1037,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateUserNavigationOptionsForCourses(courseIds: number[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserNavigationOptionsCacheKey(courseIds));
         });
     }
@@ -1048,7 +1048,7 @@ export class CoreCoursesProvider {
      * @return Whether guest WS is available.
      */
     isGuestWSAvailable(): boolean {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         return currentSite && currentSite.wsAvailable('enrol_guest_get_instance_info');
     }
@@ -1065,7 +1065,7 @@ export class CoreCoursesProvider {
     search(text: string, page: number = 0, perPage?: number, siteId?: string): Promise<{ total: number, courses: any[] }> {
         perPage = perPage || CoreCoursesProvider.SEARCH_PER_PAGE;
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     criterianame: 'search',
                     criteriavalue: text,
@@ -1093,7 +1093,7 @@ export class CoreCoursesProvider {
      *         with an object with code = CoreCoursesProvider.ENROL_INVALID_KEY.
      */
     selfEnrol(courseId: number, password: string = '', instanceId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const params: any = {
                     courseid: courseId,
@@ -1139,7 +1139,7 @@ export class CoreCoursesProvider {
      * @return Promise resolved when done.
      */
     setFavouriteCourse(courseId: number, favourite: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {
                     courses: [
                         {

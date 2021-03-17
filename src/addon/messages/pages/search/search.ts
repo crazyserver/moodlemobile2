@@ -107,7 +107,7 @@ export class AddonMessagesSearchPage implements OnDestroy {
      * @return Resolved when done.
      */
     search(query: string, loadMore?: 'contacts' | 'noncontacts' | 'messages', infiniteComplete?: any): Promise<any> {
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         this.query = query;
         this.disableSearch = true;
@@ -199,7 +199,7 @@ export class AddonMessagesSearchPage implements OnDestroy {
                 }
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingusers', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingusers', true);
 
             if (loadMore == 'messages') {
                 this.messages.loadMoreError = true;

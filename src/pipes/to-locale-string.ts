@@ -57,6 +57,6 @@ export class CoreToLocaleStringPipe implements PipeTransform {
             timestamp = timestamp * 1000;
         }
 
-        return this.timeUtils.userDate(timestamp, 'core.strftimedatetimeshort');
+        return CoreTimeUtils.userDate(timestamp, 'core.strftimedatetimeshort');
     }
 }

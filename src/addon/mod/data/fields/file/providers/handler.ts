@@ -22,7 +22,7 @@ import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploa
 /**
  * Handler for file data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldFileHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataFieldFileHandler';
     type = 'file';
@@ -105,7 +105,7 @@ export class AddonModDataFieldFileHandler implements AddonModDataFieldHandler {
             originalFiles = [originalFiles[0]];
         }
 
-        return this.fileUploaderProvider.areFileListDifferent(files, originalFiles);
+        return CoreFileUploader.areFileListDifferent(files, originalFiles);
     }
 
     /**
@@ -117,7 +117,7 @@ export class AddonModDataFieldFileHandler implements AddonModDataFieldHandler {
      */
     getFieldsNotifications(field: any, inputData: any): string | false {
         if (field.required && (!inputData || !inputData.length || !inputData[0].value)) {
-            return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+            return Translate.instant('addon.mod_data.errormustsupplyvalue');
         }
 
         return false;

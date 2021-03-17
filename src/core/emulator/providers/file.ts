@@ -24,7 +24,7 @@ import { FileEntryMock, DirectoryEntryMock } from '../classes/filesystem';
  * Emulates the Cordova File plugin in desktop apps and in browser.
  * Most of the code is extracted from the File class of Ionic Native.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FileMock extends File {
 
     constructor(private appProvider: CoreAppProvider, private textUtils: CoreTextUtilsProvider,
@@ -205,7 +205,7 @@ export class FileMock extends File {
      * @param fs Node module 'fs'.
      */
     protected emulateCordovaFileForDesktop(fs: any): void {
-        if (!this.appProvider.isDesktop()) {
+        if (!CoreApp.isDesktop()) {
             return;
         }
 
@@ -366,7 +366,7 @@ export class FileMock extends File {
                 PERSISTENT: 1
             };
 
-            if (this.appProvider.isDesktop()) {
+            if (CoreApp.isDesktop()) {
                 const fs = require('fs'),
                     app = require('electron').remote.app;
 

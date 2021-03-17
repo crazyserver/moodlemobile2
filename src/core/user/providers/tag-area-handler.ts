@@ -20,7 +20,7 @@ import { CoreUserTagAreaComponent } from '../components/tag-area/tag-area';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserTagAreaHandler implements CoreTagAreaHandler {
     name = 'CoreUserTagAreaHandler';
     type = 'core/user';
@@ -43,7 +43,7 @@ export class CoreUserTagAreaHandler implements CoreTagAreaHandler {
      */
     parseContent(content: string): any[] | Promise<any[]> {
         const items = [];
-        const element = this.domUtils.convertToElement(content);
+        const element = CoreDomUtils.convertToElement(content);
 
         Array.from(element.querySelectorAll('div.user-box')).forEach((userbox: HTMLElement) => {
             const item: any = {};

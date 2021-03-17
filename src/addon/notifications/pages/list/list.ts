@@ -63,12 +63,12 @@ export class AddonNotificationsListPage {
                 this.notificationsLoaded = false;
                 this.refreshNotifications();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         this.pushObserver = this.pushNotificationsDelegate.on('receive').subscribe((notification) => {
             // New notification received. If it's from current site, refresh the data.
-            if (this.isCurrentView && this.utils.isTrueOrOne(notification.notif) &&
-                    this.sitesProvider.isCurrentSite(notification.site)) {
+            if (this.isCurrentView && CoreUtils.isTrueOrOne(notification.notif) &&
+                    CoreSites.isCurrentSite(notification.site)) {
 
                 this.notificationsLoaded = false;
                 this.refreshNotifications();
@@ -99,7 +99,7 @@ export class AddonNotificationsListPage {
 
             this.markNotificationsAsRead(result.notifications);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.notifications.errorgetnotifications', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.notifications.errorgetnotifications', true);
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
         }).finally(() => {
             this.notificationsLoaded = true;
@@ -114,7 +114,7 @@ export class AddonNotificationsListPage {
         this.notificationsProvider.markAllNotificationsAsRead().catch(() => {
             // Omit failure.
         }).then(() => {
-            const siteId = this.sitesProvider.getCurrentSiteId();
+            const siteId = CoreSites.getCurrentSiteId();
             CoreEvents.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, siteId);
 
             // All marked as read, refresh the list.
@@ -147,7 +147,7 @@ export class AddonNotificationsListPage {
                 // Ignore errors.
             }).finally(() => {
                 this.notificationsProvider.invalidateNotificationsList().finally(() => {
-                    const siteId = this.sitesProvider.getCurrentSiteId();
+                    const siteId = CoreSites.getCurrentSiteId();
                     CoreEvents.trigger(AddonNotificationsProvider.READ_CHANGED_EVENT, null, siteId);
                 });
             });

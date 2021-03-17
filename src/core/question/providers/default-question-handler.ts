@@ -18,7 +18,7 @@ import { CoreQuestionBaseHandler } from '../classes/base-question-handler';
 /**
  * Default handler used when the question type doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreQuestionDefaultHandler extends CoreQuestionBaseHandler {
     name = 'CoreQuestionDefault';
     type = 'default';

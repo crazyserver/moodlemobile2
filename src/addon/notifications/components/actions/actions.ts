@@ -83,6 +83,6 @@ export class AddonNotificationsActionsComponent implements OnInit {
     protected defaultAction(siteId: string, navCtrl?: NavController): void {
         const url = (this.data && this.data.appurl) || this.contextUrl;
 
-        this.sitesProvider.getCurrentSite().openInBrowserWithAutoLogin(url);
+        CoreSites.getCurrentSite().openInBrowserWithAutoLogin(url);
     }
 }

@@ -53,7 +53,7 @@ export class AddonModH5PActivityAttemptResultsPage implements OnInit {
         try {
             await this.fetchData();
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'Error loading attempt.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading attempt.');
         } finally {
             this.loaded = true;
         }
@@ -76,9 +76,9 @@ export class AddonModH5PActivityAttemptResultsPage implements OnInit {
      * @return Promise resolved when done.
      */
     protected async fetchData(): Promise<void> {
-        this.h5pActivity = await AddonModH5PActivity.instance.getH5PActivityById(this.courseId, this.h5pActivityId);
+        this.h5pActivity = await AddonModH5PActivity.getH5PActivityById(this.courseId, this.h5pActivityId);
 
-        this.attempt = await AddonModH5PActivity.instance.getAttemptResults(this.h5pActivityId, this.attemptId, {
+        this.attempt = await AddonModH5PActivity.getAttemptResults(this.h5pActivityId, this.attemptId, {
             cmId: this.h5pActivity.coursemodule,
         });
 
@@ -92,7 +92,7 @@ export class AddonModH5PActivityAttemptResultsPage implements OnInit {
      */
     protected async fetchUserProfile(): Promise<void> {
         try {
-            this.user = await CoreUser.instance.getProfile(this.attempt.userid, this.courseId, true);
+            this.user = await CoreUser.getProfile(this.attempt.userid, this.courseId, true);
         } catch (error) {
             // Ignore errors.
         }
@@ -107,8 +107,8 @@ export class AddonModH5PActivityAttemptResultsPage implements OnInit {
 
         try {
             await Promise.all([
-                AddonModH5PActivity.instance.invalidateActivityData(this.courseId),
-                AddonModH5PActivity.instance.invalidateAttemptResults(this.h5pActivityId, this.attemptId),
+                AddonModH5PActivity.invalidateActivityData(this.courseId),
+                AddonModH5PActivity.invalidateAttemptResults(this.h5pActivityId, this.attemptId),
             ]);
         } catch (error) {
             // Ignore errors.

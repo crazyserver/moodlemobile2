@@ -19,7 +19,7 @@ import { AddonModWorkshopSyncProvider } from './sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopSyncCronHandler implements CoreCronHandler {
     name = 'AddonModWorkshopSyncCronHandler';
 

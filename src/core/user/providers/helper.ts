@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Service that provides some features regarding users information.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserHelperProvider {
     protected logger: CoreLogger;
 
@@ -36,7 +36,7 @@ export class CoreUserHelperProvider {
      * @return Formatted address.
      */
     formatAddress(address: string, city: string, country: string): string {
-        const separator = this.translate.instant('core.listsep');
+        const separator = Translate.instant('core.listsep');
         let values = [address, city, country];
 
         values = values.filter((value) => {
@@ -57,10 +57,10 @@ export class CoreUserHelperProvider {
             return '';
         }
 
-        const separator = this.translate.instant('core.listsep');
+        const separator = Translate.instant('core.listsep');
 
         return roles.map((value) => {
-            const translation = this.translate.instant('core.user.' + value.shortname);
+            const translation = Translate.instant('core.user.' + value.shortname);
 
             return translation.indexOf('core.user.') < 0 ? translation : value.shortname;
         }).join(separator + ' ');

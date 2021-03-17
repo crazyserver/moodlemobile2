@@ -73,7 +73,7 @@ export class CoreGradesCoursesPage {
                this.grades = grades;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading grades');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading grades');
         });
     }
 

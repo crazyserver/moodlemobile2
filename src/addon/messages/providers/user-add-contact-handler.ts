@@ -24,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Profile add/remove contact handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandler, OnDestroy {
     /**
      * Update handler information event.
@@ -66,7 +66,7 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
      * @return Promise resolved with true if enabled, resolved with false otherwise.
      */
     isEnabledForUser(user: any, courseId: number, navOptions?: any, admOptions?: any): boolean | Promise<boolean> {
-        return user.id != this.sitesProvider.getCurrentSiteUserId();
+        return user.id != CoreSites.getCurrentSiteUserId();
     }
 
     /**
@@ -94,17 +94,17 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
 
                 this.messagesProvider.isContact(user.id).then((isContact) => {
                     if (isContact) {
-                        const message = this.translate.instant('addon.messages.removecontactconfirm', {$a: user.fullname});
-                        const okText = this.translate.instant('core.remove');
+                        const message = Translate.instant('addon.messages.removecontactconfirm', {$a: user.fullname});
+                        const okText = Translate.instant('core.remove');
 
-                        return this.domUtils.showConfirm(message, undefined, okText).then(() => {
+                        return CoreDomUtils.showConfirm(message, undefined, okText).then(() => {
                             return this.messagesProvider.removeContact(user.id);
                         });
                     } else {
                         return this.addContact(user);
                     }
                 }).catch((error) => {
-                    this.domUtils.showErrorModalDefault(error, 'core.error', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
                 }).finally(() => {
                     CoreEvents.trigger(AddonMessagesAddContactUserHandler.UPDATED_EVENT, {userId: user.id});
                     this.checkButton(user.id).finally(() => {
@@ -173,26 +173,26 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
         }
 
         return this.messagesProvider.getMemberInfo(user.id).then((member) => {
-            const currentUserId = this.sitesProvider.getCurrentSiteUserId();
+            const currentUserId = CoreSites.getCurrentSiteUserId();
             const requestSent = member.contactrequests.some((request) => {
                 return request.userid == currentUserId && request.requesteduserid == user.id;
             });
 
             if (requestSent) {
-                const message = this.translate.instant('addon.messages.yourcontactrequestpending', {$a: user.fullname});
+                const message = Translate.instant('addon.messages.yourcontactrequestpending', {$a: user.fullname});
 
-               return this.domUtils.showAlert(null, message);
+               return CoreDomUtils.showAlert(null, message);
             }
 
-            const message = this.translate.instant('addon.messages.addcontactconfirm', {$a: user.fullname});
-            const okText = this.translate.instant('core.add');
+            const message = Translate.instant('addon.messages.addcontactconfirm', {$a: user.fullname});
+            const okText = Translate.instant('core.add');
 
-            return this.domUtils.showConfirm(message, undefined, okText).then(() => {
+            return CoreDomUtils.showConfirm(message, undefined, okText).then(() => {
                 return this.messagesProvider.createContactRequest(user.id);
             }).then(() => {
-                const message = this.translate.instant('addon.messages.contactrequestsent');
+                const message = Translate.instant('addon.messages.contactrequestsent');
 
-                return this.domUtils.showAlert(null, message);
+                return CoreDomUtils.showAlert(null, message);
             });
         });
     }

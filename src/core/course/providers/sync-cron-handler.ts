@@ -19,7 +19,7 @@ import { CoreCourseSyncProvider } from './sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseSyncCronHandler implements CoreCronHandler {
     name = 'CoreCourseSyncCronHandler';
 

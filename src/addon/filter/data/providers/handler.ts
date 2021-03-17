@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Database auto-link filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterDataHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterDataHandler';
     filterName = 'data';

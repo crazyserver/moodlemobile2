@@ -41,7 +41,7 @@ export class CoreCoursesCourseListItemComponent implements OnInit {
      */
     ngOnInit(): void {
         // Check if the user is enrolled in the course.
-        this.coursesProvider.getUserCourse(this.course.id).then(() => {
+        CoreCourses.getUserCourse(this.course.id).then(() => {
             this.course.isEnrolled = true;
         }).catch(() => {
             this.course.isEnrolled = false;
@@ -50,17 +50,17 @@ export class CoreCoursesCourseListItemComponent implements OnInit {
             this.course.enrollmentmethods.forEach((instance) => {
                 if (instance === 'self') {
                     this.course.enrollment.push({
-                        name: this.translate.instant('core.courses.selfenrolment'),
+                        name: Translate.instant('core.courses.selfenrolment'),
                         icon: 'unlock'
                     });
                 } else if (instance === 'guest') {
                     this.course.enrollment.push({
-                        name: this.translate.instant('core.courses.allowguests'),
+                        name: Translate.instant('core.courses.allowguests'),
                         icon: 'person'
                     });
                 } else if (instance === 'paypal') {
                     this.course.enrollment.push({
-                        name: this.translate.instant('core.courses.paypalaccepted'),
+                        name: Translate.instant('core.courses.paypalaccepted'),
                         img: 'assets/img/icons/paypal.png'
                     });
                 }
@@ -68,7 +68,7 @@ export class CoreCoursesCourseListItemComponent implements OnInit {
 
             if (this.course.enrollment.length == 0) {
                 this.course.enrollment.push({
-                    name: this.translate.instant('core.courses.notenrollable'),
+                    name: Translate.instant('core.courses.notenrollable'),
                     icon: 'lock'
                 });
             }
@@ -82,7 +82,7 @@ export class CoreCoursesCourseListItemComponent implements OnInit {
      */
     openCourse(course: any): void {
         if (course.isEnrolled) {
-            this.courseHelper.openCourse(this.navCtrl, course);
+            CoreCourseHelper.openCourse(this.navCtrl, course);
         } else {
             this.navCtrl.push('CoreCoursesCoursePreviewPage', {course: course});
         }

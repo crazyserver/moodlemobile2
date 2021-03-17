@@ -20,7 +20,7 @@ import { CoreTagFeedComponent } from '@core/tag/components/feed/feed';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumTagAreaHandler implements CoreTagAreaHandler {
     name = 'AddonModForumTagAreaHandler';
     type = 'mod_forum/forum_posts';

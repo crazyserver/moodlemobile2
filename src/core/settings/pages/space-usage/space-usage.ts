@@ -40,7 +40,7 @@ export class CoreSettingsSpaceUsagePage {
             protected domUtils: CoreDomUtilsProvider,
             protected translate: TranslateService,
     ) {
-        this.currentSiteId = this.sitesProvider.getCurrentSiteId();
+        this.currentSiteId = CoreSites.getCurrentSiteId();
     }
 
     /**
@@ -62,7 +62,7 @@ export class CoreSettingsSpaceUsagePage {
         let totalSize = 0;
         let totalEntries = 0;
 
-        this.sites = await this.sitesProvider.getSortedSites();
+        this.sites = await CoreSites.getSortedSites();
 
         // Get space usage.
         await Promise.all(this.sites.map(async (site) => {
@@ -110,8 +110,8 @@ export class CoreSettingsSpaceUsagePage {
      * Show information about space usage actions.
      */
     showInfo(): void {
-        this.domUtils.showAlert(this.translate.instant('core.help'),
-            this.translate.instant('core.settings.spaceusagehelp'));
+        CoreDomUtils.showAlert(Translate.instant('core.help'),
+            Translate.instant('core.settings.spaceusagehelp'));
     }
 }
 

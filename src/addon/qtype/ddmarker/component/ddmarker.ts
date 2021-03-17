@@ -56,13 +56,13 @@ export class AddonQtypeDdMarkerComponent extends CoreQuestionBaseComponent imple
             return this.questionHelper.showComponentError(this.onAbort);
         }
 
-        const element = this.domUtils.convertToElement(this.question.html);
+        const element = CoreDomUtils.convertToElement(this.question.html);
 
         // Get D&D area, form and question text.
         const ddArea = element.querySelector('.ddarea'),
             ddForm = element.querySelector('.ddform');
 
-        this.question.text = this.domUtils.getContentsOfElement(element, '.qtext');
+        this.question.text = CoreDomUtils.getContentsOfElement(element, '.qtext');
         if (!ddArea || !ddForm || typeof this.question.text == 'undefined') {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
 
@@ -136,15 +136,15 @@ export class AddonQtypeDdMarkerComponent extends CoreQuestionBaseComponent imple
         if (!this.destroyed) {
             // Download background image (3.6+ sites).
             let promise = null;
-            const site = this.sitesProvider.getCurrentSite();
+            const site = CoreSites.getCurrentSite();
             if (this.imgSrc && site.canDownloadFiles() && this.urlUtils.isPluginFileUrl(this.imgSrc)) {
-                promise = this.filepoolProvider.getSrcByUrl(site.id, this.imgSrc, this.component, this.componentId, 0, true, true);
+                promise = CoreFilepool.getSrcByUrl(site.id, this.imgSrc, this.component, this.componentId, 0, true, true);
              } else {
                 promise = Promise.resolve(this.imgSrc);
             }
 
             promise.then((imgSrc) => {
-                this.domUtils.waitForImages(this.questionTextEl.nativeElement).then(() => {
+                CoreDomUtils.waitForImages(this.questionTextEl.nativeElement).then(() => {
                     // Create the instance.
                     this.questionInstance = new AddonQtypeDdMarkerQuestion(this.loggerProvider, this.domUtils, this.textUtils,
                             this.element, this.question, this.question.readOnly, this.dropZones, imgSrc);

@@ -116,7 +116,7 @@ export class CoreSitePluginsPluginContentComponent implements OnInit, DoCheck {
             this.content = '<div></div>';
             this.onContentLoaded.emit(refresh);
 
-            this.domUtils.showErrorModalDefault(error, 'core.errorloadingcontent', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errorloadingcontent', true);
         }).finally(() => {
             this.dataLoaded = true;
         });

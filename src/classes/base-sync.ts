@@ -73,7 +73,7 @@ export class CoreSyncBaseProvider {
      * @param error Specific error message.
      */
     protected addOfflineDataDeletedWarning(warnings: string[], component: string, name: string, error: string): void {
-        const warning = this.translate.instant('core.warningofflinedatadeleted', {
+        const warning = Translate.instant('core.warningofflinedatadeleted', {
             component: component,
             name: name,
             error: error,
@@ -93,7 +93,7 @@ export class CoreSyncBaseProvider {
      * @return The sync promise.
      */
     addOngoingSync<T>(id: string | number, promise: Promise<T>, siteId?: string): Promise<T> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const uniqueId = this.getUniqueSyncId(id);
         if (!this.syncPromises[siteId]) {
@@ -116,7 +116,7 @@ export class CoreSyncBaseProvider {
      * @return Promise of the current sync or undefined if there isn't any.
      */
     getOngoingSync(id: string | number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isSyncing(id, siteId)) {
             // There's already a sync ongoing for this discussion, return the promise.
@@ -147,9 +147,9 @@ export class CoreSyncBaseProvider {
      */
     getReadableTimeFromTimestamp(timestamp: number): string {
         if (!timestamp) {
-            return this.translate.instant('core.never');
+            return Translate.instant('core.never');
         } else {
-            return this.timeUtils.userDate(timestamp);
+            return CoreTimeUtils.userDate(timestamp);
         }
     }
 
@@ -201,7 +201,7 @@ export class CoreSyncBaseProvider {
      * @return Whether it's synchronizing.
      */
     isSyncing(id: string | number, siteId?: string): boolean {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const uniqueId = this.getUniqueSyncId(id);
 
@@ -259,7 +259,7 @@ export class CoreSyncBaseProvider {
      * @return Resolved with siteIds selected. Rejected if offline.
      */
     syncOnSites(syncFunctionLog: string, syncFunction: Function, params?: any[], siteId?: string): Promise<any> {
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             this.logger.debug(`Cannot sync '${syncFunctionLog}' because device is offline.`);
 
             return Promise.reject(null);
@@ -269,7 +269,7 @@ export class CoreSyncBaseProvider {
         if (!siteId) {
             // No site ID defined, sync all sites.
             this.logger.debug(`Try to sync '${syncFunctionLog}' in all sites.`);
-            promise = this.sitesProvider.getLoggedInSitesIds();
+            promise = CoreSites.getLoggedInSitesIds();
         } else {
             this.logger.debug(`Try to sync '${syncFunctionLog}' in site '${siteId}'.`);
             promise = Promise.resolve([siteId]);

@@ -27,7 +27,7 @@ import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/hel
 /**
  * Helper service that provides some features for quiz.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizHelperProvider {
 
     constructor(private domUtils: CoreDomUtilsProvider, private translate: TranslateService, private utils: CoreUtilsProvider,
@@ -88,7 +88,7 @@ export class AddonModQuizHelperProvider {
                     // Show error and ask for the preflight again.
                     // Wait to show the error because we want it to be shown over the preflight modal.
                     setTimeout(() => {
-                        this.domUtils.showErrorModalDefault(error, 'core.error', true);
+                        CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
                     }, 100);
 
                     return this.getAndCheckPreflightData(quiz, accessInfo, preflightData, attempt, offline, prefetch,
@@ -121,7 +121,7 @@ export class AddonModQuizHelperProvider {
         });
 
         if (notSupported.length) {
-            return Promise.reject(this.translate.instant('addon.mod_quiz.errorrulesnotsupported') + ' ' +
+            return Promise.reject(Translate.instant('addon.mod_quiz.errorrulesnotsupported') + ' ' +
                     JSON.stringify(notSupported));
         }
 
@@ -143,7 +143,7 @@ export class AddonModQuizHelperProvider {
                 if (typeof data != 'undefined') {
                     resolve(data);
                 } else {
-                    reject(this.domUtils.createCanceledError());
+                    reject(CoreDomUtils.createCanceledError());
                 }
             });
         });
@@ -157,9 +157,9 @@ export class AddonModQuizHelperProvider {
      * @return Question's mark.
      */
     getQuestionMarkFromHtml(html: string): string {
-        const element = this.domUtils.convertToElement(html);
+        const element = CoreDomUtils.convertToElement(html);
 
-        return this.domUtils.getContentsOfElement(element, '.grade');
+        return CoreDomUtils.getContentsOfElement(element, '.grade');
     }
 
     /**
@@ -193,9 +193,9 @@ export class AddonModQuizHelperProvider {
      */
     handleReviewLink(navCtrl: NavController, attemptId: number, page?: number, courseId?: number, quizId?: number,
             siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         let promise;
 
         if (quizId) {
@@ -212,7 +212,7 @@ export class AddonModQuizHelperProvider {
             if (courseId) {
                 return courseId;
             } else {
-                return this.courseHelper.getModuleCourseIdByInstance(quizId, 'quiz', siteId);
+                return CoreCourseHelper.getModuleCourseIdByInstance(quizId, 'quiz', siteId);
             }
         }).then((courseId) => {
             // Go to the review page.
@@ -226,7 +226,7 @@ export class AddonModQuizHelperProvider {
             return this.linkHelper.goInSite(navCtrl, 'AddonModQuizReviewPage', pageParams, siteId);
         }).catch((error) => {
 
-            this.domUtils.showErrorModalDefault(error, 'An error occurred while loading the required data.');
+            CoreDomUtils.showErrorModalDefault(error, 'An error occurred while loading the required data.');
         }).finally(() => {
             modal.dismiss();
         });
@@ -338,7 +338,7 @@ export class AddonModQuizHelperProvider {
 
             return attempt;
         }).catch((error) => {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // The WebService returned an error, assume the preflight failed.
                 this.accessRuleDelegate.notifyPreflightCheckFailed(rules, quiz, attempt, preflightData, prefetch, siteId);
             }

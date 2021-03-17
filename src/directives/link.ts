@@ -60,7 +60,7 @@ export class CoreLinkDirective implements OnInit {
      * Function executed when the component is initialized.
      */
     ngOnInit(): void {
-        this.inApp = typeof this.inApp == 'undefined' ? this.inApp : this.utils.isTrueOrOne(this.inApp);
+        this.inApp = typeof this.inApp == 'undefined' ? this.inApp : CoreUtils.isTrueOrOne(this.inApp);
 
         let navCtrl = this.navCtrl;
 
@@ -79,7 +79,7 @@ export class CoreLinkDirective implements OnInit {
 
                     const openIn = this.element.getAttribute('data-open-in');
 
-                    if (this.utils.isTrueOrOne(this.capture)) {
+                    if (CoreUtils.isTrueOrOne(this.capture)) {
                         href = this.textUtils.decodeURI(href);
                         this.contentLinksHelper.handleLink(href, undefined, navCtrl, true, true).then((treated) => {
                             if (!treated) {
@@ -107,18 +107,18 @@ export class CoreLinkDirective implements OnInit {
             // We have a local file.
             const filename = href.substr(href.lastIndexOf('/') + 1);
 
-            if (!CoreFileHelper.instance.isOpenableInApp({ filename })) {
+            if (!CoreFileHelper.isOpenableInApp({ filename })) {
                 try {
-                    await CoreFileHelper.instance.showConfirmOpenUnsupportedFile();
+                    await CoreFileHelper.showConfirmOpenUnsupportedFile();
                 } catch (error) {
                     return; // Cancelled, stop.
                 }
             }
 
             try {
-                await this.utils.openFile(href);
+                await CoreUtils.openFile(href);
             } catch (error) {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
             }
         } else if (href.charAt(0) == '#') {
             href = href.substr(1);
@@ -128,7 +128,7 @@ export class CoreLinkDirective implements OnInit {
                 // In Ionic 4 the navigation will change, so maybe it can be done by then.
             } else {
                 // Look for id or name.
-                this.domUtils.scrollToElementBySelector(this.content, '#' + href + ', [name=\'' + href + '\']');
+                CoreDomUtils.scrollToElementBySelector(this.content, '#' + href + ', [name=\'' + href + '\']');
             }
         } else if (this.urlSchemesProvider.isCustomURL(href)) {
             try {
@@ -139,35 +139,35 @@ export class CoreLinkDirective implements OnInit {
         } else {
 
             // It's an external link, we will open with browser. Check if we need to auto-login.
-            if (!this.sitesProvider.isLoggedIn()) {
+            if (!CoreSites.isLoggedIn()) {
                 // Not logged in, cannot auto-login.
                 if (this.inApp) {
-                    this.utils.openInApp(href);
+                    CoreUtils.openInApp(href);
                 } else {
-                    this.utils.openInBrowser(href);
+                    CoreUtils.openInBrowser(href);
                 }
             } else {
                 // Check if URL does not have any protocol, so it's a relative URL.
                 if (!this.urlUtils.isAbsoluteURL(href)) {
                     // Add the site URL at the begining.
                     if (href.charAt(0) == '/') {
-                        href = this.sitesProvider.getCurrentSite().getURL() + href;
+                        href = CoreSites.getCurrentSite().getURL() + href;
                     } else {
-                        href = this.sitesProvider.getCurrentSite().getURL() + '/' + href;
+                        href = CoreSites.getCurrentSite().getURL() + '/' + href;
                     }
                 }
 
                 if (this.autoLogin == 'yes') {
                     if (this.inApp) {
-                        await this.sitesProvider.getCurrentSite().openInAppWithAutoLogin(href);
+                        await CoreSites.getCurrentSite().openInAppWithAutoLogin(href);
                     } else {
-                        await this.sitesProvider.getCurrentSite().openInBrowserWithAutoLogin(href);
+                        await CoreSites.getCurrentSite().openInBrowserWithAutoLogin(href);
                     }
                 } else if (this.autoLogin == 'no') {
                     if (this.inApp) {
-                        this.utils.openInApp(href);
+                        CoreUtils.openInApp(href);
                     } else {
-                        this.utils.openInBrowser(href);
+                        CoreUtils.openInBrowser(href);
                     }
                 } else {
                     // Priority order is: core-link inApp attribute > forceOpenLinksIn setting > data-open-in HTML attribute.
@@ -183,9 +183,9 @@ export class CoreLinkDirective implements OnInit {
                     }
 
                     if (openInApp) {
-                        await this.sitesProvider.getCurrentSite().openInAppWithAutoLoginIfSameSite(href);
+                        await CoreSites.getCurrentSite().openInAppWithAutoLoginIfSameSite(href);
                     } else {
-                        await this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(href);
+                        await CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(href);
                     }
                 }
             }

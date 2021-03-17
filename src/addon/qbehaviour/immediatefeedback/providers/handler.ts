@@ -20,7 +20,7 @@ import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 /**
  * Handler to support immediate feedback question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourImmediateFeedbackHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourImmediateFeedback';
     type = 'immediatefeedback';

@@ -43,7 +43,7 @@ export type isSameResponseFunction = (question: any, prevAnswers: any, prevBasic
 /**
  * Handler to support deferred feedback question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourDeferredFeedbackHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourDeferredFeedback';
     type = 'deferredfeedback';

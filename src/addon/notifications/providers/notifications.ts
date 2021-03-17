@@ -27,7 +27,7 @@ import { CoreWSExternalWarning } from '@services/ws';
 /**
  * Service to handle notifications.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotificationsProvider {
 
     static READ_CHANGED_EVENT = 'addon_notifications_read_changed_event';
@@ -120,7 +120,7 @@ export class AddonNotificationsProvider {
     getNotificationPreferences(siteId?: string): Promise<AddonNotificationsNotificationPreferences> {
         this.logger.debug('Get notification preferences');
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                 cacheKey: this.getNotificationPreferencesCacheKey(),
                     updateFrequency: CoreSite.FREQUENCY_SOMETIMES
@@ -160,7 +160,7 @@ export class AddonNotificationsProvider {
         limitNumber = limitNumber || AddonNotificationsProvider.LIST_LIMIT;
         this.logger.debug('Get ' + (read ? 'read' : 'unread') + ' notifications from ' + limitFrom + '. Limit: ' + limitNumber);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 useridto: site.getUserId(),
                 useridfrom: 0,
@@ -183,7 +183,7 @@ export class AddonNotificationsProvider {
                     const notifications = response.messages;
 
                     return this.formatNotificationsData(notifications, read).then(() => {
-                        if (this.appProvider.isDesktop() && toDisplay && !read && limitFrom === 0) {
+                        if (CoreApp.isDesktop() && toDisplay && !read && limitFrom === 0) {
                             // Store the last received notification. Don't block the user for this.
                             this.emulatorHelper.storeLastReceivedNotification(
                                 AddonNotificationsProvider.PUSH_SIMULATION_COMPONENT, notifications[0], siteId);
@@ -217,7 +217,7 @@ export class AddonNotificationsProvider {
 
         this.logger.debug('Get popup notifications from ' + offset + '. Limit: ' + limit);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                     useridto: site.getUserId(),
                     newestfirst: 1,
@@ -244,7 +244,7 @@ export class AddonNotificationsProvider {
                     return this.formatNotificationsData(result.notifications).then(() => {
                         const first = result.notifications[0];
 
-                        if (this.appProvider.isDesktop() && toDisplay && offset === 0 && first && !first.read) {
+                        if (CoreApp.isDesktop() && toDisplay && offset === 0 && first && !first.read) {
                             // Store the last received notification. Don't block the user for this.
                             this.emulatorHelper.storeLastReceivedNotification(
                                 AddonNotificationsProvider.PUSH_SIMULATION_COMPONENT, first, siteId);
@@ -299,7 +299,7 @@ export class AddonNotificationsProvider {
      * @return Promise resolved with the message notifications count.
      */
     getUnreadNotificationsCount(userId?: number, siteId?: string): Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // @since 3.2
             if (site.wsAvailable('message_popup_get_unread_popup_notification_count')) {
                 userId = userId || site.getUserId();
@@ -340,7 +340,7 @@ export class AddonNotificationsProvider {
      * @return Promise resolved with true if available, resolved with false or rejected otherwise.
      */
     isPopupAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('message_popup_get_popup_notifications');
         });
     }
@@ -353,10 +353,10 @@ export class AddonNotificationsProvider {
      */
     markAllNotificationsAsRead(): Promise<boolean> {
         const params = {
-            useridto: this.sitesProvider.getCurrentSiteUserId()
+            useridto: CoreSites.getCurrentSiteUserId()
         };
 
-        return this.sitesProvider.getCurrentSite().write('core_message_mark_all_notifications_as_read', params);
+        return CoreSites.getCurrentSite().write('core_message_mark_all_notifications_as_read', params);
     }
 
     /**
@@ -370,12 +370,12 @@ export class AddonNotificationsProvider {
     markNotificationRead(notificationId: number, siteId?: string)
             : Promise<AddonNotificationsMarkNotificationReadResult | AddonMessagesMarkMessageReadResult> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             if (site.wsAvailable('core_message_mark_notification_read')) {
                 const params = {
                     notificationid: notificationId,
-                    timeread: this.timeUtils.timestamp()
+                    timeread: CoreTimeUtils.timestamp()
                 };
 
                 return site.write('core_message_mark_notification_read', params);
@@ -393,7 +393,7 @@ export class AddonNotificationsProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateNotificationPreferences(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getNotificationPreferencesCacheKey());
         });
     }
@@ -405,7 +405,7 @@ export class AddonNotificationsProvider {
      * @return Promise resolved when the list is invalidated.
      */
     invalidateNotificationsList(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getNotificationsCacheKey());
         });
     }
@@ -417,7 +417,7 @@ export class AddonNotificationsProvider {
      * @since 3.2
      */
     isMarkAllNotificationsAsReadEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_mark_all_notifications_as_read');
+        return CoreSites.wsAvailableInCurrentSite('core_message_mark_all_notifications_as_read');
     }
 
     /**
@@ -427,7 +427,7 @@ export class AddonNotificationsProvider {
      * @since 3.2
      */
     isPreciseNotificationCountEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('message_popup_get_unread_popup_notification_count');
+        return CoreSites.wsAvailableInCurrentSite('message_popup_get_unread_popup_notification_count');
     }
 
     /**
@@ -437,7 +437,7 @@ export class AddonNotificationsProvider {
      * @since 3.2
      */
     isNotificationPreferencesEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_get_user_notification_preferences');
+        return CoreSites.wsAvailableInCurrentSite('core_message_get_user_notification_preferences');
     }
 }
 

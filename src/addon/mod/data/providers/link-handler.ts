@@ -20,7 +20,7 @@ import { AddonModDataProvider } from './data';
 /**
  * Handler to treat links to data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModDataLinkHandler';
 
@@ -39,6 +39,6 @@ export class AddonModDataLinkHandler extends CoreContentLinksModuleIndexHandler 
      * @return Whether the handler is enabled for the URL and site.
      */
     isEnabled(siteId: string, url: string, params: any, courseId?: number): boolean | Promise<boolean> {
-        return this.dataProvider.isPluginEnabled();
+        return AddonModData.isPluginEnabled();
     }
 }

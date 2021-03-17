@@ -18,7 +18,7 @@ import { CorePluginFileHandler } from '@services/plugin-file-delegate';
 /**
  * Handler to treat links to IMSCP.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModImscpPluginFileHandler implements CorePluginFileHandler {
     name = 'AddonModImscpPluginFileHandler';
     component = 'mod_imscp';

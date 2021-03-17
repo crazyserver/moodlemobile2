@@ -21,7 +21,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to SCORM grade.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormGradeLinkHandler extends CoreContentLinksModuleGradeHandler {
     name = 'AddonModScormGradeLinkHandler';
     canReview = false;

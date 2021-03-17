@@ -20,7 +20,7 @@ import { AddonQtypeDescriptionComponent } from '../component/description';
 /**
  * Handler to support description question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeDescriptionHandler implements CoreQuestionHandler {
     name = 'AddonQtypeDescription';
     type = 'qtype_description';

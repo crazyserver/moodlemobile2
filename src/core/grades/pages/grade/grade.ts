@@ -61,7 +61,7 @@ export class CoreGradesGradePage {
         return this.gradesHelper.getGradeItem(this.courseId, this.gradeId, this.userId).then((grade) => {
             this.grade = grade;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading grade item');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading grade item');
         });
     }
 

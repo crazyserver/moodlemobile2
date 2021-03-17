@@ -21,7 +21,7 @@ import { AddonBadgesProvider } from './badges';
 /**
  * Handler for badges push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBadgesPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonBadgesPushClickHandler';
     priority = 200;
@@ -39,7 +39,7 @@ export class AddonBadgesPushClickHandler implements CorePushNotificationsClickHa
     handles(notification: any): boolean | Promise<boolean> {
         const data = notification.customdata || {};
 
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
+        if (CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
                 (notification.name == 'badgerecipientnotice' || (notification.name == 'badgecreatornotice' && data.hash))) {
             return this.badgesProvider.isPluginEnabled(notification.site);
         }

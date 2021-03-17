@@ -28,7 +28,7 @@ import { CoreLogger } from '@singletons/logger';
 /**
  * Handler to treat links to course view or enrol (except site home).
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreCoursesCourseLinkHandler';
     pattern = /((\/enrol\/index\.php)|(\/course\/enrol\.php)|(\/course\/view\.php)).*([\?\&]id=\d+)/;
@@ -78,12 +78,12 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
 
         return [{
             action: (siteId, navCtrl?): void => {
-                siteId = siteId || this.sitesProvider.getCurrentSiteId();
-                if (siteId == this.sitesProvider.getCurrentSiteId()) {
+                siteId = siteId || CoreSites.getCurrentSiteId();
+                if (siteId == CoreSites.getCurrentSiteId()) {
                     // Check if we already are in the course index page.
-                    if (this.courseProvider.currentViewIsCourse(navCtrl, courseId)) {
+                    if (CoreCourse.currentViewIsCourse(navCtrl, courseId)) {
                         // Current view is this course, just select the contents tab.
-                        this.courseProvider.selectCourseTab('', pageParams);
+                        CoreCourse.selectCourseTab('', pageParams);
 
                         return;
                     } else {
@@ -93,7 +93,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
                     }
                 } else {
                     // Don't pass the navCtrl to make the course the new history root (to avoid "loops" in history).
-                    this.courseHelper.getAndOpenCourse(undefined, courseId, pageParams, siteId);
+                    CoreCourseHelper.getAndOpenCourse(undefined, courseId, pageParams, siteId);
                 }
             }
         }];
@@ -117,7 +117,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
         }
 
         // Get the course id of Site Home.
-        return this.sitesProvider.getSiteHomeId(siteId).then((siteHomeId) => {
+        return CoreSites.getSiteHomeId(siteId).then((siteHomeId) => {
             return courseId != siteHomeId;
         });
     }
@@ -133,12 +133,12 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
      * @return Promise resolved when done.
      */
     protected actionEnrol(courseId: number, url: string, pageParams: any, navCtrl?: NavController): Promise<any> {
-        const modal = this.domUtils.showModalLoading(),
+        const modal = CoreDomUtils.showModalLoading(),
             isEnrolUrl = !!url.match(/(\/enrol\/index\.php)|(\/course\/enrol\.php)/);
         let course;
 
         // Check if user is enrolled in the course.
-        return this.coursesProvider.getUserCourse(courseId).then((courseObj) => {
+        return CoreCourses.getUserCourse(courseId).then((courseObj) => {
             course = courseObj;
         }).catch(() => {
             // User is not enrolled in the course. Check if can self enrol.
@@ -147,7 +147,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
 
                 // The user can self enrol. If it's not a enrolment URL we'll ask for confirmation.
                 const promise = isEnrolUrl ? Promise.resolve() :
-                    this.domUtils.showConfirm(this.translate.instant('core.courses.confirmselfenrol'));
+                    CoreDomUtils.showConfirm(Translate.instant('core.courses.confirmselfenrol'));
 
                 return promise.then(() => {
                     // Enrol URL or user confirmed.
@@ -155,18 +155,18 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
                         course = courseObj;
                     }).catch((error) => {
                         if (error) {
-                            this.domUtils.showErrorModal(error);
+                            CoreDomUtils.showErrorModal(error);
                         }
 
                         return Promise.reject(null);
                     });
                 }, () => {
                     // User cancelled. Check if the user can view the course contents (guest access or similar).
-                    return this.courseProvider.getSections(courseId, false, true);
+                    return CoreCourse.getSections(courseId, false, true);
                 });
             }, (error) => {
                 // Can't self enrol. Check if the user can view the course contents (guest access or similar).
-                return this.courseProvider.getSections(courseId, false, true).catch(() => {
+                return CoreCourse.getSections(courseId, false, true).catch(() => {
                     // Error. Show error message and allow the user to open the link in browser.
                     modal.dismiss();
 
@@ -174,14 +174,14 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
                         error = this.textUtils.getErrorMessageFromError(error) || error;
                     }
                     if (!error) {
-                        error = this.translate.instant('core.courses.notenroled');
+                        error = Translate.instant('core.courses.notenroled');
                     }
 
                     const body = this.textUtils.buildSeveralParagraphsMessage(
-                            [error, this.translate.instant('core.confirmopeninbrowser')]);
+                            [error, Translate.instant('core.confirmopeninbrowser')]);
 
-                    this.domUtils.showConfirm(body).then(() => {
-                        this.sitesProvider.getCurrentSite().openInBrowserWithAutoLogin(url);
+                    CoreDomUtils.showConfirm(body).then(() => {
+                        CoreSites.getCurrentSite().openInBrowserWithAutoLogin(url);
                     }).catch(() => {
                         // User cancelled.
                     });
@@ -192,7 +192,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
         }).then(() => {
             // Check if we need to retrieve the course.
             if (!course) {
-                return this.courseHelper.getCourse(courseId).then((data) => {
+                return CoreCourseHelper.getCourse(courseId).then((data) => {
                     return data.course;
                 }).catch(() => {
                     // Cannot get course, return a "fake".
@@ -209,7 +209,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
             }
 
             // Now open the course.
-            this.courseHelper.openCourse(navCtrl, course, pageParams);
+            CoreCourseHelper.openCourse(navCtrl, course, pageParams);
         });
     }
 
@@ -221,7 +221,7 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
      */
     protected canSelfEnrol(courseId: number): Promise<any> {
         // Check that the course has self enrolment enabled.
-        return this.coursesProvider.getCourseEnrolmentMethods(courseId).then((methods) => {
+        return CoreCourses.getCourseEnrolmentMethods(courseId).then((methods) => {
             let isSelfEnrolEnabled = false,
                 instances = 0;
 
@@ -247,11 +247,11 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
      * @return Promise resolved when the user is enrolled, rejected otherwise.
      */
     protected selfEnrol(courseId: number, password?: string): Promise<any> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
-        return this.coursesProvider.selfEnrol(courseId, password).then(() => {
+        return CoreCourses.selfEnrol(courseId, password).then(() => {
             // Success self enrolling the user, invalidate the courses list.
-            return this.coursesProvider.invalidateUserCourses().catch(() => {
+            return CoreCourses.invalidateUserCourses().catch(() => {
                 // Ignore errors.
             }).then(() => {
                 // Sometimes the list of enrolled courses takes a while to be updated. Wait for it.
@@ -264,16 +264,16 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
             modal.dismiss();
             if (error && error.code === CoreCoursesProvider.ENROL_INVALID_KEY) {
                 // Invalid password. Allow the user to input password.
-                const title = this.translate.instant('core.courses.selfenrolment'),
+                const title = Translate.instant('core.courses.selfenrolment'),
                     body = ' ', // Empty message.
-                    placeholder = this.translate.instant('core.courses.password');
+                    placeholder = Translate.instant('core.courses.password');
 
                 if (typeof password != 'undefined') {
                     // The user attempted a password. Show an error message.
-                    this.domUtils.showErrorModal(error);
+                    CoreDomUtils.showErrorModal(error);
                 }
 
-                return this.domUtils.showPrompt(body, title, placeholder).then((password) => {
+                return CoreDomUtils.showPrompt(body, title, placeholder).then((password) => {
                     return this.selfEnrol(courseId, password);
                 });
             } else {
@@ -295,10 +295,10 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
         }
 
         // Check if user is enrolled in the course.
-        return this.coursesProvider.invalidateUserCourses().catch(() => {
+        return CoreCourses.invalidateUserCourses().catch(() => {
             // Ignore errors.
         }).then(() => {
-            return this.coursesProvider.getUserCourse(courseId);
+            return CoreCourses.getUserCourse(courseId);
         }).catch(() => {
             // Not enrolled, wait a bit and try again.
             if (Date.now() - this.waitStart > 60000) {

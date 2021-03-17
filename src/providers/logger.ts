@@ -27,7 +27,7 @@ import { makeSingleton } from '@singletons/core.singletons';
  *
  * Then you can call the log function you want to use in this logger instance.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreLoggerProvider {
     /** Whether the logging is enabled. */
     enabled = true;

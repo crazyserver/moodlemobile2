@@ -31,10 +31,10 @@ export class CoreSiteHomeEnrolledCourseListComponent implements OnInit {
      * Component being initialized.
      */
     ngOnInit(): void {
-        if (this.coursesProvider.isMyCoursesDisabledInSite()) {
+        if (CoreCourses.isMyCoursesDisabledInSite()) {
             this.show = false;
         } else {
-            this.coursesProvider.getUserCourses().then((courses) => {
+            CoreCourses.getUserCourses().then((courses) => {
                 this.show = courses.length > 0;
             });
         }

@@ -48,7 +48,7 @@ export interface CoreInitHandler {
 /*
  * Provider for initialisation mechanisms.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreInitDelegate {
     static DEFAULT_PRIORITY = 100; // Default priority for init processes.
     static MAX_RECOMMENDED_PRIORITY = 600;
@@ -91,14 +91,14 @@ export class CoreInitDelegate {
         });
 
         // Execute all the processes in order to solve dependencies.
-        this.utils.executeOrderedPromises(ordered).finally(this.readiness.resolve);
+        CoreUtils.executeOrderedPromises(ordered).finally(this.readiness.resolve);
     }
 
     /**
      * Init the readiness promise.
      */
     protected initReadiness(): void {
-        this.readiness = this.utils.promiseDefer();
+        this.readiness = CoreUtils.promiseDefer();
         this.readiness.promise.then(() => this.readiness.resolved = true);
     }
 

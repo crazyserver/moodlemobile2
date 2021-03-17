@@ -133,7 +133,7 @@ export interface CoreFileUploaderHandlerDataToReturn extends CoreFileUploaderHan
 /**
  * Delegate to register handlers to be shown in the file picker.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderDelegate extends CoreDelegate {
     constructor(protected sitesProvider: CoreSitesProvider,
            ) {

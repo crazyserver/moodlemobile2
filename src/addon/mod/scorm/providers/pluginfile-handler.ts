@@ -18,7 +18,7 @@ import { CorePluginFileHandler } from '@services/plugin-file-delegate';
 /**
  * Handler to treat file URLs in SCORM.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormPluginFileHandler implements CorePluginFileHandler {
     name = 'AddonModScormPluginFileHandler';
     component = 'mod_scorm';

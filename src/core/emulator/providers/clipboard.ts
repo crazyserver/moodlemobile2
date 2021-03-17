@@ -19,7 +19,7 @@ import { CoreAppProvider } from '@services/app';
 /**
  * Emulates the Cordova Clipboard plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ClipboardMock extends Clipboard {
     isDesktop: boolean;
     clipboard: any;

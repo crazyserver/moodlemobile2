@@ -67,7 +67,7 @@ export class CoreRatingRatingsPage {
                 this.scaleId, undefined, this.courseId).then((ratings) => {
             this.ratings = ratings;
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         });
     }
 

@@ -76,7 +76,7 @@ export class AddonModQuizAttemptPage implements OnInit {
 
             return this.fetchAttempt();
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_quiz.errorgetattempt', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_quiz.errorgetattempt', true);
         });
     }
 

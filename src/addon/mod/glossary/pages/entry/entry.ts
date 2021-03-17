@@ -58,7 +58,7 @@ export class AddonModGlossaryEntryPage {
      * View loaded.
      */
     ngOnInit(): void {
-        this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
+        this.tagsEnabled = CoreTag.areTagsAvailableInSite();
         this.commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
 
         this.fetchEntry().then(() => {
@@ -128,7 +128,7 @@ export class AddonModGlossaryEntryPage {
                 });
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_glossary.errorloadingentry', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_glossary.errorloadingentry', true);
 
             return Promise.reject(null);
         });

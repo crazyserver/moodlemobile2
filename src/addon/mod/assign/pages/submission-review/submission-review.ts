@@ -103,7 +103,7 @@ export class AddonModAssignSubmissionReviewPage implements OnInit {
 
             this.blindMarking = this.assign.blindmarking && !this.assign.revealidentities;
 
-            return this.courseProvider.getModuleBasicGradeInfo(this.moduleId).then((gradeInfo) => {
+            return CoreCourse.getModuleBasicGradeInfo(this.moduleId).then((gradeInfo) => {
                 if (gradeInfo) {
                     // Grades can be saved if simple grading.
                     if (gradeInfo.advancedgrading && gradeInfo.advancedgrading[0] &&
@@ -160,12 +160,12 @@ export class AddonModAssignSubmissionReviewPage implements OnInit {
         if (this.submissionComponent) {
             this.submissionComponent.submitGrade().then(() => {
                 // Grade submitted, leave the view if not in tablet.
-                if (!this.appProvider.isWide()) {
+                if (!CoreApp.isWide()) {
                     this.forceLeave = true;
                     this.navCtrl.pop();
                 }
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'core.error', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
             });
         }
     }

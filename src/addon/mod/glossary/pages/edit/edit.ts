@@ -155,13 +155,13 @@ export class AddonModGlossaryEditPage implements OnInit {
 
         if (this.glossaryHelper.hasEntryDataChanged(this.entry, this.attachments, this.originalData)) {
             // Show confirmation if some data has been modified.
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
         // Delete the local files from the tmp folder.
         this.uploaderProvider.clearTmpFiles(this.attachments);
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -174,12 +174,12 @@ export class AddonModGlossaryEditPage implements OnInit {
         const timecreated = this.entry.timecreated || Date.now();
 
         if (!this.entry.concept || !definition) {
-            this.domUtils.showErrorModal('addon.mod_glossary.fillfields', true);
+            CoreDomUtils.showErrorModal('addon.mod_glossary.fillfields', true);
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         // Add some HTML to the definition if needed.
         definition = this.textUtils.formatHtmlLines(definition);
@@ -222,7 +222,7 @@ export class AddonModGlossaryEditPage implements OnInit {
                     }).then((used) => {
                             if (used) {
                                 // There's a entry with same name, reject with error message.
-                                return Promise.reject(this.translate.instant('addon.mod_glossary.errconceptalreadyexists'));
+                                return Promise.reject(Translate.instant('addon.mod_glossary.errconceptalreadyexists'));
                             }
                         });
                 } else {
@@ -260,14 +260,14 @@ export class AddonModGlossaryEditPage implements OnInit {
             const data = {
                 glossaryId: this.glossary.id,
             };
-            CoreEvents.trigger(AddonModGlossaryProvider.ADD_ENTRY_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModGlossaryProvider.ADD_ENTRY_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!entryId, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!entryId, CoreSites.getCurrentSiteId());
 
             this.saved = true;
             this.navCtrl.pop();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_glossary.cannoteditentry', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_glossary.cannoteditentry', true);
         }).finally(() => {
             modal.dismiss();
         });

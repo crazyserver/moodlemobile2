@@ -32,7 +32,7 @@ import { AddonModWorkshopOfflineProvider } from './offline';
 /**
  * Service to sync workshops.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_workshop_autom_synced';
@@ -134,7 +134,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncWorkshop(workshopId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isSyncing(workshopId, siteId)) {
             // There's already a sync ongoing for this discussion, return the promise.
@@ -145,7 +145,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
         if (this.syncProvider.isBlocked(AddonModWorkshopProvider.COMPONENT, workshopId, siteId)) {
             this.logger.debug('Cannot sync workshop ' + workshopId + ' because it is blocked.');
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         this.logger.debug('Try to sync workshop ' + workshopId);
@@ -177,7 +177,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
         }));
 
         // Sync offline logs.
-        syncPromises.push(this.logHelper.syncIfNeeded(AddonModWorkshopProvider.COMPONENT, workshopId, siteId));
+        syncPromises.push(CoreCourseLogHelper.syncIfNeeded(AddonModWorkshopProvider.COMPONENT, workshopId, siteId));
 
         const result = {
             warnings: [],
@@ -199,7 +199,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             if (!courseId) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
                 return Promise.reject(null);
             }
@@ -305,7 +305,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             if (timemodified < 0 || timemodified >= submissionActions[0].timemodified) {
                 // The entry was not found in Moodle or the entry has been modified, discard the action.
                 result.updated = true;
-                discardError = this.translate.instant('addon.mod_workshop.warningsubmissionmodified');
+                discardError = Translate.instant('addon.mod_workshop.warningsubmissionmodified');
 
                 return this.workshopOffline.deleteAllSubmissionActions(workshop.id, submissionId, siteId);
             }
@@ -351,7 +351,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
                                 return Promise.resolve();
                         }
                     }).catch((error) => {
-                        if (error && this.utils.isWebServiceError(error)) {
+                        if (error && CoreUtils.isWebServiceError(error)) {
                             // The WebService has thrown an error, this means it cannot be performed. Discard.
                             discardError = this.textUtils.getErrorMessageFromError(error);
                         } else {
@@ -379,7 +379,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             return promise.then(() => {
                 if (discardError) {
                     // Submission was discarded, add a warning.
-                    const message = this.translate.instant('core.warningofflinedatadeleted', {
+                    const message = Translate.instant('core.warningofflinedatadeleted', {
                         component: this.componentTranslate,
                         name: workshop.name,
                         error: discardError
@@ -419,7 +419,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             if (timemodified < 0 || timemodified >= assessmentData.timemodified) {
                 // The entry was not found in Moodle or the entry has been modified, discard the action.
                 result.updated = true;
-                discardError = this.translate.instant('addon.mod_workshop.warningassessmentmodified');
+                discardError = Translate.instant('addon.mod_workshop.warningassessmentmodified');
 
                 return this.workshopOffline.deleteAssessment(workshop.id, assessmentId, siteId);
             }
@@ -443,7 +443,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
 
                 return this.workshopProvider.updateAssessmentOnline(assessmentId, inputData, siteId);
             }).catch((error) => {
-                if (error && this.utils.isWebServiceError(error)) {
+                if (error && CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means it cannot be performed. Discard.
                     discardError = this.textUtils.getErrorMessageFromError(error);
                 } else {
@@ -461,7 +461,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
         }).then(() => {
             if (discardError) {
                 // Assessment was discarded, add a warning.
-                const message = this.translate.instant('core.warningofflinedatadeleted', {
+                const message = Translate.instant('core.warningofflinedatadeleted', {
                     component: this.componentTranslate,
                     name: workshop.name,
                     error: discardError
@@ -500,14 +500,14 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             if (timemodified < 0 || timemodified >= evaluate.timemodified) {
                 // The entry was not found in Moodle or the entry has been modified, discard the action.
                 result.updated = true;
-                discardError = this.translate.instant('addon.mod_workshop.warningsubmissionmodified');
+                discardError = Translate.instant('addon.mod_workshop.warningsubmissionmodified');
 
                 return this.workshopOffline.deleteEvaluateSubmission(workshop.id, submissionId, siteId);
             }
 
             return this.workshopProvider.evaluateSubmissionOnline(submissionId, evaluate.feedbacktext, evaluate.published,
                 evaluate.gradeover, siteId).catch((error) => {
-                if (error && this.utils.isWebServiceError(error)) {
+                if (error && CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means it cannot be performed. Discard.
                     discardError = this.textUtils.getErrorMessageFromError(error);
                 } else {
@@ -523,7 +523,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
         }).then(() => {
             if (discardError) {
                 // Assessment was discarded, add a warning.
-                const message = this.translate.instant('core.warningofflinedatadeleted', {
+                const message = Translate.instant('core.warningofflinedatadeleted', {
                     component: this.componentTranslate,
                     name: workshop.name,
                     error: discardError
@@ -562,14 +562,14 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             if (timemodified < 0 || timemodified >= evaluate.timemodified) {
                 // The entry was not found in Moodle or the entry has been modified, discard the action.
                 result.updated = true;
-                discardError = this.translate.instant('addon.mod_workshop.warningassessmentmodified');
+                discardError = Translate.instant('addon.mod_workshop.warningassessmentmodified');
 
                 return this.workshopOffline.deleteEvaluateAssessment(workshop.id, assessmentId, siteId);
             }
 
             return this.workshopProvider.evaluateAssessmentOnline(assessmentId, evaluate.feedbacktext, evaluate.weight,
                 evaluate.gradinggradeover, siteId).catch((error) => {
-                if (error && this.utils.isWebServiceError(error)) {
+                if (error && CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means it cannot be performed. Discard.
                     discardError = this.textUtils.getErrorMessageFromError(error);
                 } else {
@@ -585,7 +585,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
         }).then(() => {
             if (discardError) {
                 // Assessment was discarded, add a warning.
-                const message = this.translate.instant('core.warningofflinedatadeleted', {
+                const message = Translate.instant('core.warningofflinedatadeleted', {
                     component: this.componentTranslate,
                     name: workshop.name,
                     error: discardError

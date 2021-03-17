@@ -21,7 +21,7 @@ import { CoreGradesHelperProvider } from './helper';
 /**
  * Handler to treat links to user grades.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesUserLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreGradesUserLinkHandler';
     pattern = /\/grade\/report(\/user)?\/index.php/;

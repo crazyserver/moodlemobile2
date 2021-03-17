@@ -84,7 +84,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.offline = !this.appProvider.isOnline();
+                this.offline = !CoreApp.isOnline();
             });
         });
     }
@@ -95,7 +95,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
     ngOnInit(): void {
         this.fetchData().then(() => {
             this.feedbackProvider.logView(this.feedback.id, this.feedback.name, true).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -124,8 +124,8 @@ export class AddonModFeedbackFormPage implements OnDestroy {
 
             if (this.items && !this.completed && this.originalData) {
                 // Form submitted. Check if there is any change.
-                if (!this.utils.basicLeftCompare(responses, this.originalData, 3)) {
-                     return this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+                if (!CoreUtils.basicLeftCompare(responses, this.originalData, 3)) {
+                     return CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
                 }
             }
         }
@@ -139,7 +139,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     protected fetchData(): Promise<any> {
-        this.offline = !this.appProvider.isOnline();
+        this.offline = !CoreApp.isOnline();
         const options = {
             cmId: this.module.id,
             readingStrategy: this.offline ? CoreSitesReadingStrategy.PreferCache : CoreSitesReadingStrategy.OnlyNetwork,
@@ -161,7 +161,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
                 return Promise.resolve(0);
             }
         }).catch((error) => {
-            if (!this.offline && !this.utils.isWebServiceError(error)) {
+            if (!this.offline && !CoreUtils.isWebServiceError(error)) {
                 // If it fails, go offline.
                 this.offline = true;
                 options.readingStrategy = CoreSitesReadingStrategy.PreferCache;
@@ -173,7 +173,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
         }).then((page) => {
             return this.fetchFeedbackPageData(page || 0);
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
             this.forceLeave = true;
             this.navCtrl.pop();
 
@@ -195,7 +195,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
         };
 
         return this.feedbackProvider.getFeedbackAccessInformation(this.feedback.id, options).catch((error) => {
-            if (!this.offline && !this.utils.isWebServiceError(error)) {
+            if (!this.offline && !CoreUtils.isWebServiceError(error)) {
                 // If it fails, go offline.
                 this.offline = true;
                 options.readingStrategy = CoreSitesReadingStrategy.PreferCache;
@@ -225,7 +225,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
             this.currentPage = page;
 
             promise = this.feedbackProvider.getPageItemsWithValues(this.feedback.id, page, options).catch((error) => {
-                if (!this.offline && !this.utils.isWebServiceError(error)) {
+                if (!this.offline && !CoreUtils.isWebServiceError(error)) {
                     // If it fails, go offline.
                     this.offline = true;
                     options.readingStrategy = CoreSitesReadingStrategy.PreferCache;
@@ -251,7 +251,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
             });
 
             if (!this.preview) {
-                const itemsCopy = this.utils.clone(this.items); // Copy the array to avoid modifications.
+                const itemsCopy = CoreUtils.clone(this.items); // Copy the array to avoid modifications.
                 this.originalData = this.feedbackHelper.getPageItemsResponses(itemsCopy);
             }
         });
@@ -264,7 +264,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
      * @return Resolved when done.
      */
     gotoPage(goPrevious: boolean): Promise<void> {
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
         this.feedbackLoaded = false;
 
         const responses = this.feedbackHelper.getPageItemsResponses(this.items),
@@ -316,7 +316,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
                 }
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
 
             return Promise.reject(null);
         }).finally(() => {
@@ -337,7 +337,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
      */
     continue(): void {
         if (this.siteAfterSubmit) {
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
             this.linkHelper.handleLink(this.siteAfterSubmit).then((treated) => {
                 if (!treated) {
                     return this.currentSite.openInBrowserWithAutoLoginIfSameSite(this.siteAfterSubmit);
@@ -346,7 +346,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
                 modal.dismiss();
             });
         } else {
-            this.courseHelper.getAndOpenCourse(undefined, this.courseId, {}, this.currentSite.getId());
+            CoreCourseHelper.getAndOpenCourse(undefined, this.courseId, {}, this.currentSite.getId());
         }
     }
 

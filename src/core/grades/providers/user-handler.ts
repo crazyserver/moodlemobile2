@@ -21,7 +21,7 @@ import { CoreGradesProvider } from './grades';
 /**
  * Profile grades handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesUserHandler implements CoreUserProfileHandler {
     name = 'CoreGrades:viewGrades';
     priority = 400;

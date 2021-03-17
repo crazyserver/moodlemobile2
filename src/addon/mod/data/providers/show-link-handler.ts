@@ -24,7 +24,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
  * Content links handler for database show entry.
  * Match mod/data/view.php?d=6&rid=5 with a valid data id and entryid.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataShowLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModDataShowLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModData';
@@ -49,13 +49,13 @@ export class AddonModDataShowLinkHandler extends CoreContentLinksHandlerBase {
             CoreContentLinksAction[] | Promise<CoreContentLinksAction[]> {
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     dataId = parseInt(params.d, 10),
                     rId = parseInt(params.rid, 10) || false,
                     group = parseInt(params.group, 10) || false,
                     page = parseInt(params.page, 10) || false;
 
-                this.courseProvider.getModuleBasicInfoByInstance(dataId, 'data', siteId).then((module) => {
+                CoreCourse.getModuleBasicInfoByInstance(dataId, 'data', siteId).then((module) => {
                     const pageParams = {
                         module: module,
                         courseId: module.course
@@ -100,6 +100,6 @@ export class AddonModDataShowLinkHandler extends CoreContentLinksHandlerBase {
             return false;
         }
 
-        return this.dataProvider.isPluginEnabled(siteId);
+        return AddonModData.isPluginEnabled(siteId);
     }
 }

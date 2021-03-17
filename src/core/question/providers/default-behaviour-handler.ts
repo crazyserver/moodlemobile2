@@ -19,7 +19,7 @@ import { CoreQuestionProvider } from '@core/question/providers/question';
 /**
  * Default handler used when the question behaviour doesn't have a specific implementation.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreQuestionBehaviourDefaultHandler extends CoreQuestionBehaviourBaseHandler {
     name = 'CoreQuestionBehaviourDefault';
     type = 'default';

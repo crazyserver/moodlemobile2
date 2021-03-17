@@ -19,7 +19,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /*
  * Provider to create sites instances.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSitesFactoryProvider {
 
     constructor(private injector: Injector) { }

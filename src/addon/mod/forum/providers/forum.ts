@@ -29,7 +29,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some features for forums.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumProvider {
     static COMPONENT = 'mmaModForum';
     static DISCUSSIONS_PER_PAGE = 10; // Max of discussions per page.
@@ -179,12 +179,12 @@ export class AddonModForumProvider {
      */
     addNewDiscussionOnline(forumId: number, subject: string, message: string, options?: any, groupId?: number, siteId?: string)
             : Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params: any = {
                 forumid: forumId,
                 subject: subject,
                 message: message,
-                options: this.utils.objectToArrayOfObjects(options, 'name', 'value')
+                options: CoreUtils.objectToArrayOfObjects(options, 'name', 'value')
             };
 
             if (groupId) {
@@ -194,7 +194,7 @@ export class AddonModForumProvider {
             return site.write('mod_forum_add_discussion', params).then((response) => {
                 // Other errors ocurring.
                 if (!response || !response.discussionid) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 } else {
                     return response.discussionid;
                 }
@@ -222,10 +222,10 @@ export class AddonModForumProvider {
             cacheKey: this.getCanAddDiscussionCacheKey(forumId, groupId),
             component: AddonModForumProvider.COMPONENT,
             componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             return site.read('mod_forum_can_add_discussion', params, preSets).then((result) => {
                 if (result) {
                     if (typeof result.canpindiscussions == 'undefined') {
@@ -268,7 +268,7 @@ export class AddonModForumProvider {
      * @since 3.8
      */
     deletePost(postId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 postid: postId
             };
@@ -295,8 +295,8 @@ export class AddonModForumProvider {
      * @return True if fixed, false otherwise.
      */
     isAllParticipantsFixed(): boolean {
-        return this.sitesProvider.getCurrentSite() &&
-                this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan(['3.1.5', '3.2.2']);
+        return CoreSites.getCurrentSite() &&
+                CoreSites.getCurrentSite().isVersionGreaterEqualThan(['3.1.5', '3.2.2']);
     }
 
     /**
@@ -306,7 +306,7 @@ export class AddonModForumProvider {
      * @since 3.8
      */
     isGetDiscussionPostAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_forum_get_discussion_post');
+        return CoreSites.wsAvailableInCurrentSite('mod_forum_get_discussion_post');
     }
 
     /**
@@ -318,7 +318,7 @@ export class AddonModForumProvider {
      */
     isGetDiscussionPostsAvailable(site?: CoreSite): boolean {
         return site ? site.wsAvailable('mod_forum_get_discussion_posts') :
-            this.sitesProvider.wsAvailableInCurrentSite('mod_forum_get_discussion_posts');
+            CoreSites.wsAvailableInCurrentSite('mod_forum_get_discussion_posts');
     }
 
     /**
@@ -328,7 +328,7 @@ export class AddonModForumProvider {
      * @since 3.8
      */
     isDeletePostAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_forum_delete_post');
+        return CoreSites.wsAvailableInCurrentSite('mod_forum_delete_post');
     }
 
     /**
@@ -338,7 +338,7 @@ export class AddonModForumProvider {
      * @since 3.8
      */
     isUpdatePostAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_forum_update_discussion_post');
+        return CoreSites.wsAvailableInCurrentSite('mod_forum_update_discussion_post');
     }
 
     /**
@@ -349,11 +349,11 @@ export class AddonModForumProvider {
      * @return Promise resolved with the formatted discussions.
      */
     formatDiscussionsGroups(cmId: number, discussions: any[]): Promise<any[]> {
-        discussions = this.utils.clone(discussions);
+        discussions = CoreUtils.clone(discussions);
 
-        return this.groupsProvider.getActivityAllowedGroups(cmId).then((result) => {
-            const strAllParts = this.translate.instant('core.allparticipants');
-            const strAllGroups = this.translate.instant('core.allgroups');
+        return CoreGroups.getActivityAllowedGroups(cmId).then((result) => {
+            const strAllParts = Translate.instant('core.allparticipants');
+            const strAllGroups = Translate.instant('core.allgroups');
 
             // Turn groups into an object where each group is identified by id.
             const groups = {};
@@ -390,7 +390,7 @@ export class AddonModForumProvider {
      * @return Promise resolved when the forums are retrieved.
      */
     getCourseForums(courseId: number, options: CoreSitesCommonWSOptions = {}): Promise<any[]> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -398,7 +398,7 @@ export class AddonModForumProvider {
                 cacheKey: this.getForumDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModForumProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_forum_get_forums_by_courses', params, preSets);
@@ -417,7 +417,7 @@ export class AddonModForumProvider {
     getDiscussionPost(forumId: number, discussionId: number, postId: number, options: CoreCourseCommonModWSOptions = {})
             : Promise<any> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 postid: postId,
             };
@@ -426,7 +426,7 @@ export class AddonModForumProvider {
                 updateFrequency: CoreSite.FREQUENCY_USUALLY,
                 component: AddonModForumProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_forum_get_discussion_post', params, preSets).then((response) => {
@@ -486,7 +486,7 @@ export class AddonModForumProvider {
      * @since 3.7
      */
     getAccessInformation(forumId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             if (!site.wsAvailable('mod_forum_get_forum_access_information')) {
                 // Access information not available for 3.6 or older sites.
                 return Promise.resolve({});
@@ -499,7 +499,7 @@ export class AddonModForumProvider {
                 cacheKey: this.getAccessInformationCacheKey(forumId),
                 component: AddonModForumProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_forum_get_forum_access_information', params, preSets);
@@ -557,10 +557,10 @@ export class AddonModForumProvider {
             cacheKey: this.getDiscussionPostsCacheKey(discussionId),
             component: AddonModForumProvider.COMPONENT,
             componentId: options.cmId,
-            ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const wsName = this.isGetDiscussionPostsAvailable(site) ? 'mod_forum_get_discussion_posts' :
                 'mod_forum_get_forum_discussion_posts';
 
@@ -611,7 +611,7 @@ export class AddonModForumProvider {
      * @return True if discussion lists can be sorted.
      */
     isDiscussionListSortingAvailable(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site && site.isVersionGreaterEqualThan('3.7');
     }
@@ -671,7 +671,7 @@ export class AddonModForumProvider {
         options.sortOrder = options.sortOrder || AddonModForumProvider.SORTORDER_LASTPOST_DESC;
         options.page = options.page || 0;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             let method = 'mod_forum_get_forum_discussions_paginated';
             const params: any = {
                 forumid: forumId,
@@ -697,12 +697,12 @@ export class AddonModForumProvider {
                 cacheKey: this.getDiscussionsListCacheKey(forumId, options.sortOrder),
                 component: AddonModForumProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read(method, params, preSets).catch((error) => {
                 // Try to get the data from cache stored with the old WS method.
-                if (!this.appProvider.isOnline() && method == 'mod_forum_get_forum_discussion' &&
+                if (!CoreApp.isOnline() && method == 'mod_forum_get_forum_discussion' &&
                         options.sortOrder == AddonModForumProvider.SORTORDER_LASTPOST_DESC) {
 
                     const params = {
@@ -712,7 +712,7 @@ export class AddonModForumProvider {
                         sortby: 'timemodified',
                         sortdirection: 'DESC'
                     };
-                    Object.assign(preSets, this.sitesProvider.getReadingStrategyPreSets(CoreSitesReadingStrategy.PreferCache));
+                    Object.assign(preSets, CoreSites.getReadingStrategyPreSets(CoreSitesReadingStrategy.PreferCache));
 
                     return site.read('mod_forum_get_forum_discussions_paginated', params, preSets);
                 }
@@ -791,7 +791,7 @@ export class AddonModForumProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCanAddDiscussion(forumId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getCommonCanAddDiscussionCacheKey(forumId));
         });
     }
@@ -828,7 +828,7 @@ export class AddonModForumProvider {
                         promises.push(this.invalidateDiscussionPosts(discussion.discussion, forum.id));
                     });
 
-                    return this.utils.allPromises(promises);
+                    return CoreUtils.allPromises(promises);
                 }));
             });
 
@@ -836,7 +836,7 @@ export class AddonModForumProvider {
                 promises.push(this.userProvider.invalidateUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER));
             }
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         });
     }
 
@@ -848,7 +848,7 @@ export class AddonModForumProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAccessInformation(forumId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAccessInformationCacheKey(forumId));
         });
     }
@@ -862,14 +862,14 @@ export class AddonModForumProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDiscussionPosts(discussionId: number, forumId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = [site.invalidateWsCacheForKey(this.getDiscussionPostsCacheKey(discussionId))];
 
             if (forumId) {
                 promises.push(site.invalidateWsCacheForKeyStartingWith(this.getForumDiscussionDataCacheKey(forumId, discussionId)));
             }
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         });
     }
 
@@ -881,8 +881,8 @@ export class AddonModForumProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDiscussionsList(forumId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            return this.utils.allPromises(this.getAvailableSortOrders().map((sortOrder) => {
+        return CoreSites.getSite(siteId).then((site) => {
+            return CoreUtils.allPromises(this.getAvailableSortOrders().map((sortOrder) => {
                 return site.invalidateWsCacheForKey(this.getDiscussionsListCacheKey(forumId, sortOrder.value));
             }));
         });
@@ -895,9 +895,9 @@ export class AddonModForumProvider {
      * @return Promise resolved when the files are invalidated.
      */
     invalidateFiles(moduleId: number): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModForumProvider.COMPONENT, moduleId);
+        return CoreFilepool.invalidateFilesByComponent(siteId, AddonModForumProvider.COMPONENT, moduleId);
     }
 
     /**
@@ -907,7 +907,7 @@ export class AddonModForumProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateForumData(courseId: number): Promise<any> {
-        return this.sitesProvider.getCurrentSite().invalidateWsCacheForKey(this.getForumDataCacheKey(courseId));
+        return CoreSites.getCurrentSite().invalidateWsCacheForKey(this.getForumDataCacheKey(courseId));
     }
 
     /**
@@ -923,7 +923,7 @@ export class AddonModForumProvider {
             forumid: id
         };
 
-        return this.logHelper.logSingle('mod_forum_view_forum', params, AddonModForumProvider.COMPONENT, id, name, 'forum', {},
+        return CoreCourseLogHelper.logSingle('mod_forum_view_forum', params, AddonModForumProvider.COMPONENT, id, name, 'forum', {},
                 siteId);
     }
 
@@ -941,7 +941,7 @@ export class AddonModForumProvider {
             discussionid: id
         };
 
-        return this.logHelper.logSingle('mod_forum_view_forum_discussion', params, AddonModForumProvider.COMPONENT, forumId, name,
+        return CoreCourseLogHelper.logSingle('mod_forum_view_forum_discussion', params, AddonModForumProvider.COMPONENT, forumId, name,
                 'forum', params, siteId);
     }
 
@@ -962,13 +962,13 @@ export class AddonModForumProvider {
      */
     replyPost(postId: number, discussionId: number, forumId: number, name: string, courseId: number, subject: string,
             message: string, options?: any, siteId?: string, allowOffline?: boolean): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = (): Promise<boolean> => {
             if (!forumId) {
                 // Not enough data to store in offline, reject.
-                return Promise.reject(this.translate.instant('core.networkerrormsg'));
+                return Promise.reject(Translate.instant('core.networkerrormsg'));
             }
 
             return this.forumOffline.replyPost(postId, discussionId, forumId, name, courseId, subject, message, options, siteId)
@@ -977,7 +977,7 @@ export class AddonModForumProvider {
             });
         };
 
-        if (!this.appProvider.isOnline() && allowOffline) {
+        if (!CoreApp.isOnline() && allowOffline) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -988,7 +988,7 @@ export class AddonModForumProvider {
             return this.replyPostOnline(postId, subject, message, options, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (allowOffline && !this.utils.isWebServiceError(error)) {
+                if (allowOffline && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1010,17 +1010,17 @@ export class AddonModForumProvider {
      * @return Promise resolved with the created post id.
      */
     replyPostOnline(postId: number, subject: string, message: string, options?: any, siteId?: string): Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 postid: postId,
                 subject: subject,
                 message: message,
-                options: this.utils.objectToArrayOfObjects(options, 'name', 'value')
+                options: CoreUtils.objectToArrayOfObjects(options, 'name', 'value')
             };
 
             return site.write('mod_forum_add_discussion_post', params).then((response) => {
                 if (!response || !response.postid) {
-                    return Promise.reject(this.utils.createFakeWSError(''));
+                    return Promise.reject(CoreUtils.createFakeWSError(''));
                 } else {
                     return response.postid;
                 }
@@ -1039,7 +1039,7 @@ export class AddonModForumProvider {
      * @since 3.7
      */
     setLockState(forumId: number, discussionId: number, locked: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 forumid: forumId,
                 discussionid: discussionId,
@@ -1058,9 +1058,9 @@ export class AddonModForumProvider {
      * @since 3.7
      */
     isSetPinStateAvailableForSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_forum_set_pin_state');
+        return CoreSites.wsAvailableInCurrentSite('mod_forum_set_pin_state');
     }
 
     /**
@@ -1073,7 +1073,7 @@ export class AddonModForumProvider {
      * @since 3.7
      */
     setPinState(discussionId: number, pinned: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 discussionid: discussionId,
                 targetstate: pinned ? 1 : 0
@@ -1093,7 +1093,7 @@ export class AddonModForumProvider {
      * @since 3.7
      */
     toggleFavouriteState(discussionId: number, starred: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 discussionid: discussionId,
                 targetstate: starred ? 1 : 0
@@ -1140,7 +1140,7 @@ export class AddonModForumProvider {
             }
         });
 
-        this.userProvider.storeUsers(this.utils.objectToArray(users));
+        this.userProvider.storeUsers(CoreUtils.objectToArray(users));
     }
 
     /**
@@ -1154,12 +1154,12 @@ export class AddonModForumProvider {
      * @return Promise resolved with success boolean when done.
      */
     updatePost(postId: number, subject: string, message: string, options?: any, siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 postid: postId,
                 subject: subject,
                 message: message,
-                options: this.utils.objectToArrayOfObjects(options, 'name', 'value')
+                options: CoreUtils.objectToArrayOfObjects(options, 'name', 'value')
             };
 
             return site.write('mod_forum_update_discussion_post', params).then((response) => {

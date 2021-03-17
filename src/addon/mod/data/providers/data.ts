@@ -88,7 +88,7 @@ export interface AddonModDataSubfieldData {
 /**
  * Service that provides some features for databases.
  */
-@Injectable()
+@Injectable({providedIn: 'root' })
 export class AddonModDataProvider {
     static COMPONENT = 'mmaModData';
     static PER_PAGE = 25;
@@ -119,7 +119,7 @@ export class AddonModDataProvider {
      */
     async addEntry(dataId: number, entryId: number, courseId: number, contents: AddonModDataSubfieldData[], groupId: number = 0,
             fields: any, siteId?: string, forceOffline: boolean = false): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a data to be synchronized later.
         const storeOffline = async (): Promise<any> => {
@@ -133,7 +133,7 @@ export class AddonModDataProvider {
         };
 
         // Checks to store offline.
-        if (!this.appProvider.isOnline() || forceOffline) {
+        if (!CoreApp.isOnline() || forceOffline) {
             const notifications = this.checkFields(fields, contents);
             if (notifications) {
                 return { fieldnotifications: notifications };
@@ -144,7 +144,7 @@ export class AddonModDataProvider {
         await this.deleteEntryOfflineAction(dataId, entryId, 'add', siteId);
 
         // App is offline, store the action.
-        if (!this.appProvider.isOnline() || forceOffline) {
+        if (!CoreApp.isOnline() || forceOffline) {
             return storeOffline();
         }
 
@@ -154,7 +154,7 @@ export class AddonModDataProvider {
 
             return result;
         } catch (error) {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // The WebService has thrown an error, this means that responses cannot be submitted.
                 throw error;
             }
@@ -174,7 +174,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the action is done.
      */
     addEntryOnline(dataId: number, data: AddonModDataSubfieldData[], groupId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     databaseid: dataId,
                     data: data
@@ -199,7 +199,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the action is done.
      */
     async approveEntry(dataId: number, entryId: number, approve: boolean, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a data to be synchronized later.
         const storeOffline = async (): Promise<any> => {
@@ -221,7 +221,7 @@ export class AddonModDataProvider {
             return;
         }
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -233,7 +233,7 @@ export class AddonModDataProvider {
                 sent: true,
             };
         } catch (error) {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // The WebService has thrown an error, this means that responses cannot be submitted.
                 throw error;
             }
@@ -252,7 +252,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the action is done.
      */
     approveEntryOnline(entryId: number, approve: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     entryid: entryId,
                     approve: approve ? 1 : 0
@@ -305,7 +305,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the action is done.
      */
     async deleteEntry(dataId: number, entryId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a data to be synchronized later.
         const storeOffline = async (): Promise<any> => {
@@ -323,7 +323,7 @@ export class AddonModDataProvider {
             return;
         }
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -335,7 +335,7 @@ export class AddonModDataProvider {
                 sent: true,
             };
         } catch (error) {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // The WebService has thrown an error, this means that responses cannot be submitted.
                 throw error;
             }
@@ -353,7 +353,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the action is done.
      */
     deleteEntryOnline(entryId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     entryid: entryId
                 };
@@ -399,7 +399,7 @@ export class AddonModDataProvider {
      */
     async editEntry(dataId: number, entryId: number, courseId: number, contents: AddonModDataSubfieldData[], fields: any,
             siteId?: string, forceOffline: boolean = false): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a data to be synchronized later.
         const storeOffline = async (): Promise<any> => {
@@ -411,7 +411,7 @@ export class AddonModDataProvider {
             };
         };
 
-        if (!this.appProvider.isOnline() || forceOffline) {
+        if (!CoreApp.isOnline() || forceOffline) {
             const notifications = this.checkFields(fields, contents);
             if (notifications) {
                 return { fieldnotifications: notifications };
@@ -421,7 +421,7 @@ export class AddonModDataProvider {
         // Remove unnecessary not synced actions.
         await this.deleteEntryOfflineAction(dataId, entryId, 'edit', siteId);
 
-        if (!this.appProvider.isOnline() || forceOffline) {
+        if (!CoreApp.isOnline() || forceOffline) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -432,7 +432,7 @@ export class AddonModDataProvider {
 
             return result;
         } catch (error) {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // The WebService has thrown an error, this means that responses cannot be submitted.
                 throw error;
             }
@@ -451,7 +451,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the action is done.
      */
     editEntryOnline(entryId: number, data: AddonModDataSubfieldData[], siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     entryid: entryId,
                     data: data
@@ -469,7 +469,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when done.
      */
     fetchAllEntries(dataId: number, options: AddonModDataGetEntriesOptions = {}): Promise<AddonModDataEntry[]> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
         options.page = 0;
 
         return this.fetchEntriesRecursive(dataId, [], options);
@@ -530,7 +530,7 @@ export class AddonModDataProvider {
      */
     protected getDatabaseByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {}):
             Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -538,7 +538,7 @@ export class AddonModDataProvider {
                 cacheKey: this.getDatabaseDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModDataProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_data_get_databases_by_courses', params, preSets).then((response) => {
@@ -607,7 +607,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the database is retrieved.
      */
     getDatabaseAccessInformation(dataId: number, options: AddonModDataAccessInfoOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             options.groupId = options.groupId || 0;
 
             const params = {
@@ -618,7 +618,7 @@ export class AddonModDataProvider {
                 cacheKey: this.getDatabaseAccessInformationDataCacheKey(dataId, options.groupId),
                 component: AddonModDataProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_data_get_data_access_information', params, preSets);
@@ -639,7 +639,7 @@ export class AddonModDataProvider {
         options.page = options.page || 0;
         options.perPage = options.perPage || AddonModDataProvider.PER_PAGE;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             // Always use sort and order params to improve cache usage (entries are identified by params).
             const params = {
                 databaseid: dataId,
@@ -655,12 +655,12 @@ export class AddonModDataProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModDataProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_data_get_entries', params, preSets).then((response) => {
                 response.entries.forEach((entry) => {
-                    entry.contents = this.utils.arrayToObject(entry.contents, 'fieldid');
+                    entry.contents = CoreUtils.arrayToObject(entry.contents, 'fieldid');
                 });
 
                 return response;
@@ -699,7 +699,7 @@ export class AddonModDataProvider {
      */
     getEntry(dataId: number, entryId: number, options: CoreCourseCommonModWSOptions = {}):
              Promise<{entry: AddonModDataEntry, ratinginfo: CoreRatingInfo}> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 entryid: entryId,
                 returncontents: 1,
@@ -709,11 +709,11 @@ export class AddonModDataProvider {
                 updateFrequency: CoreSite.FREQUENCY_SOMETIMES,
                 component: AddonModDataProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_data_get_entry', params, preSets).then((response) => {
-                response.entry.contents = this.utils.arrayToObject(response.entry.contents, 'fieldid');
+                response.entry.contents = CoreUtils.arrayToObject(response.entry.contents, 'fieldid');
 
                 return response;
             });
@@ -739,7 +739,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the fields are retrieved.
      */
     getFields(dataId: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 databaseid: dataId,
             };
@@ -748,7 +748,7 @@ export class AddonModDataProvider {
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModDataProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_data_get_fields', params, preSets).then((response) => {
@@ -781,7 +781,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -798,7 +798,7 @@ export class AddonModDataProvider {
 
         promises.push(this.invalidateFiles(moduleId, siteId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -809,7 +809,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDatabaseAccessInformationData(dataId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getDatabaseAccessInformationDataPrefixCacheKey(dataId));
         });
     }
@@ -822,7 +822,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateEntriesData(dataId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getEntriesPrefixCacheKey(dataId));
         });
     }
@@ -835,7 +835,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateFieldsData(dataId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getFieldsCacheKey(dataId));
         });
     }
@@ -848,7 +848,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the files are invalidated.
      */
     invalidateFiles(moduleId: number, siteId?: string): Promise<any> {
-        return this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModDataProvider.COMPONENT, moduleId);
+        return CoreFilepool.invalidateFilesByComponent(siteId, AddonModDataProvider.COMPONENT, moduleId);
     }
 
     /**
@@ -859,7 +859,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDatabaseData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getDatabaseDataCacheKey(courseId));
         });
     }
@@ -872,7 +872,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateDatabaseWSData(databaseId: number, siteId: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getDatabaseDataPrefixCacheKey(databaseId));
         });
     }
@@ -886,7 +886,7 @@ export class AddonModDataProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateEntryData(dataId: number, entryId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getEntryCacheKey(dataId, entryId));
         });
     }
@@ -899,7 +899,7 @@ export class AddonModDataProvider {
      * @since 3.3
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('mod_data_get_data_access_information');
         });
     }
@@ -917,7 +917,7 @@ export class AddonModDataProvider {
             databaseid: id
         };
 
-        return this.logHelper.logSingle('mod_data_view_database', params, AddonModDataProvider.COMPONENT, id, name, 'data', {},
+        return CoreCourseLogHelper.logSingle('mod_data_view_database', params, AddonModDataProvider.COMPONENT, id, name, 'data', {},
                     siteId);
     }
 
@@ -936,7 +936,7 @@ export class AddonModDataProvider {
         options.perPage = options.perPage || AddonModDataProvider.PER_PAGE;
         options.readingStrategy = options.readingStrategy || CoreSitesReadingStrategy.PreferNetwork;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 databaseid: dataId,
                 groupid: options.groupId,
@@ -947,7 +947,7 @@ export class AddonModDataProvider {
             const preSets = {
                 component: AddonModDataProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             if (typeof options.sort != 'undefined') {
@@ -968,7 +968,7 @@ export class AddonModDataProvider {
 
             return site.read('mod_data_search_entries', params, preSets).then((response) => {
                 response.entries.forEach((entry) => {
-                    entry.contents = this.utils.arrayToObject(entry.contents, 'fieldid');
+                    entry.contents = CoreUtils.arrayToObject(entry.contents, 'fieldid');
                 });
 
                 return response;

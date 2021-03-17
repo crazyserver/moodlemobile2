@@ -21,7 +21,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /*
  * "Utils" service with helper functions for date and time.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreTimeUtilsProvider {
 
     protected FORMAT_REPLACEMENTS = { // To convert PHP strf format to Moment format.
@@ -170,11 +170,11 @@ export class CoreTimeUtilsProvider {
         mins = Math.floor(remainder / CoreConstants.SECONDS_MINUTE);
         secs = remainder - (mins * CoreConstants.SECONDS_MINUTE);
 
-        const ss = this.translate.instant('core.' + (secs == 1 ? 'sec' : 'secs')),
-            sm = this.translate.instant('core.' + (mins == 1 ? 'min' : 'mins')),
-            sh = this.translate.instant('core.' + (hours == 1 ? 'hour' : 'hours')),
-            sd = this.translate.instant('core.' + (days == 1 ? 'day' : 'days')),
-            sy = this.translate.instant('core.' + (years == 1 ? 'year' : 'years'));
+        const ss = Translate.instant('core.' + (secs == 1 ? 'sec' : 'secs')),
+            sm = Translate.instant('core.' + (mins == 1 ? 'min' : 'mins')),
+            sh = Translate.instant('core.' + (hours == 1 ? 'hour' : 'hours')),
+            sd = Translate.instant('core.' + (days == 1 ? 'day' : 'days')),
+            sy = Translate.instant('core.' + (years == 1 ? 'year' : 'years'));
         let oyears = '',
             odays = '',
             ohours = '',
@@ -213,7 +213,7 @@ export class CoreTimeUtilsProvider {
             return osecs;
         }
 
-        return this.translate.instant('core.now');
+        return Translate.instant('core.now');
     }
 
     /**
@@ -305,7 +305,7 @@ export class CoreTimeUtilsProvider {
      * @return Readable date.
      */
     userDate(timestamp: number, format?: string, convert: boolean = true, fixDay: boolean = true, fixHour: boolean = true): string {
-        format = this.translate.instant(format ? format : 'core.strftimedaydatetime');
+        format = Translate.instant(format ? format : 'core.strftimedaydatetime');
 
         if (fixDay) {
             format = format.replace(/%d/g, '%e');

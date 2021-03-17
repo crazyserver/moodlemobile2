@@ -66,12 +66,12 @@ export class AddonBadgesUserBadgesPage {
      * @return Promise resolved when done.
      */
     fetchBadges(): Promise<any> {
-        this.currentTime = this.timeUtils.timestamp();
+        this.currentTime = CoreTimeUtils.timestamp();
 
         return this.badgesProvider.getUserBadges(this.courseId, this.userId).then((badges) => {
             this.badges = badges;
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting badges data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting badges data.');
         });
     }
 

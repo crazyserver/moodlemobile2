@@ -25,7 +25,7 @@ import { AddonModGlossaryProvider } from './glossary';
  * Match mod/glossary/edit.php?cmid=6 with a valid data.
  * Currently it only supports new entry.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryEditLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModGlossaryEditLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModGlossary';
@@ -50,10 +50,10 @@ export class AddonModGlossaryEditLinkHandler extends CoreContentLinksHandlerBase
 
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     cmId = parseInt(params.cmid, 10);
 
-                this.courseProvider.getModuleBasicInfo(cmId, siteId).then((module) => {
+                CoreCourse.getModuleBasicInfo(cmId, siteId).then((module) => {
                     return this.glossaryProvider.getGlossary(module.course, module.id).then((glossary) => {
                         const pageParams = {
                             courseId: module.course,

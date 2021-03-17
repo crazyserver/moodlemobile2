@@ -19,7 +19,7 @@ import { AddonModQuizAccessRuleHandler } from '../../../providers/access-rules-d
 /**
  * Handler to support safe address access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessSafeBrowserHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessSafeBrowser';
     ruleName = 'quizaccess_safebrowser';

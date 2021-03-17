@@ -29,7 +29,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service that provides some features for LTI.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLtiProvider {
     static COMPONENT = 'mmaModLti';
 
@@ -88,7 +88,7 @@ export class AddonModLtiProvider {
 
         const entry = await this.fileProvider.writeFile(this.LAUNCHER_FILE_NAME, text);
 
-        if (this.appProvider.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             return entry.toInternalURL();
         } else {
             return entry.toURL();
@@ -111,10 +111,10 @@ export class AddonModLtiProvider {
             cacheKey: this.getLtiCacheKey(courseId),
             updateFrequency: CoreSite.FREQUENCY_RARELY,
             component: AddonModLtiProvider.COMPONENT,
-            ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+            ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
         };
 
-        const site = await this.sitesProvider.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         const response: AddonModLtiGetLtisByCoursesResult = await site.read('mod_lti_get_ltis_by_courses', params, preSets);
 
@@ -157,7 +157,7 @@ export class AddonModLtiProvider {
             cacheKey: this.getLtiLaunchDataCacheKey(id)
         };
 
-        return this.sitesProvider.getCurrentSite().read('mod_lti_get_tool_launch_data', params, preSets)
+        return CoreSites.getCurrentSite().read('mod_lti_get_tool_launch_data', params, preSets)
                 .then((response: AddonModLtiGetToolLaunchDataResult): any => {
 
             if (response.endpoint) {
@@ -185,7 +185,7 @@ export class AddonModLtiProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateLti(courseId: number): Promise<any> {
-        return this.sitesProvider.getCurrentSite().invalidateWsCacheForKey(this.getLtiCacheKey(courseId));
+        return CoreSites.getCurrentSite().invalidateWsCacheForKey(this.getLtiCacheKey(courseId));
     }
 
     /**
@@ -195,7 +195,7 @@ export class AddonModLtiProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateLtiLaunchData(id: number): Promise<any> {
-        return this.sitesProvider.getCurrentSite().invalidateWsCacheForKey(this.getLtiLaunchDataCacheKey(id));
+        return CoreSites.getCurrentSite().invalidateWsCacheForKey(this.getLtiLaunchDataCacheKey(id));
     }
 
     /**
@@ -205,7 +205,7 @@ export class AddonModLtiProvider {
      * @return Promise resolved with boolean: whether it's disabled.
      */
     async isOpenInAppBrowserDisabled(siteId?: string): Promise<boolean> {
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         return this.isOpenInAppBrowserDisabledInSite(site);
     }
@@ -217,7 +217,7 @@ export class AddonModLtiProvider {
      * @return Whether it's disabled.
      */
     isOpenInAppBrowserDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('CoreCourseModuleDelegate_AddonModLti:openInAppBrowser');
     }
@@ -231,17 +231,17 @@ export class AddonModLtiProvider {
      */
     async launch(url: string, params: AddonModLtiParam[]): Promise<void> {
         if (!this.urlUtils.isHttpURL(url)) {
-            throw this.translate.instant('addon.mod_lti.errorinvalidlaunchurl');
+            throw Translate.instant('addon.mod_lti.errorinvalidlaunchurl');
         }
 
         // Generate launcher and open it.
         const launcherUrl = await this.generateLauncher(url, params);
 
-        if (this.appProvider.isMobile()) {
-            this.utils.openInApp(launcherUrl);
+        if (CoreApp.isMobile()) {
+            CoreUtils.openInApp(launcherUrl);
         } else {
             // In desktop open in browser, we found some cases where inapp caused JS issues.
-            this.utils.openInBrowser(launcherUrl);
+            CoreUtils.openInBrowser(launcherUrl);
         }
     }
 
@@ -258,7 +258,7 @@ export class AddonModLtiProvider {
             ltiid: id
         };
 
-        return this.logHelper.logSingle('mod_lti_view_lti', params, AddonModLtiProvider.COMPONENT, id, name, 'lti', {}, siteId);
+        return CoreCourseLogHelper.logSingle('mod_lti_view_lti', params, AddonModLtiProvider.COMPONENT, id, name, 'lti', {}, siteId);
     }
 }
 

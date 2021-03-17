@@ -65,7 +65,7 @@ export class CoreLoadingComponent implements OnInit, OnChanges {
     ngOnInit(): void {
         if (!this.message) {
             // Default loading message.
-            this.message = this.translate.instant('core.loading');
+            this.message = Translate.instant('core.loading');
         }
 
         // Add class if loaded on init.

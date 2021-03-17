@@ -21,7 +21,7 @@ import { AddonQtypeMultichoiceComponent } from '@addon/qtype/multichoice/compone
 /**
  * Handler to support true/false question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeTrueFalseHandler implements CoreQuestionHandler {
     name = 'AddonQtypeTrueFalse';
     type = 'qtype_truefalse';
@@ -82,7 +82,7 @@ export class AddonQtypeTrueFalseHandler implements CoreQuestionHandler {
      * @return Whether they're the same.
      */
     isSameResponse(question: any, prevAnswers: any, newAnswers: any): boolean {
-        return this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
+        return CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, 'answer');
     }
 
     /**

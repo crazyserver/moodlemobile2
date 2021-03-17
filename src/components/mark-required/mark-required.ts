@@ -39,14 +39,14 @@ export class CoreMarkRequiredComponent implements OnInit, AfterViewInit {
     constructor(element: ElementRef, private translate: TranslateService, private textUtils: CoreTextUtilsProvider,
             private utils: CoreUtilsProvider) {
         this.element = element.nativeElement;
-        this.requiredLabel = this.translate.instant('core.required');
+        this.requiredLabel = Translate.instant('core.required');
     }
 
     /**
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.coreMarkRequired = this.utils.isTrueOrOne(this.coreMarkRequired);
+        this.coreMarkRequired = CoreUtils.isTrueOrOne(this.coreMarkRequired);
     }
 
     /**

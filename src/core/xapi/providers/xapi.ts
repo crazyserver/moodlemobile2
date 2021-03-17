@@ -25,7 +25,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service to provide XAPI functionalities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreXAPIProvider {
 
     protected ROOT_CACHE_KEY = 'CoreXAPI:';
@@ -38,7 +38,7 @@ export class CoreXAPIProvider {
      * @since 3.9
      */
     async canPostStatements(siteId?: string): Promise<boolean> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         return this.canPostStatementsInSite(site);
     }
@@ -51,7 +51,7 @@ export class CoreXAPIProvider {
      * @since 3.9
      */
     canPostStatementsInSite(site?: CoreSite): boolean {
-        site = site || CoreSites.instance.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_xapi_statement_post');
     }
@@ -65,9 +65,9 @@ export class CoreXAPIProvider {
      * @return Promise resolved when done.
      */
     async getUrl(contextId: number, type: string, siteId?: string): Promise<string> {
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
-        return CoreTextUtils.instance.concatenatePaths(site.getURL(), `xapi/${type}/${contextId}`);
+        return CoreTextUtils.concatenatePaths(site.getURL(), `xapi/${type}/${contextId}`);
     }
 
     /**
@@ -83,16 +83,16 @@ export class CoreXAPIProvider {
             : Promise<boolean> {
 
         options = options || {};
-        options.siteId = options.siteId || CoreSites.instance.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a message to be synchronized later.
         const storeOffline = async (): Promise<boolean> => {
-            await CoreXAPIOffline.instance.saveStatements(contextId, component, json, options);
+            await CoreXAPIOffline.saveStatements(contextId, component, json, options);
 
             return false;
         };
 
-        if (!CoreApp.instance.isOnline() || options.offline) {
+        if (!CoreApp.isOnline() || options.offline) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -102,7 +102,7 @@ export class CoreXAPIProvider {
 
             return true;
         } catch (error) {
-            if (CoreUtils.instance.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // The WebService has thrown an error, this means that responses cannot be submitted.
                 throw error;
             } else {
@@ -122,7 +122,7 @@ export class CoreXAPIProvider {
      */
     async postStatementsOnline(component: string, json: string, siteId?: string): Promise<number[]> {
 
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         const data = {
             component: component,

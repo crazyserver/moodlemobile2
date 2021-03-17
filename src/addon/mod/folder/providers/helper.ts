@@ -18,7 +18,7 @@ import { CoreCourseProvider } from '@core/course/providers/course';
 /**
  * Service that provides some features for folder.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFolderHelperProvider {
 
     constructor(private courseProvider: CoreCourseProvider) {
@@ -35,7 +35,7 @@ export class AddonModFolderHelperProvider {
     formatContents(contents: any[]): any[] {
         const files = [],
             folders = [],
-            folderIcon = this.courseProvider.getModuleIconSrc('folder');
+            folderIcon = CoreCourse.getModuleIconSrc('folder');
 
         contents.forEach((entry) => {
             if (entry.filepath !== '/') {

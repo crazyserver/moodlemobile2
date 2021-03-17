@@ -19,7 +19,7 @@ import { AddonModQuizAccessRuleHandler } from '../../../providers/access-rules-d
 /**
  * Handler to support IP address access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessIpAddressHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessIpAddress';
     ruleName = 'quizaccess_ipaddress';

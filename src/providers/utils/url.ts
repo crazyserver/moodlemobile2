@@ -22,7 +22,7 @@ import { CoreUrl } from '@singletons/url';
 /*
  * "Utils" service with helper functions for URLs.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUrlUtilsProvider {
 
     constructor(private langProvider: CoreLangProvider, private textUtils: CoreTextUtilsProvider) { }

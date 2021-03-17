@@ -22,7 +22,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 /**
  * Service that provides some features for labels.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLabelProvider {
     static COMPONENT = 'mmaModLabel';
 
@@ -53,7 +53,7 @@ export class AddonModLabelProvider {
     protected getLabelByField(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModLabelLabel> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -61,7 +61,7 @@ export class AddonModLabelProvider {
                 cacheKey: this.getLabelDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModLabelProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_label_get_labels_by_courses', params, preSets)
@@ -111,7 +111,7 @@ export class AddonModLabelProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateLabelData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(null).then((site) => {
+        return CoreSites.getSite(null).then((site) => {
             return site.invalidateWsCacheForKey(this.getLabelDataCacheKey(courseId));
         });
     }
@@ -125,15 +125,15 @@ export class AddonModLabelProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
         promises.push(this.invalidateLabelData(courseId, siteId));
 
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModLabelProvider.COMPONENT, moduleId, true));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModLabelProvider.COMPONENT, moduleId, true));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -144,7 +144,7 @@ export class AddonModLabelProvider {
      * @since 3.3
      */
     isGetLabelAvailable(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('mod_label_get_labels_by_courses');
         });
     }
@@ -157,7 +157,7 @@ export class AddonModLabelProvider {
      * @since 3.3
      */
     isGetLabelAvailableForSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('mod_label_get_labels_by_courses');
     }

@@ -42,12 +42,12 @@ export class AddonModChatUsersPage {
             private sitesProvider: CoreSitesProvider, private viewCtrl: ViewController,
             private domUtils: CoreDomUtilsProvider, private chatProvider: AddonModChatProvider) {
         this.sessionId = navParams.get('sessionId');
-        this.isOnline = this.appProvider.isOnline();
-        this.currentUserId = this.sitesProvider.getCurrentSiteUserId();
+        this.isOnline = CoreApp.isOnline();
+        this.currentUserId = CoreSites.getCurrentSiteUserId();
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = this.appProvider.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
     }
@@ -59,7 +59,7 @@ export class AddonModChatUsersPage {
         this.chatProvider.getChatUsers(this.sessionId, {cmId: this.cmId}).then((data) => {
             this.users = data.users;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhilegettingchatusers', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhilegettingchatusers', true);
         }).finally(() => {
             this.usersLoaded = true;
         });

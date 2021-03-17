@@ -51,7 +51,7 @@ export class CoreContentLinksChooseSitePage implements OnInit {
         }
 
         // Check if it's the root URL.
-        this.sitesProvider.isStoredRootURL(this.url).then((data): any => {
+        CoreSites.isStoredRootURL(this.url).then((data): any => {
             if (data.site) {
                 // It's the root URL.
                 this.isRootURL = true;
@@ -62,23 +62,23 @@ export class CoreContentLinksChooseSitePage implements OnInit {
                 return this.contentLinksDelegate.getActionsFor(this.url).then((actions): any => {
                     this.action = this.contentLinksHelper.getFirstValidAction(actions);
                     if (!this.action) {
-                        return Promise.reject(this.translate.instant('core.contentlinks.errornoactions'));
+                        return Promise.reject(Translate.instant('core.contentlinks.errornoactions'));
                     }
 
                     return this.action.sites;
                 });
             } else {
                 // No sites to treat the URL.
-                return Promise.reject(this.translate.instant('core.contentlinks.errornosites'));
+                return Promise.reject(Translate.instant('core.contentlinks.errornosites'));
             }
         }).then((siteIds) => {
             // Get the sites that can perform the action.
-            return this.sitesProvider.getSites(siteIds);
+            return CoreSites.getSites(siteIds);
         }).then((sites) => {
             this.sites = sites;
 
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.contentlinks.errornosites', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.contentlinks.errornosites', true);
             this.leaveView();
         }).finally(() => {
             this.loaded = true;
@@ -109,7 +109,7 @@ export class CoreContentLinksChooseSitePage implements OnInit {
      * Cancel and leave the view.
      */
     protected leaveView(): void {
-        this.sitesProvider.logout().finally(() => {
+        CoreSites.logout().finally(() => {
             this.navCtrl.setRoot('CoreLoginSitesPage');
         });
     }

@@ -234,12 +234,12 @@ export type CoreSitesCommonWSOptions = {
  * their own database tables. Example:
  *
  * constructor(sitesProvider: CoreSitesProvider) {
- *     this.sitesProvider.registerSiteSchema(this.tableSchema);
+ *     CoreSites.registerSiteSchema(this.tableSchema);
  *
  * This provider will automatically create the tables in the databases of all the instantiated sites, and also to the
  * databases of sites instantiated from now on.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSitesProvider {
     // Variables for the database.
     static SITES_TABLE = 'sites_2';
@@ -495,9 +495,9 @@ export class CoreSitesProvider {
         siteUrl = this.urlUtils.formatURL(siteUrl);
 
         if (!this.urlUtils.isHttpURL(siteUrl)) {
-            return Promise.reject(this.translate.instant('core.login.invalidsite'));
-        } else if (!this.appProvider.isOnline()) {
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+            return Promise.reject(Translate.instant('core.login.invalidsite'));
+        } else if (!CoreApp.isOnline()) {
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         } else {
             return this.checkSiteWithProtocol(siteUrl, protocol).catch((error) => {
                 // Do not continue checking if a critical error happened.
@@ -519,7 +519,7 @@ export class CoreSitesProvider {
                     } else if (this.textUtils.getErrorMessageFromError(secondError)) {
                         return Promise.reject(secondError);
                     } else {
-                        return this.translate.instant('core.cannotconnecttrouble');
+                        return Translate.instant('core.cannotconnecttrouble');
                     }
                 });
             });
@@ -580,11 +580,11 @@ export class CoreSitesProvider {
 
                         // Check that the user can authenticate.
                         if (!config.enablewebservices) {
-                            return rejectWithCriticalError(this.translate.instant('core.login.webservicesnotenabled'));
+                            return rejectWithCriticalError(Translate.instant('core.login.webservicesnotenabled'));
                         } else if (!config.enablemobilewebservice) {
-                            return rejectWithCriticalError(this.translate.instant('core.login.mobileservicesnotenabled'));
+                            return rejectWithCriticalError(Translate.instant('core.login.mobileservicesnotenabled'));
                         } else if (config.maintenanceenabled) {
-                            let message = this.translate.instant('core.sitemaintenance');
+                            let message = Translate.instant('core.sitemaintenance');
                             if (config.maintenancemessage) {
                                 message += config.maintenancemessage;
                             }
@@ -606,12 +606,12 @@ export class CoreSitesProvider {
 
                             if (error.errorcode == 'codingerror') {
                                 // This could be caused by a redirect. Check if it's the case.
-                                return this.utils.checkRedirect(siteUrl).then((redirect) => {
+                                return CoreUtils.checkRedirect(siteUrl).then((redirect) => {
                                     if (redirect) {
-                                        error.error = this.translate.instant('core.login.sitehasredirect');
+                                        error.error = Translate.instant('core.login.sitehasredirect');
                                     } else {
                                         // We can't be sure if there is a redirect or not. Display cannot connect error.
-                                        error.error = this.translate.instant('core.cannotconnecttrouble');
+                                        error.error = Translate.instant('core.cannotconnecttrouble');
                                     }
 
                                     return Promise.reject(error);
@@ -656,12 +656,12 @@ export class CoreSitesProvider {
         return this.http.post(siteUrl + '/login/token.php', {}).timeout(this.wsProvider.getRequestTimeout()).toPromise()
                 .catch(() => {
             // Default error messages are kinda bad, return our own message.
-            return Promise.reject({error: this.translate.instant('core.cannotconnecttrouble')});
+            return Promise.reject({error: Translate.instant('core.cannotconnecttrouble')});
         }).then((data: any) => {
 
             if (data === null) {
                 // Cannot connect.
-                return Promise.reject({error: this.translate.instant('core.cannotconnect', {$a: CoreSite.MINIMUM_MOODLE_VERSION})});
+                return Promise.reject({error: Translate.instant('core.cannotconnect', {$a: CoreSite.MINIMUM_MOODLE_VERSION})});
             }
 
             if (data.errorcode && (data.errorcode == 'enablewsdescription' || data.errorcode == 'requirecorrectaccess')) {
@@ -685,8 +685,8 @@ export class CoreSitesProvider {
      */
     getUserToken(siteUrl: string, username: string, password: string, service?: string, retry?: boolean)
             : Promise<CoreSiteUserTokenResponse> {
-        if (!this.appProvider.isOnline()) {
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+        if (!CoreApp.isOnline()) {
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         }
 
         if (!service) {
@@ -703,7 +703,7 @@ export class CoreSitesProvider {
 
         return promise.then((data: any): any => {
             if (typeof data == 'undefined') {
-                return Promise.reject(this.translate.instant('core.cannotconnecttrouble'));
+                return Promise.reject(Translate.instant('core.cannotconnecttrouble'));
             } else {
                 if (typeof data.token != 'undefined') {
                     return { token: data.token, siteUrl: siteUrl, privateToken: data.privatetoken };
@@ -717,9 +717,9 @@ export class CoreSitesProvider {
                             return this.getUserToken(siteUrl, username, password, service, true);
                         } else if (data.errorcode == 'missingparam') {
                             // It seems the server didn't receive all required params, it could be due to a redirect.
-                            return this.utils.checkRedirect(loginUrl).then((redirect) => {
+                            return CoreUtils.checkRedirect(loginUrl).then((redirect) => {
                                 if (redirect) {
-                                    return Promise.reject({ error: this.translate.instant('core.login.sitehasredirect') });
+                                    return Promise.reject({ error: Translate.instant('core.login.sitehasredirect') });
                                 } else {
                                     return Promise.reject({ error: data.error, errorcode: data.errorcode });
                                 }
@@ -730,12 +730,12 @@ export class CoreSitesProvider {
                             return Promise.reject(data.error);
                         }
                     } else {
-                        return Promise.reject(this.translate.instant('core.login.invalidaccount'));
+                        return Promise.reject(Translate.instant('core.login.invalidaccount'));
                     }
                 }
             }
         }, () => {
-            return Promise.reject(this.translate.instant('core.cannotconnecttrouble'));
+            return Promise.reject(Translate.instant('core.cannotconnecttrouble'));
         });
     }
 
@@ -868,7 +868,7 @@ export class CoreSitesProvider {
 
         return promise.then(() => {
            return Promise.reject({
-                error: this.translate.instant(errorKey, translateParams),
+                error: Translate.instant(errorKey, translateParams),
                 errorcode: errorCode,
                 loggedout: true
             });
@@ -1064,17 +1064,17 @@ export class CoreSitesProvider {
                     default: config.tool_mobile_setuplink,
                 };
 
-                const downloadUrl = this.appProvider.getAppStoreUrl(storesConfig);
+                const downloadUrl = CoreApp.getAppStoreUrl(storesConfig);
                 const siteId = this.getCurrentSiteId();
 
                 // Do not block interface.
-                this.domUtils.showConfirm(
-                    this.translate.instant('core.updaterequireddesc', { $a: config.tool_mobile_minimumversion }),
-                    this.translate.instant('core.updaterequired'),
-                    this.translate.instant('core.download'),
-                    this.translate.instant(siteId ? 'core.mainmenu.logout' : 'core.cancel')).then(() => {
+                CoreDomUtils.showConfirm(
+                    Translate.instant('core.updaterequireddesc', { $a: config.tool_mobile_minimumversion }),
+                    Translate.instant('core.updaterequired'),
+                    Translate.instant('core.download'),
+                    Translate.instant(siteId ? 'core.mainmenu.logout' : 'core.cancel')).then(() => {
 
-                    this.utils.openInBrowser(downloadUrl);
+                    CoreUtils.openInBrowser(downloadUrl);
                 }).catch(() => {
                     // Do nothing.
                 });

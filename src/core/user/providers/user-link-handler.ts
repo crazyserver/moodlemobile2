@@ -20,7 +20,7 @@ import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/hel
 /**
  * Handler to treat links to user profiles.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserProfileLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreUserProfileLinkHandler';
     // Match user/view.php and user/profile.php but NOT grade/report/user/.

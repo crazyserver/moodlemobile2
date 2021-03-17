@@ -21,7 +21,7 @@ import { CoreDashboardMainMenuHandler } from './mainmenu-handler';
 /**
  * Handler to treat links to my overview.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesDashboardLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreCoursesMyOverviewLinkHandler';
     pattern = /\/my\/?$/;

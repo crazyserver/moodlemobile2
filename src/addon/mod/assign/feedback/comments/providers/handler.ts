@@ -26,7 +26,7 @@ import { AddonModAssignFeedbackCommentsComponent } from '../component/comments';
 /**
  * Handler for comments feedback plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignFeedbackCommentsHandler implements AddonModAssignFeedbackHandler {
     name = 'AddonModAssignFeedbackCommentsHandler';
     type = 'comments';
@@ -88,7 +88,7 @@ export class AddonModAssignFeedbackCommentsHandler implements AddonModAssignFeed
      * @return Draft ID.
      */
     protected getDraftId(assignId: number, userId: number, siteId?: string): string {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return siteId + '#' + assignId + '#' + userId;
     }

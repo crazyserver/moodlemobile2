@@ -29,7 +29,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch pages.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModPagePrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModPage';
     modName = 'page';
@@ -97,8 +97,8 @@ export class AddonModPagePrefetchHandler extends CoreCourseResourcePrefetchHandl
         const promises = [];
 
         promises.push(this.pageProvider.invalidatePageData(courseId));
-        promises.push(this.courseProvider.invalidateModule(module.id));
+        promises.push(CoreCourse.invalidateModule(module.id));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 }

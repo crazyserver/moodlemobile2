@@ -58,7 +58,7 @@ export interface CoreQuestionBehaviourHandler extends CoreDelegateHandler {
 /**
  * Delegate to register question behaviour handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreQuestionBehaviourDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';

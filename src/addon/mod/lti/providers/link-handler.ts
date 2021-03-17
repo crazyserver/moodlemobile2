@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to LTI.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLtiLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModLtiLinkHandler';
 

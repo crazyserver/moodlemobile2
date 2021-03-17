@@ -21,7 +21,7 @@ import { AddonModGlossaryOfflineProvider } from './offline';
 /**
  * Helper to gather some common functions for glossary.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryHelperProvider {
 
     constructor(private fileProvider: CoreFileProvider,

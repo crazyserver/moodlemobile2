@@ -18,7 +18,7 @@ import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 /**
  * Service to handle offline data for courses.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseOfflineProvider {
 
     // Variables for database.
@@ -57,7 +57,7 @@ export class CoreCourseOfflineProvider {
     };
 
     constructor(private sitesProvider: CoreSitesProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -68,7 +68,7 @@ export class CoreCourseOfflineProvider {
      * @return Promise resolved when deleted, rejected if failure.
      */
     deleteManualCompletion(cmId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().deleteRecords(CoreCourseOfflineProvider.MANUAL_COMPLETION_TABLE, {cmid: cmId});
         });
@@ -81,7 +81,7 @@ export class CoreCourseOfflineProvider {
      * @return Promise resolved with the list of completions.
      */
     getAllManualCompletions(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().getRecords(CoreCourseOfflineProvider.MANUAL_COMPLETION_TABLE);
         });
@@ -95,7 +95,7 @@ export class CoreCourseOfflineProvider {
      * @return Promise resolved with the list of completions.
      */
     getCourseManualCompletions(courseId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().getRecords(CoreCourseOfflineProvider.MANUAL_COMPLETION_TABLE, {courseid: courseId});
         });
@@ -109,7 +109,7 @@ export class CoreCourseOfflineProvider {
      * @return Promise resolved with the completion, rejected if failure or not found.
      */
     getManualCompletion(cmId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             return site.getDb().getRecord(CoreCourseOfflineProvider.MANUAL_COMPLETION_TABLE, {cmid: cmId});
         });
@@ -129,7 +129,7 @@ export class CoreCourseOfflineProvider {
             : Promise<{status: boolean, offline: boolean}> {
 
         // Store the offline data.
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 cmid: cmId,
                 completed: completed,

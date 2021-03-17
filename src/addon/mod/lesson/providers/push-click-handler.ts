@@ -21,7 +21,7 @@ import { CoreGradesHelperProvider } from '@core/grades/providers/helper';
 /**
  * Handler for lesson push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'AddonModLessonPushClickHandler';
     priority = 200;
@@ -37,7 +37,7 @@ export class AddonModLessonPushClickHandler implements CorePushNotificationsClic
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_lesson' &&
+        if (CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_lesson' &&
                 notification.name == 'graded_essay') {
 
             return this.gradesProvider.isPluginEnabledForCourse(Number(notification.courseid), notification.site);

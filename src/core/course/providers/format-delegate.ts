@@ -179,7 +179,7 @@ export interface CoreCourseFormatHandler extends CoreDelegateHandler {
 /**
  * Service to interact with course formats. Provides the functions to register and interact with the addons.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseFormatDelegate extends CoreDelegate {
     protected featurePrefix = 'CoreCourseFormatDelegate_';
     protected handlerNameProperty = 'format';

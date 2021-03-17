@@ -21,7 +21,7 @@ import { AddonCompetencyProvider } from './competency';
 /**
  * Service that provides some features regarding learning plans.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyHelperProvider {
 
     constructor(private sitesProvider: CoreSitesProvider, private userProvider: CoreUserProvider,
@@ -35,7 +35,7 @@ export class AddonCompetencyHelperProvider {
      * @return User profile Image URL or true if default icon.
      */
     getProfile(userId: number): Promise<any> {
-        if (!userId || userId == this.sitesProvider.getCurrentSiteUserId()) {
+        if (!userId || userId == CoreSites.getCurrentSiteUserId()) {
             return Promise.resolve(false);
         }
 
@@ -69,7 +69,7 @@ export class AddonCompetencyHelperProvider {
                 return String(status);
         }
 
-        return this.translate.instant('addon.competency.usercompetencystatus_' + statusTranslateName);
+        return Translate.instant('addon.competency.usercompetencystatus_' + statusTranslateName);
     }
 
     /**
@@ -100,6 +100,6 @@ export class AddonCompetencyHelperProvider {
                 return String(status);
         }
 
-        return this.translate.instant('addon.competency.planstatus' + statusTranslateName);
+        return Translate.instant('addon.competency.planstatus' + statusTranslateName);
     }
 }

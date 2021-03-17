@@ -135,8 +135,8 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
         if (this.feedback) {
             promises.push(this.feedbackProvider.invalidateFeedbackAccessInformationData(this.feedback.id));
             promises.push(this.feedbackProvider.invalidateAnalysisData(this.feedback.id));
-            promises.push(this.groupsProvider.invalidateActivityAllowedGroups(this.feedback.coursemodule));
-            promises.push(this.groupsProvider.invalidateActivityGroupMode(this.feedback.coursemodule));
+            promises.push(CoreGroups.invalidateActivityAllowedGroups(this.feedback.coursemodule));
+            promises.push(CoreGroups.invalidateActivityGroupMode(this.feedback.coursemodule));
             promises.push(this.feedbackProvider.invalidateResumePageData(this.feedback.id));
         }
 
@@ -155,7 +155,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (this.feedback && syncEventData.feedbackId == this.feedback.id) {
             // Refresh the data.
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             return true;
         }
@@ -227,9 +227,9 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
 
         if (accessData.canedititems) {
             this.overview.timeopen = parseInt(this.feedback.timeopen) * 1000 || 0;
-            this.overview.openTimeReadable = this.overview.timeopen ? this.timeUtils.userDate(this.overview.timeopen) : '';
+            this.overview.openTimeReadable = this.overview.timeopen ? CoreTimeUtils.userDate(this.overview.timeopen) : '';
             this.overview.timeclose = parseInt(this.feedback.timeclose) * 1000 || 0;
-            this.overview.closeTimeReadable = this.overview.timeclose ? this.timeUtils.userDate(this.overview.timeclose) : '';
+            this.overview.closeTimeReadable = this.overview.timeclose ? CoreTimeUtils.userDate(this.overview.timeclose) : '';
         }
         if (accessData.canviewanalysis) {
             // Get groups (only for teachers).
@@ -270,10 +270,10 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
      * @return Resolved when done.
      */
     protected fetchGroupInfo(cmId: number): Promise<any> {
-        return this.groupsProvider.getActivityGroupInfo(cmId).then((groupInfo) => {
+        return CoreGroups.getActivityGroupInfo(cmId).then((groupInfo) => {
             this.groupInfo = groupInfo;
 
-            return this.setGroup(this.groupsProvider.validateGroupId(this.group, groupInfo));
+            return this.setGroup(CoreGroups.validateGroupId(this.group, groupInfo));
         });
     }
 

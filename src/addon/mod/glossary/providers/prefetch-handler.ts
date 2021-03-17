@@ -31,7 +31,7 @@ import { CoreUserProvider } from '@core/user/providers/user';
 /**
  * Handler to prefetch forums.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModGlossary';
     modName = 'glossary';
@@ -87,8 +87,8 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
      */
     protected getFilesFromGlossaryAndEntries(module: any, glossary: any, entries: any[]): any[] {
         let files = this.getIntroFilesFromInstance(module, glossary);
-        const getInlineFiles = this.sitesProvider.getCurrentSite() &&
-                this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.2');
+        const getInlineFiles = CoreSites.getCurrentSite() &&
+                CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.2');
 
         // Get entries files.
         entries.forEach((entry) => {
@@ -97,7 +97,7 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
             if (getInlineFiles && entry.definitioninlinefiles && entry.definitioninlinefiles.length) {
                 files = files.concat(entry.definitioninlinefiles);
             } else if (entry.definition && !getInlineFiles) {
-                files = files.concat(this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(entry.definition));
+                files = files.concat(CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(entry.definition));
             }
         });
 
@@ -138,7 +138,7 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
      * @return Promise resolved when done.
      */
     protected prefetchGlossary(module: any, courseId: number, single: boolean, siteId: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const options = {
             cmId: module.id,
@@ -188,7 +188,7 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
                 });
 
                 const files = this.getFilesFromGlossaryAndEntries(module, glossary, entries);
-                promises.push(this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id));
+                promises.push(CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id));
 
                 // Prefetch user avatars.
                 promises.push(this.userProvider.prefetchUserAvatars(entries, 'userpictureurl', siteId));
@@ -200,8 +200,8 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
             promises.push(this.glossaryProvider.getAllCategories(glossary.id, options));
 
             // Prefetch data for link handlers.
-            promises.push(this.courseProvider.getModuleBasicInfo(module.id, siteId));
-            promises.push(this.courseProvider.getModuleBasicInfoByInstance(glossary.id, 'glossary', siteId));
+            promises.push(CoreCourse.getModuleBasicInfo(module.id, siteId));
+            promises.push(CoreCourse.getModuleBasicInfoByInstance(glossary.id, 'glossary', siteId));
 
             return Promise.all(promises);
         });

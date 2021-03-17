@@ -123,16 +123,16 @@ export class AddonModForumDiscussionPage implements OnDestroy {
         this.postId = navParams.get('postId');
         this.parent = navParams.get('parent');
 
-        this.isOnline = this.appProvider.isOnline();
+        this.isOnline = CoreApp.isOnline();
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = this.appProvider.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
         this.isSplitViewOn = this.svComponent && this.svComponent.isOn();
 
-        this.discussionStr = translate.instant('addon.mod_forum.discussion');
+        this.discussionStr = Translate.instant('addon.mod_forum.discussion');
     }
 
     /**
@@ -151,7 +151,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
         if (scrollTo) {
             // Scroll to the post.
             setTimeout(() => {
-                this.domUtils.scrollToElementBySelector(this.content, '#addon-mod_forum-post-' + scrollTo);
+                CoreDomUtils.scrollToElementBySelector(this.content, '#addon-mod_forum-post-' + scrollTo);
             });
         }
     }
@@ -163,7 +163,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
      */
     protected async getUserSort(): Promise<SortType> {
         try {
-            const value = await this.sitesProvider.getCurrentSite().getLocalSiteConfig('AddonModForumDiscussionSort');
+            const value = await CoreSites.getCurrentSite().getLocalSiteConfig('AddonModForumDiscussionSort');
 
             return value;
         } catch (error) {
@@ -202,28 +202,28 @@ export class AddonModForumDiscussionPage implements OnDestroy {
         // Refresh data if this discussion is synchronized automatically.
         this.syncObserver = CoreEvents.on(AddonModForumSyncProvider.AUTO_SYNCED, (data) => {
             if (data.forumId == this.forumId && this.discussionId == data.discussionId
-                    && data.userId == this.sitesProvider.getCurrentSiteUserId()) {
+                    && data.userId == CoreSites.getCurrentSiteUserId()) {
                 // Refresh the data.
                 this.discussionLoaded = false;
                 this.refreshPosts();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Refresh data if this forum discussion is synchronized from discussions list.
         this.syncManualObserver = CoreEvents.on(AddonModForumSyncProvider.MANUAL_SYNCED, (data) => {
             if (data.source != 'discussion' && data.forumId == this.forumId &&
-                    data.userId == this.sitesProvider.getCurrentSiteUserId()) {
+                    data.userId == CoreSites.getCurrentSiteUserId()) {
                 // Refresh the data.
                 this.discussionLoaded = false;
                 this.refreshPosts();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Trigger view event, to highlight the current opened discussion in the split view.
         CoreEvents.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
             forumId: this.forumId,
             discussion: this.discussionId
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Listen for offline ratings saved and synced.
         this.ratingOfflineObserver = CoreEvents.on(CoreRatingProvider.RATING_SAVED_EVENT, (data) => {
@@ -278,7 +278,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
 
         if (this.forumHelper.hasPostDataChanged(this.replyData, this.originalData)) {
             // Show confirmation if some data has been modified.
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
         // Delete the local files from the tmp folder.
@@ -365,7 +365,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
 
                     return Promise.all(convertPromises).then(() => {
                         // Convert back to array.
-                        onlinePosts = this.utils.objectToArray(posts);
+                        onlinePosts = CoreUtils.objectToArray(posts);
                     });
                 });
             });
@@ -380,7 +380,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                 this.forumProvider.sortDiscussionPosts(posts, 'ASC');
 
                 const rootId = this.startingPost ? this.startingPost.id : (this.discussion ? this.discussion.id : 0);
-                posts = this.utils.formatTree(posts, 'parentid', 'id', rootId);
+                posts = CoreUtils.formatTree(posts, 'parentid', 'id', rootId);
             } else {
                 // Set default reply subject.
                 const direction = this.sort == 'flat-newest' ? 'DESC' : 'ASC';
@@ -460,7 +460,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                 this.hasOfflineRatings = hasRatings;
             });
         }).catch((message) => {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }).finally(() => {
             this.discussionLoaded = true;
             this.refreshIcon = 'refresh';
@@ -475,7 +475,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                     CoreEvents.trigger(AddonModForumProvider.MARK_READ_EVENT, {
                         courseId: this.courseId,
                         moduleId: this.cmId
-                    }, this.sitesProvider.getCurrentSiteId());
+                    }, CoreSites.getCurrentSiteId());
                 });
             }
         });
@@ -514,16 +514,16 @@ export class AddonModForumDiscussionPage implements OnDestroy {
 
         promises.push(this.forumSync.syncDiscussionReplies(this.discussionId).then((result) => {
             if (result.warnings && result.warnings.length) {
-                this.domUtils.showErrorModal(result.warnings[0]);
+                CoreDomUtils.showErrorModal(result.warnings[0]);
             }
 
             if (result && result.updated) {
                 // Sync successful, send event.
                 CoreEvents.trigger(AddonModForumSyncProvider.MANUAL_SYNCED, {
                     forumId: this.forumId,
-                    userId: this.sitesProvider.getCurrentSiteUserId(),
+                    userId: CoreSites.getCurrentSiteUserId(),
                     source: 'discussion'
-                }, this.sitesProvider.getCurrentSiteId());
+                }, CoreSites.getCurrentSiteId());
             }
 
             return result.updated;
@@ -531,13 +531,13 @@ export class AddonModForumDiscussionPage implements OnDestroy {
 
         promises.push(this.forumSync.syncRatings(this.cmId, this.discussionId).then((result) => {
             if (result.warnings && result.warnings.length) {
-                this.domUtils.showErrorModal(result.warnings[0]);
+                CoreDomUtils.showErrorModal(result.warnings[0]);
             }
         }));
 
         return Promise.all(promises).catch((error) => {
             if (showErrors) {
-                this.domUtils.showErrorModalDefault(error, 'core.errorsync', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errorsync', true);
             }
 
             return Promise.reject(null);
@@ -571,7 +571,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     refreshPosts(sync?: boolean, showErrors?: boolean): Promise<any> {
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
         this.refreshIcon = 'spinner';
         this.syncIcon = 'spinner';
 
@@ -582,7 +582,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
             this.forumProvider.invalidateCanAddDiscussion(this.forumId)
         ];
 
-        return this.utils.allPromises(promises).catch(() => {
+        return CoreUtils.allPromises(promises).catch(() => {
             // Ignore errors.
         }).then(() => {
             return this.fetchPosts(sync, showErrors);
@@ -598,8 +598,8 @@ export class AddonModForumDiscussionPage implements OnDestroy {
     changeSort(type: SortType): Promise<any> {
         this.discussionLoaded = false;
         this.sort = type;
-        this.sitesProvider.getCurrentSite().setLocalSiteConfig('AddonModForumDiscussionSort', this.sort);
-        this.domUtils.scrollToTop(this.content);
+        CoreSites.getCurrentSite().setLocalSiteConfig('AddonModForumDiscussionSort', this.sort);
+        CoreDomUtils.scrollToTop(this.content);
 
         return this.fetchPosts();
     }
@@ -610,7 +610,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
      * @param locked True to lock the discussion, false to unlock.
      */
     setLockState(locked: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.forumProvider.setLockState(this.forumId, this.discussionId, locked).then((response) => {
             this.discussion.locked = response.locked;
@@ -621,11 +621,11 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                 cmId: this.cmId,
                 locked: this.discussion.locked
             };
-            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.showToast('addon.mod_forum.lockupdated', true);
+            CoreDomUtils.showToast('addon.mod_forum.lockupdated', true);
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             modal.dismiss();
         });
@@ -637,7 +637,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
      * @param pinned True to pin the discussion, false to unpin it.
      */
     setPinState(pinned: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.forumProvider.setPinState(this.discussionId, pinned).then(() => {
             this.discussion.pinned = pinned;
@@ -648,11 +648,11 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                 cmId: this.cmId,
                 pinned: this.discussion.pinned
             };
-            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.showToast('addon.mod_forum.pinupdated', true);
+            CoreDomUtils.showToast('addon.mod_forum.pinupdated', true);
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             modal.dismiss();
         });
@@ -664,7 +664,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
      * @param starred True to star the discussion, false to unstar it.
      */
     toggleFavouriteState(starred: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.forumProvider.toggleFavouriteState(this.discussionId, starred).then(() => {
             this.discussion.starred = starred;
@@ -675,11 +675,11 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                 cmId: this.cmId,
                 starred: this.discussion.starred
             };
-            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+            CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
-            this.domUtils.showToast('addon.mod_forum.favouriteupdated', true);
+            CoreDomUtils.showToast('addon.mod_forum.favouriteupdated', true);
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             modal.dismiss();
         });
@@ -695,7 +695,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
             discussionId: this.discussionId,
             cmId: this.cmId
         };
-        CoreEvents.trigger(AddonModForumProvider.REPLY_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+        CoreEvents.trigger(AddonModForumProvider.REPLY_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
         this.discussionLoaded = false;
         this.refreshPosts().finally(() => {

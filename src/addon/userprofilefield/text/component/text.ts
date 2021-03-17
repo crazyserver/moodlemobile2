@@ -49,7 +49,7 @@ export class AddonUserProfileFieldTextComponent implements OnInit {
             }
 
             // Check if it's a password or text.
-            field.inputType = this.utils.isTrueOrOne(field.param3) ? 'password' : 'text';
+            field.inputType = CoreUtils.isTrueOrOne(field.param3) ? 'password' : 'text';
 
             const formData = {
                 value: field.defaultdata,

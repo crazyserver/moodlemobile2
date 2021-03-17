@@ -51,7 +51,7 @@ export interface AddonModScormProgressEvent {
 /**
  * Handler to prefetch SCORMs.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModScorm';
     modName = 'scorm';
@@ -90,7 +90,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
     download(module: any, courseId: number, dirPath?: string, onProgress?: (event: AddonModScormProgressEvent) => any)
             : Promise<any> {
 
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         return this.prefetchPackage(module, courseId, true, this.downloadOrPrefetchScorm.bind(this), siteId, false, onProgress);
     }
@@ -127,7 +127,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
             promises.push(this.downloadOrPrefetchMainFileIfNeeded(scorm, prefetch, onProgress, siteId));
 
             // Download intro files.
-            promises.push(this.filepoolProvider.downloadOrPrefetchFiles(siteId, introFiles, prefetch, false, this.component,
+            promises.push(CoreFilepool.downloadOrPrefetchFiles(siteId, introFiles, prefetch, false, this.component,
                     module.id).catch(() => {
                 // Ignore errors.
             }));
@@ -163,22 +163,22 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
 
             // Download the ZIP file to the filepool.
             if (prefetch) {
-               return this.filepoolProvider.addToQueueByUrl(siteId, packageUrl, this.component, scorm.coursemodule, undefined,
+               return CoreFilepool.addToQueueByUrl(siteId, packageUrl, this.component, scorm.coursemodule, undefined,
                         undefined, this.downloadProgress.bind(this, true, onProgress));
             } else {
-                return this.filepoolProvider.downloadUrl(siteId, packageUrl, true, this.component, scorm.coursemodule,
+                return CoreFilepool.downloadUrl(siteId, packageUrl, true, this.component, scorm.coursemodule,
                         undefined, this.downloadProgress.bind(this, true, onProgress));
             }
         }).then(() => {
             // Get the ZIP file path.
-            return this.filepoolProvider.getFilePathByUrl(siteId, packageUrl);
+            return CoreFilepool.getFilePathByUrl(siteId, packageUrl);
         }).then((zipPath) => {
             // Notify that the unzip is starting.
             onProgress && onProgress({message: 'core.unzipping'});
 
             // Unzip and delete the zip when finished.
             return this.fileProvider.unzipFile(zipPath, dirPath, this.downloadProgress.bind(this, false, onProgress)).then(() => {
-                return this.filepoolProvider.removeFileByUrl(siteId, packageUrl).catch(() => {
+                return CoreFilepool.removeFileByUrl(siteId, packageUrl).catch(() => {
                     // Ignore errors.
                 });
             });
@@ -197,12 +197,12 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
     protected downloadOrPrefetchMainFileIfNeeded(scorm: any, prefetch?: boolean,
             onProgress?: (event: AddonModScormProgressEvent) => any, siteId?: string): Promise<any> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const result = this.scormProvider.isScormUnsupported(scorm);
 
         if (result) {
-            return Promise.reject(this.translate.instant(result));
+            return Promise.reject(Translate.instant(result));
         }
 
         // First verify that the file needs to be downloaded.
@@ -240,7 +240,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
      * @return Promise resolved when the data is prefetched.
      */
     fetchWSData(scorm: any, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
         const modOptions = {
@@ -398,7 +398,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
     prefetch(module: any, courseId?: number, single?: boolean, dirPath?: string,
             onProgress?: (event: AddonModScormProgressEvent) => any): Promise<any> {
 
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         return this.prefetchPackage(module, courseId, single, this.downloadOrPrefetchScorm.bind(this), siteId, true, onProgress);
     }
@@ -411,7 +411,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
      * @return Promise resolved when done.
      */
     removeFiles(module: any, courseId: number): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
         let scorm;
 
         return this.scormProvider.getScorm(courseId, module.id, {moduleUrl: module.url, siteId}).then((scormData) => {
@@ -424,7 +424,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
 
             // Remove the unzipped folder.
             promises.push(this.fileProvider.removeDir(path).catch((error) => {
-                if (error && (error.code == 1 || !this.appProvider.isMobile())) {
+                if (error && (error.code == 1 || !CoreApp.isMobile())) {
                     // Not found, ignore error.
                 } else {
                     return Promise.reject(error);
@@ -432,7 +432,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
             }));
 
             // Delete other files.
-            promises.push(this.filepoolProvider.removeFilesByComponent(siteId, this.component, module.id));
+            promises.push(CoreFilepool.removeFilesByComponent(siteId, this.component, module.id));
 
             return Promise.all(promises);
         });

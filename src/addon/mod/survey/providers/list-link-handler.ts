@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to survey list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModSurveyListLinkHandler';
 

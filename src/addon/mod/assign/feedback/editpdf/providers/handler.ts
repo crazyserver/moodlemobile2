@@ -23,7 +23,7 @@ import { AddonModAssignFeedbackEditPdfComponent } from '../component/editpdf';
 /**
  * Handler for edit pdf feedback plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignFeedbackEditPdfHandler implements AddonModAssignFeedbackHandler {
     name = 'AddonModAssignFeedbackEditPdfHandler';
     type = 'editpdf';

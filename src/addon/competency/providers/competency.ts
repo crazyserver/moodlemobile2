@@ -24,7 +24,7 @@ import { CoreCourseSummary, CoreCourseModuleSummary } from '@core/course/provide
 /**
  * Service to handle caompetency learning plans.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyProvider {
 
     // Learning plan status.
@@ -55,7 +55,7 @@ export class AddonCompetencyProvider {
      * @return Promise resolved with boolean: whether all competency features are disabled.
      */
     allCompetenciesDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.isFeatureDisabled('CoreMainMenuDelegate_AddonCompetency') &&
                     site.isFeatureDisabled('CoreCourseOptionsDelegate_AddonCompetency') &&
                     site.isFeatureDisabled('CoreUserDelegate_AddonCompetency');
@@ -134,7 +134,7 @@ export class AddonCompetencyProvider {
      * @return competencies if enabled for the given course, false otherwise.
      */
     isPluginForCourseEnabled(courseId: number, siteId?: string): Promise<any> {
-        if (!this.sitesProvider.isLoggedIn()) {
+        if (!CoreSites.isLoggedIn()) {
             return Promise.resolve(false);
         }
 
@@ -151,7 +151,7 @@ export class AddonCompetencyProvider {
      * @return Promise to be resolved when the plans are retrieved.
      */
     getLearningPlans(userId?: number, siteId?: string): Promise<AddonCompetencyPlan[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Get plans for user ' + userId);
@@ -184,7 +184,7 @@ export class AddonCompetencyProvider {
      * @return Promise to be resolved when the plan is retrieved.
      */
     getLearningPlan(planId: number, siteId?: string): Promise<AddonCompetencyDataForPlanPageResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             this.logger.debug('Get plan ' + planId);
 
@@ -219,7 +219,7 @@ export class AddonCompetencyProvider {
     getCompetencyInPlan(planId: number, competencyId: number, siteId?: string)
             : Promise<AddonCompetencyUserCompetencySummaryInPlan> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             this.logger.debug('Get competency ' + competencyId + ' in plan ' + planId);
 
@@ -257,7 +257,7 @@ export class AddonCompetencyProvider {
     getCompetencyInCourse(courseId: number, competencyId: number, userId?: number, siteId?: string, ignoreCache?: boolean)
             : Promise<AddonCompetencyUserCompetencySummaryInCourse> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Get competency ' + competencyId + ' in course ' + courseId);
@@ -301,7 +301,7 @@ export class AddonCompetencyProvider {
     getCompetencySummary(competencyId: number, userId?: number, siteId?: string, ignoreCache?: boolean)
             : Promise<AddonCompetencyUserCompetencySummary> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug('Get competency ' + competencyId + ' summary for user' + userId);
@@ -344,7 +344,7 @@ export class AddonCompetencyProvider {
     getCourseCompetencies(courseId: number, userId?: number, siteId?: string, ignoreCache?: boolean)
             : Promise<AddonCompetencyDataForCourseCompetenciesPageResult> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             this.logger.debug('Get course competencies for course ' + courseId);
 
@@ -373,7 +373,7 @@ export class AddonCompetencyProvider {
 
         }).then((response) => {
 
-            if (!userId || userId == this.sitesProvider.getCurrentSiteUserId()) {
+            if (!userId || userId == CoreSites.getCurrentSiteUserId()) {
                 return response;
             }
 
@@ -401,7 +401,7 @@ export class AddonCompetencyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateLearningPlans(userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getLearningPlansCacheKey(userId));
@@ -416,7 +416,7 @@ export class AddonCompetencyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateLearningPlan(planId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getLearningPlanCacheKey(planId));
         });
     }
@@ -430,7 +430,7 @@ export class AddonCompetencyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCompetencyInPlan(planId: number, competencyId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCompetencyInPlanCacheKey(planId, competencyId));
         });
     }
@@ -445,7 +445,7 @@ export class AddonCompetencyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCompetencyInCourse(courseId: number, competencyId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCompetencyInCourseCacheKey(courseId, competencyId, userId));
@@ -461,7 +461,7 @@ export class AddonCompetencyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCompetencySummary(competencyId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCompetencySummaryCacheKey(competencyId, userId));
@@ -477,10 +477,10 @@ export class AddonCompetencyProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourseCompetencies(courseId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCourseCompetenciesCacheKey(courseId));
         }).then(() => {
-            if (!userId || userId == this.sitesProvider.getCurrentSiteUserId()) {
+            if (!userId || userId == CoreSites.getCurrentSiteUserId()) {
                 return;
             }
 
@@ -512,7 +512,7 @@ export class AddonCompetencyProvider {
             siteId?: string): Promise<void> {
         if (planId && competencyId) {
 
-            return this.sitesProvider.getSite(siteId).then((site) => {
+            return CoreSites.getSite(siteId).then((site) => {
                 userId = userId || site.getUserId();
 
                 const params = {
@@ -557,7 +557,7 @@ export class AddonCompetencyProvider {
             : Promise<void> {
 
         if (courseId && competencyId) {
-            return this.sitesProvider.getSite(siteId).then((site) => {
+            return CoreSites.getSite(siteId).then((site) => {
                 userId = userId || site.getUserId();
 
                 const params = {
@@ -596,7 +596,7 @@ export class AddonCompetencyProvider {
      */
     logCompetencyView(competencyId: number, name?: string, siteId?: string): Promise<void> {
         if (competencyId) {
-            return this.sitesProvider.getSite(siteId).then((site) => {
+            return CoreSites.getSite(siteId).then((site) => {
                 const params = {
                     id: competencyId,
                 };

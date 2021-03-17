@@ -51,7 +51,7 @@ export class CoreFilesComponent implements OnInit, DoCheck {
      * Component being initialized.
      */
     ngOnInit(): void {
-        if (this.utils.isTrueOrOne(this.showInline)) {
+        if (CoreUtils.isTrueOrOne(this.showInline)) {
             this.renderInlineFiles();
         }
     }
@@ -60,7 +60,7 @@ export class CoreFilesComponent implements OnInit, DoCheck {
      * Detect and act upon changes that Angular can’t or won’t detect on its own (objects and arrays).
      */
     ngDoCheck(): void {
-        if (this.utils.isTrueOrOne(this.showInline)) {
+        if (CoreUtils.isTrueOrOne(this.showInline)) {
             // Check if there's any change in the files array.
             const changes = this.differ.diff(this.files);
             if (changes) {

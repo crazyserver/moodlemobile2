@@ -21,7 +21,7 @@ import { AddonModDataProvider } from './data';
 /**
  * Handler to treat links to data list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModDataListLinkHandler';
 
@@ -36,6 +36,6 @@ export class AddonModDataListLinkHandler extends CoreContentLinksModuleListHandl
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabled(): Promise<boolean> {
-        return this.dataProvider.isPluginEnabled();
+        return AddonModData.isPluginEnabled();
     }
 }

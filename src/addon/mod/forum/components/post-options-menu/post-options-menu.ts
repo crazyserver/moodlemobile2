@@ -53,11 +53,11 @@ export class AddonForumPostOptionsMenuComponent implements OnInit {
         this.forumId = navParams.get('forumId');
         this.cmId = navParams.get('cmId');
 
-        this.isOnline = CoreApp.instance.isOnline();
+        this.isOnline = CoreApp.isOnline();
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = CoreApp.instance.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
     }
@@ -67,7 +67,7 @@ export class AddonForumPostOptionsMenuComponent implements OnInit {
      */
     async ngOnInit(): Promise<void> {
         if (this.post.id > 0) {
-            const site: CoreSite = this.sitesProvider.getCurrentSite();
+            const site: CoreSite = CoreSites.getCurrentSite();
             this.url = site.createSiteUrl('/mod/forum/discuss.php', {d: this.post.discussionid}, 'p' + this.post.id);
             this.offlinePost = false;
         } else {
@@ -87,7 +87,7 @@ export class AddonForumPostOptionsMenuComponent implements OnInit {
                             readingStrategy: CoreSitesReadingStrategy.OnlyNetwork,
                         });
                 } catch (error) {
-                    this.domUtils.showErrorModalDefault(error, 'Error getting discussion post.');
+                    CoreDomUtils.showErrorModalDefault(error, 'Error getting discussion post.');
                 }
             } else {
                 this.loaded = true;

@@ -147,7 +147,7 @@ export interface AddonModAssignFeedbackHandler extends CoreDelegateHandler {
 /**
  * Delegate to register plugins for assign feedback.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignFeedbackDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';

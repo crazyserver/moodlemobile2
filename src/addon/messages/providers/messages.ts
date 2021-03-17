@@ -28,7 +28,7 @@ import { CoreWSExternalWarning } from '@services/ws';
 /**
  * Service to handle messages.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesProvider {
     protected ROOT_CACHE_KEY = 'mmaMessages:';
     protected LIMIT_MESSAGES = AddonMessagesProvider.LIMIT_MESSAGES;
@@ -74,7 +74,7 @@ export class AddonMessagesProvider {
      * @deprecated since Moodle 3.6
      */
     addContact(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 userids: [ userId ]
             };
@@ -93,7 +93,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved when done.
      */
     blockContact(userId: number, siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             let promise;
             if (site.wsAvailable('core_message_block_user')) {
                 // Since Moodle 3.6
@@ -127,14 +127,14 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     confirmContactRequest(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 userid: userId,
                 requesteduserid: site.getUserId(),
             };
 
             return site.write('core_message_confirm_contact_request', params).then(() => {
-                return this.utils.allPromises([
+                return CoreUtils.allPromises([
                     this.invalidateAllMemberInfo(userId, site),
                     this.invalidateContactsCache(site.id),
                     this.invalidateUserContacts(site.id),
@@ -156,7 +156,7 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     createContactRequest(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 userid: site.getUserId(),
                 requesteduserid: userId,
@@ -180,14 +180,14 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     declineContactRequest(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 userid: userId,
                 requesteduserid: site.getUserId(),
             };
 
             return site.write('core_message_decline_contact_request', params).then(() => {
-                return this.utils.allPromises([
+                return CoreUtils.allPromises([
                     this.invalidateAllMemberInfo(userId, site),
                     this.refreshContactRequestsCount(site.id),
                 ]).finally(() => {
@@ -219,7 +219,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved when the conversations have been deleted.
      */
     deleteConversations(conversationIds: number[], siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const params = {
@@ -277,14 +277,14 @@ export class AddonMessagesProvider {
     deleteMessageOnline(id: number, read: number, userId?: number): Promise<any> {
         const params: any = {
             messageid: id,
-            userid: userId || this.sitesProvider.getCurrentSiteUserId()
+            userid: userId || CoreSites.getCurrentSiteUserId()
         };
 
         if (typeof read != 'undefined') {
             params.read = read;
         }
 
-        return this.sitesProvider.getCurrentSite().write('core_message_delete_message', params).then(() => {
+        return CoreSites.getCurrentSite().write('core_message_delete_message', params).then(() => {
             return this.invalidateDiscussionCache(userId);
         });
     }
@@ -299,10 +299,10 @@ export class AddonMessagesProvider {
     deleteMessageForAllOnline(id: number, userId?: number): Promise<any> {
         const params: any = {
             messageid: id,
-            userid: userId || this.sitesProvider.getCurrentSiteUserId()
+            userid: userId || CoreSites.getCurrentSiteUserId()
         };
 
-        return this.sitesProvider.getCurrentSite().write('core_message_delete_message_for_all_users', params).then(() => {
+        return CoreSites.getCurrentSite().write('core_message_delete_message_for_all_users', params).then(() => {
             return this.invalidateDiscussionCache(userId);
         });
     }
@@ -543,7 +543,7 @@ export class AddonMessagesProvider {
      * @deprecated since Moodle 3.6
      */
     getAllContacts(siteId?: string): Promise<AddonMessagesGetContactsResult> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getContacts(siteId).then((contacts) => {
             return this.getBlockedContacts(siteId).then((blocked) => {
@@ -568,7 +568,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved with the WS data.
      */
     getBlockedContacts(siteId?: string): Promise<AddonMessagesGetBlockedUsersResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const userId = site.getUserId(),
                 params = {
                     userid: userId
@@ -592,7 +592,7 @@ export class AddonMessagesProvider {
      * @deprecated since Moodle 3.6
      */
     getContacts(siteId?: string): Promise<AddonMessagesGetContactsResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                 cacheKey: this.getCacheKeyForContacts(),
                 updateFrequency: CoreSite.FREQUENCY_OFTEN
@@ -635,7 +635,7 @@ export class AddonMessagesProvider {
     getUserContacts(limitFrom: number = 0, limitNum: number = AddonMessagesProvider.LIMIT_CONTACTS , siteId?: string):
             Promise<{contacts: AddonMessagesConversationMember[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 userid: site.getUserId(),
                 limitfrom: limitFrom,
@@ -679,7 +679,7 @@ export class AddonMessagesProvider {
     getContactRequests(limitFrom: number = 0, limitNum: number =  AddonMessagesProvider.LIMIT_CONTACTS, siteId?: string):
             Promise<{requests: AddonMessagesConversationMember[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 userid: site.getUserId(),
                 limitfrom: limitFrom,
@@ -719,7 +719,7 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     getContactRequestsCount(siteId?: string): Promise<number> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 userid: site.getUserId(),
             };
@@ -759,7 +759,7 @@ export class AddonMessagesProvider {
             messageOffset: number = 0, messageLimit: number = 1, memberOffset: number = 0, memberLimit: number = 2,
             newestFirst: boolean = true, siteId?: string, userId?: number): Promise<AddonMessagesConversationFormatted> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const preSets = {
@@ -807,7 +807,7 @@ export class AddonMessagesProvider {
             newestFirst: boolean = true, siteId?: string, userId?: number, preferCache?: boolean)
             : Promise<AddonMessagesConversationFormatted> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const preSets = {
@@ -846,7 +846,7 @@ export class AddonMessagesProvider {
     getConversationMembers(conversationId: number, limitFrom: number = 0, limitTo?: number, includeContactRequests?: boolean,
             siteId?: string, userId?: number): Promise<{members: AddonMessagesConversationMember[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             if (typeof limitTo == 'undefined' || limitTo === null) {
@@ -898,7 +898,7 @@ export class AddonMessagesProvider {
 
         options = options || {};
 
-        const site = await this.sitesProvider.getSite(options.siteId);
+        const site = await CoreSites.getSite(options.siteId);
 
         options.userId = options.userId || site.getUserId();
         options.limitFrom = options.limitFrom || 0;
@@ -953,7 +953,7 @@ export class AddonMessagesProvider {
             }
         });
 
-        if (this.appProvider.isDesktop() && options.limitFrom === 0 && lastReceived) {
+        if (CoreApp.isDesktop() && options.limitFrom === 0 && lastReceived) {
             // Store the last received message (we cannot know if it's unread or not). Don't block the user for this.
             this.storeLastReceivedMessageIfNeeded(conversationId, lastReceived, site.getId());
         }
@@ -996,7 +996,7 @@ export class AddonMessagesProvider {
             forceCache?: boolean, ignoreCache?: boolean)
             : Promise<{conversations: AddonMessagesConversationFormatted[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const preSets = {
@@ -1044,7 +1044,7 @@ export class AddonMessagesProvider {
                     conv = conversations[0],
                     lastMessage = conv && conv.messages[0];
 
-                if (this.appProvider.isDesktop() && limitFrom === 0 && lastMessage && !conv.sentfromcurrentuser) {
+                if (CoreApp.isDesktop() && limitFrom === 0 && lastMessage && !conv.sentfromcurrentuser) {
                     // Store the last received message (we cannot know if it's unread or not). Don't block the user for this.
                     this.storeLastReceivedMessageIfNeeded(conv.id, lastMessage, site.getId());
                 }
@@ -1067,7 +1067,7 @@ export class AddonMessagesProvider {
      */
     getConversationCounts(siteId?: string): Promise<{favourites: number, individual: number, group: number, self: number}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                 cacheKey: this.getCacheKeyForConversationCounts()
             };
@@ -1104,7 +1104,7 @@ export class AddonMessagesProvider {
             lfSentUnread: number = 0, lfSentRead: number = 0, toDisplay: boolean = true, siteId?: string)
             : Promise<{messages: AddonMessagesGetMessagesMessage[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const result = {
                     messages: <AddonMessagesGetMessagesMessage[]> [],
                     canLoadMore: false
@@ -1181,7 +1181,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved with an object where the keys are the user ID of the other user.
      */
     getDiscussions(siteId?: string): Promise<{[userId: number]: AddonMessagesDiscussion}> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const discussions: {[userId: number]: AddonMessagesDiscussion} = {},
                 currentUserId = site.getUserId(),
                 params = {
@@ -1298,7 +1298,7 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     getMemberInfo(otherUserId: number, siteId?: string, userId?: number): Promise<AddonMessagesConversationMember> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const preSets = {
@@ -1343,7 +1343,7 @@ export class AddonMessagesProvider {
     getMessagePreferences(siteId?: string): Promise<AddonMessagesMessagePreferences> {
         this.logger.debug('Get message preferences');
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const preSets = {
                     cacheKey: this.getMessagePreferencesCacheKey(),
                     updateFrequency: CoreSite.FREQUENCY_SOMETIMES
@@ -1378,7 +1378,7 @@ export class AddonMessagesProvider {
         params['type'] = 'conversations';
         params['newestfirst'] = 1;
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const userId = site.getUserId();
 
             return site.read('core_message_get_messages', params, preSets).then((response: AddonMessagesGetMessagesResult) => {
@@ -1389,7 +1389,7 @@ export class AddonMessagesProvider {
                     message.timeread = message.timeread ? message.timeread * 1000 : 0;
                 });
 
-                if (toDisplay && this.appProvider.isDesktop() && !params.read && params.useridto == userId &&
+                if (toDisplay && CoreApp.isDesktop() && !params.read && params.useridto == userId &&
                         params.limitfrom === 0) {
                     // Store the last unread received messages. Don't block the user for this.
                     this.storeLastReceivedMessageIfNeeded(params.useridfrom, response.messages[0], site.getId());
@@ -1462,7 +1462,7 @@ export class AddonMessagesProvider {
     getSelfConversation(messageOffset: number = 0, messageLimit: number = 1, newestFirst: boolean = true, siteId?: string,
             userId?: number): Promise<AddonMessagesConversationFormatted> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const preSets = {
@@ -1491,7 +1491,7 @@ export class AddonMessagesProvider {
     getUnreadConversationCounts(siteId?: string):
             Promise<{favourites: number, individual: number, group: number, self: number, orMore?: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             let promise: Promise<{favourites: number, individual: number, group: number, self: number, orMore?: boolean}>;
 
             if (this.isGroupMessagingEnabled()) {
@@ -1572,7 +1572,7 @@ export class AddonMessagesProvider {
      */
     getUnreadReceivedMessages(toDisplay: boolean = true, forceCache: boolean = false, ignoreCache: boolean = false,
             siteId?: string): Promise<AddonMessagesGetMessagesResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     read: 0,
                     limitfrom: 0,
@@ -1601,7 +1601,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateAllContactsCache(userId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.invalidateContactsCache(siteId).then(() => {
             return this.invalidateBlockedContactsCache(userId, siteId);
@@ -1615,7 +1615,7 @@ export class AddonMessagesProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     invalidateBlockedContactsCache(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForBlockedContacts(userId));
         });
     }
@@ -1627,7 +1627,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateContactsCache(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForContacts());
         });
     }
@@ -1639,7 +1639,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateUserContacts(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForUserContacts());
         });
     }
@@ -1651,7 +1651,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateContactRequestsCache(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForContactRequests());
         });
     }
@@ -1663,7 +1663,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateContactRequestsCountCache(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForContactRequestsCount());
         });
     }
@@ -1677,7 +1677,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateConversation(conversationId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCacheKeyForConversation(userId, conversationId));
@@ -1693,7 +1693,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateConversationBetweenUsers(otherUserId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCacheKeyForConversationBetweenUsers(userId, otherUserId));
@@ -1709,7 +1709,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateConversationMembers(conversationId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCacheKeyForConversationMembers(userId, conversationId));
@@ -1725,7 +1725,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateConversationMessages(conversationId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCacheKeyForConversationMessages(userId, conversationId));
@@ -1740,7 +1740,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateConversations(siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKeyStartingWith(this.getCommonCacheKeyForUserConversations(userId));
@@ -1754,7 +1754,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateConversationCounts(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForConversationCounts());
         });
     }
@@ -1767,7 +1767,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateDiscussionCache(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCacheKeyForDiscussion(userId));
         });
     }
@@ -1781,7 +1781,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateDiscussionsCache(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = [];
             promises.push(site.invalidateWsCacheForKey(this.getCacheKeyForDiscussions()));
             promises.push(this.invalidateContactsCache(site.getId()));
@@ -1799,7 +1799,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateMemberInfo(otherUserId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCacheKeyForMemberInfo(userId, otherUserId));
@@ -1813,7 +1813,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateMessagePreferences(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getMessagePreferencesCacheKey());
         });
     }
@@ -1826,14 +1826,14 @@ export class AddonMessagesProvider {
      * @return Promise resolved when done.
      */
     protected invalidateAllMemberInfo(userId: number, site: CoreSite): Promise<any> {
-        return this.utils.allPromises([
+        return CoreUtils.allPromises([
             this.invalidateMemberInfo(userId, site.id),
             this.invalidateUserContacts(site.id),
             this.invalidateContactRequestsCache(site.id),
             this.invalidateConversations(site.id),
             this.getConversationBetweenUsers(userId, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
                     site.id, undefined, true).then((conversation) => {
-                return this.utils.allPromises([
+                return CoreUtils.allPromises([
                     this.invalidateConversation(conversation.id),
                     this.invalidateConversationMembers(conversation.id, site.id),
                 ]);
@@ -1851,7 +1851,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateSelfConversation(siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.invalidateWsCacheForKey(this.getCacheKeyForSelfConversation(userId));
@@ -1865,7 +1865,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     invalidateUnreadConversationCounts(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (this.isGroupMessagingEnabled()) {
                 // @since 3.6
                 return site.invalidateWsCacheForKey(this.getCacheKeyForUnreadConversationCounts());
@@ -1936,7 +1936,7 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     isGroupMessagingEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_get_conversations');
+        return CoreSites.wsAvailableInCurrentSite('core_message_get_conversations');
     }
 
     /**
@@ -1947,7 +1947,7 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     isGroupMessagingEnabledInSite(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('core_message_get_conversations');
         }).catch(() => {
             return false;
@@ -1961,8 +1961,8 @@ export class AddonMessagesProvider {
      * @since  3.2
      */
     isMarkAllMessagesReadEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_mark_all_conversation_messages_as_read') ||
-                this.sitesProvider.wsAvailableInCurrentSite('core_message_mark_all_messages_as_read');
+        return CoreSites.wsAvailableInCurrentSite('core_message_mark_all_conversation_messages_as_read') ||
+                CoreSites.wsAvailableInCurrentSite('core_message_mark_all_messages_as_read');
     }
 
     /**
@@ -1972,7 +1972,7 @@ export class AddonMessagesProvider {
      * @since  3.2
      */
     isMessageCountEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_get_unread_conversations_count');
+        return CoreSites.wsAvailableInCurrentSite('core_message_get_unread_conversations_count');
     }
 
     /**
@@ -1982,7 +1982,7 @@ export class AddonMessagesProvider {
      * @since  3.2
      */
     isMessagePreferencesEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_get_user_message_preferences');
+        return CoreSites.wsAvailableInCurrentSite('core_message_get_user_message_preferences');
     }
 
     /**
@@ -2009,7 +2009,7 @@ export class AddonMessagesProvider {
      * @since 3.7
      */
     isMuteConversationEnabled(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_message_mute_conversations');
     }
@@ -2022,7 +2022,7 @@ export class AddonMessagesProvider {
      * @since 3.7
      */
     isMuteConversationEnabledInSite(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isMuteConversationEnabled(site);
         }).catch(() => {
             return false;
@@ -2036,7 +2036,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved with true if enabled, rejected or resolved with false otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.canUseAdvancedFeature('messaging');
         });
     }
@@ -2047,7 +2047,7 @@ export class AddonMessagesProvider {
      * @since  3.2
      */
     isSearchMessagesEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('core_message_data_for_messagearea_search_messages');
+        return CoreSites.wsAvailableInCurrentSite('core_message_data_for_messagearea_search_messages');
     }
 
     /**
@@ -2058,7 +2058,7 @@ export class AddonMessagesProvider {
      * @since 3.7
      */
     isSelfConversationEnabled(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.wsAvailable('core_message_get_self_conversation');
     }
@@ -2071,7 +2071,7 @@ export class AddonMessagesProvider {
      * @since 3.7
      */
     isSelfConversationEnabledInSite(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.isSelfConversationEnabled(site);
         }).catch(() => {
             return false;
@@ -2086,10 +2086,10 @@ export class AddonMessagesProvider {
      * @return Promise resolved with boolean marking success or not.
      */
     markMessageRead(messageId: number, siteId?: string): Promise<AddonMessagesMarkMessageReadResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 messageid: messageId,
-                timeread: this.timeUtils.timestamp()
+                timeread: CoreTimeUtils.timestamp()
             };
 
             return site.write('core_message_mark_message_read', params);
@@ -2105,14 +2105,14 @@ export class AddonMessagesProvider {
      */
     markAllConversationMessagesRead(conversationId?: number): Promise<null> {
         const params = {
-                userid: this.sitesProvider.getCurrentSiteUserId(),
+                userid: CoreSites.getCurrentSiteUserId(),
                 conversationid: conversationId
             },
             preSets = {
                 responseExpected: false
             };
 
-        return this.sitesProvider.getCurrentSite().write('core_message_mark_all_conversation_messages_as_read', params, preSets);
+        return CoreSites.getCurrentSite().write('core_message_mark_all_conversation_messages_as_read', params, preSets);
     }
 
     /**
@@ -2123,14 +2123,14 @@ export class AddonMessagesProvider {
      */
     markAllMessagesRead(userIdFrom?: number): Promise<boolean> {
         const params = {
-                useridto: this.sitesProvider.getCurrentSiteUserId(),
+                useridto: CoreSites.getCurrentSiteUserId(),
                 useridfrom: userIdFrom
             },
             preSets = {
                 typeExpected: 'boolean'
             };
 
-        return this.sitesProvider.getCurrentSite().write('core_message_mark_all_messages_as_read', params, preSets);
+        return CoreSites.getCurrentSite().write('core_message_mark_all_messages_as_read', params, preSets);
     }
 
     /**
@@ -2156,7 +2156,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     muteConversations(conversations: number[], set: boolean, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const params = {
@@ -2188,7 +2188,7 @@ export class AddonMessagesProvider {
      * @since 3.6
      */
     refreshContactRequestsCount(siteId?: string): Promise<number> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.invalidateContactRequestsCountCache(siteId).then(() => {
             return this.getContactRequestsCount(siteId);
@@ -2204,7 +2204,7 @@ export class AddonMessagesProvider {
     refreshUnreadConversationCounts(siteId?: string):
             Promise<{favourites: number, individual: number, group: number, orMore?: boolean}> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.invalidateUnreadConversationCounts(siteId).then(() => {
             return this.getUnreadConversationCounts(siteId);
@@ -2219,7 +2219,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     removeContact(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     userids: [ userId ]
                 },
@@ -2229,7 +2229,7 @@ export class AddonMessagesProvider {
 
             return site.write('core_message_delete_contacts', params, preSets).then(() => {
                 if (this.isGroupMessagingEnabled()) {
-                    return this.utils.allPromises([
+                    return CoreUtils.allPromises([
                         this.invalidateUserContacts(site.id),
                         this.invalidateAllMemberInfo(userId, site),
                     ]).then(() => {
@@ -2256,7 +2256,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved with the contacts.
      */
     searchContacts(query: string, limit: number = 100, siteId?: string): Promise<AddonMessagesSearchContactsContact[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                     searchtext: query,
                     onlymycourses: 0
@@ -2291,7 +2291,7 @@ export class AddonMessagesProvider {
     searchMessages(query: string, userId?: number, limitFrom: number = 0, limitNum: number = AddonMessagesProvider.LIMIT_SEARCH,
             siteId?: string): Promise<{messages: AddonMessagesMessageAreaContact[], canLoadMore: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     userid: userId || site.getUserId(),
                     search: query,
@@ -2341,7 +2341,7 @@ export class AddonMessagesProvider {
             Promise<{contacts: AddonMessagesConversationMember[], nonContacts: AddonMessagesConversationMember[],
                 canLoadMoreContacts: boolean, canLoadMoreNonContacts: boolean}> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                     userid: site.getUserId(),
                     search: query,
@@ -2396,9 +2396,9 @@ export class AddonMessagesProvider {
             });
         };
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the message.
             return storeOffline();
         }
@@ -2420,7 +2420,7 @@ export class AddonMessagesProvider {
                     message: result
                 };
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // It's a WebService error, the user cannot send the message so don't store it.
                     return Promise.reject(error);
                 }
@@ -2440,7 +2440,7 @@ export class AddonMessagesProvider {
      * @return Promise resolved if success, rejected if failure.
      */
     sendMessageOnline(toUserId: number, message: string, siteId?: string): Promise<AddonMessagesSendInstantMessagesMessage> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const messages = [
                 {
@@ -2453,7 +2453,7 @@ export class AddonMessagesProvider {
         return this.sendMessagesOnline(messages, siteId).then((response) => {
             if (response && response[0] && response[0].msgid === -1) {
                 // There was an error, and it should be translated already.
-                return Promise.reject(this.utils.createFakeWSError(response[0].errormessage));
+                return Promise.reject(CoreUtils.createFakeWSError(response[0].errormessage));
             }
 
             return this.invalidateDiscussionCache(toUserId, siteId).catch(() => {
@@ -2475,7 +2475,7 @@ export class AddonMessagesProvider {
      *         have been sent, the resolve param can contain errors for messages not sent.
      */
     sendMessagesOnline(messages: any[], siteId?: string): Promise<AddonMessagesSendInstantMessagesMessage[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 messages: messages
             };
@@ -2508,9 +2508,9 @@ export class AddonMessagesProvider {
             });
         };
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the message.
             return storeOffline();
         }
@@ -2532,7 +2532,7 @@ export class AddonMessagesProvider {
                     message: result
                 };
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // It's a WebService error, the user cannot send the message so don't store it.
                     return Promise.reject(error);
                 }
@@ -2554,7 +2554,7 @@ export class AddonMessagesProvider {
      */
     sendMessageToConversationOnline(conversationId: number, message: string, siteId?: string)
             : Promise<AddonMessagesSendMessagesToConversationMessage> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const messages = [
                 {
@@ -2584,7 +2584,7 @@ export class AddonMessagesProvider {
     sendMessagesToConversationOnline(conversationId: number, messages: any[], siteId?: string)
             : Promise<AddonMessagesSendMessagesToConversationMessage[]> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 conversationid: conversationId,
                 messages: messages.map((message) => {
@@ -2622,7 +2622,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     setFavouriteConversations(conversations: number[], set: boolean, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const params = {
@@ -2758,7 +2758,7 @@ export class AddonMessagesProvider {
      * @return Resolved when done.
      */
     unblockContact(userId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             let promise;
             if (site.wsAvailable('core_message_unblock_user')) {
                 // Since Moodle 3.6

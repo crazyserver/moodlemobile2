@@ -23,7 +23,7 @@ import { CoreBlockBaseHandler } from '@core/block/classes/base-block-handler';
 /**
  * Block handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockTimelineHandler extends CoreBlockBaseHandler {
     name = 'AddonBlockTimeline';
     blockName = 'timeline';
@@ -41,10 +41,10 @@ export class AddonBlockTimelineHandler extends CoreBlockBaseHandler {
      */
     isEnabled(): boolean | Promise<boolean> {
         return this.timelineProvider.isAvailable().then((enabled) => {
-            const currentSite = this.sitesProvider.getCurrentSite();
+            const currentSite = CoreSites.getCurrentSite();
 
             return enabled && ((currentSite && currentSite.isVersionGreaterEqualThan('3.6')) ||
-                !this.coursesProvider.isMyCoursesDisabledInSite());
+                !CoreCourses.isMyCoursesDisabledInSite());
         });
     }
 

@@ -22,7 +22,7 @@ import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
 /**
  * Course nav handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCompetencyCourseOptionHandler implements CoreCourseOptionsHandler {
     name = 'AddonCompetency';
     priority = 300;

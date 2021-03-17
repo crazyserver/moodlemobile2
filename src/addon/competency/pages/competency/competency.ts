@@ -121,7 +121,7 @@ export class AddonCompetencyCompetencyPage {
                 this.coursemodules = (<AddonCompetencyUserCompetencySummaryInCourse> competency).coursemodules;
             }
 
-            if (this.competency.user.id != this.sitesProvider.getCurrentSiteUserId()) {
+            if (this.competency.user.id != CoreSites.getCurrentSiteUserId()) {
                 // Get the user profile from the returned object.
                 this.user = this.competency.user;
             }
@@ -129,11 +129,11 @@ export class AddonCompetencyCompetencyPage {
             this.competency.evidence.forEach((evidence) => {
                 if (evidence.descidentifier) {
                     const key = 'addon.competency.' + evidence.descidentifier;
-                    evidence.description = this.translate.instant(key, {$a: evidence.desca});
+                    evidence.description = Translate.instant(key, {$a: evidence.desca});
                 }
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting competency data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting competency data.');
         });
     }
 

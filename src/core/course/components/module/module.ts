@@ -99,13 +99,13 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
                         this.module.handlerData.updateStatus(status);
                     }
                 }
-            }, this.sitesProvider.getCurrentSiteId());
+            }, CoreSites.getCurrentSiteId());
         }
 
         this.module.handlerData.a11yTitle = typeof this.module.handlerData.a11yTitle != 'undefined' ?
             this.module.handlerData.a11yTitle : this.module.handlerData.title;
 
-        this.module.modnametranslated = this.courseProvider.translateModuleName(this.module.modname) || '';
+        this.module.modnametranslated = CoreCourse.translateModuleName(this.module.modname) || '';
     }
 
     /**
@@ -149,7 +149,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
 
         // Get download size to ask for confirm if it's high.
         this.prefetchHandler.getDownloadSize(this.module, this.courseId, true).then((size) => {
-            return this.courseHelper.prefetchModule(this.prefetchHandler, this.module, size, this.courseId, refresh);
+            return CoreCourseHelper.prefetchModule(this.prefetchHandler, this.module, size, this.courseId, refresh);
         }).then(() => {
             const eventData = {
                 sectionId: this.section.id,
@@ -161,7 +161,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
             // Error, hide spinner.
             this.spinner = false;
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
             }
         });
     }

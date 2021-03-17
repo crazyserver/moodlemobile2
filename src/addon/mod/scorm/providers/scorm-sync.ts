@@ -53,7 +53,7 @@ export interface AddonModScormSyncResult {
 /**
  * Service to sync SCORMs.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_scorm_autom_synced';
@@ -108,7 +108,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
                     this.logger.debug('Try to delete attempt ' + attempt + ' because it cannot be created as a new attempt.');
 
                     return this.scormOfflineProvider.deleteAttempt(scormId, attempt, siteId).then(() => {
-                        warnings.push(this.translate.instant('addon.mod_scorm.warningofflinedatadeleted', {number: attempt}));
+                        warnings.push(Translate.instant('addon.mod_scorm.warningofflinedatadeleted', {number: attempt}));
                     }).catch(() => {
                         // Maybe there's something wrong with the data or the storage implementation.
                     });
@@ -176,7 +176,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
             promises.push(this.scormOfflineProvider.changeAttemptNumber(scormId, attempt, lastOffline + index + 1, siteId));
         });
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -198,7 +198,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
 
         if (updated) {
             // Update downloaded data.
-            promise = this.courseProvider.getModuleBasicInfoByInstance(scorm.id, 'scorm', siteId).then((module) => {
+            promise = CoreCourse.getModuleBasicInfoByInstance(scorm.id, 'scorm', siteId).then((module) => {
                 return this.prefetchAfterUpdate(module, scorm.course, undefined, siteId);
             }).catch(() => {
                 // Ignore errors.
@@ -342,7 +342,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
                     promises.push(this.scormOfflineProvider.changeAttemptNumber(scormId, newNumber, attempt, siteId));
                 });
 
-                return this.utils.allPromises(promises).then(() => {
+                return CoreUtils.allPromises(promises).then(() => {
                     return Promise.reject(error); // It will now enter the .catch that moves offline attempts after collisions.
                 });
             });
@@ -531,7 +531,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
      * @return Promise resolved when the attempt is successfully synced.
      */
     protected syncAttempt(scormId: number, attempt: number, cmId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         this.logger.debug('Try to sync attempt ' + attempt + ' in SCORM ' + scormId + ' and site ' + siteId);
 
@@ -570,7 +570,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
                 }));
             }
 
-            return this.utils.allPromises(promises).then(() => {
+            return CoreUtils.allPromises(promises).then(() => {
                 // Attempt has been sent. Let's delete it from local.
                 return this.scormOfflineProvider.deleteAttempt(scormId, attempt, siteId).catch(() => {
                     // Failed to delete (shouldn't happen). Let's retry once.
@@ -623,7 +623,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
      * @return Promise resolved in success.
      */
     syncScorm(scorm: any, siteId?: string): Promise<AddonModScormSyncResult> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         let warnings = [],
             syncPromise,
@@ -640,13 +640,13 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
         if (this.syncProvider.isBlocked(AddonModScormProvider.COMPONENT, scorm.id, siteId)) {
             this.logger.debug('Cannot sync SCORM ' + scorm.id + ' because it is blocked.');
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         this.logger.debug('Try to sync SCORM ' + scorm.id + ' in site ' + siteId);
 
         // Sync offline logs.
-        syncPromise = this.logHelper.syncIfNeeded(AddonModScormProvider.COMPONENT, scorm.id, siteId).catch(() => {
+        syncPromise = CoreCourseLogHelper.syncIfNeeded(AddonModScormProvider.COMPONENT, scorm.id, siteId).catch(() => {
             // Ignore errors.
         }).then(() => {
             // Get attempts data. We ignore cache for online attempts, so this call will fail if offline or server down.
@@ -733,7 +733,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
 
                             return Promise.all(promises).then(() => {
                                 if (cannotSyncSome) {
-                                    warnings.push(this.translate.instant('addon.mod_scorm.warningsynconlineincomplete'));
+                                    warnings.push(Translate.instant('addon.mod_scorm.warningsynconlineincomplete'));
                                 }
 
                                 return this.finishSync(siteId, scorm, warnings, lastOnline, lastOnlineWasFinished, initialCount,
@@ -743,7 +743,7 @@ export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvide
                     });
                 } else {
                     // No collisions, but last online attempt is incomplete so we can't send offline attempts.
-                    warnings.push(this.translate.instant('addon.mod_scorm.warningsynconlineincomplete'));
+                    warnings.push(Translate.instant('addon.mod_scorm.warningsynconlineincomplete'));
 
                     return this.finishSync(siteId, scorm, warnings, lastOnline, lastOnlineWasFinished, initialCount, false);
                 }

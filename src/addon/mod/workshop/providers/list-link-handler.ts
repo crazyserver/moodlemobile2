@@ -21,7 +21,7 @@ import { AddonModWorkshopProvider } from './workshop';
 /**
  * Handler to treat links to workshop list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModWorkshopListLinkHandler';
 

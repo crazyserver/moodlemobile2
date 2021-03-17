@@ -19,7 +19,7 @@ import { CoreCourseFormatSingleActivityHandler } from '../../singleactivity/prov
  * Handler to support social course format.
  * This format is like singleactivity in the mobile app, so we'll use the same implementation for both.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseFormatSocialHandler extends CoreCourseFormatSingleActivityHandler {
     name = 'CoreCourseFormatSocial';
     format = 'social';

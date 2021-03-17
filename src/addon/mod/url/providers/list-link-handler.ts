@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to URL list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModUrlListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModUrlListLinkHandler';
 

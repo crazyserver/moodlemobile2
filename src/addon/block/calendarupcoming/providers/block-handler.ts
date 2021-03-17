@@ -21,7 +21,7 @@ import { AddonCalendarProvider } from '@addon/calendar/providers/calendar';
 /**
  * Block handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockCalendarUpcomingHandler extends CoreBlockBaseHandler {
     name = 'AddonBlockCalendarUpcoming';
     blockName = 'calendar_upcoming';

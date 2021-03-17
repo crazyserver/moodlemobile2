@@ -92,7 +92,7 @@ export class AddonModForumEditPostPage {
 
         if (this.forumHelper.hasPostDataChanged(this.replyData, this.originalData)) {
             // Show confirmation if some data has been modified.
-            promise = this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            promise = CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         } else {
             promise = Promise.resolve();
         }
@@ -119,9 +119,9 @@ export class AddonModForumEditPostPage {
      */
     closeModal(data: any, ): void {
         if (data) {
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
         } else {
-            this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
         }
 
         this.viewCtrl.dismiss(data);

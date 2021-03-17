@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the Email protection filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterEmailProtectHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterEmailProtectHandler';
     filterName = 'emailprotect';

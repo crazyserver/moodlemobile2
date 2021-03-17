@@ -89,7 +89,7 @@ export class CoreSitePluginsModulePrefetchHandler extends CoreCourseActivityPref
      */
     protected downloadPrefetchPlugin(module: any, courseId: number, single?: boolean, siteId?: string, prefetch?: boolean,
             dirPath?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const promises = [],
                 args = {
@@ -130,16 +130,16 @@ export class CoreSitePluginsModulePrefetchHandler extends CoreCourseActivityPref
 
             if (dirPath) {
                 // Download intro files in filepool root folder.
-                promises.push(this.filepoolProvider.downloadOrPrefetchFiles(siteId, introFiles, prefetch, false,
+                promises.push(CoreFilepool.downloadOrPrefetchFiles(siteId, introFiles, prefetch, false,
                     this.component, module.id));
 
                 // Download content files inside dirPath.
-                promises.push(this.filepoolProvider.downloadOrPrefetchFiles(siteId, contentFiles, prefetch, false,
+                promises.push(CoreFilepool.downloadOrPrefetchFiles(siteId, contentFiles, prefetch, false,
                     this.component, module.id, dirPath));
             } else {
                 // No dirPath, download everything in filepool root folder.
                 const files = introFiles.concat(contentFiles);
-                promises.push(this.filepoolProvider.downloadOrPrefetchFiles(siteId, files, prefetch, false,
+                promises.push(CoreFilepool.downloadOrPrefetchFiles(siteId, files, prefetch, false,
                     this.component, module.id));
             }
 
@@ -170,7 +170,7 @@ export class CoreSitePluginsModulePrefetchHandler extends CoreCourseActivityPref
      */
     invalidateContent(moduleId: number, courseId: number): Promise<any> {
         const promises = [],
-            currentSite = this.sitesProvider.getCurrentSite(),
+            currentSite = CoreSites.getCurrentSite(),
             siteId = currentSite.getId(),
             args = {
                 courseid: courseId,
@@ -179,8 +179,8 @@ export class CoreSitePluginsModulePrefetchHandler extends CoreCourseActivityPref
             };
 
         // Invalidate files and the module.
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, this.component, moduleId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, this.component, moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId));
 
         // Also invalidate all the WS calls.
         for (const method in this.handlerSchema.offlinefunctions) {
@@ -193,7 +193,7 @@ export class CoreSitePluginsModulePrefetchHandler extends CoreCourseActivityPref
             }
         }
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -215,7 +215,7 @@ export class CoreSitePluginsModulePrefetchHandler extends CoreCourseActivityPref
      */
     loadContents(module: any, courseId: number, ignoreCache?: boolean): Promise<void> {
         if (this.isResource) {
-            return this.courseProvider.loadModuleContents(module, courseId, undefined, false, ignoreCache);
+            return CoreCourse.loadModuleContents(module, courseId, undefined, false, ignoreCache);
         }
 
         return Promise.resolve();

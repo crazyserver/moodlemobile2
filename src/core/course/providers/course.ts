@@ -34,7 +34,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service that provides some features regarding a course.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseProvider {
     static ALL_SECTIONS_ID = -2;
     static STEALTH_MODULES_SECTION_ID = -1;
@@ -109,7 +109,7 @@ export class CoreCourseProvider {
             private domUtils: CoreDomUtilsProvider, protected pushNotificationsProvider: CorePushNotificationsProvider) {
         this.logger = CoreLogger.getInstance('CoreCourseProvider');
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -120,7 +120,7 @@ export class CoreCourseProvider {
      * @since 3.7
      */
     canGetCourseBlocks(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site && site.isVersionGreaterEqualThan('3.7') && site.wsAvailable('core_block_get_course_blocks');
     }
@@ -133,7 +133,7 @@ export class CoreCourseProvider {
      * @since 3.4.6, 3.5.3, 3.6
      */
     canRequestStealthModules(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site && site.isVersionGreaterEqualThan(['3.4.6', '3.5.3']);
     }
@@ -160,7 +160,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when all status are cleared.
      */
     clearAllCoursesStatus(siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             this.logger.debug('Clear all course status for site ' + site.id);
 
             return site.getDb().deleteRecords(this.COURSE_STATUS_TABLE).then(() => {
@@ -200,7 +200,7 @@ export class CoreCourseProvider {
     getActivitiesCompletionStatus(courseId: number, siteId?: string, userId?: number, forceCache: boolean = false,
             ignoreCache: boolean = false, includeOffline: boolean = true): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             this.logger.debug(`Getting completion status for user ${userId} in course ${courseId}`);
@@ -222,7 +222,7 @@ export class CoreCourseProvider {
 
             return site.read('core_completion_get_activities_completion_status', params, preSets).then((data) => {
                 if (data && data.statuses) {
-                    return this.utils.arrayToObject(data.statuses, 'cmid');
+                    return CoreUtils.arrayToObject(data.statuses, 'cmid');
                 }
 
                 return Promise.reject(null);
@@ -275,7 +275,7 @@ export class CoreCourseProvider {
      * @since 3.7
      */
     getCourseBlocks(courseId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     courseid: courseId,
                     returncontents: 1
@@ -309,7 +309,7 @@ export class CoreCourseProvider {
      * @return Promise resolved with the data.
      */
     getCourseStatusData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(this.COURSE_STATUS_TABLE, { id: courseId }).then((entry) => {
                 if (!entry) {
                     return Promise.reject(null);
@@ -342,7 +342,7 @@ export class CoreCourseProvider {
      * @return Resolves with an array containing downloaded course ids.
      */
     async getDownloadedCourseIds(siteId?: string): Promise<number[]> {
-        const site = await this.sitesProvider.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
         const entries = await site.getDb().getRecordsList(this.COURSE_STATUS_TABLE, 'status', [
             CoreConstants.DOWNLOADED,
             CoreConstants.DOWNLOADING,
@@ -367,7 +367,7 @@ export class CoreCourseProvider {
      */
     getModule(moduleId: number, courseId?: number, sectionId?: number, preferCache?: boolean, ignoreCache?: boolean,
             siteId?: string, modName?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Helper function to do the WS request without processing the result.
         const doRequest = (site: CoreSite, moduleId: number, modName: string, includeStealth: boolean, preferCache: boolean):
@@ -410,7 +410,7 @@ export class CoreCourseProvider {
 
             return site.read('core_course_get_contents', params, preSets).catch(() => {
                 // The module might still be cached by a request with different parameters.
-                if (!ignoreCache && !this.appProvider.isOnline()) {
+                if (!ignoreCache && !CoreApp.isOnline()) {
                     if (includeStealth) {
                         // Older versions didn't include the includestealthmodules option.
                         return doRequest(site, moduleId, modName, false, true);
@@ -435,7 +435,7 @@ export class CoreCourseProvider {
         }
 
         return promise.then(() => {
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((site) => {
             // We have courseId, we can use core_course_get_contents for compatibility.
             this.logger.debug(`Getting module ${moduleId} in course ${courseId}`);
@@ -483,7 +483,7 @@ export class CoreCourseProvider {
      * @return Promise resolved with the module's info.
      */
     getModuleBasicInfo(moduleId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     cmid: moduleId
                 },
@@ -541,7 +541,7 @@ export class CoreCourseProvider {
      * @return Promise resolved with the module's info.
      */
     getModuleBasicInfoByInstance(id: number, module: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     instance: id,
                     module: module
@@ -672,7 +672,7 @@ export class CoreCourseProvider {
     getSections(courseId?: number, excludeModules?: boolean, excludeContents?: boolean, preSets?: CoreSiteWSPreSets,
         siteId?: string, includeStealthModules: boolean = true): Promise<any[]> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             preSets = preSets || {};
             preSets.cacheKey = this.getSectionsCacheKey(courseId);
             preSets.updateFrequency = preSets.updateFrequency || CoreSite.FREQUENCY_RARELY;
@@ -762,7 +762,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateCourseBlocks(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getCourseBlocksCacheKey(courseId));
         });
     }
@@ -776,7 +776,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateModule(moduleId: number, siteId?: string, modName?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = [];
 
             if (modName) {
@@ -798,7 +798,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateModuleByInstance(id: number, module: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getModuleBasicInfoByInstanceCacheKey(id, module));
         });
     }
@@ -812,7 +812,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSections(courseId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = [],
                 siteHomeId = site.getSiteHomeId();
 
@@ -873,7 +873,7 @@ export class CoreCourseProvider {
             params.sectionnumber = sectionNumber;
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             this.pushNotificationsProvider.logViewEvent(courseId, name, 'course', wsName, {sectionnumber: sectionNumber}, siteId);
 
             return site.write('core_course_view_course', params).then((response) => {
@@ -902,7 +902,7 @@ export class CoreCourseProvider {
     markCompletedManually(cmId: number, completed: number, courseId: number, courseName?: string, siteId?: string)
             : Promise<any> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a completion to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -910,7 +910,7 @@ export class CoreCourseProvider {
         };
 
         // The offline function requires a courseId and it could be missing because it's a calculated field.
-        if (!this.appProvider.isOnline() && courseId) {
+        if (!CoreApp.isOnline() && courseId) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -924,7 +924,7 @@ export class CoreCourseProvider {
                 return result;
             });
         }).catch((error) => {
-            if (this.utils.isWebServiceError(error) || !courseId) {
+            if (CoreUtils.isWebServiceError(error) || !courseId) {
                 // The WebService has thrown an error, this means that responses cannot be submitted.
                 return Promise.reject(error);
             } else {
@@ -943,7 +943,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when completion is successfully sent.
      */
     markCompletedManuallyOnline(cmId: number, completed: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                     cmid: cmId,
                     completed: completed
@@ -979,7 +979,7 @@ export class CoreCourseProvider {
      * @return Promise resolved when done.
      */
     async openCourse(navCtrl: NavController, course: any, params?: any): Promise<void> {
-        const loading = this.domUtils.showModalLoading();
+        const loading = CoreDomUtils.showModalLoading();
 
         // Wait for site plugins to be fetched.
         await this.sitePluginsProvider.waitFetchPlugins();
@@ -994,9 +994,9 @@ export class CoreCourseProvider {
                 const available = coursesProvider.isGetCoursesByFieldAvailableInSite();
                 try {
                     if (available) {
-                        course = await CoreCourses.instance.getCourseByField('id', course.id);
+                        course = await CoreCourses.getCourseByField('id', course.id);
                     } else {
-                        course = await CoreCourses.instance.getCourse(course.id);
+                        course = await CoreCourses.getCourse(course.id);
                     }
                 } catch (error) {
                     // Ignore errors.
@@ -1021,7 +1021,7 @@ export class CoreCourseProvider {
             }
 
             // Wait for plugins to be loaded.
-            const deferred = this.utils.promiseDefer(),
+            const deferred = CoreUtils.promiseDefer(),
                 observer = CoreEvents.on(CoreEvents.SITE_PLUGINS_LOADED, () => {
                     observer && observer.off();
 
@@ -1035,10 +1035,10 @@ export class CoreCourseProvider {
             return deferred.promise;
         } catch (error) {
             // The site plugin failed to load. The user needs to restart the app to try loading it again.
-            const message = this.translate.instant('core.courses.errorloadplugins');
-            const reload = this.translate.instant('core.courses.reload');
-            const ignore = this.translate.instant('core.courses.ignore');
-            this.domUtils.showConfirm(message, '', reload, ignore).then(() => {
+            const message = Translate.instant('core.courses.errorloadplugins');
+            const reload = Translate.instant('core.courses.reload');
+            const ignore = Translate.instant('core.courses.ignore');
+            CoreDomUtils.showConfirm(message, '', reload, ignore).then(() => {
                 window.location.reload();
             });
         }
@@ -1065,11 +1065,11 @@ export class CoreCourseProvider {
      * @return Promise resolved when the status is changed. Resolve param: new status.
      */
     setCoursePreviousStatus(courseId: number, siteId?: string): Promise<string> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         this.logger.debug(`Set previous status for course ${courseId} in site ${siteId}`);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const db = site.getDb(),
                 newData: any = {};
 
@@ -1103,17 +1103,17 @@ export class CoreCourseProvider {
      * @return Promise resolved when the status is stored.
      */
     setCourseStatus(courseId: number, status: string, siteId?: string): Promise<void> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         this.logger.debug(`Set status '${status}' for course ${courseId} in site ${siteId}`);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             let downloadTime,
                 previousDownloadTime;
 
             if (status == CoreConstants.DOWNLOADING) {
                 // Set download time if course is now downloading.
-                downloadTime = this.timeUtils.timestamp();
+                downloadTime = CoreTimeUtils.timestamp();
             }
 
             // Search current status to set it as previous status.
@@ -1163,7 +1163,7 @@ export class CoreCourseProvider {
         }
 
         const langKey = 'core.mod_' + moduleName,
-            translated = this.translate.instant(langKey);
+            translated = Translate.instant(langKey);
 
         return translated !== langKey ? translated : moduleName;
     }

@@ -30,7 +30,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch chats.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChatPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModChat';
     modName = 'chat';
@@ -76,7 +76,7 @@ export class AddonModChatPrefetchHandler extends CoreCourseActivityPrefetchHandl
                 this.chatProvider.invalidateAllSessionMessages(chat.id)
             ];
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         });
     }
 
@@ -91,10 +91,10 @@ export class AddonModChatPrefetchHandler extends CoreCourseActivityPrefetchHandl
     invalidateModule(module: any, courseId: number): Promise<any> {
         const promises = [
             this.chatProvider.invalidateChats(courseId),
-            this.courseProvider.invalidateModule(module.id)
+            CoreCourse.invalidateModule(module.id)
         ];
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -123,7 +123,7 @@ export class AddonModChatPrefetchHandler extends CoreCourseActivityPrefetchHandl
         // Prefetch chat and group info.
         const promises: Promise<any>[] = [
             this.chatProvider.getChat(courseId, module.id, {readingStrategy: CoreSitesReadingStrategy.OnlyNetwork, siteId}),
-            this.groupsProvider.getActivityGroupInfo(module.id, false, undefined, siteId)
+            CoreGroups.getActivityGroupInfo(module.id, false, undefined, siteId)
         ];
         const options = {
             cmId: module.id,

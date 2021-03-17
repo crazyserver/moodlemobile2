@@ -31,7 +31,7 @@ import { CoreCourseLogHelperProvider } from './log-helper';
  * Service to sync course offline data. This only syncs the offline data of the course itself, not the offline data of
  * the activities in the course.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'core_course_autom_synced';
@@ -66,7 +66,7 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
     protected syncAllCoursesFunc(siteId: string, force: boolean): Promise<any> {
         const p1 = [];
 
-        p1.push(this.logHelper.syncSite(siteId));
+        p1.push(CoreCourseLogHelper.syncSite(siteId));
 
         p1.push(this.courseOffline.getAllManualCompletions(siteId).then((completions) => {
             // Sync all courses.
@@ -112,7 +112,7 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncCourse(courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isSyncing(courseId, siteId)) {
             // There's already a sync ongoing for this discussion, return the promise.
@@ -136,14 +136,14 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
                 return;
             }
 
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
                 return Promise.reject(null);
             }
 
             // Get the current completion status to check if any completion was modified in web.
             // This can be retrieved on core_course_get_contents since 3.6 but this is an easy way to get them.
-            return this.courseProvider.getActivitiesCompletionStatus(courseId, siteId, undefined, false, true, false)
+            return CoreCourse.getActivitiesCompletionStatus(courseId, siteId, undefined, false, true, false)
                     .then((onlineCompletions) => {
 
                 const promises = [];
@@ -158,9 +158,9 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
 
                             // Completion deleted, add a warning if the completion status doesn't match.
                             if (onlineComp.state != entry.completed) {
-                                result.warnings.push(this.translate.instant('core.course.warningofflinemanualcompletiondeleted', {
+                                result.warnings.push(Translate.instant('core.course.warningofflinemanualcompletiondeleted', {
                                     name: entry.coursename || courseId,
-                                    error: this.translate.instant('core.course.warningmanualcompletionmodified')
+                                    error: Translate.instant('core.course.warningmanualcompletionmodified')
                                 }));
                             }
                         }));
@@ -168,18 +168,18 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
                         return;
                     }
 
-                    promises.push(this.courseProvider.markCompletedManuallyOnline(entry.cmid, entry.completed, siteId).then(() => {
+                    promises.push(CoreCourse.markCompletedManuallyOnline(entry.cmid, entry.completed, siteId).then(() => {
                         result.updated = true;
 
                         return this.courseOffline.deleteManualCompletion(entry.cmid, siteId);
                     }).catch((error) => {
-                        if (this.utils.isWebServiceError(error)) {
+                        if (CoreUtils.isWebServiceError(error)) {
                             // The WebService has thrown an error, this means that the completion cannot be submitted. Delete it.
                             result.updated = true;
 
                             return this.courseOffline.deleteManualCompletion(entry.cmid, siteId).then(() => {
                                 // Completion deleted, add a warning.
-                                result.warnings.push(this.translate.instant('core.course.warningofflinemanualcompletiondeleted', {
+                                result.warnings.push(Translate.instant('core.course.warningofflinemanualcompletiondeleted', {
                                     name: entry.coursename || courseId,
                                     error: this.textUtils.getErrorMessageFromError(error)
                                 }));
@@ -196,13 +196,13 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
         }).then(() => {
             if (result.updated) {
                 // Update data.
-                return this.courseProvider.invalidateSections(courseId, siteId).then(() => {
-                    const currentSite = this.sitesProvider.getCurrentSite();
+                return CoreCourse.invalidateSections(courseId, siteId).then(() => {
+                    const currentSite = CoreSites.getCurrentSite();
 
                     if (currentSite && currentSite.isVersionGreaterEqualThan('3.6')) {
-                        return this.courseProvider.getSections(courseId, false, true, undefined, siteId);
+                        return CoreCourse.getSections(courseId, false, true, undefined, siteId);
                     } else {
-                        return this.courseProvider.getActivitiesCompletionStatus(courseId, siteId);
+                        return CoreCourse.getActivitiesCompletionStatus(courseId, siteId);
                     }
                 }).catch(() => {
                     // Ignore errors.

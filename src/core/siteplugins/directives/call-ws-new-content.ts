@@ -85,7 +85,7 @@ export class CoreSitePluginsCallWSNewContentDirective extends CoreSitePluginsCal
         // Add the properties from the WS call result to the args.
         args = Object.assign(args, result);
 
-        if (this.utils.isTrueOrOne(this.samePage)) {
+        if (CoreUtils.isTrueOrOne(this.samePage)) {
             // Update the parent content (if it exists).
             if (this.parentContent) {
                 this.parentContent.updateContent(args, this.component, this.method, this.jsData, this.newContentPreSets);

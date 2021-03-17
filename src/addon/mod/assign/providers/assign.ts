@@ -33,7 +33,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Service that provides some functions for assign.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignProvider {
     static COMPONENT = 'mmaModAssign';
     static SUBMISSION_COMPONENT = 'mmaModAssignSubmission';
@@ -163,7 +163,7 @@ export class AddonModAssignProvider {
     protected getAssignmentByField(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModAssignAssign> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
                 includenotenrolledcourses: 1,
@@ -172,7 +172,7 @@ export class AddonModAssignProvider {
                 cacheKey: this.getAssignmentCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModAssignProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_assign_get_assignments', params, preSets).catch(() => {
@@ -230,7 +230,7 @@ export class AddonModAssignProvider {
      */
     getAssignmentUserMappings(assignId: number, userId: number, options: CoreCourseCommonModWSOptions = {}): Promise<number> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 assignmentids: [assignId],
             };
@@ -239,7 +239,7 @@ export class AddonModAssignProvider {
                 updateFrequency: CoreSite.FREQUENCY_OFTEN,
                 component: AddonModAssignProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_assign_get_user_mappings', params, preSets)
@@ -291,7 +291,7 @@ export class AddonModAssignProvider {
      */
     getAssignmentGrades(assignId: number, options: CoreCourseCommonModWSOptions = {}): Promise<AddonModAssignGrade[]> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 assignmentids: [assignId],
             };
@@ -299,7 +299,7 @@ export class AddonModAssignProvider {
                 cacheKey: this.getAssignmentGradesCacheKey(assignId),
                 component: AddonModAssignProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_assign_get_grades', params, preSets).then((response: AddonModAssignGetGradesResult): any => {
@@ -452,7 +452,7 @@ export class AddonModAssignProvider {
     getSubmissions(assignId: number, options: CoreCourseCommonModWSOptions = {})
             : Promise<{canviewsubmissions: boolean, submissions?: AddonModAssignSubmission[]}> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 assignmentids: [assignId],
             };
@@ -461,7 +461,7 @@ export class AddonModAssignProvider {
                 updateFrequency: CoreSite.FREQUENCY_OFTEN,
                 component: AddonModAssignProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_assign_get_submissions', params, preSets)
@@ -508,7 +508,7 @@ export class AddonModAssignProvider {
             options.filter = true;
         }
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const fixedParams = this.fixSubmissionStatusParams(site, options.userId, options.groupId, options.isBlind);
 
             const params = {
@@ -530,7 +530,7 @@ export class AddonModAssignProvider {
                 // Don't cache when getting text without filters.
                 // @todo Change this to support offline editing.
                 saveToCache: options.filter,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_assign_get_submission_status', params, preSets);
@@ -641,7 +641,7 @@ export class AddonModAssignProvider {
 
         groupId = groupId || 0;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             if (!site.wsAvailable('mod_assign_list_participants')) {
                 // Silently fail if is not available. (needs Moodle version >= 3.2)
                 return Promise.reject(null);
@@ -657,7 +657,7 @@ export class AddonModAssignProvider {
                 updateFrequency: CoreSite.FREQUENCY_OFTEN,
                 component: AddonModAssignProvider.COMPONENT,
                 componentId: options.cmId,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_assign_list_participants', params, preSets);
@@ -693,7 +693,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAllSubmissionData(assignId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.getSubmissionsCacheKey(assignId));
         });
     }
@@ -706,7 +706,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAssignmentData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAssignmentCacheKey(courseId));
         });
     }
@@ -719,7 +719,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAssignmentUserMappingsData(assignId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAssignmentUserMappingsCacheKey(assignId));
         });
     }
@@ -732,7 +732,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateAssignmentGradesData(assignId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getAssignmentGradesCacheKey(assignId));
         });
     }
@@ -747,7 +747,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.getAssignment(courseId, moduleId, {siteId}).then((assign) => {
             const promises = [];
@@ -772,7 +772,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the files are invalidated.
      */
      invalidateFiles(moduleId: number): Promise<any> {
-         return this.filepoolProvider.invalidateFilesByComponent(this.sitesProvider.getCurrentSiteId(),
+         return CoreFilepool.invalidateFilesByComponent(CoreSites.getCurrentSiteId(),
                  AddonModAssignProvider.COMPONENT, moduleId);
      }
 
@@ -784,7 +784,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateSubmissionData(assignId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getSubmissionsCacheKey(assignId));
         });
     }
@@ -801,7 +801,7 @@ export class AddonModAssignProvider {
      */
     invalidateSubmissionStatusData(assignId: number, userId?: number, groupId?: number, isBlind?: boolean, siteId?: string):
             Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const fixedParams = this.fixSubmissionStatusParams(site, userId, groupId, isBlind);
 
             return site.invalidateWsCacheForKey(this.getSubmissionStatusCacheKey(assignId, fixedParams.userId,
@@ -817,7 +817,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateListParticipantsData(assignId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKeyStartingWith(this.listParticipantsPrefixCacheKey(assignId));
         });
     }
@@ -848,7 +848,7 @@ export class AddonModAssignProvider {
      * @since 3.2
      */
     isOutcomesEditEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('mod_assign_submit_grading_form');
         });
     }
@@ -875,7 +875,7 @@ export class AddonModAssignProvider {
             return false;
         }
 
-        const time = this.timeUtils.timestamp(),
+        const time = CoreTimeUtils.timestamp(),
             lastAttempt = submissionStatus.lastattempt,
             submission = this.getSubmissionObjectFromAttempt(assign, lastAttempt);
 
@@ -930,12 +930,12 @@ export class AddonModAssignProvider {
      */
     logSubmissionView(assignId: number, name?: string, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 assignid: assignId
             };
 
-            return this.logHelper.logSingle('mod_assign_view_submission_status', params, AddonModAssignProvider.COMPONENT,
+            return CoreCourseLogHelper.logSingle('mod_assign_view_submission_status', params, AddonModAssignProvider.COMPONENT,
                     assignId, name, 'assign', {}, siteId);
         });
     }
@@ -953,7 +953,7 @@ export class AddonModAssignProvider {
             assignid: assignId
         };
 
-        return this.logHelper.logSingle('mod_assign_view_grading_table', params, AddonModAssignProvider.COMPONENT, assignId,
+        return CoreCourseLogHelper.logSingle('mod_assign_view_grading_table', params, AddonModAssignProvider.COMPONENT, assignId,
                 name, 'assign', {}, siteId);
     }
 
@@ -970,7 +970,7 @@ export class AddonModAssignProvider {
             assignid: assignId
         };
 
-        return this.logHelper.logSingle('mod_assign_view_assign', params, AddonModAssignProvider.COMPONENT, assignId, name,
+        return CoreCourseLogHelper.logSingle('mod_assign_view_assign', params, AddonModAssignProvider.COMPONENT, assignId, name,
                 'assign', {}, siteId);
     }
 
@@ -1024,7 +1024,7 @@ export class AddonModAssignProvider {
     saveSubmission(assignId: number, courseId: number, pluginData: any, allowOffline: boolean, timemodified: number,
             allowsDrafts?: boolean, userId?: number, siteId?: string): Promise<boolean> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Function to store the submission to be synchronized later.
         const storeOffline = (): Promise<boolean> => {
@@ -1034,7 +1034,7 @@ export class AddonModAssignProvider {
             });
         };
 
-        if (allowOffline && !this.appProvider.isOnline()) {
+        if (allowOffline && !CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -1044,7 +1044,7 @@ export class AddonModAssignProvider {
             return this.saveSubmissionOnline(assignId, pluginData, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (allowOffline && error && !this.utils.isWebServiceError(error)) {
+                if (allowOffline && error && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1064,7 +1064,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when saved, rejected otherwise.
      */
     saveSubmissionOnline(assignId: number, pluginData: any, siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 assignmentid: assignId,
                 plugindata: pluginData
@@ -1093,7 +1093,7 @@ export class AddonModAssignProvider {
     submitForGrading(assignId: number, courseId: number, acceptStatement: boolean, timemodified: number, forceOffline?: boolean,
             siteId?: string): Promise<boolean> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Function to store the submission to be synchronized later.
         const storeOffline = (): Promise<boolean> => {
@@ -1103,7 +1103,7 @@ export class AddonModAssignProvider {
             });
         };
 
-        if (forceOffline || !this.appProvider.isOnline()) {
+        if (forceOffline || !CoreApp.isOnline()) {
             // App is offline, store the action.
             return storeOffline();
         }
@@ -1113,7 +1113,7 @@ export class AddonModAssignProvider {
             return this.submitForGradingOnline(assignId, acceptStatement, siteId).then(() => {
                 return true;
             }).catch((error) => {
-                if (error && !this.utils.isWebServiceError(error)) {
+                if (error && !CoreUtils.isWebServiceError(error)) {
                     // Couldn't connect to server, store in offline.
                     return storeOffline();
                 } else {
@@ -1133,7 +1133,7 @@ export class AddonModAssignProvider {
      * @return Promise resolved when submitted, rejected otherwise.
      */
     submitForGradingOnline(assignId: number, acceptStatement: boolean, siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 assignmentid: assignId,
                 acceptsubmissionstatement: acceptStatement ? 1 : 0
@@ -1167,7 +1167,7 @@ export class AddonModAssignProvider {
     submitGradingForm(assignId: number, userId: number, courseId: number, grade: number, attemptNumber: number, addAttempt: boolean,
             workflowState: string, applyToAll: boolean, outcomes: any, pluginData: any, siteId?: string): Promise<boolean> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Function to store the grading to be synchronized later.
         const storeOffline = (): Promise<boolean> => {
@@ -1187,7 +1187,7 @@ export class AddonModAssignProvider {
                 });
             }
 
-            if (!this.appProvider.isOnline()) {
+            if (!CoreApp.isOnline()) {
                 // App is offline, store the action.
                 return storeOffline();
             }
@@ -1198,7 +1198,7 @@ export class AddonModAssignProvider {
                         outcomes, pluginData, siteId).then(() => {
                     return true;
                 }).catch((error) => {
-                    if (error && !this.utils.isWebServiceError(error)) {
+                    if (error && !CoreUtils.isWebServiceError(error)) {
                         // Couldn't connect to server, store in offline.
                         return storeOffline();
                     } else {
@@ -1229,7 +1229,7 @@ export class AddonModAssignProvider {
     submitGradingFormOnline(assignId: number, userId: number, grade: number, attemptNumber: number, addAttempt: boolean,
             workflowState: string, applyToAll: boolean, outcomes: any, pluginData: any, siteId?: string): Promise<void | null> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             if (site.wsAvailable('mod_assign_submit_grading_form')) {

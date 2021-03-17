@@ -457,11 +457,11 @@ export class AddonQtypeDdwtosQuestion {
             const groupNo = this.getGroup(drag),
                 choiceNo = this.getChoice(drag);
 
-            position = this.domUtils.getElementXY(this.container, this.selectors.dragHome(groupNo, choiceNo), 'answercontainer');
+            position = CoreDomUtils.getElementXY(this.container, this.selectors.dragHome(groupNo, choiceNo), 'answercontainer');
             drag.classList.add('unplaced');
         } else {
             // Get the drop zone position.
-            position = this.domUtils.getElementXY(this.container, this.selectors.dropForPlace(placeNo),
+            position = CoreDomUtils.getElementXY(this.container, this.selectors.dropForPlace(placeNo),
                     'addon-qtype-ddwtos-container');
             drag.classList.remove('unplaced');
         }

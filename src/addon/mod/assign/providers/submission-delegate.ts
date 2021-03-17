@@ -211,7 +211,7 @@ export interface AddonModAssignSubmissionHandler extends CoreDelegateHandler {
 /**
  * Delegate to register plugins for assign submission.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignSubmissionDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';

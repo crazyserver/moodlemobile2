@@ -20,7 +20,7 @@ import { AddonModQuizProvider } from './quiz';
 /**
  * Handler to treat links to quiz index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModQuizIndexLinkHandler';
 

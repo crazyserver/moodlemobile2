@@ -106,7 +106,7 @@ export type CoreCourseCoursesProgress = {
 /**
  * Helper to gather some common course functions.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseHelperProvider {
 
     protected courseDwnPromises: { [s: string]: { [id: number]: Promise<any> } } = {};
@@ -258,7 +258,7 @@ export class CoreCourseHelperProvider {
                 section.isCalculating = true;
                 promises.push(this.calculateSectionStatus(section, courseId, refresh, checkUpdates).then((result) => {
                     // Calculate "All sections" status.
-                    allSectionsStatus = this.filepoolProvider.determinePackagesStatus(allSectionsStatus, result.status);
+                    allSectionsStatus = CoreFilepool.determinePackagesStatus(allSectionsStatus, result.status);
                 }).finally(() => {
                     section.isCalculating = false;
                 }));
@@ -296,7 +296,7 @@ export class CoreCourseHelperProvider {
 
         const initialIcon = data.prefetchCourseIcon,
             initialTitle = data.title,
-            siteId = this.sitesProvider.getCurrentSiteId();
+            siteId = CoreSites.getCurrentSiteId();
         let promise;
 
         data.downloadSucceeded = false;
@@ -307,7 +307,7 @@ export class CoreCourseHelperProvider {
         if (sections) {
             promise = Promise.resolve(sections);
         } else {
-            promise = this.courseProvider.getSections(course.id, false, true);
+            promise = CoreCourse.getSections(course.id, false, true);
         }
 
         return promise.then((sections) => {
@@ -356,10 +356,10 @@ export class CoreCourseHelperProvider {
      * @return Resolved when downloaded, rejected if error or canceled.
      */
     confirmAndPrefetchCourses(courses: any[], onProgress?: (data: CoreCourseCoursesProgress) => void): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         // Confirm the download without checking size because it could take a while.
-        return this.domUtils.showConfirm(this.translate.instant('core.areyousure')).then(() => {
+        return CoreDomUtils.showConfirm(Translate.instant('core.areyousure')).then(() => {
             const promises = [],
                 total = courses.length;
             let count = 0;
@@ -372,7 +372,7 @@ export class CoreCourseHelperProvider {
                     success = true;
 
                 // Get the sections and the handlers.
-                subPromises.push(this.courseProvider.getSections(course.id, false, true).then((courseSections) => {
+                subPromises.push(CoreCourse.getSections(course.id, false, true).then((courseSections) => {
                     sections = courseSections;
                 }));
                 subPromises.push(this.courseOptionsDelegate.getHandlersToDisplay(this.injector, course).then((cHandlers) => {
@@ -402,7 +402,7 @@ export class CoreCourseHelperProvider {
                 onProgress({ count: 0, total: total, success: true });
             }
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         });
     }
 
@@ -419,9 +419,9 @@ export class CoreCourseHelperProvider {
 
         try {
 
-            await this.domUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
+            await CoreDomUtils.showDeleteConfirm('core.course.confirmdeletestoreddata');
 
-            modal = this.domUtils.showModalLoading();
+            modal = CoreDomUtils.showModalLoading();
 
             await this.removeModuleStoredData(module, courseId);
 
@@ -429,7 +429,7 @@ export class CoreCourseHelperProvider {
 
         } catch (error) {
             if (error) {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
             }
         } finally {
             modal && modal.dismiss();
@@ -454,7 +454,7 @@ export class CoreCourseHelperProvider {
             sizePromise = this.prefetchDelegate.getDownloadSize(section.modules, courseId);
 
             // Check if the section has embedded files in the description.
-            haveEmbeddedFiles = this.filepoolProvider.extractDownloadableFilesFromHtml(section.summary).length > 0;
+            haveEmbeddedFiles = CoreFilepool.extractDownloadableFilesFromHtml(section.summary).length > 0;
         } else {
             const promises = [],
                 results = {
@@ -470,7 +470,7 @@ export class CoreCourseHelperProvider {
                     }));
 
                     // Check if the section has embedded files in the description.
-                    if (!haveEmbeddedFiles && this.filepoolProvider.extractDownloadableFilesFromHtml(s.summary).length > 0) {
+                    if (!haveEmbeddedFiles && CoreFilepool.extractDownloadableFilesFromHtml(s.summary).length > 0) {
                         haveEmbeddedFiles = true;
                     }
                 }
@@ -487,7 +487,7 @@ export class CoreCourseHelperProvider {
             }
 
             // Show confirm modal if needed.
-            return this.domUtils.confirmDownloadSize(size, undefined, undefined, undefined, undefined, alwaysConfirm);
+            return CoreDomUtils.confirmDownloadSize(size, undefined, undefined, undefined, undefined, alwaysConfirm);
         });
     }
 
@@ -508,7 +508,7 @@ export class CoreCourseHelperProvider {
 
         // We need to call getDownloadSize, the package might have been updated.
         return this.prefetchDelegate.getModuleDownloadSize(module, courseId, true).then((size) => {
-            return this.domUtils.confirmDownloadSize(size).then(() => {
+            return CoreDomUtils.confirmDownloadSize(size).then(() => {
                 return this.prefetchDelegate.prefetchModule(module, courseId, true);
             });
         }).then(() => {
@@ -518,7 +518,7 @@ export class CoreCourseHelperProvider {
             instance.prefetchStatusIcon = initialIcon;
 
             if (!instance.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
             }
         });
     }
@@ -532,17 +532,17 @@ export class CoreCourseHelperProvider {
     determineCoursesStatus(courses: any[]): Promise<string> {
         // Get the status of each course.
         const promises = [],
-            siteId = this.sitesProvider.getCurrentSiteId();
+            siteId = CoreSites.getCurrentSiteId();
 
         courses.forEach((course) => {
-            promises.push(this.courseProvider.getCourseStatus(course.id, siteId));
+            promises.push(CoreCourse.getCourseStatus(course.id, siteId));
         });
 
         return Promise.all(promises).then((statuses) => {
             // Now determine the status of the whole list.
             let status = statuses[0];
             for (let i = 1; i < statuses.length; i++) {
-                status = this.filepoolProvider.determinePackagesStatus(status, statuses[i]);
+                status = CoreFilepool.determinePackagesStatus(status, statuses[i]);
             }
 
             return status;
@@ -563,13 +563,13 @@ export class CoreCourseHelperProvider {
      */
     downloadModuleAndOpenFile(module: any, courseId: number, component?: string, componentId?: string | number, files?: any[],
             siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         let promise;
         if (files && files.length) {
             promise = Promise.resolve(files);
         } else {
-            promise = this.courseProvider.loadModuleContents(module, courseId).then(() => {
+            promise = CoreCourse.loadModuleContents(module, courseId).then(() => {
                 files = module.contents;
             });
         }
@@ -577,21 +577,21 @@ export class CoreCourseHelperProvider {
         // Make sure that module contents are loaded.
         return promise.then(() => {
             if (!files || !files.length) {
-                return Promise.reject(this.utils.createFakeWSError('core.filenotfound', true));
+                return Promise.reject(CoreUtils.createFakeWSError('core.filenotfound', true));
             }
 
             if (!this.fileHelper.isOpenableInApp(module.contents[0])) {
                 return this.fileHelper.showConfirmOpenUnsupportedFile();
             }
         }).then(() => {
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((site) => {
             const mainFile = files[0],
                 fileUrl = this.fileHelper.getFileUrl(mainFile);
 
             // Check if the file should be opened in browser.
             if (this.fileHelper.shouldOpenInBrowser(mainFile)) {
-                if (this.appProvider.isOnline()) {
+                if (CoreApp.isOnline()) {
                     // Open in browser.
                     return site.checkAndFixPluginfileURL(fileUrl).then((fixedUrl) => {
                         fixedUrl = fixedUrl.replace('&offline=1', '');
@@ -600,7 +600,7 @@ export class CoreCourseHelperProvider {
                         // Remove forcedownload when not followed by any param.
                         fixedUrl = fixedUrl.replace(/[\?|\&]forcedownload=\d+/, '');
 
-                        this.utils.openInBrowser(fixedUrl);
+                        CoreUtils.openInBrowser(fixedUrl);
 
                         if (this.fileProvider.isAvailable()) {
                             // Download the file if needed (file outdated or not downloaded).
@@ -611,10 +611,10 @@ export class CoreCourseHelperProvider {
 
                 } else {
                     // Not online, get the offline file. It will fail if not found.
-                    return this.filepoolProvider.getInternalUrlByUrl(siteId, fileUrl).then((path) => {
-                        return this.utils.openFile(path);
+                    return CoreFilepool.getInternalUrlByUrl(siteId, fileUrl).then((path) => {
+                        return CoreUtils.openFile(path);
                     }, (error) => {
-                        return Promise.reject(this.translate.instant('core.networkerrormsg'));
+                        return Promise.reject(Translate.instant('core.networkerrormsg'));
                     });
                 }
             }
@@ -623,36 +623,36 @@ export class CoreCourseHelperProvider {
             return this.downloadModuleWithMainFileIfNeeded(module, courseId, component, componentId, files, siteId)
                     .then((result) => {
 
-                if (!CoreUrlUtils.instance.isLocalFileUrl(result.path)) {
+                if (!CoreUrlUtils.isLocalFileUrl(result.path)) {
                     /* In iOS, if we use the same URL in embedded browser and background download then the download only
                        downloads a few bytes (cached ones). Add a hash to the URL so both URLs are different. */
                     result.path = result.path + '#moodlemobile-embedded';
 
-                    return this.utils.openOnlineFile(result.path).catch((error) => {
+                    return CoreUtils.openOnlineFile(result.path).catch((error) => {
                         // Error opening the file, some apps don't allow opening online files.
                         if (!this.fileProvider.isAvailable()) {
                             return Promise.reject(error);
                         } else if (result.status === CoreConstants.DOWNLOADING) {
-                            return Promise.reject(this.translate.instant('core.erroropenfiledownloading'));
+                            return Promise.reject(Translate.instant('core.erroropenfiledownloading'));
                         }
 
                         let promise;
                         if (result.status === CoreConstants.NOT_DOWNLOADED) {
                             // Not downloaded, download it now and return the local file.
                             promise = this.downloadModule(module, courseId, component, componentId, files, siteId).then(() => {
-                                return this.filepoolProvider.getInternalUrlByUrl(siteId, fileUrl);
+                                return CoreFilepool.getInternalUrlByUrl(siteId, fileUrl);
                             });
                         } else {
                             // File is outdated or stale and can't be opened in online, return the local URL.
-                            promise = this.filepoolProvider.getInternalUrlByUrl(siteId, fileUrl);
+                            promise = CoreFilepool.getInternalUrlByUrl(siteId, fileUrl);
                         }
 
                         return promise.then((path) => {
-                            return this.utils.openFile(path);
+                            return CoreUtils.openFile(path);
                         });
                     });
                 } else {
-                    return this.utils.openFile(result.path);
+                    return CoreUtils.openFile(result.path);
                 }
             });
         });
@@ -673,7 +673,7 @@ export class CoreCourseHelperProvider {
     downloadModuleWithMainFileIfNeeded(module: any, courseId: number, component?: string, componentId?: string | number,
             files?: any[], siteId?: string): Promise<{fixedUrl: string, path: string, status: string}> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (!files || !files.length) {
             // Module not valid, stop.
@@ -688,28 +688,28 @@ export class CoreCourseHelperProvider {
                 status: undefined
             };
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.checkAndFixPluginfileURL(fileUrl);
         }).then((fixedUrl) => {
             result.fixedUrl = fixedUrl;
 
             if (this.fileProvider.isAvailable()) {
                 // The file system is available.
-                return this.filepoolProvider.getPackageStatus(siteId, component, componentId).then((status) => {
+                return CoreFilepool.getPackageStatus(siteId, component, componentId).then((status) => {
                     result.status = status;
 
                     if (status === CoreConstants.DOWNLOADED) {
                         // Get the local file URL.
-                        return this.filepoolProvider.getInternalUrlByUrl(siteId, fileUrl).catch((error) => {
+                        return CoreFilepool.getInternalUrlByUrl(siteId, fileUrl).catch((error) => {
                             // File not found, mark the module as not downloaded and try again.
-                            return this.filepoolProvider.storePackageStatus(siteId, CoreConstants.NOT_DOWNLOADED, component,
+                            return CoreFilepool.storePackageStatus(siteId, CoreConstants.NOT_DOWNLOADED, component,
                                     componentId).then(() => {
 
                                 return this.downloadModuleWithMainFile(module, courseId, fixedUrl, files, status, component,
                                         componentId, siteId);
                             });
                         });
-                    } else if (status === CoreConstants.DOWNLOADING && !this.appProvider.isDesktop()) {
+                    } else if (status === CoreConstants.DOWNLOADING && !CoreApp.isDesktop()) {
                         // Return the online URL.
                         return fixedUrl;
                     } else {
@@ -747,24 +747,24 @@ export class CoreCourseHelperProvider {
     protected downloadModuleWithMainFile(module: any, courseId: number, fixedUrl: string, files: any[], status: string,
             component?: string, componentId?: string | number, siteId?: string): Promise<string> {
 
-        const isOnline = this.appProvider.isOnline();
+        const isOnline = CoreApp.isOnline();
         const mainFile = files[0];
         const fileUrl = this.fileHelper.getFileUrl(mainFile);
         const timemodified = this.fileHelper.getFileTimemodified(mainFile);
 
         if (!isOnline && status === CoreConstants.NOT_DOWNLOADED) {
             // Not downloaded and we're offline, reject.
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         }
 
-        return this.filepoolProvider.shouldDownloadBeforeOpen(fixedUrl, mainFile.filesize).then(() => {
+        return CoreFilepool.shouldDownloadBeforeOpen(fixedUrl, mainFile.filesize).then(() => {
             // Download and then return the local URL.
             return this.downloadModule(module, courseId, component, componentId, files, siteId).then(() => {
-                return this.filepoolProvider.getInternalUrlByUrl(siteId, fileUrl);
+                return CoreFilepool.getInternalUrlByUrl(siteId, fileUrl);
             });
         }, () => {
             // Start the download if in wifi, but return the URL right away so the file is opened.
-            if (this.appProvider.isWifi()) {
+            if (CoreApp.isWifi()) {
                 this.downloadModule(module, courseId, component, componentId, files, siteId);
             }
 
@@ -773,7 +773,7 @@ export class CoreCourseHelperProvider {
                 return fixedUrl;
             } else {
                 // Outdated but offline, so we return the local URL. Use getUrlByUrl so it's added to the queue.
-                return this.filepoolProvider.getUrlByUrl(siteId, fileUrl, component, componentId, timemodified,
+                return CoreFilepool.getUrlByUrl(siteId, fileUrl, component, componentId, timemodified,
                         false, false, mainFile);
             }
         });
@@ -807,7 +807,7 @@ export class CoreCourseHelperProvider {
         // There's no prefetch handler for the module, just download the files.
         files = files || module.contents;
 
-        return this.filepoolProvider.downloadOrPrefetchFiles(siteId, files, false, false, component, componentId);
+        return CoreFilepool.downloadOrPrefetchFiles(siteId, files, false, false, component, componentId);
     }
 
     /**
@@ -821,7 +821,7 @@ export class CoreCourseHelperProvider {
      * @return Promise resolved when done.
      */
     fillContextMenu(instance: any, module: any, courseId: number, invalidateCache?: boolean, component?: string): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         return this.getModulePrefetchInfo(module, courseId, invalidateCache, component).then((moduleInfo) => {
             instance.size = moduleInfo.size > 0 ? moduleInfo.sizeReadable : 0;
@@ -831,10 +831,10 @@ export class CoreCourseHelperProvider {
             if (moduleInfo.status != CoreConstants.NOT_DOWNLOADABLE) {
                 // Module is downloadable, get the text to display to prefetch.
                 if (moduleInfo.downloadTime > 0) {
-                    instance.prefetchText = this.translate.instant('core.lastdownloaded') + ': ' + moduleInfo.downloadTimeReadable;
+                    instance.prefetchText = Translate.instant('core.lastdownloaded') + ': ' + moduleInfo.downloadTimeReadable;
                 } else {
                     // Module not downloaded, show a default text.
-                    instance.prefetchText = this.translate.instant('core.download');
+                    instance.prefetchText = Translate.instant('core.download');
                 }
             }
 
@@ -853,7 +853,7 @@ export class CoreCourseHelperProvider {
 
             if (typeof instance.contextFileStatusObserver == 'undefined' && component) {
                 // Debounce the update size function to prevent too many calls when downloading or deleting a whole activity.
-                const debouncedUpdateSize = this.utils.debounce(() => {
+                const debouncedUpdateSize = CoreUtils.debounce(() => {
                     this.prefetchDelegate.getModuleStoredSize(module, courseId).then((moduleSize) => {
                         instance.size = moduleSize > 0 ? this.textUtils.bytesToSize(moduleSize, 2) : 0;
                     });
@@ -867,7 +867,7 @@ export class CoreCourseHelperProvider {
                         return;
                     }
 
-                    if (!this.filepoolProvider.isFileEventDownloadedOrDeleted(data)) {
+                    if (!CoreFilepool.isFileEventDownloadedOrDeleted(data)) {
                         return;
                     }
 
@@ -886,18 +886,18 @@ export class CoreCourseHelperProvider {
      * @return Promise resolved with the course.
      */
     getCourse(courseId: number, siteId?: string): Promise<{enrolled: boolean, course: any}> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Try with enrolled courses first.
-        return this.coursesProvider.getUserCourse(courseId, false, siteId).then((course) => {
+        return CoreCourses.getUserCourse(courseId, false, siteId).then((course) => {
             return { enrolled: true, course: course };
         }).catch(() => {
             // Not enrolled or an error happened. Try to use another WebService.
-            return this.coursesProvider.isGetCoursesByFieldAvailableInSite(siteId).then((available) => {
+            return CoreCourses.isGetCoursesByFieldAvailableInSite(siteId).then((available) => {
                 if (available) {
-                    return this.coursesProvider.getCourseByField('id', courseId, siteId);
+                    return CoreCourses.getCourseByField('id', courseId, siteId);
                 } else {
-                    return this.coursesProvider.getCourse(courseId, siteId);
+                    return CoreCourses.getCourse(courseId, siteId);
                 }
             }).then((course) => {
                 return { enrolled: false, course: course };
@@ -915,7 +915,7 @@ export class CoreCourseHelperProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     getAndOpenCourse(navCtrl: NavController, courseId: number, params?: any, siteId?: string): Promise<any> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         return this.getCourse(courseId, siteId).then((data) => {
             return data.course;
@@ -939,7 +939,7 @@ export class CoreCourseHelperProvider {
      * @since 3.3
      */
     hasABlockNamed(courseId: number, name: string, siteId?: string): Promise<boolean> {
-        return this.courseProvider.getCourseBlocks(courseId, siteId).then((blocks) => {
+        return CoreCourse.getCourseBlocks(courseId, siteId).then((blocks) => {
             return blocks.some((block) => {
                 return block.name == name;
             });
@@ -995,7 +995,7 @@ export class CoreCourseHelperProvider {
             const totalOffline = offlineCompletions.length;
             let loaded = 0;
 
-            const offlineCompletionsMap = this.utils.arrayToObject(offlineCompletions, 'cmid');
+            const offlineCompletionsMap = CoreUtils.arrayToObject(offlineCompletions, 'cmid');
 
             // Load the offline data in the modules.
             for (let i = 0; i < sections.length; i++) {
@@ -1054,7 +1054,7 @@ export class CoreCourseHelperProvider {
      * @return Download promise, undefined if not found.
      */
     getCourseDownloadPromise(courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.courseDwnPromises[siteId] && this.courseDwnPromises[siteId][courseId];
     }
@@ -1067,7 +1067,7 @@ export class CoreCourseHelperProvider {
      * @return Promise resolved with the icon name and the title key.
      */
     getCourseStatusIconAndTitle(courseId: number, siteId?: string): Promise<{icon: string, title: string}> {
-        return this.courseProvider.getCourseStatus(courseId, siteId).then((status) => {
+        return CoreCourse.getCourseStatus(courseId, siteId).then((status) => {
             return this.getCourseStatusIconAndTitleFromStatus(status);
         });
     }
@@ -1107,10 +1107,10 @@ export class CoreCourseHelperProvider {
      * @return Promise resolved with the module's course ID.
      */
     getModuleCourseIdByInstance(id: number, module: any, siteId?: string): Promise<number> {
-        return this.courseProvider.getModuleBasicInfoByInstance(id, module, siteId).then((cm) => {
+        return CoreCourse.getModuleBasicInfoByInstance(id, module, siteId).then((cm) => {
             return cm.course;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
 
             return Promise.reject(null);
         });
@@ -1128,7 +1128,7 @@ export class CoreCourseHelperProvider {
     getModulePrefetchInfo(module: any, courseId: number, invalidateCache?: boolean, component?: string)
             : Promise<CoreCourseModulePrefetchInfo> {
         const moduleInfo: CoreCourseModulePrefetchInfo = {},
-            siteId = this.sitesProvider.getCurrentSiteId(),
+            siteId = CoreSites.getCurrentSiteId(),
             promises = [];
 
         if (invalidateCache) {
@@ -1164,9 +1164,9 @@ export class CoreCourseHelperProvider {
         }));
 
         // Get the time it was downloaded (if it was downloaded).
-        promises.push(this.filepoolProvider.getPackageData(siteId, component, module.id).then((data) => {
+        promises.push(CoreFilepool.getPackageData(siteId, component, module.id).then((data) => {
             if (data && data.downloadTime && this.fileHelper.isStateDownloaded(data.status)) {
-                const now = this.timeUtils.timestamp();
+                const now = CoreTimeUtils.timestamp();
                 moduleInfo.downloadTime = data.downloadTime;
                 if (now - data.downloadTime < 7 * 86400) {
                     moduleInfo.downloadTimeReadable = moment(data.downloadTime * 1000).fromNow();
@@ -1212,13 +1212,13 @@ export class CoreCourseHelperProvider {
     navigateToModuleByInstance(instanceId: number, modName: string, siteId?: string, courseId?: number, sectionId?: number,
             useModNameToGetModule: boolean = false, modParams?: any, navCtrl?: NavController): Promise<void> {
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
-        return this.courseProvider.getModuleBasicInfoByInstance(instanceId, modName, siteId).then((module) => {
+        return CoreCourse.getModuleBasicInfoByInstance(instanceId, modName, siteId).then((module) => {
             this.navigateToModule(parseInt(module.id, 10), siteId, module.course, sectionId,
                 useModNameToGetModule ? modName : undefined, modParams, navCtrl);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
         }).finally(() => {
             // Just in case. In fact we need to dismiss the modal before showing a toast or error message.
             modal.dismiss();
@@ -1242,9 +1242,9 @@ export class CoreCourseHelperProvider {
     navigateToModule(moduleId: number, siteId?: string, courseId?: number, sectionId?: number, modName?: string, modParams?: any,
                      navCtrl?: NavController)
             : Promise<void> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         let promise,
             site: CoreSite;
 
@@ -1253,13 +1253,13 @@ export class CoreCourseHelperProvider {
             promise = Promise.resolve();
         } else if (!courseId) {
             // We don't have courseId.
-            promise = this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+            promise = CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
                 courseId = module.course;
                 sectionId = module.section;
             });
         } else {
             // We don't have sectionId but we have courseId.
-            promise = this.courseProvider.getModuleSectionId(moduleId, siteId).then((id) => {
+            promise = CoreCourse.getModuleSectionId(moduleId, siteId).then((id) => {
                 sectionId = id;
             });
         }
@@ -1270,15 +1270,15 @@ export class CoreCourseHelperProvider {
             sectionId = Number(sectionId);
 
             // Get the site.
-            return this.sitesProvider.getSite(siteId);
+            return CoreSites.getSite(siteId);
         }).then((s) => {
             site = s;
 
             // Get the module.
-            return this.courseProvider.getModule(moduleId, courseId, sectionId, false, false, siteId, modName);
+            return CoreCourse.getModule(moduleId, courseId, sectionId, false, false, siteId, modName);
         }).then((module) => {
 
-            if (navCtrl && this.sitesProvider.isLoggedIn() && this.sitesProvider.getCurrentSiteId() == site.getId()) {
+            if (navCtrl && CoreSites.isLoggedIn() && CoreSites.getCurrentSiteId() == site.getId()) {
                 // If the link handler for this module passed through navCtrl, we can use the module's handler to navigate cleanly.
                 // Otherwise, we will redirect below.
                 module.handlerData = this.moduleDelegate.getModuleDataFor(module.modname, module, courseId, sectionId, false);
@@ -1313,7 +1313,7 @@ export class CoreCourseHelperProvider {
             }
         }).catch((error) => {
             modal.dismiss();
-            this.domUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
         });
     }
 
@@ -1353,7 +1353,7 @@ export class CoreCourseHelperProvider {
      */
     prefetchCourse(course: any, sections: any[], courseHandlers: CoreCourseOptionsHandlerToDisplay[],
            courseMenuHandlers: CoreCourseOptionsMenuHandlerToDisplay[], siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.courseDwnPromises[siteId] && this.courseDwnPromises[siteId][course.id]) {
             // There's already a download ongoing for this course, return the promise.
@@ -1363,7 +1363,7 @@ export class CoreCourseHelperProvider {
         }
 
         // First of all, mark the course as being downloaded.
-        this.courseDwnPromises[siteId][course.id] = this.courseProvider.setCourseStatus(course.id, CoreConstants.DOWNLOADING,
+        this.courseDwnPromises[siteId][course.id] = CoreCourse.setCourseStatus(course.id, CoreConstants.DOWNLOADING,
                 siteId).then(() => {
 
             const promises = [];
@@ -1388,26 +1388,26 @@ export class CoreCourseHelperProvider {
             });
 
             // Prefetch other data needed to render the course.
-            if (this.coursesProvider.isGetCoursesByFieldAvailable()) {
-                promises.push(this.coursesProvider.getCoursesByField('id', course.id));
+            if (CoreCourses.isGetCoursesByFieldAvailable()) {
+                promises.push(CoreCourses.getCoursesByField('id', course.id));
             }
 
             const sectionWithModules = sections.find((section) => {
                     return section.modules && section.modules.length > 0;
             });
             if (!sectionWithModules || typeof sectionWithModules.modules[0].completion == 'undefined') {
-                promises.push(this.courseProvider.getActivitiesCompletionStatus(course.id));
+                promises.push(CoreCourse.getActivitiesCompletionStatus(course.id));
             }
 
             promises.push(this.filterHelper.getFilters('course', course.id));
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         }).then(() => {
             // Download success, mark the course as downloaded.
-            return this.courseProvider.setCourseStatus(course.id, CoreConstants.DOWNLOADED, siteId);
+            return CoreCourse.setCourseStatus(course.id, CoreConstants.DOWNLOADED, siteId);
         }).catch((error) => {
             // Error, restore previous status.
-            return this.courseProvider.setCoursePreviousStatus(course.id, siteId).then(() => {
+            return CoreCourse.setCoursePreviousStatus(course.id, siteId).then(() => {
                 return Promise.reject(error);
             });
         }).finally(() => {
@@ -1430,7 +1430,7 @@ export class CoreCourseHelperProvider {
      */
     prefetchModule(handler: any, module: any, size: any, courseId: number, refresh?: boolean): Promise<any> {
         // Show confirmation if needed.
-        return this.domUtils.confirmDownloadSize(size).then(() => {
+        return CoreDomUtils.confirmDownloadSize(size).then(() => {
             // Invalidate content if refreshing and download the data.
             const promise = refresh ? handler.invalidateContent(module.id, courseId) : Promise.resolve();
 
@@ -1470,13 +1470,13 @@ export class CoreCourseHelperProvider {
                         // Calculate the status of the section that finished.
                         return this.calculateSectionStatus(section, courseId, false, false).then((result) => {
                             // Calculate "All sections" status.
-                            allSectionsStatus = this.filepoolProvider.determinePackagesStatus(allSectionsStatus, result.status);
+                            allSectionsStatus = CoreFilepool.determinePackagesStatus(allSectionsStatus, result.status);
                         });
                     }));
                 }
             });
 
-            return this.utils.allPromises(promises).then(() => {
+            return CoreUtils.allPromises(promises).then(() => {
                 // Set "All sections" data.
                 section.downloadStatus = allSectionsStatus;
                 section.canCheckUpdates = this.prefetchDelegate.canCheckUpdates();
@@ -1528,10 +1528,10 @@ export class CoreCourseHelperProvider {
         }));
 
         // Download the files in the section description.
-        const introFiles = this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(section.summary),
-            siteId = this.sitesProvider.getCurrentSiteId();
+        const introFiles = CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(section.summary),
+            siteId = CoreSites.getCurrentSiteId();
 
-        promises.push(this.filepoolProvider.addFilesToQueue(siteId, introFiles, CoreCourseProvider.COMPONENT, courseId)
+        promises.push(CoreFilepool.addFilesToQueue(siteId, introFiles, CoreCourseProvider.COMPONENT, courseId)
                 .catch(() => {
             // Ignore errors.
         }));
@@ -1602,9 +1602,9 @@ export class CoreCourseHelperProvider {
      * @return Promise resolved when done.
      */
     openCourse(navCtrl: NavController, course: any, params?: any, siteId?: string): Promise<void> {
-        if (!siteId || siteId == this.sitesProvider.getCurrentSiteId()) {
+        if (!siteId || siteId == CoreSites.getCurrentSiteId()) {
             // Current site, we can open the course.
-            return this.courseProvider.openCourse(navCtrl, course, params);
+            return CoreCourse.openCourse(navCtrl, course, params);
         } else {
             // We need to load the site first.
             params = params || {};
@@ -1621,14 +1621,14 @@ export class CoreCourseHelperProvider {
      * @return Promise to be resolved once the course files are deleted.
      */
     async deleteCourseFiles(courseId: number): Promise<void> {
-        const sections = await this.courseProvider.getSections(courseId);
+        const sections = await CoreCourse.getSections(courseId);
         const modules = CoreArray.flatten(sections.map((section) => section.modules));
 
         await Promise.all(
             modules.map((module) => this.removeModuleStoredData(module, courseId)),
         );
 
-        await this.courseProvider.setCourseStatus(courseId, CoreConstants.NOT_DOWNLOADED);
+        await CoreCourse.setCourseStatus(courseId, CoreConstants.NOT_DOWNLOADED);
     }
 
     /**
@@ -1645,7 +1645,7 @@ export class CoreCourseHelperProvider {
 
         const handler = this.prefetchDelegate.getPrefetchHandlerFor(module);
         if (handler) {
-            promises.push(this.sitesProvider.getCurrentSite().deleteComponentFromCache(handler.component, module.id));
+            promises.push(CoreSites.getCurrentSite().deleteComponentFromCache(handler.component, module.id));
         }
 
         await Promise.all(promises);

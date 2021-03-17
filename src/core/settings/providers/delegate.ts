@@ -70,7 +70,7 @@ export interface CoreSettingsHandlerData {
  * Service to interact with addons to be shown in app settings. Provides functions to register a plugin
  * and notify an update in the data.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSettingsDelegate extends CoreDelegate {
 
     protected siteHandlers: CoreSettingsHandlerData[] = []; // Handlers to return.

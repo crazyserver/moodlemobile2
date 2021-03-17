@@ -24,7 +24,7 @@ import { CoreBlockDelegate } from '@core/block/providers/delegate';
 /**
  * Handler to add Dashboard into main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreDashboardMainMenuHandler implements CoreMainMenuHandler {
     name = 'CoreHome'; // This handler contains several different features, so we use a generic name like "CoreHome".
     priority = 1100;
@@ -49,7 +49,7 @@ export class CoreDashboardMainMenuHandler implements CoreMainMenuHandler {
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabledForSite(siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
         let blocksEnabled,
@@ -83,7 +83,7 @@ export class CoreDashboardMainMenuHandler implements CoreMainMenuHandler {
                     }
 
                     // My overview not enabled, check if my courses is enabled.
-                    return !this.coursesProvider.isMyCoursesDisabledInSite();
+                    return !CoreCourses.isMyCoursesDisabledInSite();
                 });
             });
         });

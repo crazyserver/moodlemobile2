@@ -47,7 +47,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
     canAdd = false;
     canLoadMore = false;
     loadMoreError = false;
-    loadingMessage = this.translate.instant('core.loading');
+    loadingMessage = Translate.instant('core.loading');
     selectedEntry: number;
 
     protected syncEventName = AddonModGlossarySyncProvider.AUTO_SYNCED;
@@ -112,7 +112,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
             }
 
             this.glossaryProvider.logView(this.glossary.id, this.viewMode, this.glossary.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch((error) => {
                 // Ignore errors.
             });
@@ -259,7 +259,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
      */
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         return this.glossary && syncEventData.glossaryId == this.glossary.id &&
-                syncEventData.userId == this.sitesProvider.getCurrentSiteUserId();
+                syncEventData.userId == CoreSites.getCurrentSiteUserId();
     }
 
     /**
@@ -342,7 +342,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
     loadMoreEntries(infiniteComplete?: any): Promise<any> {
         return this.fetchEntries(true).catch((error) => {
             this.loadMoreError = true;
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_glossary.errorloadingentries', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_glossary.errorloadingentries', true);
         }).finally(() => {
             infiniteComplete && infiniteComplete();
         });
@@ -403,8 +403,8 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
      */
     changeFetchMode(mode: FetchMode): void {
         this.isSearch = false;
-        this.loadingMessage = this.translate.instant('core.loading');
-        this.domUtils.scrollToTop(this.content);
+        this.loadingMessage = Translate.instant('core.loading');
+        CoreDomUtils.scrollToTop(this.content);
         this.switchMode(mode);
         this.loaded = false;
         this.loadContent();
@@ -446,7 +446,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
      * @param query Text entered on the search box.
      */
     search(query: string): void {
-        this.loadingMessage = this.translate.instant('core.searching');
+        this.loadingMessage = Translate.instant('core.searching');
         this.fetchArguments = [this.glossary.id, query, 1, 'CONCEPT', 'ASC'];
         this.loaded = false;
         this.loadContent();
@@ -462,7 +462,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
             this.showLoadingAndRefresh(false);
 
             // Check completion since it could be configured to complete once the user adds a new discussion or replies.
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }
     }
 

@@ -20,7 +20,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Service to handle Offline survey.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyOfflineProvider {
 
     protected logger: CoreLogger;
@@ -66,7 +66,7 @@ export class AddonModSurveyOfflineProvider {
 
     constructor(private sitesProvider: CoreSitesProvider, private textUtils: CoreTextUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonModSurveyOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -78,7 +78,7 @@ export class AddonModSurveyOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteSurveyAnswers(surveyId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().deleteRecords(AddonModSurveyOfflineProvider.SURVEY_TABLE, {surveyid: surveyId, userid: userId});
@@ -92,7 +92,7 @@ export class AddonModSurveyOfflineProvider {
      * @return Promise resolved with answers.
      */
     getAllData(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonModSurveyOfflineProvider.SURVEY_TABLE).then((entries) => {
                 entries.forEach((entry) => {
                     entry.answers = this.textUtils.parseJSON(entry.answers);
@@ -128,7 +128,7 @@ export class AddonModSurveyOfflineProvider {
      * @return Promise resolved with the data.
      */
     getSurveyData(surveyId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecord(AddonModSurveyOfflineProvider.SURVEY_TABLE, {surveyid: surveyId, userid: userId});
@@ -165,7 +165,7 @@ export class AddonModSurveyOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     saveAnswers(surveyId: number, name: string, courseId: number, answers: any[], siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             const entry = {

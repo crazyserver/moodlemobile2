@@ -45,7 +45,7 @@ export class CoreLoginSitePolicyPage {
      * View laoded.
      */
     ngOnInit(): void {
-        this.currentSite = this.sitesProvider.getCurrentSite();
+        this.currentSite = CoreSites.getCurrentSite();
 
         if (!this.currentSite) {
             // Not logged in, stop.
@@ -77,7 +77,7 @@ export class CoreLoginSitePolicyPage {
             this.sitePolicy = sitePolicy;
 
             // Try to get the mime type.
-            return this.utils.getMimeTypeFromUrl(sitePolicy).then((mimeType) => {
+            return CoreUtils.getMimeTypeFromUrl(sitePolicy).then((mimeType) => {
                 const extension = this.mimeUtils.getExtension(mimeType, sitePolicy);
                 this.showInline = extension == 'html' || extension == 'htm';
             }).catch(() => {
@@ -87,7 +87,7 @@ export class CoreLoginSitePolicyPage {
                 this.policyLoaded = true;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting site policy.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting site policy.');
             this.cancel();
         });
     }
@@ -96,7 +96,7 @@ export class CoreLoginSitePolicyPage {
      * Cancel.
      */
     cancel(): void {
-        this.sitesProvider.logout().catch(() => {
+        CoreSites.logout().catch(() => {
             // Ignore errors, shouldn't happen.
         }).then(() => {
             this.navCtrl.setRoot('CoreLoginSitesPage');
@@ -107,7 +107,7 @@ export class CoreLoginSitePolicyPage {
      * Accept the site policy.
      */
     accept(): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         this.loginHelper.acceptSitePolicy(this.siteId).then(() => {
             // Success accepting, go to site initial page.
             // Invalidate cache since some WS don't return error if site policy is not accepted.
@@ -117,7 +117,7 @@ export class CoreLoginSitePolicyPage {
                 return this.loginHelper.goToSiteInitialPage();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error accepting site policy.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error accepting site policy.');
         }).finally(() => {
             modal.dismiss();
         });

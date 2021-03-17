@@ -21,7 +21,7 @@ import { AddonCourseCompletionReportComponent } from '../components/report/repor
 /**
  * Handler to inject an option into the course main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonCourseCompletionCourseOptionHandler implements CoreCourseOptionsHandler {
     name = 'AddonCourseCompletion';
     priority = 200;

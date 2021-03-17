@@ -59,7 +59,7 @@ export class CoreSendMessageFormComponent implements OnInit {
         this.onSubmit = new EventEmitter();
         this.onResize = new EventEmitter();
 
-        configProvider.get(CoreConstants.SETTINGS_SEND_ON_ENTER, !this.appProvider.isMobile()).then((sendOnEnter) => {
+        configProvider.get(CoreConstants.SETTINGS_SEND_ON_ENTER, !CoreApp.isMobile()).then((sendOnEnter) => {
             this.sendOnEnter = !!sendOnEnter;
         });
 
@@ -69,7 +69,7 @@ export class CoreSendMessageFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.showKeyboard = this.utils.isTrueOrOne(this.showKeyboard);
+        this.showKeyboard = CoreUtils.isTrueOrOne(this.showKeyboard);
     }
 
     /**
@@ -90,7 +90,7 @@ export class CoreSendMessageFormComponent implements OnInit {
 
         this.message = ''; // Reset the form.
 
-        this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
         value = this.textUtils.replaceNewLines(value, '<br>');
         this.onSubmit.emit(value);
@@ -117,8 +117,8 @@ export class CoreSendMessageFormComponent implements OnInit {
         if (this.sendOnEnter && !other) {
             // Enter clicked, send the message.
             this.submitForm(e);
-        } else if (!this.sendOnEnter && !this.appProvider.isMobile()) {
-            if ((this.appProvider.isMac() && other == 'meta') || (!this.appProvider.isMac() && other == 'control')) {
+        } else if (!this.sendOnEnter && !CoreApp.isMobile()) {
+            if ((CoreApp.isMac() && other == 'meta') || (!CoreApp.isMac() && other == 'control')) {
                 // Cmd+Enter or Ctrl+Enter, send message.
                 this.submitForm(e);
             }

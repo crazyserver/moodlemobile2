@@ -20,7 +20,7 @@ import { AddonModPageProvider } from './page';
 /**
  * Handler to treat links to resource.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModPageLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModPageLinkHandler';
 

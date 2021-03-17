@@ -21,7 +21,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Service to handle Offline messages.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesOfflineProvider {
 
     protected logger: CoreLogger;
@@ -91,7 +91,7 @@ export class AddonMessagesOfflineProvider {
     constructor(private sitesProvider: CoreSitesProvider, private appProvider: CoreAppProvider,
             private textUtils: CoreTextUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonMessagesOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -104,7 +104,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteConversationMessage(conversationId: number, message: string, timeCreated: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonMessagesOfflineProvider.CONVERSATION_MESSAGES_TABLE, {
                     conversationid: conversationId,
                     text: message,
@@ -121,7 +121,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteConversationMessages(conversationId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonMessagesOfflineProvider.CONVERSATION_MESSAGES_TABLE, {
                     conversationid: conversationId
                 });
@@ -138,7 +138,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteMessage(toUserId: number, message: string, timeCreated: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonMessagesOfflineProvider.MESSAGES_TABLE, {
                     touserid: toUserId,
                     smallmessage: message,
@@ -154,7 +154,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved with messages.
      */
     getAllDeviceOfflineMessages(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = [];
 
             promises.push(site.getDb().getRecords(AddonMessagesOfflineProvider.MESSAGES_TABLE, {deviceoffline: 1}));
@@ -175,7 +175,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved with messages.
      */
     getAllMessages(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const promises = [];
 
             promises.push(site.getDb().getAllRecords(AddonMessagesOfflineProvider.MESSAGES_TABLE));
@@ -197,7 +197,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved with messages.
      */
     getConversationMessages(conversationId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonMessagesOfflineProvider.CONVERSATION_MESSAGES_TABLE,
                     {conversationid: conversationId}).then((messages) => {
 
@@ -214,7 +214,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved with messages.
      */
     getMessages(toUserId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonMessagesOfflineProvider.MESSAGES_TABLE, {touserid: toUserId});
         });
     }
@@ -274,12 +274,12 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     saveConversationMessage(conversation: any, message: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 conversationid: conversation.id,
                 text: message,
                 timecreated: Date.now(),
-                deviceoffline: this.appProvider.isOnline() ? 0 : 1,
+                deviceoffline: CoreApp.isOnline() ? 0 : 1,
                 conversation: JSON.stringify({
                     name: conversation.name || '',
                     subname: conversation.subname || '',
@@ -304,13 +304,13 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     saveMessage(toUserId: number, message: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 touserid: toUserId,
                 useridfrom: site.getUserId(),
                 smallmessage: message,
                 timecreated: new Date().getTime(),
-                deviceoffline: this.appProvider.isOnline() ? 0 : 1
+                deviceoffline: CoreApp.isOnline() ? 0 : 1
             };
 
             return site.getDb().insertRecord(AddonMessagesOfflineProvider.MESSAGES_TABLE, entry).then(() => {
@@ -328,7 +328,7 @@ export class AddonMessagesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     setMessagesDeviceOffline(messages: any, value: boolean, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const db = site.getDb(),
                 promises = [],
                 data = { deviceoffline: value ? 1 : 0 };

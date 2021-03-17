@@ -23,7 +23,7 @@ import { AddonModChatProvider } from './chat';
 /**
  * Handler to support chat modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChatModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModChat';
     modName = 'chat';
@@ -60,7 +60,7 @@ export class AddonModChatModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         const data: CoreCourseModuleHandlerData = {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_chat-handler',
             action(event: Event, navCtrl: NavController, module: any, courseId: number, options: NavOptions, params?: any): void {

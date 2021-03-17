@@ -147,7 +147,7 @@ export class AddonCalendarUpcomingEventsComponent implements OnInit, DoCheck, On
         return Promise.all(promises).then(() => {
             return this.fetchEvents();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -198,7 +198,7 @@ export class AddonCalendarUpcomingEventsComponent implements OnInit, DoCheck, On
             return Promise.resolve();
         }
 
-        return this.coursesProvider.getCategories(0, true).then((cats) => {
+        return CoreCourses.getCategories(0, true).then((cats) => {
             this.categoriesRetrieved = true;
             this.categories = {};
 
@@ -231,7 +231,7 @@ export class AddonCalendarUpcomingEventsComponent implements OnInit, DoCheck, On
         if (!afterChange) {
             promises.push(this.calendarProvider.invalidateAllUpcomingEvents());
         }
-        promises.push(this.coursesProvider.invalidateCategories(0, true));
+        promises.push(CoreCourses.invalidateCategories(0, true));
         promises.push(this.calendarProvider.invalidateLookAhead());
         promises.push(this.calendarProvider.invalidateTimeFormat());
 

@@ -56,7 +56,7 @@ export interface AddonModAssignSyncResult {
 /**
  * Service to sync assigns.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_assign_autom_synced';
@@ -195,7 +195,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
      * @return Promise resolved in success.
      */
     async syncAssign(assignId: number, siteId?: string): Promise<AddonModAssignSyncResult> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.isSyncing(assignId, siteId)) {
             // There's already a sync ongoing for this assign, return the promise.
@@ -206,7 +206,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
         if (this.syncProvider.isBlocked(AddonModAssignProvider.COMPONENT, assignId, siteId)) {
             this.logger.error('Cannot sync assign ' + assignId + ' because it is blocked.');
 
-            throw new CoreSyncBlockedError(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            throw new CoreSyncBlockedError(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         return this.addOngoingSync(assignId, this.performSyncAssign(assignId, siteId), siteId);
@@ -233,7 +233,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
         const promisesResults = await Promise.all([
             this.getOfflineSubmissions(assignId, siteId),
             this.getOfflineGrades(assignId, siteId),
-            this.logHelper.syncIfNeeded(AddonModAssignProvider.COMPONENT, assignId, siteId),
+            CoreCourseLogHelper.syncIfNeeded(AddonModAssignProvider.COMPONENT, assignId, siteId),
         ]);
 
         const submissions = promisesResults[0];
@@ -241,12 +241,12 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
         if (!submissions.length && !grades.length) {
             // Nothing to sync.
-            await this.utils.ignoreErrors(this.setSyncTime(assignId, siteId));
+            await CoreUtils.ignoreErrors(this.setSyncTime(assignId, siteId));
 
             return result;
-        } else if (!this.appProvider.isOnline()) {
+        } else if (!CoreApp.isOnline()) {
             // Cannot sync in offline.
-            throw new Error(this.translate.instant('core.cannotconnect'));
+            throw new Error(Translate.instant('core.cannotconnect'));
         }
 
         const courseId = submissions.length > 0 ? submissions[0].courseid : grades[0].courseid;
@@ -280,11 +280,11 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
         if (result.updated) {
             // Data has been sent to server. Now invalidate the WS calls.
-            await this.utils.ignoreErrors(this.assignProvider.invalidateContent(assign.cmid, courseId, siteId));
+            await CoreUtils.ignoreErrors(this.assignProvider.invalidateContent(assign.cmid, courseId, siteId));
         }
 
         // Sync finished, set sync time.
-        await this.utils.ignoreErrors(this.setSyncTime(assignId, siteId));
+        await CoreUtils.ignoreErrors(this.setSyncTime(assignId, siteId));
 
         // All done, return the result.
         return result;
@@ -354,7 +354,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
         if (submission.timemodified != offlineData.onlinetimemodified) {
             // The submission was modified in Moodle, discard the submission.
             this.addOfflineDataDeletedWarning(warnings, this.componentTranslate, assign.name,
-                    this.translate.instant('addon.mod_assign.warningsubmissionmodified'));
+                    Translate.instant('addon.mod_assign.warningsubmissionmodified'));
 
             return this.deleteSubmissionData(assign, submission, offlineData, siteId);
         }
@@ -378,7 +378,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
             // Submission data sent, update cached data. No need to block the user for this.
             this.assignProvider.getSubmissionStatus(assign.id, options);
         } catch (error) {
-            if (!error || !this.utils.isWebServiceError(error)) {
+            if (!error || !CoreUtils.isWebServiceError(error)) {
                 // Local error, reject.
                 throw error;
             }
@@ -439,8 +439,8 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
         if (this.syncProvider.isBlocked(AddonModAssignProvider.COMPONENT, syncId, siteId)) {
             this.logger.error(`Cannot sync grade for assign ${assign.id} and user ${userId} because it is blocked.!!!!`);
 
-            throw new CoreSyncBlockedError(this.translate.instant('core.errorsyncblocked',
-                    {$a: this.translate.instant('addon.mod_assign.syncblockedusercomponent')}));
+            throw new CoreSyncBlockedError(Translate.instant('core.errorsyncblocked',
+                    {$a: Translate.instant('addon.mod_assign.syncblockedusercomponent')}));
         }
 
         const status = await this.assignProvider.getSubmissionStatus(assign.id, options);
@@ -450,7 +450,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
         if (timemodified > offlineData.timemodified) {
             // The submission grade was modified in Moodle, discard it.
             this.addOfflineDataDeletedWarning(warnings, this.componentTranslate, assign.name,
-                    this.translate.instant('addon.mod_assign.warningsubmissiongrademodified'));
+                    Translate.instant('addon.mod_assign.warningsubmissiongrademodified'));
 
             return this.assignOfflineProvider.deleteSubmissionGrade(assign.id, userId, siteId);
         }
@@ -458,7 +458,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
         // If grade has been modified from gradebook, do not use offline.
         const grades = await this.gradesHelper.getGradeModuleItems(courseId, assign.cmid, userId, undefined, siteId, true);
 
-        const gradeInfo = await this.courseProvider.getModuleBasicGradeInfo(assign.cmid, siteId);
+        const gradeInfo = await CoreCourse.getModuleBasicGradeInfo(assign.cmid, siteId);
 
         // Override offline grade and outcomes based on the gradebook data.
         grades.forEach((grade) => {
@@ -499,7 +499,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
             await Promise.all(promises);
         } catch (error) {
-            if (!error || !this.utils.isWebServiceError(error)) {
+            if (!error || !CoreUtils.isWebServiceError(error)) {
                 // Local error, reject.
                 throw error;
             }

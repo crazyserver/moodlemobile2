@@ -79,7 +79,7 @@ export class CoreCompileHtmlComponent implements OnChanges, OnDestroy, DoCheck {
             if (changes) {
                 this.setInputData();
                 if (this.componentInstance.ngOnChanges) {
-                    this.componentInstance.ngOnChanges(this.domUtils.createChangesFromKeyValueDiff(changes));
+                    this.componentInstance.ngOnChanges(CoreDomUtils.createChangesFromKeyValueDiff(changes));
                 }
             }
         }
@@ -90,7 +90,7 @@ export class CoreCompileHtmlComponent implements OnChanges, OnDestroy, DoCheck {
      */
     ngOnChanges(changes: { [name: string]: SimpleChange }): void {
         // Only compile if text/javascript has changed or the forceCompile flag has been set to true.
-        if ((changes.text || changes.javascript || (changes.forceCompile && this.utils.isTrueOrOne(this.forceCompile))) &&
+        if ((changes.text || changes.javascript || (changes.forceCompile && CoreUtils.isTrueOrOne(this.forceCompile))) &&
                 this.text) {
 
             // Create a new component and a new module.
@@ -109,7 +109,7 @@ export class CoreCompileHtmlComponent implements OnChanges, OnDestroy, DoCheck {
 
                 this.loaded = true;
             }).catch((error) => {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
 
                 this.loaded = true;
             }).finally(() => {
@@ -242,7 +242,7 @@ export class CoreCompileHtmlComponent implements OnChanges, OnDestroy, DoCheck {
                 return this.pendingCalls[name].defer.promise;
             }
 
-            const defer = this.utils.promiseDefer();
+            const defer = CoreUtils.promiseDefer();
 
             this.pendingCalls[name] = {
                 params: params,

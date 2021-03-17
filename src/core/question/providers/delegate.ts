@@ -120,7 +120,7 @@ export interface CoreQuestionHandler extends CoreDelegateHandler {
 /**
  * Delegate to register question handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreQuestionDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'type';

@@ -31,7 +31,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch lessons.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModLesson';
     modName = 'lesson';
@@ -77,7 +77,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
                 if (typeof password != 'undefined') {
                     resolve(password);
                 } else {
-                    reject(this.domUtils.createCanceledError());
+                    reject(CoreDomUtils.createCanceledError());
                 }
             });
         });
@@ -93,7 +93,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
      *         to calculate the total size.
      */
     getDownloadSize(module: any, courseId: any, single?: boolean): Promise<{ size: number, total: boolean }> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
         let lesson,
             password,
             result;
@@ -144,7 +144,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
     getLessonPassword(lessonId: number, options: AddonModLessonGetPasswordOptions = {})
             : Promise<{password?: string, lesson?: any, accessInfo: any}> {
 
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         // Get access information to check if password is needed.
         return this.lessonProvider.getAccessInformation(lessonId, options).then((info): any => {
@@ -195,8 +195,8 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
         const promises = [];
 
         promises.push(this.lessonProvider.invalidateLessonData(courseId));
-        promises.push(this.courseProvider.invalidateModule(moduleId));
-        promises.push(this.groupsProvider.invalidateActivityAllowedGroups(moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId));
+        promises.push(CoreGroups.invalidateActivityAllowedGroups(moduleId));
 
         return Promise.all(promises);
     }
@@ -209,7 +209,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
      * @return Promise resolved when invalidated.
      */
     invalidateModule(module: any, courseId: number): Promise<any> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         // Invalidate data to determine if module is downloadable.
         return this.lessonProvider.getLesson(courseId, module.id, {
@@ -233,7 +233,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
      * @return Whether the module can be downloaded. The promise should never be rejected.
      */
     isDownloadable(module: any, courseId: number): boolean | Promise<boolean> {
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
         return this.lessonProvider.getLesson(courseId, module.id, {siteId}).then((lesson) => {
             // Check if there is any prevent access reason.
@@ -314,7 +314,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
                     const promises = [];
 
                     // New data generated, update the download time and refresh the access info.
-                    promises.push(this.filepoolProvider.updatePackageDownloadTime(siteId, this.component, module.id).catch(() => {
+                    promises.push(CoreFilepool.updatePackageDownloadTime(siteId, this.component, module.id).catch(() => {
                         // Ignore errors.
                     }));
 
@@ -333,7 +333,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
             let files = lesson.mediafiles || [];
             files = files.concat(this.getIntroFilesFromInstance(module, lesson));
 
-            promises.push(this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id));
+            promises.push(CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id));
 
             // Get the list of pages.
             if (this.lessonProvider.isLessonOffline(lesson)) {
@@ -376,7 +376,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
                                 }
                             });
 
-                            return this.filepoolProvider.addFilesToQueue(siteId, pageFiles, this.component, module.id);
+                            return CoreFilepool.addFilesToQueue(siteId, pageFiles, this.component, module.id);
                         }));
                     });
 
@@ -384,7 +384,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
                     subPromises.push(this.lessonProvider.getPagesPossibleJumps(lesson.id, modOptions).catch((error) => {
                         if (hasRandomBranch) {
                             // The WebSevice probably failed because RANDOMBRANCH aren't supported if the user hasn't seen any page.
-                            return Promise.reject(this.translate.instant('addon.mod_lesson.errorprefetchrandombranch'));
+                            return Promise.reject(Translate.instant('addon.mod_lesson.errorprefetchrandombranch'));
                         } else {
                             return Promise.reject(error);
                         }
@@ -407,7 +407,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
 
             if (accessInfo.canviewreports) {
                 // Prefetch reports data.
-                promises.push(this.groupsProvider.getActivityGroupInfo(module.id, false, undefined, siteId, true).then((info) => {
+                promises.push(CoreGroups.getActivityGroupInfo(module.id, false, undefined, siteId, true).then((info) => {
                     const subPromises = [];
 
                     info.groups.forEach((group) => {
@@ -451,12 +451,12 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
                                         return;
                                     }
                                     answerPage.answerdata.answers.forEach((answer) => {
-                                        files.push(...this.filepoolProvider.extractDownloadableFilesFromHtmlAsFakeFileObjects(
+                                        files.push(...CoreFilepool.extractDownloadableFilesFromHtmlAsFakeFileObjects(
                                                 answer[0]));
                                     });
                                 });
 
-                                return this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id);
+                                return CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id);
                             }));
                         });
 
@@ -483,7 +483,7 @@ export class AddonModLessonPrefetchHandler extends CoreCourseActivityPrefetchHan
     protected validatePassword(lessonId: number, info: any, pwd: string, options: CoreCourseCommonModWSOptions = {})
             : Promise<{password: string, lesson: any, accessInfo: any}> {
 
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         return this.lessonProvider.getLessonWithPassword(lessonId, {
             password: pwd,

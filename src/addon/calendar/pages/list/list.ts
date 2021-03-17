@@ -235,14 +235,14 @@ export class AddonCalendarListPage implements OnDestroy {
 
             this.filterEvents();
 
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
         });
 
         // Refresh online status when changes.
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = this.appProvider.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
     }
@@ -279,10 +279,10 @@ export class AddonCalendarListPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     fetchData(refresh?: boolean, sync?: boolean, showErrors?: boolean): Promise<any> {
-        this.initialTime = this.timeUtils.timestamp();
+        this.initialTime = CoreTimeUtils.timestamp();
         this.daysLoaded = 0;
         this.emptyEventsTimes = 0;
-        this.isOnline = this.appProvider.isOnline();
+        this.isOnline = CoreApp.isOnline();
 
         let promise;
 
@@ -290,7 +290,7 @@ export class AddonCalendarListPage implements OnDestroy {
             // Try to synchronize offline events.
             promise = this.calendarSync.syncEvents().then((result) => {
                 if (result.warnings && result.warnings.length) {
-                    this.domUtils.showErrorModal(result.warnings[0]);
+                    CoreDomUtils.showErrorModal(result.warnings[0]);
                 }
 
                 if (result.updated) {
@@ -301,7 +301,7 @@ export class AddonCalendarListPage implements OnDestroy {
                 }
             }).catch((error) => {
                 if (showErrors) {
-                    this.domUtils.showErrorModalDefault(error, 'core.errorsync', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.errorsync', true);
                 }
             });
         } else {
@@ -319,7 +319,7 @@ export class AddonCalendarListPage implements OnDestroy {
             }));
 
             // Load courses for the popover.
-            promises.push(this.coursesHelper.getCoursesForPopover(this.filter['courseId']).then((result) => {
+            promises.push(CoreCoursesHelper.getCoursesForPopover(this.filter['courseId']).then((result) => {
                 this.courses = result.courses;
 
                 return this.fetchEvents(refresh);
@@ -390,8 +390,8 @@ export class AddonCalendarListPage implements OnDestroy {
                     this.events = events;
                 } else {
                     // Filter events with same ID. Repeated events are returned once per WS call, show them only once.
-                    this.onlineEvents = this.utils.mergeArraysWithoutDuplicates(this.onlineEvents, onlineEvents, 'id');
-                    this.events = this.utils.mergeArraysWithoutDuplicates(this.events, events, 'id');
+                    this.onlineEvents = CoreUtils.mergeArraysWithoutDuplicates(this.onlineEvents, onlineEvents, 'id');
+                    this.events = CoreUtils.mergeArraysWithoutDuplicates(this.events, events, 'id');
                 }
                 this.filterEvents();
 
@@ -412,7 +412,7 @@ export class AddonCalendarListPage implements OnDestroy {
             // @todo: Infinite loading is not working if content is not high enough.
             this.content.resize();
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.calendar.errorloadevents', true);
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
         }).then(() => {
             // Success retrieving events. Get categories if needed.
@@ -463,7 +463,7 @@ export class AddonCalendarListPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     protected loadCategories(): Promise<any> {
-        return this.coursesProvider.getCategories(0, true).then((cats) => {
+        return CoreCourses.getCategories(0, true).then((cats) => {
             this.categoriesRetrieved = true;
             this.categories = {};
             // Index categories by ID.
@@ -575,7 +575,7 @@ export class AddonCalendarListPage implements OnDestroy {
         promises.push(this.calendarProvider.invalidateAllowedEventTypes());
 
         if (this.categoriesRetrieved) {
-            promises.push(this.coursesProvider.invalidateCategories(0, true));
+            promises.push(CoreCourses.invalidateCategories(0, true));
             this.categoriesRetrieved = false;
         }
 

@@ -42,8 +42,8 @@ export class AddonModH5PActivityUserAttemptsPage implements OnInit {
     constructor(navParams: NavParams) {
         this.courseId = navParams.get('courseId');
         this.h5pActivityId = navParams.get('h5pActivityId');
-        this.userId = navParams.get('userId') || CoreSites.instance.getCurrentSiteUserId();
-        this.isCurrentUser = this.userId == CoreSites.instance.getCurrentSiteUserId();
+        this.userId = navParams.get('userId') || CoreSites.getCurrentSiteUserId();
+        this.isCurrentUser = this.userId == CoreSites.getCurrentSiteUserId();
     }
 
     /**
@@ -55,7 +55,7 @@ export class AddonModH5PActivityUserAttemptsPage implements OnInit {
         try {
             await this.fetchData();
         } catch (error) {
-            CoreDomUtils.instance.showErrorModalDefault(error, 'Error loading attempts.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading attempts.');
         } finally {
             this.loaded = true;
         }
@@ -78,7 +78,7 @@ export class AddonModH5PActivityUserAttemptsPage implements OnInit {
      * @return Promise resolved when done.
      */
     protected async fetchData(): Promise<void> {
-        this.h5pActivity = await AddonModH5PActivity.instance.getH5PActivityById(this.courseId, this.h5pActivityId);
+        this.h5pActivity = await AddonModH5PActivity.getH5PActivityById(this.courseId, this.h5pActivityId);
 
         await Promise.all([
             this.fetchAttempts(),
@@ -92,7 +92,7 @@ export class AddonModH5PActivityUserAttemptsPage implements OnInit {
      * @return Promise resolved when done.
      */
     protected async fetchAttempts(): Promise<void> {
-        this.attemptsData = await AddonModH5PActivity.instance.getUserAttempts(this.h5pActivityId, {
+        this.attemptsData = await AddonModH5PActivity.getUserAttempts(this.h5pActivityId, {
             cmId: this.h5pActivity.coursemodule,
             userId: this.userId,
         });
@@ -105,7 +105,7 @@ export class AddonModH5PActivityUserAttemptsPage implements OnInit {
      */
     protected async fetchUserProfile(): Promise<void> {
         try {
-            this.user = await CoreUser.instance.getProfile(this.userId, this.courseId, true);
+            this.user = await CoreUser.getProfile(this.userId, this.courseId, true);
         } catch (error) {
             // Ignore errors.
         }
@@ -120,8 +120,8 @@ export class AddonModH5PActivityUserAttemptsPage implements OnInit {
 
         try {
             await Promise.all([
-                AddonModH5PActivity.instance.invalidateActivityData(this.courseId),
-                AddonModH5PActivity.instance.invalidateUserAttempts(this.h5pActivityId, this.userId),
+                AddonModH5PActivity.invalidateActivityData(this.courseId),
+                AddonModH5PActivity.invalidateUserAttempts(this.h5pActivityId, this.userId),
             ]);
         } catch (error) {
             // Ignore errors.

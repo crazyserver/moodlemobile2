@@ -23,7 +23,7 @@ import { AddonNotesProvider } from './notes';
 /**
  * Profile notes handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotesUserHandler implements CoreUserProfileHandler {
     name = 'AddonNotes:notes';
     priority = 100;
@@ -71,7 +71,7 @@ export class AddonNotesUserHandler implements CoreUserProfileHandler {
      */
     isEnabledForUser(user: any, courseId: number, navOptions?: any, admOptions?: any): boolean | Promise<boolean> {
         // Active course required.
-        if (!courseId || user.id == this.sitesProvider.getCurrentSiteUserId()) {
+        if (!courseId || user.id == CoreSites.getCurrentSiteUserId()) {
             return false;
         }
 

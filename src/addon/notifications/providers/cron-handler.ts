@@ -26,7 +26,7 @@ import { AddonNotificationsHelperProvider } from './helper';
 /**
  * Notifications cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotificationsCronHandler implements CoreCronHandler {
     name = 'AddonNotificationsCronHandler';
 
@@ -41,7 +41,7 @@ export class AddonNotificationsCronHandler implements CoreCronHandler {
      * @return Time between consecutive executions (in ms).
      */
     getInterval(): number {
-        return this.appProvider.isDesktop() ? 60000 : 600000; // 1 or 10 minutes.
+        return CoreApp.isDesktop() ? 60000 : 600000; // 1 or 10 minutes.
     }
 
     /**
@@ -52,7 +52,7 @@ export class AddonNotificationsCronHandler implements CoreCronHandler {
     isSync(): boolean {
         // This is done to use only wifi if using the fallback function.
         // In desktop it is always sync, since it fetches notification to see if there's a new one.
-        return !this.notificationsProvider.isPreciseNotificationCountEnabled() || this.appProvider.isDesktop();
+        return !this.notificationsProvider.isPreciseNotificationCountEnabled() || CoreApp.isDesktop();
     }
 
     /**
@@ -74,11 +74,11 @@ export class AddonNotificationsCronHandler implements CoreCronHandler {
      *         will be called again often, it shouldn't be abused.
      */
     execute(siteId?: string, force?: boolean): Promise<any> {
-        if (this.sitesProvider.isCurrentSite(siteId)) {
-            CoreEvents.trigger(AddonNotificationsProvider.READ_CRON_EVENT, {}, this.sitesProvider.getCurrentSiteId());
+        if (CoreSites.isCurrentSite(siteId)) {
+            CoreEvents.trigger(AddonNotificationsProvider.READ_CRON_EVENT, {}, CoreSites.getCurrentSiteId());
         }
 
-        if (this.appProvider.isDesktop() && this.localNotifications.isAvailable()) {
+        if (CoreApp.isDesktop() && this.localNotifications.isAvailable()) {
             this.emulatorHelper.checkNewNotifications(
                 AddonNotificationsProvider.PUSH_SIMULATION_COMPONENT,
                 this.fetchNotifications.bind(this), this.getTitleAndText.bind(this), siteId);

@@ -28,7 +28,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch books.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModBookPrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModBook';
     modName = 'book';

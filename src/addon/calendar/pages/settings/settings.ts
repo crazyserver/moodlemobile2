@@ -48,6 +48,6 @@ export class AddonCalendarSettingsPage {
     updateDefaultTime(newTime: number): void {
         this.calendarProvider.setDefaultNotificationTime(newTime);
         CoreEvents.trigger(AddonCalendarProvider.DEFAULT_NOTIFICATION_TIME_CHANGED, { time: newTime },
-            this.sitesProvider.getCurrentSiteId());
+            CoreSites.getCurrentSiteId());
     }
 }

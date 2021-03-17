@@ -76,21 +76,21 @@ export class CoreFileComponent implements OnInit, OnDestroy {
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.canDelete = this.utils.isTrueOrOne(this.canDelete);
-        this.alwaysDownload = this.utils.isTrueOrOne(this.alwaysDownload);
-        this.canDownload = this.utils.isTrueOrOne(this.canDownload);
+        this.canDelete = CoreUtils.isTrueOrOne(this.canDelete);
+        this.alwaysDownload = CoreUtils.isTrueOrOne(this.alwaysDownload);
+        this.canDownload = CoreUtils.isTrueOrOne(this.canDownload);
 
         this.fileUrl = this.fileHelper.getFileUrl(this.file);
         this.timemodified = this.fileHelper.getFileTimemodified(this.file);
-        this.siteId = this.sitesProvider.getCurrentSiteId();
+        this.siteId = CoreSites.getCurrentSiteId();
         this.fileSize = this.file.filesize;
         this.fileName = this.file.filename;
 
-        if (this.utils.isTrueOrOne(this.showSize) && this.fileSize >= 0) {
+        if (CoreUtils.isTrueOrOne(this.showSize) && this.fileSize >= 0) {
             this.fileSizeReadable = this.textUtils.bytesToSize(this.fileSize, 2);
         }
 
-        this.showTime = this.utils.isTrueOrOne(this.showTime) && this.timemodified > 0;
+        this.showTime = CoreUtils.isTrueOrOne(this.showTime) && this.timemodified > 0;
 
         if (this.file.isexternalfile) {
             this.alwaysDownload = true; // Always show the download button in external files.
@@ -102,7 +102,7 @@ export class CoreFileComponent implements OnInit, OnDestroy {
             this.calculateState();
 
             // Update state when receiving events about this file.
-            this.filepoolProvider.getFileEventNameByUrl(this.siteId, this.fileUrl).then((eventName) => {
+            CoreFilepool.getFileEventNameByUrl(this.siteId, this.fileUrl).then((eventName) => {
                 this.observer = CoreEvents.on(eventName, () => {
                     this.calculateState();
                 });
@@ -118,8 +118,8 @@ export class CoreFileComponent implements OnInit, OnDestroy {
      * @return Promise resolved when state has been calculated.
      */
     protected calculateState(): Promise<void> {
-        return this.filepoolProvider.getFileStateByUrl(this.siteId, this.fileUrl, this.timemodified).then((state) => {
-            this.canDownload = this.sitesProvider.getCurrentSite().canDownloadFiles();
+        return CoreFilepool.getFileStateByUrl(this.siteId, this.fileUrl, this.timemodified).then((state) => {
+            this.canDownload = CoreSites.getCurrentSite().canDownloadFiles();
 
             this.state = state;
             this.isDownloading = this.canDownload && state === CoreConstants.DOWNLOADING;
@@ -138,7 +138,7 @@ export class CoreFileComponent implements OnInit, OnDestroy {
                 this.isDownloading = true;
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
         });
     }
 
@@ -160,21 +160,21 @@ export class CoreFileComponent implements OnInit, OnDestroy {
             // File cannot be downloaded, just open it.
             if (this.file.toURL) {
                 // Local file.
-                this.utils.openFile(this.file.toURL());
+                CoreUtils.openFile(this.file.toURL());
             } else if (this.fileUrl) {
                 if (this.urlUtils.isLocalFileUrl(this.fileUrl)) {
-                    this.utils.openFile(this.fileUrl);
+                    CoreUtils.openFile(this.fileUrl);
                 } else {
-                    this.utils.openOnlineFile(this.urlUtils.unfixPluginfileURL(this.fileUrl));
+                    CoreUtils.openOnlineFile(this.urlUtils.unfixPluginfileURL(this.fileUrl));
                 }
             }
 
             return;
         }
 
-        if (!this.appProvider.isOnline() && (!openAfterDownload || (openAfterDownload &&
+        if (!CoreApp.isOnline() && (!openAfterDownload || (openAfterDownload &&
                 !this.fileHelper.isStateDownloaded(this.state)))) {
-            this.domUtils.showErrorModal('core.networkerrormsg', true);
+            CoreDomUtils.showErrorModal('core.networkerrormsg', true);
 
             return;
         }
@@ -184,7 +184,7 @@ export class CoreFileComponent implements OnInit, OnDestroy {
             try {
                 await this.openFile();
             } catch (error) {
-                this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
             }
         } else {
             // File doesn't need to be opened (it's a prefetch).
@@ -202,23 +202,23 @@ export class CoreFileComponent implements OnInit, OnDestroy {
                         this.siteId);
 
                 if (size) {
-                    await this.domUtils.confirmDownloadSize({ size: size, total: true });
+                    await CoreDomUtils.confirmDownloadSize({ size: size, total: true });
                 }
 
                 // User confirmed, add the file to queue.
-                await this.utils.ignoreErrors(this.filepoolProvider.invalidateFileByUrl(this.siteId, this.fileUrl));
+                await CoreUtils.ignoreErrors(CoreFilepool.invalidateFileByUrl(this.siteId, this.fileUrl));
 
                 this.isDownloading = true;
 
                 try {
-                    await this.filepoolProvider.addToQueueByUrl(this.siteId, this.fileUrl, this.component,
+                    await CoreFilepool.addToQueueByUrl(this.siteId, this.fileUrl, this.component,
                             this.componentId, this.timemodified, undefined, undefined, 0, this.file);
                 } catch (error) {
-                    this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                    CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
                     this.calculateState();
                 }
             } catch (error) {
-                this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
             }
         }
     }

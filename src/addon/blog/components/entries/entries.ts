@@ -109,7 +109,7 @@ export class AddonBlogEntriesComponent implements OnInit {
         }
 
         this.commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
-        this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
+        this.tagsEnabled = CoreTag.areTagsAvailableInSite();
 
         this.fetchEntries().then(() => {
             this.blogProvider.logView(this.filter).catch(() => {
@@ -163,7 +163,7 @@ export class AddonBlogEntriesComponent implements OnInit {
                     entry.contextInstanceId = entry.userid;
                 }
 
-                entry.summary = CoreTextUtils.instance.replacePluginfileUrls(entry.summary, entry.summaryfiles || []);
+                entry.summary = CoreTextUtils.replacePluginfileUrls(entry.summary, entry.summaryfiles || []);
 
                 return this.userProvider.getProfile(entry.userid, entry.courseid, true).then((user) => {
                     entry.user = user;
@@ -175,7 +175,7 @@ export class AddonBlogEntriesComponent implements OnInit {
             if (refresh) {
                 this.entries = result.entries;
             } else {
-                this.entries = this.utils.uniqueArray(this.entries.concat(result.entries), 'id').sort((a, b) => {
+                this.entries = CoreUtils.uniqueArray(this.entries.concat(result.entries), 'id').sort((a, b) => {
                     return b.created - a.created;
                 });
             }
@@ -195,7 +195,7 @@ export class AddonBlogEntriesComponent implements OnInit {
 
             return Promise.all(promises);
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.blog.errorloadentries', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.blog.errorloadentries', true);
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
         }).finally(() => {
             this.loaded = true;
@@ -260,7 +260,7 @@ export class AddonBlogEntriesComponent implements OnInit {
 
         }
 
-        this.utils.allPromises(promises).finally(() => {
+        CoreUtils.allPromises(promises).finally(() => {
             this.fetchEntries(true).finally(() => {
                 if (refresher) {
                     refresher?.detail.complete();

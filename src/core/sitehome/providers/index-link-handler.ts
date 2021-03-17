@@ -22,7 +22,7 @@ import { CoreSiteHomeProvider } from './sitehome';
 /**
  * Handler to treat links to site home index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSiteHomeIndexLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreSiteHomeIndexLinkHandler';
     featureName = 'CoreMainMenuDelegate_CoreSiteHome';
@@ -67,7 +67,7 @@ export class CoreSiteHomeIndexLinkHandler extends CoreContentLinksHandlerBase {
             return false;
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (courseId != site.getSiteHomeId()) {
                 // The course is not site home.
                 return false;

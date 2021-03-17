@@ -127,8 +127,8 @@ export class CoreLoginSitePage {
 
             this.filteredSites = this.fixedSites;
             url = this.fixedSites[0].url;
-        } else if (CoreConstants.CONFIG.enableonboarding && !this.appProvider.isIOS() && !this.appProvider.isMac()) {
-            CoreConfig.instance.get(CoreLoginHelperProvider.ONBOARDING_DONE, false).then((onboardingDone) => {
+        } else if (CoreConstants.CONFIG.enableonboarding && !CoreApp.isIOS() && !CoreApp.isMac()) {
+            CoreConfig.get(CoreLoginHelperProvider.ONBOARDING_DONE, false).then((onboardingDone) => {
                 if (!onboardingDone) {
                     // Check onboarding.
                     this.showOnboarding();
@@ -136,19 +136,19 @@ export class CoreLoginSitePage {
             });
         }
 
-        this.showScanQR = this.utils.canScanQR() && (typeof CoreConfigConstants['displayqronsitescreen'] == 'undefined' ||
+        this.showScanQR = CoreUtils.canScanQR() && (typeof CoreConfigConstants['displayqronsitescreen'] == 'undefined' ||
             !!CoreConfigConstants['displayqronsitescreen']);
 
         this.siteForm = fb.group({
             siteUrl: [url, this.moodleUrlValidator()]
         });
 
-        this.searchFnc = this.utils.debounce(async (search: string) => {
+        this.searchFnc = CoreUtils.debounce(async (search: string) => {
             search = search.trim();
 
             if (search.length >= 3) {
                 // Update the sites list.
-                this.sites = await this.sitesProvider.findSites(search);
+                this.sites = await CoreSites.findSites(search);
 
                 // Add UI tweaks.
                 this.sites = this.extendCoreLoginSiteInfo(this.sites);
@@ -180,7 +180,7 @@ export class CoreLoginSitePage {
             site.title = name && alias ? name + ' (' + alias + ')' : name + alias;
 
             const country = this.siteFinderSettings.displaycountry && site.countrycode ?
-                this.utils.getCountryName(site.countrycode) : '';
+                CoreUtils.getCountryName(site.countrycode) : '';
             const city = this.siteFinderSettings.displaycity && site.city ?
                 site.city : '';
 
@@ -202,16 +202,16 @@ export class CoreLoginSitePage {
         e.preventDefault();
         e.stopPropagation();
 
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         if (!url) {
-            this.domUtils.showErrorModal('core.login.siteurlrequired', true);
+            CoreDomUtils.showErrorModal('core.login.siteurlrequired', true);
 
             return;
         }
 
-        if (!this.appProvider.isOnline()) {
-            this.domUtils.showErrorModal('core.networkerrormsg', true);
+        if (!CoreApp.isOnline()) {
+            CoreDomUtils.showErrorModal('core.networkerrormsg', true);
 
             return;
         }
@@ -219,20 +219,20 @@ export class CoreLoginSitePage {
         url = url.trim();
 
         if (url.match(/^(https?:\/\/)?campus\.example\.edu/)) {
-            this.showLoginIssue(null, this.translate.instant('core.login.errorexampleurl'));
+            this.showLoginIssue(null, Translate.instant('core.login.errorexampleurl'));
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading(),
-            siteData = this.sitesProvider.getDemoSiteData(url);
+        const modal = CoreDomUtils.showModalLoading(),
+            siteData = CoreSites.getDemoSiteData(url);
 
         if (siteData) {
             // It's a demo site.
-            this.sitesProvider.getUserToken(siteData.url, siteData.username, siteData.password).then((data) => {
-                return this.sitesProvider.newSite(data.siteUrl, data.token, data.privateToken).then(() => {
+            CoreSites.getUserToken(siteData.url, siteData.username, siteData.password).then((data) => {
+                return CoreSites.newSite(data.siteUrl, data.token, data.privateToken).then(() => {
 
-                    this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
+                    CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true);
 
                     return this.loginHelper.goToSiteInitialPage();
                 }, (error) => {
@@ -252,13 +252,13 @@ export class CoreLoginSitePage {
 
         } else {
             // Not a demo site.
-            this.sitesProvider.checkSite(url)
+            CoreSites.checkSite(url)
                 .catch((error) => {
                     // Attempt guessing the domain if the initial check failed
                     const domain = CoreUrl.guessMoodleDomain(url);
 
                     if (domain && domain != url) {
-                        return this.sitesProvider.checkSite(domain).catch((secondError) => {
+                        return CoreSites.checkSite(domain).catch((secondError) => {
                             // Try to use the first error.
                             return Promise.reject(error || secondError);
                         });
@@ -312,13 +312,13 @@ export class CoreLoginSitePage {
      * @param error Error to display.
      */
     protected showLoginIssue(url: string, error: any): void {
-        error = this.domUtils.getErrorMessage(error);
+        error = CoreDomUtils.getErrorMessage(error);
 
-        if (error == this.translate.instant('core.cannotconnecttrouble')) {
+        if (error == Translate.instant('core.cannotconnecttrouble')) {
             const found = this.sites.find((site) => site.url == url);
 
             if (!found) {
-                error += ' ' + this.translate.instant('core.cannotconnectverify');
+                error += ' ' + Translate.instant('core.cannotconnectverify');
             }
         }
 
@@ -330,20 +330,20 @@ export class CoreLoginSitePage {
 
         const buttons = [
             {
-                text: this.translate.instant('core.needhelp'),
+                text: Translate.instant('core.needhelp'),
                 handler: (): void => {
                     this.showHelp();
                 }
             },
             {
-                text: this.translate.instant('core.tryagain'),
+                text: Translate.instant('core.tryagain'),
                 role: 'cancel'
             }
         ];
 
         // @TODO: Remove CoreSite.MINIMUM_MOODLE_VERSION, not used on translations since 3.9.0.
-        this.domUtils.showAlertWithOptions({
-            title: this.translate.instant('core.cannotconnect', {$a: CoreSite.MINIMUM_MOODLE_VERSION}),
+        CoreDomUtils.showAlertWithOptions({
+            title: Translate.instant('core.cannotconnect', {$a: CoreSite.MINIMUM_MOODLE_VERSION}),
             message,
             buttons,
         });
@@ -395,12 +395,12 @@ export class CoreLoginSitePage {
      * @return Promise resolved after logging in.
      */
     protected async login(response: CoreSiteCheckResponse, foundSite?: CoreLoginSiteInfoExtended): Promise<void> {
-        return this.sitesProvider.checkApplication(response.config).then(() => {
+        return CoreSites.checkApplication(response.config).then(() => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true);
 
             if (response.warning) {
-                this.domUtils.showErrorModal(response.warning, true, 4000);
+                CoreDomUtils.showErrorModal(response.warning, true, 4000);
             }
 
             if (this.loginHelper.isSSOLoginNeeded(response.code)) {
@@ -448,17 +448,17 @@ export class CoreLoginSitePage {
      */
     showInstructionsAndScanQR(): void {
         // Show some instructions first.
-        this.domUtils.showAlertWithOptions({
-            title: this.translate.instant('core.login.faqwhereisqrcode'),
-            message: this.translate.instant('core.login.faqwhereisqrcodeanswer',
+        CoreDomUtils.showAlertWithOptions({
+            title: Translate.instant('core.login.faqwhereisqrcode'),
+            message: Translate.instant('core.login.faqwhereisqrcodeanswer',
                 {$image: CoreLoginHelperProvider.FAQ_QRCODE_IMAGE_HTML}),
             buttons: [
                 {
-                    text: this.translate.instant('core.cancel'),
+                    text: Translate.instant('core.cancel'),
                     role: 'cancel'
                 },
                 {
-                    text: this.translate.instant('core.next'),
+                    text: Translate.instant('core.next'),
                     handler: (): void => {
                         this.scanQR();
                     }
@@ -474,7 +474,7 @@ export class CoreLoginSitePage {
      */
     async scanQR(): Promise<void> {
         // Scan for a QR code.
-        const text = await this.utils.scanQR();
+        const text = await CoreUtils.scanQR();
 
         if (text) {
             if (this.urlSchemesProvider.isCustomURL(text)) {
@@ -493,14 +493,14 @@ export class CoreLoginSitePage {
                 const scheme = this.urlUtils.getUrlProtocol(text);
 
                 if (scheme && scheme != 'http' && scheme != 'https') {
-                    this.domUtils.showErrorModal(this.translate.instant('core.errorurlschemeinvalidscheme', {$a: text}));
+                    CoreDomUtils.showErrorModal(Translate.instant('core.errorurlschemeinvalidscheme', {$a: text}));
                 } else if (this.loginHelper.isSiteUrlAllowed(text)) {
                     // Put the text in the field (if present).
                     this.siteForm.controls.siteUrl.setValue(text);
 
                     this.connect(new Event('click'), text);
                 } else {
-                    this.domUtils.showErrorModal('core.errorurlschemeinvalidsite', true);
+                    CoreDomUtils.showErrorModal('core.errorurlschemeinvalidsite', true);
                 }
             }
         }
@@ -516,16 +516,16 @@ export class CoreLoginSitePage {
      */
     protected async treatErrorInAuthenticationCustomURL(customURL: string, error: CoreCustomURLSchemesHandleError): Promise<void> {
         const siteUrl = error.data.siteUrl;
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Set the site URL in the input.
         this.siteForm.controls.siteUrl.setValue(siteUrl);
 
         try {
             // Check if site uses SSO.
-            const response = await this.sitesProvider.checkSite(siteUrl);
+            const response = await CoreSites.checkSite(siteUrl);
 
-            await this.sitesProvider.checkApplication(response.config);
+            await CoreSites.checkApplication(response.config);
 
             if (!this.loginHelper.isSSOLoginNeeded(response.code)) {
                 // No SSO, go to credentials page.
@@ -542,7 +542,7 @@ export class CoreLoginSitePage {
 
         // Now display the error.
         error.error = this.textUtils.addTextToError(error.error,
-                '<br><br>' + this.translate.instant('core.login.youcanstillconnectwithcredentials'));
+                '<br><br>' + Translate.instant('core.login.youcanstillconnectwithcredentials'));
 
         this.urlSchemesProvider.treatHandleCustomURLError(error);
     }

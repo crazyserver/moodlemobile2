@@ -51,7 +51,7 @@ export class CoreSitePluginsCourseOptionComponent implements OnInit {
                     courseid: this.courseId,
                 };
                 this.initResult = handler.initResult;
-                this.ptrEnabled = !CoreUtils.instance.isFalseOrZero(handler.handlerSchema.ptrenabled);
+                this.ptrEnabled = !CoreUtils.isFalseOrZero(handler.handlerSchema.ptrenabled);
             }
         }
     }

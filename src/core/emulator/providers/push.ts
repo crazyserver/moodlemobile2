@@ -20,7 +20,7 @@ import { CoreAppProvider } from '@services/app';
 /**
  * Emulates the Cordova Push plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PushMock implements Push {
 
     constructor(private appProvider: CoreAppProvider) {
@@ -107,7 +107,7 @@ export class PushObjectMock extends PushObject {
      * @param count
      */
     setApplicationIconBadgeNumber(count?: number): Promise<any> {
-        if (!this.appProvider.isDesktop()) {
+        if (!CoreApp.isDesktop()) {
             return Promise.reject('setApplicationIconBadgeNumber is not supported in browser');
         }
 
@@ -128,7 +128,7 @@ export class PushObjectMock extends PushObject {
      * successHandler gets called with an integer which is the current badge count
      */
     getApplicationIconBadgeNumber(): Promise<number> {
-        if (!this.appProvider.isDesktop()) {
+        if (!CoreApp.isDesktop()) {
             return Promise.reject('getApplicationIconBadgeNumber is not supported in browser');
         }
 

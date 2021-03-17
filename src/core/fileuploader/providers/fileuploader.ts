@@ -42,7 +42,7 @@ export interface CoreFileUploaderOptions extends CoreWSFileUploadOptions {
 /**
  * Service to upload files.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderProvider {
     static LIMITED_SIZE_WARNING = 1048576; // 1 MB.
     static WIFI_SIZE_WARNING = 10485760; // 10 MB.
@@ -183,7 +183,7 @@ export class CoreFileUploaderProvider {
     getCameraUploadOptions(uri: string, isFromAlbum?: boolean): CoreFileUploaderOptions {
         const extension = this.mimeUtils.guessExtensionFromUrl(uri);
         const mimetype = this.mimeUtils.getMimeType(extension);
-        const isIOS = CoreApp.instance.isIOS();
+        const isIOS = CoreApp.isIOS();
         const options: CoreFileUploaderOptions = {
                 deleteAfterUpload: !isFromAlbum,
                 mimeType: mimetype
@@ -194,7 +194,7 @@ export class CoreFileUploaderProvider {
             // In iOS, the pictures can have repeated names, even if they come from the album.
             // Add a timestamp to the filename to make it unique.
             const split = fileName.split('.');
-            split[0] += '_' + this.timeUtils.readableTimestamp();
+            split[0] += '_' + CoreTimeUtils.readableTimestamp();
 
             options.fileName = split.join('.');
         } else {
@@ -206,7 +206,7 @@ export class CoreFileUploaderProvider {
             // If the file was picked from the album, delete it only if it was copied to the app's folder.
             options.deleteAfterUpload = this.fileProvider.isFileInAppFolder(uri);
 
-            if (CoreApp.instance.isAndroid()) {
+            if (CoreApp.isAndroid()) {
                 // Picking an image from album in Android adds a timestamp at the end of the file. Delete it.
                 options.fileName = options.fileName.replace(/(\.[^\.]*)\?[^\.]*$/, '$1');
             }
@@ -251,7 +251,7 @@ export class CoreFileUploaderProvider {
         if (!filename.match(/_\d{14}(\..*)?$/)) {
             // Add a timestamp to the filename to make it unique.
             const split = filename.split('.');
-            split[0] += '_' + this.timeUtils.readableTimestamp();
+            split[0] += '_' + CoreTimeUtils.readableTimestamp();
             filename = split.join('.');
         }
 
@@ -304,7 +304,7 @@ export class CoreFileUploaderProvider {
 
         if (filesObject) {
             if (filesObject.online && filesObject.online.length > 0) {
-                files = this.utils.clone(filesObject.online);
+                files = CoreUtils.clone(filesObject.online);
             }
 
             if (filesObject.offline > 0) {
@@ -348,9 +348,9 @@ export class CoreFileUploaderProvider {
             }
 
             if (mimetype && mimetypes.indexOf(mimetype) == -1) {
-                extension = extension || this.translate.instant('core.unknown');
+                extension = extension || Translate.instant('core.unknown');
 
-                return this.translate.instant('core.fileuploader.invalidfiletype', { $a: extension });
+                return Translate.instant('core.fileuploader.invalidfiletype', { $a: extension });
             }
         }
     }
@@ -516,11 +516,11 @@ export class CoreFileUploaderProvider {
         options = options || {};
 
         const deleteAfterUpload = options.deleteAfterUpload,
-            ftOptions = this.utils.clone(options);
+            ftOptions = CoreUtils.clone(options);
 
         delete ftOptions.deleteAfterUpload;
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.uploadFile(uri, ftOptions, onProgress);
         }).then((result) => {
             if (deleteAfterUpload) {
@@ -549,7 +549,7 @@ export class CoreFileUploaderProvider {
      */
     uploadOrReuploadFile(file: any, itemId?: number, component?: string, componentId?: string | number,
             siteId?: string): Promise<number> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         let promise,
             fileName;
@@ -559,7 +559,7 @@ export class CoreFileUploaderProvider {
         if (isOnline) {
             // It's an online file. We need to download it and re-upload it.
             fileName = file.filename;
-            promise = this.filepoolProvider.downloadUrl(siteId, file.url || file.fileurl, false, component, componentId,
+            promise = CoreFilepool.downloadUrl(siteId, file.url || file.fileurl, false, component, componentId,
                 file.timemodified, undefined, undefined, file).then((path) => {
                     return this.fileProvider.getExternalFile(path);
                 });
@@ -593,7 +593,7 @@ export class CoreFileUploaderProvider {
      * @return Promise resolved with the itemId.
      */
     uploadOrReuploadFiles(files: any[], component?: string, componentId?: string | number, siteId?: string): Promise<number> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (!files || !files.length) {
             // Return fake draft ID.

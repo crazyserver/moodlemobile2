@@ -21,7 +21,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 /**
  * Service with features regarding rich text editor in offline.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreEditorOfflineProvider {
 
     protected DRAFT_TABLE = 'editor_draft';
@@ -87,7 +87,7 @@ export class CoreEditorOfflineProvider {
             protected utils: CoreUtilsProvider) {
         this.logger = CoreLogger.getInstance('CoreEditorProvider');
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -104,7 +104,7 @@ export class CoreEditorOfflineProvider {
             siteId?: string): Promise<void> {
 
         try {
-            const db = await this.sitesProvider.getSiteDb(siteId);
+            const db = await CoreSites.getSiteDb(siteId);
 
             const params = this.fixDraftPrimaryData(contextLevel, contextInstanceId, elementId, extraParams);
 
@@ -130,7 +130,7 @@ export class CoreEditorOfflineProvider {
             contextlevel: contextLevel,
             contextinstanceid: contextInstanceId,
             elementid: elementId,
-            extraparams: this.utils.sortAndStringify(extraParams || {}),
+            extraparams: CoreUtils.sortAndStringify(extraParams || {}),
         };
     }
 
@@ -147,7 +147,7 @@ export class CoreEditorOfflineProvider {
     async getDraft(contextLevel: string, contextInstanceId: number, elementId: string, extraParams: {[name: string]: any},
             siteId?: string): Promise<CoreEditorDraft> {
 
-        const db = await this.sitesProvider.getSiteDb(siteId);
+        const db = await CoreSites.getSiteDb(siteId);
 
         const params = this.fixDraftPrimaryData(contextLevel, contextInstanceId, elementId, extraParams);
 
@@ -175,7 +175,7 @@ export class CoreEditorOfflineProvider {
 
             // There is a draft stored. Update its page instance.
             try {
-                const db = await this.sitesProvider.getSiteDb(siteId);
+                const db = await CoreSites.getSiteDb(siteId);
 
                 entry.pageinstance = pageInstance;
                 entry.timemodified = Date.now();
@@ -239,7 +239,7 @@ export class CoreEditorOfflineProvider {
             }
         }
 
-        const db = await this.sitesProvider.getSiteDb(siteId);
+        const db = await CoreSites.getSiteDb(siteId);
 
         const data: CoreEditorDraft = this.fixDraftPrimaryData(contextLevel, contextInstanceId, elementId, extraParams);
 

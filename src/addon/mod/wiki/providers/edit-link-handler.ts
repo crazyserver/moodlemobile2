@@ -21,7 +21,7 @@ import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/hel
 /**
  * Handler to treat links to edit a wiki page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiEditLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModWikiEditLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModWiki';

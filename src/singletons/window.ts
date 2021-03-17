@@ -43,34 +43,34 @@ export class CoreWindow {
      * @return Promise resolved when done.
      */
     static async open(url: string, name?: string, options?: CoreWindowOpenOptions): Promise<void> {
-        if (CoreUrlUtils.instance.isLocalFileUrl(url)) {
+        if (CoreUrlUtils.isLocalFileUrl(url)) {
             const filename = url.substr(url.lastIndexOf('/') + 1);
 
-            if (!CoreFileHelper.instance.isOpenableInApp({ filename })) {
+            if (!CoreFileHelper.isOpenableInApp({ filename })) {
                 try {
-                    await CoreFileHelper.instance.showConfirmOpenUnsupportedFile();
+                    await CoreFileHelper.showConfirmOpenUnsupportedFile();
                 } catch (error) {
                     return; // Cancelled, stop.
                 }
             }
 
-            await CoreUtils.instance.openFile(url);
+            await CoreUtils.openFile(url);
         } else {
             let treated: boolean;
             options = options || {};
 
             if (name != '_system') {
                 // Check if it can be opened in the app.
-                treated = await CoreContentLinksHelper.instance.handleLink(url, undefined, options.navCtrl, true, true);
+                treated = await CoreContentLinksHelper.handleLink(url, undefined, options.navCtrl, true, true);
             }
 
             if (!treated) {
                 // Not opened in the app, open with browser. Check if we need to auto-login
-                if (!CoreSites.instance.isLoggedIn()) {
+                if (!CoreSites.isLoggedIn()) {
                     // Not logged in, cannot auto-login.
-                    CoreUtils.instance.openInBrowser(url);
+                    CoreUtils.openInBrowser(url);
                 } else {
-                    await CoreSites.instance.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
+                    await CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
                 }
             }
         }

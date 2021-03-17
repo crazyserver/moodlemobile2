@@ -87,7 +87,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
             }
 
             this.quizProvider.logViewQuiz(this.quizData.id, this.quizData.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch((error) => {
                 // Ignore errors.
             });
@@ -129,7 +129,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
                         // If the site doesn't support check updates, continue too because we cannot tell if there's something new.
                         this.openQuiz();
                     } else {
-                        this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                        CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
                     }
 
                 }).finally(() => {
@@ -168,7 +168,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
             return this.quizSync.getSyncWarnings(this.quizData.id).then((warnings) => {
                 if (warnings && warnings.length) {
                     // Show warnings and delete them so they aren't shown again.
-                    this.domUtils.showErrorModal(this.textUtils.buildMessage(warnings));
+                    CoreDomUtils.showErrorModal(this.textUtils.buildMessage(warnings));
 
                     return this.quizSync.setSyncWarnings(this.quizData.id, []);
                 }
@@ -338,18 +338,18 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
             if (this.overallStats) {
                 // Show the quiz grade. The message shown is different if the quiz is finished.
                 if (this.moreAttempts) {
-                    this.gradeResult = this.translate.instant('addon.mod_quiz.gradesofar', {$a: {
+                    this.gradeResult = Translate.instant('addon.mod_quiz.gradesofar', {$a: {
                         method: this.quizData.gradeMethodReadable,
                         mygrade: gradeToShow,
                         quizgrade: this.quizData.gradeFormatted
                     }});
                 } else {
-                    const outOfShort = this.translate.instant('addon.mod_quiz.outofshort', {$a: {
+                    const outOfShort = Translate.instant('addon.mod_quiz.outofshort', {$a: {
                         grade: gradeToShow,
                         maxgrade: this.quizData.gradeFormatted
                     }});
 
-                    this.gradeResult = this.translate.instant('addon.mod_quiz.yourfinalgradeis', {$a: outOfShort});
+                    this.gradeResult = Translate.instant('addon.mod_quiz.yourfinalgradeis', {$a: outOfShort});
                 }
             }
 
@@ -375,7 +375,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
      */
     protected goToAutoReview(): Promise<any> {
         // If we go to auto review it means an attempt was finished. Check completion status.
-        this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+        CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
 
         // Verify that user can see the review.
         const attemptId = this.autoReview.attemptId;
@@ -400,7 +400,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
     protected hasSyncSucceed(result: any): boolean {
         if (result.attemptFinished) {
             // An attempt was finished, check completion status.
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }
 
         // If the sync call isn't rejected it means the sync was successful.
@@ -431,7 +431,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
             this.loaded = false;
             this.refreshIcon = 'spinner';
             this.syncIcon = 'spinner';
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             promise.then(() => {
                 this.refreshContent().finally(() => {
@@ -489,11 +489,11 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (syncEventData.attemptFinished) {
             // An attempt was finished, check completion status.
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }
 
         if (this.quizData && syncEventData.quizId == this.quizData.id) {
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             return true;
         }

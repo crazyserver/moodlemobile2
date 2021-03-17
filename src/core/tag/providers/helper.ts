@@ -18,7 +18,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
 /**
  * Service with helper functions for tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreTagHelperProvider {
 
     constructor(protected domUtils: CoreDomUtilsProvider) {}
@@ -31,7 +31,7 @@ export class CoreTagHelperProvider {
      */
     parseFeedContent(content: string): any[] {
         const items = [];
-        const element = this.domUtils.convertToElement(content);
+        const element = CoreDomUtils.convertToElement(content);
 
         Array.from(element.querySelectorAll('ul.tag_feed > li.media')).forEach((itemElement) => {
             const item: any = { details: [] };

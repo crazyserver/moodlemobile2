@@ -121,18 +121,18 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
         this.contentChanged = new EventEmitter<string>();
         this.element = elementRef.nativeElement as HTMLDivElement;
         this.pageInstance = 'app_' + Date.now(); // Generate a "unique" ID based on timestamp.
-        this.canScanQR = this.utils.canScanQR();
+        this.canScanQR = CoreUtils.canScanQR();
     }
 
     /**
      * Init editor.
      */
     ngAfterContentInit(): void {
-        this.domUtils.isRichTextEditorEnabled().then((enabled) => {
+        CoreDomUtils.isRichTextEditorEnabled().then((enabled) => {
             this.rteEnabled = !!enabled;
         });
 
-        this.editorSupported = this.domUtils.isRichTextEditorSupported();
+        this.editorSupported = CoreDomUtils.isRichTextEditorSupported();
 
         // Setup the editor.
         this.editorElement = this.editor.nativeElement as HTMLDivElement;
@@ -213,11 +213,11 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
     protected maximizeEditorSize = (): Promise<number> => {
         this.content.resize();
 
-        const deferred = this.utils.promiseDefer();
+        const deferred = CoreUtils.promiseDefer();
 
         setTimeout(() => {
-            let contentVisibleHeight = this.domUtils.getContentHeight(this.content);
-            if (!CoreApp.instance.isAndroid()) {
+            let contentVisibleHeight = CoreDomUtils.getContentHeight(this.content);
+            if (!CoreApp.isAndroid()) {
                 // In Android we ignore the keyboard height because it is not part of the web view.
                 contentVisibleHeight -= this.kbHeight;
             }
@@ -232,10 +232,10 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
                 // Editor is ready, adjust Height if needed.
                 let height;
 
-                if (CoreApp.instance.isAndroid()) {
+                if (CoreApp.isAndroid()) {
                     // In Android we ignore the keyboard height because it is not part of the web view.
-                    height = this.domUtils.getContentHeight(this.content) - this.getSurroundingHeight(this.element);
-                } else if (CoreApp.instance.isIOS() && this.kbHeight > 0 && this.platform.version().major < 12) {
+                    height = CoreDomUtils.getContentHeight(this.content) - this.getSurroundingHeight(this.element);
+                } else if (CoreApp.isIOS() && this.kbHeight > 0 && this.platform.version().major < 12) {
                     // Keyboard open in iOS 11 or previous. The window height changes when the keyboard is open.
                     height = window.innerHeight - this.getSurroundingHeight(this.element);
 
@@ -246,12 +246,12 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
 
                 } else {
                     // Header is fixed, use the content to calculate the editor height.
-                    height = this.domUtils.getContentHeight(this.content) - this.kbHeight - this.getSurroundingHeight(this.element);
+                    height = CoreDomUtils.getContentHeight(this.content) - this.kbHeight - this.getSurroundingHeight(this.element);
 
                 }
 
                 if (height > this.minHeight) {
-                    this.element.style.height = this.domUtils.formatPixelsSize(height - 1);
+                    this.element.style.height = CoreDomUtils.formatPixelsSize(height - 1);
                 } else {
                     this.element.style.height = '';
                 }
@@ -278,7 +278,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
                 for (let x = 0; x < parent.childNodes.length; x++) {
                     const child = parent.childNodes[x];
                     if (child.tagName && child != element) {
-                        height += this.domUtils.getElementHeight(child, false, true, true);
+                        height += CoreDomUtils.getElementHeight(child, false, true, true);
                     }
                 }
             }
@@ -286,14 +286,14 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
         }
 
         const cs = getComputedStyle(element);
-        height += this.domUtils.getComputedStyleMeasure(cs, 'paddingTop') +
-            this.domUtils.getComputedStyleMeasure(cs, 'paddingBottom');
+        height += CoreDomUtils.getComputedStyleMeasure(cs, 'paddingTop') +
+            CoreDomUtils.getComputedStyleMeasure(cs, 'paddingBottom');
 
         if (element && element.parentNode && element.parentNode.tagName == 'ION-CONTENT') {
             const cs2 = getComputedStyle(element);
 
-            height -= this.domUtils.getComputedStyleMeasure(cs2, 'paddingTop') +
-                this.domUtils.getComputedStyleMeasure(cs2, 'paddingBottom');
+            height -= CoreDomUtils.getComputedStyleMeasure(cs2, 'paddingTop') +
+                CoreDomUtils.getComputedStyleMeasure(cs2, 'paddingBottom');
         }
 
         return height;
@@ -490,14 +490,14 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
      * Treating videos and audios in here is complex, so if a user manually adds one he won't be able to play it in the editor.
      */
     protected treatExternalContent(): void {
-        if (!this.sitesProvider.isLoggedIn()) {
+        if (!CoreSites.isLoggedIn()) {
             // Only treat external content if the user is logged in.
             return;
         }
 
         const elements = Array.from(this.editorElement.querySelectorAll('img')),
-            siteId = this.sitesProvider.getCurrentSiteId(),
-            canDownloadFiles = this.sitesProvider.getCurrentSite().canDownloadFiles();
+            siteId = CoreSites.getCurrentSiteId(),
+            canDownloadFiles = CoreSites.getCurrentSite().canDownloadFiles();
         elements.forEach((el) => {
             if (el.getAttribute('data-original-src')) {
                 // Already treated.
@@ -512,7 +512,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
             }
 
             // Check if it's downloaded.
-            return this.filepoolProvider.getSrcByUrl(siteId, url, this.component, this.componentId).then((finalUrl) => {
+            return CoreFilepool.getSrcByUrl(siteId, url, this.component, this.componentId).then((finalUrl) => {
                 // Check again if it's already treated, this function can be called concurrently more than once.
                 if (!el.getAttribute('data-original-src')) {
                     el.setAttribute('data-original-src', el.src);
@@ -693,7 +693,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
     mouseDownAction(event: Event): void {
         const selection = window.getSelection().toString();
         // When RTE is focused with a whole paragraph in desktop the stopBubble will not fire click.
-        if (CoreApp.instance.isMobile() || !this.rteEnabled || document.activeElement != this.editorElement || selection == '') {
+        if (CoreApp.isMobile() || !this.rteEnabled || document.activeElement != this.editorElement || selection == '') {
             this.stopBubble(event);
         }
     }
@@ -733,7 +733,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
             return;
         }
 
-        const width = this.domUtils.getElementWidth(this.toolbar.nativeElement);
+        const width = CoreDomUtils.getElementWidth(this.toolbar.nativeElement);
 
         if (!(this.toolbarSlides as any)._init || !width) {
             // Slides is not initialized or width is not available yet, try later.
@@ -799,8 +799,8 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
      * @return {boolean} Whether it should auto save drafts.
      */
     protected shouldAutoSaveDrafts(): boolean {
-        return !!this.sitesProvider.getCurrentSite() &&
-                (typeof this.autoSave == 'undefined' || this.utils.isTrueOrOne(this.autoSave)) &&
+        return !!CoreSites.getCurrentSite() &&
+                (typeof this.autoSave == 'undefined' || CoreUtils.isTrueOrOne(this.autoSave)) &&
                 typeof this.contextLevel != 'undefined' &&
                 typeof this.contextInstanceId != 'undefined' &&
                 typeof this.elementId != 'undefined';
@@ -888,7 +888,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
                     // Error deleting draft. Shouldn't happen.
                 }
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -917,7 +917,7 @@ export class CoreEditorRichTextEditorComponent implements AfterContentInit, OnDe
         this.stopBubble($event);
 
         // Scan for a QR code.
-        this.utils.scanQR().then((text) => {
+        CoreUtils.scanQR().then((text) => {
             if (text) {
                 document.execCommand('insertText', false, text);
             }

@@ -21,7 +21,7 @@ import { AddonBadgesProvider } from './badges';
 /**
  * Handler to treat links to user participants page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBadgesBadgeLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonBadgesBadgeLinkHandler';
     pattern = /\/badges\/badge\.php.*([\?\&]hash=)/;

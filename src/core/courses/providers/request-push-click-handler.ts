@@ -25,7 +25,7 @@ import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 /**
  * Handler for course request push notifications clicks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesRequestPushClickHandler implements CorePushNotificationsClickHandler {
     name = 'CoreCoursesRequestPushClickHandler';
     priority = 200;
@@ -44,7 +44,7 @@ export class CoreCoursesRequestPushClickHandler implements CorePushNotifications
      */
     handles(notification: any): boolean | Promise<boolean> {
         // Don't support 'courserequestrejected', that way the app will open the notifications page.
-        return this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
+        return CoreUtils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
                 (notification.name == 'courserequested' || notification.name == 'courserequestapproved');
     }
 
@@ -59,19 +59,19 @@ export class CoreCoursesRequestPushClickHandler implements CorePushNotifications
 
         if (notification.name == 'courserequested') {
             // Feature not supported in the app, open in browser.
-            return this.sitesProvider.getSite(notification.site).then((site) => {
+            return CoreSites.getSite(notification.site).then((site) => {
                 const url = this.textUtils.concatenatePaths(site.getURL(), 'course/pending.php');
 
                 return site.openInBrowserWithAutoLogin(url);
             });
         } else {
             // Open the course.
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
 
-            return this.coursesProvider.invalidateUserCourses(notification.site).catch(() => {
+            return CoreCourses.invalidateUserCourses(notification.site).catch(() => {
                 // Ignore errors.
             }).then(() => {
-                return this.courseHelper.getCourse(courseId, notification.site);
+                return CoreCourseHelper.getCourse(courseId, notification.site);
             }).then((result) => {
                 const params: any = {
                     course: result.course
@@ -88,7 +88,7 @@ export class CoreCoursesRequestPushClickHandler implements CorePushNotifications
 
                 return this.loginHelper.redirect(page, params, notification.site);
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'Error getting course.');
+                CoreDomUtils.showErrorModalDefault(error, 'Error getting course.');
             }).finally(() => {
                 modal.dismiss();
             });

@@ -21,7 +21,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 /**
  * Service to handle offline workshop.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopOfflineProvider {
 
     // Variables for database.
@@ -173,7 +173,7 @@ export class AddonModWorkshopOfflineProvider {
             private sitesProvider: CoreSitesProvider,
             private textUtils: CoreTextUtilsProvider,
             private timeUtils: CoreTimeUtilsProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -237,7 +237,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteSubmissionAction(workshopId: number, submissionId: number, action: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 submissionid: submissionId,
@@ -257,7 +257,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteAllSubmissionActions(workshopId: number, submissionId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 submissionid: submissionId,
@@ -274,7 +274,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the objects to be synced.
      */
     getAllSubmissions(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModWorkshopOfflineProvider.SUBMISSIONS_TABLE).then((records) => {
                 records.forEach(this.parseSubmissionRecord.bind(this));
 
@@ -291,7 +291,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getSubmissions(workshopId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId
             };
@@ -313,7 +313,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getSubmissionActions(workshopId: number, submissionId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 submissionid: submissionId
@@ -337,7 +337,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getSubmissionAction(workshopId: number, submissionId: number, action: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 submissionid: submissionId,
@@ -368,8 +368,8 @@ export class AddonModWorkshopOfflineProvider {
      */
     saveSubmission(workshopId: number, courseId: number, title: string, content: string, attachmentsId: any,
             submissionId: number, action: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            const timemodified = this.timeUtils.timestamp();
+        return CoreSites.getSite(siteId).then((site) => {
+            const timemodified = CoreTimeUtils.timestamp();
             const assessment = {
                 workshopid: workshopId,
                 courseid: courseId,
@@ -403,7 +403,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteAssessment(workshopId: number, assessmentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 assessmentid: assessmentId
@@ -420,7 +420,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the objects to be synced.
      */
     getAllAssessments(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModWorkshopOfflineProvider.ASSESSMENTS_TABLE).then((records) => {
                 records.forEach(this.parseAssessmentRecord.bind(this));
 
@@ -437,7 +437,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getAssessments(workshopId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId
             };
@@ -459,7 +459,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getAssessment(workshopId: number, assessmentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 assessmentid: assessmentId
@@ -484,13 +484,13 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved when assessment is successfully saved.
      */
     saveAssessment(workshopId: number, assessmentId: number, courseId: number, inputData: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const assessment = {
                 workshopid: workshopId,
                 courseid: courseId,
                 inputdata: JSON.stringify(inputData),
                 assessmentid: assessmentId,
-                timemodified: this.timeUtils.timestamp()
+                timemodified: CoreTimeUtils.timestamp()
             };
 
             return site.getDb().insertRecord(AddonModWorkshopOfflineProvider.ASSESSMENTS_TABLE, assessment);
@@ -520,7 +520,7 @@ export class AddonModWorkshopOfflineProvider {
             submissionid: submissionId
         };
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonModWorkshopOfflineProvider.EVALUATE_SUBMISSIONS_TABLE, conditions);
         });
     }
@@ -532,7 +532,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the objects to be synced.
      */
     getAllEvaluateSubmissions(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModWorkshopOfflineProvider.EVALUATE_SUBMISSIONS_TABLE).then((records) => {
                 records.forEach(this.parseEvaluateSubmissionRecord.bind(this));
 
@@ -549,7 +549,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getEvaluateSubmissions(workshopId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId
             };
@@ -572,7 +572,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getEvaluateSubmission(workshopId: number, submissionId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 submissionid: submissionId
@@ -600,12 +600,12 @@ export class AddonModWorkshopOfflineProvider {
      */
     saveEvaluateSubmission(workshopId: number, submissionId: number, courseId: number, feedbackText: string, published: boolean,
             gradeOver: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const submission = {
                 workshopid: workshopId,
                 courseid: courseId,
                 submissionid: submissionId,
-                timemodified: this.timeUtils.timestamp(),
+                timemodified: CoreTimeUtils.timestamp(),
                 feedbacktext: feedbackText,
                 published: Number(published),
                 gradeover: JSON.stringify(gradeOver)
@@ -634,7 +634,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteEvaluateAssessment(workshopId: number, assessmentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 assessmentid: assessmentId
@@ -651,7 +651,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the objects to be synced.
      */
     getAllEvaluateAssessments(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModWorkshopOfflineProvider.EVALUATE_ASSESSMENTS_TABLE).then((records) => {
                 records.forEach(this.parseEvaluateAssessmentRecord.bind(this));
 
@@ -668,7 +668,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getEvaluateAssessments(workshopId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId
             };
@@ -691,7 +691,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getEvaluateAssessment(workshopId: number, assessmentId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = {
                 workshopid: workshopId,
                 assessmentid: assessmentId
@@ -719,12 +719,12 @@ export class AddonModWorkshopOfflineProvider {
      */
     saveEvaluateAssessment(workshopId: number, assessmentId: number, courseId: number, feedbackText: string, weight: number,
             gradingGradeOver: any, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const assessment = {
                 workshopid: workshopId,
                 courseid: courseId,
                 assessmentid: assessmentId,
-                timemodified: this.timeUtils.timestamp(),
+                timemodified: CoreTimeUtils.timestamp(),
                 feedbacktext: feedbackText,
                 weight: weight,
                 gradinggradeover: JSON.stringify(gradingGradeOver)
@@ -751,7 +751,7 @@ export class AddonModWorkshopOfflineProvider {
      * @return Promise resolved with the path.
      */
     getWorkshopFolder(workshopId: number, siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             const siteFolderPath = this.fileProvider.getSiteFolder(site.getId());
             const workshopFolderPath = 'offlineworkshop/' + workshopId + '/';

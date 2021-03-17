@@ -20,7 +20,7 @@ import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 /**
  * Handler to support interactive countback question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourInteractiveCountbackHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourInteractiveCountback';
     type = 'interactivecountback';

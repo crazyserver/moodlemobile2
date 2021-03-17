@@ -49,7 +49,7 @@ export interface AddonModQuizSyncResult {
 /**
  * Service to sync quizzes.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_quiz_autom_synced';
@@ -97,7 +97,7 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
         }).then(() => {
             if (updated) {
                 // Data has been sent. Update prefetched data.
-                return this.courseProvider.getModuleBasicInfoByInstance(quiz.id, 'quiz', siteId).then((module) => {
+                return CoreCourse.getModuleBasicInfoByInstance(quiz.id, 'quiz', siteId).then((module) => {
                     return this.prefetchAfterUpdateQuiz(module, quiz, courseId, undefined, siteId);
                 }).catch(() => {
                     // Ignore errors.
@@ -286,7 +286,7 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
      * @return Promise resolved in success.
      */
     syncQuiz(quiz: any, askPreflight?: boolean, siteId?: string): Promise<AddonModQuizSyncResult> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const warnings = [];
         const courseId = quiz.course;
@@ -307,13 +307,13 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
         if (this.syncProvider.isBlocked(AddonModQuizProvider.COMPONENT, quiz.id, siteId)) {
             this.logger.debug('Cannot sync quiz ' + quiz.id + ' because it is blocked.');
 
-            return Promise.reject(this.translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
+            return Promise.reject(Translate.instant('core.errorsyncblocked', {$a: this.componentTranslate}));
         }
 
         this.logger.debug('Try to sync quiz ' + quiz.id + ' in site ' + siteId);
 
         // Sync offline logs.
-        syncPromise = this.logHelper.syncIfNeeded(AddonModQuizProvider.COMPONENT, quiz.id, siteId).catch(() => {
+        syncPromise = CoreCourseLogHelper.syncIfNeeded(AddonModQuizProvider.COMPONENT, quiz.id, siteId).catch(() => {
             // Ignore errors.
         }).then(() => {
             // Get all the offline attempts for the quiz.
@@ -343,7 +343,7 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
 
                 if (!onlineAttempt || this.quizProvider.isAttemptFinished(onlineAttempt.state)) {
                     // Attempt not found or it's finished in online. Discard it.
-                    warnings.push(this.translate.instant('addon.mod_quiz.warningattemptfinished'));
+                    warnings.push(Translate.instant('addon.mod_quiz.warningattemptfinished'));
 
                     return this.finishSync(siteId, quiz, courseId, warnings, offlineAttempt.id, offlineAttempt, onlineAttempt,
                             true);
@@ -390,9 +390,9 @@ export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider
 
                         if (discardedData) {
                             if (offlineAttempt.finished) {
-                                warnings.push(this.translate.instant('addon.mod_quiz.warningdatadiscardedfromfinished'));
+                                warnings.push(Translate.instant('addon.mod_quiz.warningdatadiscardedfromfinished'));
                             } else {
-                                warnings.push(this.translate.instant('addon.mod_quiz.warningdatadiscarded'));
+                                warnings.push(Translate.instant('addon.mod_quiz.warningdatadiscarded'));
                             }
                         }
 

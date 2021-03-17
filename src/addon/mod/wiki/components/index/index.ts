@@ -81,8 +81,8 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
             private tagProvider: CoreTagProvider, protected modalCtrl: ModalController) {
         super(injector, content);
 
-        this.pageStr = this.translate.instant('addon.mod_wiki.wikipage');
-        this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
+        this.pageStr = Translate.instant('addon.mod_wiki.wikipage');
+        this.tagsEnabled = CoreTag.areTagsAvailableInSite();
     }
 
     /**
@@ -91,7 +91,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.currentUserId = this.sitesProvider.getCurrentSiteUserId();
+        this.currentUserId = CoreSites.getCurrentSiteUserId();
         this.isMainPage = !this.pageId && !this.pageTitle;
         this.currentPage = this.pageId;
 
@@ -102,7 +102,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
 
             if (!this.pageId) {
                 this.wikiProvider.logView(this.wiki.id, this.wiki.name).then(() => {
-                    this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                    CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
                 }).catch((error) => {
                     // Ignore errors.
                 });
@@ -203,7 +203,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
             // Get module instance if it's empty.
             let promise;
             if (!this.module.id) {
-                promise = this.courseProvider.getModule(this.wiki.coursemodule, this.wiki.course, undefined, true);
+                promise = CoreCourse.getModule(this.wiki.coursemodule, this.wiki.course, undefined, true);
             } else {
                 promise = Promise.resolve(this.module);
             }
@@ -216,7 +216,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                 this.componentId = this.module.id;
 
                 // Get real groupmode, in case it's forced by the course.
-                return this.groupsProvider.getActivityGroupInfo(this.wiki.coursemodule).then((groupInfo) => {
+                return CoreGroups.getActivityGroupInfo(this.wiki.coursemodule).then((groupInfo) => {
                     return this.fetchSubwikis(this.wiki.id).then(() => {
                         // Get the subwiki list data from the cache.
                         const subwikiList = this.wikiProvider.getSubwikiList(this.wiki.id);
@@ -240,7 +240,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                 }).then(() => {
 
                     if (!this.isAnySubwikiSelected() || this.subwikiData.count <= 0) {
-                        return Promise.reject(this.translate.instant('addon.mod_wiki.errornowikiavailable'));
+                        return Promise.reject(Translate.instant('addon.mod_wiki.errornowikiavailable'));
                     }
                 }).then(() => {
                     return this.fetchWikiPage();
@@ -292,7 +292,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                             this.newPageObserver.off();
                             this.newPageObserver = undefined;
                         }
-                    }, this.sitesProvider.getCurrentSiteId());
+                    }, CoreSites.getCurrentSiteId());
                 }
 
                 return offlinePage;
@@ -649,7 +649,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
         content = content.trim();
 
         if (content.length > 0) {
-            const editUrl = this.textUtils.concatenatePaths(this.sitesProvider.getCurrentSite().getURL(), '/mod/wiki/edit.php');
+            const editUrl = this.textUtils.concatenatePaths(CoreSites.getCurrentSite().getURL(), '/mod/wiki/edit.php');
             content = content.replace(/href="edit\.php/g, 'href="' + editUrl);
         }
 
@@ -726,8 +726,8 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
 
         if (this.wiki) {
             promises.push(this.wikiProvider.invalidateSubwikis(this.wiki.id));
-            promises.push(this.groupsProvider.invalidateActivityAllowedGroups(this.wiki.coursemodule));
-            promises.push(this.groupsProvider.invalidateActivityGroupMode(this.wiki.coursemodule));
+            promises.push(CoreGroups.invalidateActivityAllowedGroups(this.wiki.coursemodule));
+            promises.push(CoreGroups.invalidateActivityGroupMode(this.wiki.coursemodule));
         }
 
         if (this.currentSubwiki) {
@@ -755,7 +755,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
 
             if (this.isCurrentView && syncEventData.warnings && syncEventData.warnings.length) {
                 // Show warnings.
-                this.domUtils.showErrorModal(syncEventData.warnings[0]);
+                CoreDomUtils.showErrorModal(syncEventData.warnings[0]);
             }
 
             // Check if current page was created or discarded.
@@ -841,7 +841,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                 // Add 'All participants' subwiki if needed at the start.
                 if (!allParticipants) {
                     subwikiList.unshift({
-                        name: this.translate.instant('core.allparticipants'),
+                        name: Translate.instant('core.allparticipants'),
                         id: subwiki.id,
                         userid: userId,
                         groupid: groupId,
@@ -858,7 +858,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                         groupLabel = userGroups[groupIdPosition].name;
                     }
                 } else {
-                    groupLabel = this.translate.instant('addon.mod_wiki.notingroup');
+                    groupLabel = Translate.instant('addon.mod_wiki.notingroup');
                 }
 
                 if (userId != 0) {
@@ -992,8 +992,8 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
             });
         } else if (showMyGroupsLabel) {
             const noGrouping = {label: '', subwikis: []},
-                myGroupsGrouping = {label: this.translate.instant('core.mygroups'), subwikis: []},
-                otherGroupsGrouping = {label: this.translate.instant('core.othergroups'), subwikis: []};
+                myGroupsGrouping = {label: Translate.instant('core.mygroups'), subwikis: []},
+                otherGroupsGrouping = {label: Translate.instant('core.othergroups'), subwikis: []};
 
             // As we loop over each subwiki, add it to the current group
             subwikiList.forEach((subwiki) => {

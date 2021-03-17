@@ -20,7 +20,7 @@ import { CoreFileUploaderHelperProvider } from './helper';
 /**
  * Handler to upload files from the album.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderAlbumHandler implements CoreFileUploaderHandler {
     name = 'CoreFileUploaderAlbum';
     priority = 2000;
@@ -34,7 +34,7 @@ export class CoreFileUploaderAlbumHandler implements CoreFileUploaderHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return this.appProvider.isMobile();
+        return CoreApp.isMobile();
     }
 
     /**
@@ -45,7 +45,7 @@ export class CoreFileUploaderAlbumHandler implements CoreFileUploaderHandler {
      */
     getSupportedMimetypes(mimetypes: string[]): string[] {
         // Album allows picking images and videos.
-        return this.utils.filterByRegexp(mimetypes, /^(image|video)\//);
+        return CoreUtils.filterByRegexp(mimetypes, /^(image|video)\//);
     }
 
     /**

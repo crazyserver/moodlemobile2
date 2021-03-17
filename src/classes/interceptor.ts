@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
  * Interceptor for Http calls. Adds the header 'Content-Type'='application/x-www-form-urlencoded'
  * and serializes the parameters if needed.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreInterceptor implements HttpInterceptor {
 
     constructor() {

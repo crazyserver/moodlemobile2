@@ -87,7 +87,7 @@ export class CoreRatingRateComponent implements OnChanges, OnDestroy {
         // Add "No rating" item to the scale.
         if (!this.scale.items[0] || this.scale.items[0].value != CoreRatingProvider.UNSET_RATING) {
             this.scale.items.unshift({
-                name: this.translate.instant('core.none'),
+                name: Translate.instant('core.none'),
                 value: CoreRatingProvider.UNSET_RATING
             });
         }
@@ -111,17 +111,17 @@ export class CoreRatingRateComponent implements OnChanges, OnDestroy {
      * Send or save the user rating when changed.
      */
     protected userRatingChanged(): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         this.ratingProvider.addRating(this.ratingInfo.component, this.ratingInfo.ratingarea, this.contextLevel, this.instanceId,
                 this.itemId, this.itemSetId, this.courseId, this.scaleId, this.rating, this.userId, this.aggregateMethod)
                 .then((response) => {
             if (response == null) {
-                this.domUtils.showToast('core.datastoredoffline', true, 3000);
+                CoreDomUtils.showToast('core.datastoredoffline', true, 3000);
             } else {
                 this.onUpdate.emit();
             }
         }).catch((error) => {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }).finally(() => {
             modal.dismiss();
         });

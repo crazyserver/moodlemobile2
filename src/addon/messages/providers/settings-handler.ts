@@ -19,7 +19,7 @@ import { CoreSettingsHandler, CoreSettingsHandlerData } from '@core/settings/pro
 /**
  * Message settings handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesSettingsHandler implements CoreSettingsHandler {
     name = 'AddonMessages';
     priority = 600;

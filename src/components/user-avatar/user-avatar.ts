@@ -56,13 +56,13 @@ export class CoreUserAvatarComponent implements OnInit, OnChanges, OnDestroy {
 
             @Optional() private svComponent: CoreSplitViewComponent) {
 
-        this.currentUserId = this.sitesProvider.getCurrentSiteUserId();
+        this.currentUserId = CoreSites.getCurrentSiteUserId();
 
         this.pictureObs = CoreEvents.on(CoreUserProvider.PROFILE_PICTURE_UPDATED, (data) => {
             if (data.userId == this.userId) {
                 this.avatarUrl = data.picture;
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -105,7 +105,7 @@ export class CoreUserAvatarComponent implements OnInit, OnChanges, OnDestroy {
      * @return boolean
      */
     isOnline(): boolean {
-        if (this.utils.isFalseOrZero(this.user.isonline)) {
+        if (CoreUtils.isFalseOrZero(this.user.isonline)) {
             return false;
         }
 
@@ -116,7 +116,7 @@ export class CoreUserAvatarComponent implements OnInit, OnChanges, OnDestroy {
             return this.user.lastaccess * 1000 >= time;
         } else {
             // You have to have Internet access first.
-            return this.user.isonline && this.appProvider.isOnline();
+            return this.user.isonline && CoreApp.isOnline();
         }
     }
 

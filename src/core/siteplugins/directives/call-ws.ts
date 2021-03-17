@@ -68,12 +68,12 @@ export class CoreSitePluginsCallWSDirective extends CoreSitePluginsCallWSOnClick
     protected wsCallSuccess(result: any): void {
         if (typeof this.successMessage != 'undefined') {
             // Display the success message.
-            this.domUtils.showToast(this.successMessage || this.translate.instant('core.success'));
+            CoreDomUtils.showToast(this.successMessage || Translate.instant('core.success'));
         }
 
-        if (this.utils.isTrueOrOne(this.goBackOnSuccess)) {
+        if (CoreUtils.isTrueOrOne(this.goBackOnSuccess)) {
             this.navCtrl.pop();
-        } else if (this.utils.isTrueOrOne(this.refreshOnSuccess) && this.parentContent) {
+        } else if (CoreUtils.isTrueOrOne(this.refreshOnSuccess) && this.parentContent) {
             this.parentContent.refreshContent(true);
         }
     }

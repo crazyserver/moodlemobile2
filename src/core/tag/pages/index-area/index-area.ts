@@ -94,14 +94,14 @@ export class CoreTagIndexAreaPage {
         this.loadMoreError = false;
         const page = refresh ? 0 : this.nextPage;
 
-        return this.tagProvider.getTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
+        return CoreTag.getTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
                 this.contextId, this.recursive, page).then((areas) => {
             const area = areas[0];
 
             return this.tagAreaDelegate.parseContent(area.component, area.itemtype, area.content).then((items) => {
                 if (!items || !items.length) {
                     // Tag area not supported.
-                    return Promise.reject(this.translate.instant('core.tag.errorareanotsupported'));
+                    return Promise.reject(Translate.instant('core.tag.errorareanotsupported'));
                 }
 
                 if (page == 0) {
@@ -117,7 +117,7 @@ export class CoreTagIndexAreaPage {
             });
         }).catch((error) => {
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
-            this.domUtils.showErrorModalDefault(error, 'Error loading tag index');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading tag index');
         });
     }
 
@@ -139,7 +139,7 @@ export class CoreTagIndexAreaPage {
      * @param refresher Refresher.
      */
     refreshData(refresher: any): void {
-        this.tagProvider.invalidateTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
+        CoreTag.invalidateTagIndexPerArea(this.tagId, this.tagName, this.collectionId, this.areaId, this.fromContextId,
                 this.contextId, this.recursive).finally(() => {
             this.fetchData(true).finally(() => {
                 refresher?.detail.complete();

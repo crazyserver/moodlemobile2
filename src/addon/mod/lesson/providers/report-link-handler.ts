@@ -25,7 +25,7 @@ import { AddonModLessonProvider } from './lesson';
 /**
  * Handler to treat links to lesson report.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonReportLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModLessonReportLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModLesson';
@@ -95,10 +95,10 @@ export class AddonModLessonReportLinkHandler extends CoreContentLinksHandlerBase
     protected openReportOverview(moduleId: number, courseId?: number, groupId?: number, siteId?: string, navCtrl?: NavController)
             : Promise<any> {
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Get the module object.
-        return this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+        return CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
             courseId = courseId || module.course;
 
             const pageParams = {
@@ -110,7 +110,7 @@ export class AddonModLessonReportLinkHandler extends CoreContentLinksHandlerBase
 
             this.linkHelper.goInSite(navCtrl, 'AddonModLessonIndexPage', pageParams, siteId);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error processing link.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error processing link.');
         }).finally(() => {
             modal.dismiss();
         });
@@ -131,10 +131,10 @@ export class AddonModLessonReportLinkHandler extends CoreContentLinksHandlerBase
     protected openUserRetake(moduleId: number, userId: number, courseId: number, retake: number, siteId: string,
             navCtrl?: NavController): Promise<any> {
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Get the module object.
-        return this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+        return CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
             courseId = courseId || module.course;
 
             const pageParams = {
@@ -146,7 +146,7 @@ export class AddonModLessonReportLinkHandler extends CoreContentLinksHandlerBase
 
             this.linkHelper.goInSite(navCtrl, 'AddonModLessonUserRetakePage', pageParams, siteId);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error processing link.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error processing link.');
         }).finally(() => {
             modal.dismiss();
         });

@@ -21,7 +21,7 @@ import { AddonModQuizAccessOfflineAttemptsComponent } from '../component/offline
 /**
  * Handler to support offline attempts access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessOfflineAttemptsHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessOfflineAttempts';
     ruleName = 'quizaccess_offlineattempts';

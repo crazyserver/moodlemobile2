@@ -56,8 +56,8 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
      * Component being initialized.
      */
     ngOnInit(): void {
-        this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();
-        this.downloadAllCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
+        this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
+        this.downloadAllCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
         this.fetchCourses().finally(() => {
             this.coursesLoaded = true;
@@ -70,20 +70,20 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
             if (data.action == CoreCoursesProvider.ACTION_ENROL) {
                 this.fetchCourses();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Refresh the enabled flags if site is updated.
         this.siteUpdatedObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             const wasEnabled = this.downloadAllCoursesEnabled;
 
-            this.searchEnabled = !this.coursesProvider.isSearchCoursesDisabledInSite();
-            this.downloadAllCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
+            this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
+            this.downloadAllCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
             if (!wasEnabled && this.downloadAllCoursesEnabled && this.coursesLoaded) {
                 // Download all courses is enabled now, initialize it.
                 this.initPrefetchCoursesIcon();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -92,7 +92,7 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
      * @return Promise resolved when done.
      */
     protected fetchCourses(): Promise<any> {
-        return this.coursesProvider.getUserCourses().then((courses) => {
+        return CoreCourses.getUserCourses().then((courses) => {
             const promises = [],
                 courseIds = courses.map((course) => {
                 return course.id;
@@ -100,10 +100,10 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
 
             this.courseIds = courseIds.join(',');
 
-            promises.push(this.coursesHelper.loadCoursesExtraInfo(courses));
+            promises.push(CoreCoursesHelper.loadCoursesExtraInfo(courses));
 
-            if (this.coursesProvider.canGetAdminAndNavOptions()) {
-                promises.push(this.coursesProvider.getCoursesAdminAndNavOptions(courseIds).then((options) => {
+            if (CoreCourses.canGetAdminAndNavOptions()) {
+                promises.push(CoreCourses.getCoursesAdminAndNavOptions(courseIds).then((options) => {
                     courses.forEach((course) => {
                         course.navOptions = options.navOptions[course.id];
                         course.admOptions = options.admOptions[course.id];
@@ -119,7 +119,7 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
                 this.initPrefetchCoursesIcon();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
         });
     }
 
@@ -131,10 +131,10 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
     refreshCourses(refresher: any): void {
         const promises = [];
 
-        promises.push(this.coursesProvider.invalidateUserCourses());
+        promises.push(CoreCourses.invalidateUserCourses());
         promises.push(this.courseOptionsDelegate.clearAndInvalidateCoursesOptions());
         if (this.courseIds) {
-            promises.push(this.coursesProvider.invalidateCoursesByField('ids', this.courseIds));
+            promises.push(CoreCourses.invalidateCoursesByField('ids', this.courseIds));
         }
 
         Promise.all(promises).finally(() => {
@@ -194,13 +194,13 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
         this.prefetchCoursesData.icon = 'spinner';
         this.prefetchCoursesData.badge = '';
 
-        return this.courseHelper.confirmAndPrefetchCourses(this.courses, (progress) => {
+        return CoreCourseHelper.confirmAndPrefetchCourses(this.courses, (progress) => {
             this.prefetchCoursesData.badge = progress.count + ' / ' + progress.total;
         }).then(() => {
             this.prefetchCoursesData.icon = 'ion-android-refresh';
         }).catch((error) => {
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
                 this.prefetchCoursesData.icon = initialIcon;
             }
         }).finally(() => {
@@ -226,8 +226,8 @@ export class CoreCoursesMyCoursesComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.courseHelper.determineCoursesStatus(this.courses).then((status) => {
-            let icon = this.courseHelper.getCourseStatusIconAndTitleFromStatus(status).icon;
+        CoreCourseHelper.determineCoursesStatus(this.courses).then((status) => {
+            let icon = CoreCourseHelper.getCourseStatusIconAndTitleFromStatus(status).icon;
             if (icon == 'spinner') {
                 // It seems all courses are being downloaded, show a download button instead.
                 icon = 'cloud-download';

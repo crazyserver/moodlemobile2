@@ -90,17 +90,17 @@ export class AddonCompetencyCompetenciesPage {
                 const resp = <AddonCompetencyDataForPlanPageResult> response;
 
                 if (resp.competencycount <= 0) {
-                    return Promise.reject(this.translate.instant('addon.competency.errornocompetenciesfound'));
+                    return Promise.reject(Translate.instant('addon.competency.errornocompetenciesfound'));
                 }
 
                 this.title = resp.plan.name;
                 this.userId = resp.plan.userid;
             } else {
-                this.title = this.translate.instant('addon.competency.coursecompetencies');
+                this.title = Translate.instant('addon.competency.coursecompetencies');
             }
             this.competencies = response.competencies;
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting competencies data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting competencies data.');
         });
     }
 

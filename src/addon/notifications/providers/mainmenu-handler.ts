@@ -24,7 +24,7 @@ import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers
 /**
  * Handler to inject an option into main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotificationsMainMenuHandler implements CoreMainMenuHandler {
     name = 'AddonNotifications';
     priority = 700;
@@ -61,7 +61,7 @@ export class AddonNotificationsMainMenuHandler implements CoreMainMenuHandler {
         // If a push notification is received, refresh the count.
         pushNotificationsDelegate.on('receive').subscribe((notification) => {
             // New notification received. If it's from current site, refresh the data.
-            if (utils.isTrueOrOne(notification.notif) && this.sitesProvider.isCurrentSite(notification.site)) {
+            if (utils.isTrueOrOne(notification.notif) && CoreSites.isCurrentSite(notification.site)) {
                 this.updateBadge(notification.site);
             }
         });
@@ -98,7 +98,7 @@ export class AddonNotificationsMainMenuHandler implements CoreMainMenuHandler {
      * @param siteId Site ID or current Site if undefined.
      */
     updateBadge(siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         if (!siteId) {
             return;
         }

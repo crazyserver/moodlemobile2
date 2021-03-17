@@ -27,7 +27,7 @@ import { CoreWSExternalWarning } from '@services/ws';
 /**
  * Service to handle notes.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotesProvider {
 
     protected ROOT_CACHE_KEY = 'mmaNotes:';
@@ -50,7 +50,7 @@ export class AddonNotesProvider {
      * @return Promise resolved with boolean: true if note was sent to server, false if stored in device.
      */
     addNote(userId: number, courseId: number, publishState: string, noteText: string, siteId?: string): Promise<boolean> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Convenience function to store a note to be synchronized later.
         const storeOffline = (): Promise<any> => {
@@ -59,7 +59,7 @@ export class AddonNotesProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the note.
             return storeOffline();
         }
@@ -68,7 +68,7 @@ export class AddonNotesProvider {
         return this.addNoteOnline(userId, courseId, publishState, noteText, siteId).then(() => {
             return true;
         }).catch((error) => {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // It's a WebService error, the user cannot send the message so don't store it.
                 return Promise.reject(error);
             }
@@ -102,7 +102,7 @@ export class AddonNotesProvider {
         return this.addNotesOnline(notes, siteId).then((response) => {
             if (response && response[0] && response[0].noteid === -1) {
                 // There was an error, and it should be translated already.
-                return Promise.reject(this.utils.createFakeWSError(response[0].errormessage));
+                return Promise.reject(CoreUtils.createFakeWSError(response[0].errormessage));
             }
 
             // A note was added, invalidate the course notes.
@@ -125,7 +125,7 @@ export class AddonNotesProvider {
             return Promise.resolve([]);
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 notes: notes
             };
@@ -144,7 +144,7 @@ export class AddonNotesProvider {
      *         have been deleted, the resolve param can contain errors for notes not deleted.
      */
     deleteNote(note: AddonNotesNoteFormatted, courseId: number, siteId?: string): Promise<void> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (note.offline) {
             return this.notesOffline.deleteOfflineNote(note.userid, note.content, note.created, siteId);
@@ -157,7 +157,7 @@ export class AddonNotesProvider {
             });
         };
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // App is offline, store the note.
             return storeOffline();
         }
@@ -166,7 +166,7 @@ export class AddonNotesProvider {
         return this.deleteNotesOnline([note.id], courseId, siteId).then(() => {
             return true;
         }).catch((error) => {
-            if (this.utils.isWebServiceError(error)) {
+            if (CoreUtils.isWebServiceError(error)) {
                 // It's a WebService error, the user cannot send the note so don't store it.
                 return Promise.reject(error);
             }
@@ -186,7 +186,7 @@ export class AddonNotesProvider {
      *         have been deleted, the resolve param can contain errors for notes not deleted.
      */
     deleteNotesOnline(noteIds: number[], courseId: number, siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 notes: noteIds
             };
@@ -210,7 +210,7 @@ export class AddonNotesProvider {
      * @return Promise resolved with true if enabled, resolved with false or rejected otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.canUseAdvancedFeature('enablenotes');
         });
     }
@@ -223,7 +223,7 @@ export class AddonNotesProvider {
      * @return Promise resolved with true if enabled, resolved with false or rejected otherwise.
      */
     isPluginAddNoteEnabledForCourse(courseId: number, siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // The only way to detect if it's enabled is to perform a WS call.
             // We use an invalid user ID (-1) to avoid saving the note if the user has permissions.
             const data = {
@@ -243,7 +243,7 @@ export class AddonNotesProvider {
 
             /* Use .read to cache data and be able to check it in offline. This means that, if a user loses the capabilities
                to add notes, he'll still see the option in the app. */
-            return this.utils.promiseWorks(site.read('core_notes_create_notes', data, preSets));
+            return CoreUtils.promiseWorks(site.read('core_notes_create_notes', data, preSets));
         });
     }
 
@@ -255,7 +255,7 @@ export class AddonNotesProvider {
      * @return Promise resolved with true if enabled, resolved with false or rejected otherwise.
      */
     isPluginViewNotesEnabledForCourse(courseId: number, siteId?: string): Promise<boolean> {
-        return this.utils.promiseWorks(this.getNotes(courseId, undefined, false, true, siteId));
+        return CoreUtils.promiseWorks(this.getNotes(courseId, undefined, false, true, siteId));
     }
 
     /**
@@ -294,7 +294,7 @@ export class AddonNotesProvider {
 
         this.logger.debug('Get notes for course ' + courseId);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 courseid: courseId
             };
@@ -370,7 +370,7 @@ export class AddonNotesProvider {
                 note.userfullname = user.fullname;
                 note.userprofileimageurl = user.profileimageurl || null;
             }).catch(() => {
-                note.userfullname = this.translate.instant('addon.notes.userwithid', {id: note.userid});
+                note.userfullname = Translate.instant('addon.notes.userwithid', {id: note.userid});
             });
         });
 
@@ -388,7 +388,7 @@ export class AddonNotesProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateNotes(courseId: number, userId?: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (userId) {
                 return site.invalidateWsCacheForKey(this.getNotesCacheKey(courseId, userId));
             }
@@ -406,7 +406,7 @@ export class AddonNotesProvider {
      * @return Promise resolved when the WS call is successful.
      */
     logView(courseId: number, userId?: number, siteId?: string): Promise<AddonNotesViewNotesResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const params = {
                 courseid: courseId,
                 userid: userId || 0

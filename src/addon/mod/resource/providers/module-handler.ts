@@ -30,7 +30,7 @@ import { CoreWSExternalFile } from '@services/ws';
 /**
  * Handler to support resource modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModResource';
     modName = 'resource';
@@ -79,7 +79,7 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
         };
 
         const handlerData: CoreCourseModuleHandlerData = {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_resource-handler',
             showDownloadButton: true,
@@ -128,7 +128,7 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
             // No need to load contents.
             promise = Promise.resolve();
         } else {
-            promise = this.courseProvider.loadModuleContents(module, courseId, undefined, false, false, undefined, this.modName);
+            promise = CoreCourse.loadModuleContents(module, courseId, undefined, false, false, undefined, this.modName);
         }
 
         return promise.then(() => {
@@ -206,19 +206,19 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
 
                 if (options.showdate) {
                     if (options.filedetails && options.filedetails.modifieddate) {
-                        extra.push(this.translate.instant('addon.mod_resource.modifieddate',
-                            {$a: this.timeUtils.userDate(options.filedetails.modifieddate * 1000, 'core.strftimedatetimeshort') }));
+                        extra.push(Translate.instant('addon.mod_resource.modifieddate',
+                            {$a: CoreTimeUtils.userDate(options.filedetails.modifieddate * 1000, 'core.strftimedatetimeshort') }));
                     } else if (options.filedetails && options.filedetails.uploadeddate) {
-                        extra.push(this.translate.instant('addon.mod_resource.uploadeddate',
-                            {$a: this.timeUtils.userDate(options.filedetails.uploadeddate * 1000, 'core.strftimedatetimeshort') }));
+                        extra.push(Translate.instant('addon.mod_resource.uploadeddate',
+                            {$a: CoreTimeUtils.userDate(options.filedetails.uploadeddate * 1000, 'core.strftimedatetimeshort') }));
                     } else if (file.timemodified > file.timecreated + CoreConstants.SECONDS_MINUTE * 5) {
                         /* Modified date may be up to several minutes later than uploaded date just because
                            teacher did not submit the form promptly. Give teacher up to 5 minutes to do it. */
-                        extra.push(this.translate.instant('addon.mod_resource.modifieddate',
-                            {$a: this.timeUtils.userDate(file.timemodified * 1000, 'core.strftimedatetimeshort') }));
+                        extra.push(Translate.instant('addon.mod_resource.modifieddate',
+                            {$a: CoreTimeUtils.userDate(file.timemodified * 1000, 'core.strftimedatetimeshort') }));
                     } else {
-                        extra.push(this.translate.instant('addon.mod_resource.uploadeddate',
-                            {$a: this.timeUtils.userDate(file.timecreated * 1000, 'core.strftimedatetimeshort') }));
+                        extra.push(Translate.instant('addon.mod_resource.uploadeddate',
+                            {$a: CoreTimeUtils.userDate(file.timecreated * 1000, 'core.strftimedatetimeshort') }));
                     }
                 }
 
@@ -227,7 +227,7 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
 
             // No previously set, just set the icon.
             if (resourceData.icon == '') {
-                resourceData.icon = this.courseProvider.getModuleIconSrc(this.modName, module.modicon);
+                resourceData.icon = CoreCourse.getModuleIconSrc(this.modName, module.modicon);
             }
 
             return resourceData;

@@ -19,7 +19,7 @@ import { AddonModQuizAccessRuleHandler } from '../../../providers/access-rules-d
 /**
  * Handler to support delay between attempts access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessDelayBetweenAttemptsHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessDelayBetweenAttempts';
     ruleName = 'quizaccess_delaybetweenattempts';

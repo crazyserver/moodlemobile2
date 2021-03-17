@@ -90,8 +90,8 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
         this.initialSubwikiId = this.subwikiId;
         this.componentId = this.module.id;
         this.canEditTitle = !pageTitle;
-        this.title = pageTitle ? this.translate.instant('addon.mod_wiki.editingpage', {$a: pageTitle}) :
-                this.translate.instant('addon.mod_wiki.newpagehdr');
+        this.title = pageTitle ? Translate.instant('addon.mod_wiki.editingpage', {$a: pageTitle}) :
+                Translate.instant('addon.mod_wiki.newpagehdr');
         this.blockId = this.wikiSync.getSubwikiBlockId(this.subwikiId, this.wikiId, this.userId, this.groupId);
 
         // Create the form group and its controls.
@@ -158,7 +158,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                 this.pageForm.controls.title.setValue(pageContents.title); // Set the title in the form group.
                 this.wikiId = pageContents.wikiid;
                 this.subwikiId = pageContents.subwikiid;
-                this.title = this.translate.instant('addon.mod_wiki.editingpage', {$a: pageContents.title});
+                this.title = Translate.instant('addon.mod_wiki.editingpage', {$a: pageContents.title});
                 this.groupId = pageContents.groupid;
                 this.userId = pageContents.userid;
                 canEdit = pageContents.caneditpage;
@@ -240,7 +240,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
         return promise.then(() => {
             return true;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting wiki data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting wiki data.');
 
             // Go back.
             this.forceLeavePage();
@@ -249,8 +249,8 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
         }).finally(() => {
             if (!canEdit) {
                 // Cannot edit, show alert and go back.
-                this.domUtils.showAlert(this.translate.instant('core.notice'),
-                        this.translate.instant('addon.mod_wiki.cannoteditpage'));
+                CoreDomUtils.showAlert(Translate.instant('core.notice'),
+                        Translate.instant('addon.mod_wiki.cannoteditpage'));
                 this.forceLeavePage();
             }
         });
@@ -285,7 +285,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                 };
             }
         } else {
-            this.domUtils.showAlert(this.translate.instant('core.success'), this.translate.instant('core.datastoredoffline'));
+            CoreDomUtils.showAlert(Translate.instant('core.success'), Translate.instant('core.datastoredoffline'));
         }
 
         this.forceLeavePage();
@@ -356,10 +356,10 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
 
         // Check if data has changed.
         if (this.hasDataChanged()) {
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -418,7 +418,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
     save(): void {
         const values = this.pageForm.value,
             title = values.title,
-            modal = this.domUtils.showModalLoading('core.sending', true);
+            modal = CoreDomUtils.showModalLoading('core.sending', true);
         let promise,
             text = values.text;
 
@@ -429,7 +429,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
             // Edit existing page.
             promise = this.wikiProvider.editPage(this.pageId, text, this.section).then(() => {
 
-                this.domUtils.triggerFormSubmittedEvent(this.formElement, true, this.sitesProvider.getCurrentSiteId());
+                CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true, CoreSites.getCurrentSiteId());
 
                 // Invalidate page since it changed.
                 return this.wikiProvider.invalidatePage(this.pageId).then(() => {
@@ -440,8 +440,8 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
             // Creating a new page.
             if (!title) {
                 // Title is mandatory, stop.
-                this.domUtils.showAlert(this.translate.instant('core.notice'),
-                        this.translate.instant('addon.mod_wiki.titleshouldnotbeempty'));
+                CoreDomUtils.showAlert(Translate.instant('core.notice'),
+                        Translate.instant('addon.mod_wiki.titleshouldnotbeempty'));
                 modal.dismiss();
 
                 return;
@@ -451,7 +451,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                 // Check if the user has an offline page with the same title.
                 promise = this.wikiOffline.getNewPage(title, this.subwikiId, this.wikiId, this.userId, this.groupId).then(() => {
                     // There's a page with same name, reject with error message.
-                    return Promise.reject(this.translate.instant('addon.mod_wiki.pageexists'));
+                    return Promise.reject(Translate.instant('addon.mod_wiki.pageexists'));
                 }, () => {
                     // Not found, page can be sent.
                 });
@@ -471,7 +471,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                     cmId: this.module.id,
                 }).then((id) => {
 
-                    this.domUtils.triggerFormSubmittedEvent(this.formElement, id > 0, this.sitesProvider.getCurrentSiteId());
+                    CoreDomUtils.triggerFormSubmittedEvent(this.formElement, id > 0, CoreSites.getCurrentSiteId());
 
                     if (id > 0) {
                         CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'wiki' });
@@ -504,7 +504,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                                 pageId: this.pageId,
                                 subwikiId: this.subwikiId,
                                 pageTitle: title,
-                            }, this.sitesProvider.getCurrentSiteId());
+                            }, CoreSites.getCurrentSiteId());
                         });
                     } else {
                         // Page stored in offline. Go to see the offline page.
@@ -515,7 +515,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
         }
 
         return promise.catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error saving wiki data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error saving wiki data.');
         }).finally(() => {
             modal.dismiss();
         });
@@ -545,7 +545,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
         }
 
         const promise = this.module.id ? Promise.resolve(this.module) :
-                this.courseProvider.getModuleBasicInfoByInstance(wikiId, 'wiki');
+                CoreCourse.getModuleBasicInfoByInstance(wikiId, 'wiki');
 
         return promise.then((mod) => {
             this.module = mod;
@@ -554,7 +554,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
             if (!this.courseId && this.module.course) {
                 this.courseId = this.module.course;
             } else if (!this.courseId) {
-                return this.courseHelper.getModuleCourseIdByInstance(wikiId, 'wiki').then((course) => {
+                return CoreCourseHelper.getModuleCourseIdByInstance(wikiId, 'wiki').then((course) => {
                     this.courseId = course;
                 });
             }

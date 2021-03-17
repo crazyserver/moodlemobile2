@@ -20,7 +20,7 @@ import { AddonModWorkshopAssessmentStrategyCommentsComponent } from '../componen
 /**
  * Handler for comments assessment strategy plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopAssessmentStrategyCommentsHandler implements AddonWorkshopAssessmentStrategyHandler {
     name = 'AddonModWorkshopAssessmentStrategyComments';
     strategyName = 'comments';
@@ -57,7 +57,7 @@ export class AddonModWorkshopAssessmentStrategyCommentsHandler implements AddonW
         const originalValues = [];
 
         form.fields.forEach((field, n) => {
-            field.dimtitle = this.translate.instant('addon.mod_workshop_assessment_comments.dimensionnumber', {$a: field.number});
+            field.dimtitle = Translate.instant('addon.mod_workshop_assessment_comments.dimensionnumber', {$a: field.number});
 
             if (!form.current[n]) {
                 form.current[n] = {};
@@ -106,7 +106,7 @@ export class AddonModWorkshopAssessmentStrategyCommentsHandler implements AddonW
                 if (currentValues[idx].peercomment) {
                     data['peercomment__idx_' + idx] = currentValues[idx].peercomment;
                 } else {
-                    errors['peercomment_' + idx] = this.translate.instant('core.err_required');
+                    errors['peercomment_' + idx] = Translate.instant('core.err_required');
                     hasErrors = true;
                 }
 

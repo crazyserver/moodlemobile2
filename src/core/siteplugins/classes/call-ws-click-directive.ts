@@ -49,7 +49,7 @@ export class CoreSitePluginsCallWSOnClickBaseDirective extends CoreSitePluginsCa
 
             if (typeof this.confirmMessage != 'undefined') {
                 // Ask for confirm.
-                this.domUtils.showConfirm(this.confirmMessage || this.translate.instant('core.areyousure')).then(() => {
+                CoreDomUtils.showConfirm(this.confirmMessage || Translate.instant('core.areyousure')).then(() => {
                     this.callWS();
                 }).catch(() => {
                     // User cancelled, ignore.
@@ -66,11 +66,11 @@ export class CoreSitePluginsCallWSOnClickBaseDirective extends CoreSitePluginsCa
      * @return Promise resolved when done.
      */
     protected callWS(): Promise<any> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         return super.callWS().catch((error) => {
-            if (typeof this.showError == 'undefined' || this.utils.isTrueOrOne(this.showError)) {
-                this.domUtils.showErrorModalDefault(error, 'core.serverconnection', true);
+            if (typeof this.showError == 'undefined' || CoreUtils.isTrueOrOne(this.showError)) {
+                CoreDomUtils.showErrorModalDefault(error, 'core.serverconnection', true);
             }
         }).finally(() => {
             modal.dismiss();

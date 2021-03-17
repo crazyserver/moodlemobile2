@@ -104,11 +104,11 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
         this.currentSite = sitesProvider.getCurrentSite();
         this.errors = {
-            required: this.translate.instant('core.required')
+            required: Translate.instant('core.required')
         };
 
         // Calculate format to use. ion-datetime doesn't support escaping characters ([]), so we remove them.
-        this.dateFormat = this.timeUtils.convertPHPToMoment(this.translate.instant('core.strftimedatetimeshort'))
+        this.dateFormat = CoreTimeUtils.convertPHPToMoment(Translate.instant('core.strftimedatetimeshort'))
             .replace(/[\[\]]/g, '');
 
         // Initialize form variables.
@@ -117,7 +117,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
         this.groupControl = this.fb.control('');
         this.descriptionControl = this.fb.control('');
 
-        const currentDate = this.timeUtils.toDatetimeFormat(timestamp);
+        const currentDate = CoreTimeUtils.toDatetimeFormat(timestamp);
 
         this.eventForm.addControl('name', this.fb.control('', Validators.required));
         this.eventForm.addControl('timestart', this.fb.control(currentDate, Validators.required));
@@ -141,7 +141,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.fetchData().finally(() => {
-            this.originalData = this.utils.clone(this.eventForm.value);
+            this.originalData = CoreUtils.clone(this.eventForm.value);
             this.loaded = true;
         });
     }
@@ -169,7 +169,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
                 eventTypes = this.calendarHelper.getEventTypeOptions(types);
 
             if (!eventTypes.length) {
-                return Promise.reject(this.translate.instant('addon.calendar.nopermissiontoupdatecalendar'));
+                return Promise.reject(Translate.instant('addon.calendar.nopermissiontoupdatecalendar'));
             }
 
             if (this.eventId && !this.gotEventData) {
@@ -220,17 +220,17 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
             if (types.category) {
                 // Get the categories.
-                promises.push(this.coursesProvider.getCategories(0, true).then((cats) => {
+                promises.push(CoreCourses.getCategories(0, true).then((cats) => {
                     this.categories = cats;
                 }));
             }
 
-            this.showAll = this.utils.isTrueOrOne(this.currentSite.getStoredConfig('calendar_adminseesall')) &&
+            this.showAll = CoreUtils.isTrueOrOne(this.currentSite.getStoredConfig('calendar_adminseesall')) &&
                     accessInfo.canmanageentries;
 
             if (types.course || types.groups) {
                 // Get the courses.
-                const promise = this.showAll ? this.coursesProvider.getCoursesByField() : this.coursesProvider.getUserCourses();
+                const promise = this.showAll ? CoreCourses.getCoursesByField() : CoreCourses.getUserCourses();
 
                 promises.push(promise.then((courses) => {
                     if (this.showAll) {
@@ -278,7 +278,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             });
 
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting data.');
             this.error = true;
 
             if (!this.svComponent || !this.svComponent.isOn()) {
@@ -299,7 +299,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
         const courseId = event.course ? event.course.id : event.courseid;
 
         this.eventForm.controls.name.setValue(event.name);
-        this.eventForm.controls.timestart.setValue(this.timeUtils.toDatetimeFormat(event.timestart * 1000));
+        this.eventForm.controls.timestart.setValue(CoreTimeUtils.toDatetimeFormat(event.timestart * 1000));
         this.eventForm.controls.eventtype.setValue(event.eventtype);
         this.eventForm.controls.categoryid.setValue(event.categoryid || '');
         this.eventForm.controls.courseid.setValue(courseId || '');
@@ -312,7 +312,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             // It's an offline event, use the data as it is.
             this.eventForm.controls.duration.setValue(event.duration);
             this.eventForm.controls.timedurationuntil.setValue(
-                    this.timeUtils.toDatetimeFormat((event.timedurationuntil * 1000) || Date.now()));
+                    CoreTimeUtils.toDatetimeFormat((event.timedurationuntil * 1000) || Date.now()));
             this.eventForm.controls.timedurationminutes.setValue(event.timedurationminutes || '');
             this.eventForm.controls.repeat.setValue(!!event.repeat);
             this.eventForm.controls.repeats.setValue(event.repeats || '1');
@@ -322,12 +322,12 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
             if (event.timeduration > 0) {
                 this.eventForm.controls.duration.setValue(1);
-                this.eventForm.controls.timedurationuntil.setValue(this.timeUtils.toDatetimeFormat(
+                this.eventForm.controls.timedurationuntil.setValue(CoreTimeUtils.toDatetimeFormat(
                         (event.timestart + event.timeduration) * 1000));
             } else {
                 // No duration.
                 this.eventForm.controls.duration.setValue(0);
-                this.eventForm.controls.timedurationuntil.setValue(this.timeUtils.toDatetimeFormat());
+                this.eventForm.controls.timedurationuntil.setValue(CoreTimeUtils.toDatetimeFormat());
             }
 
             this.eventForm.controls.timedurationminutes.setValue('');
@@ -356,13 +356,13 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
         if (this.types) {
             if (this.types.category) {
-                promises.push(this.coursesProvider.invalidateCategories(0, true));
+                promises.push(CoreCourses.invalidateCategories(0, true));
             }
             if (this.types.course || this.types.groups) {
                 if (this.showAll) {
-                    promises.push(this.coursesProvider.invalidateCoursesByField());
+                    promises.push(CoreCourses.invalidateCoursesByField());
                 } else {
-                    promises.push(this.coursesProvider.invalidateUserCourses());
+                    promises.push(CoreCourses.invalidateUserCourses());
                 }
             }
         }
@@ -384,12 +384,12 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             return;
         }
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         this.loadGroups(courseId).then(() => {
             this.groupControl.setValue('');
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting data.');
         }).finally(() => {
             modal.dismiss();
         });
@@ -404,7 +404,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
     protected loadGroups(courseId: number): Promise<any> {
         this.loadingGroups = true;
 
-        return this.groupsProvider.getUserGroupsInCourse(courseId).then((groups) => {
+        return CoreGroups.getUserGroupsInCourse(courseId).then((groups) => {
             this.groups = groups;
             this.courseGroupSet = true;
         }).finally(() => {
@@ -425,8 +425,8 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
     submit(): void {
         // Validate data.
         const formData = this.eventForm.value,
-            timeStartDate = this.timeUtils.convertToTimestamp(formData.timestart),
-            timeUntilDate = this.timeUtils.convertToTimestamp(formData.timedurationuntil),
+            timeStartDate = CoreTimeUtils.convertToTimestamp(formData.timestart),
+            timeUntilDate = CoreTimeUtils.convertToTimestamp(formData.timedurationuntil),
             timeDurationMinutes = parseInt(formData.timedurationminutes || '', 10);
         let error;
 
@@ -446,7 +446,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
         if (error) {
             // Show error and stop.
-            this.domUtils.showErrorModal(this.translate.instant(error));
+            CoreDomUtils.showErrorModal(Translate.instant(error));
 
             return;
         }
@@ -490,13 +490,13 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
         }
 
         // Send the data.
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         let event: AddonCalendarEvent;
 
         this.calendarProvider.submitEvent(this.eventId, data).then((result) => {
             event = result.event;
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, result.sent, this.currentSite.getId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, result.sent, this.currentSite.getId());
 
             if (result.sent) {
                 // Event created or edited, invalidate right days & months.
@@ -510,7 +510,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
         }).then(() => {
             this.returnToList(event);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error sending data.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error sending data.');
         }).finally(() => {
             modal.dismiss();
         });
@@ -546,7 +546,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             // Empty form.
             this.hasOffline = false;
             this.eventForm.reset(this.originalData);
-            this.originalData = this.utils.clone(this.eventForm.value);
+            this.originalData = CoreUtils.clone(this.eventForm.value);
         } else {
             this.originalData = null; // Avoid asking for confirmation.
             this.navCtrl.pop();
@@ -557,15 +557,15 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
      * Discard an offline saved discussion.
      */
     discard(): void {
-        this.domUtils.showConfirm(this.translate.instant('core.areyousure')).then(() => {
+        CoreDomUtils.showConfirm(Translate.instant('core.areyousure')).then(() => {
             this.calendarOffline.deleteEvent(this.eventId).then(() => {
 
-                this.domUtils.triggerFormCancelledEvent(this.formElement, this.currentSite.getId());
+                CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.currentSite.getId());
 
                 this.returnToList();
             }).catch(() => {
                 // Shouldn't happen.
-                this.domUtils.showErrorModal('Error discarding event.');
+                CoreDomUtils.showErrorModal('Error discarding event.');
             });
         }).catch(() => {
             // Cancelled.
@@ -580,10 +580,10 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
     async ionViewCanLeave(): Promise<void> {
         if (this.calendarHelper.hasEventDataChanged(this.eventForm.value, this.originalData)) {
             // Show confirmation if some data has been modified.
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.currentSite.getId());
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.currentSite.getId());
     }
 
     /**

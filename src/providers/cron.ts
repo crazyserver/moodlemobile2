@@ -83,7 +83,7 @@ export interface CoreCronHandler {
 /*
  * Service to handle cron processes. The registered processes will be executed every certain time.
 */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCronDelegate {
     // Constants.
     static DEFAULT_INTERVAL = 3600000; // Default interval is 1 hour.
@@ -124,7 +124,7 @@ export class CoreCronDelegate {
             private utils: CoreUtilsProvider, network: Network, zone: NgZone) {
         this.logger = CoreLogger.getInstance('CoreCronDelegate');
 
-        this.appDB = this.appProvider.getDB();
+        this.appDB = CoreApp.getDB();
         this.dbReady = appProvider.createTablesFromSchema(this.tableSchema).catch(() => {
             // Ignore errors.
         });
@@ -164,7 +164,7 @@ export class CoreCronDelegate {
             isSync = !force && this.isHandlerSync(name);
         let promise;
 
-        if (usesNetwork && !this.appProvider.isOnline()) {
+        if (usesNetwork && !CoreApp.isOnline()) {
             // Offline, stop executing.
             this.logger.debug('Cannot execute handler because device is offline: ' + name);
             this.stopHandler(name);
@@ -175,7 +175,7 @@ export class CoreCronDelegate {
         if (isSync) {
             // Check network connection.
             promise = this.configProvider.get(CoreConstants.SETTINGS_SYNC_ONLY_ON_WIFI, false).then((syncOnlyOnWifi) => {
-                return !syncOnlyOnWifi || this.appProvider.isWifi();
+                return !syncOnlyOnWifi || CoreApp.isWifi();
             });
         } else {
             promise = Promise.resolve(true);
@@ -257,7 +257,7 @@ export class CoreCronDelegate {
             }
         }
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -295,7 +295,7 @@ export class CoreCronDelegate {
         }
 
         // Don't allow intervals lower than the minimum.
-        const minInterval = this.appProvider.isDesktop() ? CoreCronDelegate.DESKTOP_MIN_INTERVAL : CoreCronDelegate.MIN_INTERVAL,
+        const minInterval = CoreApp.isDesktop() ? CoreCronDelegate.DESKTOP_MIN_INTERVAL : CoreCronDelegate.MIN_INTERVAL,
             handlerInterval = this.handlers[name].getInterval();
 
         if (!handlerInterval) {

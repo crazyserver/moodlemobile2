@@ -51,7 +51,7 @@ export type CoreFileProgressFunction = (event: CoreFileProgressEvent) => void;
 /**
  * Factory to interact with the file system.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileProvider {
     // Formats to read a file.
     static FORMATTEXT = 0;
@@ -177,9 +177,9 @@ export class CoreFileProvider {
 
         return this.platform.ready().then(() => {
 
-            if (CoreApp.instance.isAndroid()) {
+            if (CoreApp.isAndroid()) {
                 this.basePath = this.file.externalApplicationStorageDirectory || this.basePath;
-            } else if (CoreApp.instance.isIOS()) {
+            } else if (CoreApp.isIOS()) {
                 this.basePath = this.file.documentsDirectory || this.basePath;
             } else if (!this.isAvailable() || this.basePath === '') {
                 this.logger.error('Error getting device OS.');
@@ -474,7 +474,7 @@ export class CoreFileProvider {
      */
     calculateFreeSpace(): Promise<number> {
         return this.file.getFreeDiskSpace().then((size) => {
-            if (CoreApp.instance.isIOS()) {
+            if (CoreApp.isIOS()) {
                 // In iOS the size is in bytes.
                 return Number(size);
             }
@@ -621,7 +621,7 @@ export class CoreFileProvider {
 
             // Create file (and parent folders) to prevent errors.
             return this.createFile(path).then((fileEntry) => {
-                if (this.isHTMLAPI && !CoreApp.instance.isDesktop() &&
+                if (this.isHTMLAPI && !CoreApp.isDesktop() &&
                     (typeof data == 'string' || data.toString() == '[object ArrayBuffer]')) {
                     // We need to write Blobs.
                     const type = this.mimeUtils.getMimeType(this.mimeUtils.getFileExtension(path));
@@ -744,7 +744,7 @@ export class CoreFileProvider {
      */
     getBasePathToDownload(): Promise<string> {
         return this.init().then(() => {
-            if (CoreApp.instance.isIOS()) {
+            if (CoreApp.isIOS()) {
                 // In iOS we want the internal URL (cdvfile://localhost/persistent/...).
                 return this.file.resolveDirectoryUrl(this.basePath).then((dirEntry) => {
                     return dirEntry.toInternalURL();
@@ -1251,7 +1251,7 @@ export class CoreFileProvider {
      * @return Converted src.
      */
     convertFileSrc(src: string): string {
-        return CoreApp.instance.isIOS() ? (<any> window).Ionic.WebView.convertFileSrc(src) : src;
+        return CoreApp.isIOS() ? (<any> window).Ionic.WebView.convertFileSrc(src) : src;
     }
 
     /**
@@ -1261,7 +1261,7 @@ export class CoreFileProvider {
      * @return Unconverted src.
      */
     unconvertFileSrc(src: string): string {
-        if (!CoreApp.instance.isIOS()) {
+        if (!CoreApp.isIOS()) {
             return src;
         }
 

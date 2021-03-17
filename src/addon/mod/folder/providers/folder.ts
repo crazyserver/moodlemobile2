@@ -24,7 +24,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 /**
  * Service that provides some features for folder.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFolderProvider {
     static COMPONENT = 'mmaModFolder';
 
@@ -59,7 +59,7 @@ export class AddonModFolderProvider {
      */
     protected getFolderByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModFolderFolder> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -67,7 +67,7 @@ export class AddonModFolderProvider {
                 cacheKey: this.getFolderCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModFolderProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_folder_get_folders_by_courses', params, preSets)
@@ -108,9 +108,9 @@ export class AddonModFolderProvider {
         const promises = [];
 
         promises.push(this.invalidateFolderData(courseId, siteId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -121,7 +121,7 @@ export class AddonModFolderProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateFolderData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getFolderCacheKey(courseId));
         });
     }
@@ -133,7 +133,7 @@ export class AddonModFolderProvider {
      * @since 3.3
      */
     isGetFolderWSAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_folder_get_folders_by_courses');
+        return CoreSites.wsAvailableInCurrentSite('mod_folder_get_folders_by_courses');
     }
 
     /**
@@ -149,7 +149,7 @@ export class AddonModFolderProvider {
             folderid: id
         };
 
-        return this.logHelper.logSingle('mod_folder_view_folder', params, AddonModFolderProvider.COMPONENT, id, name, 'folder',
+        return CoreCourseLogHelper.logSingle('mod_folder_view_folder', params, AddonModFolderProvider.COMPONENT, id, name, 'folder',
                 {}, siteId);
     }
 }

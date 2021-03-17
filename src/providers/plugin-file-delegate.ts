@@ -134,7 +134,7 @@ export type CorePluginFileDownloadableResult = {
 /**
  * Delegate to register pluginfile information handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CorePluginFileDelegate extends CoreDelegate {
     protected handlerNameProperty = 'component';
 
@@ -248,7 +248,7 @@ export class CorePluginFileDelegate extends CoreDelegate {
         const filteredFiles = [];
 
         await Promise.all(files.map(async (file) => {
-            const state = await CoreFilepool.instance.getFileStateByUrl(siteId, file.fileurl, file.timemodified);
+            const state = await CoreFilepool.getFileStateByUrl(siteId, file.fileurl, file.timemodified);
 
             if (state != CoreConstants.DOWNLOADED && state != CoreConstants.NOT_DOWNLOADABLE) {
                 filteredFiles.push(file);

@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to choice.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoiceLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModChoiceLinkHandler';
 

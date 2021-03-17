@@ -80,7 +80,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
         this.componentName = navParams.get('componentName');
         this.itemId = navParams.get('itemId');
         this.area = navParams.get('area') || '';
-        this.title = navParams.get('title') || this.translate.instant('core.comments.comments');
+        this.title = navParams.get('title') || Translate.instant('core.comments.comments');
         this.courseId = navParams.get('courseId');
         this.page = 0;
 
@@ -96,7 +96,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
                 this.refreshIcon = 'spinner';
                 this.syncIcon = 'spinner';
 
-                this.domUtils.scrollToTop(this.content);
+                CoreDomUtils.scrollToTop(this.content);
 
                 this.page = 0;
                 this.comments = [];
@@ -114,7 +114,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
             this.addDeleteCommentsAvailable = enabled;
         });
 
-        this.currentUserId = this.sitesProvider.getCurrentSiteUserId();
+        this.currentUserId = CoreSites.getCurrentSiteUserId();
         this.fetchComments(true);
     }
 
@@ -159,9 +159,9 @@ export class CoreCommentsViewerPage implements OnDestroy {
         }).catch((error) => {
             this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
             if (error && this.componentName == 'assignsubmission_comments') {
-                this.domUtils.showAlertTranslated('core.notice', 'core.comments.commentsnotworking');
+                CoreDomUtils.showAlertTranslated('core.notice', 'core.comments.commentsnotworking');
             } else {
-                this.domUtils.showErrorModalDefault(error, this.translate.instant('core.error') + ': get_comments');
+                CoreDomUtils.showErrorModalDefault(error, Translate.instant('core.error') + ': get_comments');
             }
         }).finally(() => {
             this.commentsLoaded = true;
@@ -216,7 +216,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
     private showSyncWarnings(warnings: string[]): void {
         const message = this.textUtils.buildMessage(warnings);
         if (message) {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }
     }
 
@@ -232,7 +232,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
             this.showSyncWarnings(warnings);
         }).catch((error) => {
             if (showErrors) {
-                this.domUtils.showErrorModalDefault(error, 'core.errorsync', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errorsync', true);
             }
 
             return Promise.reject(null);
@@ -274,7 +274,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
                             itemId: this.itemId,
                             area: this.area,
                             countChange: addedComments.length,
-                        }, this.sitesProvider.getCurrentSiteId());
+                        }, CoreSites.getCurrentSiteId());
                 });
             } else if (data && !data.comments) {
                 // Comments added in offline mode.
@@ -294,7 +294,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
         e.preventDefault();
         e.stopPropagation();
 
-        const time = this.timeUtils.userDate((deleteComment.lastmodified || deleteComment.timecreated) * 1000,
+        const time = CoreTimeUtils.userDate((deleteComment.lastmodified || deleteComment.timecreated) * 1000,
             'core.strftimerecentfull');
 
         deleteComment.contextlevel = this.contextLevel;
@@ -303,7 +303,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
         deleteComment.itemid = this.itemId;
         deleteComment.area = this.area;
 
-        this.domUtils.showDeleteConfirm('core.comments.deletecommentbyon', {$a:
+        CoreDomUtils.showDeleteConfirm('core.comments.deletecommentbyon', {$a:
                 { user: deleteComment.fullname || '', time: time } }).then(() => {
             this.commentsProvider.deleteComment(deleteComment).then((deletedOnline) => {
                 this.showDelete = false;
@@ -320,7 +320,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
                             itemId: this.itemId,
                             area: this.area,
                             countChange: -1,
-                        }, this.sitesProvider.getCurrentSiteId());
+                        }, CoreSites.getCurrentSiteId());
                     }
                 } else {
                     this.loadOfflineData();
@@ -328,9 +328,9 @@ export class CoreCommentsViewerPage implements OnDestroy {
 
                 this.invalidateComments();
 
-                this.domUtils.showToast('core.comments.eventcommentdeleted', true, 3000);
+                CoreDomUtils.showToast('core.comments.eventcommentdeleted', true, 3000);
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'Delete comment failed.');
+                CoreDomUtils.showErrorModalDefault(error, 'Delete comment failed.');
             });
         }).catch(() => {
             // User cancelled, nothing to do.

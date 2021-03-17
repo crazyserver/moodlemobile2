@@ -59,7 +59,7 @@ export class AddonModAssignSubmissionFileComponent extends AddonModAssignSubmiss
 
                 return promise.then((offlineFiles) => {
                     const onlineFiles = offlineData.plugindata.files_filemanager.online || [];
-                    offlineFiles = this.fileUploaderProvider.markOfflineFiles(offlineFiles);
+                    offlineFiles = CoreFileUploader.markOfflineFiles(offlineFiles);
 
                     this.files = onlineFiles.concat(offlineFiles);
                 });

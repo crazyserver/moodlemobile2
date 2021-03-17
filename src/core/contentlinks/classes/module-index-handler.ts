@@ -80,7 +80,7 @@ export class CoreContentLinksModuleIndexHandler extends CoreContentLinksHandlerB
 
             return [{
                 action: (siteId, navCtrl?): void => {
-                    this.courseHelper.navigateToModuleByInstance(instanceId, this.modName, siteId, courseId, undefined,
+                    CoreCourseHelper.navigateToModuleByInstance(instanceId, this.modName, siteId, courseId, undefined,
                         this.useModNameToGetModule, pageParams, navCtrl);
                 }
             }];
@@ -88,7 +88,7 @@ export class CoreContentLinksModuleIndexHandler extends CoreContentLinksHandlerB
 
         return [{
             action: (siteId, navCtrl?): void => {
-                this.courseHelper.navigateToModule(parseInt(params.id, 10), siteId, courseId, undefined,
+                CoreCourseHelper.navigateToModule(parseInt(params.id, 10), siteId, courseId, undefined,
                     this.useModNameToGetModule ? this.modName : undefined, pageParams, navCtrl);
             }
         }];

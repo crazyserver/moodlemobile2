@@ -22,7 +22,7 @@ import { AddonModFeedbackHelperProvider } from './helper';
  * Content links handler for feedback show entries questions.
  * Match mod/feedback/show_entries.php with a valid feedback id.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackShowEntriesLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModFeedbackShowEntriesLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModFeedback';

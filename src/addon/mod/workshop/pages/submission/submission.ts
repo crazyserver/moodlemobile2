@@ -131,7 +131,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.fetchSubmissionData().then(() => {
             this.workshopProvider.logViewSubmission(this.submissionId, this.workshopId, this.workshop.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -150,9 +150,9 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
         }
 
         // Show confirmation if some data has been modified.
-        await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+        await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
     }
 
     /**
@@ -176,7 +176,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
      */
     protected eventReceived(data: any): void {
         if (this.workshopId === data.workshopId) {
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             this.loaded = false;
             this.refreshAllData();
@@ -266,7 +266,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
                     this.syncProvider.blockOperation(this.component, this.workshopId);
                 }
 
-                const defaultGrade = this.translate.instant('addon.mod_workshop.notoverridden');
+                const defaultGrade = Translate.instant('addon.mod_workshop.notoverridden');
 
                 promises.push(this.gradesHelper.makeGradesMenu(this.workshop.grade, undefined, defaultGrade, -1).then((grades) => {
                     this.evaluationGrades = grades;
@@ -324,7 +324,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
                 });
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -461,7 +461,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
      * @return Resolved when done.
      */
     protected sendEvaluation(): Promise<any> {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         const inputData = this.feedbackForm.value;
 
@@ -473,7 +473,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
         return this.workshopProvider.evaluateSubmission(this.workshopId, this.submissionId, this.courseId, inputData.text,
                 inputData.published, inputData.grade).then((result) => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!result, this.siteId);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!result, this.siteId);
 
             const data = {
                 workshopId: this.workshopId,
@@ -485,7 +485,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
                 CoreEvents.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Cannot save submission evaluation');
+            CoreDomUtils.showErrorModalDefault(message, 'Cannot save submission evaluation');
         }).finally(() => {
             modal.dismiss();
         });
@@ -495,15 +495,15 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
      * Perform the submission delete action.
      */
     deleteSubmission(): void {
-        this.domUtils.showDeleteConfirm('addon.mod_workshop.submissiondeleteconfirm').then(() => {
-            const modal = this.domUtils.showModalLoading('core.deleting', true);
+        CoreDomUtils.showDeleteConfirm('addon.mod_workshop.submissiondeleteconfirm').then(() => {
+            const modal = CoreDomUtils.showModalLoading('core.deleting', true);
             let success = false;
             this.workshopProvider.deleteSubmission(this.workshopId, this.submissionId, this.courseId).then(() => {
                 success = true;
 
                 return this.workshopProvider.invalidateSubmissionData(this.workshopId, this.submissionId);
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'Cannot delete submission');
+                CoreDomUtils.showErrorModalDefault(error, 'Cannot delete submission');
             }).finally(() => {
                 modal.dismiss();
                 if (success) {

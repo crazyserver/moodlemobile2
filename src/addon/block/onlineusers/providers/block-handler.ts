@@ -20,7 +20,7 @@ import { CoreBlockBaseHandler } from '@core/block/classes/base-block-handler';
 /**
  * Block handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlockOnlineUsersHandler extends CoreBlockBaseHandler {
     name = 'AddonBlockOnlineUsers';
     blockName = 'online_users';

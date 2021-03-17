@@ -29,7 +29,7 @@ import { CoreSyncProvider } from '@services/sync';
 /**
  * Service to sync omments.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
 
     static AUTO_SYNCED = 'core_comments_autom_synced';
@@ -70,7 +70,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
                     comment.area);
             });
 
-            comments = this.utils.uniqueArray(comments, 'syncId');
+            comments = CoreUtils.uniqueArray(comments, 'syncId');
 
             // Sync all courses.
             const promises = comments.map((comment) => {
@@ -132,7 +132,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
      */
     syncComments(contextLevel: string, instanceId: number, component: string, itemId: number, area: string = '',
             siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const syncId = this.getSyncId(contextLevel, instanceId, component, itemId, area);
 
@@ -151,9 +151,9 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
             if (!comments.length) {
                 // Nothing to sync.
                 return;
-            } else if (!this.appProvider.isOnline()) {
+            } else if (!CoreApp.isOnline()) {
                 // Cannot sync in offline.
-                return Promise.reject(this.translate.instant('core.networkerrormsg'));
+                return Promise.reject(Translate.instant('core.networkerrormsg'));
             }
 
             const errors = [],
@@ -193,7 +193,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
                         itemId: itemId,
                         area: area,
                         countChange: countChange,
-                    }, this.sitesProvider.getCurrentSiteId());
+                    }, CoreSites.getCurrentSiteId());
 
                 // Fetch the comments from server to be sure they're up to date.
                 return this.commentsProvider.invalidateCommentsData(contextLevel, instanceId, component, itemId, area, siteId)
@@ -203,7 +203,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
                     // Ignore errors.
                 });
             }).catch((error) => {
-                if (this.utils.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // It's a WebService error, this means the user cannot send comments.
                     errors.push(error.message);
                 } else {
@@ -213,7 +213,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
             }).then(() => {
                 if (errors && errors.length) {
                     errors.forEach((error) => {
-                        warnings.push(this.translate.instant('core.comments.warningcommentsnotsent', {
+                        warnings.push(Translate.instant('core.comments.warningcommentsnotsent', {
                             error: error
                         }));
                     });

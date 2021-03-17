@@ -21,7 +21,7 @@ import { CoreUserParticipantsComponent } from '../components/participants/partic
 /**
  * Course nav handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserParticipantsCourseOptionHandler implements CoreCourseOptionsHandler {
     name = 'CoreUserParticipants';
     priority = 600;

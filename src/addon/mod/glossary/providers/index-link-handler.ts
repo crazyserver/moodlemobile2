@@ -20,7 +20,7 @@ import { AddonModGlossaryProvider } from './glossary';
 /**
  * Handler to treat links to glossary index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModGlossaryIndexLinkHandler';
 

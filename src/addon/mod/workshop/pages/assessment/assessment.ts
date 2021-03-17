@@ -129,9 +129,9 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
         }
 
         // Show confirmation if some data has been modified.
-        await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+        await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
     }
 
     /**
@@ -145,7 +145,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
             this.title = this.workshop.name;
             this.strategy = this.workshop.strategy;
 
-            return this.courseProvider.getModuleBasicGradeInfo(workshopData.coursemodule);
+            return CoreCourse.getModuleBasicGradeInfo(workshopData.coursemodule);
         }).then((gradeInfo) => {
             this.maxGrade = gradeInfo.grade;
 
@@ -186,7 +186,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
                         }
 
                         if (accessData.canoverridegrades) {
-                            defaultGrade = this.translate.instant('addon.mod_workshop.notoverridden');
+                            defaultGrade = Translate.instant('addon.mod_workshop.notoverridden');
                             promise = this.gradesHelper.makeGradesMenu(this.workshop.gradinggrade, undefined, defaultGrade, -1)
                                     .then((grades) => {
                                 this.evaluationGrades = grades;
@@ -235,7 +235,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
                 });
             }
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'mm.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'mm.course.errorgetmodule', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -336,7 +336,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
      * @return Resolved when done.
      */
     protected sendEvaluation(): Promise<any> {
-        const modal = this.domUtils.showModalLoading('core.sending', true),
+        const modal = CoreDomUtils.showModalLoading('core.sending', true),
             inputData = this.evaluateForm.value;
 
         inputData.grade = inputData.grade >= 0 ? inputData.grade : '';
@@ -347,7 +347,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
         return this.workshopProvider.evaluateAssessment(this.workshopId, this.assessmentId, this.courseId, inputData.text,
                 inputData.weight, inputData.grade).then((result) => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!result, this.siteId);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!result, this.siteId);
 
             const data = {
                 workshopId: this.workshopId,
@@ -359,7 +359,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
                 CoreEvents.trigger(AddonModWorkshopProvider.ASSESSMENT_SAVED, data, this.siteId);
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Cannot save assessment evaluation');
+            CoreDomUtils.showErrorModalDefault(message, 'Cannot save assessment evaluation');
         }).finally(() => {
             modal.dismiss();
         });

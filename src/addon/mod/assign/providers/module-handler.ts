@@ -23,7 +23,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support assign modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModAssign';
     modName = 'assign';
@@ -64,7 +64,7 @@ export class AddonModAssignModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_assign-handler',
             showDownloadButton: true,

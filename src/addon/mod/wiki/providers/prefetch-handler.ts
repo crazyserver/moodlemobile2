@@ -33,7 +33,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch wikis.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModWiki';
     modName = 'wiki';
@@ -70,7 +70,7 @@ export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandl
      */
     protected getAllPages(module: any, courseId: number, options: CoreSitesCommonWSOptions = {}): Promise<any[]> {
 
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         return this.wikiProvider.getWiki(courseId, module.id, options).then((wiki) => {
             return this.wikiProvider.getWikiPageList(wiki, options);
@@ -91,7 +91,7 @@ export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandl
      */
     getDownloadSize(module: any, courseId: number, single?: boolean): Promise<{ size: number, total: boolean }> {
         const promises = [],
-            siteId = this.sitesProvider.getCurrentSiteId();
+            siteId = CoreSites.getCurrentSiteId();
 
         promises.push(this.getFiles(module, courseId, single, siteId).then((files) => {
             return this.pluginFileDelegate.getFilesDownloadSize(files);
@@ -131,7 +131,7 @@ export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandl
      */
     getFiles(module: any, courseId: number, single?: boolean, siteId?: string): Promise<any[]> {
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.wikiProvider.getWiki(courseId, module.id, {siteId}).then((wiki) => {
             const introFiles = this.getIntroFilesFromInstance(module, wiki);
@@ -167,9 +167,9 @@ export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandl
      */
     prefetch(module: any, courseId?: number, single?: boolean, dirPath?: string): Promise<any> {
         // Get the download time of the package before starting the download (otherwise we'd always get current time).
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.getPackageData(siteId, this.component, module.id).catch(() => {
+        return CoreFilepool.getPackageData(siteId, this.component, module.id).catch(() => {
             // No package data yet.
         }).then((data) => {
             const downloadTime = (data && data.downloadTime) || 0;
@@ -189,7 +189,7 @@ export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Promise resolved when done.
      */
     protected prefetchWiki(module: any, courseId: number, single: boolean, siteId: string, downloadTime: number): Promise<any> {
-        const userId = this.sitesProvider.getCurrentSiteUserId();
+        const userId = CoreSites.getCurrentSiteUserId();
 
         const commonOptions = {
             readingStrategy: CoreSitesReadingStrategy.OnlyNetwork,
@@ -212,16 +212,16 @@ export class AddonModWikiPrefetchHandler extends CoreCourseActivityPrefetchHandl
             });
 
             // Fetch group data.
-            promises.push(this.groupsProvider.getActivityGroupInfo(module.id, false, userId, siteId));
+            promises.push(CoreGroups.getActivityGroupInfo(module.id, false, userId, siteId));
 
             // Fetch info to provide wiki links.
             promises.push(this.wikiProvider.getWiki(courseId, module.id, {siteId}).then((wiki) => {
-                return this.courseHelper.getModuleCourseIdByInstance(wiki.id, 'wiki', siteId);
+                return CoreCourseHelper.getModuleCourseIdByInstance(wiki.id, 'wiki', siteId);
             }));
 
             // Get related page files and fetch them.
             promises.push(this.getFiles(module, courseId, single, siteId).then((files) => {
-                return this.filepoolProvider.addFilesToQueue(siteId, files, this.component, module.id);
+                return CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id);
             }));
 
             return Promise.all(promises);

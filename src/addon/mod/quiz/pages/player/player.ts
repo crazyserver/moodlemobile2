@@ -143,7 +143,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
 
         if (this.questions && this.questions.length && !this.showSummary) {
             // Save answers.
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             try {
                 await this.processAttempt(false, false);
@@ -151,9 +151,9 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                 // Save attempt failed. Show confirmation.
                 modal.dismiss();
 
-                await this.domUtils.showConfirm(this.translate.instant('addon.mod_quiz.confirmleavequizonerror'));
+                await CoreDomUtils.showConfirm(Translate.instant('addon.mod_quiz.confirmleavequizonerror'));
 
-                this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+                CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
             } finally {
                 modal.dismiss();
             }
@@ -181,8 +181,8 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
      */
     behaviourButtonClicked(button: any): void {
         // Confirm that the user really wants to do it.
-        this.domUtils.showConfirm(this.translate.instant('core.areyousure')).then(() => {
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+        CoreDomUtils.showConfirm(Translate.instant('core.areyousure')).then(() => {
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             // Get the answers.
             return this.prepareAnswers().then((answers) => {
@@ -201,17 +201,17 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                     scrollLeft = scrollElement.scrollLeft || 0;
 
                 this.loaded = false;
-                this.domUtils.scrollToTop(this.content); // Scroll top so the spinner is seen.
+                CoreDomUtils.scrollToTop(this.content); // Scroll top so the spinner is seen.
 
                 return this.loadPage(this.attempt.currentpage).finally(() => {
                     this.loaded = true;
-                    this.domUtils.scrollTo(this.content, scrollLeft, scrollTop);
+                    CoreDomUtils.scrollTo(this.content, scrollLeft, scrollTop);
                 });
             }).finally(() => {
                 modal.dismiss();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error performing action.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error performing action.');
         });
     }
 
@@ -241,7 +241,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
         }
 
         this.loaded = false;
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
 
         // First try to save the attempt data. We only save it if we're not seeing the summary.
         const promise = this.showSummary ? Promise.resolve() : this.processAttempt(false, false);
@@ -268,10 +268,10 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                     this.autoSave.startCheckChangesProcess(this.quiz, this.attempt, this.preflightData, this.offline);
                 }
 
-                this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);
             });
         }, (error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorsaveattempt', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorsaveattempt', true);
         }).finally(() => {
             this.loaded = true;
 
@@ -310,7 +310,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
             this.offline = offlineMode;
 
             if (this.quiz.timelimit > 0) {
-                this.quiz.readableTimeLimit = this.timeUtils.formatTime(this.quiz.timelimit);
+                this.quiz.readableTimeLimit = CoreTimeUtils.formatTime(this.quiz.timelimit);
             }
 
             // Get access information for the quiz.
@@ -349,7 +349,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                 return Promise.all(promises);
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquiz', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquiz', true);
         });
     }
 
@@ -365,13 +365,13 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
 
         // Show confirm if the user clicked the finish button and the quiz is in progress.
         if (!timeUp && this.attempt.state == AddonModQuizProvider.ATTEMPT_IN_PROGRESS) {
-            promise = this.domUtils.showConfirm(this.translate.instant('addon.mod_quiz.confirmclose'));
+            promise = CoreDomUtils.showConfirm(Translate.instant('addon.mod_quiz.confirmclose'));
         } else {
             promise = Promise.resolve();
         }
 
         return promise.then(() => {
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
             return this.processAttempt(userFinish, timeUp).then(() => {
                 // Trigger an event to notify the attempt was finished.
@@ -379,7 +379,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                     quizId: this.quizId,
                     attemptId: this.attempt.id,
                     synced: !this.offline
-                }, this.sitesProvider.getCurrentSiteId());
+                }, CoreSites.getCurrentSiteId());
 
                 CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: 'quiz' });
 
@@ -390,7 +390,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                 modal.dismiss();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorsaveattempt', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorsaveattempt', true);
         });
     }
 
@@ -549,7 +549,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
 
         if (this.reloadNavigaton) {
             // Some data has changed, reload the navigation.
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
 
             promise = this.loadNavigation().catch(() => {
                 // Ignore errors.
@@ -609,7 +609,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
             this.autoSave.hideAutoSaveError();
 
             if (this.formElement) {
-                this.domUtils.triggerFormSubmittedEvent(this.formElement, !this.offline, this.sitesProvider.getCurrentSiteId());
+                CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !this.offline, CoreSites.getCurrentSiteId());
             }
         });
     }
@@ -620,7 +620,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
      * @param slot Slot of the question to scroll to.
      */
     protected scrollToQuestion(slot: number): void {
-        this.domUtils.scrollToElementBySelector(this.content, '#addon-mod_quiz-question-' + slot);
+        CoreDomUtils.scrollToElementBySelector(this.content, '#addon-mod_quiz-question-' + slot);
     }
 
     /**
@@ -689,7 +689,7 @@ export class AddonModQuizPlayerPage implements OnInit, OnDestroy {
                 }
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);
         });
     }
 

@@ -33,7 +33,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch databases.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModData';
     modName = 'data';
@@ -72,7 +72,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
             : Promise<AddonModDataEntry[]> {
 
         const promises = groups.map((group) => {
-            return this.dataProvider.fetchAllEntries(dataId, {
+            return AddonModData.fetchAllEntries(dataId, {
                 groupId: group.id,
                 ...options, // Include all options.
             });
@@ -87,7 +87,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
                 });
             });
 
-            return this.utils.objectToArray(uniqueEntries);
+            return CoreUtils.objectToArray(uniqueEntries);
         });
     }
 
@@ -108,13 +108,13 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
             files = [];
 
         options.cmId = options.cmId || module.id;
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
-        return this.dataProvider.getDatabase(courseId, module.id, options).then((data) => {
+        return AddonModData.getDatabase(courseId, module.id, options).then((data) => {
             files = this.getIntroFilesFromInstance(module, data);
             database = data;
 
-            return this.groupsProvider.getActivityGroupInfo(module.id, false, undefined, options.siteId).then((groupInfo) => {
+            return CoreGroups.getActivityGroupInfo(module.id, false, undefined, options.siteId).then((groupInfo) => {
                 if (!groupInfo.groups || groupInfo.groups.length == 0) {
                     groupInfo.groups = [{id: 0}];
                 }
@@ -157,7 +157,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
         let files = [];
 
         entries.forEach((entry) => {
-            this.utils.objectToArray(entry.contents).forEach((content) => {
+            CoreUtils.objectToArray(entry.contents).forEach((content) => {
                 files = files.concat(content.files);
             });
         });
@@ -187,7 +187,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Promise resolved with list of intro files.
      */
     getIntroFiles(module: any, courseId: number): Promise<any[]> {
-        return this.dataProvider.getDatabase(courseId, module.id).catch(() => {
+        return AddonModData.getDatabase(courseId, module.id).catch(() => {
             // Not found, return undefined so module description is used.
         }).then((data) => {
             return this.getIntroFilesFromInstance(module, data);
@@ -202,7 +202,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Promise resolved when the data is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number): Promise<any> {
-        return this.dataProvider.invalidateContent(moduleId, courseId);
+        return AddonModData.invalidateContent(moduleId, courseId);
     }
 
     /**
@@ -214,8 +214,8 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
      */
     invalidateModule(module: any, courseId: number): Promise<any> {
         const promises = [];
-        promises.push(this.dataProvider.invalidateDatabaseData(courseId));
-        promises.push(this.dataProvider.invalidateDatabaseAccessInformationData(module.instance));
+        promises.push(AddonModData.invalidateDatabaseData(courseId));
+        promises.push(AddonModData.invalidateDatabaseAccessInformationData(module.instance));
 
         return Promise.all(promises);
     }
@@ -229,13 +229,13 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return Promise resolved with true if downloadable, resolved with false otherwise.
      */
     isDownloadable(module: any, courseId: number): boolean | Promise<boolean> {
-        return this.dataProvider.getDatabase(courseId, module.id, {
+        return AddonModData.getDatabase(courseId, module.id, {
             readingStrategy: CoreSitesReadingStrategy.PreferCache,
         }).then((database) => {
-            return this.dataProvider.getDatabaseAccessInformation(database.id, {cmId: module.id}).then((accessData) => {
+            return AddonModData.getDatabaseAccessInformation(database.id, {cmId: module.id}).then((accessData) => {
                 // Check if database is restricted by time.
                 if (!accessData.timeavailable) {
-                    const time = this.timeUtils.timestamp();
+                    const time = CoreTimeUtils.timestamp();
 
                     // It is restricted, checking times.
                     if (database.timeavailablefrom && time < database.timeavailablefrom) {
@@ -257,7 +257,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
      * @return A boolean, or a promise resolved with a boolean, indicating if the handler is enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return this.dataProvider.isPluginEnabled();
+        return AddonModData.isPluginEnabled();
     }
 
     /**
@@ -295,19 +295,19 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
                 commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite(),
                 promises = [];
 
-            promises.push(this.dataProvider.getFields(database.id, options));
+            promises.push(AddonModData.getFields(database.id, options));
 
-            promises.push(this.filepoolProvider.addFilesToQueue(siteId, info.files, this.component, module.id));
+            promises.push(CoreFilepool.addFilesToQueue(siteId, info.files, this.component, module.id));
 
             info.groups.forEach((group) => {
-                promises.push(this.dataProvider.getDatabaseAccessInformation(database.id, {
+                promises.push(AddonModData.getDatabaseAccessInformation(database.id, {
                     groupId: group.id,
                     ...options, // Include all options.
                 }));
             });
 
             info.entries.forEach((entry) => {
-                promises.push(this.dataProvider.getEntry(database.id, entry.id, options));
+                promises.push(AddonModData.getEntry(database.id, entry.id, options));
 
                 if (commentsEnabled && database.comments) {
                     promises.push(this.commentsProvider.getComments('module', database.coursemodule, 'mod_data', entry.id,
@@ -316,7 +316,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
             });
 
             // Add Basic Info to manage links.
-            promises.push(this.courseProvider.getModuleBasicInfoByInstance(database.id, 'data', siteId));
+            promises.push(CoreCourse.getModuleBasicInfoByInstance(database.id, 'data', siteId));
 
             return Promise.all(promises);
         });

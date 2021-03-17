@@ -59,7 +59,7 @@ export class CoreTagSearchPage {
             this.fetchCollections(),
             this.fetchTags()
         ]).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading tags.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading tags.');
         });
     }
 
@@ -69,10 +69,10 @@ export class CoreTagSearchPage {
      * @return Resolved when done.
      */
     fetchCollections(): Promise<any> {
-        return this.tagProvider.getTagCollections().then((collections) => {
+        return CoreTag.getTagCollections().then((collections) => {
             collections.forEach((collection) => {
                 if (!collection.name && collection.isdefault) {
-                    collection.name = this.translate.instant('core.tag.defautltagcoll');
+                    collection.name = Translate.instant('core.tag.defautltagcoll');
                 }
             });
             this.collections = collections;
@@ -85,7 +85,7 @@ export class CoreTagSearchPage {
      * @return Resolved when done.
      */
     fetchTags(): Promise<any> {
-        return this.tagProvider.getTagCloud(this.collectionId, undefined, undefined, this.query).then((cloud) => {
+        return CoreTag.getTagCloud(this.collectionId, undefined, undefined, this.query).then((cloud) => {
             this.cloud = cloud;
         });
     }
@@ -104,9 +104,9 @@ export class CoreTagSearchPage {
      * @param refresher Refresher.
      */
     refreshData(refresher: any): void {
-        this.utils.allPromises([
-            this.tagProvider.invalidateTagCollections(),
-            this.tagProvider.invalidateTagCloud(this.collectionId, undefined, undefined, this.query),
+        CoreUtils.allPromises([
+            CoreTag.invalidateTagCollections(),
+            CoreTag.invalidateTagCloud(this.collectionId, undefined, undefined, this.query),
         ]).finally(() => {
             return this.fetchData().finally(() => {
                 refresher?.detail.complete();
@@ -123,10 +123,10 @@ export class CoreTagSearchPage {
     searchTags(query: string): Promise<any> {
         this.searching = true;
         this.query = query;
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
 
         return this.fetchTags().catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error loading tags.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error loading tags.');
         }).finally(() => {
             this.searching = false;
         });

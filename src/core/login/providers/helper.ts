@@ -73,7 +73,7 @@ export interface CoreLoginSSOData {
 /**
  * Helper provider that provides some common features regarding authentication.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreLoginHelperProvider {
     static OPEN_COURSE = 'open_course';
     static ONBOARDING_DONE = 'onboarding_done';
@@ -122,7 +122,7 @@ export class CoreLoginHelperProvider {
      * @return Promise resolved if success, rejected if failure.
      */
     acceptSitePolicy(siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.write('core_user_agree_site_policy', {}).then((result) => {
                 if (!result.status) {
                     // Error.
@@ -159,17 +159,17 @@ export class CoreLoginHelperProvider {
             return false;
         }
 
-        if (CoreApp.instance.isSSOAuthenticationOngoing()) {
+        if (CoreApp.isSSOAuthenticationOngoing()) {
             // Authentication ongoing, probably duplicated request.
             return true;
         }
-        if (CoreApp.instance.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             // In desktop, make sure InAppBrowser is closed.
-            this.utils.closeInAppBrowser(true);
+            CoreUtils.closeInAppBrowser(true);
         }
 
         // App opened using custom URL scheme. Probably an SSO authentication.
-        CoreApp.instance.startSSOAuthentication();
+        CoreApp.startSSOAuthentication();
         this.logger.debug('App launched by URL with an SSO');
 
         // Delete the sso scheme from the URL.
@@ -193,8 +193,8 @@ export class CoreLoginHelperProvider {
             modal;
 
         // Wait for app to be ready.
-        this.ApplicationInit.instance.donePromise.then(() => {
-            modal = this.domUtils.showModalLoading('core.login.authenticating', true);
+        this.ApplicationInit.donePromise.then(() => {
+            modal = CoreDomUtils.showModalLoading('core.login.authenticating', true);
 
             return this.validateBrowserSSOLogin(url);
         }).then((data) => {
@@ -205,7 +205,7 @@ export class CoreLoginHelperProvider {
         }).then(() => {
             if (siteData.pageName) {
                 // State defined, go to that state instead of site initial page.
-                CoreApp.instance.getRootNavController().push(siteData.pageName, siteData.pageParams);
+                CoreApp.getRootNavController().push(siteData.pageName, siteData.pageParams);
             } else {
                 this.goToSiteInitialPage();
             }
@@ -213,11 +213,11 @@ export class CoreLoginHelperProvider {
             if (error) {
                 // An error occurred, display the error and logout the user.
                 this.treatUserTokenError(siteData.siteUrl, error);
-                this.sitesProvider.logout();
+                CoreSites.logout();
             }
         }).finally(() => {
             modal.dismiss();
-            CoreApp.instance.finishSSOAuthentication();
+            CoreApp.finishSSOAuthentication();
         });
 
         return true;
@@ -242,11 +242,11 @@ export class CoreLoginHelperProvider {
      * Function called when an SSO InAppBrowser is closed or the app is resumed. Check if user needs to be logged out.
      */
     checkLogout(): void {
-        const navCtrl = CoreApp.instance.getRootNavController();
-        if (!CoreApp.instance.isSSOAuthenticationOngoing() && this.sitesProvider.isLoggedIn() &&
-            this.sitesProvider.getCurrentSite().isLoggedOut() && navCtrl.getActive().name == 'CoreLoginReconnectPage') {
+        const navCtrl = CoreApp.getRootNavController();
+        if (!CoreApp.isSSOAuthenticationOngoing() && CoreSites.isLoggedIn() &&
+            CoreSites.getCurrentSite().isLoggedOut() && navCtrl.getActive().name == 'CoreLoginReconnectPage') {
             // User must reauthenticate but he closed the InAppBrowser without doing so, logout him.
-            this.sitesProvider.logout();
+            CoreSites.logout();
         }
     }
 
@@ -264,7 +264,7 @@ export class CoreLoginHelperProvider {
         let promise;
 
         if (showConfirmation) {
-            promise = this.domUtils.showConfirm(this.translate.instant('core.login.logininsiterequired'));
+            promise = CoreDomUtils.showConfirm(Translate.instant('core.login.logininsiterequired'));
         } else {
             promise = Promise.resolve();
         }
@@ -287,13 +287,13 @@ export class CoreLoginHelperProvider {
     forgottenPasswordClicked(navCtrl: NavController, siteUrl: string, username: string, siteConfig?: any): void {
         if (siteConfig && siteConfig.forgottenpasswordurl) {
             // URL set, open it.
-            this.utils.openInApp(siteConfig.forgottenpasswordurl);
+            CoreUtils.openInApp(siteConfig.forgottenpasswordurl);
 
             return;
         }
 
         // Check if password reset can be done through the app.
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         this.canRequestPasswordReset(siteUrl).then((canReset) => {
             if (canReset) {
@@ -377,28 +377,28 @@ export class CoreLoginHelperProvider {
         const errors: any = {};
 
         if (requiredMsg) {
-            errors.required = errors.requiredTrue = this.translate.instant(requiredMsg);
+            errors.required = errors.requiredTrue = Translate.instant(requiredMsg);
         }
         if (emailMsg) {
-            errors.email = this.translate.instant(emailMsg);
+            errors.email = Translate.instant(emailMsg);
         }
         if (patternMsg) {
-            errors.pattern = this.translate.instant(patternMsg);
+            errors.pattern = Translate.instant(patternMsg);
         }
         if (urlMsg) {
-            errors.url = this.translate.instant(urlMsg);
+            errors.url = Translate.instant(urlMsg);
         }
         if (minlengthMsg) {
-            errors.minlength = this.translate.instant(minlengthMsg);
+            errors.minlength = Translate.instant(minlengthMsg);
         }
         if (maxlengthMsg) {
-            errors.maxlength = this.translate.instant(maxlengthMsg);
+            errors.maxlength = Translate.instant(maxlengthMsg);
         }
         if (minMsg) {
-            errors.min = this.translate.instant(minMsg);
+            errors.min = Translate.instant(minMsg);
         }
         if (maxMsg) {
-            errors.max = this.translate.instant(maxMsg);
+            errors.max = Translate.instant(maxMsg);
         }
 
         return errors;
@@ -421,7 +421,7 @@ export class CoreLoginHelperProvider {
      * @return The string key.
      */
     getLogoutLabel(site?: CoreSite): string {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
         const config = site.getStoredConfig();
 
         return 'core.mainmenu.' + (config && config.tool_mobile_forcelogout == '1' ? 'logout' : 'changesite');
@@ -444,7 +444,7 @@ export class CoreLoginHelperProvider {
      * @return Promise resolved with the site policy.
      */
     getSitePolicy(siteId?: string): Promise<string> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             // Try to get the latest config, maybe the site policy was just added or has changed.
             return site.getConfig('sitepolicy', true).then((sitePolicy) => {
                 return sitePolicy ? sitePolicy : Promise.reject(null);
@@ -525,9 +525,9 @@ export class CoreLoginHelperProvider {
         }
 
         if (setRoot) {
-            return CoreApp.instance.getRootNavController().setRoot(pageName, params, { animate: false });
+            return CoreApp.getRootNavController().setRoot(pageName, params, { animate: false });
         } else {
-            return CoreApp.instance.getRootNavController().push(pageName, params);
+            return CoreApp.getRootNavController().push(pageName, params);
         }
     }
 
@@ -540,7 +540,7 @@ export class CoreLoginHelperProvider {
      * @return Promise resolved when done.
      */
     goToNoSitePage(navCtrl: NavController, page: string, params?: any): Promise<any> {
-        navCtrl = navCtrl || CoreApp.instance.getRootNavController();
+        navCtrl = navCtrl || CoreApp.getRootNavController();
 
         const currentPage = navCtrl && navCtrl.getActive().component.name;
 
@@ -554,7 +554,7 @@ export class CoreLoginHelperProvider {
             return navCtrl.push(page, params);
         } else {
             // Check if there is any site stored.
-            return this.sitesProvider.hasSites().then((hasSites) => {
+            return CoreSites.hasSites().then((hasSites) => {
                 if (hasSites) {
                     // There are sites stored, open sites page first to be able to go back.
                     navCtrl.setRoot('CoreLoginSitesPage');
@@ -601,7 +601,7 @@ export class CoreLoginHelperProvider {
      */
     handleSSOLoginAuthentication(siteUrl: string, token: string, privateToken?: string, oauthId?: number): Promise<any> {
         // Always create a new site to prevent overriding data if another user credentials were introduced.
-        return this.sitesProvider.newSite(siteUrl, token, privateToken, true, oauthId);
+        return CoreSites.newSite(siteUrl, token, privateToken, true, oauthId);
     }
 
     /**
@@ -685,7 +685,7 @@ export class CoreLoginHelperProvider {
      * @return True if user is logged out, false otherwise.
      */
     isSiteLoggedOut(pageName?: string, params?: any): boolean {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
         if (!site) {
             return false;
         }
@@ -720,7 +720,7 @@ export class CoreLoginHelperProvider {
             });
         } else if (CoreConstants.CONFIG.multisitesdisplay == 'sitefinder' && CoreConstants.CONFIG.onlyallowlistedsites) {
             // Call the sites finder to validate the site.
-            const result = await this.sitesProvider.findSites(siteUrl.replace(/^https?\:\/\/|\.\w{2,3}\/?$/g, ''));
+            const result = await CoreSites.findSites(siteUrl.replace(/^https?\:\/\/|\.\w{2,3}\/?$/g, ''));
 
             return result && result.some((site) => {
                 return CoreUrl.sameDomainAndPath(siteUrl, site.url);
@@ -738,7 +738,7 @@ export class CoreLoginHelperProvider {
      * @return True if embedded browser, false othwerise.
      */
     isSSOEmbeddedBrowser(code: number): boolean {
-        if (CoreApp.instance.isLinux()) {
+        if (CoreApp.isLinux()) {
             // In Linux desktop app, always use embedded browser.
             return true;
         }
@@ -765,15 +765,15 @@ export class CoreLoginHelperProvider {
      * @return Promise resolved when done.
      */
     protected loadSiteAndPage(page: string, params: any, siteId: string): Promise<any> {
-        const navCtrl = CoreApp.instance.getRootNavController();
+        const navCtrl = CoreApp.getRootNavController();
 
         if (siteId == CoreConstants.NO_SITE_ID) {
             // Page doesn't belong to a site, just load the page.
             return navCtrl.setRoot(page, params);
         } else {
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
 
-            return this.sitesProvider.loadSite(siteId, page, params).then((loggedIn) => {
+            return CoreSites.loadSite(siteId, page, params).then((loggedIn) => {
                 if (loggedIn) {
                     return this.openMainMenu(navCtrl, page, params);
                 }
@@ -793,7 +793,7 @@ export class CoreLoginHelperProvider {
      * @param params Params to pass to the page.
      */
     loadPageInMainMenu(page: string, params: any): void {
-        if (!CoreApp.instance.isMainMenuOpen()) {
+        if (!CoreApp.isMainMenuOpen()) {
             // Main menu not open. Store the page to be loaded later.
             this.pageToLoad = {
                 page: page,
@@ -806,7 +806,7 @@ export class CoreLoginHelperProvider {
 
         if (page == CoreLoginHelperProvider.OPEN_COURSE) {
             // Use the openCourse function.
-            this.courseProvider.openCourse(undefined, params.course, params);
+            CoreCourse.openCourse(undefined, params.course, params);
         } else {
             CoreEvents.trigger(CoreEvents.LOAD_PAGE_MAIN_MENU, { redirectPage: page, redirectParams: params });
         }
@@ -823,7 +823,7 @@ export class CoreLoginHelperProvider {
      * @return Promise resolved when done.
      */
     protected openMainMenu(navCtrl: NavController, page: string, params: any, options?: NavOptions, url?: string): Promise<any> {
-        navCtrl = navCtrl || CoreApp.instance.getRootNavController();
+        navCtrl = navCtrl || CoreApp.getRootNavController();
 
         // Due to DeepLinker, we need to remove the path from the URL before going to main menu.
         // IonTabs checks the URL to determine which path to load for deep linking, so we clear the URL.
@@ -832,7 +832,7 @@ export class CoreLoginHelperProvider {
         if (page == CoreLoginHelperProvider.OPEN_COURSE) {
             // Load the main menu first, and then open the course.
             return navCtrl.setRoot('CoreMainMenuPage').finally(() => {
-                return this.courseProvider.openCourse(undefined, params.course, params);
+                return CoreCourse.openCourse(undefined, params.course, params);
             });
         } else {
             // Open the main menu.
@@ -862,17 +862,17 @@ export class CoreLoginHelperProvider {
             return false;
         }
 
-        const service = this.sitesProvider.determineService(siteUrl);
+        const service = CoreSites.determineService(siteUrl);
         const loginUrl = this.prepareForSSOLogin(siteUrl, service, launchUrl, pageName, pageParams, {
             oauthsso: params.id,
         });
 
-        if (CoreApp.instance.isLinux()) {
+        if (CoreApp.isLinux()) {
             // In Linux desktop app, always use embedded browser.
-            this.utils.openInApp(loginUrl);
+            CoreUtils.openInApp(loginUrl);
         } else {
             // Always open it in browser because the user might have the session stored in there.
-            this.utils.openInBrowser(loginUrl);
+            CoreUtils.openInBrowser(loginUrl);
             if ((<any> navigator).app) {
                 (<any> navigator).app.exitApp();
             }
@@ -898,11 +898,11 @@ export class CoreLoginHelperProvider {
         if (this.isSSOEmbeddedBrowser(typeOfLogin)) {
             const options = {
                 clearsessioncache: 'yes', // Clear the session cache to allow for multiple logins.
-                closebuttoncaption: this.translate.instant('core.login.cancel'),
+                closebuttoncaption: Translate.instant('core.login.cancel'),
             };
-            this.utils.openInApp(loginUrl, options);
+            CoreUtils.openInApp(loginUrl, options);
         } else {
-            this.utils.openInBrowser(loginUrl);
+            CoreUtils.openInBrowser(loginUrl);
             if ((<any> navigator).app) {
                 (<any> navigator).app.exitApp();
             }
@@ -916,11 +916,11 @@ export class CoreLoginHelperProvider {
      * @param error Error message.
      */
     openChangePassword(siteUrl: string, error: string): void {
-        this.domUtils.showAlert(this.translate.instant('core.notice'), error, undefined, 3000).then((alert) => {
+        CoreDomUtils.showAlert(Translate.instant('core.notice'), error, undefined, 3000).then((alert) => {
             const subscription = alert.didDismiss.subscribe(() => {
                 subscription && subscription.unsubscribe();
 
-                this.utils.openInApp(siteUrl + '/login/change_password.php');
+                CoreUtils.openInApp(siteUrl + '/login/change_password.php');
             });
         });
     }
@@ -931,7 +931,7 @@ export class CoreLoginHelperProvider {
      * @param siteUrl URL of the site.
      */
     openForgottenPassword(siteUrl: string): void {
-        this.utils.openInApp(siteUrl + '/login/forgot_password.php');
+        CoreUtils.openInApp(siteUrl + '/login/forgot_password.php');
     }
 
     /**
@@ -943,12 +943,12 @@ export class CoreLoginHelperProvider {
      * @param invalidateCache Whether to invalidate site's cache (e.g. when the user is forced to change password).
      */
     openInAppForEdit(siteId: string, path: string, alertMessage?: string, invalidateCache?: boolean): void {
-        if (!siteId || siteId !== this.sitesProvider.getCurrentSiteId()) {
+        if (!siteId || siteId !== CoreSites.getCurrentSiteId()) {
             // Site that triggered the event is not current site, nothing to do.
             return;
         }
 
-        const currentSite = this.sitesProvider.getCurrentSite(),
+        const currentSite = CoreSites.getCurrentSite(),
             siteUrl = currentSite && currentSite.getURL();
         if (!currentSite || !siteUrl) {
             return;
@@ -963,7 +963,7 @@ export class CoreLoginHelperProvider {
 
             // Open change password.
             if (alertMessage) {
-                alertMessage = this.translate.instant(alertMessage) + '<br>' + this.translate.instant('core.redirectingtosite');
+                alertMessage = Translate.instant(alertMessage) + '<br>' + Translate.instant('core.redirectingtosite');
             }
             currentSite.openInAppWithAutoLogin(siteUrl + path, undefined, alertMessage).then(() => {
                 this.waitingForBrowser = true;
@@ -979,12 +979,12 @@ export class CoreLoginHelperProvider {
      * @param siteId The site ID.
      */
     passwordChangeForced(siteId: string): void {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
         if (!currentSite || siteId !== currentSite.getId()) {
             return; // Site that triggered the event is not current site.
         }
 
-        const rootNavCtrl = CoreApp.instance.getRootNavController(),
+        const rootNavCtrl = CoreApp.getRootNavController(),
         activePage = rootNavCtrl.getActive();
 
         // If current page is already change password, stop.
@@ -1044,18 +1044,18 @@ export class CoreLoginHelperProvider {
      * @return Promise resolved when done.
      */
     redirect(page: string, params?: any, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        if (this.sitesProvider.isLoggedIn()) {
-            if (siteId && siteId != this.sitesProvider.getCurrentSiteId()) {
+        if (CoreSites.isLoggedIn()) {
+            if (siteId && siteId != CoreSites.getCurrentSiteId()) {
                 // Target page belongs to a different site. Change site.
                 if (this.sitePluginsProvider.hasSitePluginsLoaded) {
                     // The site has site plugins so the app will be restarted. Store the data and logout.
-                    CoreApp.instance.storeRedirect(siteId, page, params);
+                    CoreApp.storeRedirect(siteId, page, params);
 
-                    return this.sitesProvider.logout();
+                    return CoreSites.logout();
                 } else {
-                    return this.sitesProvider.logout().then(() => {
+                    return CoreSites.logout().then(() => {
                         return this.loadSiteAndPage(page, params, siteId);
                     });
                 }
@@ -1066,7 +1066,7 @@ export class CoreLoginHelperProvider {
             if (siteId) {
                 return this.loadSiteAndPage(page, params, siteId);
             } else {
-                return CoreApp.instance.getRootNavController().setRoot('CoreLoginSitesPage');
+                return CoreApp.getRootNavController().setRoot('CoreLoginSitesPage');
             }
         }
 
@@ -1102,7 +1102,7 @@ export class CoreLoginHelperProvider {
      */
     sessionExpired(data: any): void {
         const siteId = data && data.siteId,
-            currentSite = this.sitesProvider.getCurrentSite(),
+            currentSite = CoreSites.getCurrentSite(),
             siteUrl = currentSite && currentSite.getURL();
         let promise;
 
@@ -1115,19 +1115,19 @@ export class CoreLoginHelperProvider {
         }
 
         // Check authentication method.
-        this.sitesProvider.checkSite(siteUrl).then((result) => {
+        CoreSites.checkSite(siteUrl).then((result) => {
 
             if (result.warning) {
-                this.domUtils.showErrorModal(result.warning, true, 4000);
+                CoreDomUtils.showErrorModal(result.warning, true, 4000);
             }
 
             if (this.isSSOLoginNeeded(result.code)) {
                 // SSO. User needs to authenticate in a browser. Check if we need to display a message.
-                if (!CoreApp.instance.isSSOAuthenticationOngoing() && !this.isSSOConfirmShown && !this.waitingForBrowser) {
+                if (!CoreApp.isSSOAuthenticationOngoing() && !this.isSSOConfirmShown && !this.waitingForBrowser) {
                     this.isSSOConfirmShown = true;
 
                     if (this.shouldShowSSOConfirm(result.code)) {
-                        promise = this.domUtils.showConfirm(this.translate.instant('core.login.' +
+                        promise = CoreDomUtils.showConfirm(Translate.instant('core.login.' +
                             (currentSite.isLoggedOut() ? 'loggedoutssodescription' : 'reconnectssodescription')));
                     } else {
                         promise = Promise.resolve();
@@ -1140,7 +1140,7 @@ export class CoreLoginHelperProvider {
                             result.config && result.config.launchurl, data.pageName, data.params);
                     }).catch(() => {
                         // User cancelled, logout him.
-                        this.sitesProvider.logout();
+                        CoreSites.logout();
                     }).finally(() => {
                         this.isSSOConfirmShown = false;
                     });
@@ -1156,22 +1156,22 @@ export class CoreLoginHelperProvider {
                     });
 
                     if (providerToUse) {
-                        if (!CoreApp.instance.isSSOAuthenticationOngoing() && !this.isSSOConfirmShown && !this.waitingForBrowser) {
+                        if (!CoreApp.isSSOAuthenticationOngoing() && !this.isSSOConfirmShown && !this.waitingForBrowser) {
                             // Open browser to perform the OAuth.
                             this.isSSOConfirmShown = true;
 
-                            const confirmMessage = this.translate.instant('core.login.' +
+                            const confirmMessage = Translate.instant('core.login.' +
                                     (currentSite.isLoggedOut() ? 'loggedoutssodescription' : 'reconnectssodescription'));
 
-                            this.domUtils.showConfirm(confirmMessage).then(() => {
+                            CoreDomUtils.showConfirm(confirmMessage).then(() => {
                                 this.waitingForBrowser = true;
-                                this.sitesProvider.unsetCurrentSite(); // Unset current site to make authentication work fine.
+                                CoreSites.unsetCurrentSite(); // Unset current site to make authentication work fine.
 
                                 this.openBrowserForOAuthLogin(siteUrl, providerToUse, result.config.launchurl, data.pageName,
                                         data.params);
                             }).catch(() => {
                                 // User cancelled, logout him.
-                                this.sitesProvider.logout();
+                                CoreSites.logout();
                             }).finally(() => {
                                 this.isSSOConfirmShown = false;
                             });
@@ -1183,7 +1183,7 @@ export class CoreLoginHelperProvider {
 
                 const info = currentSite.getInfo();
                 if (typeof info != 'undefined' && typeof info.username != 'undefined' && !this.isOpeningReconnect) {
-                    const rootNavCtrl = CoreApp.instance.getRootNavController(),
+                    const rootNavCtrl = CoreApp.getRootNavController(),
                         activePage = rootNavCtrl.getActive();
 
                     // If current page is already reconnect, stop.
@@ -1209,8 +1209,8 @@ export class CoreLoginHelperProvider {
             // Error checking site.
             if (currentSite.isLoggedOut()) {
                 // Site is logged out, show error and logout the user.
-                this.domUtils.showErrorModalDefault(error, 'core.networkerrormsg', true);
-                this.sitesProvider.logout();
+                CoreDomUtils.showErrorModalDefault(error, 'core.networkerrormsg', true);
+                CoreSites.logout();
             }
         });
     }
@@ -1232,9 +1232,9 @@ export class CoreLoginHelperProvider {
      * @param message The warning message.
      */
     protected showWorkplaceNoticeModal(message: string): void {
-        const link = CoreApp.instance.getAppStoreUrl({android: 'com.moodle.workplace', ios: 'id1470929705' });
+        const link = CoreApp.getAppStoreUrl({android: 'com.moodle.workplace', ios: 'id1470929705' });
 
-        this.domUtils.showDownloadAppNoticeModal(message, link);
+        CoreDomUtils.showDownloadAppNoticeModal(message, link);
     }
 
     /**
@@ -1248,9 +1248,9 @@ export class CoreLoginHelperProvider {
         storesConfig.mobile = 'https://download.moodle.org/mobile/';
         storesConfig.default = 'https://download.moodle.org/mobile/';
 
-        const link = CoreApp.instance.getAppStoreUrl(storesConfig);
+        const link = CoreApp.getAppStoreUrl(storesConfig);
 
-        this.domUtils.showDownloadAppNoticeModal(message, link);
+        CoreDomUtils.showDownloadAppNoticeModal(message, link);
     }
 
     /**
@@ -1262,18 +1262,18 @@ export class CoreLoginHelperProvider {
      * @param password User password. If not set the button to resend email will not be shown.
      */
     protected showNotConfirmedModal(siteUrl: string, email?: string, username?: string, password?: string): void {
-        const title = this.translate.instant('core.login.mustconfirm');
+        const title = Translate.instant('core.login.mustconfirm');
         let message;
         if (email) {
-            message = this.translate.instant('core.login.emailconfirmsent', { $a: email });
+            message = Translate.instant('core.login.emailconfirmsent', { $a: email });
         } else {
-            message = this.translate.instant('core.login.emailconfirmsentnoemail');
+            message = Translate.instant('core.login.emailconfirmsentnoemail');
         }
 
         // Check whether we need to display the resend button or not.
         let promise;
         if (username && password) {
-            const modal = this.domUtils.showModalLoading();
+            const modal = CoreDomUtils.showModalLoading();
             // We don't have site info before login, the only way to check if the WS is available is by calling it.
             const preSets = { siteUrl };
             promise = this.wsProvider.callAjax('core_auth_resend_confirmation_email', {}, preSets).catch((error) => {
@@ -1288,19 +1288,19 @@ export class CoreLoginHelperProvider {
 
         promise.then((canResend) => {
             if (canResend) {
-                const okText = this.translate.instant('core.login.resendemail');
-                const cancelText = this.translate.instant('core.close');
+                const okText = Translate.instant('core.login.resendemail');
+                const cancelText = Translate.instant('core.close');
 
-                this.domUtils.showConfirm(message, title, okText, cancelText).then(() => {
+                CoreDomUtils.showConfirm(message, title, okText, cancelText).then(() => {
                     // Call the WS to resend the confirmation email.
-                    const modal = this.domUtils.showModalLoading('core.sending', true);
+                    const modal = CoreDomUtils.showModalLoading('core.sending', true);
                     const data = { username, password };
                     const preSets = { siteUrl };
                     this.wsProvider.callAjax('core_auth_resend_confirmation_email', data, preSets).then((response) => {
-                        const message = this.translate.instant('core.login.emailconfirmsentsuccess');
-                        this.domUtils.showAlert(this.translate.instant('core.success'), message);
+                        const message = Translate.instant('core.login.emailconfirmsentsuccess');
+                        CoreDomUtils.showAlert(Translate.instant('core.success'), message);
                     }).catch((error) => {
-                        this.domUtils.showErrorModal(error);
+                        CoreDomUtils.showErrorModal(error);
                     }).finally(() => {
                         modal.dismiss();
                     });
@@ -1308,7 +1308,7 @@ export class CoreLoginHelperProvider {
                     // Dialog dismissed.
                 });
             } else {
-                this.domUtils.showAlert(title, message);
+                CoreDomUtils.showAlert(title, message);
             }
         });
     }
@@ -1319,18 +1319,18 @@ export class CoreLoginHelperProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     sitePolicyNotAgreed(siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
-        if (!siteId || siteId != this.sitesProvider.getCurrentSiteId()) {
+        siteId = siteId || CoreSites.getCurrentSiteId();
+        if (!siteId || siteId != CoreSites.getCurrentSiteId()) {
             // Only current site allowed.
             return;
         }
 
-        if (!this.sitesProvider.wsAvailableInCurrentSite('core_user_agree_site_policy')) {
+        if (!CoreSites.wsAvailableInCurrentSite('core_user_agree_site_policy')) {
             // WS not available, stop.
             return;
         }
 
-        const rootNavCtrl = CoreApp.instance.getRootNavController(),
+        const rootNavCtrl = CoreApp.getRootNavController(),
             activePage = rootNavCtrl.getActive();
 
         // If current page is already site policy, stop.
@@ -1359,7 +1359,7 @@ export class CoreLoginHelperProvider {
         } else if (error.errorcode == 'connecttoworkplaceapp') {
             this.showWorkplaceNoticeModal(this.textUtils.getErrorMessageFromError(error));
         } else {
-            this.domUtils.showErrorModal(error);
+            CoreDomUtils.showErrorModal(error);
         }
     }
 
@@ -1412,7 +1412,7 @@ export class CoreLoginHelperProvider {
                 this.logger.debug('Invalid signature in the URL request yours: ' + params[0] + ' mine: '
                     + signature + ' for passport ' + passport);
 
-                return Promise.reject(this.translate.instant('core.unexpectederror'));
+                return Promise.reject(Translate.instant('core.unexpectederror'));
             }
         });
     }

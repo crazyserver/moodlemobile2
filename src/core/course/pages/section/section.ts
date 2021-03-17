@@ -89,7 +89,7 @@ export class CoreCourseSectionPage implements OnDestroy {
         this.title = courseFormatDelegate.getCourseTitle(this.course);
         this.displayEnableDownload = !sitesProvider.getCurrentSite().isOfflineDisabled() &&
             courseFormatDelegate.displayEnableDownload(this.course);
-        this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
+        this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
 
         // Check if the course format requires the view to be refreshed when completion changes.
         courseFormatDelegate.shouldRefreshWhenCompletionChanges(this.course).then((shouldRefresh) => {
@@ -105,7 +105,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                         this.refreshAfterCompletionChange(false);
 
                         if (data.warnings && data.warnings[0]) {
-                            this.domUtils.showErrorModal(data.warnings[0]);
+                            CoreDomUtils.showErrorModal(data.warnings[0]);
                         }
                     }
                 });
@@ -149,7 +149,7 @@ export class CoreCourseSectionPage implements OnDestroy {
 
         if (this.module) {
             this.moduleId = this.module.id;
-            this.courseHelper.openModule(this.navCtrl, this.module, this.course.id, this.sectionId, this.modParams);
+            CoreCourseHelper.openModule(this.navCtrl, this.module, this.course.id, this.sectionId, this.modParams);
         }
 
         this.loadData(false, true).finally(() => {
@@ -164,17 +164,17 @@ export class CoreCourseSectionPage implements OnDestroy {
             this.determineCoursePrefetchIcon().then(() => {
                 if (this.prefetchCourseData.prefetchCourseIcon == 'spinner') {
                     // Course is being downloaded. Get the download promise.
-                    const promise = this.courseHelper.getCourseDownloadPromise(this.course.id);
+                    const promise = CoreCourseHelper.getCourseDownloadPromise(this.course.id);
                     if (promise) {
                         // There is a download promise. Show an error if it fails.
                         promise.catch((error) => {
                             if (!this.isDestroyed) {
-                                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
                             }
                         });
                     } else {
                         // No download, this probably means that the app was closed while downloading. Set previous status.
-                        this.courseProvider.setCoursePreviousStatus(this.course.id).then((status) => {
+                        CoreCourse.setCoursePreviousStatus(this.course.id).then((status) => {
                             this.updateCourseStatus(status);
                         });
                     }
@@ -192,7 +192,7 @@ export class CoreCourseSectionPage implements OnDestroy {
      */
     protected loadData(refresh?: boolean, sync?: boolean): Promise<any> {
         // First of all, get the course because the data might have changed.
-        return this.courseHelper.getCourse(this.course.id).then((result) => {
+        return CoreCourseHelper.getCourse(this.course.id).then((result) => {
             return result.course;
         }).catch(() => {
             // Error getting the course, probably guest access.
@@ -209,7 +209,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                 // Try to synchronize the course data.
                 return this.syncProvider.syncCourse(this.course.id).then((result) => {
                     if (result.warnings && result.warnings.length) {
-                        this.domUtils.showErrorModal(result.warnings[0]);
+                        CoreDomUtils.showErrorModal(result.warnings[0]);
                     }
                 }).catch(() => {
                     // For now we don't allow manual syncing, so ignore errors.
@@ -219,10 +219,10 @@ export class CoreCourseSectionPage implements OnDestroy {
             const promises = [];
 
             // Get all the sections.
-            promises.push(this.courseProvider.getSections(this.course.id, false, true).then((sections) => {
+            promises.push(CoreCourse.getSections(this.course.id, false, true).then((sections) => {
                 if (refresh) {
                     // Invalidate the recently downloaded module list. To ensure info can be prefetched.
-                    const modules = this.courseProvider.getSectionsModules(sections);
+                    const modules = CoreCourse.getSectionsModules(sections);
 
                     return this.prefetchDelegate.invalidateModules(modules, this.course.id).then(() => {
                         return sections;
@@ -244,13 +244,13 @@ export class CoreCourseSectionPage implements OnDestroy {
 
                     if (sectionWithModules && typeof sectionWithModules.modules[0].completion != 'undefined') {
                         // The module already has completion (3.6 onwards). Load the offline completion.
-                        promise = this.courseHelper.loadOfflineCompletion(this.course.id, sections).catch(() => {
+                        promise = CoreCourseHelper.loadOfflineCompletion(this.course.id, sections).catch(() => {
                             // It shouldn't happen.
                         }).then(() => {
                             return {};
                         });
                     } else {
-                        promise = this.courseProvider.getActivitiesCompletionStatus(this.course.id).catch(() => {
+                        promise = CoreCourse.getActivitiesCompletionStatus(this.course.id).catch(() => {
                             // It failed, don't use completion.
                             return {};
                         });
@@ -258,7 +258,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                 }
 
                 return promise.then((completionStatus) => {
-                    this.courseHelper.addHandlerDataForModules(sections, this.course.id, completionStatus, this.course.fullname,
+                    CoreCourseHelper.addHandlerDataForModules(sections, this.course.id, completionStatus, this.course.fullname,
                             true);
 
                     // Format the name of each section and check if it has content.
@@ -267,7 +267,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                                 {clean: true, singleLine: true}).then((result) => {
                             section.formattedName = result.text;
                         });
-                        section.hasContent = this.courseHelper.sectionHasContent(section);
+                        section.hasContent = CoreCourseHelper.sectionHasContent(section);
 
                         return section;
                     });
@@ -275,7 +275,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                     if (this.courseFormatDelegate.canViewAllSections(this.course)) {
                         // Add a fake first section (all sections).
                         this.sections.unshift({
-                            name: this.translate.instant('core.course.allsections'),
+                            name: Translate.instant('core.course.allsections'),
                             id: CoreCourseProvider.ALL_SECTIONS_ID,
                             hasContent: true
                         });
@@ -327,21 +327,21 @@ export class CoreCourseSectionPage implements OnDestroy {
             }));
 
             // Load the course format options when course completion is enabled to show completion progress on sections.
-            if (this.course.enablecompletion && this.coursesProvider.isGetCoursesByFieldAvailable()) {
-                promises.push(this.coursesProvider.getCourseByField('id', this.course.id).catch(() => {
+            if (this.course.enablecompletion && CoreCourses.isGetCoursesByFieldAvailable()) {
+                promises.push(CoreCourses.getCourseByField('id', this.course.id).catch(() => {
                     // Ignore errors.
                 }).then((course) => {
                     course && Object.assign(this.course, course);
 
                     if (this.course.courseformatoptions) {
-                        this.course.courseformatoptions = this.utils.objectToKeyValueMap(this.course.courseformatoptions,
+                        this.course.courseformatoptions = CoreUtils.objectToKeyValueMap(this.course.courseformatoptions,
                             'name', 'value');
                     }
                 }));
             }
 
             return Promise.all(promises).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'core.course.couldnotloadsectioncontent', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.couldnotloadsectioncontent', true);
             });
         });
     }
@@ -389,8 +389,8 @@ export class CoreCourseSectionPage implements OnDestroy {
     protected invalidateData(): Promise<any> {
         const promises = [];
 
-        promises.push(this.courseProvider.invalidateSections(this.course.id));
-        promises.push(this.coursesProvider.invalidateUserCourses());
+        promises.push(CoreCourse.invalidateSections(this.course.id));
+        promises.push(CoreCourses.invalidateUserCourses());
         promises.push(this.courseFormatDelegate.invalidateData(this.course, this.sections));
 
         if (this.sections) {
@@ -412,7 +412,7 @@ export class CoreCourseSectionPage implements OnDestroy {
             scrollLeft = scrollElement.scrollLeft || 0;
 
         this.dataLoaded = false;
-        this.domUtils.scrollToTop(this.content); // Scroll top so the spinner is seen.
+        CoreDomUtils.scrollToTop(this.content); // Scroll top so the spinner is seen.
 
         this.loadData(true, sync).then(() => {
             return this.formatComponent.doRefresh(undefined, undefined, true);
@@ -432,7 +432,7 @@ export class CoreCourseSectionPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     protected determineCoursePrefetchIcon(): Promise<void> {
-        return this.courseHelper.getCourseStatusIconAndTitle(this.course.id).then((data) => {
+        return CoreCourseHelper.getCourseStatusIconAndTitle(this.course.id).then((data) => {
             this.prefetchCourseData.prefetchCourseIcon = data.icon;
             this.prefetchCourseData.title = data.title;
         });
@@ -442,10 +442,10 @@ export class CoreCourseSectionPage implements OnDestroy {
      * Prefetch the whole course.
      */
     prefetchCourse(): void {
-        this.courseHelper.confirmAndPrefetchCourse(this.prefetchCourseData, this.course, this.sections,
+        CoreCourseHelper.confirmAndPrefetchCourse(this.prefetchCourseData, this.course, this.sections,
                 this.courseHandlers, this.courseMenuHandlers).catch((error) => {
             if (!this.isDestroyed) {
-                this.domUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.course.errordownloadingcourse', true);
             }
         });
     }
@@ -464,7 +464,7 @@ export class CoreCourseSectionPage implements OnDestroy {
      * @param status Status to show.
      */
     protected updateCourseStatus(status: string): void {
-        const statusData = this.courseHelper.getCourseStatusIconAndTitleFromStatus(status);
+        const statusData = CoreCourseHelper.getCourseStatusIconAndTitleFromStatus(status);
 
         this.prefetchCourseData.prefetchCourseIcon = statusData.icon;
         this.prefetchCourseData.title = statusData.title;

@@ -23,7 +23,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support data modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModData';
     modName = 'data';
@@ -50,7 +50,7 @@ export class AddonModDataModuleHandler implements CoreCourseModuleHandler {
      * @return Whether or not the handler is enabled on a site level.
      */
     isEnabled(): Promise<boolean> {
-        return this.dataProvider.isPluginEnabled();
+        return AddonModData.isPluginEnabled();
     }
 
     /**
@@ -63,7 +63,7 @@ export class AddonModDataModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_data-handler',
             showDownloadButton: true,

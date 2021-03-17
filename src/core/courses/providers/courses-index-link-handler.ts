@@ -21,7 +21,7 @@ import { CoreCoursesProvider } from './courses';
 /**
  * Handler to treat links to course index (list of courses).
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesIndexLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreCoursesIndexLinkHandler';
     featureName = 'CoreMainMenuDelegate_CoreCourses';
@@ -47,7 +47,7 @@ export class CoreCoursesIndexLinkHandler extends CoreContentLinksHandlerBase {
                 let page = 'CoreCoursesMyCoursesPage'; // By default, go to My Courses.
                 const pageParams: any = {};
 
-                if (this.coursesProvider.isGetCoursesByFieldAvailable()) {
+                if (CoreCourses.isGetCoursesByFieldAvailable()) {
                     if (params.categoryid) {
                         page = 'CoreCoursesCategoriesPage';
                         pageParams.categoryId = parseInt(params.categoryid, 10);

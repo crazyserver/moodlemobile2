@@ -22,7 +22,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support survey modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModSurvey';
     modName = 'survey';
@@ -60,7 +60,7 @@ export class AddonModSurveyModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         return {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_survey-handler',
             showDownloadButton: true,

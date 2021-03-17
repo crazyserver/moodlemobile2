@@ -118,17 +118,17 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
 
         // Refresh data if this discussion is synchronized automatically.
         this.syncObserver = CoreEvents.on(AddonModForumSyncProvider.AUTO_SYNCED, (data) => {
-            if (data.forumId == this.forumId && data.userId == this.sitesProvider.getCurrentSiteUserId()) {
-                this.domUtils.showAlertTranslated('core.notice', 'core.contenteditingsynced');
+            if (data.forumId == this.forumId && data.userId == CoreSites.getCurrentSiteUserId()) {
+                CoreDomUtils.showAlertTranslated('core.notice', 'core.contenteditingsynced');
                 this.returnToDiscussions();
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         // Trigger view event, to highlight the current opened discussion in the split view.
         CoreEvents.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
             forumId: this.forumId,
             discussion: -this.timeCreated
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
     }
 
     /**
@@ -138,11 +138,11 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     protected fetchDiscussionData(refresh?: boolean): Promise<any> {
-        return this.groupsProvider.getActivityGroupMode(this.cmId).then((mode) => {
+        return CoreGroups.getActivityGroupMode(this.cmId).then((mode) => {
             const promises = [];
 
             if (mode === CoreGroupsProvider.SEPARATEGROUPS || mode === CoreGroupsProvider.VISIBLEGROUPS) {
-                promises.push(this.groupsProvider.getActivityAllowedGroups(this.cmId).then((result) => {
+                promises.push(CoreGroups.getActivityAllowedGroups(this.cmId).then((result) => {
                     let promise;
                     if (mode === CoreGroupsProvider.VISIBLEGROUPS) {
                         // We need to check which of the returned groups the user can post to.
@@ -166,7 +166,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
                             const message = mode === CoreGroupsProvider.SEPARATEGROUPS ?
                                     'addon.mod_forum.cannotadddiscussionall' : 'addon.mod_forum.cannotadddiscussion';
 
-                            return Promise.reject(this.translate.instant(message));
+                            return Promise.reject(Translate.instant(message));
                         }
                     });
                 }));
@@ -251,7 +251,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             }
             this.showForm = true;
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_forum.errorgetgroups', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_forum.errorgetgroups', true);
             this.showForm = false;
         });
     }
@@ -360,7 +360,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
                 groups.unshift({
                     courseid: this.courseId,
                     id: AddonModForumProvider.ALL_PARTICIPANTS,
-                    name: this.translate.instant('core.allparticipants')
+                    name: Translate.instant('core.allparticipants')
                 });
             }
 
@@ -375,8 +375,8 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
      */
     refreshGroups(refresher: any): void {
         const promises = [
-            this.groupsProvider.invalidateActivityGroupMode(this.cmId),
-            this.groupsProvider.invalidateActivityAllowedGroups(this.cmId),
+            CoreGroups.invalidateActivityGroupMode(this.cmId),
+            CoreGroups.invalidateActivityAllowedGroups(this.cmId),
             this.forumProvider.invalidateCanAddDiscussion(this.forumId),
         ];
 
@@ -400,7 +400,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             discussionIds: discussionIds,
             discTimecreated: discTimecreated
         };
-        CoreEvents.trigger(AddonModForumProvider.NEW_DISCUSSION_EVENT, data, this.sitesProvider.getCurrentSiteId());
+        CoreEvents.trigger(AddonModForumProvider.NEW_DISCUSSION_EVENT, data, CoreSites.getCurrentSiteId());
 
         // Delete the local files from the tmp folder.
         this.uploaderProvider.clearTmpFiles(this.newDiscussion.files);
@@ -413,14 +413,14 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             this.newDiscussion.files = [];
             this.newDiscussion.postToAllGroups = false;
             this.messageEditor.clearText();
-            this.originalData = this.utils.clone(this.newDiscussion);
+            this.originalData = CoreUtils.clone(this.newDiscussion);
             this.forceLeave = true; // Avoid asking for confirmation.
 
             // Trigger view event, to highlight the current opened discussion in the split view.
             CoreEvents.trigger(AddonModForumProvider.VIEW_DISCUSSION_EVENT, {
                 forumId: this.forumId,
                 discussion: 0
-            }, this.sitesProvider.getCurrentSiteId());
+            }, CoreSites.getCurrentSiteId());
         } else {
             this.forceLeave = true; // Avoid asking for confirmation.
             this.navCtrl.pop();
@@ -451,17 +451,17 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
         };
 
         if (!subject) {
-            this.domUtils.showErrorModal('addon.mod_forum.erroremptysubject', true);
+            CoreDomUtils.showErrorModal('addon.mod_forum.erroremptysubject', true);
 
             return;
         }
         if (!message) {
-            this.domUtils.showErrorModal('addon.mod_forum.erroremptymessage', true);
+            CoreDomUtils.showErrorModal('addon.mod_forum.erroremptymessage', true);
 
             return;
         }
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         // Add some HTML to the message if needed.
         message = this.textUtils.formatHtmlLines(message);
@@ -483,14 +483,14 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
 
             if (discussionIds && discussionIds.length < groupIds.length) {
                 // Some discussions could not be created.
-                this.domUtils.showErrorModalDefault(null, 'addon.mod_forum.errorposttoallgroups', true);
+                CoreDomUtils.showErrorModalDefault(null, 'addon.mod_forum.errorposttoallgroups', true);
             }
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!discussionIds, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!discussionIds, CoreSites.getCurrentSiteId());
 
             this.returnToDiscussions(discussionIds, discTimecreated);
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_forum.cannotcreatediscussion', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_forum.cannotcreatediscussion', true);
         }).finally(() => {
             modal.dismiss();
         });
@@ -500,7 +500,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
      * Discard an offline saved discussion.
      */
     discard(): void {
-        this.domUtils.showConfirm(this.translate.instant('core.areyousure')).then(() => {
+        CoreDomUtils.showConfirm(Translate.instant('core.areyousure')).then(() => {
             const promises = [];
 
             promises.push(this.forumOffline.deleteNewDiscussion(this.forumId, this.timeCreated));
@@ -509,7 +509,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             }));
 
             return Promise.all(promises).then(() => {
-                this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+                CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
 
                 this.returnToDiscussions();
             });
@@ -537,14 +537,14 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
 
         if (this.forumHelper.hasPostDataChanged(this.newDiscussion, this.originalData)) {
             // Show confirmation if some data has been modified.
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
         // Delete the local files from the tmp folder.
         this.uploaderProvider.clearTmpFiles(this.newDiscussion.files);
 
         if (this.formElement) {
-            this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
         }
     }
 

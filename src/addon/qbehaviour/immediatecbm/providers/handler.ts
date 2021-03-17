@@ -21,7 +21,7 @@ import { AddonQbehaviourDeferredCBMComponent } from '@addon/qbehaviour/deferredc
 /**
  * Handler to support immediate CBM question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourImmediateCBMHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourImmediateCBM';
     type = 'immediatecbm';

@@ -54,7 +54,7 @@ export class CoreCourseDownloadModuleMainFileDirective implements OnInit {
             ev.preventDefault();
             ev.stopPropagation();
 
-            const modal = this.domUtils.showModalLoading(),
+            const modal = CoreDomUtils.showModalLoading(),
                 courseId = typeof this.courseId == 'string' ? parseInt(this.courseId, 10) : this.courseId;
             let promise;
 
@@ -64,15 +64,15 @@ export class CoreCourseDownloadModuleMainFileDirective implements OnInit {
             } else {
                 // Try to get the module from cache.
                 this.moduleId = typeof this.moduleId == 'string' ? parseInt(this.moduleId, 10) : this.moduleId;
-                promise = this.courseProvider.getModule(this.moduleId, courseId);
+                promise = CoreCourse.getModule(this.moduleId, courseId);
             }
 
             promise.then((module) => {
                 const componentId = this.componentId || module.id;
 
-                return this.courseHelper.downloadModuleAndOpenFile(module, courseId, this.component, componentId, this.files);
+                return CoreCourseHelper.downloadModuleAndOpenFile(module, courseId, this.component, componentId, this.files);
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'core.errordownloading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.errordownloading', true);
             }).finally(() => {
                 modal.dismiss();
             });

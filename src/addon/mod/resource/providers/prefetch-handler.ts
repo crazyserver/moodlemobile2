@@ -30,7 +30,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch resources.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourcePrefetchHandler extends CoreCourseResourcePrefetchHandlerBase {
     name = 'AddonModResource';
     modName = 'resource';
@@ -94,7 +94,7 @@ export class AddonModResourcePrefetchHandler extends CoreCourseResourcePrefetchH
         let promise;
 
         if (this.resourceHelper.isDisplayedInIframe(module)) {
-            promise = this.filepoolProvider.getPackageDirPathByUrl(this.sitesProvider.getCurrentSiteId(), module.url);
+            promise = CoreFilepool.getPackageDirPathByUrl(CoreSites.getCurrentSiteId(), module.url);
         } else {
             promise = Promise.resolve();
         }
@@ -134,7 +134,7 @@ export class AddonModResourcePrefetchHandler extends CoreCourseResourcePrefetchH
         const promises = [];
 
         promises.push(this.resourceProvider.invalidateResourceData(courseId));
-        promises.push(this.courseProvider.invalidateModule(module.id, undefined, this.modName));
+        promises.push(CoreCourse.invalidateModule(module.id, undefined, this.modName));
 
         return Promise.all(promises);
     }
@@ -147,7 +147,7 @@ export class AddonModResourcePrefetchHandler extends CoreCourseResourcePrefetchH
      * @return Promise resolved with true if downloadable, resolved with false otherwise.
      */
     isDownloadable(module: any, courseId: number): Promise<boolean> {
-        if (this.sitesProvider.getCurrentSite() && this.sitesProvider.getCurrentSite().isVersionGreaterEqualThan('3.7')) {
+        if (CoreSites.getCurrentSite() && CoreSites.getCurrentSite().isVersionGreaterEqualThan('3.7')) {
             // Nextcloud files are downloadable from 3.7 onwards.
             return Promise.resolve(true);
         }

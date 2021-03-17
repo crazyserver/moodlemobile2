@@ -26,7 +26,7 @@ import { CoreConstants } from '@core/constants';
 /**
  * Handler to support forum modules.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
     name = 'AddonModForum';
     modName = 'forum';
@@ -68,7 +68,7 @@ export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
      */
     getData(module: any, courseId: number, sectionId: number): CoreCourseModuleHandlerData {
         const data: CoreCourseModuleHandlerData = {
-            icon: this.courseProvider.getModuleIconSrc(this.modName, module.modicon),
+            icon: CoreCourse.getModuleIconSrc(this.modName, module.modicon),
             title: module.name,
             class: 'addon-mod_forum-handler',
             showDownloadButton: true,
@@ -84,7 +84,7 @@ export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
         if (typeof module.afterlink != 'undefined') {
             data.extraBadgeColor = '';
             const match = />(\d+)[^<]+/.exec(module.afterlink);
-            data.extraBadge = match ? this.translate.instant('addon.mod_forum.unreadpostsnumber', {$a : match[1] }) : '';
+            data.extraBadge = match ? Translate.instant('addon.mod_forum.unreadpostsnumber', {$a : match[1] }) : '';
         } else {
             this.updateExtraBadge(data, courseId, module.id);
         }
@@ -93,7 +93,7 @@ export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
             if (eventData.courseId == courseId && eventData.moduleId == module.id) {
                 this.updateExtraBadge(data, eventData.courseId, eventData.moduleId, eventData.siteId);
             }
-        }, this.sitesProvider.getCurrentSiteId());
+        }, CoreSites.getCurrentSiteId());
 
         data.onDestroy = (): void => {
             event && event.off();
@@ -133,19 +133,19 @@ export class AddonModForumModuleHandler implements CoreCourseModuleHandler {
      * @param siteId Site ID. If not defined, current site.
      */
     updateExtraBadge(data: CoreCourseModuleHandlerData, courseId: number, moduleId: number, siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         if (!siteId) {
             return;
         }
 
-        data.extraBadge =  this.translate.instant('core.loading');
+        data.extraBadge =  Translate.instant('core.loading');
         data.extraBadgeColor = 'light';
 
         this.forumProvider.invalidateForumData(courseId).finally(() => {
             // Handle unread posts.
             this.forumProvider.getForum(courseId, moduleId, {siteId}).then((forumData) => {
                 data.extraBadgeColor = '';
-                data.extraBadge = forumData.unreadpostscount ? this.translate.instant('addon.mod_forum.unreadpostsnumber',
+                data.extraBadge = forumData.unreadpostscount ? Translate.instant('addon.mod_forum.unreadpostsnumber',
                     {$a : forumData.unreadpostscount }) : '';
             }).catch(() => {
                 data.extraBadgeColor = '';

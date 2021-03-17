@@ -124,7 +124,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
                 // Show first warning if any.
                 if (data.warnings && data.warnings[0]) {
-                    this.domUtils.showErrorModal(data.warnings[0]);
+                    CoreDomUtils.showErrorModal(data.warnings[0]);
                 }
             }
         }, this.siteId);
@@ -215,7 +215,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
     protected fetchData(): Promise<any> {
         let loader;
         if (this.showLoadingModal) {
-            loader = this.domUtils.showModalLoading();
+            loader = CoreDomUtils.showModalLoading();
         }
 
         if (!this.groupMessagingEnabled && this.userId) {
@@ -233,7 +233,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             // Ignore errors.
         }).then((warnings): Promise<any> => {
             if (warnings && warnings[0]) {
-                this.domUtils.showErrorModal(warnings[0]);
+                CoreDomUtils.showErrorModal(warnings[0]);
             }
 
             if (this.groupMessagingEnabled) {
@@ -284,7 +284,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 });
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingmessages', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingmessages', true);
         }).finally(() => {
             this.checkCanDelete();
             this.resizeContent();
@@ -381,8 +381,8 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
         // Check if we are at the bottom to scroll it after render.
         // Use a 5px error margin because in iOS there is 1px difference for some reason.
-        this.scrollBottom = Math.abs(scrollHeight - this.domUtils.getScrollTop(this.content) -
-            this.domUtils.getContentHeight(this.content)) < 5;
+        this.scrollBottom = Math.abs(scrollHeight - CoreDomUtils.getScrollTop(this.content) -
+            CoreDomUtils.getContentHeight(this.content)) < 5;
 
         if (this.messagesBeingSent > 0) {
             // Ignore polling due to a race condition.
@@ -453,8 +453,8 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
      */
     protected scrollListenerFunction(): void {
         if (this.newMessages > 0) {
-            const scrollBottom = this.domUtils.getScrollTop(this.content) + this.domUtils.getContentHeight(this.content);
-            const scrollHeight = this.domUtils.getScrollHeight(this.content);
+            const scrollBottom = CoreDomUtils.getScrollTop(this.content) + CoreDomUtils.getContentHeight(this.content);
+            const scrollHeight = CoreDomUtils.getScrollHeight(this.content);
             if (scrollBottom > scrollHeight - 40) {
                 // At the bottom, reset.
                 this.setNewMessagesBadge(0);
@@ -853,7 +853,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.resolve();
         }
 
-        const deferred = this.utils.promiseDefer();
+        const deferred = CoreUtils.promiseDefer();
 
         setTimeout(() => {
             return this.waitForFetch().finally(() => {
@@ -902,7 +902,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
     copyMessage(message: AddonMessagesConversationMessageFormatted | AddonMessagesGetMessagesMessageFormatted): void {
         const text = this.textUtils.decodeHTMLEntities(
                 (<AddonMessagesGetMessagesMessageFormatted> message).smallmessage || message.text || '');
-        this.utils.copyToClipboard(text);
+        CoreUtils.copyToClipboard(text);
     }
 
     /**
@@ -926,12 +926,12 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 name: 'deleteforall',
                 checked: false,
                 value: true,
-                label: this.translate.instant('addon.messages.deleteforeveryone')
+                label: Translate.instant('addon.messages.deleteforeveryone')
             }];
         }
 
-        this.domUtils.showConfirm(this.translate.instant(langKey), undefined, undefined, undefined, options).then((data) => {
-            const modal = this.domUtils.showModalLoading('core.deleting', true);
+        CoreDomUtils.showConfirm(Translate.instant(langKey), undefined, undefined, undefined, options).then((data) => {
+            const modal = CoreDomUtils.showModalLoading('core.deleting', true);
 
             return this.messagesProvider.deleteMessage(message, data && data[0]).then(() => {
                  // Remove message from the list without having to wait for re-fetch.
@@ -944,7 +944,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 modal.dismiss();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errordeletemessage', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errordeletemessage', true);
         });
     }
 
@@ -956,7 +956,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
      */
     loadPrevious(infiniteComplete?: any): Promise<void> {
         let infiniteHeight = this.infinite ? this.infinite.getHeight() : 0;
-        const scrollHeight = this.domUtils.getScrollHeight(this.content);
+        const scrollHeight = CoreDomUtils.getScrollHeight(this.content);
 
         // If there is an ongoing fetch, wait for it to finish.
         return this.waitForFetch().finally(() => {
@@ -965,7 +965,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             this.fetchMessages(false).then(() => {
 
                 // Try to keep the scroll position.
-                const scrollBottom = scrollHeight - this.domUtils.getScrollTop(this.content);
+                const scrollBottom = scrollHeight - CoreDomUtils.getScrollTop(this.content);
 
                 if (this.canLoadMore && infiniteHeight && this.infinite) {
                     // The height of the infinite is different while spinner is shown. Add that difference.
@@ -979,7 +979,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             }).catch((error) => {
                 this.loadMoreError = true; // Set to prevent infinite calls with infinite-loading.
                 this.pagesLoaded--;
-                this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingmessages', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingmessages', true);
             }).finally(() => {
                 infiniteComplete && infiniteComplete();
             });
@@ -994,7 +994,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         retries = retries || 0;
 
         setTimeout(() => {
-            const newScrollHeight = this.domUtils.getScrollHeight(this.content);
+            const newScrollHeight = CoreDomUtils.getScrollHeight(this.content);
 
             if (newScrollHeight == oldScrollHeight) {
                 // Height hasn't changed yet. Retry if max retries haven't been reached.
@@ -1007,7 +1007,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
             const scrollTo = newScrollHeight - oldScrollBottom + infiniteHeight;
 
-            this.domUtils.scrollTo(this.content, 0, scrollTo, 0);
+            CoreDomUtils.scrollTo(this.content, 0, scrollTo, 0);
         }, 30);
     }
 
@@ -1021,15 +1021,15 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         // Wait for new content height to be calculated.
         setTimeout(() => {
             // Visible content size changed, maintain the bottom position.
-            if (!this.viewDestroyed && this.content && this.domUtils.getContentHeight(this.content) != this.oldContentHeight) {
+            if (!this.viewDestroyed && this.content && CoreDomUtils.getContentHeight(this.content) != this.oldContentHeight) {
                 if (!top) {
                     top = this.content.getContentDimensions().scrollTop;
                 }
 
-                top += this.oldContentHeight - this.domUtils.getContentHeight(this.content);
-                this.oldContentHeight = this.domUtils.getContentHeight(this.content);
+                top += this.oldContentHeight - CoreDomUtils.getContentHeight(this.content);
+                this.oldContentHeight = CoreDomUtils.getContentHeight(this.content);
 
-                this.domUtils.scrollTo(this.content, 0, top, 0);
+                CoreDomUtils.scrollTo(this.content, 0, top, 0);
             }
         });
     }
@@ -1043,7 +1043,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
              // Need a timeout to leave time to the view to be rendered.
             setTimeout(() => {
                 if (!this.viewDestroyed) {
-                    this.domUtils.scrollToBottom(this.content, 0);
+                    CoreDomUtils.scrollToBottom(this.content, 0);
                 }
             });
             this.scrollBottom = false;
@@ -1060,7 +1060,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
         if (this.newMessages > 0) {
             const messages = Array.from(document.querySelectorAll('.addon-message-not-mine'));
 
-            this.domUtils.scrollToElement(this.content, <HTMLElement> messages[messages.length - this.newMessages]);
+            CoreDomUtils.scrollToElement(this.content, <HTMLElement> messages[messages.length - this.newMessages]);
         }
     }
 
@@ -1144,9 +1144,9 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
                 // Only close the keyboard if an error happens.
                 // We want the user to be able to send multiple messages without the keyboard being closed.
-                this.appProvider.closeKeyboard();
+                CoreApp.closeKeyboard();
 
-                this.domUtils.showErrorModalDefault(error, 'addon.messages.messagenotsent', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.messages.messagenotsent', true);
                 this.removeMessage(message.hash);
             });
         });
@@ -1257,7 +1257,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 value: this.conversation.isfavourite
             }, this.siteId);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error changing favourite state.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error changing favourite state.');
         }).finally(() => {
             this.favouriteIcon = 'fa-star';
             this.favouriteIconSlash = this.conversation.isfavourite;
@@ -1285,7 +1285,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 value: this.conversation.ismuted
             }, this.siteId);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error changing muted state.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error changing muted state.');
         }).finally(() => {
             this.muteIcon = this.conversation.ismuted ? 'volume-up' : 'volume-off';
             done && done();
@@ -1341,13 +1341,13 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.reject(null);
         }
 
-        const template = this.translate.instant('addon.messages.blockuserconfirm', {$a: this.otherMember.fullname});
-        const okText = this.translate.instant('addon.messages.blockuser');
+        const template = Translate.instant('addon.messages.blockuserconfirm', {$a: this.otherMember.fullname});
+        const okText = Translate.instant('addon.messages.blockuser');
 
-        return this.domUtils.showConfirm(template, undefined, okText).then(() => {
+        return CoreDomUtils.showConfirm(template, undefined, okText).then(() => {
             this.blockIcon = 'spinner';
 
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.showLoadingModal = true;
 
             return this.messagesProvider.blockContact(this.otherMember.id).finally(() => {
@@ -1355,7 +1355,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 this.showLoadingModal = false;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.error', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
         }).finally(() => {
             this.blockIcon = this.otherMember.isblocked ? 'close-circle' : 'checkmark-circle';
         });
@@ -1369,7 +1369,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
     deleteConversation(done?: () => void): void {
         const confirmMessage = 'addon.messages.' + (this.isSelf ? 'deleteallselfconfirm' : 'deleteallconfirm');
 
-        this.domUtils.showDeleteConfirm(confirmMessage).then(() => {
+        CoreDomUtils.showDeleteConfirm(confirmMessage).then(() => {
             this.deleteIcon = 'spinner';
 
             return this.messagesProvider.deleteConversation(this.conversation.id).then(() => {
@@ -1384,7 +1384,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 done && done();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error deleting conversation.');
+            CoreDomUtils.showErrorModalDefault(error, 'Error deleting conversation.');
         });
     }
 
@@ -1399,13 +1399,13 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.reject(null);
         }
 
-        const template = this.translate.instant('addon.messages.unblockuserconfirm', {$a: this.otherMember.fullname});
-        const okText = this.translate.instant('addon.messages.unblockuser');
+        const template = Translate.instant('addon.messages.unblockuserconfirm', {$a: this.otherMember.fullname});
+        const okText = Translate.instant('addon.messages.unblockuser');
 
-        return this.domUtils.showConfirm(template, undefined, okText).then(() => {
+        return CoreDomUtils.showConfirm(template, undefined, okText).then(() => {
             this.blockIcon = 'spinner';
 
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.showLoadingModal = true;
 
             return this.messagesProvider.unblockContact(this.otherMember.id).finally(() => {
@@ -1413,7 +1413,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 this.showLoadingModal = false;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.error', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
         }).finally(() => {
             this.blockIcon = this.otherMember.isblocked ? 'close-circle' : 'checkmark-circle';
         });
@@ -1430,13 +1430,13 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.reject(null);
         }
 
-        const template = this.translate.instant('addon.messages.addcontactconfirm', { $a: this.otherMember.fullname });
-        const okText = this.translate.instant('core.add');
+        const template = Translate.instant('addon.messages.addcontactconfirm', { $a: this.otherMember.fullname });
+        const okText = Translate.instant('core.add');
 
-        return this.domUtils.showConfirm(template, undefined, okText).then(() => {
+        return CoreDomUtils.showConfirm(template, undefined, okText).then(() => {
             this.addRemoveIcon = 'spinner';
 
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.showLoadingModal = true;
 
             return this.messagesProvider.createContactRequest(this.otherMember.id).finally(() => {
@@ -1444,7 +1444,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 this.showLoadingModal = false;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.error', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
         }).finally(() => {
             this.addRemoveIcon = 'person';
         });
@@ -1461,14 +1461,14 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.reject(null);
         }
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         this.showLoadingModal = true;
 
         return this.messagesProvider.confirmContactRequest(this.otherMember.id).finally(() => {
             modal.dismiss();
             this.showLoadingModal = false;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.error', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
         });
     }
 
@@ -1483,14 +1483,14 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.reject(null);
         }
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         this.showLoadingModal = true;
 
         return this.messagesProvider.declineContactRequest(this.otherMember.id).finally(() => {
             modal.dismiss();
             this.showLoadingModal = false;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.error', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
         });
     }
 
@@ -1505,13 +1505,13 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
             return Promise.reject(null);
         }
 
-        const template = this.translate.instant('addon.messages.removecontactconfirm', { $a: this.otherMember.fullname });
-        const okText = this.translate.instant('core.remove');
+        const template = Translate.instant('addon.messages.removecontactconfirm', { $a: this.otherMember.fullname });
+        const okText = Translate.instant('core.remove');
 
-        return this.domUtils.showConfirm(template, undefined, okText).then(() => {
+        return CoreDomUtils.showConfirm(template, undefined, okText).then(() => {
             this.addRemoveIcon = 'spinner';
 
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.showLoadingModal = true;
 
             return this.messagesProvider.removeContact(this.otherMember.id).finally(() => {
@@ -1519,7 +1519,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                 this.showLoadingModal = false;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.error', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.error', true);
         }).finally(() => {
             this.addRemoveIcon = 'person';
         });

@@ -45,10 +45,10 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
             protected translate: TranslateService,
     ) {
 
-        this.currentSiteId = this.sitesProvider.getCurrentSiteId();
+        this.currentSiteId = CoreSites.getCurrentSiteId();
 
         this.sitesObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, (data) => {
-            this.sitesProvider.getSite(data.siteId).then((site) => {
+            CoreSites.getSite(data.siteId).then((site) => {
                 const siteInfo = site.getInfo();
                 const siteEntry = this.sites.find((siteEntry) => siteEntry.id == site.id);
                 if (siteEntry) {
@@ -64,7 +64,7 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        this.sitesProvider.getSortedSites().then((sites) => {
+        CoreSites.getSortedSites().then((sites) => {
             this.sites = sites;
         }).finally(() => {
             this.sitesLoaded = true;
@@ -93,7 +93,7 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
             if (this.isDestroyed) {
                 return;
             }
-            this.domUtils.showErrorModalDefault(error, 'core.settings.errorsyncsite', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.settings.errorsyncsite', true);
         });
     }
 
@@ -111,8 +111,8 @@ export class CoreSettingsSynchronizationPage implements OnDestroy {
      * Show information about sync actions.
      */
     showInfo(): void {
-        this.domUtils.showAlert(this.translate.instant('core.help'),
-            this.translate.instant('core.settings.synchronizenowhelp'));
+        CoreDomUtils.showAlert(Translate.instant('core.help'),
+            Translate.instant('core.settings.synchronizenowhelp'));
     }
 
     /**

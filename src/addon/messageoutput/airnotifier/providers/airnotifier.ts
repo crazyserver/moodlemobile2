@@ -22,7 +22,7 @@ import { CoreWSExternalWarning } from '@services/ws';
 /**
  * Service to handle Airnotifier message output.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessageOutputAirnotifierProvider {
 
     protected ROOT_CACHE_KEY = 'mmaMessageOutputAirnotifier:';
@@ -41,7 +41,7 @@ export class AddonMessageOutputAirnotifierProvider {
      * @return Promise resolved if success.
      */
     enableDevice(deviceId: number, enable: boolean, siteId?: string): Promise<void> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 deviceid: deviceId,
                 enable: enable ? 1 : 0
@@ -80,7 +80,7 @@ export class AddonMessageOutputAirnotifierProvider {
     getUserDevices(siteId?: string): Promise<AddonMessageOutputAirnotifierDevice[]> {
         this.logger.debug('Get user devices');
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
                 appid: CoreConstants.CONFIG.app_id
             };
@@ -103,7 +103,7 @@ export class AddonMessageOutputAirnotifierProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateUserDevices(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getUserDevicesCacheKey());
         });
     }
@@ -115,8 +115,8 @@ export class AddonMessageOutputAirnotifierProvider {
      * @since 3.2
      */
     isEnabled(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('message_airnotifier_enable_device') &&
-                this.sitesProvider.wsAvailableInCurrentSite('message_airnotifier_get_user_devices');
+        return CoreSites.wsAvailableInCurrentSite('message_airnotifier_enable_device') &&
+                CoreSites.wsAvailableInCurrentSite('message_airnotifier_get_user_devices');
     }
 }
 

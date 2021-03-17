@@ -39,18 +39,18 @@ export class CoreLoginInitPage {
      */
     ngOnInit(): void {
         // Wait for the app to be ready.
-        this.ApplicationInit.instance.donePromise.then(() => {
+        this.ApplicationInit.donePromise.then(() => {
             // Check if there was a pending redirect.
-            const redirectData = this.appProvider.getRedirect();
+            const redirectData = CoreApp.getRedirect();
             if (redirectData.siteId) {
                 // Unset redirect data.
-                this.appProvider.storeRedirect('', '', '');
+                CoreApp.storeRedirect('', '', '');
 
                 // Only accept the redirect if it was stored less than 20 seconds ago.
                 if (Date.now() - redirectData.timemodified < 20000) {
                     if (redirectData.siteId != CoreConstants.NO_SITE_ID) {
                         // The redirect is pointing to a site, load it.
-                        return this.sitesProvider.loadSite(redirectData.siteId, redirectData.page, redirectData.params)
+                        return CoreSites.loadSite(redirectData.siteId, redirectData.page, redirectData.params)
                                 .then((loggedIn) => {
 
                             if (loggedIn) {
@@ -83,9 +83,9 @@ export class CoreLoginInitPage {
      * @return Promise resolved when done.
      */
     protected loadPage(): Promise<any> {
-        if (this.sitesProvider.isLoggedIn()) {
+        if (CoreSites.isLoggedIn()) {
             if (this.loginHelper.isSiteLoggedOut()) {
-                return this.sitesProvider.logout().then(() => {
+                return CoreSites.logout().then(() => {
                     return this.loadPage();
                 });
             }

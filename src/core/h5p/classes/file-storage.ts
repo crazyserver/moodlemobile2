@@ -53,17 +53,17 @@ export class CoreH5PFileStorage {
 
             // Create new file for cached assets.
             const fileName = key + '.' + (type == 'scripts' ? 'js' : 'css');
-            const path = CoreTextUtils.instance.concatenatePaths(cachedAssetsPath, fileName);
+            const path = CoreTextUtils.concatenatePaths(cachedAssetsPath, fileName);
 
             // Store concatenated content.
             const content = await this.concatenateFiles(assets, type);
 
-            await CoreFile.instance.writeFile(path, content);
+            await CoreFile.writeFile(path, content);
 
             // Now update the files data.
             files[type] = [
                 {
-                    path: CoreTextUtils.instance.concatenatePaths(CoreH5PFileStorage.CACHED_ASSETS_FOLDER_NAME, fileName),
+                    path: CoreTextUtils.concatenatePaths(CoreH5PFileStorage.CACHED_ASSETS_FOLDER_NAME, fileName),
                     version: ''
                 }
             ];
@@ -78,13 +78,13 @@ export class CoreH5PFileStorage {
      * @return Promise resolved with all of the files content in one string.
      */
     protected async concatenateFiles(assets: CoreH5PDependencyAsset[], type: string): Promise<string> {
-        const basePath = CoreFile.instance.convertFileSrc(CoreFile.instance.getBasePathInstant());
+        const basePath = CoreFile.convertFileSrc(CoreFile.getBasePathInstant());
         let content = '';
 
         for (const i in assets) {
             const asset = assets[i];
 
-            let fileContent: string = await CoreFile.instance.readFile(asset.path);
+            let fileContent: string = await CoreFile.readFile(asset.path);
 
             if (type == 'scripts') {
                 // No need to treat scripts, just append the content.
@@ -131,8 +131,8 @@ export class CoreH5PFileStorage {
                             url = pathSplit.join('/');
                         }
 
-                        fileContent = fileContent.replace(new RegExp(CoreTextUtils.instance.escapeForRegex(match), 'g'),
-                                    'url("' + CoreTextUtils.instance.concatenatePaths(basePath, url) + '")');
+                        fileContent = fileContent.replace(new RegExp(CoreTextUtils.escapeForRegex(match), 'g'),
+                                    'url("' + CoreTextUtils.concatenatePaths(basePath, url) + '")');
                     });
                 }
 
@@ -152,7 +152,7 @@ export class CoreH5PFileStorage {
      */
     async deleteCachedAssets(removedEntries: CoreH5PLibrariesCachedAssetsDBData[], siteId?: string): Promise<void> {
 
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
         const promises = [];
 
         removedEntries.forEach((entry) => {
@@ -160,14 +160,14 @@ export class CoreH5PFileStorage {
             const cachedAssetsFolder = this.getCachedAssetsFolderPath(entry.foldername, site.getId());
 
             ['js', 'css'].forEach((type) => {
-                const path = CoreTextUtils.instance.concatenatePaths(cachedAssetsFolder, entry.hash + '.' + type);
+                const path = CoreTextUtils.concatenatePaths(cachedAssetsFolder, entry.hash + '.' + type);
 
-                promises.push(CoreFile.instance.removeFile(path));
+                promises.push(CoreFile.removeFile(path));
             });
         });
 
         try {
-            await CoreUtils.instance.allPromises(promises);
+            await CoreUtils.allPromises(promises);
         } catch (error) {
             // Ignore errors, maybe there's no cached asset of some type.
         }
@@ -181,7 +181,7 @@ export class CoreH5PFileStorage {
      * @return Promise resolved when done.
      */
     async deleteContentFolder(folderName: string, siteId?: string): Promise<void> {
-        await CoreFile.instance.removeDir(this.getContentFolderPath(folderName, siteId));
+        await CoreFile.removeDir(this.getContentFolderPath(folderName, siteId));
     }
 
     /**
@@ -192,7 +192,7 @@ export class CoreH5PFileStorage {
      * @return Promise resolved when done.
      */
     async deleteContentIndex(folderName: string, siteId?: string): Promise<void> {
-        await CoreFile.instance.removeFile(this.getContentIndexPath(folderName, siteId));
+        await CoreFile.removeFile(this.getContentIndexPath(folderName, siteId));
     }
 
     /**
@@ -204,7 +204,7 @@ export class CoreH5PFileStorage {
      */
     async deleteContentIndexesForLibrary(libraryId: number, siteId?: string): Promise<void> {
 
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         const db = site.getDb();
 
@@ -238,7 +238,7 @@ export class CoreH5PFileStorage {
      * @return Promise resolved when done.
      */
     async deleteLibraryFolder(libraryData: any, folderName?: string, siteId?: string): Promise<void> {
-        await CoreFile.instance.removeDir(this.getLibraryFolderPath(libraryData, siteId, folderName));
+        await CoreFile.removeDir(this.getLibraryFolderPath(libraryData, siteId, folderName));
     }
 
     /**
@@ -273,9 +273,9 @@ export class CoreH5PFileStorage {
     protected async getCachedAsset(key: string, extension: string): Promise<CoreH5PDependencyAsset[]> {
 
         try {
-            const path = CoreTextUtils.instance.concatenatePaths(CoreH5PFileStorage.CACHED_ASSETS_FOLDER_NAME, key + extension);
+            const path = CoreTextUtils.concatenatePaths(CoreH5PFileStorage.CACHED_ASSETS_FOLDER_NAME, key + extension);
 
-            const size = await CoreFile.instance.getFileSize(path);
+            const size = await CoreFile.getFileSize(path);
 
             if (size > 0) {
                 return [
@@ -298,7 +298,7 @@ export class CoreH5PFileStorage {
      * @return Path.
      */
     getCachedAssetsFolderPath(folderName: string, siteId: string): string {
-        return CoreTextUtils.instance.concatenatePaths(
+        return CoreTextUtils.concatenatePaths(
                 this.getContentFolderPath(folderName, siteId), CoreH5PFileStorage.CACHED_ASSETS_FOLDER_NAME);
     }
 
@@ -310,11 +310,11 @@ export class CoreH5PFileStorage {
      * @return Promise resolved with the folder name.
      */
     async getContentFolderNameByUrl(fileUrl: string, siteId: string): Promise<string> {
-        const path = await CoreFilepool.instance.getFilePathByUrl(siteId, fileUrl);
+        const path = await CoreFilepool.getFilePathByUrl(siteId, fileUrl);
 
-        const fileAndDir = CoreFile.instance.getFileAndDirectoryFromPath(path);
+        const fileAndDir = CoreFile.getFileAndDirectoryFromPath(path);
 
-        return CoreMimetypeUtils.instance.removeExtension(fileAndDir.name);
+        return CoreMimetypeUtils.removeExtension(fileAndDir.name);
     }
 
     /**
@@ -325,7 +325,7 @@ export class CoreH5PFileStorage {
      * @return Folder path.
      */
     getContentFolderPath(folderName: string, siteId: string): string {
-        return CoreTextUtils.instance.concatenatePaths(
+        return CoreTextUtils.concatenatePaths(
                 this.getExternalH5PFolderPath(siteId), 'packages/' + folderName + '/content');
     }
 
@@ -337,11 +337,11 @@ export class CoreH5PFileStorage {
      * @return Promise resolved with the file URL if exists, rejected otherwise.
      */
     async getContentIndexFileUrl(fileUrl: string, siteId?: string): Promise<string> {
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const folderName = await this.getContentFolderNameByUrl(fileUrl, siteId);
 
-        const file = await CoreFile.instance.getFile(this.getContentIndexPath(folderName, siteId));
+        const file = await CoreFile.getFile(this.getContentIndexPath(folderName, siteId));
 
         return file.toURL();
     }
@@ -354,7 +354,7 @@ export class CoreH5PFileStorage {
      * @return Folder path.
      */
     getContentIndexPath(folderName: string, siteId: string): string {
-        return CoreTextUtils.instance.concatenatePaths(this.getContentFolderPath(folderName, siteId), 'index.html');
+        return CoreTextUtils.concatenatePaths(this.getContentFolderPath(folderName, siteId), 'index.html');
     }
 
     /**
@@ -363,7 +363,7 @@ export class CoreH5PFileStorage {
      * @return Folder path.
      */
     getCoreH5PPath(): string {
-        return CoreTextUtils.instance.concatenatePaths(CoreFile.instance.getWWWPath(), '/h5p/');
+        return CoreTextUtils.concatenatePaths(CoreFile.getWWWPath(), '/h5p/');
     }
 
     /**
@@ -383,7 +383,7 @@ export class CoreH5PFileStorage {
      * @return Folder path.
      */
     getExternalH5PFolderPath(siteId: string): string {
-        return CoreTextUtils.instance.concatenatePaths(CoreFile.instance.getSiteFolder(siteId), 'h5p');
+        return CoreTextUtils.concatenatePaths(CoreFile.getSiteFolder(siteId), 'h5p');
     }
 
     /**
@@ -393,7 +393,7 @@ export class CoreH5PFileStorage {
      * @return Folder path.
      */
     getLibrariesFolderPath(siteId: string): string {
-        return CoreTextUtils.instance.concatenatePaths(this.getExternalH5PFolderPath(siteId), 'libraries');
+        return CoreTextUtils.concatenatePaths(this.getExternalH5PFolderPath(siteId), 'libraries');
     }
 
     /**
@@ -409,7 +409,7 @@ export class CoreH5PFileStorage {
             folderName = CoreH5PCore.libraryToString(libraryData, true);
         }
 
-        return CoreTextUtils.instance.concatenatePaths(this.getLibrariesFolderPath(siteId), folderName);
+        return CoreTextUtils.concatenatePaths(this.getLibrariesFolderPath(siteId), folderName);
     }
 
     /**
@@ -425,13 +425,13 @@ export class CoreH5PFileStorage {
 
         // Delete existing content for this package.
         try {
-            await CoreFile.instance.removeDir(folderPath);
+            await CoreFile.removeDir(folderPath);
         } catch (error) {
             // Ignore errors, maybe it doesn't exist.
         }
 
         // Copy the new one.
-        await CoreFile.instance.moveDir(contentPath, folderPath);
+        await CoreFile.moveDir(contentPath, folderPath);
     }
 
     /**
@@ -446,12 +446,12 @@ export class CoreH5PFileStorage {
 
         // Delete existing library version.
         try {
-            await CoreFile.instance.removeDir(folderPath);
+            await CoreFile.removeDir(folderPath);
         } catch (error) {
             // Ignore errors, maybe it doesn't exist.
         }
 
         // Copy the new one.
-        await CoreFile.instance.moveDir(libraryData.uploadDirectory, folderPath, true);
+        await CoreFile.moveDir(libraryData.uploadDirectory, folderPath, true);
     }
 }

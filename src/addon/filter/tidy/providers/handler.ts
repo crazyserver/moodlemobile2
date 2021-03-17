@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the HTML tidy filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterTidyHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterTidyHandler';
     filterName = 'tidy';

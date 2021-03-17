@@ -28,7 +28,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch LTIs. LTIs cannot be prefetched, but the handler will be used to invalidate some data on course PTR.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLtiPrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModLti';
     modName = 'lti';

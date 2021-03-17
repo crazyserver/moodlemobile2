@@ -22,7 +22,7 @@ import { AddonModDataHelperProvider } from './helper';
  * Content links handler for database approve/disapprove entry.
  * Match mod/data/view.php?d=6&approve=5 with a valid data id and entryid.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataApproveLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModDataApproveLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModData';
@@ -50,7 +50,7 @@ export class AddonModDataApproveLinkHandler extends CoreContentLinksHandlerBase 
                     entryId = parseInt(params.approve, 10) || parseInt(params.disapprove, 10),
                     approve = parseInt(params.approve, 10) ? true : false;
 
-                this.dataHelper.approveOrDisapproveEntry(dataId, entryId, approve, courseId, siteId);
+                AddonModDataHelper.approveOrDisapproveEntry(dataId, entryId, approve, courseId, siteId);
             }
         }];
     }
@@ -71,6 +71,6 @@ export class AddonModDataApproveLinkHandler extends CoreContentLinksHandlerBase 
             return false;
         }
 
-        return this.dataProvider.isPluginEnabled(siteId);
+        return AddonModData.isPluginEnabled(siteId);
     }
 }

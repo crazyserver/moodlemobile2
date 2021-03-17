@@ -19,7 +19,7 @@ import { AddonNotesSyncProvider } from './notes-sync';
 /**
  * Synchronization cron handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotesSyncCronHandler implements CoreCronHandler {
     name = 'AddonNotesSyncCronHandler';
 

@@ -19,7 +19,7 @@ import { AddonUserProfileFieldMenuComponent } from '../component/menu';
 /**
  * Menu user profile field handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonUserProfileFieldMenuHandler implements CoreUserProfileFieldHandler {
     name = 'AddonUserProfileFieldMenu';
     type = 'menu';

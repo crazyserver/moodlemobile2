@@ -25,7 +25,7 @@ import { makeSingleton } from '@singletons/core.singletons';
  *
  * This service handles processes that need to be run when updating the app, like migrate Ionic 1 database data to Ionic 3.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUpdateManagerProvider implements CoreInitHandler {
     // Data for init delegate.
     name = 'CoreUpdateManager';
@@ -53,7 +53,7 @@ export class CoreUpdateManagerProvider implements CoreInitHandler {
         const versionApplied: number = await this.configProvider.get(this.VERSION_APPLIED, 0);
 
         if (versionCode >= 3900 && versionApplied < 3900 && versionApplied > 0) {
-            promises.push(CoreH5P.instance.h5pPlayer.deleteAllContentIndexes());
+            promises.push(CoreH5P.h5pPlayer.deleteAllContentIndexes());
         }
 
         try {

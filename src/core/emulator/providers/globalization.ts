@@ -31,7 +31,7 @@ export class GlobalizationErrorMock implements GlobalizationError {
 /**
  * Emulates the Cordova Globalization plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GlobalizationMock extends Globalization {
 
     constructor(private appProvider: CoreAppProvider) {
@@ -69,7 +69,7 @@ export class GlobalizationMock extends Globalization {
         const navLang = (<any> navigator).userLanguage || navigator.language;
 
         try {
-            if (this.appProvider.isDesktop()) {
+            if (CoreApp.isDesktop()) {
                 return require('electron').remote.app.getLocale() || navLang;
             } else {
                 return navLang;

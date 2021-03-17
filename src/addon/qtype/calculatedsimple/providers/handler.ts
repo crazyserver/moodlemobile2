@@ -21,7 +21,7 @@ import { AddonQtypeCalculatedComponent } from '@addon/qtype/calculated/component
 /**
  * Handler to support calculated simple question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeCalculatedSimpleHandler implements CoreQuestionHandler {
     name = 'AddonQtypeCalculatedSimple';
     type = 'qtype_calculatedsimple';

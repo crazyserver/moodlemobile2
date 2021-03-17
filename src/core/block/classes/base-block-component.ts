@@ -56,7 +56,7 @@ export class CoreBlockBaseComponent implements OnInit {
                 return config;
             });
 
-            this.block.configs = this.utils.arrayToObject(this.block.configs, 'name');
+            this.block.configs = CoreUtils.arrayToObject(this.block.configs, 'name');
         }
 
         this.loadContent();
@@ -138,7 +138,7 @@ export class CoreBlockBaseComponent implements OnInit {
 
         return promise.catch((error) => {
             // Error getting data, fail.
-            this.domUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
+            CoreDomUtils.showErrorModalDefault(error, this.fetchContentDefaultError, true);
         }).finally(() => {
             this.loaded = true;
         });

@@ -56,8 +56,8 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
             private appProvider: CoreAppProvider, platform: Platform, private utils: CoreUtilsProvider,
             pushNotificationsDelegate: CorePushNotificationsDelegate) {
 
-        this.search.loading =  translate.instant('core.searching');
-        this.loadingMessages = translate.instant('core.loading');
+        this.search.loading =  Translate.instant('core.searching');
+        this.loadingMessages = Translate.instant('core.loading');
         this.siteId = sitesProvider.getCurrentSiteId();
 
         // Update discussions when new message is received.
@@ -151,7 +151,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
             promises.push(this.messagesProvider.invalidateUnreadConversationCounts(this.siteId));
         }
 
-        return this.utils.allPromises(promises).finally(() => {
+        return CoreUtils.allPromises(promises).finally(() => {
             return this.fetchData().finally(() => {
                 if (refresher) {
                     refresher?.detail.complete();
@@ -187,7 +187,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
         promises.push(this.messagesProvider.getUnreadConversationCounts(this.siteId));
 
         return Promise.all(promises).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingdiscussions', true);
         }).finally(() => {
             this.loaded = true;
         });
@@ -212,7 +212,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
      * @return Resolved when done.
      */
     searchMessage(query: string): Promise<any> {
-        this.appProvider.closeKeyboard();
+        CoreApp.closeKeyboard();
         this.loaded = false;
         this.loadingMessage = this.search.loading;
 
@@ -220,7 +220,7 @@ export class AddonMessagesDiscussionsComponent implements OnDestroy {
             this.search.showResults = true;
             this.search.results = searchResults.messages;
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingmessages', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.messages.errorwhileretrievingmessages', true);
         }).finally(() => {
             this.loaded = true;
         });

@@ -60,7 +60,7 @@ export class CoreSitePreferencesPage {
             navParams: NavParams,
     ) {
 
-        this.isIOS = CoreApp.instance.isIOS();
+        this.isIOS = CoreApp.isIOS();
 
         this.selectedPage = navParams.get('page') || false;
 
@@ -95,7 +95,7 @@ export class CoreSitePreferencesPage {
      */
     protected async fetchData(): Promise<void> {
         this.handlers = this.settingsDelegate.getHandlers();
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
         this.siteId = currentSite.id;
         this.siteInfo = currentSite.getInfo();
         this.siteName = currentSite.getSiteName();
@@ -123,7 +123,7 @@ export class CoreSitePreferencesPage {
             if (this.isDestroyed) {
                 return;
             }
-            this.domUtils.showErrorModalDefault(error, 'core.settings.errorsyncsite', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.settings.errorsyncsite', true);
         });
     }
 
@@ -175,16 +175,16 @@ export class CoreSitePreferencesPage {
      * Show information about space usage actions.
      */
     showSpaceInfo(): void {
-        this.domUtils.showAlert(this.translate.instant('core.help'),
-            this.translate.instant('core.settings.spaceusagehelp'));
+        CoreDomUtils.showAlert(Translate.instant('core.help'),
+            Translate.instant('core.settings.spaceusagehelp'));
     }
 
     /**
      * Show information about sync actions.
      */
     showSyncInfo(): void {
-        this.domUtils.showAlert(this.translate.instant('core.help'),
-            this.translate.instant('core.settings.synchronizenowhelp'));
+        CoreDomUtils.showAlert(Translate.instant('core.help'),
+            Translate.instant('core.settings.synchronizenowhelp'));
     }
 
     /**

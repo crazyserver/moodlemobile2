@@ -179,10 +179,10 @@ export class CoreQuestionBaseComponent {
 
         this.realElement.classList.add('core-question-container');
 
-        const element = this.domUtils.convertToElement(this.question.html);
+        const element = CoreDomUtils.convertToElement(this.question.html);
 
         // Extract question text.
-        this.question.text = this.domUtils.getContentsOfElement(element, '.qtext');
+        this.question.text = CoreDomUtils.getContentsOfElement(element, '.qtext');
         if (typeof this.question.text == 'undefined') {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
 
@@ -210,9 +210,9 @@ export class CoreQuestionBaseComponent {
 
             if (!textarea) {
                 // Textarea not found, we might be in review. Search the answer and the attachments.
-                this.question.answer = this.domUtils.getContentsOfElement(questionEl, '.qtype_essay_response');
+                this.question.answer = CoreDomUtils.getContentsOfElement(questionEl, '.qtype_essay_response');
                 this.question.attachments = this.questionHelper.getQuestionAttachmentsFromHtml(
-                        this.domUtils.getContentsOfElement(questionEl, '.attachments'));
+                        CoreDomUtils.getContentsOfElement(questionEl, '.attachments'));
             } else {
                 // Textarea found.
                 const input = <HTMLInputElement> questionEl.querySelector('input[type="hidden"][name*=answerformat]'),
@@ -247,7 +247,7 @@ export class CoreQuestionBaseComponent {
             return this.questionHelper.showComponentError(this.onAbort);
         }
 
-        const element = this.domUtils.convertToElement(this.question.html);
+        const element = CoreDomUtils.convertToElement(this.question.html);
 
         // Get question content.
         const content = <HTMLElement> element.querySelector(contentSelector);
@@ -258,8 +258,8 @@ export class CoreQuestionBaseComponent {
         }
 
         // Remove sequencecheck and validation error.
-        this.domUtils.removeElement(content, 'input[name*=sequencecheck]');
-        this.domUtils.removeElement(content, '.validationerror');
+        CoreDomUtils.removeElement(content, 'input[name*=sequencecheck]');
+        CoreDomUtils.removeElement(content, '.validationerror');
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.questionHelper.replaceCorrectnessClasses(element);
@@ -293,7 +293,7 @@ export class CoreQuestionBaseComponent {
                 name: input.name,
                 value: input.value,
                 readOnly: input.readOnly,
-                isInline: !!this.domUtils.closest(input, '.qtext') // The answer can be inside the question text.
+                isInline: !!CoreDomUtils.closest(input, '.qtext') // The answer can be inside the question text.
             };
 
             // Check if question is marked as correct.
@@ -432,7 +432,7 @@ export class CoreQuestionBaseComponent {
         if (questionEl) {
 
             // Get the prompt.
-            this.question.prompt = this.domUtils.getContentsOfElement(questionEl, '.prompt');
+            this.question.prompt = CoreDomUtils.getContentsOfElement(questionEl, '.prompt');
 
             // Search radio buttons first (single choice).
             let options = <HTMLInputElement[]> Array.from(questionEl.querySelectorAll('input[type="radio"]'));

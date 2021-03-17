@@ -19,7 +19,7 @@ import { AddonModQuizAccessRuleHandler } from '../../../providers/access-rules-d
 /**
  * Handler to support num attempts access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessNumAttemptsHandler implements AddonModQuizAccessRuleHandler {
     name = 'AddonModQuizAccessNumAttempts';
     ruleName = 'quizaccess_numattempts';

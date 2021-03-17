@@ -63,7 +63,7 @@ export class CoreSiteHomeIndexComponent implements OnInit {
     doRefresh(refresher: any): void {
         const promises = [];
 
-        promises.push(this.courseProvider.invalidateSections(this.siteHomeId));
+        promises.push(CoreCourse.invalidateSections(this.siteHomeId));
         promises.push(this.currentSite.invalidateConfig().then(() => {
             // Config invalidated, fetch it again.
             return this.currentSite.getConfig().then((config) => {
@@ -128,23 +128,23 @@ export class CoreSiteHomeIndexComponent implements OnInit {
             });
         }
 
-        return this.courseProvider.getSections(this.siteHomeId, false, true).then((sections) => {
+        return CoreCourse.getSections(this.siteHomeId, false, true).then((sections) => {
 
             // Check "Include a topic section" setting from numsections.
             this.section = config.numsections ? sections.find((section) => section.section == 1) : false;
             if (this.section) {
-                this.section.hasContent = this.courseHelper.sectionHasContent(this.section);
-                this.hasContent = this.courseHelper.addHandlerDataForModules([this.section], this.siteHomeId, undefined,
+                this.section.hasContent = CoreCourseHelper.sectionHasContent(this.section);
+                this.hasContent = CoreCourseHelper.addHandlerDataForModules([this.section], this.siteHomeId, undefined,
                         undefined, true) || this.hasContent;
             }
 
             // Add log in Moodle.
-            this.courseProvider.logView(this.siteHomeId, undefined, undefined,
+            CoreCourse.logView(this.siteHomeId, undefined, undefined,
                     this.currentSite && this.currentSite.getInfo().sitename).catch(() => {
                 // Ignore errors.
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.course.couldnotloadsectioncontent', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.course.couldnotloadsectioncontent', true);
         });
     }
 }

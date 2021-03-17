@@ -25,7 +25,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 /**
  * Service that provides some features for page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModPageProvider {
     static COMPONENT = 'mmaModPage';
 
@@ -61,7 +61,7 @@ export class AddonModPageProvider {
      */
     protected getPageByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModPagePage> {
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -69,7 +69,7 @@ export class AddonModPageProvider {
                 cacheKey: this.getPageCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModPageProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_page_get_pages_by_courses', params, preSets)
@@ -110,10 +110,10 @@ export class AddonModPageProvider {
         const promises = [];
 
         promises.push(this.invalidatePageData(courseId, siteId));
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModPageProvider.COMPONENT, moduleId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModPageProvider.COMPONENT, moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -124,7 +124,7 @@ export class AddonModPageProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidatePageData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getPageCacheKey(courseId));
         });
     }
@@ -136,7 +136,7 @@ export class AddonModPageProvider {
      * @since 3.3
      */
     isGetPageWSAvailable(): boolean {
-        return this.sitesProvider.wsAvailableInCurrentSite('mod_page_get_pages_by_courses');
+        return CoreSites.wsAvailableInCurrentSite('mod_page_get_pages_by_courses');
     }
 
     /**
@@ -146,7 +146,7 @@ export class AddonModPageProvider {
      * @return Promise resolved with true if plugin is enabled, rejected or resolved with false otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.canDownloadFiles();
         });
     }
@@ -164,7 +164,7 @@ export class AddonModPageProvider {
             pageid: id
         };
 
-        return this.logHelper.logSingle('mod_page_view_page', params, AddonModPageProvider.COMPONENT, id, name, 'page', {}, siteId);
+        return CoreCourseLogHelper.logSingle('mod_page_view_page', params, AddonModPageProvider.COMPONENT, id, name, 'page', {}, siteId);
     }
 }
 

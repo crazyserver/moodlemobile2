@@ -36,7 +36,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 /**
  * Service to sync H5P activities.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseProvider {
 
     static AUTO_SYNCED = 'addon_mod_h5pactivity_autom_synced';
@@ -55,7 +55,7 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
         super('AddonModH5PActivitySyncProvider', loggerProvider, sitesProvider, appProvider, syncProvider, textUtils, translate,
                 timeUtils, prefetchDelegate, prefetchHandler);
 
-        this.componentTranslate = CoreCourse.instance.translateModuleName('h5pactivity');
+        this.componentTranslate = CoreCourse.translateModuleName('h5pactivity');
     }
 
     /**
@@ -77,7 +77,7 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
      * @return Promise resolved if sync is successful, rejected if sync fails.
      */
     protected async syncAllActivitiesFunc(siteId?: string, force?: boolean): Promise<void> {
-        const entries = await CoreXAPIOffline.instance.getAllStatements(siteId);
+        const entries = await CoreXAPIOffline.getAllStatements(siteId);
 
         // Sync all responses.
         const promises = entries.map((response) => {
@@ -87,7 +87,7 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
             return promise.then((result) => {
                 if (result && result.updated) {
                     // Sync successful, send event.
-                    CoreEvents.instance.trigger(AddonModH5PActivitySyncProvider.AUTO_SYNCED, {
+                    CoreEvents.trigger(AddonModH5PActivitySyncProvider.AUTO_SYNCED, {
                         contextId: response.contextid,
                         warnings: result.warnings,
                     }, siteId);
@@ -121,11 +121,11 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
      * @return Promise resolved if sync is successful, rejected otherwise.
      */
     syncActivity(contextId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // Cannot sync in offline.
-            throw this.translate.instant('core.networkerrormsg');
+            throw Translate.instant('core.networkerrormsg');
         }
 
         if (this.isSyncing(contextId, siteId)) {
@@ -153,7 +153,7 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
         };
 
         // Get all the statements stored for the activity.
-        const entries = await CoreXAPIOffline.instance.getContextStatements(contextId, siteId);
+        const entries = await CoreXAPIOffline.getContextStatements(contextId, siteId);
 
         if (!entries || !entries.length) {
             // Nothing to sync.
@@ -165,11 +165,11 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
         // Get the activity instance.
         const courseId = entries[0].courseid;
 
-        const h5pActivity = await AddonModH5PActivity.instance.getH5PActivityByContextId(courseId, contextId, {siteId});
+        const h5pActivity = await AddonModH5PActivity.getH5PActivityByContextId(courseId, contextId, {siteId});
 
         // Sync offline logs.
         try {
-            await CoreCourseLogHelper.instance.syncIfNeeded(AddonModH5PActivityProvider.COMPONENT, h5pActivity.id, siteId);
+            await CoreCourseLogHelper.syncIfNeeded(AddonModH5PActivityProvider.COMPONENT, h5pActivity.id, siteId);
         } catch (error) {
             // Ignore errors.
         }
@@ -179,20 +179,20 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
             const entry = entries[i];
 
             try {
-                await CoreXAPI.instance.postStatementsOnline(entry.component, entry.statements, siteId);
+                await CoreXAPI.postStatementsOnline(entry.component, entry.statements, siteId);
 
                 result.updated = true;
 
-                await CoreXAPIOffline.instance.deleteStatements(entry.id, siteId);
+                await CoreXAPIOffline.deleteStatements(entry.id, siteId);
             } catch (error) {
-                if (CoreUtils.instance.isWebServiceError(error)) {
+                if (CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means that statements cannot be submitted. Delete them.
                     result.updated = true;
 
-                    await CoreXAPIOffline.instance.deleteStatements(entry.id, siteId);
+                    await CoreXAPIOffline.deleteStatements(entry.id, siteId);
 
                     // Responses deleted, add a warning.
-                    result.warnings.push(this.translate.instant('core.warningofflinedatadeleted', {
+                    result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                         component: this.componentTranslate,
                         name: entry.extra,
                         error: this.textUtils.getErrorMessageFromError(error),
@@ -207,7 +207,7 @@ export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseP
         if (result.updated) {
             try {
                 // Data has been sent to server, invalidate attempts.
-                await AddonModH5PActivity.instance.invalidateUserAttempts(h5pActivity.id, undefined, siteId);
+                await AddonModH5PActivity.invalidateUserAttempts(h5pActivity.id, undefined, siteId);
             } catch (error) {
                 // Ignore errors.
             }

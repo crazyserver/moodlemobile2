@@ -26,7 +26,7 @@ import { SQLiteDB } from '@classes/sqlitedb';
 /**
  * Service to handle offline quiz.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizOfflineProvider {
 
     protected logger: CoreLogger;
@@ -87,7 +87,7 @@ export class AddonModQuizOfflineProvider {
             private behaviourDelegate: CoreQuestionBehaviourDelegate) {
         this.logger = CoreLogger.getInstance('AddonModQuizOfflineProvider');
 
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -144,7 +144,7 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved with the offline attempts.
      */
     getAllAttempts(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getAllRecords(AddonModQuizOfflineProvider.ATTEMPTS_TABLE);
         });
     }
@@ -168,7 +168,7 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved with the attempt.
      */
     getAttemptById(attemptId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.getRecord(AddonModQuizOfflineProvider.ATTEMPTS_TABLE, {id: attemptId});
         });
     }
@@ -182,7 +182,7 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved with the attempts.
      */
     getQuizAttempts(quizId: number, siteId?: string, userId?: number): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecords(AddonModQuizOfflineProvider.ATTEMPTS_TABLE, {quizid: quizId, userid: userId});
@@ -206,7 +206,7 @@ export class AddonModQuizOfflineProvider {
 
                 const state = this.questionProvider.getState(q.state);
                 question.state = q.state;
-                question.status = this.translate.instant('core.question.' + state.status);
+                question.status = Translate.instant('core.question.' + state.status);
             }).catch(() => {
                 // Question not found.
             }));
@@ -229,12 +229,12 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved in success, rejected otherwise.
      */
     processAttempt(quiz: any, attempt: any, questions: any, data: any, finish?: boolean, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const now = this.timeUtils.timestamp();
+        const now = CoreTimeUtils.timestamp();
         let db: SQLiteDB;
 
-        return this.sitesProvider.getSiteDb(siteId).then((siteDb) => {
+        return CoreSites.getSiteDb(siteId).then((siteDb) => {
             db = siteDb;
 
             // Check if an attempt already exists.
@@ -270,7 +270,7 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved when done.
      */
     removeAttemptAndAnswers(attemptId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -279,7 +279,7 @@ export class AddonModQuizOfflineProvider {
         promises.push(this.questionProvider.removeAttemptQuestions(AddonModQuizProvider.COMPONENT, attemptId, siteId));
 
         // Remove the attempt.
-        promises.push(this.sitesProvider.getSiteDb(siteId).then((db) => {
+        promises.push(CoreSites.getSiteDb(siteId).then((db) => {
             return db.deleteRecords(AddonModQuizOfflineProvider.ATTEMPTS_TABLE, {id: attemptId});
         }));
 
@@ -295,7 +295,7 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved when finished.
      */
     removeQuestionAndAnswers(attemptId: number, slot: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
@@ -317,8 +317,8 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved when done.
      */
     saveAnswers(quiz: any, attempt: any, questions: any, answers: any, timeMod?: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
-        timeMod = timeMod || this.timeUtils.timestamp();
+        siteId = siteId || CoreSites.getCurrentSiteId();
+        timeMod = timeMod || CoreTimeUtils.timestamp();
 
         const questionsWithAnswers = {},
             newStates = {};
@@ -366,7 +366,7 @@ export class AddonModQuizOfflineProvider {
                     attempt.userid, question, newStates[slot], siteId));
             }
 
-            return this.utils.allPromises(promises).catch((err) => {
+            return CoreUtils.allPromises(promises).catch((err) => {
                 // Ignore errors when saving question state.
                 this.logger.error('Error saving question state', err);
             });
@@ -382,7 +382,7 @@ export class AddonModQuizOfflineProvider {
      * @return Promise resolved in success, rejected otherwise.
      */
     setAttemptCurrentPage(attemptId: number, page: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSiteDb(siteId).then((db) => {
+        return CoreSites.getSiteDb(siteId).then((db) => {
             return db.updateRecords(AddonModQuizOfflineProvider.ATTEMPTS_TABLE, {currentpage: page}, {id: attemptId});
         });
     }

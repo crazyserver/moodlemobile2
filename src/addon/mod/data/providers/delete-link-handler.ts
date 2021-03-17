@@ -22,7 +22,7 @@ import { AddonModDataHelperProvider } from './helper';
  * Content links handler for database delete entry.
  * Match mod/data/view.php?d=6&delete=5 with a valid data id and entryid.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataDeleteLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModDataDeleteLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModData';
@@ -48,7 +48,7 @@ export class AddonModDataDeleteLinkHandler extends CoreContentLinksHandlerBase {
                 const dataId = parseInt(params.d, 10);
                 const entryId = parseInt(params.delete, 10);
 
-                this.dataHelper.showDeleteEntryModal(dataId, entryId, courseId);
+                AddonModDataHelper.showDeleteEntryModal(dataId, entryId, courseId);
             }
         }];
     }
@@ -69,6 +69,6 @@ export class AddonModDataDeleteLinkHandler extends CoreContentLinksHandlerBase {
             return false;
         }
 
-        return this.dataProvider.isPluginEnabled(siteId);
+        return AddonModData.isPluginEnabled(siteId);
     }
 }

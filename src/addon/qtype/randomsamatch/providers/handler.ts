@@ -21,7 +21,7 @@ import { AddonQtypeMatchComponent } from '@addon/qtype/match/component/match';
 /**
  * Handler to support random short-answer matching question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeRandomSaMatchHandler implements CoreQuestionHandler {
     name = 'AddonQtypeRandomSaMatch';
     type = 'qtype_randomsamatch';

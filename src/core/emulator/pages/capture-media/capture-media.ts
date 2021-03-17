@@ -311,7 +311,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
             this.title = 'core.captureimage';
         }
 
-        this.isCordovaAudioCapture = CoreApp.instance.isMobile() && this.isAudio;
+        this.isCordovaAudioCapture = CoreApp.isMobile() && this.isAudio;
 
         if (this.isCordovaAudioCapture) {
             this.extension = this.plaform.is('ios') ? 'wav' : 'aac';
@@ -345,7 +345,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
                 // Get the image from the video and set it to the canvas, using video width/height.
                 const width = this.streamVideo.nativeElement.videoWidth,
                     height = this.streamVideo.nativeElement.videoHeight,
-                    loadingModal = this.domUtils.showModalLoading();
+                    loadingModal = CoreDomUtils.showModalLoading();
 
                 this.imgCanvas.nativeElement.width = width;
                 this.imgCanvas.nativeElement.height = height;
@@ -426,13 +426,13 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
 
         if (!this.mediaBlob && !this.isCordovaAudioCapture) {
             // Shouldn't happen.
-            this.domUtils.showErrorModal('Please capture the media first.');
+            CoreDomUtils.showErrorModal('Please capture the media first.');
 
             return;
         }
 
         let fileEntry = this.fileEntry;
-        const loadingModal = this.domUtils.showModalLoading();
+        const loadingModal = CoreDomUtils.showModalLoading();
 
         try {
             if (!this.isCordovaAudioCapture) {
@@ -453,7 +453,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
 
                 let mimetype = null;
                 if (this.extension) {
-                    mimetype = CoreMimetypeUtils.instance.getMimeType(this.extension);
+                    mimetype = CoreMimetypeUtils.getMimeType(this.extension);
                 }
 
                 const mediaFile: MediaFile = {
@@ -470,7 +470,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
                 this.dismissWithData([mediaFile]);
             }
         } catch (err) {
-            this.domUtils.showErrorModal(err);
+            CoreDomUtils.showErrorModal(err);
         } finally {
             loadingModal.dismiss();
         }
@@ -482,7 +482,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
      * @return Path.
      */
     protected getFilePath(): string {
-        const fileName = this.type + '_' + this.timeUtils.readableTimestamp() + '.' + this.extension;
+        const fileName = this.type + '_' + CoreTimeUtils.readableTimestamp() + '.' + this.extension;
 
         return this.textUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, 'media/' + fileName);
     }

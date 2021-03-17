@@ -30,7 +30,7 @@ import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 /**
  * Handler to prefetch choices.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoicePrefetchHandler extends CoreCourseActivityPrefetchHandlerBase {
     name = 'AddonModChoice';
     modName = 'choice';
@@ -102,7 +102,7 @@ export class AddonModChoicePrefetchHandler extends CoreCourseActivityPrefetchHan
                             subPromises.push(this.userProvider.getProfile(response.userid, courseId, false, siteId));
                         }
                         if (response.profileimageurl) {
-                            subPromises.push(this.filepoolProvider.addToQueueByUrl(siteId, response.profileimageurl).catch(() => {
+                            subPromises.push(CoreFilepool.addToQueueByUrl(siteId, response.profileimageurl).catch(() => {
                                 // Ignore failures.
                             }));
                         }
@@ -114,7 +114,7 @@ export class AddonModChoicePrefetchHandler extends CoreCourseActivityPrefetchHan
 
             // Get the intro files.
             const introFiles = this.getIntroFilesFromInstance(module, choice);
-            promises.push(this.filepoolProvider.addFilesToQueue(siteId, introFiles, AddonModChoiceProvider.COMPONENT, module.id));
+            promises.push(CoreFilepool.addFilesToQueue(siteId, introFiles, AddonModChoiceProvider.COMPONENT, module.id));
 
             return Promise.all(promises);
         });

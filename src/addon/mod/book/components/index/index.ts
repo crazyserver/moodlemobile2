@@ -62,7 +62,7 @@ export class AddonModBookIndexComponent extends CoreCourseModuleMainResourceComp
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
+        this.tagsEnabled = CoreTag.areTagsAvailableInSite();
 
         this.loadContent();
     }
@@ -186,7 +186,7 @@ export class AddonModBookIndexComponent extends CoreCourseModuleMainResourceComp
      */
     protected loadChapter(chapterId: string, logChapterId: boolean): Promise<void> {
         this.currentChapter = chapterId;
-        this.domUtils.scrollToTop(this.content);
+        CoreDomUtils.scrollToTop(this.content);
 
         return this.bookProvider.getChapterContent(this.contentsMap, chapterId, this.module.id).then((content) => {
             this.chapterContent = content;
@@ -194,21 +194,21 @@ export class AddonModBookIndexComponent extends CoreCourseModuleMainResourceComp
             this.nextChapter = this.bookProvider.getNextChapter(this.chapters, chapterId);
 
             this.previousNavBarTitle = this.previousChapter && this.displayTitlesInNavBar ?
-                    this.translate.instant('addon.mod_book.navprevtitle', {$a: this.previousChapter.title}) : '';
+                    Translate.instant('addon.mod_book.navprevtitle', {$a: this.previousChapter.title}) : '';
             this.nextNavBarTitle = this.nextChapter && this.displayTitlesInNavBar ?
-                    this.translate.instant('addon.mod_book.navnexttitle', {$a: this.nextChapter.title}) : '';
+                    Translate.instant('addon.mod_book.navnexttitle', {$a: this.nextChapter.title}) : '';
 
             // Chapter loaded, log view. We don't return the promise because we don't want to block the user for this.
             this.bookProvider.logView(this.module.instance, logChapterId ? chapterId : undefined, this.module.name).then(() => {
                 // Module is completed when last chapter is viewed, so we only check completion if the last is reached.
                 if (!this.nextChapter) {
-                    this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                    CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
                 }
             }).catch(() => {
                 // Ignore errors.
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_book.errorchapter', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_book.errorchapter', true);
 
             return Promise.reject(null);
         }).finally(() => {

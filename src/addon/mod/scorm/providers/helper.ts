@@ -24,7 +24,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
 /**
  * Helper service that provides some features for SCORM.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModScormHelperProvider {
 
     // List of elements we want to ignore when copying attempts (they're calculated).
@@ -61,7 +61,7 @@ export class AddonModScormHelperProvider {
                 }
 
                 return subPromise.then((size) => {
-                    return this.domUtils.confirmDownloadSize({size: size, total: true});
+                    return CoreDomUtils.confirmDownloadSize({size: size, total: true});
                 });
             }
         });
@@ -76,7 +76,7 @@ export class AddonModScormHelperProvider {
      * @return Promise resolved when the attempt is created.
      */
     convertAttemptToOffline(scorm: any, attempt: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Get data from the online attempt.
         return this.scormProvider.getScormUserData(scorm.id, attempt, {cmId: scorm.coursemodule, siteId}).then((onlineData) => {
@@ -85,7 +85,7 @@ export class AddonModScormHelperProvider {
             return this.scormOfflineProvider.getScormUserData(scorm.id, attempt, undefined, siteId).catch(() => {
                 // Ignore errors.
             }).then((offlineData) => {
-                const dataToStore = this.utils.clone(onlineData);
+                const dataToStore = CoreUtils.clone(onlineData);
 
                 // Filter the data to copy.
                 for (const scoId in dataToStore) {
@@ -115,7 +115,7 @@ export class AddonModScormHelperProvider {
             });
         }).catch(() => {
             // Shouldn't happen.
-            return Promise.reject(this.translate.instant('addon.mod_scorm.errorcreateofflineattempt'));
+            return Promise.reject(Translate.instant('addon.mod_scorm.errorcreateofflineattempt'));
         });
     }
 
@@ -129,7 +129,7 @@ export class AddonModScormHelperProvider {
      * @return Promise resolved when the attempt is created.
      */
     createOfflineAttempt(scorm: any, newAttempt: number, lastOnline: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Try to get data from online attempts.
         return this.searchOnlineAttemptUserData(scorm.id, lastOnline, {cmId: scorm.coursemodule, siteId}).then((userData) => {
@@ -150,7 +150,7 @@ export class AddonModScormHelperProvider {
 
             return this.scormOfflineProvider.createNewAttempt(scorm, newAttempt, userData, undefined, siteId);
         }).catch(() => {
-            return Promise.reject(this.translate.instant('addon.mod_scorm.errorcreateofflineattempt'));
+            return Promise.reject(Translate.instant('addon.mod_scorm.errorcreateofflineattempt'));
         });
     }
 
@@ -323,7 +323,7 @@ export class AddonModScormHelperProvider {
      * @return Promise resolved with user data.
      */
     searchOnlineAttemptUserData(scormId: number, attempt: number, options: CoreCourseCommonModWSOptions = {}): Promise<any> {
-        options.siteId = options.siteId || this.sitesProvider.getCurrentSiteId();
+        options.siteId = options.siteId || CoreSites.getCurrentSiteId();
 
         return this.scormProvider.getScormUserData(scormId, attempt, options).catch(() => {
             if (attempt > 0) {

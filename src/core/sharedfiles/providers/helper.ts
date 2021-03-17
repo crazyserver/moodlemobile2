@@ -28,7 +28,7 @@ import { CoreFileUploaderProvider } from '@core/fileuploader/providers/fileuploa
 /**
  * Helper service to share files with the app.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSharedFilesHelperProvider {
     protected logger: CoreLogger;
 
@@ -48,19 +48,19 @@ export class CoreSharedFilesHelperProvider {
      * @return Promise resolved with the name to use when the user chooses. Rejected if user cancels.
      */
     askRenameReplace(originalName: string, newName: string): Promise<string> {
-        const deferred = this.utils.promiseDefer(),
+        const deferred = CoreUtils.promiseDefer(),
             alert = this.alertCtrl.create({
-                header: this.translate.instant('core.sharedfiles.sharedfiles'),
-                message: this.translate.instant('core.sharedfiles.chooseactionrepeatedfile', { $a: newName }),
+                header: Translate.instant('core.sharedfiles.sharedfiles'),
+                message: Translate.instant('core.sharedfiles.chooseactionrepeatedfile', { $a: newName }),
                 buttons: [
                     {
-                        text: this.translate.instant('core.sharedfiles.rename'),
+                        text: Translate.instant('core.sharedfiles.rename'),
                         handler: (): void => {
                             deferred.resolve(newName);
                         }
                     },
                     {
-                        text: this.translate.instant('core.sharedfiles.replace'),
+                        text: Translate.instant('core.sharedfiles.replace'),
                         handler: (): void => {
                             deferred.resolve(originalName);
                         }
@@ -80,7 +80,7 @@ export class CoreSharedFilesHelperProvider {
      * @param isInbox Whether the file is in the Inbox folder.
      */
     goToChooseSite(filePath: string, isInbox?: boolean): void {
-        const navCtrl = this.appProvider.getRootNavController();
+        const navCtrl = CoreApp.getRootNavController();
         navCtrl.push('CoreSharedFilesChooseSitePage', { filePath: filePath, isInbox: isInbox });
     }
 
@@ -90,7 +90,7 @@ export class CoreSharedFilesHelperProvider {
      * @return Whether the user is already choosing a site to store a shared file.
      */
     protected isChoosingSite(): boolean {
-        const navCtrl = this.appProvider.getRootNavController();
+        const navCtrl = CoreApp.getRootNavController();
 
         return navCtrl && navCtrl.getActive().id == 'CoreSharedFilesChooseSitePage';
     }
@@ -109,12 +109,12 @@ export class CoreSharedFilesHelperProvider {
             modal.onDidDismiss((file: any) => {
                 if (!file) {
                     // User cancelled.
-                    reject(this.domUtils.createCanceledError());
+                    reject(CoreDomUtils.createCanceledError());
 
                     return;
                 }
 
-                const error = this.fileUploaderProvider.isInvalidMimetype(mimetypes, file.fullPath);
+                const error = CoreFileUploader.isInvalidMimetype(mimetypes, file.fullPath);
                 if (error) {
                     reject(error);
                 } else {
@@ -151,7 +151,7 @@ export class CoreSharedFilesHelperProvider {
      * @return Promise resolved when done.
      */
     searchIOSNewSharedFiles(path?: string): Promise<any> {
-        return this.ApplicationInit.instance.donePromise.then(() => {
+        return this.ApplicationInit.donePromise.then(() => {
             if (this.isChoosingSite()) {
                 // We're already treating a shared file. Abort.
                 return Promise.reject(null);
@@ -167,10 +167,10 @@ export class CoreSharedFilesHelperProvider {
             }
 
             return promise.then((fileEntry) => {
-                return this.sitesProvider.getSitesIds().then((siteIds) => {
+                return CoreSites.getSitesIds().then((siteIds) => {
                     if (!siteIds.length) {
                         // No sites stored, show error and delete the file.
-                        this.domUtils.showErrorModal('core.sharedfiles.errorreceivefilenosites', true);
+                        CoreDomUtils.showErrorModal('core.sharedfiles.errorreceivefilenosites', true);
 
                         return this.removeSharedFile(fileEntry, !path);
                     } else if (siteIds.length == 1) {
@@ -196,7 +196,7 @@ export class CoreSharedFilesHelperProvider {
      * @return Promise resolved when done.
      */
     storeSharedFileInSite(fileEntry: any, siteId?: string, isInbox?: boolean): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // First of all check if there's already a file with the same name in the shared files folder.
         const sharedFilesDirPath = this.sharedFilesProvider.getSiteSharedFilesDirPath(siteId);
@@ -211,10 +211,10 @@ export class CoreSharedFilesHelperProvider {
             }
         }).then((name) => {
             return this.sharedFilesProvider.storeFileInSite(fileEntry, name, siteId).catch((err) => {
-                this.domUtils.showErrorModal(err || 'Error moving file.');
+                CoreDomUtils.showErrorModal(err || 'Error moving file.');
             }).finally(() => {
                 this.removeSharedFile(fileEntry, isInbox);
-                this.domUtils.showAlertTranslated('core.success', 'core.sharedfiles.successstorefile');
+                CoreDomUtils.showAlertTranslated('core.success', 'core.sharedfiles.successstorefile');
             });
         });
     }

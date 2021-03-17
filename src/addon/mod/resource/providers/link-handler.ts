@@ -20,7 +20,7 @@ import { AddonModResourceProvider } from './resource';
 /**
  * Handler to treat links to resource.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourceLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModResourceLinkHandler';
 

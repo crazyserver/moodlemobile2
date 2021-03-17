@@ -135,6 +135,6 @@ export class CoreSitePluginsCourseOptionHandler extends CoreSitePluginsBaseHandl
      * Mark init being updated.
      */
     updatingInit(): void {
-        this.updatingDefer = this.utils.promiseDefer();
+        this.updatingDefer = CoreUtils.promiseDefer();
     }
 }

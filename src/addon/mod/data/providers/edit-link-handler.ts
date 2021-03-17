@@ -24,7 +24,7 @@ import { CoreDomUtilsProvider } from '@services/utils/dom';
  * Content links handler for database add or edit entry.
  * Match mod/data/edit.php?d=6&rid=6 with a valid data and optional record id.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataEditLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModDataEditLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModData';
@@ -48,11 +48,11 @@ export class AddonModDataEditLinkHandler extends CoreContentLinksHandlerBase {
             CoreContentLinksAction[] | Promise<CoreContentLinksAction[]> {
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading(),
+                const modal = CoreDomUtils.showModalLoading(),
                     dataId = parseInt(params.d, 10),
                     rId = parseInt(params.rid, 10) || false;
 
-                this.courseProvider.getModuleBasicInfoByInstance(dataId, 'data', siteId).then((module) => {
+                CoreCourse.getModuleBasicInfoByInstance(dataId, 'data', siteId).then((module) => {
                     const pageParams = {
                         module: module,
                         courseId: module.course
@@ -87,6 +87,6 @@ export class AddonModDataEditLinkHandler extends CoreContentLinksHandlerBase {
             return false;
         }
 
-        return this.dataProvider.isPluginEnabled(siteId);
+        return AddonModData.isPluginEnabled(siteId);
     }
 }

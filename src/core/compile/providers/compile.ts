@@ -138,7 +138,7 @@ import { AddonModWorkshopComponentsModule } from '@addon/mod/workshop/components
 /**
  * Service to provide functionalities regarding compiling dynamic HTML and Javascript.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCompileProvider {
 
     protected logger: CoreLogger;

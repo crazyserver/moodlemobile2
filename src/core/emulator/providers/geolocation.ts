@@ -20,7 +20,7 @@ import { TeardownLogic } from 'rxjs/Subscription';
 /**
  * Emulates the Cordova Geolocation plugin in desktop apps and in browser.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GeolocationMock extends Geolocation {
 
     /**

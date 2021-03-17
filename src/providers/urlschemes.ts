@@ -59,7 +59,7 @@ export interface CoreCustomURLSchemesParams extends CoreLoginSSOData {
 /*
  * Provider to handle custom URL schemes.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCustomURLSchemesProvider {
     protected logger: CoreLogger;
     protected lastUrls = {};
@@ -91,25 +91,25 @@ export class CoreCustomURLSchemesProvider {
             return;
         }
 
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         if (!currentSite || currentSite.getToken() != data.token) {
             // Token belongs to a different site, create it. It doesn't matter if it already exists.
 
             if (!data.siteUrl.match(/^https?:\/\//)) {
                 // URL doesn't have a protocol and it's required to be able to create the site. Check which one to use.
-                const result = await this.sitesProvider.checkSite(data.siteUrl);
+                const result = await CoreSites.checkSite(data.siteUrl);
 
                 data.siteUrl = result.siteUrl;
 
-                await this.sitesProvider.checkApplication(result.config);
+                await CoreSites.checkApplication(result.config);
             }
 
-            return this.sitesProvider.newSite(data.siteUrl, data.token, data.privateToken, !!data.isSSOToken,
+            return CoreSites.newSite(data.siteUrl, data.token, data.privateToken, !!data.isSSOToken,
                         this.loginHelper.getOAuthIdFromParams(data.ssoUrlParams));
         } else {
             // Token belongs to current site, no need to create it.
-            return this.sitesProvider.getCurrentSiteId();
+            return CoreSites.getCurrentSiteId();
         }
     }
 
@@ -135,13 +135,13 @@ export class CoreCustomURLSchemesProvider {
         url = this.textUtils.decodeURIComponent(url);
 
         // Wait for app to be ready.
-        await this.ApplicationInit.instance.donePromise;
+        await this.ApplicationInit.donePromise;
 
         // Some platforms like Windows add a slash at the end. Remove it.
         // Some sites add a # at the end of the URL. If it's there, remove it.
         url = url.replace(/\/?#?\/?$/, '');
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         let data: CoreCustomURLSchemesParams;
 
         // Get the data from the URL.
@@ -169,12 +169,12 @@ export class CoreCustomURLSchemesProvider {
             const isValid = await this.loginHelper.isSiteUrlAllowed(data.siteUrl);
 
             if (!isValid) {
-                throw this.translate.instant('core.errorurlschemeinvalidsite');
+                throw Translate.instant('core.errorurlschemeinvalidsite');
             }
 
             if (data.redirect && data.redirect.match(/^https?:\/\//) && data.redirect.indexOf(data.siteUrl) == -1) {
                 // Redirect URL must belong to the same site. Reject.
-                throw this.translate.instant('core.contentlinks.errorredirectothersite');
+                throw Translate.instant('core.contentlinks.errorredirectothersite');
             }
 
             // First of all, create the site if needed.
@@ -184,7 +184,7 @@ export class CoreCustomURLSchemesProvider {
                 // Site created and authenticated, open the page to go.
                 if (data.pageName) {
                     // State defined, go to that state instead of site initial page.
-                    this.appProvider.getRootNavController().push(data.pageName, data.pageParams);
+                    CoreApp.getRootNavController().push(data.pageName, data.pageParams);
                 } else {
                     this.loginHelper.goToSiteInitialPage();
                 }
@@ -201,7 +201,7 @@ export class CoreCustomURLSchemesProvider {
 
             if (!siteId) {
                 // No site created, check if the site is stored (to know which one to use).
-                siteIds = await this.sitesProvider.getSiteIdsFromUrl(data.siteUrl, true, data.username);
+                siteIds = await CoreSites.getSiteIdsFromUrl(data.siteUrl, true, data.username);
             }
 
             if (siteIds.length > 1) {
@@ -210,7 +210,7 @@ export class CoreCustomURLSchemesProvider {
 
             } else if (siteIds.length == 1) {
                 // Only one site, handle the link.
-                const site = await this.sitesProvider.getSite(siteIds[0]);
+                const site = await CoreSites.getSite(siteIds[0]);
 
                 if (!data.redirect) {
                     // No redirect, go to the root URL if needed.
@@ -226,13 +226,13 @@ export class CoreCustomURLSchemesProvider {
                     const treated = await this.linksHelper.handleLink(data.redirect, username);
 
                     if (!treated) {
-                        this.domUtils.showErrorModal('core.contentlinks.errornoactions', true);
+                        CoreDomUtils.showErrorModal('core.contentlinks.errornoactions', true);
                     }
                 }
 
             } else {
                 // Site not stored. Try to add the site.
-                const result = await this.sitesProvider.checkSite(data.siteUrl);
+                const result = await CoreSites.checkSite(data.siteUrl);
 
                 // Site exists. We'll allow to add it.
                 modal.dismiss(); // Dismiss modal so it doesn't collide with confirms.
@@ -246,7 +246,7 @@ export class CoreCustomURLSchemesProvider {
             modal.dismiss();
 
             if (data.isSSOToken) {
-                this.appProvider.finishSSOAuthentication();
+                CoreApp.finishSSOAuthentication();
             }
         }
     }
@@ -285,11 +285,11 @@ export class CoreCustomURLSchemesProvider {
 
         if (!url.match(/https?:\/\//)) {
             // Url doesn't have a protocol. Check if the site is stored in the app to be able to determine the protocol.
-            const siteIds = await this.sitesProvider.getSiteIdsFromUrl(url, true, username);
+            const siteIds = await CoreSites.getSiteIdsFromUrl(url, true, username);
 
             if (siteIds.length) {
                 // There is at least 1 site with this URL. Use it to know the full URL.
-                const site = await this.sitesProvider.getSite(siteIds[0]);
+                const site = await CoreSites.getSite(siteIds[0]);
 
                 url = site.getURL();
             }
@@ -329,7 +329,7 @@ export class CoreCustomURLSchemesProvider {
         }
 
         // First of all, check if it's the root URL of a site.
-        const data = await this.sitesProvider.isStoredRootURL(url, username);
+        const data = await CoreSites.isStoredRootURL(url, username);
 
         if (data.site) {
             // Root URL.
@@ -340,7 +340,7 @@ export class CoreCustomURLSchemesProvider {
 
         } else if (data.siteIds.length > 0) {
             // Not the root URL, but at least 1 site supports the URL. Get the site URL from the list of sites.
-            const site = await this.sitesProvider.getSite(data.siteIds[0]);
+            const site = await CoreSites.getSite(data.siteIds[0]);
 
             return {
                 siteUrl: site.getURL(),
@@ -378,18 +378,18 @@ export class CoreCustomURLSchemesProvider {
             throw new CoreCustomURLSchemesHandleError(null);
         }
 
-        if (this.appProvider.isSSOAuthenticationOngoing()) {
+        if (CoreApp.isSSOAuthenticationOngoing()) {
             // Authentication ongoing, probably duplicated request.
             throw new CoreCustomURLSchemesHandleError('Duplicated');
         }
 
-        if (this.appProvider.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             // In desktop, make sure InAppBrowser is closed.
-            this.utils.closeInAppBrowser(true);
+            CoreUtils.closeInAppBrowser(true);
         }
 
         // App opened using custom URL scheme. Probably an SSO authentication.
-        this.appProvider.startSSOAuthentication();
+        CoreApp.startSSOAuthentication();
         this.logger.debug('App launched by URL with an SSO');
 
         // Delete the sso scheme from the URL.
@@ -435,18 +435,18 @@ export class CoreCustomURLSchemesProvider {
         };
         let hasSitePluginsLoaded = false;
 
-        if (this.sitesProvider.isLoggedIn()) {
+        if (CoreSites.isLoggedIn()) {
             // Ask the user before changing site.
-            await this.domUtils.showConfirm(this.translate.instant('core.contentlinks.confirmurlothersite'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.contentlinks.confirmurlothersite'));
 
             if (!ssoNeeded) {
                 hasSitePluginsLoaded = this.sitePluginsProvider.hasSitePluginsLoaded;
                 if (hasSitePluginsLoaded) {
                     // Store the redirect since logout will restart the app.
-                    this.appProvider.storeRedirect(CoreConstants.NO_SITE_ID, pageName, pageParams);
+                    CoreApp.storeRedirect(CoreConstants.NO_SITE_ID, pageName, pageParams);
                 }
 
-                await this.sitesProvider.logout();
+                await CoreSites.logout();
             }
         }
 
@@ -541,9 +541,9 @@ export class CoreCustomURLSchemesProvider {
         } else if (error.error && error.data && error.data.isSSOToken) {
             // An error occurred, display the error and logout the user.
             this.loginHelper.treatUserTokenError(error.data.siteUrl, error.error);
-            this.sitesProvider.logout();
+            CoreSites.logout();
         } else {
-            this.domUtils.showErrorModalDefault(error.error, this.translate.instant('core.login.invalidsite'));
+            CoreDomUtils.showErrorModalDefault(error.error, Translate.instant('core.login.invalidsite'));
         }
     }
 }

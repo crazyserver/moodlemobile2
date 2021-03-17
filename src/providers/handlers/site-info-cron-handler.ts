@@ -19,7 +19,7 @@ import { CoreSitesProvider } from '@services/sites';
 /**
  * Cron handler to update site info every certain time.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSiteInfoCronHandler implements CoreCronHandler {
     name = 'CoreSiteInfoCronHandler';
 
@@ -34,11 +34,11 @@ export class CoreSiteInfoCronHandler implements CoreCronHandler {
      */
     async execute(siteId?: string): Promise<any> {
         if (!siteId) {
-            const siteIds = await this.sitesProvider.getSitesIds();
+            const siteIds = await CoreSites.getSitesIds();
 
-            return Promise.all(siteIds.map((siteId) => this.sitesProvider.updateSiteInfo(siteId)));
+            return Promise.all(siteIds.map((siteId) => CoreSites.updateSiteInfo(siteId)));
         } else {
-            return this.sitesProvider.updateSiteInfo(siteId);
+            return CoreSites.updateSiteInfo(siteId);
         }
     }
 

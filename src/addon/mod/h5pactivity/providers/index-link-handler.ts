@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to H5P activity index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModH5PActivityIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModH5PActivityIndexLinkHandler';
 

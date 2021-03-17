@@ -88,11 +88,11 @@ export class CoreCourseActivityPrefetchHandlerBase extends CoreCourseModulePrefe
      */
     prefetchPackage(module: any, courseId: number, single: boolean, downloadFn: prefetchFunction, siteId?: string, ...args: any[])
             : Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             // Cannot prefetch in offline.
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         }
 
         if (this.isDownloading(module.id, siteId)) {
@@ -103,8 +103,8 @@ export class CoreCourseActivityPrefetchHandlerBase extends CoreCourseModulePrefe
         const prefetchPromise = this.setDownloading(module.id, siteId).then(() => {
             // Package marked as downloading, get module info to be able to handle links. Get module filters too.
             return Promise.all([
-                this.courseProvider.getModuleBasicInfo(module.id, siteId),
-                this.courseProvider.getModule(module.id, courseId, undefined, false, true, siteId),
+                CoreCourse.getModuleBasicInfo(module.id, siteId),
+                CoreCourse.getModule(module.id, courseId, undefined, false, true, siteId),
                 this.filterHelper.getFilters('module', module.id, {courseId: courseId})
             ]);
         }).then(() => {
@@ -135,9 +135,9 @@ export class CoreCourseActivityPrefetchHandlerBase extends CoreCourseModulePrefe
      * @return Promise resolved when done.
      */
     setDownloaded(id: number, siteId?: string, extra?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.storePackageStatus(siteId, CoreConstants.DOWNLOADED, this.component, id, extra);
+        return CoreFilepool.storePackageStatus(siteId, CoreConstants.DOWNLOADED, this.component, id, extra);
     }
 
     /**
@@ -148,9 +148,9 @@ export class CoreCourseActivityPrefetchHandlerBase extends CoreCourseModulePrefe
      * @return Promise resolved when done.
      */
     setDownloading(id: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.storePackageStatus(siteId, CoreConstants.DOWNLOADING, this.component, id);
+        return CoreFilepool.storePackageStatus(siteId, CoreConstants.DOWNLOADING, this.component, id);
     }
 
     /**
@@ -162,9 +162,9 @@ export class CoreCourseActivityPrefetchHandlerBase extends CoreCourseModulePrefe
      * @return Rejected promise.
      */
     setPreviousStatusAndReject(id: number, error?: any, siteId?: string): Promise<never> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.setPackagePreviousStatus(siteId, this.component, id).then(() => {
+        return CoreFilepool.setPackagePreviousStatus(siteId, this.component, id).then(() => {
             return Promise.reject(error);
         });
     }

@@ -21,7 +21,7 @@ import { AddonModQuizAccessPasswordComponent } from '../component/password';
 /**
  * Handler to support password access rule.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessPasswordHandler implements AddonModQuizAccessRuleHandler {
     // Variables for database.
     static PASSWORD_TABLE = 'addon_mod_quiz_access_password';
@@ -54,7 +54,7 @@ export class AddonModQuizAccessPasswordHandler implements AddonModQuizAccessRule
     ruleName = 'quizaccess_password';
 
     constructor(private sitesProvider: CoreSitesProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -87,7 +87,7 @@ export class AddonModQuizAccessPasswordHandler implements AddonModQuizAccessRule
      */
     protected getPasswordEntry(quizId: number, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonModQuizAccessPasswordHandler.PASSWORD_TABLE, {id: quizId});
         });
     }
@@ -179,7 +179,7 @@ export class AddonModQuizAccessPasswordHandler implements AddonModQuizAccessRule
      */
     protected removePassword(quizId: number, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonModQuizAccessPasswordHandler.PASSWORD_TABLE, {id: quizId});
         });
     }
@@ -194,7 +194,7 @@ export class AddonModQuizAccessPasswordHandler implements AddonModQuizAccessRule
      */
     protected storePassword(quizId: number, password: string, siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 id: quizId,
                 password: password,

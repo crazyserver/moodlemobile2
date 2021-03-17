@@ -24,7 +24,7 @@ import { CoreTagItem } from '@core/tag/providers/tag';
 /**
  * Service to handle blog entries.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlogProvider {
     static ENTRIES_PER_PAGE = 10;
     static COMPONENT = 'blog';
@@ -46,7 +46,7 @@ export class AddonBlogProvider {
      * @return Promise resolved with true if enabled, resolved with false or rejected otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.wsAvailable('core_blog_get_entries') &&
                 site.canUseAdvancedFeature('enableblogs');
         });
@@ -59,7 +59,7 @@ export class AddonBlogProvider {
      * @return Cache key.
      */
     getEntriesCacheKey(filter: any = {}): string {
-        return this.ROOT_CACHE_KEY + this.utils.sortAndStringify(filter);
+        return this.ROOT_CACHE_KEY + CoreUtils.sortAndStringify(filter);
     }
 
     /**
@@ -71,9 +71,9 @@ export class AddonBlogProvider {
      * @return Promise to be resolved when the entries are retrieved.
      */
     getEntries(filter: any = {}, page: number = 0, siteId?: string): Promise<AddonBlogGetEntriesResult> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
-                filters: this.utils.objectToArrayOfObjects(filter, 'name', 'value'),
+                filters: CoreUtils.objectToArrayOfObjects(filter, 'name', 'value'),
                 page: page,
                 perpage: AddonBlogProvider.ENTRIES_PER_PAGE
             };
@@ -95,7 +95,7 @@ export class AddonBlogProvider {
      * @return Promise resolved when data is invalidated.
      */
     invalidateEntries(filter: any = {}, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getEntriesCacheKey(filter));
         });
     }
@@ -110,9 +110,9 @@ export class AddonBlogProvider {
     logView(filter: any = {}, siteId?: string): Promise<AddonBlogViewEntriesResult> {
         this.pushNotificationsProvider.logViewListEvent('blog', 'core_blog_view_entries', filter, siteId);
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const data = {
-                filters: this.utils.objectToArrayOfObjects(filter, 'name', 'value')
+                filters: CoreUtils.objectToArrayOfObjects(filter, 'name', 'value')
             };
 
             return site.write('core_blog_view_entries', data);

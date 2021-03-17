@@ -71,7 +71,7 @@ export class CoreNavBarButtonsComponent implements OnInit, OnDestroy {
     constructor(element: ElementRef, private domUtils: CoreDomUtilsProvider) {
         this.element = element.nativeElement;
         this.logger = CoreLogger.getInstance('CoreNavBarButtonsComponent');
-        this.instanceId = this.domUtils.storeInstanceByElement(this.element, this);
+        this.instanceId = CoreDomUtils.storeInstanceByElement(this.element, this);
     }
 
     /**
@@ -95,7 +95,7 @@ export class CoreNavBarButtonsComponent implements OnInit, OnDestroy {
                     this.mergeContextMenus(buttonsContainer);
 
                     const prepend = this.element.hasAttribute('prepend');
-                    this.movedChildren = this.domUtils.moveChildren(this.element, buttonsContainer, prepend);
+                    this.movedChildren = CoreDomUtils.moveChildren(this.element, buttonsContainer, prepend);
                     this.showHideAllElements();
 
                 } else {
@@ -137,8 +137,8 @@ export class CoreNavBarButtonsComponent implements OnInit, OnDestroy {
         }
 
         // Both containers have a context menu. Merge them to prevent having 2 menus at the same time.
-        const mainContextMenuInstance: CoreContextMenuComponent = this.domUtils.getInstanceByElement(mainContextMenu),
-            secondaryContextMenuInstance: CoreContextMenuComponent = this.domUtils.getInstanceByElement(secondaryContextMenu);
+        const mainContextMenuInstance: CoreContextMenuComponent = CoreDomUtils.getInstanceByElement(mainContextMenu),
+            secondaryContextMenuInstance: CoreContextMenuComponent = CoreDomUtils.getInstanceByElement(secondaryContextMenu);
 
         // Check that both context menus belong to the same core-tab. We shouldn't merge menus from different tabs.
         if (mainContextMenuInstance && secondaryContextMenuInstance &&
@@ -168,7 +168,7 @@ export class CoreNavBarButtonsComponent implements OnInit, OnDestroy {
             }
 
             // Get the next parent page.
-            parentPage = <HTMLElement> this.domUtils.closest(parentPage.parentElement, '.ion-page');
+            parentPage = <HTMLElement> CoreDomUtils.closest(parentPage.parentElement, '.ion-page');
             if (parentPage) {
                 // Check if the page has a header. If it doesn't, search the next parent page.
                 const header = this.searchHeaderInPage(parentPage);
@@ -249,7 +249,7 @@ export class CoreNavBarButtonsComponent implements OnInit, OnDestroy {
      * Component destroyed.
      */
     ngOnDestroy(): void {
-        this.domUtils.removeInstanceById(this.instanceId);
+        CoreDomUtils.removeInstanceById(this.instanceId);
 
         // This component was destroyed, remove all the buttons that were moved.
         // The buttons can be moved outside of the current page, that's why we need to manually destroy them.

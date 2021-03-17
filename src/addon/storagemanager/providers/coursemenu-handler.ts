@@ -18,7 +18,7 @@ import { CoreCourseOptionsMenuHandler, CoreCourseOptionsMenuHandlerData } from '
 /**
  * Handler to inject an option into course menu so that user can get to the manage storage page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonStorageManagerCourseMenuHandler implements CoreCourseOptionsMenuHandler {
     name = 'AddonStorageManager';
     priority = 500;

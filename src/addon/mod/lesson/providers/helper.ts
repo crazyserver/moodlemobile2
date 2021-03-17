@@ -23,7 +23,7 @@ import { AddonModLessonProvider } from './lesson';
 /**
  * Helper service that provides some features for quiz.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonHelperProvider {
 
     constructor(private domUtils: CoreDomUtilsProvider, private fb: FormBuilder, private translate: TranslateService,
@@ -37,7 +37,7 @@ export class AddonModLessonHelperProvider {
      * @return Formatted data.
      */
     formatActivityLink(activityLink: string): {formatted: boolean, label: string, href: string} {
-        const element = this.domUtils.convertToElement(activityLink),
+        const element = CoreDomUtils.convertToElement(activityLink),
             anchor = element.querySelector('a');
 
         if (!anchor) {
@@ -67,7 +67,7 @@ export class AddonModLessonHelperProvider {
                 buttonText: '',
                 content: ''
             },
-            element = this.domUtils.convertToElement(html);
+            element = CoreDomUtils.convertToElement(html);
 
         // Search the input button.
         const button = <HTMLInputElement> element.querySelector('input[type="button"]');
@@ -91,7 +91,7 @@ export class AddonModLessonHelperProvider {
      */
     getPageButtonsFromHtml(html: string): any[] {
         const buttons = [],
-            element = this.domUtils.convertToElement(html);
+            element = CoreDomUtils.convertToElement(html);
 
         // Get the container of the buttons if it exists.
         let buttonsContainer = element.querySelector('.branchbuttoncontainer');
@@ -143,7 +143,7 @@ export class AddonModLessonHelperProvider {
      */
     getPageContentsFromPageData(data: any): string {
         // Search the page contents inside the whole page HTML. Use data.pagecontent because it's filtered.
-        const element = this.domUtils.convertToElement(data.pagecontent),
+        const element = CoreDomUtils.convertToElement(data.pagecontent),
             contents = element.querySelector('.contents');
 
         if (contents) {
@@ -170,7 +170,7 @@ export class AddonModLessonHelperProvider {
      */
     getQuestionFromPageData(questionForm: FormGroup, pageData: any): any {
         const question: any = {},
-            element = this.domUtils.convertToElement(pageData.pagecontent);
+            element = CoreDomUtils.convertToElement(pageData.pagecontent);
 
         // Get the container of the question answers if it exists.
         const fieldContainer = element.querySelector('.fcontainer');
@@ -183,7 +183,7 @@ export class AddonModLessonHelperProvider {
 
         // Get the submit button and extract its value.
         const submitButton = <HTMLInputElement> element.querySelector('input[type="submit"]');
-        question.submitLabel = submitButton ? submitButton.value : this.translate.instant('addon.mod_lesson.submit');
+        question.submitLabel = submitButton ? submitButton.value : Translate.instant('addon.mod_lesson.submit');
 
         if (!fieldContainer) {
             // Element not found, return.
@@ -365,7 +365,7 @@ export class AddonModLessonHelperProvider {
      */
     getQuestionPageAnswerDataFromHtml(html: string): any {
         const data: any = {},
-            element = this.domUtils.convertToElement(html);
+            element = CoreDomUtils.convertToElement(html);
 
         // Check if it has a checkbox.
         let input = <HTMLInputElement> element.querySelector('input[type="checkbox"][name*="answer"]');
@@ -435,21 +435,21 @@ export class AddonModLessonHelperProvider {
         if (hasGrade || retake.end) {
             // Retake finished with or without grade (if the lesson only has content pages, it has no grade).
             if (hasGrade) {
-                data.grade = this.translate.instant('core.percentagenumber', {$a: retake.grade});
+                data.grade = Translate.instant('core.percentagenumber', {$a: retake.grade});
             }
-            data.timestart = this.timeUtils.userDate(retake.timestart * 1000);
+            data.timestart = CoreTimeUtils.userDate(retake.timestart * 1000);
             if (includeDuration) {
-                data.duration = this.timeUtils.formatTime(retake.timeend - retake.timestart);
+                data.duration = CoreTimeUtils.formatTime(retake.timeend - retake.timestart);
             }
         } else {
             // The user has not completed the retake.
-            data.grade = this.translate.instant('addon.mod_lesson.notcompleted');
+            data.grade = Translate.instant('addon.mod_lesson.notcompleted');
             if (retake.timestart) {
-                data.timestart = this.timeUtils.userDate(retake.timestart * 1000);
+                data.timestart = CoreTimeUtils.userDate(retake.timestart * 1000);
             }
         }
 
-        return this.translate.instant('addon.mod_lesson.retakelabel' + (includeDuration ? 'full' : 'short'), data);
+        return Translate.instant('addon.mod_lesson.retakelabel' + (includeDuration ? 'full' : 'short'), data);
     }
 
     /**
@@ -482,10 +482,10 @@ export class AddonModLessonHelperProvider {
      * @return Feedback without the question text.
      */
     removeQuestionFromFeedback(html: string): string {
-        const element = this.domUtils.convertToElement(html);
+        const element = CoreDomUtils.convertToElement(html);
 
         // Remove the question text.
-        this.domUtils.removeElement(element, '.generalbox:not(.feedback):not(.correctanswer)');
+        CoreDomUtils.removeElement(element, '.generalbox:not(.feedback):not(.correctanswer)');
 
         return element.innerHTML.trim();
     }

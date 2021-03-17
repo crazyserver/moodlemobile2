@@ -21,7 +21,7 @@ import { AddonModWorkshopAssessmentStrategyAccumulativeComponent } from '../comp
 /**
  * Handler for accumulative assessment strategy plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWorkshopAssessmentStrategyAccumulativeHandler implements AddonWorkshopAssessmentStrategyHandler {
     name = 'AddonModWorkshopAssessmentStrategyAccumulative';
     strategyName = 'accumulative';
@@ -55,12 +55,12 @@ export class AddonModWorkshopAssessmentStrategyAccumulativeHandler implements Ad
      * @return Promise resolved with original values sorted.
      */
      getOriginalValues(form: any, workshopId: number): Promise<any[]> {
-        const defaultGrade = this.translate.instant('core.choosedots'),
+        const defaultGrade = Translate.instant('core.choosedots'),
             originalValues = [],
             promises = [];
 
         form.fields.forEach((field, n) => {
-            field.dimtitle = this.translate.instant(
+            field.dimtitle = Translate.instant(
                     'addon.mod_workshop_assessment_accumulative.dimensionnumber', {$a: field.number});
 
             if (!form.current[n]) {
@@ -127,7 +127,7 @@ export class AddonModWorkshopAssessmentStrategyAccumulativeHandler implements Ad
                 if (!isNaN(grade) && grade >= 0) {
                     data['grade__idx_' + idx] = grade;
                 } else {
-                    errors['grade_' + idx] = this.translate.instant('addon.mod_workshop_assessment_accumulative.mustchoosegrade');
+                    errors['grade_' + idx] = Translate.instant('addon.mod_workshop_assessment_accumulative.mustchoosegrade');
                     hasErrors = true;
                 }
 

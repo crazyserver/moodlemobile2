@@ -18,7 +18,7 @@ import { CoreCourseFormatHandler } from '../../../providers/format-delegate';
 /**
  * Handler to support topics course format.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseFormatTopicsHandler implements CoreCourseFormatHandler {
     name = 'CoreCourseFormatTopics';
     format = 'topics';

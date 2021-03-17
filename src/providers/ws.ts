@@ -142,7 +142,7 @@ export type HttpRequestOptions = {
 /**
  * This service allows performing WS calls and download/upload files.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreWSProvider {
     protected logger: CoreLogger;
     protected mimeTypeCache = {}; // A "cache" to store file mimetypes to prevent performing too many HEAD requests.
@@ -162,7 +162,7 @@ export class CoreWSProvider {
         this.logger = CoreLogger.getInstance('CoreWSProvider');
 
         platform.ready().then(() => {
-            if (this.appProvider.isIOS()) {
+            if (CoreApp.isIOS()) {
                 (<any> cordova).plugin.http.setHeader('User-Agent', navigator.userAgent);
             }
         });
@@ -211,7 +211,7 @@ export class CoreWSProvider {
 
         if (!preSets) {
             return Promise.reject(this.createFakeWSError('core.unexpectederror', true));
-        } else if (!this.appProvider.isOnline()) {
+        } else if (!CoreApp.isOnline()) {
             return Promise.reject(this.createFakeWSError('core.networkerrormsg', true));
         }
 
@@ -330,7 +330,7 @@ export class CoreWSProvider {
      */
     createFakeWSError(message: string, needsTranslate?: boolean, translateParams?: {}): CoreWSError {
         if (needsTranslate) {
-            message = this.translate.instant(message, translateParams);
+            message = Translate.instant(message, translateParams);
         }
 
         return {
@@ -350,8 +350,8 @@ export class CoreWSProvider {
     downloadFile(url: string, path: string, addExtension?: boolean, onProgress?: (event: ProgressEvent) => any): Promise<any> {
         this.logger.debug('Downloading file', url, path, addExtension);
 
-        if (!this.appProvider.isOnline()) {
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+        if (!CoreApp.isOnline()) {
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         }
 
         // Use a tmp path to download the file and then move it to final location.
@@ -484,7 +484,7 @@ export class CoreWSProvider {
      * @return Timeout in ms.
      */
     getRequestTimeout(): number {
-        return this.appProvider.isNetworkAccessLimited() ? CoreConstants.WS_TIMEOUT : CoreConstants.WS_TIMEOUT_WIFI;
+        return CoreApp.isNetworkAccessLimited() ? CoreConstants.WS_TIMEOUT : CoreConstants.WS_TIMEOUT_WIFI;
     }
 
     /**
@@ -520,7 +520,7 @@ export class CoreWSProvider {
 
         if (typeof preSets.siteUrl == 'undefined') {
             return rejectWithError(this.createFakeWSError('core.unexpectederror', true));
-        } else if (!this.appProvider.isOnline()) {
+        } else if (!CoreApp.isOnline()) {
             return rejectWithError(this.createFakeWSError('core.networkerrormsg', true));
         }
 
@@ -795,11 +795,11 @@ export class CoreWSProvider {
             xhr;
 
         if (!preSets) {
-            errorResponse.message = this.translate.instant('core.unexpectederror');
+            errorResponse.message = Translate.instant('core.unexpectederror');
 
             return errorResponse;
-        } else if (!this.appProvider.isOnline()) {
-            errorResponse.message = this.translate.instant('core.networkerrormsg');
+        } else if (!CoreApp.isOnline()) {
+            errorResponse.message = Translate.instant('core.networkerrormsg');
 
             return errorResponse;
         }
@@ -812,7 +812,7 @@ export class CoreWSProvider {
         data = this.convertValuesToString(data || {}, preSets.cleanUnicode);
         if (data == null) {
             // Empty cleaned text found.
-            errorResponse.message = this.translate.instant('core.unicodenotsupportedcleanerror');
+            errorResponse.message = Translate.instant('core.unicodenotsupportedcleanerror');
 
             return errorResponse;
         }
@@ -853,10 +853,10 @@ export class CoreWSProvider {
         }
 
         if (!data) {
-            errorResponse.message = this.translate.instant('core.serverconnection');
+            errorResponse.message = Translate.instant('core.serverconnection');
         } else if (typeof data != preSets.typeExpected) {
             this.logger.warn('Response of type "' + typeof data + '" received, expecting "' + preSets.typeExpected + '"');
-            errorResponse.message = this.translate.instant('core.errorinvalidresponse');
+            errorResponse.message = Translate.instant('core.errorinvalidresponse');
         }
 
         if (typeof data.exception != 'undefined' || typeof data.debuginfo != 'undefined') {
@@ -887,8 +887,8 @@ export class CoreWSProvider {
             return Promise.reject(null);
         }
 
-        if (!this.appProvider.isOnline()) {
-            return Promise.reject(this.translate.instant('core.networkerrormsg'));
+        if (!CoreApp.isOnline()) {
+            return Promise.reject(Translate.instant('core.networkerrormsg'));
         }
 
         const uploadUrl = preSets.siteUrl + '/webservice/upload.php',
@@ -911,15 +911,15 @@ export class CoreWSProvider {
             const data = this.textUtils.parseJSON(success.response, null,
                     this.logger.error.bind(this.logger, 'Error parsing response from upload', success.response));
             if (data === null) {
-                return Promise.reject(this.translate.instant('core.errorinvalidresponse'));
+                return Promise.reject(Translate.instant('core.errorinvalidresponse'));
             }
 
             if (!data) {
-                return Promise.reject(this.translate.instant('core.serverconnection'));
+                return Promise.reject(Translate.instant('core.serverconnection'));
             } else if (typeof data != 'object') {
                 this.logger.warn('Upload file: Response of type "' + typeof data + '" received, expecting "object"');
 
-                return Promise.reject(this.translate.instant('core.errorinvalidresponse'));
+                return Promise.reject(Translate.instant('core.errorinvalidresponse'));
             }
 
             if (typeof data.exception !== 'undefined') {
@@ -937,7 +937,7 @@ export class CoreWSProvider {
         }).catch((error) => {
             this.logger.error('Error while uploading file', filePath, error);
 
-            return Promise.reject(this.translate.instant('core.errorinvalidresponse'));
+            return Promise.reject(Translate.instant('core.errorinvalidresponse'));
         });
     }
 
@@ -978,7 +978,7 @@ export class CoreWSProvider {
         options.responseType = options.responseType || 'json';
         options.timeout = typeof options.timeout == 'undefined' ? this.getRequestTimeout() : options.timeout;
 
-        if (this.appProvider.isIOS()) {
+        if (CoreApp.isIOS()) {
             // Use the cordova plugin.
             if (url.indexOf('file://') === 0) {
                 // We cannot load local files using the http native plugin. Use file provider instead.

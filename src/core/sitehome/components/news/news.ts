@@ -40,7 +40,7 @@ export class CoreSiteHomeNewsComponent implements OnInit {
      */
     ngOnInit(): void {
         // Get number of news items to show.
-        const currentSite = this.sitesProvider.getCurrentSite(),
+        const currentSite = CoreSites.getCurrentSite(),
             newsItems = currentSite.getStoredConfig('newsitems') || 0;
         if (!newsItems) {
             return;
@@ -50,7 +50,7 @@ export class CoreSiteHomeNewsComponent implements OnInit {
 
         // Get the news forum.
         this.siteHomeProvider.getNewsForum(siteHomeId).then((forum) => {
-            return this.courseProvider.getModuleBasicInfo(forum.cmid).then((module) => {
+            return CoreCourse.getModuleBasicInfo(forum.cmid).then((module) => {
                 this.show = true;
                 this.module = module;
                 module.handlerData = this.moduleDelegate.getModuleDataFor(module.modname, module, siteHomeId, module.section, true);

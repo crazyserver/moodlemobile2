@@ -77,7 +77,7 @@ export class CoreSplitViewComponent implements OnInit, OnDestroy {
         });
 
         // Change the side when the language changes.
-        this.languageChangedSubscription = translate.onLangChange.subscribe((event: any) => {
+        this.languageChangedSubscription = Translate.onLangChange.subscribe((event: any) => {
             setTimeout(() => {
                 this.side = platform.isRTL ? 'right' : 'left';
                 this.menu.setElementAttribute('side', this.side);
@@ -134,22 +134,22 @@ export class CoreSplitViewComponent implements OnInit, OnDestroy {
 
             if (this.masterCanLeaveOverridden) {
                 // We've overridden the can leave of the master page for a previous details page. Restore it.
-                masterViewController.instance.ionViewCanLeave = this.originalMasterCanLeave;
+                masterViewController.ionViewCanLeave = this.originalMasterCanLeave;
                 this.originalMasterCanLeave = undefined;
                 this.masterCanLeaveOverridden = false;
             }
 
-            if (detailsViewController && detailsViewController.instance && detailsViewController.instance.ionViewCanLeave) {
+            if (detailsViewController && detailsViewController.instance && detailsViewController.ionViewCanLeave) {
                 // The details page defines a canLeave function. Check if the master page also defines one.
-                if (masterViewController.instance.ionViewCanLeave) {
+                if (masterViewController.ionViewCanLeave) {
                     // Master page also defines a canLeave function, store it because it will be overridden.
-                    this.originalMasterCanLeave = masterViewController.instance.ionViewCanLeave;
+                    this.originalMasterCanLeave = masterViewController.ionViewCanLeave;
                 }
 
                 // Override the master canLeave function so it also calls the details canLeave.
                 this.masterCanLeaveOverridden = true;
 
-                masterViewController.instance.ionViewCanLeave = (): Promise<any> => {
+                masterViewController.ionViewCanLeave = (): Promise<any> => {
                     // Always return a Promise.
                     return Promise.resolve().then(() => {
                         if (this.originalMasterCanLeave) {
@@ -164,7 +164,7 @@ export class CoreSplitViewComponent implements OnInit, OnDestroy {
                         }
                     }).then(() => {
                         // User can leave the master page. Check if he can also leave the details page.
-                        return detailsViewController.instance.ionViewCanLeave();
+                        return detailsViewController.ionViewCanLeave();
                     });
                 };
             }

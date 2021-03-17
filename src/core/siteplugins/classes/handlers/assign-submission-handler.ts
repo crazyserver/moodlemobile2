@@ -48,7 +48,7 @@ export class CoreSitePluginsAssignSubmissionHandler extends AddonModAssignBaseSu
     getPluginName(plugin: any): string {
         // Check if there's a translated string for the plugin.
         const translationId = this.prefix + 'pluginname',
-            translation = this.translate.instant(translationId);
+            translation = Translate.instant(translationId);
 
         if (translationId != translation) {
             // Translation found, use it.

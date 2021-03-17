@@ -44,7 +44,7 @@ export class AddonUserProfileFieldCheckboxComponent implements OnInit {
 
             // Initialize the value.
             const formData = {
-                value: this.utils.isTrueOrOne(field.defaultdata),
+                value: CoreUtils.isTrueOrOne(field.defaultdata),
                 disabled: this.disabled
             };
             this.form.addControl(field.modelName, this.fb.control(formData,

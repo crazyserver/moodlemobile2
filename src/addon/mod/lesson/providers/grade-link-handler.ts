@@ -25,7 +25,7 @@ import { AddonModLessonProvider } from './lesson';
 /**
  * Handler to treat links to lesson grade.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonGradeLinkHandler extends CoreContentLinksModuleGradeHandler {
     name = 'AddonModLessonGradeLinkHandler';
     canReview = true;
@@ -49,10 +49,10 @@ export class AddonModLessonGradeLinkHandler extends CoreContentLinksModuleGradeH
     protected goToReview(url: string, params: any, courseId: number, siteId: string, navCtrl?: NavController): Promise<any> {
 
         const moduleId = parseInt(params.id, 10),
-            modal = this.domUtils.showModalLoading();
+            modal = CoreDomUtils.showModalLoading();
         let module;
 
-        return this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((mod) => {
+        return CoreCourse.getModuleBasicInfo(moduleId, siteId).then((mod) => {
             module = mod;
             courseId = module.course || courseId || params.courseid || params.cid;
 
@@ -70,10 +70,10 @@ export class AddonModLessonGradeLinkHandler extends CoreContentLinksModuleGradeH
                 this.linkHelper.goInSite(navCtrl, 'AddonModLessonUserRetakePage', pageParams, siteId);
             } else {
                 // User cannot view the report, go to lesson index.
-                this.courseHelper.navigateToModule(moduleId, siteId, courseId, module.section, undefined, undefined, navCtrl);
+                CoreCourseHelper.navigateToModule(moduleId, siteId, courseId, module.section, undefined, undefined, navCtrl);
             }
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
         }).finally(() => {
             modal.dismiss();
         });

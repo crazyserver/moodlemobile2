@@ -20,7 +20,7 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 /**
  * Service to handle offline notes.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotesOfflineProvider {
     protected logger: CoreLogger;
 
@@ -88,7 +88,7 @@ export class AddonNotesOfflineProvider {
 
     constructor( private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider) {
         this.logger = CoreLogger.getInstance('AddonNotesOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -101,7 +101,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     deleteOfflineNote(userId: number, content: string, timecreated: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonNotesOfflineProvider.NOTES_TABLE, {
                 userid: userId,
                 content: content,
@@ -117,7 +117,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with notes.
      */
     getAllDeletedNotes(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_DELETED_TABLE);
         });
     }
@@ -130,7 +130,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with notes.
      */
     getCourseDeletedNotes(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_DELETED_TABLE, {courseid: courseId});
         });
     }
@@ -142,7 +142,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with notes.
      */
     getAllNotes(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_TABLE);
         });
     }
@@ -157,7 +157,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with the notes.
      */
     getNote(userId: number, content: string, timecreated: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonNotesOfflineProvider.NOTES_TABLE, {
                 userid: userId,
                 content: content,
@@ -179,7 +179,7 @@ export class AddonNotesOfflineProvider {
             return this.getNotesForCourse(courseId, siteId);
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_TABLE, {userid: userId, courseid: courseId});
         });
     }
@@ -192,7 +192,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with notes.
      */
     getNotesForCourse(courseId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_TABLE, {courseid: courseId});
         });
     }
@@ -205,7 +205,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with notes.
      */
     getNotesForUser(userId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_TABLE, {userid: userId});
         });
     }
@@ -218,7 +218,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved with notes.
      */
     getNotesWithPublishState(state: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonNotesOfflineProvider.NOTES_TABLE, {publishstate: state});
         });
     }
@@ -273,8 +273,8 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     saveNote(userId: number, courseId: number, state: string, content: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            const now = this.timeUtils.timestamp();
+        return CoreSites.getSite(siteId).then((site) => {
+            const now = CoreTimeUtils.timestamp();
             const data = {
                 userid: userId,
                 courseid: courseId,
@@ -300,8 +300,8 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteNote(noteId: number, courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
-            const now = this.timeUtils.timestamp();
+        return CoreSites.getSite(siteId).then((site) => {
+            const now = CoreTimeUtils.timestamp();
             const data = {
                 noteid: noteId,
                 courseid: courseId,
@@ -322,7 +322,7 @@ export class AddonNotesOfflineProvider {
      * @return Promise resolved if deleted, rejected if failure.
      */
     undoDeleteNote(noteId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(AddonNotesOfflineProvider.NOTES_DELETED_TABLE, { noteid: noteId });
         });
     }

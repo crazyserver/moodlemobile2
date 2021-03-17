@@ -119,15 +119,15 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
         // Check if data has changed.
         if (this.hasDataChanged()) {
             // Show confirmation if some data has been modified.
-            await this.domUtils.showConfirm(this.translate.instant('core.confirmcanceledit'));
+            await CoreDomUtils.showConfirm(Translate.instant('core.confirmcanceledit'));
         }
 
         if (this.submission.attachmentfiles) {
             // Delete the local files from the tmp folder.
-            this.fileUploaderProvider.clearTmpFiles(this.submission.attachmentfiles);
+            CoreFileUploader.clearTmpFiles(this.submission.attachmentfiles);
         }
 
-        this.domUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
+        CoreDomUtils.triggerFormCancelledEvent(this.formElement, this.siteId);
     }
 
     /**
@@ -211,7 +211,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
         }).catch((message) => {
             this.loaded = false;
 
-            this.domUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
+            CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
 
             this.forceLeavePage();
         });
@@ -271,7 +271,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
         }
 
         if (this.fileAvailable) {
-            return this.fileUploaderProvider.areFileListDifferent(inputData.attachmentfiles, this.originalData.attachmentfiles);
+            return CoreFileUploader.areFileListDifferent(inputData.attachmentfiles, this.originalData.attachmentfiles);
         }
 
         return false;
@@ -304,7 +304,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
         const inputData = this.getInputData();
 
         if (!inputData.title) {
-            this.domUtils.showAlertTranslated('core.notice', 'addon.mod_workshop.submissionrequiredtitle');
+            CoreDomUtils.showAlertTranslated('core.notice', 'addon.mod_workshop.submissionrequiredtitle');
 
             return Promise.reject(null);
         }
@@ -313,7 +313,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
         const noFiles = !inputData.attachmentfiles.length;
 
         if ((this.textRequired && noText) || (this.fileRequired && noFiles) || (noText && noFiles)) {
-            this.domUtils.showAlertTranslated('core.notice', 'addon.mod_workshop.submissionrequiredcontent');
+            CoreDomUtils.showAlertTranslated('core.notice', 'addon.mod_workshop.submissionrequiredcontent');
 
             return Promise.reject(null);
         }
@@ -321,7 +321,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
         let allowOffline = true,
             saveOffline = false;
 
-        const modal = this.domUtils.showModalLoading('core.sending', true),
+        const modal = CoreDomUtils.showModalLoading('core.sending', true),
             submissionId = this.submission.id;
 
         // Add some HTML to the message if needed.
@@ -374,7 +374,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
                 attachmentsId, undefined, submissionId, allowOffline);
         }).then((newSubmissionId) => {
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, !!newSubmissionId, this.siteId);
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!newSubmissionId, this.siteId);
 
             const data = {
                 workshopId: this.workshopId,
@@ -397,10 +397,10 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
                 CoreEvents.trigger(AddonModWorkshopProvider.SUBMISSION_CHANGED, data, this.siteId);
 
                 // Delete the local files from the tmp folder.
-                this.fileUploaderProvider.clearTmpFiles(inputData.attachmentfiles);
+                CoreFileUploader.clearTmpFiles(inputData.attachmentfiles);
             });
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Cannot save submission');
+            CoreDomUtils.showErrorModalDefault(message, 'Cannot save submission');
         }).finally(() => {
             modal.dismiss();
         });

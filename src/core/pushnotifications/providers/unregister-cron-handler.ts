@@ -19,7 +19,7 @@ import { CorePushNotificationsProvider } from './pushnotifications';
 /**
  * Cron handler to retry pending unregisters.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CorePushNotificationsUnregisterCronHandler implements CoreCronHandler {
     name = 'CorePushNotificationsUnregisterCronHandler';
 

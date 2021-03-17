@@ -18,7 +18,7 @@ import { CorePluginFileHandler } from '@services/plugin-file-delegate';
 /**
  * Handler to treat links to folder.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFolderPluginFileHandler implements CorePluginFileHandler {
     name = 'AddonModFolderPluginFileHandler';
     component = 'mod_folder';

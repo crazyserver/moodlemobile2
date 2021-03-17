@@ -21,7 +21,7 @@ import {
 /**
  * Service that provides some helper functions for notifications.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonNotificationsHelperProvider {
 
     constructor(private notificationsProvider: AddonNotificationsProvider, private sitesProvider: CoreSitesProvider) {
@@ -43,7 +43,7 @@ export class AddonNotificationsHelperProvider {
 
         notifications = notifications || [];
         limit = limit || AddonNotificationsProvider.LIST_LIMIT;
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.notificationsProvider.isPopupAvailable(siteId).then((available) => {
 

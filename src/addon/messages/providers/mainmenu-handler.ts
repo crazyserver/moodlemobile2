@@ -29,7 +29,7 @@ import { CoreFilterHelperProvider } from '@core/filter/providers/helper';
 /**
  * Handler to inject an option into main menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCronHandler {
     name = 'AddonMessages';
     priority = 800;
@@ -77,7 +77,7 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
         pushNotificationsDelegate.on('receive').subscribe((notification) => {
             // New message received. If it's from current site, refresh the data.
             const isMessage = utils.isFalseOrZero(notification.notif) || notification.name == 'messagecontactrequests';
-            if (isMessage && this.sitesProvider.isCurrentSite(notification.site)) {
+            if (isMessage && CoreSites.isCurrentSite(notification.site)) {
                 this.refreshBadge(notification.site);
             }
         });
@@ -119,7 +119,7 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
      * @return Resolve when done.
      */
     refreshBadge(siteId?: string, unreadOnly?: boolean): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         if (!siteId) {
             return;
         }
@@ -170,11 +170,11 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
      * @return Promise resolved when done, rejected if failure.
      */
     execute(siteId?: string, force?: boolean): Promise<any> {
-        if (this.sitesProvider.isCurrentSite(siteId)) {
+        if (CoreSites.isCurrentSite(siteId)) {
             this.refreshBadge();
         }
 
-        if (this.appProvider.isDesktop() && this.localNotificationsProvider.isAvailable()) {
+        if (CoreApp.isDesktop() && this.localNotificationsProvider.isAvailable()) {
             this.emulatorHelper.checkNewNotifications(
                 AddonMessagesProvider.PUSH_SIMULATION_COMPONENT,
                 this.fetchMessages.bind(this), this.getTitleAndText.bind(this), siteId);
@@ -189,7 +189,7 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
      * @return Time between consecutive executions (in ms).
      */
     getInterval(): number {
-        if (this.appProvider.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             return 60000; // Desktop usually has a WiFi connection, check it every minute.
         } else if (this.messagesProvider.isGroupMessagingEnabled() || this.messagesProvider.isMessageCountEnabled()) {
             return 300000; // We have a WS to check the number, check it every 5 minutes.
@@ -206,7 +206,7 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
     isSync(): boolean {
         // This is done to use only wifi if using the fallback function.
 
-        if (this.appProvider.isDesktop()) {
+        if (CoreApp.isDesktop()) {
             // In desktop it is always sync, since it fetches messages to see if there's a new one.
             return true;
         }
@@ -230,7 +230,7 @@ export class AddonMessagesMainMenuHandler implements CoreMainMenuHandler, CoreCr
      * @return Promise resolved with the notifications.
      */
     protected fetchMessages(siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             if (site.isVersionGreaterEqualThan('3.7')) {
 
                 // Use get conversations WS to be able to get group conversations messages.

@@ -62,7 +62,7 @@ export class MoodleMobileApp implements OnInit {
             ) {
         this.logger = CoreLogger.getInstance('AppComponent');
 
-        if (this.appProvider.isIOS() && !platform.is('ios')) {
+        if (CoreApp.isIOS() && !platform.is('ios')) {
             // Solve problem with wrong detected iPadOS.
             const platforms = platform.platforms();
             const index = platforms.indexOf('core');
@@ -102,24 +102,24 @@ export class MoodleMobileApp implements OnInit {
             // Here you can do any higher level native things you might need.
 
             // Set StatusBar properties.
-            this.appProvider.setStatusBarColor();
+            CoreApp.setStatusBarColor();
 
             keyboard.hideFormAccessoryBar(false);
 
-            if (this.appProvider.isDesktop()) {
+            if (CoreApp.isDesktop()) {
                 app.setElementClass('platform-desktop', true);
 
-                if (this.appProvider.isMac()) {
+                if (CoreApp.isMac()) {
                     app.setElementClass('platform-mac', true);
-                } else if (this.appProvider.isLinux()) {
+                } else if (CoreApp.isLinux()) {
                     app.setElementClass('platform-linux', true);
-                } else if (this.appProvider.isWindows()) {
+                } else if (CoreApp.isWindows()) {
                     app.setElementClass('platform-windows', true);
                 }
             }
 
             // Register back button action to allow closing modals before anything else.
-            this.appProvider.registerBackButtonAction(() => {
+            CoreApp.registerBackButtonAction(() => {
                 return this.closeModal();
             }, 2000);
         });
@@ -134,7 +134,7 @@ export class MoodleMobileApp implements OnInit {
             // Go to sites page when user is logged out.
             // Due to DeepLinker, we need to use the ViewCtrl instead of name.
             // Otherwise some pages are re-created when they shouldn't.
-            this.appProvider.getRootNavController().setRoot(CoreLoginSitesPage);
+            CoreApp.getRootNavController().setRoot(CoreLoginSitesPage);
 
             // Unload lang custom strings.
             this.langProvider.clearCustomStrings();
@@ -166,7 +166,7 @@ export class MoodleMobileApp implements OnInit {
             this.network.onchange().subscribe(() => {
                 // Execute the callback in the Angular zone, so change detection doesn't stop working.
                 this.zone.run(() => {
-                    const isOnline = this.appProvider.isOnline(),
+                    const isOnline = CoreApp.isOnline(),
                         hadOfflineMessage = document.body.classList.contains('core-offline');
 
                     document.body.classList.toggle('core-offline', !isOnline);
@@ -194,22 +194,22 @@ export class MoodleMobileApp implements OnInit {
                 this.urlSchemesProvider.handleCustomURL(url).catch((error: CoreCustomURLSchemesHandleError) => {
                     this.urlSchemesProvider.treatHandleCustomURLError(error);
                 });
-                this.utils.closeInAppBrowser(false);
+                CoreUtils.closeInAppBrowser(false);
 
-            } else if (CoreApp.instance.isAndroid()) {
+            } else if (CoreApp.isAndroid()) {
                 // Check if the URL has a custom URL scheme. In Android they need to be opened manually.
                 const urlScheme = this.urlUtils.getUrlProtocol(url);
                 if (urlScheme && urlScheme !== 'file' && urlScheme !== 'cdvfile') {
                     // Open in browser should launch the right app if found and do nothing if not found.
-                    this.utils.openInBrowser(url);
+                    CoreUtils.openInBrowser(url);
 
                     // At this point the InAppBrowser is showing a "Webpage not available" error message.
                     // Try to navigate to last loaded URL so this error message isn't found.
                     if (this.lastInAppUrl) {
-                        this.utils.openInApp(this.lastInAppUrl);
+                        CoreUtils.openInApp(this.lastInAppUrl);
                     } else {
                         // No last URL loaded, close the InAppBrowser.
-                        this.utils.closeInAppBrowser(false);
+                        CoreUtils.closeInAppBrowser(false);
                     }
                 } else {
                     this.lastInAppUrl = url;
@@ -265,7 +265,7 @@ export class MoodleMobileApp implements OnInit {
 
         // Load custom lang strings. This cannot be done inside the lang provider because it causes circular dependencies.
         const loadCustomStrings = (): void => {
-            const currentSite = this.sitesProvider.getCurrentSite(),
+            const currentSite = CoreSites.getCurrentSite(),
                 customStrings = currentSite && currentSite.getStoredConfig('tool_mobile_customlangstrings');
 
             if (typeof customStrings != 'undefined') {
@@ -275,12 +275,12 @@ export class MoodleMobileApp implements OnInit {
 
         CoreEvents.on(CoreEvents.LOGIN, (data) => {
             if (data.siteId) {
-                this.sitesProvider.getSite(data.siteId).then((site) => {
+                CoreSites.getSite(data.siteId).then((site) => {
                     const info = site.getInfo();
                     if (info) {
                         // Add version classes to body.
                         this.removeVersionClass();
-                        this.addVersionClass(this.sitesProvider.getReleaseNumber(info.release || ''));
+                        this.addVersionClass(CoreSites.getReleaseNumber(info.release || ''));
                     }
                 });
             }
@@ -289,28 +289,28 @@ export class MoodleMobileApp implements OnInit {
         });
 
         CoreEvents.on(CoreEvents.SITE_UPDATED, (data) => {
-            if (data.siteId == this.sitesProvider.getCurrentSiteId()) {
+            if (data.siteId == CoreSites.getCurrentSiteId()) {
                 loadCustomStrings();
 
                 // Add version classes to body.
                 this.removeVersionClass();
-                this.addVersionClass(this.sitesProvider.getReleaseNumber(data.release || ''));
+                this.addVersionClass(CoreSites.getReleaseNumber(data.release || ''));
             }
         });
 
         CoreEvents.on(CoreEvents.SITE_ADDED, (data) => {
-            if (data.siteId == this.sitesProvider.getCurrentSiteId()) {
+            if (data.siteId == CoreSites.getCurrentSiteId()) {
                 loadCustomStrings();
 
                 // Add version classes to body.
                 this.removeVersionClass();
-                this.addVersionClass(this.sitesProvider.getReleaseNumber(data.release || ''));
+                this.addVersionClass(CoreSites.getReleaseNumber(data.release || ''));
             }
         });
 
         // Pause Youtube videos in Android when app is put in background or screen is locked.
         this.platform.pause.subscribe(() => {
-            if (!CoreApp.instance.isAndroid()) {
+            if (!CoreApp.isAndroid()) {
                 return;
             }
 
@@ -335,7 +335,7 @@ export class MoodleMobileApp implements OnInit {
         // Detect orientation changes.
         this.screenOrientation.onChange().subscribe(
             () => {
-                if (CoreApp.instance.isIOS()) {
+                if (CoreApp.isIOS()) {
                     // Force ios to recalculate safe areas when rotating.
                     // This can be erased when https://issues.apache.org/jira/browse/CB-13448 issue is solved or
                     // After switching to WkWebview.

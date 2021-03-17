@@ -21,7 +21,7 @@ import { AddonMessagesProvider } from './messages';
 /**
  * Profile send message handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonMessagesSendMessageUserHandler implements CoreUserProfileHandler {
     name = 'AddonMessages:sendMessage';
     priority = 1000;
@@ -49,7 +49,7 @@ export class AddonMessagesSendMessageUserHandler implements CoreUserProfileHandl
      * @return Promise resolved with true if enabled, resolved with false otherwise.
      */
     isEnabledForUser(user: any, courseId: number, navOptions?: any, admOptions?: any): boolean | Promise<boolean> {
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
 
         if (!currentSite) {
             return false;

@@ -20,7 +20,7 @@ import { AddonBlogProvider } from './blog';
 /**
  * Profile item handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonBlogUserHandler implements CoreUserProfileHandler {
     name = 'AddonBlog:blogs';
     priority = 300;

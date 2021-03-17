@@ -21,7 +21,7 @@ import { AddonModLessonProvider } from './lesson';
 /**
  * Handler to treat links to lesson list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModLessonListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModLessonListLinkHandler';
 

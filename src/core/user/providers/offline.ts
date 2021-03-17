@@ -27,7 +27,7 @@ export interface CoreUserOfflinePreference {
 /**
  * Service to handle offline user preferences.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserOfflineProvider {
 
     // Variables for database.
@@ -59,7 +59,7 @@ export class CoreUserOfflineProvider {
     };
 
     constructor(private sitesProvider: CoreSitesProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -68,7 +68,7 @@ export class CoreUserOfflineProvider {
      * @return Promise resolved with list of preferences.
      */
     getChangedPreferences(siteId?: string): Promise<CoreUserOfflinePreference[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecordsSelect(CoreUserOfflineProvider.PREFERENCES_TABLE, 'value != onlineValue');
         });
     }
@@ -80,7 +80,7 @@ export class CoreUserOfflineProvider {
      * @return Promise resolved with the preference, rejected if not found.
      */
     getPreference(name: string, siteId?: string): Promise<CoreUserOfflinePreference> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const conditions = { name };
 
             return site.getDb().getRecord(CoreUserOfflineProvider.PREFERENCES_TABLE, conditions);
@@ -96,7 +96,7 @@ export class CoreUserOfflineProvider {
      * @return Promise resolved when done.
      */
     setPreference(name: string, value: string, onlineValue?: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             let promise: Promise<string>;
             if (typeof onlineValue == 'undefined') {
                 promise = this.getPreference(name, site.id).then((preference) => preference.onlinevalue);

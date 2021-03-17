@@ -88,7 +88,7 @@ export class CoreSitePluginsCallWSBaseDirective implements OnInit, OnDestroy {
         }
 
         if (this.form && document.forms[this.form]) {
-            params = Object.assign(params, this.domUtils.getDataFromForm(document.forms[this.form]));
+            params = Object.assign(params, CoreDomUtils.getDataFromForm(document.forms[this.form]));
         }
 
         return params;

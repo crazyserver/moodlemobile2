@@ -20,7 +20,7 @@ import { CoreTagFeedComponent } from '@core/tag/components/feed/feed';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCourseModulesTagAreaHandler implements CoreTagAreaHandler {
     name = 'CoreCourseModulesTagAreaHandler';
     type = 'core/course_modules';

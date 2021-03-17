@@ -20,7 +20,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Handler for textarea data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldTextareaHandler extends AddonModDataFieldTextHandler {
     name = 'AddonModDataFieldTextareaHandler';
     type = 'textarea';
@@ -100,13 +100,13 @@ export class AddonModDataFieldTextareaHandler extends AddonModDataFieldTextHandl
     getFieldsNotifications(field: any, inputData: any): string | false {
         if (field.required) {
             if (!inputData || !inputData.length) {
-                return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+                return Translate.instant('addon.mod_data.errormustsupplyvalue');
             }
 
             const value = inputData.find((value) => value.subfield == '');
 
             if (!value || this.textUtils.htmlIsBlank(value.value)) {
-                return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+                return Translate.instant('addon.mod_data.errormustsupplyvalue');
             }
         }
 

@@ -69,14 +69,14 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.userId = this.sitesProvider.getCurrentSiteUserId();
+        this.userId = CoreSites.getCurrentSiteUserId();
 
         this.loadContent(false, true).then(() => {
             if (!this.choice) {
                 return;
             }
             this.choiceProvider.logView(this.choice.id, this.choice.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch((error) => {
                 // Ignore errors.
             });
@@ -109,7 +109,7 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
      */
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (this.choice && syncEventData.choiceId == this.choice.id && syncEventData.userId == this.userId) {
-            this.domUtils.scrollToTop(this.content);
+            CoreDomUtils.scrollToTop(this.content);
 
             return true;
         }
@@ -132,8 +132,8 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
             this.choice = choice;
             this.choice.timeopen = choice.timeopen * 1000;
             this.choice.timeclose = choice.timeclose * 1000;
-            this.openTimeReadable = this.timeUtils.userDate(choice.timeopen);
-            this.closeTimeReadable = this.timeUtils.userDate(choice.timeclose);
+            this.openTimeReadable = CoreTimeUtils.userDate(choice.timeopen);
+            this.closeTimeReadable = CoreTimeUtils.userDate(choice.timeclose);
 
             this.description = choice.intro;
             this.choiceNotOpenYet = choice.timeopen && choice.timeopen > this.now;
@@ -343,7 +343,7 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
         if (this.choice.allowupdate) {
             promise = Promise.resolve();
         } else {
-            promise = this.domUtils.showConfirm(this.translate.instant('core.areyousure'));
+            promise = CoreDomUtils.showConfirm(Translate.instant('core.areyousure'));
         }
 
         promise.then(() => {
@@ -358,20 +358,20 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
                 responses.push(this.selectedOption.id);
             }
 
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.choiceProvider.submitResponse(this.choice.id, this.choice.name, this.courseId, responses).then((online) => {
                 // Success!
                 // Check completion since it could be configured to complete once the user answers the choice.
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
-                this.domUtils.scrollToTop(this.content);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreDomUtils.scrollToTop(this.content);
 
                 if (online) {
-                    CoreEvents.instance.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
+                    CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
                 }
 
                 return this.dataUpdated(online);
             }).catch((message) => {
-                this.domUtils.showErrorModalDefault(message, 'addon.mod_choice.cannotsubmit', true);
+                CoreDomUtils.showErrorModalDefault(message, 'addon.mod_choice.cannotsubmit', true);
             }).finally(() => {
                 modal.dismiss();
             });
@@ -382,15 +382,15 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
      * Delete options selected.
      */
     delete(): void {
-        this.domUtils.showDeleteConfirm().then(() => {
-            const modal = this.domUtils.showModalLoading('core.sending', true);
+        CoreDomUtils.showDeleteConfirm().then(() => {
+            const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.choiceProvider.deleteResponses(this.choice.id, this.choice.name, this.courseId).then(() => {
-                this.domUtils.scrollToTop(this.content);
+                CoreDomUtils.scrollToTop(this.content);
 
                 // Refresh the data. Don't call dataUpdated because deleting an answer doesn't mark the choice as outdated.
                 return this.refreshContent(false);
             }).catch((message) => {
-                this.domUtils.showErrorModalDefault(message, 'addon.mod_choice.cannotsubmit', true);
+                CoreDomUtils.showErrorModalDefault(message, 'addon.mod_choice.cannotsubmit', true);
             }).finally(() => {
                 modal.dismiss();
             });

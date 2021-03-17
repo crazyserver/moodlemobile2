@@ -29,7 +29,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Service that provides some features regarding grades information.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreGradesHelperProvider {
     protected logger: CoreLogger;
 
@@ -203,9 +203,9 @@ export class CoreGradesHelperProvider {
         let coursesWereMissing;
 
         try {
-            const courses = await this.coursesProvider.getUserCourses(undefined, undefined, CoreSitesReadingStrategy.OnlyCache);
+            const courses = await CoreCourses.getUserCourses(undefined, undefined, CoreSitesReadingStrategy.OnlyCache);
 
-            const coursesMap = this.utils.arrayToObject(courses, 'id');
+            const coursesMap = CoreUtils.arrayToObject(courses, 'id');
 
             coursesWereMissing = this.addCourseData(grades, coursesMap);
         } catch (error) {
@@ -214,13 +214,13 @@ export class CoreGradesHelperProvider {
 
         // If any course wasn't found, make a network request.
         if (coursesWereMissing) {
-            const coursesPromise = this.coursesProvider.isGetCoursesByFieldAvailable()
-                ? this.coursesProvider.getCoursesByField('ids', grades.map((grade) => grade.courseid).join(','))
-                : this.coursesProvider.getUserCourses(undefined, undefined, CoreSitesReadingStrategy.PreferNetwork);
+            const coursesPromise = CoreCourses.isGetCoursesByFieldAvailable()
+                ? CoreCourses.getCoursesByField('ids', grades.map((grade) => grade.courseid).join(','))
+                : CoreCourses.getUserCourses(undefined, undefined, CoreSitesReadingStrategy.PreferNetwork);
 
             const courses = await coursesPromise;
 
-            const coursesMap = this.utils.arrayToObject(courses, 'id');
+            const coursesMap = CoreUtils.arrayToObject(courses, 'id');
 
             this.addCourseData(grades, coursesMap);
         }
@@ -355,7 +355,7 @@ export class CoreGradesHelperProvider {
      * @return URL linking to the module.
      */
     protected getModuleLink(text: string): string | false {
-        const el = this.domUtils.toDom(text)[0],
+        const el = CoreDomUtils.toDom(text)[0],
             link = el.attributes['href'] ? el.attributes['href'].value : false;
 
         if (!link || link.indexOf('/mod/') < 0) {
@@ -432,10 +432,10 @@ export class CoreGradesHelperProvider {
      */
     goToGrades(courseId: number, userId?: number, moduleId?: number, navCtrl?: NavController, siteId?: string): Promise<any> {
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         let currentUserId;
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             siteId = site.id;
             currentUserId = site.getUserId();
 
@@ -491,15 +491,15 @@ export class CoreGradesHelperProvider {
             }
 
             // View own grades. Check if we already are in the course index page.
-            if (this.courseProvider.currentViewIsCourse(navCtrl, courseId)) {
+            if (CoreCourse.currentViewIsCourse(navCtrl, courseId)) {
                 // Current view is this course, just select the grades tab.
-                this.courseProvider.selectCourseTab('CoreGrades');
+                CoreCourse.selectCourseTab('CoreGrades');
 
                 return;
             }
 
             // Open the course with the grades tab selected.
-            return this.courseHelper.getCourse(courseId, siteId).then((result) => {
+            return CoreCourseHelper.getCourse(courseId, siteId).then((result) => {
                 const pageParams: any = {
                     course: result.course,
                     selectedTab: 'CoreGrades'
@@ -527,9 +527,9 @@ export class CoreGradesHelperProvider {
      * @return Promise to be resolved when the grades are invalidated.
      */
     invalidateGradeModuleItems(courseId: number, userId?: number, groupId?: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return this.gradesProvider.isGradeItemsAvalaible(siteId).then((enabled) => {
@@ -572,8 +572,8 @@ export class CoreGradesHelperProvider {
             if (typeof module[1] != 'undefined') {
                 row['itemtype'] = 'mod';
                 row['itemmodule'] = module[1];
-                row['image'] = this.courseProvider.getModuleIconSrc(module[1],
-                    this.domUtils.convertToElement(text).querySelector('img').getAttribute('src'));
+                row['image'] = CoreCourse.getModuleIconSrc(module[1],
+                    CoreDomUtils.convertToElement(text).querySelector('img').getAttribute('src'));
             }
         } else {
             if (row['rowspan'] && row['rowspan'] > 1) {
@@ -611,11 +611,11 @@ export class CoreGradesHelperProvider {
             Promise<any[]> {
         if (gradingType < 0) {
             if (scale) {
-                return Promise.resolve(this.utils.makeMenuFromList(scale, defaultLabel, undefined, defaultValue));
+                return Promise.resolve(CoreUtils.makeMenuFromList(scale, defaultLabel, undefined, defaultValue));
             } else if (moduleId) {
-                return this.courseProvider.getModuleBasicGradeInfo(moduleId).then((gradeInfo) => {
+                return CoreCourse.getModuleBasicGradeInfo(moduleId).then((gradeInfo) => {
                     if (gradeInfo.scale) {
-                        return this.utils.makeMenuFromList(gradeInfo.scale, defaultLabel, undefined,  defaultValue);
+                        return CoreUtils.makeMenuFromList(gradeInfo.scale, defaultLabel, undefined,  defaultValue);
                     }
 
                     return [];

@@ -81,7 +81,7 @@ export class AddonCompetencyPlanListPage {
             });
             this.plans = plans;
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting learning plans data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting learning plans data.');
         });
     }
 

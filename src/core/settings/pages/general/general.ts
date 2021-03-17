@@ -113,7 +113,7 @@ export class CoreSettingsGeneralPage {
             });
         });
 
-        this.rteSupported = this.domUtils.isRichTextEditorSupported();
+        this.rteSupported = CoreDomUtils.isRichTextEditorSupported();
         if (this.rteSupported) {
             this.configProvider.get(CoreConstants.SETTINGS_RICH_TEXT_EDITOR, true).then((richTextEditorEnabled) => {
                 this.richTextEditor = !!richTextEditorEnabled;
@@ -178,7 +178,7 @@ export class CoreSettingsGeneralPage {
      */
     debugDisplayChanged(): void {
         this.configProvider.set(CoreConstants.SETTINGS_DEBUG_DISPLAY, this.debugDisplay ? 1 : 0);
-        this.domUtils.setDebugDisplay(this.debugDisplay);
+        CoreDomUtils.setDebugDisplay(this.debugDisplay);
     }
 
     /**

@@ -44,7 +44,7 @@ export class AddonCourseCompletionReportComponent implements OnInit {
      */
     ngOnInit(): void {
         if (!this.userId) {
-            this.userId = this.sitesProvider.getCurrentSiteUserId();
+            this.userId = CoreSites.getCurrentSiteUserId();
         }
 
         this.fetchCompletion().finally(() => {
@@ -70,7 +70,7 @@ export class AddonCourseCompletionReportComponent implements OnInit {
                 // Not enrolled error, probably a teacher.
                 this.tracked = false;
             } else {
-                this.domUtils.showErrorModalDefault(error, 'addon.coursecompletion.couldnotloadreport', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.coursecompletion.couldnotloadreport', true);
             }
         });
     }
@@ -92,11 +92,11 @@ export class AddonCourseCompletionReportComponent implements OnInit {
      * Mark course as completed.
      */
     completeCourse(): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         this.courseCompletionProvider.markCourseAsSelfCompleted(this.courseId).then(() => {
             return this.refreshCompletion();
         }).catch((message) => {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }).finally(() => {
             modal.dismiss();
         });

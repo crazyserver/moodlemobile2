@@ -32,7 +32,7 @@ import { CoreRatingOfflineProvider } from '@core/rating/providers/offline';
 /**
  * Service that provides helper functions for datas.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataHelperProvider {
 
     constructor(
@@ -129,21 +129,21 @@ export class AddonModDataHelperProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     approveOrDisapproveEntry(dataId: number, entryId: number, approve: boolean, courseId?: number, siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         this.getActivityCourseIdIfNotSet(dataId, courseId, siteId).then((courseId) => {
             // Approve/disapprove entry.
-            return this.dataProvider.approveEntry(dataId, entryId, approve, courseId, siteId).catch((message) => {
-                this.domUtils.showErrorModalDefault(message, 'addon.mod_data.errorapproving', true);
+            return AddonModData.approveEntry(dataId, entryId, approve, courseId, siteId).catch((message) => {
+                CoreDomUtils.showErrorModalDefault(message, 'addon.mod_data.errorapproving', true);
 
                 return Promise.reject(null);
             });
         }).then(() => {
             const promises = [];
-            promises.push(this.dataProvider.invalidateEntryData(dataId, entryId, siteId));
-            promises.push(this.dataProvider.invalidateEntriesData(dataId, siteId));
+            promises.push(AddonModData.invalidateEntryData(dataId, entryId, siteId));
+            promises.push(AddonModData.invalidateEntriesData(dataId, siteId));
 
             return Promise.all(promises).catch(() => {
                 // Ignore errors.
@@ -151,7 +151,7 @@ export class AddonModDataHelperProvider {
         }).then(() => {
             CoreEvents.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId: dataId, entryId: entryId}, siteId);
 
-            this.domUtils.showToast(approve ? 'addon.mod_data.recordapproved' : 'addon.mod_data.recorddisapproved', true, 3000);
+            CoreDomUtils.showToast(approve ? 'addon.mod_data.recordapproved' : 'addon.mod_data.recorddisapproved', true, 3000);
         }).catch(() => {
             // Ignore error, it was already displayed.
         }).finally(() => {
@@ -198,9 +198,9 @@ export class AddonModDataHelperProvider {
             if (actions[action]) {
                 if (action == 'moreurl') {
                     // Render more url directly because it can be part of an HTML attribute.
-                    render = this.sitesProvider.getCurrentSite().getURL() + '/mod/data/view.php?d={{data.id}}&rid=' + entry.id;
+                    render = CoreSites.getCurrentSite().getURL() + '/mod/data/view.php?d={{data.id}}&rid=' + entry.id;
                 } else if (action == 'approvalstatus') {
-                    render = this.translate.instant('addon.mod_data.' + (entry.approved ? 'approved' : 'notapproved'));
+                    render = Translate.instant('addon.mod_data.' + (entry.approved ? 'approved' : 'notapproved'));
                 } else {
                     render = '<addon-mod-data-action action="' + action + '" [entry]="entries[' + entry.id + ']" mode="' + mode +
                     '" [database]="data" [module]="module" [offset]="' + offset + '" [group]="group" ></addon-mod-data-action>';
@@ -226,7 +226,7 @@ export class AddonModDataHelperProvider {
         options.groupId = options.groupId || 0;
         options.page = options.page || 0;
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const offlineActions = {};
             const result: AddonModDataEntries = {
                 entries: [],
@@ -273,13 +273,13 @@ export class AddonModDataHelperProvider {
 
             let fetchPromise: Promise<void>;
             if (options.search || options.advSearch) {
-                fetchPromise = this.dataProvider.searchEntries(data.id, options).then((fetchResult) => {
+                fetchPromise = AddonModData.searchEntries(data.id, options).then((fetchResult) => {
                     result.entries = fetchResult.entries;
                     result.totalcount = fetchResult.totalcount;
                     result.maxcount = fetchResult.maxcount;
                 });
             } else {
-                fetchPromise = this.dataProvider.getEntries(data.id, options).then((fetchResult) => {
+                fetchPromise = AddonModData.getEntries(data.id, options).then((fetchResult) => {
                     result.entries = fetchResult.entries;
                     result.totalcount = fetchResult.totalcount;
                 });
@@ -313,13 +313,13 @@ export class AddonModDataHelperProvider {
      */
     fetchEntry(data: any, fields: any[], entryId: number, siteId?: string):
             Promise<{entry: AddonModDataEntry, ratinginfo?: CoreRatingInfo}> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.dataOffline.getEntryActions(data.id, entryId, site.id).then((offlineActions) => {
                 let promise: Promise<{entry: AddonModDataEntry, ratinginfo?: CoreRatingInfo}>;
 
                 if (entryId > 0) {
                     // Online entry.
-                    promise = this.dataProvider.getEntry(data.id, entryId, {cmId: data.coursemodule, siteId: site.id});
+                    promise = AddonModData.getEntry(data.id, entryId, {cmId: data.coursemodule, siteId: site.id});
                 } else  {
                     // Offline entry or new entry.
                     promise = Promise.resolve({
@@ -392,7 +392,7 @@ export class AddonModDataHelperProvider {
             return Promise.resolve(courseId);
         }
 
-        return this.courseProvider.getModuleBasicInfoByInstance(dataId, 'data', siteId).then((module) => {
+        return CoreCourse.getModuleBasicInfoByInstance(dataId, 'data', siteId).then((module) => {
             return module.course;
         });
     }
@@ -493,7 +493,7 @@ export class AddonModDataHelperProvider {
             return Promise.resolve({});
         }
 
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Filter and translate fields to each field plugin.
         const edit = [],
@@ -576,7 +576,7 @@ export class AddonModDataHelperProvider {
      */
     getStoredFiles(dataId: number, entryId: number, fieldId: number, siteId?: string): Promise<any> {
         return this.dataOffline.getEntryFieldFolder(dataId, entryId, fieldId, siteId).then((folderPath) => {
-            return this.fileUploaderProvider.getStoredFiles(folderPath).catch(() => {
+            return CoreFileUploader.getStoredFiles(folderPath).catch(() => {
                 // Ignore not found files.
                 return [];
             });
@@ -596,7 +596,7 @@ export class AddonModDataHelperProvider {
 
         if (type != 'listtemplateheader' && type != 'listtemplatefooter') {
             // Try to fix syntax errors so the template can be parsed by Angular.
-            template = this.domUtils.fixHtml(template);
+            template = CoreDomUtils.fixHtml(template);
         }
 
         // Add core-link directive to links.
@@ -640,22 +640,22 @@ export class AddonModDataHelperProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     async showDeleteEntryModal(dataId: number, entryId: number, courseId?: number, siteId?: string): Promise<void> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         let modal;
         try {
-            await this.domUtils.showDeleteConfirm('addon.mod_data.confirmdeleterecord');
+            await CoreDomUtils.showDeleteConfirm('addon.mod_data.confirmdeleterecord');
 
-            modal = this.domUtils.showModalLoading();
+            modal = CoreDomUtils.showModalLoading();
 
             try {
                 if (entryId > 0) {
                     courseId = await this.getActivityCourseIdIfNotSet(dataId, courseId, siteId);
                 }
 
-                this.dataProvider.deleteEntry(dataId, entryId, courseId, siteId);
+                AddonModData.deleteEntry(dataId, entryId, courseId, siteId);
             } catch (message) {
-                this.domUtils.showErrorModalDefault(message, 'addon.mod_data.errordeleting', true);
+                CoreDomUtils.showErrorModalDefault(message, 'addon.mod_data.errordeleting', true);
 
                 modal && modal.dismiss();
 
@@ -663,15 +663,15 @@ export class AddonModDataHelperProvider {
             }
 
             try {
-                await this.dataProvider.invalidateEntryData(dataId, entryId, siteId);
-                await this.dataProvider.invalidateEntriesData(dataId, siteId);
+                await AddonModData.invalidateEntryData(dataId, entryId, siteId);
+                await AddonModData.invalidateEntriesData(dataId, siteId);
             } catch (error) {
                 // Ignore errors.
             }
 
             CoreEvents.trigger(AddonModDataProvider.ENTRY_CHANGED, {dataId, entryId,  deleted: true}, siteId);
 
-            this.domUtils.showToast('addon.mod_data.recorddeleted', true, 3000);
+            CoreDomUtils.showToast('addon.mod_data.recorddeleted', true, 3000);
         } catch (error) {
             // Ignore error, it was already displayed.
         }
@@ -693,7 +693,7 @@ export class AddonModDataHelperProvider {
     storeFiles(dataId: number, entryId: number, fieldId: number, files: any[], siteId?: string): Promise<any> {
         // Get the folder where to store the files.
         return this.dataOffline.getEntryFieldFolder(dataId, entryId, fieldId, siteId).then((folderPath) => {
-            return this.fileUploaderProvider.storeFilesToUpload(folderPath, files);
+            return CoreFileUploader.storeFilesToUpload(folderPath, files);
         });
     }
 
@@ -716,7 +716,7 @@ export class AddonModDataHelperProvider {
                 return this.storeFiles(dataId, entryId, fieldId, files, siteId);
             }
 
-            return this.fileUploaderProvider.uploadOrReuploadFiles(files, AddonModDataProvider.COMPONENT, itemId, siteId);
+            return CoreFileUploader.uploadOrReuploadFiles(files, AddonModDataProvider.COMPONENT, itemId, siteId);
         }
 
         return Promise.resolve(0);

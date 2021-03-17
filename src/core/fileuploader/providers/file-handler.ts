@@ -25,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to upload any type of file.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderFileHandler implements CoreFileUploaderHandler {
     name = 'CoreFileUploaderFile';
     priority = 1200;
@@ -44,8 +44,8 @@ export class CoreFileUploaderFileHandler implements CoreFileUploaderHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return CoreApp.instance.isAndroid() || !CoreApp.instance.isMobile() ||
-            (CoreApp.instance.isIOS() && this.platform.version().major >= 9);
+        return CoreApp.isAndroid() || !CoreApp.isMobile() ||
+            (CoreApp.isIOS() && this.platform.version().major >= 9);
     }
 
     /**
@@ -70,7 +70,7 @@ export class CoreFileUploaderFileHandler implements CoreFileUploaderHandler {
             icon: 'folder',
         };
 
-        if (CoreApp.instance.isMobile()) {
+        if (CoreApp.isMobile()) {
             handler.action = (maxSize?: number, upload?: boolean, allowOffline?: boolean, mimetypes?: string[]): Promise<any> => {
                 return this.uploaderHelper.chooseAndUploadFile(maxSize, upload, allowOffline, mimetypes).then((result) => {
                     return {
@@ -89,7 +89,7 @@ export class CoreFileUploaderFileHandler implements CoreFileUploaderHandler {
                     const input = document.createElement('input');
                     input.setAttribute('type', 'file');
                     input.classList.add('core-fileuploader-file-handler-input');
-                    if (mimetypes && mimetypes.length && (!CoreApp.instance.isAndroid() || mimetypes.length == 1)) {
+                    if (mimetypes && mimetypes.length && (!CoreApp.isAndroid() || mimetypes.length == 1)) {
                         // Don't use accept attribute in Android with several mimetypes, it's not supported.
                         input.setAttribute('accept', mimetypes.join(', '));
                     }
@@ -105,7 +105,7 @@ export class CoreFileUploaderFileHandler implements CoreFileUploaderHandler {
                         // Verify that the mimetype of the file is supported, in case the accept attribute isn't supported.
                         const error = this.uploaderProvider.isInvalidMimetype(mimetypes, file.name, file.type);
                         if (error) {
-                            this.domUtils.showErrorModal(error);
+                            CoreDomUtils.showErrorModal(error);
 
                             return;
                         }
@@ -114,12 +114,12 @@ export class CoreFileUploaderFileHandler implements CoreFileUploaderHandler {
                         this.uploaderHelper.uploadFileObject(file, maxSize, upload, allowOffline, file.name).then((result) => {
                             this.uploaderHelper.fileUploaded(result);
                         }).catch((error) => {
-                            this.domUtils.showErrorModalDefault(error,
-                                    this.translate.instant('core.fileuploader.errorreadingfile'));
+                            CoreDomUtils.showErrorModalDefault(error,
+                                    Translate.instant('core.fileuploader.errorreadingfile'));
                         });
                     });
 
-                    if (CoreApp.instance.isIOS()) {
+                    if (CoreApp.isIOS()) {
                         // In iOS, the click on the input stopped working for some reason. We need to put it 1 level higher.
                         element.parentElement.appendChild(input);
 

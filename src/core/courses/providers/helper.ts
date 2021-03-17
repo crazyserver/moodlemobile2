@@ -24,7 +24,7 @@ import { CoreCoursePickerMenuPopoverComponent } from '@components/course-picker-
 /**
  * Helper to gather some common courses functions.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreCoursesHelperProvider {
 
     constructor(protected coursesProvider: CoreCoursesProvider,
@@ -41,11 +41,11 @@ export class CoreCoursesHelperProvider {
      * @return Promise resolved with the list of courses and the category.
      */
     getCoursesForPopover(courseId?: number): Promise<{courses: any[], categoryId: number}> {
-        return this.coursesProvider.getUserCourses(false).then((courses) => {
+        return CoreCourses.getUserCourses(false).then((courses) => {
             // Add "All courses".
             courses.unshift({
                 id: -1,
-                fullname: this.translate.instant('core.fulllistofcourses'),
+                fullname: Translate.instant('core.fulllistofcourses'),
                 category: -1
             });
 
@@ -110,7 +110,7 @@ export class CoreCoursesHelperProvider {
         let coursesInfo = {},
             courseInfoAvailable = false;
 
-        const site = this.sitesProvider.getCurrentSite(),
+        const site = CoreSites.getCurrentSite(),
             promises = [],
             colors = [];
 
@@ -124,7 +124,7 @@ export class CoreCoursesHelperProvider {
             }));
         }
 
-        if (this.coursesProvider.isGetCoursesByFieldAvailable() && (loadCategoryNames ||
+        if (CoreCourses.isGetCoursesByFieldAvailable() && (loadCategoryNames ||
                 (typeof courses[0].overviewfiles == 'undefined' && typeof courses[0].displayname == 'undefined'))) {
             const courseIds = courses.map((course) => {
                 return course.id;
@@ -133,8 +133,8 @@ export class CoreCoursesHelperProvider {
             courseInfoAvailable = true;
 
             // Get the extra data for the courses.
-            promises.push(this.coursesProvider.getCoursesByField('ids', courseIds).then((coursesInfos) => {
-                coursesInfo = this.utils.arrayToObject(coursesInfos, 'id');
+            promises.push(CoreCourses.getCoursesByField('ids', courseIds).then((coursesInfos) => {
+                coursesInfo = CoreUtils.arrayToObject(coursesInfos, 'id');
             }));
         }
 
@@ -160,15 +160,15 @@ export class CoreCoursesHelperProvider {
      */
     getUserCoursesWithOptions(sort: string = 'fullname', slice: number = 0, filter?: string, loadCategoryNames: boolean = false):
             Promise<any[]> {
-        return this.coursesProvider.getUserCourses().then((courses) => {
+        return CoreCourses.getUserCourses().then((courses) => {
             const promises = [],
                 courseIds = courses.map((course) => {
                     return course.id;
                 });
 
-            if (this.coursesProvider.canGetAdminAndNavOptions()) {
+            if (CoreCourses.canGetAdminAndNavOptions()) {
                 // Load course options of the course.
-                promises.push(this.coursesProvider.getCoursesAdminAndNavOptions(courseIds).then((options) => {
+                promises.push(CoreCourses.getCoursesAdminAndNavOptions(courseIds).then((options) => {
                     courses.forEach((course) => {
                         course.navOptions = options.navOptions[course.id];
                         course.admOptions = options.admOptions[course.id];

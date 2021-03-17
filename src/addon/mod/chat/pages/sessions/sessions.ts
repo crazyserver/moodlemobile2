@@ -65,11 +65,11 @@ export class AddonModChatSessionsPage {
      * @return Promise resolved when done.
      */
     fetchSessions(showLoading?: boolean): Promise<any> {
-        const modal = showLoading ? this.domUtils.showModalLoading() : null;
+        const modal = showLoading ? CoreDomUtils.showModalLoading() : null;
 
-        return this.groupsProvider.getActivityGroupInfo(this.cmId, false).then((groupInfo) => {
+        return CoreGroups.getActivityGroupInfo(this.cmId, false).then((groupInfo) => {
             this.groupInfo = groupInfo;
-            this.groupId = this.groupsProvider.validateGroupId(this.groupId, groupInfo);
+            this.groupId = CoreGroups.validateGroupId(this.groupId, groupInfo);
 
             return this.chatProvider.getSessions(this.chatId, this.groupId, this.showAll, {cmId: this.cmId});
         }).then((sessions: AddonModChatSessionFormatted[]) => {
@@ -85,7 +85,7 @@ export class AddonModChatSessionsPage {
                             sessionUser.userfullname = user.fullname;
                         }).catch(() => {
                             // Error getting profile, most probably the user is deleted.
-                            sessionUser.userfullname = this.translate.instant('core.deleteduser') + ' ' + sessionUser.userid;
+                            sessionUser.userfullname = Translate.instant('core.deleteduser') + ' ' + sessionUser.userid;
                         }));
                     }
                 });
@@ -101,7 +101,7 @@ export class AddonModChatSessionsPage {
                 this.sessions = sessions;
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'core.errorloadingcontent', true);
+            CoreDomUtils.showErrorModalDefault(error, 'core.errorloadingcontent', true);
         }).finally(() => {
             this.loaded = true;
             modal && modal.dismiss();
@@ -115,11 +115,11 @@ export class AddonModChatSessionsPage {
      */
     refreshSessions(refresher: any): void {
         const promises = [
-            this.groupsProvider.invalidateActivityGroupInfo(this.cmId),
+            CoreGroups.invalidateActivityGroupInfo(this.cmId),
             this.chatProvider.invalidateSessions(this.chatId, this.groupId, this.showAll)
         ];
 
-        this.utils.allPromises(promises).finally(() => {
+        CoreUtils.allPromises(promises).finally(() => {
             this.fetchSessions().finally(() => {
                 refresher?.detail.complete();
             });

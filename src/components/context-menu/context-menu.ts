@@ -62,7 +62,7 @@ export class CoreContextMenuComponent implements OnInit, OnDestroy {
         // Calculate the unique ID.
         this.uniqueId = 'core-context-menu-' + utils.getUniqueId('CoreContextMenuComponent');
 
-        this.instanceId = this.domUtils.storeInstanceByElement(elementRef.nativeElement, this);
+        this.instanceId = CoreDomUtils.storeInstanceByElement(elementRef.nativeElement, this);
     }
 
     /**
@@ -70,7 +70,7 @@ export class CoreContextMenuComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.icon = this.icon || 'more';
-        this.ariaLabel = this.ariaLabel || this.title || this.translate.instant('core.displayoptions');
+        this.ariaLabel = this.ariaLabel || this.title || Translate.instant('core.displayoptions');
     }
 
     /**
@@ -199,7 +199,7 @@ export class CoreContextMenuComponent implements OnInit, OnDestroy {
      * Component destroyed.
      */
     ngOnDestroy(): void {
-        this.domUtils.removeInstanceById(this.instanceId);
+        CoreDomUtils.removeInstanceById(this.instanceId);
         this.removeMergedItems();
     }
 }

@@ -21,7 +21,7 @@ import { CoreSite } from '@classes/site';
 /**
  * Handler to support the URL to link and images filter.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilterUrlToLinkHandler extends CoreFilterDefaultHandler {
     name = 'AddonFilterUrlToLinkHandler';
     filterName = 'urltolink';

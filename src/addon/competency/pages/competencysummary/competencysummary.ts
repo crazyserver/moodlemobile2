@@ -69,7 +69,7 @@ export class AddonCompetencyCompetencySummaryPage {
 
             this.competency = result.competency;
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting competency summary data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting competency summary data.');
         });
     }
 

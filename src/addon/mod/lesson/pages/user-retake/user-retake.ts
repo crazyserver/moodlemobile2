@@ -78,7 +78,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
 
         this.setRetake(retakeNumber).catch((error) => {
             this.selectedRetake = this.previousSelectedRetake;
-            this.domUtils.showErrorModal(this.utils.addDataNotDownloadedError(error, 'Error getting attempt.'));
+            CoreDomUtils.showErrorModal(CoreUtils.addDataNotDownloadedError(error, 'Error getting attempt.'));
         }).finally(() => {
             this.loaded = true;
         });
@@ -123,12 +123,12 @@ export class AddonModLessonUserRetakePage implements OnInit {
 
             if (!student) {
                 // Student not found.
-                return Promise.reject(this.translate.instant('addon.mod_lesson.cannotfinduser'));
+                return Promise.reject(Translate.instant('addon.mod_lesson.cannotfinduser'));
             }
 
             if (!student.attempts || !student.attempts.length) {
                 // No retakes.
-                return Promise.reject(this.translate.instant('addon.mod_lesson.cannotfindattempt'));
+                return Promise.reject(Translate.instant('addon.mod_lesson.cannotfindattempt'));
             }
 
             student.bestgrade = this.textUtils.roundToDecimals(student.bestgrade, 2);
@@ -160,7 +160,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
 
             return this.setRetake(this.selectedRetake);
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'Error getting data.', true);
+            CoreDomUtils.showErrorModalDefault(error, 'Error getting data.', true);
         });
     }
 
@@ -202,7 +202,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
             if (data && data.completed != -1) {
                 // Completed.
                 data.userstats.grade = this.textUtils.roundToDecimals(data.userstats.grade, 2);
-                data.userstats.timetakenReadable = this.timeUtils.formatTime(data.userstats.timetotake);
+                data.userstats.timetakenReadable = CoreTimeUtils.formatTime(data.userstats.timetotake);
             }
 
             if (data && data.answerpages) {

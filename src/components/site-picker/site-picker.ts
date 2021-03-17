@@ -42,10 +42,10 @@ export class CoreSitePickerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.selectedSite = this.initialSite || this.sitesProvider.getCurrentSiteId();
+        this.selectedSite = this.initialSite || CoreSites.getCurrentSiteId();
 
         // Load the sites.
-        this.sitesProvider.getSites().then((sites) => {
+        CoreSites.getSites().then((sites) => {
             const promises = [];
 
             sites.forEach((site: any) => {
@@ -54,7 +54,7 @@ export class CoreSitePickerComponent implements OnInit {
                         site.id).catch(() => {
                     return site.siteName;
                 }).then((siteName) => {
-                    site.fullNameAndSiteName = this.translate.instant('core.fullnameandsitename',
+                    site.fullNameAndSiteName = Translate.instant('core.fullnameandsitename',
                         { fullname: site.fullName, sitename: siteName });
                 }));
             });

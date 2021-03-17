@@ -26,7 +26,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
 /**
  * Service that provides some features for IMSCP.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModImscpProvider {
     static COMPONENT = 'mmaModImscp';
 
@@ -161,7 +161,7 @@ export class AddonModImscpProvider {
     protected getImscpByKey(courseId: number, key: string, value: any, options: CoreSitesCommonWSOptions = {})
             : Promise<AddonModImscpImscp> {
 
-        return this.sitesProvider.getSite(options.siteId).then((site) => {
+        return CoreSites.getSite(options.siteId).then((site) => {
             const params = {
                 courseids: [courseId],
             };
@@ -169,7 +169,7 @@ export class AddonModImscpProvider {
                 cacheKey: this.getImscpDataCacheKey(courseId),
                 updateFrequency: CoreSite.FREQUENCY_RARELY,
                 component: AddonModImscpProvider.COMPONENT,
-                ...this.sitesProvider.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
+                ...CoreSites.getReadingStrategyPreSets(options.readingStrategy), // Include reading strategy preSets.
             };
 
             return site.read('mod_imscp_get_imscps_by_courses', params, preSets)
@@ -238,17 +238,17 @@ export class AddonModImscpProvider {
             itemHref = toc[0].href;
         }
 
-        const siteId = this.sitesProvider.getCurrentSiteId();
+        const siteId = CoreSites.getCurrentSiteId();
 
-        return this.filepoolProvider.getPackageDirUrlByUrl(siteId, module.url).then((dirPath) => {
+        return CoreFilepool.getPackageDirUrlByUrl(siteId, module.url).then((dirPath) => {
             return this.textUtils.concatenatePaths(dirPath, itemHref);
         }).catch(() => {
             // Error getting directory, there was an error downloading or we're in browser. Return online URL if connected.
-            if (this.appProvider.isOnline()) {
+            if (CoreApp.isOnline()) {
                 const indexUrl = this.getFileUrlFromContents(module.contents, itemHref);
 
                 if (indexUrl) {
-                    return this.sitesProvider.getSite(siteId).then((site) => {
+                    return CoreSites.getSite(siteId).then((site) => {
                         return site.checkAndFixPluginfileURL(indexUrl);
                     });
                 }
@@ -267,15 +267,15 @@ export class AddonModImscpProvider {
      * @return Promise resolved when the content is invalidated.
      */
     invalidateContent(moduleId: number, courseId: number, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const promises = [];
 
         promises.push(this.invalidateImscpData(courseId, siteId));
-        promises.push(this.filepoolProvider.invalidateFilesByComponent(siteId, AddonModImscpProvider.COMPONENT, moduleId));
-        promises.push(this.courseProvider.invalidateModule(moduleId, siteId));
+        promises.push(CoreFilepool.invalidateFilesByComponent(siteId, AddonModImscpProvider.COMPONENT, moduleId));
+        promises.push(CoreCourse.invalidateModule(moduleId, siteId));
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -286,7 +286,7 @@ export class AddonModImscpProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateImscpData(courseId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.invalidateWsCacheForKey(this.getImscpDataCacheKey(courseId));
         });
     }
@@ -309,7 +309,7 @@ export class AddonModImscpProvider {
      * @return Promise resolved with true if plugin is enabled, rejected or resolved with false otherwise.
      */
     isPluginEnabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.canDownloadFiles();
         });
     }
@@ -327,7 +327,7 @@ export class AddonModImscpProvider {
             imscpid: id
         };
 
-        return this.logHelper.logSingle('mod_imscp_view_imscp', params, AddonModImscpProvider.COMPONENT, id, name, 'imscp', {},
+        return CoreCourseLogHelper.logSingle('mod_imscp_view_imscp', params, AddonModImscpProvider.COMPONENT, id, name, 'imscp', {},
                 siteId);
     }
 }

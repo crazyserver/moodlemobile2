@@ -69,7 +69,7 @@ export class AddonBadgesIssuedBadgePage {
     fetchIssuedBadge(): Promise<any> {
         const promises = [];
 
-        this.currentTime = this.timeUtils.timestamp();
+        this.currentTime = CoreTimeUtils.timestamp();
         promises.push(this.userProvider.getProfile(this.userId, this.courseId, true).then((user) => {
             this.user = user;
         }));
@@ -82,7 +82,7 @@ export class AddonBadgesIssuedBadgePage {
             if (badge) {
                 this.badge = badge;
                 if (badge.courseid) {
-                    return this.coursesProvider.getUserCourse(badge.courseid, true).then((course) => {
+                    return CoreCourses.getUserCourse(badge.courseid, true).then((course) => {
                         this.course = course;
                     }).catch(() => {
                         // Maybe an old deleted course.
@@ -91,7 +91,7 @@ export class AddonBadgesIssuedBadgePage {
                 }
             }
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'Error getting badge data.');
+            CoreDomUtils.showErrorModalDefault(message, 'Error getting badge data.');
         }));
 
         return Promise.all(promises);

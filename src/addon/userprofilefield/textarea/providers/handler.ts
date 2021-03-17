@@ -20,7 +20,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 /**
  * Textarea user profile field handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonUserProfileFieldTextareaHandler implements CoreUserProfileFieldHandler {
     name = 'AddonUserProfileFieldTextarea';
     type = 'textarea';

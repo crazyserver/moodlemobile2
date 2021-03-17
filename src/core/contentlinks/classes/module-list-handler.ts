@@ -59,7 +59,7 @@ export class CoreContentLinksModuleListHandler extends CoreContentLinksHandlerBa
                 const stateParams = {
                         courseId: params.id,
                         modName: this.modName,
-                        title: this.title || this.translate.instant('addon.mod_' + this.modName + '.modulenameplural')
+                        title: this.title || Translate.instant('addon.mod_' + this.modName + '.modulenameplural')
                     };
 
                 this.linkHelper.goInSite(navCtrl, 'CoreCourseListModTypePage', stateParams, siteId);

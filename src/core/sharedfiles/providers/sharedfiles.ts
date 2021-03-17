@@ -26,7 +26,7 @@ import { SQLiteDB } from '@classes/sqlitedb';
 /**
  * Service to share files with the app.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreSharedFilesProvider {
     static SHARED_FILES_FOLDER = 'sharedfiles';
 
@@ -187,7 +187,7 @@ export class CoreSharedFilesProvider {
      * @return Path.
      */
     getSiteSharedFilesDirPath(siteId?: string): string {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         return this.fileProvider.getSiteFolder(siteId) + '/' + CoreSharedFilesProvider.SHARED_FILES_FOLDER;
     }
@@ -231,7 +231,7 @@ export class CoreSharedFilesProvider {
      * @return Promise resolved when done.
      */
     storeFileInSite(entry: any, newName?: string, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (!entry || !siteId) {
             return Promise.reject(null);

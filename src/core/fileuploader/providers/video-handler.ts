@@ -20,7 +20,7 @@ import { CoreFileUploaderHelperProvider } from './helper';
 /**
  * Handler to record a video to upload it.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreFileUploaderVideoHandler implements CoreFileUploaderHandler {
     name = 'CoreFileUploaderVideo';
     priority = 1400;
@@ -36,7 +36,7 @@ export class CoreFileUploaderVideoHandler implements CoreFileUploaderHandler {
      * @return True or promise resolved with true if enabled.
      */
     isEnabled(): boolean | Promise<boolean> {
-        return CoreApp.instance.isMobile() || (CoreApp.instance.canGetUserMedia() && CoreApp.instance.canRecordMedia());
+        return CoreApp.isMobile() || (CoreApp.canGetUserMedia() && CoreApp.canRecordMedia());
     }
 
     /**
@@ -46,12 +46,12 @@ export class CoreFileUploaderVideoHandler implements CoreFileUploaderHandler {
      * @return Supported mimetypes.
      */
     getSupportedMimetypes(mimetypes: string[]): string[] {
-        if (CoreApp.instance.isIOS()) {
+        if (CoreApp.isIOS()) {
             // In iOS it's recorded as MOV.
-            return this.utils.filterByRegexp(mimetypes, /^video\/quicktime$/);
-        } else if (CoreApp.instance.isAndroid()) {
+            return CoreUtils.filterByRegexp(mimetypes, /^video\/quicktime$/);
+        } else if (CoreApp.isAndroid()) {
             // In Android we don't know the format the video will be recorded, so accept any video mimetype.
-            return this.utils.filterByRegexp(mimetypes, /^video\//);
+            return CoreUtils.filterByRegexp(mimetypes, /^video\//);
         } else {
             // In desktop, support video formats that are supported by MediaRecorder.
             const mediaRecorder = (<any> window).MediaRecorder;

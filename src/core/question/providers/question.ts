@@ -51,7 +51,7 @@ export interface CoreQuestionState {
 /**
  * Service to handle questions.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreQuestionProvider {
     static COMPONENT = 'mmQuestion';
 
@@ -243,7 +243,7 @@ export class CoreQuestionProvider {
     constructor(private sitesProvider: CoreSitesProvider, private timeUtils: CoreTimeUtilsProvider,
             private utils: CoreUtilsProvider) {
         this.logger = CoreLogger.getInstance('CoreQuestionProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -255,7 +255,7 @@ export class CoreQuestionProvider {
      */
     compareAllAnswers(prevAnswers: any, newAnswers: any): boolean {
         // Get all the keys.
-        const keys = this.utils.mergeArraysWithoutDuplicates(Object.keys(prevAnswers), Object.keys(newAnswers));
+        const keys = CoreUtils.mergeArraysWithoutDuplicates(Object.keys(prevAnswers), Object.keys(newAnswers));
 
         // Check that all the keys have the same value on both objects.
         for (const i in keys) {
@@ -263,7 +263,7 @@ export class CoreQuestionProvider {
 
             // Ignore extra answers like sequencecheck or certainty.
             if (!this.isExtraAnswer(key[0])) {
-                if (!this.utils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, key)) {
+                if (!CoreUtils.sameAtKeyMissingIsBlank(prevAnswers, newAnswers, key)) {
                     return false;
                 }
             }
@@ -304,7 +304,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved with the answer.
      */
     getAnswer(component: string, attemptId: number, name: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(this.QUESTION_ANSWERS_TABLE, {component: component, attemptid: attemptId, name: name});
         });
     }
@@ -318,7 +318,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved with the answers.
      */
     getAttemptAnswers(component: string, attemptId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(this.QUESTION_ANSWERS_TABLE, {component: component, attemptid: attemptId});
         });
     }
@@ -332,7 +332,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved with the questions.
      */
     getAttemptQuestions(component: string, attemptId: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(this.QUESTION_TABLE, {component: component, attemptid: attemptId});
         });
     }
@@ -383,7 +383,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved with the question.
      */
     getQuestion(component: string, attemptId: number, slot: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(this.QUESTION_TABLE, {component: component, attemptid: attemptId, slot: slot});
         });
     }
@@ -399,7 +399,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved with the answers.
      */
     getQuestionAnswers(component: string, attemptId: number, slot: number, filter?: boolean, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(this.QUESTION_ANSWERS_TABLE, {component: component, attemptid: attemptId,
                     questionslot: slot}).then((answers) => {
 
@@ -462,7 +462,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved when done.
      */
     removeAttemptAnswers(component: string, attemptId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(this.QUESTION_ANSWERS_TABLE, {component: component, attemptid: attemptId});
         });
     }
@@ -476,7 +476,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved when done.
      */
     removeAttemptQuestions(component: string, attemptId: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(this.QUESTION_TABLE, {component: component, attemptid: attemptId});
         });
     }
@@ -491,7 +491,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved when done.
      */
     removeAnswer(component: string, attemptId: number, name: string, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(this.QUESTION_ANSWERS_TABLE, {component: component, attemptid: attemptId,
                     name: name});
         });
@@ -507,7 +507,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved when done.
      */
     removeQuestion(component: string, attemptId: number, slot: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(this.QUESTION_TABLE, {component: component, attemptid: attemptId, slot: slot});
         });
     }
@@ -522,7 +522,7 @@ export class CoreQuestionProvider {
      * @return Promise resolved when done.
      */
     removeQuestionAnswers(component: string, attemptId: number, slot: number, siteId?: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().deleteRecords(this.QUESTION_ANSWERS_TABLE, {component: component, attemptid: attemptId,
                     questionslot: slot});
         });
@@ -556,9 +556,9 @@ export class CoreQuestionProvider {
      */
     saveAnswers(component: string, componentId: number, attemptId: number, userId: number, answers: any, timemodified?: number,
             siteId?: string): Promise<any> {
-        timemodified = timemodified || this.timeUtils.timestamp();
+        timemodified = timemodified || CoreTimeUtils.timestamp();
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const db = site.getDb(),
                 promises = [];
 
@@ -597,7 +597,7 @@ export class CoreQuestionProvider {
     saveQuestion(component: string, componentId: number, attemptId: number, userId: number, question: any, state: string,
             siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 component: component,
                 componentid: componentId,

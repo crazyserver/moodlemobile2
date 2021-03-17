@@ -71,11 +71,11 @@ export class AddonModChatChatPage {
 
         this.logger = CoreLogger.getInstance('AddonModChoiceChoicePage');
         this.currentUserId = sitesProvider.getCurrentSiteUserId();
-        this.isOnline = this.appProvider.isOnline();
+        this.isOnline = CoreApp.isOnline();
         this.onlineObserver = network.onchange().subscribe(() => {
             // Execute the callback in the Angular zone, so change detection doesn't stop working.
             zone.run(() => {
-                this.isOnline = this.appProvider.isOnline();
+                this.isOnline = CoreApp.isOnline();
             });
         });
     }
@@ -88,11 +88,11 @@ export class AddonModChatChatPage {
             return this.fetchMessages().then(() => {
                 this.startPolling();
             }).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileretrievingmessages', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileretrievingmessages', true);
                 this.navCtrl.pop();
             });
         }).catch((error) => {
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileconnecting', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileconnecting', true);
             this.navCtrl.pop();
         }).finally(() => {
             this.loaded = true;
@@ -282,7 +282,7 @@ export class AddonModChatChatPage {
                     clearInterval(this.polling);
                     this.polling = undefined;
                 }
-                this.domUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileretrievingmessages', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileretrievingmessages', true);
 
                 return Promise.reject(null);
             });
@@ -315,18 +315,18 @@ export class AddonModChatChatPage {
         }).catch((error) => {
             /* Only close the keyboard if an error happens, we want the user to be able to send multiple
               messages without the keyboard being closed. */
-            this.appProvider.closeKeyboard();
+            CoreApp.closeKeyboard();
 
             this.newMessage = text;
 
-            this.domUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhilesendingmessage', true);
+            CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhilesendingmessage', true);
         }).finally(() => {
             this.sending = false;
         });
     }
 
     reconnect(): Promise<void> {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
 
         // Call startPolling would take a while for the first execution, so we'll execute it manually to check if it works now.
         return this.fetchMessagesInterval().then(() => {
@@ -346,7 +346,7 @@ export class AddonModChatChatPage {
         // Need a timeout to leave time to the view to be rendered.
         setTimeout(() => {
             if (!this.viewDestroyed) {
-                this.domUtils.scrollToBottom(this.content, 0);
+                CoreDomUtils.scrollToBottom(this.content, 0);
             }
         });
     }
@@ -361,13 +361,13 @@ export class AddonModChatChatPage {
         // Wait for new content height to be calculated.
         setTimeout(() => {
             // Visible content size changed, maintain the bottom position.
-            if (!this.viewDestroyed && this.content && this.domUtils.getContentHeight(this.content) != this.oldContentHeight) {
+            if (!this.viewDestroyed && this.content && CoreDomUtils.getContentHeight(this.content) != this.oldContentHeight) {
                 if (!top) {
                     top = this.content.getContentDimensions().scrollTop;
                 }
 
-                top += this.oldContentHeight - this.domUtils.getContentHeight(this.content);
-                this.oldContentHeight = this.domUtils.getContentHeight(this.content);
+                top += this.oldContentHeight - CoreDomUtils.getContentHeight(this.content);
+                this.oldContentHeight = CoreDomUtils.getContentHeight(this.content);
 
                 this.content.scrollTo(0, top, 0);
             }

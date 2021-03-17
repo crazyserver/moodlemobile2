@@ -89,7 +89,7 @@ export class AddonModAssignBaseFeedbackHandler implements AddonModAssignFeedback
     getPluginName(plugin: AddonModAssignPlugin): string {
         // Check if there's a translated string for the plugin.
         const translationId = 'addon.mod_assign_feedback_' + plugin.type + '.pluginname',
-            translation = this.translate.instant(translationId);
+            translation = Translate.instant(translationId);
 
         if (translationId != translation) {
             // Translation found, use it.

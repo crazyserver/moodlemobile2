@@ -21,7 +21,7 @@ import { AddonQtypeMatchComponent } from '../component/match';
 /**
  * Handler to support match question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeMatchHandler implements CoreQuestionHandler {
     name = 'AddonQtypeMatch';
     type = 'qtype_match';

@@ -53,7 +53,7 @@ export class AddonBlockTimelineEventsComponent implements OnChanges {
      * Detect changes on input properties.
      */
     ngOnChanges(changes: {[name: string]: SimpleChange}): void {
-        this.showCourse = this.utils.isTrueOrOne(this.showCourse);
+        this.showCourse = CoreUtils.isTrueOrOne(this.showCourse);
 
         if (changes.events || changes.from || changes.to) {
             if (this.events && this.events.length > 0) {
@@ -62,7 +62,7 @@ export class AddonBlockTimelineEventsComponent implements OnChanges {
 
                 const eventsByDay = {};
                 filteredEvents.forEach((event) => {
-                    const dayTimestamp = this.timeUtils.getMidnightForTimestamp(event.timesort);
+                    const dayTimestamp = CoreTimeUtils.getMidnightForTimestamp(event.timesort);
                     if (eventsByDay[dayTimestamp]) {
                         eventsByDay[dayTimestamp].push(event);
                     } else {
@@ -70,7 +70,7 @@ export class AddonBlockTimelineEventsComponent implements OnChanges {
                     }
                 });
 
-                const todaysMidnight = this.timeUtils.getMidnightForTimestamp();
+                const todaysMidnight = CoreTimeUtils.getMidnightForTimestamp();
                 this.filteredEvents = [];
                 Object.keys(eventsByDay).forEach((key) => {
                     const dayTimestamp = parseInt(key);
@@ -104,7 +104,7 @@ export class AddonBlockTimelineEventsComponent implements OnChanges {
 
             return start <= event.timesort;
         }).map((event) => {
-            event.iconUrl = this.courseProvider.getModuleIconSrc(event.icon.component);
+            event.iconUrl = CoreCourse.getModuleIconSrc(event.icon.component);
 
             return event;
         });
@@ -131,10 +131,10 @@ export class AddonBlockTimelineEventsComponent implements OnChanges {
         // Fix URL format.
         url = this.textUtils.decodeHTMLEntities(url);
 
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         this.contentLinksHelper.handleLink(url, undefined, this.navCtrl).then((treated) => {
             if (!treated) {
-                return this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
+                return CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
             }
         }).finally(() => {
             modal.dismiss();

@@ -96,7 +96,7 @@ export class AddonModUrlIndexComponent extends CoreCourseModuleMainResourceCompo
             canGetUrl = false;
 
             // Fallback in case is not prefetched or not available.
-            return this.courseProvider.getModule(this.module.id, this.courseId, undefined, false, false, undefined, 'url');
+            return CoreCourse.getModule(this.module.id, this.courseId, undefined, false, false, undefined, 'url');
         }).then((urlData) => {
             url = urlData;
 
@@ -120,7 +120,7 @@ export class AddonModUrlIndexComponent extends CoreCourseModuleMainResourceCompo
                 mod = this.module;
 
                 // Try to load module contents, it's needed to get the URL with parameters.
-                return this.courseProvider.loadModuleContents(mod, this.courseId, undefined, false, refresh, undefined, 'url');
+                return CoreCourse.loadModuleContents(mod, this.courseId, undefined, false, refresh, undefined, 'url');
             }
         }).then(() => {
             // Always use the URL from the module because it already includes the parameters.
@@ -156,7 +156,7 @@ export class AddonModUrlIndexComponent extends CoreCourseModuleMainResourceCompo
 
         if (this.shouldIframe || (this.shouldEmbed && !this.isImage && !this.isAudio && !this.isVideo)) {
             // Will be displayed in an iframe. Check if we need to auto-login.
-            const currentSite = this.sitesProvider.getCurrentSite();
+            const currentSite = CoreSites.getCurrentSite();
 
             if (currentSite && currentSite.containsUrl(this.url)) {
                 // Format the URL to add auto-login.
@@ -176,7 +176,7 @@ export class AddonModUrlIndexComponent extends CoreCourseModuleMainResourceCompo
      */
     protected logView(): Promise<void> {
         return this.urlProvider.logView(this.module.instance, this.module.name).then(() => {
-            this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+            CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
         }).catch(() => {
             // Ignore errors.
         });

@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Handler to treat links to quiz list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModQuizListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModQuizListLinkHandler';
 

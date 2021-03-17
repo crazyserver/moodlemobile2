@@ -20,7 +20,7 @@ import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/hel
 /**
  * Service that provides helper functions for urls.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModUrlHelperProvider {
 
     constructor(private sitesProvider: CoreSitesProvider, private domUtils: CoreDomUtilsProvider,
@@ -32,10 +32,10 @@ export class AddonModUrlHelperProvider {
      * @param url The URL to go to.
      */
     open(url: string): void {
-        const modal = this.domUtils.showModalLoading();
+        const modal = CoreDomUtils.showModalLoading();
         this.contentLinksHelper.handleLink(url, undefined, undefined, true, true).then((treated) => {
             if (!treated) {
-                return this.sitesProvider.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
+                return CoreSites.getCurrentSite().openInBrowserWithAutoLoginIfSameSite(url);
             }
         }).finally(() => {
             modal.dismiss();

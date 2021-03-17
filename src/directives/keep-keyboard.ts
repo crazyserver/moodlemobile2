@@ -71,7 +71,7 @@ export class CoreKeepKeyboardDirective implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         // Use a setTimeout because to make sure that child components have been treated.
         setTimeout(() => {
-            const inButton = this.utils.isTrueOrOne(this.inButton);
+            const inButton = CoreUtils.isTrueOrOne(this.inButton);
             let candidateEls,
                 selectedEl;
 
@@ -152,7 +152,7 @@ export class CoreKeepKeyboardDirective implements AfterViewInit, OnDestroy {
      * If keyboard is open, focus the input again and stop listening focusout to focus again if needed.
      */
     protected focusElementAgain(): void {
-        this.domUtils.focusElement(this.input);
+        CoreDomUtils.focusElement(this.input);
 
         if (this.focusAgainListener) {
             // Sometimes we can receive more than 1 focus out event.

@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to survey.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModSurveyLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModSurveyLinkHandler';
 

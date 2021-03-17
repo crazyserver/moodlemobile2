@@ -52,7 +52,7 @@ export class AddonModImscpIndexComponent extends CoreCourseModuleMainResourceCom
 
         this.loadContent().then(() => {
             this.imscpProvider.logView(this.module.instance, this.module.name).then(() => {
-                this.courseProvider.checkModuleCompletion(this.courseId, this.module.completiondata);
+                CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
             }).catch(() => {
                 // Ignore errors.
             });
@@ -94,7 +94,7 @@ export class AddonModImscpIndexComponent extends CoreCourseModuleMainResourceCom
             }
 
             return this.loadItem(this.currentItem).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'addon.mod_imscp.deploymenterror', true);
+                CoreDomUtils.showErrorModalDefault(error, 'addon.mod_imscp.deploymenterror', true);
 
                 return Promise.reject(null);
             });

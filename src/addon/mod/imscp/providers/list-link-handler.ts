@@ -21,7 +21,7 @@ import { AddonModImscpProvider } from './imscp';
 /**
  * Handler to treat links to IMSCP list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModImscpListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModImscpListLinkHandler';
 

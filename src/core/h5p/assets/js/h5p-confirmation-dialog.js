@@ -340,7 +340,7 @@ H5P.ConfirmationDialog = (function (EventDispatcher) {
             var minHeight = parseInt(popup.offsetHeight, 10) +
               exitButtonOffset + (2 * shadowOffset);
             self.setViewPortMinimumHeight(minHeight);
-            options.instance.trigger('resize');
+            options.trigger('resize');
             resizeIFrame = false;
           }
         }, 100);

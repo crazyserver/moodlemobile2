@@ -69,10 +69,10 @@ export class CoreSearchBoxComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.searchLabel = this.searchLabel || this.translate.instant('core.search');
-        this.placeholder = this.placeholder || this.translate.instant('core.search');
-        this.spellcheck = this.utils.isTrueOrOne(this.spellcheck);
-        this.showClear = this.utils.isTrueOrOne(this.showClear);
+        this.searchLabel = this.searchLabel || Translate.instant('core.search');
+        this.placeholder = this.placeholder || Translate.instant('core.search');
+        this.spellcheck = CoreUtils.isTrueOrOne(this.spellcheck);
+        this.showClear = CoreUtils.isTrueOrOne(this.showClear);
         this.searchText = this.initialSearch || '';
 
         if (this.searchArea) {
@@ -111,7 +111,7 @@ export class CoreSearchBoxComponent implements OnInit {
             this.saveSearchToHistory(this.searchText);
         }
 
-        this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
+        CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
         this.historyShown = false;
         this.searched = this.searchText;

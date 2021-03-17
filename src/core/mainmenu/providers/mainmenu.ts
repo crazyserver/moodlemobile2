@@ -49,7 +49,7 @@ export interface CoreMainMenuCustomItem {
 /**
  * Service that provides some features regarding Main Menu.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreMainMenuProvider {
     static NUM_MAIN_HANDLERS = 4;
     static ITEM_MIN_WIDTH = 72; // Min with of every item, based on 5 items on a 360 pixel wide screen.
@@ -68,7 +68,7 @@ export class CoreMainMenuProvider {
      * @return Promise resolved with the current main menu handlers.
      */
     getCurrentMainMenuHandlers(): Promise<CoreMainMenuHandlerToDisplay[]> {
-        const deferred = this.utils.promiseDefer();
+        const deferred = CoreUtils.promiseDefer();
 
         const subscription = this.menuDelegate.getHandlers().subscribe((handlers) => {
             subscription && subscription.unsubscribe();
@@ -92,7 +92,7 @@ export class CoreMainMenuProvider {
      * @return List of custom menu items.
      */
     getCustomMenuItems(siteId?: string): Promise<CoreMainMenuCustomItem[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const itemsString = site.getStoredConfig('tool_mobile_custommenuitems'),
                 map = {},
                 result = [];
@@ -223,7 +223,7 @@ export class CoreMainMenuProvider {
      */
     getTabPlacement(navCtrl: NavController): string {
         const tablet = window && window.innerWidth && window.innerWidth >= 576 && (window.innerHeight >= 576 ||
-                ((CoreApp.instance.isKeyboardVisible() || CoreApp.instance.isKeyboardOpening()) && window.innerHeight >= 200));
+                ((CoreApp.isKeyboardVisible() || CoreApp.isKeyboardOpening()) && window.innerHeight >= 200));
 
         if (tablet != this.tablet) {
             this.tablet = tablet;
@@ -260,7 +260,7 @@ export class CoreMainMenuProvider {
      * @return Whether it's disabled.
      */
     protected isResponsiveMainMenuItemsDisabledInCurrentSite(): boolean {
-        const site = this.sitesProvider.getCurrentSite();
+        const site = CoreSites.getCurrentSite();
 
         return site && site.isFeatureDisabled('NoDelegate_ResponsiveMainMenuItems');
     }

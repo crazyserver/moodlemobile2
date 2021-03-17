@@ -79,10 +79,10 @@ export class CoreSitePluginsNewContentDirective implements OnInit {
             }
 
             if (this.form && document.forms[this.form]) {
-                args = Object.assign(args, this.domUtils.getDataFromForm(document.forms[this.form]));
+                args = Object.assign(args, CoreDomUtils.getDataFromForm(document.forms[this.form]));
             }
 
-            if (this.utils.isTrueOrOne(this.samePage)) {
+            if (CoreUtils.isTrueOrOne(this.samePage)) {
                 // Update the parent content (if it exists).
                 if (this.parentContent) {
                     this.parentContent.updateContent(args, this.component, this.method, this.jsData, this.preSets);

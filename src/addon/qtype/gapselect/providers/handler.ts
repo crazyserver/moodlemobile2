@@ -21,7 +21,7 @@ import { AddonQtypeGapSelectComponent } from '../component/gapselect';
 /**
  * Handler to support gapselect question type.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQtypeGapSelectHandler implements CoreQuestionHandler {
     name = 'AddonQtypeGapSelect';
     type = 'qtype_gapselect';

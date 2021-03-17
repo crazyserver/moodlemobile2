@@ -110,7 +110,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
                 });
             }
         }).catch((message) => {
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
         }).finally(() => {
             this.preferencesLoaded = true;
         });
@@ -221,7 +221,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
             this.updatePreferencesAfterDelay();
         }).catch((message) => {
             // Show error and revert change.
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
             notification.currentProcessor[state].checked = !notification.currentProcessor[state].checked;
         }).finally(() => {
             processorState.updating = false;
@@ -232,13 +232,13 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
      * Enable all notifications changed.
      */
     enableAll(enable: boolean): void {
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         this.userProvider.updateUserPreferences([], !enable).then(() => {
             // Update the preferences since they were modified.
             this.updatePreferencesAfterDelay();
         }).catch((message) => {
             // Show error and revert change.
-            this.domUtils.showErrorModal(message);
+            CoreDomUtils.showErrorModal(message);
             this.preferences.enableall = !this.preferences.enableall;
         }).finally(() => {
             modal.dismiss();
@@ -252,7 +252,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
      */
     changeNotificationSound(enabled: boolean): void {
         this.configProvider.set(CoreConstants.SETTINGS_NOTIFICATION_SOUND, enabled ? 1 : 0).finally(() => {
-            const siteId = this.sitesProvider.getCurrentSiteId();
+            const siteId = CoreSites.getCurrentSiteId();
             CoreEvents.trigger(CoreEvents.NOTIFICATION_SOUND_CHANGED, {enabled}, siteId);
             this.localNotificationsProvider.rescheduleAll();
         });

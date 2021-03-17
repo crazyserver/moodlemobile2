@@ -38,14 +38,14 @@ export class CoreLoginChangePasswordPage {
      * Show a help modal.
      */
     showHelp(): void {
-        this.domUtls.showAlert(this.translate.instant('core.help'), this.translate.instant('core.login.changepasswordhelp'));
+        this.domUtls.showAlert(Translate.instant('core.help'), Translate.instant('core.login.changepasswordhelp'));
     }
 
     /**
      * Open the change password page in a browser.
      */
     openChangePasswordPage(): void {
-        this.loginHelper.openInAppForEdit(this.sitesProvider.getCurrentSiteId(), '/login/change_password.php', undefined, true);
+        this.loginHelper.openInAppForEdit(CoreSites.getCurrentSiteId(), '/login/change_password.php', undefined, true);
         this.changingPassword = true;
     }
 
@@ -61,7 +61,7 @@ export class CoreLoginChangePasswordPage {
      * Logout the user.
      */
     logout(): void {
-        this.sitesProvider.logout();
+        CoreSites.logout();
         this.changingPassword = false;
     }
 }

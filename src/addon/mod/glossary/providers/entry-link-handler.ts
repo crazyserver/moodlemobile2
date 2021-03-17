@@ -23,7 +23,7 @@ import { AddonModGlossaryProvider } from './glossary';
 /**
  * Handler to treat links to glossary entries.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModGlossaryEntryLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModGlossaryEntryLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModGlossary';
@@ -50,7 +50,7 @@ export class AddonModGlossaryEntryLinkHandler extends CoreContentLinksHandlerBas
             CoreContentLinksAction[] | Promise<CoreContentLinksAction[]> {
         return [{
             action: (siteId, navCtrl?): void => {
-                const modal = this.domUtils.showModalLoading();
+                const modal = CoreDomUtils.showModalLoading();
                 let entryId;
                 if (params.mode == 'entry') {
                     entryId = parseInt(params.hook, 10);
@@ -64,11 +64,11 @@ export class AddonModGlossaryEntryLinkHandler extends CoreContentLinksHandlerBas
                     promise = Promise.resolve(courseId);
                 } else {
                     promise = this.glossaryProvider.getEntry(entryId, {siteId}).catch((error) => {
-                        this.domUtils.showErrorModalDefault(error, 'addon.mod_glossary.errorloadingentry', true);
+                        CoreDomUtils.showErrorModalDefault(error, 'addon.mod_glossary.errorloadingentry', true);
 
                         return Promise.reject(null);
                     }).then((response) => {
-                        return this.courseHelper.getModuleCourseIdByInstance(response.entry.glossaryid, 'glossary', siteId);
+                        return CoreCourseHelper.getModuleCourseIdByInstance(response.entry.glossaryid, 'glossary', siteId);
                     });
                 }
 

@@ -19,7 +19,7 @@ import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 /**
  * Service to handle offline wiki.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiOfflineProvider {
 
     protected logger: CoreLogger;
@@ -85,7 +85,7 @@ export class AddonModWikiOfflineProvider {
 
     constructor(private sitesProvider: CoreSitesProvider) {
         this.logger = CoreLogger.getInstance('AddonModWikiOfflineProvider');
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -114,7 +114,7 @@ export class AddonModWikiOfflineProvider {
     deleteNewPage(title: string, subwikiId?: number, wikiId?: number, userId?: number, groupId?: number, siteId?: string)
             : Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             subwikiId = this.convertToPositiveNumber(subwikiId);
             wikiId = this.convertToPositiveNumber(wikiId);
@@ -138,7 +138,7 @@ export class AddonModWikiOfflineProvider {
      * @return Promise resolved with pages.
      */
     getAllNewPages(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonModWikiOfflineProvider.NEW_PAGES_TABLE);
         });
     }
@@ -157,7 +157,7 @@ export class AddonModWikiOfflineProvider {
     getNewPage(title: string, subwikiId?: number, wikiId?: number, userId?: number, groupId?: number, siteId?: string)
             : Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             subwikiId = this.convertToPositiveNumber(subwikiId);
             wikiId = this.convertToPositiveNumber(wikiId);
@@ -185,7 +185,7 @@ export class AddonModWikiOfflineProvider {
      * @return Promise resolved with pages.
      */
     getSubwikiNewPages(subwikiId?: number, wikiId?: number, userId?: number, groupId?: number, siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
 
             subwikiId = this.convertToPositiveNumber(subwikiId);
             wikiId = this.convertToPositiveNumber(wikiId);
@@ -239,7 +239,7 @@ export class AddonModWikiOfflineProvider {
     saveNewPage(title: string, content: string, subwikiId?: number, wikiId?: number, userId?: number, groupId?: number,
             siteId?: string): Promise<any> {
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const now = new Date().getTime(),
                 entry = {
                     title: title,

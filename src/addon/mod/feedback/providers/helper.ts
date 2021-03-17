@@ -28,7 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
 /**
  * Service that provides helper functions for feedbacks.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModFeedbackHelperProvider {
 
     protected MODE_RESPONSETIME = 1;
@@ -207,12 +207,12 @@ export class AddonModFeedbackHelperProvider {
      * @return Promise resolved when done.
      */
     handleShowEntriesLink(navCtrl: NavController, params: any, siteId?: string): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        const modal = this.domUtils.showModalLoading(),
+        const modal = CoreDomUtils.showModalLoading(),
             moduleId = params.id;
 
-        return this.courseProvider.getModuleBasicInfo(moduleId, siteId).then((module) => {
+        return CoreCourse.getModuleBasicInfo(moduleId, siteId).then((module) => {
             let stateParams;
 
             if (typeof params.showcompleted == 'undefined') {
@@ -330,7 +330,7 @@ export class AddonModFeedbackHelperProvider {
         } else if (type == this.MODE_RESPONSETIME) {
             item.value = '__CURRENT__TIMESTAMP__';
             const tempValue = typeof item.rawValue != 'undefined' ? item.rawValue * 1000 : new Date().getTime();
-            item.presentation = this.timeUtils.userDate(tempValue);
+            item.presentation = CoreTimeUtils.userDate(tempValue);
         } else {
             // Errors on item, return false.
             return false;
@@ -414,7 +414,7 @@ export class AddonModFeedbackHelperProvider {
         });
 
         if (item.subtype === 'r' && item.options.search(AddonModFeedbackProvider.MULTICHOICE_HIDENOSELECT) == -1) {
-            item.choices.unshift({value: 0, label: this.translate.instant('addon.mod_feedback.not_selected')});
+            item.choices.unshift({value: 0, label: Translate.instant('addon.mod_feedback.not_selected')});
             item.value = typeof item.rawValue != 'undefined' ? parseInt(item.rawValue, 10) : 0;
         } else if (item.subtype === 'd') {
             item.choices.unshift({value: 0, label: ''});
@@ -513,14 +513,14 @@ export class AddonModFeedbackHelperProvider {
             rangeToSet = typeof rangeTo == 'number';
 
         if (!rangeFromSet && rangeToSet) {
-            return ' (' + this.translate.instant('addon.mod_feedback.maximal') + ': ' + this.utils.formatFloat(rangeTo) + ')';
+            return ' (' + Translate.instant('addon.mod_feedback.maximal') + ': ' + CoreUtils.formatFloat(rangeTo) + ')';
         } else if (rangeFromSet && !rangeToSet) {
-            return ' (' + this.translate.instant('addon.mod_feedback.minimal') + ': ' + this.utils.formatFloat(rangeFrom) + ')';
+            return ' (' + Translate.instant('addon.mod_feedback.minimal') + ': ' + CoreUtils.formatFloat(rangeFrom) + ')';
         } else if (!rangeFromSet && !rangeToSet) {
             return '';
         }
 
-        return ' (' + this.utils.formatFloat(rangeFrom) + ' - ' + this.utils.formatFloat(rangeTo) + ')';
+        return ' (' + CoreUtils.formatFloat(rangeFrom) + ' - ' + CoreUtils.formatFloat(rangeTo) + ')';
     }
 
 }

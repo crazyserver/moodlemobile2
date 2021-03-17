@@ -24,7 +24,7 @@ import {
 /**
  * Handler for comments submission plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModAssignSubmissionCommentsHandler implements AddonModAssignSubmissionHandler {
     name = 'AddonModAssignSubmissionCommentsHandler';
     type = 'comments';

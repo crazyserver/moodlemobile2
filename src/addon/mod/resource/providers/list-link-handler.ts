@@ -21,7 +21,7 @@ import { AddonModResourceProvider } from './resource';
 /**
  * Handler to treat links to resource list page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModResourceListLinkHandler extends CoreContentLinksModuleListHandler {
     name = 'AddonModResourceListLinkHandler';
 

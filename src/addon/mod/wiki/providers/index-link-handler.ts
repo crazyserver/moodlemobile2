@@ -19,7 +19,7 @@ import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Handler to treat links to wiki index.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModWikiIndexLinkHandler extends CoreContentLinksModuleIndexHandler {
     name = 'AddonModWikiIndexLinkHandler';
 

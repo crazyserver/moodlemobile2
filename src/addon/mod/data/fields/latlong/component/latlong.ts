@@ -71,7 +71,7 @@ export class AddonModDataFieldLatlongComponent extends AddonModDataFieldPluginCo
             const eastFixed = east ? east.toFixed(4) : '0.0000';
             let url;
 
-            if (CoreApp.instance.isIOS()) {
+            if (CoreApp.isIOS()) {
                 url = 'http://maps.apple.com/?ll=' + northFixed + ',' + eastFixed + '&near=' + northFixed + ',' + eastFixed;
             } else {
                 url = 'geo:' + northFixed + ',' + eastFixed;
@@ -116,10 +116,10 @@ export class AddonModDataFieldLatlongComponent extends AddonModDataFieldPluginCo
     async getLocation(event: Event): Promise<void> {
         event.preventDefault();
 
-        const modal = this.domUtils.showModalLoading('addon.mod_data.gettinglocation', true);
+        const modal = CoreDomUtils.showModalLoading('addon.mod_data.gettinglocation', true);
 
         try {
-            const coordinates = await CoreGeolocation.instance.getCoordinates();
+            const coordinates = await CoreGeolocation.getCoordinates();
 
             this.form.controls['f_' + this.field.id + '_0'].setValue(coordinates.latitude);
             this.form.controls['f_' + this.field.id + '_1'].setValue(coordinates.longitude);
@@ -137,12 +137,12 @@ export class AddonModDataFieldLatlongComponent extends AddonModDataFieldPluginCo
      */
     protected showLocationErrorModal(error: any): void {
         if (error instanceof CoreGeolocationError) {
-            this.domUtils.showErrorModal(this.getGeolocationErrorMessage(error), true);
+            CoreDomUtils.showErrorModal(this.getGeolocationErrorMessage(error), true);
 
             return;
         }
 
-        this.domUtils.showErrorModalDefault(error,  'Error getting location');
+        CoreDomUtils.showErrorModalDefault(error,  'Error getting location');
     }
 
     /**

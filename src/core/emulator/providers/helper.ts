@@ -30,7 +30,7 @@ import { CoreConstants } from '../../constants';
 /**
  * Helper service for the emulator feature. It also acts as an init handler.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreEmulatorHelperProvider implements CoreInitHandler {
     name = 'CoreEmulator';
     priority = CoreInitDelegate.MAX_RECOMMENDED_PRIORITY + 500;
@@ -89,7 +89,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
 
         (<any> window).FileTransferError = FileTransferErrorMock;
 
-        return this.utils.allPromises(promises);
+        return CoreUtils.allPromises(promises);
     }
 
     /**
@@ -103,11 +103,11 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
      * @return Promise resolved when done.
      */
     checkNewNotifications(component: string, fetchFn: Function, getDataFn: Function, siteId?: string): Promise<any> {
-        if (!this.appProvider.isDesktop() || !this.localNotifProvider.isAvailable()) {
+        if (!CoreApp.isDesktop() || !this.localNotifProvider.isAvailable()) {
             return Promise.resolve(null);
         }
 
-        if (!this.appProvider.isOnline()) {
+        if (!CoreApp.isOnline()) {
             this.logger.debug('Cannot check push notifications because device is offline.');
 
             return Promise.reject(null);
@@ -116,7 +116,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
         let promise: Promise<string[]>;
         if (!siteId) {
             // No site ID defined, check all sites.
-            promise = this.sitesProvider.getSitesIds();
+            promise = CoreSites.getSitesIds();
         } else {
             promise = Promise.resolve([siteId]);
         }
@@ -154,7 +154,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
                 const notification = notifications[0];
 
                 if (notification.id == lastNotification.id || notification.timecreated <= lastNotification.timecreated ||
-                        this.timeUtils.timestamp() - notification.timecreated > CoreConstants.SECONDS_DAY) {
+                        CoreTimeUtils.timestamp() - notification.timecreated > CoreConstants.SECONDS_DAY) {
                     // There are no new notifications or the newest one happened more than a day ago, stop.
                     return;
                 }
@@ -186,7 +186,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
      * @return Promise resolved with the notification or false if not found.
      */
     getLastReceivedNotification(component: string, siteId: string): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(this.LAST_RECEIVED_NOTIFICATION_TABLE, {component: component});
         }).catch(() => {
             return false;
@@ -207,7 +207,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
             notification = {id: -1, timecreated: 0};
         }
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 component: component,
                 id: notification.id,

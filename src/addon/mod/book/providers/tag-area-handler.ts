@@ -23,7 +23,7 @@ import { AddonModBookProvider } from './book';
 /**
  * Handler to support tags.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModBookTagAreaHandler implements CoreTagAreaHandler {
     name = 'AddonModBookTagAreaHandler';
     type = 'mod_book/book_chapters';
@@ -54,7 +54,7 @@ export class AddonModBookTagAreaHandler implements CoreTagAreaHandler {
             if (params.b && !params.id) {
                 const bookId = parseInt(params.b, 10);
 
-                return this.courseProvider.getModuleBasicInfoByInstance(bookId, 'book').then((module) => {
+                return CoreCourse.getModuleBasicInfoByInstance(bookId, 'book').then((module) => {
                     item.url += '&id=' + module.id;
                 });
             }

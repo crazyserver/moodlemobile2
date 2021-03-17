@@ -21,7 +21,7 @@ import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/hel
 /**
  * Handler to treat links to forum review.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModForumDiscussionLinkHandler extends CoreContentLinksHandlerBase {
     name = 'AddonModForumDiscussionLinkHandler';
     featureName = 'CoreCourseModuleDelegate_AddonModForum';

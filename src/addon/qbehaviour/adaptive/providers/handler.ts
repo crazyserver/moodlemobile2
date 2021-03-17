@@ -20,7 +20,7 @@ import { CoreQuestionHelperProvider } from '@core/question/providers/helper';
 /**
  * Handler to support adaptive question behaviour.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonQbehaviourAdaptiveHandler implements CoreQuestionBehaviourHandler {
     name = 'AddonQbehaviourAdaptive';
     type = 'adaptive';

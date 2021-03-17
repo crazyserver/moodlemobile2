@@ -24,7 +24,7 @@ import { CoreUserProvider } from './user';
 /**
  * Handler to treat links to user participants page.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreUserParticipantsLinkHandler extends CoreContentLinksHandlerBase {
     name = 'CoreUserParticipants';
     featureName = 'CoreCourseOptionsDelegate_CoreUserParticipants';
@@ -52,16 +52,16 @@ export class CoreUserParticipantsLinkHandler extends CoreContentLinksHandlerBase
         return [{
             action: (siteId, navCtrl?): void => {
                 // Check if we already are in the course index page.
-                if (this.courseProvider.currentViewIsCourse(navCtrl, courseId)) {
+                if (CoreCourse.currentViewIsCourse(navCtrl, courseId)) {
                     // Current view is this course, just select the participants tab.
-                    this.courseProvider.selectCourseTab('CoreUserParticipants');
+                    CoreCourse.selectCourseTab('CoreUserParticipants');
 
                     return;
                 }
 
-                const modal = this.domUtils.showModalLoading();
+                const modal = CoreDomUtils.showModalLoading();
 
-                this.courseHelper.getCourse(courseId, siteId).then((result) => {
+                CoreCourseHelper.getCourse(courseId, siteId).then((result) => {
                     const params: any = {
                         course: result.course,
                         selectedTab: 'CoreUserParticipants'

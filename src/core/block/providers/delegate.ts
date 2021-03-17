@@ -83,7 +83,7 @@ export interface CoreBlockHandlerData {
 /**
  * Delegate to register block handlers.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CoreBlockDelegate extends CoreDelegate {
 
     protected handlerNameProperty = 'blockName';
@@ -105,7 +105,7 @@ export class CoreBlockDelegate extends CoreDelegate {
      * @return Whether it's disabled.
      */
     areBlocksDisabledInSite(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('NoDelegate_SiteBlocks');
     }
@@ -117,7 +117,7 @@ export class CoreBlockDelegate extends CoreDelegate {
      * @return Whether it's disabled.
      */
     areBlocksDisabledInCourses(site?: CoreSite): boolean {
-        site = site || this.sitesProvider.getCurrentSite();
+        site = site || CoreSites.getCurrentSite();
 
         return site.isFeatureDisabled('NoDelegate_CourseBlocks');
     }
@@ -129,7 +129,7 @@ export class CoreBlockDelegate extends CoreDelegate {
      * @return Promise resolved with true if disabled, rejected or resolved with false otherwise.
      */
     areBlocksDisabled(siteId?: string): Promise<boolean> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return this.areBlocksDisabledInSite(site);
         });
     }

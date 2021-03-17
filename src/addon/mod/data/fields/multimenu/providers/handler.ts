@@ -19,7 +19,7 @@ import { AddonModDataFieldMultimenuComponent } from '../component/multimenu';
 /**
  * Handler for multimenu data field plugin.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModDataFieldMultimenuHandler implements AddonModDataFieldHandler {
     name = 'AddonModDataFieldMultimenuHandler';
     type = 'multimenu';
@@ -111,7 +111,7 @@ export class AddonModDataFieldMultimenuHandler implements AddonModDataFieldHandl
      */
     getFieldsNotifications(field: any, inputData: any): string | false {
         if (field.required && (!inputData || !inputData.length || !inputData[0].value)) {
-            return this.translate.instant('addon.mod_data.errormustsupplyvalue');
+            return Translate.instant('addon.mod_data.errormustsupplyvalue');
         }
 
         return false;

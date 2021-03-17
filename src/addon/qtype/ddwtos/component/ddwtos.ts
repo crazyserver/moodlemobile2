@@ -50,7 +50,7 @@ export class AddonQtypeDdwtosComponent extends CoreQuestionBaseComponent impleme
             return this.questionHelper.showComponentError(this.onAbort);
         }
 
-        const element = this.domUtils.convertToElement(this.question.html);
+        const element = CoreDomUtils.convertToElement(this.question.html);
 
         // Replace Moodle's correct/incorrect and feedback classes with our own.
         this.questionHelper.replaceCorrectnessClasses(element);
@@ -69,7 +69,7 @@ export class AddonQtypeDdwtosComponent extends CoreQuestionBaseComponent impleme
         this.question.readOnly = answerContainer.classList.contains('readonly');
         this.question.answers = answerContainer.outerHTML;
 
-        this.question.text = this.domUtils.getContentsOfElement(element, '.qtext');
+        this.question.text = CoreDomUtils.getContentsOfElement(element, '.qtext');
         if (typeof this.question.text == 'undefined') {
             this.logger.warn('Aborting because of an error parsing question.', this.question.name);
 
@@ -112,7 +112,7 @@ export class AddonQtypeDdwtosComponent extends CoreQuestionBaseComponent impleme
      */
     protected questionRendered(): void {
         if (!this.destroyed) {
-            this.domUtils.waitForImages(this.questionTextEl.nativeElement).then(() => {
+            CoreDomUtils.waitForImages(this.questionTextEl.nativeElement).then(() => {
                 // Create the instance.
                 this.questionInstance = new AddonQtypeDdwtosQuestion(this.loggerProvider, this.domUtils, this.element,
                         this.question, this.question.readOnly, this.inputIds, this.textUtils);

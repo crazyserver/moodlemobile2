@@ -26,7 +26,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 /**
  * Service to handle remote themes. A remote theme is a CSS sheet stored in the site that allows customising the Mobile app.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonRemoteThemesProvider {
     static COMPONENT = 'mmaRemoteStyles';
     protected SEPARATOR_35 = /\/\*\*? *3\.5(\.0)? *styles? *\*\//i; // A comment like "/* 3.5 styles */".
@@ -73,7 +73,7 @@ export class AddonRemoteThemesProvider {
         this.disableElementsBySelector('style[id*=mobilecssurl]');
 
         // Set StatusBar properties.
-        this.appProvider.setStatusBarColor();
+        CoreApp.setStatusBarColor();
     }
 
     /**
@@ -108,7 +108,7 @@ export class AddonRemoteThemesProvider {
             element.removeAttribute('disabled');
 
             if (element.innerHTML != '') {
-                this.appProvider.resetStatusBarColor();
+                CoreApp.resetStatusBarColor();
             }
         }
     }
@@ -135,18 +135,18 @@ export class AddonRemoteThemesProvider {
      */
     protected downloadFileAndRemoveOld(siteId: string, url: string): Promise<any> {
         // Check if the file is downloaded.
-        return this.filepoolProvider.getFileStateByUrl(siteId, url).then((state) => {
+        return CoreFilepool.getFileStateByUrl(siteId, url).then((state) => {
             return state !== CoreConstants.NOT_DOWNLOADED;
         }).catch(() => {
             return true; // An error occurred while getting state (shouldn't happen). Don't delete downloaded file.
         }).then((isDownloaded) => {
             if (!isDownloaded) {
                 // File not downloaded, URL has changed or first time. Delete downloaded CSS files.
-                return this.filepoolProvider.removeFilesByComponent(siteId, AddonRemoteThemesProvider.COMPONENT, 1);
+                return CoreFilepool.removeFilesByComponent(siteId, AddonRemoteThemesProvider.COMPONENT, 1);
             }
         }).then(() => {
 
-            return this.filepoolProvider.downloadUrl(siteId, url, false, AddonRemoteThemesProvider.COMPONENT, 1);
+            return CoreFilepool.downloadUrl(siteId, url, false, AddonRemoteThemesProvider.COMPONENT, 1);
         });
     }
 
@@ -156,7 +156,7 @@ export class AddonRemoteThemesProvider {
      * @param siteId Site ID. If not defined, current site.
      */
     enable(siteId?: string): void {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         if (this.stylesEls[siteId]) {
             this.disableElement(this.stylesEls[siteId].element, false);
@@ -171,9 +171,9 @@ export class AddonRemoteThemesProvider {
      *         resolved with undefined if no styles to load.
      */
     get(siteId?: string): Promise<{fileUrl: string, styles: string}> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const infos = site.getInfo();
             let promise,
                 fileUrl;
@@ -191,7 +191,7 @@ export class AddonRemoteThemesProvider {
             } else {
                 if (infos && infos.mobilecssurl === '') {
                     // CSS URL is empty. Delete downloaded files (if any).
-                    this.filepoolProvider.removeFilesByComponent(siteId, AddonRemoteThemesProvider.COMPONENT, 1);
+                    CoreFilepool.removeFilesByComponent(siteId, AddonRemoteThemesProvider.COMPONENT, 1);
                 }
 
                 return;
@@ -253,7 +253,7 @@ export class AddonRemoteThemesProvider {
      * @return Promise resolved when styles are loaded.
      */
     load(siteId?: string, disabled?: boolean): Promise<any> {
-        siteId = siteId || this.sitesProvider.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
         disabled = !!disabled;
 
         this.logger.debug('Load site', siteId, disabled);
@@ -282,7 +282,7 @@ export class AddonRemoteThemesProvider {
                 }
 
                 // Styles have been loaded, now treat the CSS.
-                this.filepoolProvider.treatCSSCode(siteId, data.fileUrl, data.styles, AddonRemoteThemesProvider.COMPONENT, 2)
+                CoreFilepool.treatCSSCode(siteId, data.fileUrl, data.styles, AddonRemoteThemesProvider.COMPONENT, 2)
                         .catch(() => {
                     // Ignore errors.
                 });
@@ -327,7 +327,7 @@ export class AddonRemoteThemesProvider {
      * @return Promise resolved when loaded.
      */
     preloadCurrentSite(): Promise<any> {
-        return this.sitesProvider.getStoredCurrentSiteId().then((siteId) => {
+        return CoreSites.getStoredCurrentSiteId().then((siteId) => {
             return this.addSite(siteId);
         }, () => {
             // No current site stored.
@@ -340,13 +340,13 @@ export class AddonRemoteThemesProvider {
      * @return Promise resolved when loaded.
      */
     preloadSites(): Promise<any> {
-        return this.sitesProvider.getSitesIds().then((ids) => {
+        return CoreSites.getSitesIds().then((ids) => {
             const promises = [];
             ids.forEach((siteId) => {
                 promises.push(this.addSite(siteId));
             });
 
-            return this.utils.allPromises(promises);
+            return CoreUtils.allPromises(promises);
         });
     }
 

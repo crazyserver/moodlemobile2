@@ -86,7 +86,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
 
             protected sitesProvider: CoreSitesProvider) {
         this.onPostChange = new EventEmitter<void>();
-        this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
+        this.tagsEnabled = CoreTag.areTagsAvailableInSite();
     }
 
     /**
@@ -95,7 +95,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
     ngOnInit(): void {
         this.uniqueId = this.post.id > 0 ? 'reply' + this.post.id : 'edit' + this.post.parentid;
 
-        const reTranslated = this.translate.instant('addon.mod_forum.re');
+        const reTranslated = Translate.instant('addon.mod_forum.re');
         this.displaySubject = !this.parentSubject ||
             (this.post.subject != this.parentSubject && this.post.subject != `Re: ${this.parentSubject}` &&
                 this.post.subject != `${reTranslated} ${this.parentSubject}`);
@@ -112,7 +112,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
     ngOnChanges(changes: {[name: string]: SimpleChange}): void {
         if (changes.leavingPage && this.leavingPage) {
             // Download all courses is enabled now, initialize it.
-            this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
         }
     }
 
@@ -120,8 +120,8 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
      * Deletes an online post.
      */
     deletePost(): void {
-        this.domUtils.showDeleteConfirm('addon.mod_forum.deletesure').then(() => {
-            const modal = this.domUtils.showModalLoading('core.deleting', true);
+        CoreDomUtils.showDeleteConfirm('addon.mod_forum.deletesure').then(() => {
+            const modal = CoreDomUtils.showModalLoading('core.deleting', true);
 
             this.forumProvider.deletePost(this.post.id).then((response) => {
 
@@ -134,11 +134,11 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
                 };
 
                 CoreEvents.trigger(AddonModForumProvider.CHANGE_DISCUSSION_EVENT, data,
-                    this.sitesProvider.getCurrentSiteId());
+                    CoreSites.getCurrentSiteId());
 
-                this.domUtils.showToast('addon.mod_forum.deletedpost', true);
+                CoreDomUtils.showToast('addon.mod_forum.deletedpost', true);
             }).catch((error) => {
-                this.domUtils.showErrorModal(error);
+                CoreDomUtils.showErrorModal(error);
             }).finally(() => {
                 modal.dismiss();
             });
@@ -238,7 +238,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
                 // Add some HTML to the message if needed.
                 const message = this.textUtils.formatHtmlLines(data.message);
                 const files = data.files || [];
-                const sendingModal = this.domUtils.showModalLoading('core.sending', true);
+                const sendingModal = CoreDomUtils.showModalLoading('core.sending', true);
                 let promise;
 
                 // Upload attachments first if any.
@@ -268,7 +268,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
                         this.post.attachments = data.files;
                     }
                 }).catch((message) => {
-                    this.domUtils.showErrorModalDefault(message, 'addon.mod_forum.couldnotupdate', true);
+                    CoreDomUtils.showErrorModalDefault(message, 'addon.mod_forum.couldnotupdate', true);
                 }).finally(() => {
                     sendingModal.dismiss();
                 });
@@ -288,7 +288,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
                 if (this.content) {
                     setTimeout(() => {
                         this.content.resize();
-                        this.domUtils.scrollToElementBySelector(this.content, '#addon-forum-reply-edit-form-' + this.uniqueId);
+                        CoreDomUtils.scrollToElementBySelector(this.content, '#addon-forum-reply-edit-form-' + this.uniqueId);
                     });
                 }
             }).catch(() => {
@@ -315,7 +315,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
         if (this.content) {
             setTimeout(() => {
                 this.content.resize();
-                this.domUtils.scrollToElementBySelector(this.content, '#addon-forum-reply-edit-form-' + this.uniqueId);
+                CoreDomUtils.scrollToElementBySelector(this.content, '#addon-forum-reply-edit-form-' + this.uniqueId);
             });
         }
 
@@ -351,13 +351,13 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
      */
     reply(): void {
         if (!this.replyData.subject) {
-            this.domUtils.showErrorModal('addon.mod_forum.erroremptysubject', true);
+            CoreDomUtils.showErrorModal('addon.mod_forum.erroremptysubject', true);
 
             return;
         }
 
         if (!this.replyData.message) {
-            this.domUtils.showErrorModal('addon.mod_forum.erroremptymessage', true);
+            CoreDomUtils.showErrorModal('addon.mod_forum.erroremptymessage', true);
 
             return;
         }
@@ -368,7 +368,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
         const replyingTo = this.replyData.replyingTo;
         const files = this.replyData.files || [];
         const options: any = {};
-        const modal = this.domUtils.showModalLoading('core.sending', true);
+        const modal = CoreDomUtils.showModalLoading('core.sending', true);
         let promise;
 
         // Add some HTML to the message if needed.
@@ -425,13 +425,13 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
 
             this.onPostChange.emit();
 
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, sent, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormSubmittedEvent(this.formElement, sent, CoreSites.getCurrentSiteId());
 
             if (this.syncId) {
                 this.syncProvider.unblockOperation(AddonModForumProvider.COMPONENT, this.syncId);
             }
         }).catch((message) => {
-            this.domUtils.showErrorModalDefault(message, 'addon.mod_forum.couldnotadd', true);
+            CoreDomUtils.showErrorModalDefault(message, 'addon.mod_forum.couldnotadd', true);
         }).finally(() => {
             modal.dismiss();
         });
@@ -445,7 +445,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
             // Reset data.
             this.setReplyFormData();
 
-            this.domUtils.triggerFormCancelledEvent(this.formElement, this.sitesProvider.getCurrentSiteId());
+            CoreDomUtils.triggerFormCancelledEvent(this.formElement, CoreSites.getCurrentSiteId());
 
             if (this.syncId) {
                 this.syncProvider.unblockOperation(AddonModForumProvider.COMPONENT, this.syncId);
@@ -459,7 +459,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
      * Discard offline reply.
      */
     discardOfflineReply(): void {
-        this.domUtils.showDeleteConfirm().then(() => {
+        CoreDomUtils.showDeleteConfirm().then(() => {
             const promises = [];
 
             promises.push(this.forumOffline.deleteReply(this.post.parentid));
@@ -515,7 +515,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
     protected confirmDiscard(): Promise<void> {
         if (this.forumHelper.hasPostDataChanged(this.replyData, this.originalData)) {
             // Show confirmation if some data has been modified.
-            return this.domUtils.showConfirm(this.translate.instant('core.confirmloss'));
+            return CoreDomUtils.showConfirm(Translate.instant('core.confirmloss'));
         } else {
             return Promise.resolve();
         }

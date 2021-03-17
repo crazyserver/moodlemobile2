@@ -51,7 +51,7 @@ export class AddonModDataActionComponent implements OnInit {
             private tagProvider: CoreTagProvider) {
         this.rootUrl = sitesProvider.getCurrentSite().getURL();
         this.siteId = sitesProvider.getCurrentSiteId();
-        this.tagsEnabled = this.tagProvider.areTagsAvailableInSite();
+        this.tagsEnabled = CoreTag.areTagsAvailableInSite();
     }
 
     /**
@@ -69,21 +69,21 @@ export class AddonModDataActionComponent implements OnInit {
      * Approve the entry.
      */
     approveEntry(): void {
-        this.dataHelper.approveOrDisapproveEntry(this.database.id, this.entry.id, true, this.database.courseid);
+        AddonModDataHelper.approveOrDisapproveEntry(this.database.id, this.entry.id, true, this.database.courseid);
     }
 
     /**
      * Show confirmation modal for deleting the entry.
      */
     deleteEntry(): void {
-       this.dataHelper.showDeleteEntryModal(this.database.id, this.entry.id, this.database.courseid);
+       AddonModDataHelper.showDeleteEntryModal(this.database.id, this.entry.id, this.database.courseid);
     }
 
     /**
      * Disapprove the entry.
      */
     disapproveEntry(): void {
-        this.dataHelper.approveOrDisapproveEntry(this.database.id, this.entry.id, false, this.database.courseid);
+        AddonModDataHelper.approveOrDisapproveEntry(this.database.id, this.entry.id, false, this.database.courseid);
     }
 
     /**

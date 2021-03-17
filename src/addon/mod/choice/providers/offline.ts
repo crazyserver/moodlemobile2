@@ -18,7 +18,7 @@ import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 /**
  * Service to handle offline choices.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonModChoiceOfflineProvider {
 
     // Variables for database.
@@ -66,7 +66,7 @@ export class AddonModChoiceOfflineProvider {
     };
 
     constructor(private sitesProvider: CoreSitesProvider) {
-        this.sitesProvider.registerSiteSchema(this.siteSchema);
+        CoreSites.registerSiteSchema(this.siteSchema);
     }
 
     /**
@@ -78,7 +78,7 @@ export class AddonModChoiceOfflineProvider {
      * @return Promise resolved if stored, rejected if failure.
      */
     deleteResponse(choiceId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().deleteRecords(AddonModChoiceOfflineProvider.CHOICE_TABLE, {choiceid: choiceId, userid: userId});
@@ -92,7 +92,7 @@ export class AddonModChoiceOfflineProvider {
      * @return Promi[se resolved with responses.
      */
     getResponses(siteId?: string): Promise<any[]> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecords(AddonModChoiceOfflineProvider.CHOICE_TABLE).then((records) => {
                 records.forEach((record) => {
                     record.responses = JSON.parse(record.responses);
@@ -129,7 +129,7 @@ export class AddonModChoiceOfflineProvider {
      * @return Promise resolved with the object to be synced.
      */
     getResponse(choiceId: number, siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
             return site.getDb().getRecord(AddonModChoiceOfflineProvider.CHOICE_TABLE, {choiceid: choiceId, userid: userId})
@@ -155,7 +155,7 @@ export class AddonModChoiceOfflineProvider {
      */
     saveResponse(choiceId: number, name: string, courseId: number, responses: number[], deleting: boolean,
             siteId?: string, userId?: number): Promise<any> {
-        return this.sitesProvider.getSite(siteId).then((site) => {
+        return CoreSites.getSite(siteId).then((site) => {
             const entry = {
                 choiceid: choiceId,
                 name: name,

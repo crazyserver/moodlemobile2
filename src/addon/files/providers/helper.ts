@@ -21,7 +21,7 @@ import { AddonFilesProvider } from './files';
 /**
  * Service that provides some features regarding private and site files.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AddonFilesHelperProvider {
 
     constructor(private sitesProvider: CoreSitesProvider, private fileUploaderHelper: CoreFileUploaderHelperProvider,
@@ -35,7 +35,7 @@ export class AddonFilesHelperProvider {
      */
     uploadPrivateFile(info?: any): Promise<any> {
         // Calculate the max size.
-        const currentSite = this.sitesProvider.getCurrentSite();
+        const currentSite = CoreSites.getCurrentSite();
         let maxSize = currentSite.getInfo().usermaxuploadfilesize,
             userQuota = currentSite.getInfo().userquota;
 
@@ -58,17 +58,17 @@ export class AddonFilesHelperProvider {
             }
 
             // File uploaded. Move it to private files.
-            const modal = this.domUtils.showModalLoading('core.fileuploader.uploading', true);
+            const modal = CoreDomUtils.showModalLoading('core.fileuploader.uploading', true);
 
             return this.filesProvider.moveFromDraftToPrivate(result.itemid).catch((error) => {
-                this.domUtils.showErrorModalDefault(error, 'core.fileuploader.errorwhileuploading', true);
+                CoreDomUtils.showErrorModalDefault(error, 'core.fileuploader.errorwhileuploading', true);
 
                 return Promise.reject(null);
             }).finally(() => {
                 modal.dismiss();
             });
         }).then(() => {
-            this.domUtils.showToast('core.fileuploader.fileuploaded', true, undefined, 'core-toast-success');
+            CoreDomUtils.showToast('core.fileuploader.fileuploaded', true, undefined, 'core-toast-success');
         });
     }
 }

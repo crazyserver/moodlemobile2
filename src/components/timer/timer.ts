@@ -57,7 +57,7 @@ export class CoreTimerComponent implements OnInit, OnDestroy {
 
         // Check time left every 200ms.
         this.timeInterval = setInterval(() => {
-            this.timeLeft = endTime - this.timeUtils.timestamp();
+            this.timeLeft = endTime - CoreTimeUtils.timestamp();
 
             if (this.timeLeft < 0) {
                 // Time is up! Stop the timer and call the finish function.

@@ -41,7 +41,7 @@ export class CoreH5PPlayer {
      * @return URL.
      */
     calculateOnlinePlayerUrl(siteUrl: string, fileUrl: string, displayOptions?: CoreH5PDisplayOptions, component?: string): string {
-        fileUrl = CoreH5P.instance.treatH5PUrl(fileUrl, siteUrl);
+        fileUrl = CoreH5P.treatH5PUrl(fileUrl, siteUrl);
 
         const params = this.getUrlParamsFromDisplayOptions(displayOptions);
         params.url = encodeURIComponent(fileUrl);
@@ -49,7 +49,7 @@ export class CoreH5PPlayer {
             params.component = component;
         }
 
-        return CoreUrlUtils.instance.addParamsToUrl(CoreTextUtils.instance.concatenatePaths(siteUrl, '/h5p/embed.php'), params);
+        return CoreUrlUtils.addParamsToUrl(CoreTextUtils.concatenatePaths(siteUrl, '/h5p/embed.php'), params);
     }
 
     /**
@@ -66,11 +66,11 @@ export class CoreH5PPlayer {
     async createContentIndex(id: number, h5pUrl: string, content: CoreH5PContentData, embedType: string, siteId?: string)
             : Promise<string> {
 
-        const site = await CoreSites.instance.getSite(siteId);
+        const site = await CoreSites.getSite(siteId);
 
         const contentId = this.getContentId(id);
-        const basePath = CoreFile.instance.getBasePathInstant();
-        const contentUrl = CoreFile.instance.convertFileSrc(CoreTextUtils.instance.concatenatePaths(
+        const basePath = CoreFile.getBasePathInstant();
+        const contentUrl = CoreFile.convertFileSrc(CoreTextUtils.concatenatePaths(
                     basePath, this.h5pCore.h5pFS.getContentFolderPath(content.folderName, site.getId())));
 
         // Create the settings needed for the content.
@@ -111,7 +111,7 @@ export class CoreH5PPlayer {
                 JSON.stringify(result.settings).replace(/\//g, '\\/') + '</script>';
 
         // Add our own script to handle the params.
-        html += '<script type="text/javascript" src="' + CoreTextUtils.instance.concatenatePaths(
+        html += '<script type="text/javascript" src="' + CoreTextUtils.concatenatePaths(
                 this.h5pCore.h5pFS.getCoreH5PPath(), 'moodle/js/params.js') + '"></script>';
 
         html += '</head><body>';
@@ -119,7 +119,7 @@ export class CoreH5PPlayer {
         // Include the required JS at the beginning of the body, like Moodle web does.
         // Load the embed.js to allow communication with the parent window.
         html += '<script type="text/javascript" src="' +
-                CoreTextUtils.instance.concatenatePaths(this.h5pCore.h5pFS.getCoreH5PPath(), 'moodle/js/embed.js') + '"></script>';
+                CoreTextUtils.concatenatePaths(this.h5pCore.h5pFS.getCoreH5PPath(), 'moodle/js/embed.js') + '"></script>';
 
         result.jsRequires.forEach((jsUrl) => {
             html += '<script type="text/javascript" src="' + jsUrl + '"></script>';
@@ -130,7 +130,7 @@ export class CoreH5PPlayer {
                     'style="height:1px; min-width: 100%" src="about:blank"></iframe>' +
                 '</div></body>';
 
-        const fileEntry = await CoreFile.instance.writeFile(indexPath, html);
+        const fileEntry = await CoreFile.writeFile(indexPath, html);
 
         return fileEntry.toURL();
     }
@@ -141,7 +141,7 @@ export class CoreH5PPlayer {
      * @return Promise resolved when done.
      */
     async deleteAllContentIndexes(): Promise<void> {
-        const siteIds = await CoreSites.instance.getSitesIds();
+        const siteIds = await CoreSites.getSitesIds();
 
         await Promise.all(siteIds.map((siteId) => this.deleteAllContentIndexesForSite(siteId)));
     }
@@ -153,7 +153,7 @@ export class CoreH5PPlayer {
      * @return Promise resolved when done.
      */
     async deleteAllContentIndexesForSite(siteId?: string): Promise<void> {
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const records = await this.h5pCore.h5pFramework.getAllContentData(siteId);
 
@@ -174,11 +174,11 @@ export class CoreH5PPlayer {
      * @return Promise resolved when done.
      */
     async deleteContentByUrl(fileUrl: string, siteId?: string): Promise<void> {
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const data = await this.h5pCore.h5pFramework.getContentDataByUrl(fileUrl, siteId);
 
-        await CoreUtils.instance.allPromises([
+        await CoreUtils.allPromises([
             this.h5pCore.h5pFramework.deleteContentData(data.id, siteId),
 
             this.h5pCore.h5pFS.deleteContentFolder(data.foldername, siteId),
@@ -197,7 +197,7 @@ export class CoreH5PPlayer {
     protected async getAssets(id: number, content: CoreH5PContentData, embedType: string, siteId?: string)
             : Promise<{settings: any, cssRequires: string[], jsRequires: string[]}> {
 
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Get core assets.
         const coreAssets = await CoreH5PHelper.getCoreAssets(siteId);
@@ -250,7 +250,7 @@ export class CoreH5PPlayer {
     async getContentIndexFileUrl(fileUrl: string, displayOptions?: CoreH5PDisplayOptions, component?: string, contextId?: number,
             siteId?: string): Promise<string> {
 
-        siteId = siteId || CoreSites.instance.getCurrentSiteId();
+        siteId = siteId || CoreSites.getCurrentSiteId();
 
         const path = await this.h5pCore.h5pFS.getContentIndexFileUrl(fileUrl, siteId);
 
@@ -266,10 +266,10 @@ export class CoreH5PPlayer {
         };
 
         if (contextId) {
-            params.trackingUrl = await CoreXAPI.instance.getUrl(contextId, 'activity', siteId);
+            params.trackingUrl = await CoreXAPI.getUrl(contextId, 'activity', siteId);
         }
 
-        return CoreUrlUtils.instance.addParamsToUrl(path, params);
+        return CoreUrlUtils.addParamsToUrl(path, params);
     }
 
     /**
@@ -282,7 +282,7 @@ export class CoreH5PPlayer {
      */
     protected async getDependencyFiles(id: number, folderName: string, siteId?: string): Promise<CoreH5PDependenciesFiles> {
 
-        const preloadedDeps = await CoreH5P.instance.h5pCore.loadContentDependencies(id, 'preloaded', siteId);
+        const preloadedDeps = await CoreH5P.h5pCore.loadContentDependencies(id, 'preloaded', siteId);
 
         return this.h5pCore.getDependenciesFiles(preloadedDeps, folderName,
                 this.h5pCore.h5pFS.getExternalH5PFolderPath(siteId), siteId);
@@ -302,11 +302,11 @@ export class CoreH5PPlayer {
         }
 
         displayOptions[CoreH5PCore.DISPLAY_OPTION_DOWNLOAD] =
-                CoreUtils.instance.isTrueOrOne(params[CoreH5PCore.DISPLAY_OPTION_DOWNLOAD]);
+                CoreUtils.isTrueOrOne(params[CoreH5PCore.DISPLAY_OPTION_DOWNLOAD]);
         displayOptions[CoreH5PCore.DISPLAY_OPTION_EMBED] =
-                CoreUtils.instance.isTrueOrOne(params[CoreH5PCore.DISPLAY_OPTION_EMBED]);
+                CoreUtils.isTrueOrOne(params[CoreH5PCore.DISPLAY_OPTION_EMBED]);
         displayOptions[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT] =
-                CoreUtils.instance.isTrueOrOne(params[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT]);
+                CoreUtils.isTrueOrOne(params[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT]);
         displayOptions[CoreH5PCore.DISPLAY_OPTION_FRAME] = displayOptions[CoreH5PCore.DISPLAY_OPTION_DOWNLOAD] ||
                 displayOptions[CoreH5PCore.DISPLAY_OPTION_EMBED] || displayOptions[CoreH5PCore.DISPLAY_OPTION_COPYRIGHT];
         displayOptions[CoreH5PCore.DISPLAY_OPTION_ABOUT] =
@@ -339,7 +339,7 @@ export class CoreH5PPlayer {
      * @return The embed URL.
      */
     protected getEmbedUrl(siteUrl: string, h5pUrl: string): string {
-        return CoreTextUtils.instance.concatenatePaths(siteUrl, '/h5p/embed.php') + '?url=' + h5pUrl;
+        return CoreTextUtils.concatenatePaths(siteUrl, '/h5p/embed.php') + '?url=' + h5pUrl;
     }
 
     /**
@@ -357,7 +357,7 @@ export class CoreH5PPlayer {
      * @return URL.
      */
     getResizerScriptUrl(): string {
-        return CoreTextUtils.instance.concatenatePaths(this.h5pCore.h5pFS.getCoreH5PPath(), 'js/h5p-resizer.js');
+        return CoreTextUtils.concatenatePaths(this.h5pCore.h5pFS.getCoreH5PPath(), 'js/h5p-resizer.js');
     }
 
     /**
