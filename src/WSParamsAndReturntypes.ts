@@ -5126,7 +5126,7 @@ export type GradereportUserGetGradeItemsWSResponse = {
             outcomeid: number; // Outcome id.
             scaleid: number; // Scale id.
             locked?: boolean; // Grade item for user locked?.
-            cmid?: number; // Course module id (if type mod).
+            cmid?: number; // Course module id (if type AddonMod).
             weightraw?: number; // Weight raw.
             weightformatted?: string; // Weight.
             status?: string; // Status.
@@ -5381,7 +5381,7 @@ export type MessagePopupGetUnreadPopupNotificationCountWSResponse = number;
 /**
  * Params of mod_assign_get_assignments WS.
  */
-export type ModAssignGetAssignmentsWSParams = {
+export type AddonModAssignGetAssignmentsWSParams = {
     courseids?: number[]; // 0 or more course ids.
     capabilities?: string[]; // List of capabilities used to filter courses.
     includenotenrolledcourses?: boolean; // Whether to return courses that the user can see
@@ -5393,7 +5393,7 @@ export type ModAssignGetAssignmentsWSParams = {
 /**
  * Data returned by mod_assign_get_assignments WS.
  */
-export type ModAssignGetAssignmentsWSResponse = {
+export type AddonModAssignGetAssignmentsWSResponse = {
     courses: { // List of courses.
         id: number; // Course id.
         fullname: string; // Course full name.
@@ -5450,7 +5450,7 @@ export type ModAssignGetAssignmentsWSResponse = {
 /**
  * Params of mod_assign_get_grades WS.
  */
-export type ModAssignGetGradesWSParams = {
+export type AddonModAssignGetGradesWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
     since?: number; // Timestamp, only return records where timemodified >= since.
 };
@@ -5458,7 +5458,7 @@ export type ModAssignGetGradesWSParams = {
 /**
  * Data returned by mod_assign_get_grades WS.
  */
-export type ModAssignGetGradesWSResponse = {
+export type AddonModAssignGetGradesWSResponse = {
     assignments: { // List of assignment grade information.
         assignmentid: number; // Assignment id.
         grades: {
@@ -5479,7 +5479,7 @@ export type ModAssignGetGradesWSResponse = {
 /**
  * Params of mod_assign_get_participant WS.
  */
-export type ModAssignGetParticipantWSParams = {
+export type AddonModAssignGetParticipantWSParams = {
     assignid: number; // Assign instance id.
     userid: number; // User id.
     embeduser?: boolean; // User id.
@@ -5488,7 +5488,7 @@ export type ModAssignGetParticipantWSParams = {
 /**
  * Data returned by mod_assign_get_participant WS.
  */
-export type ModAssignGetParticipantWSResponse = {
+export type AddonModAssignGetParticipantWSResponse = {
     id: number; // ID of the user.
     fullname: string; // The fullname of the user.
     submitted: boolean; // Have they submitted their assignment.
@@ -5553,7 +5553,7 @@ export type ModAssignGetParticipantWSResponse = {
 /**
  * Params of mod_assign_get_submission_status WS.
  */
-export type ModAssignGetSubmissionStatusWSParams = {
+export type AddonModAssignGetSubmissionStatusWSParams = {
     assignid: number; // Assignment instance id.
     userid?: number; // User id (empty for current user).
     groupid?: number; // Filter by users in group (used for generating the grading summary).
@@ -5564,7 +5564,7 @@ export type ModAssignGetSubmissionStatusWSParams = {
 /**
  * Data returned by mod_assign_get_submission_status WS.
  */
-export type ModAssignGetSubmissionStatusWSResponse = {
+export type AddonModAssignGetSubmissionStatusWSResponse = {
     gradingsummary?: {
         participantcount: number; // Number of users who can submit.
         submissiondraftscount: number; // Number of submissions in draft status.
@@ -5732,7 +5732,7 @@ export type ModAssignGetSubmissionStatusWSResponse = {
 /**
  * Params of mod_assign_get_submissions WS.
  */
-export type ModAssignGetSubmissionsWSParams = {
+export type AddonModAssignGetSubmissionsWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
     status?: string; // Status.
     since?: number; // Submitted since.
@@ -5742,7 +5742,7 @@ export type ModAssignGetSubmissionsWSParams = {
 /**
  * Data returned by mod_assign_get_submissions WS.
  */
-export type ModAssignGetSubmissionsWSResponse = {
+export type AddonModAssignGetSubmissionsWSResponse = {
     assignments: { // Assignment submissions.
         assignmentid: number; // Assignment id.
         submissions: {
@@ -5778,14 +5778,14 @@ export type ModAssignGetSubmissionsWSResponse = {
 /**
  * Params of mod_assign_get_user_flags WS.
  */
-export type ModAssignGetUserFlagsWSParams = {
+export type AddonModAssignGetUserFlagsWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
 };
 
 /**
  * Data returned by mod_assign_get_user_flags WS.
  */
-export type ModAssignGetUserFlagsWSResponse = {
+export type AddonModAssignGetUserFlagsWSResponse = {
     assignments: { // List of assign user flag information.
         assignmentid: number; // Assignment id.
         userflags: {
@@ -5804,14 +5804,14 @@ export type ModAssignGetUserFlagsWSResponse = {
 /**
  * Params of mod_assign_get_user_mappings WS.
  */
-export type ModAssignGetUserMappingsWSParams = {
+export type AddonModAssignGetUserMappingsWSParams = {
     assignmentids: number[]; // 1 or more assignment ids.
 };
 
 /**
  * Data returned by mod_assign_get_user_mappings WS.
  */
-export type ModAssignGetUserMappingsWSResponse = {
+export type AddonModAssignGetUserMappingsWSResponse = {
     assignments: { // List of assign user mapping data.
         assignmentid: number; // Assignment id.
         mappings: {
@@ -5825,7 +5825,7 @@ export type ModAssignGetUserMappingsWSResponse = {
 /**
  * Params of mod_assign_list_participants WS.
  */
-export type ModAssignListParticipantsWSParams = {
+export type AddonModAssignListParticipantsWSParams = {
     assignid: number; // Assign instance id.
     groupid: number; // Group id.
     filter: string; // Search string to filter the results.
@@ -5839,7 +5839,7 @@ export type ModAssignListParticipantsWSParams = {
 /**
  * Data returned by mod_assign_list_participants WS.
  */
-export type ModAssignListParticipantsWSResponse = {
+export type AddonModAssignListParticipantsWSResponse = {
     id: number; // ID of the user.
     username?: string; // The username.
     firstname?: string; // The first name(s) of the user.
@@ -5905,7 +5905,7 @@ export type ModAssignListParticipantsWSResponse = {
 /**
  * Params of mod_assign_lock_submissions WS.
  */
-export type ModAssignLockSubmissionsWSParams = {
+export type AddonModAssignLockSubmissionsWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
 };
@@ -5913,24 +5913,24 @@ export type ModAssignLockSubmissionsWSParams = {
 /**
  * Data returned by mod_assign_lock_submissions WS.
  */
-export type ModAssignLockSubmissionsWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignLockSubmissionsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_reveal_identities WS.
  */
-export type ModAssignRevealIdentitiesWSParams = {
+export type AddonModAssignRevealIdentitiesWSParams = {
     assignmentid: number; // The assignment id to operate on.
 };
 
 /**
  * Data returned by mod_assign_reveal_identities WS.
  */
-export type ModAssignRevealIdentitiesWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignRevealIdentitiesWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_revert_submissions_to_draft WS.
  */
-export type ModAssignRevertSubmissionsToDraftWSParams = {
+export type AddonModAssignRevertSubmissionsToDraftWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
 };
@@ -5938,12 +5938,12 @@ export type ModAssignRevertSubmissionsToDraftWSParams = {
 /**
  * Data returned by mod_assign_revert_submissions_to_draft WS.
  */
-export type ModAssignRevertSubmissionsToDraftWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignRevertSubmissionsToDraftWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_save_grade WS.
  */
-export type ModAssignSaveGradeWSParams = {
+export type AddonModAssignSaveGradeWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userid: number; // The student id to operate on.
     grade: number; // The new grade for this user. Ignored if advanced grading used.
@@ -5988,12 +5988,12 @@ export type ModAssignSaveGradeWSParams = {
 /**
  * Data returned by mod_assign_save_grade WS.
  */
-export type ModAssignSaveGradeWSResponse = {}; // WARNING: Null structure found;
+export type AddonModAssignSaveGradeWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of mod_assign_save_grades WS.
  */
-export type ModAssignSaveGradesWSParams = {
+export type AddonModAssignSaveGradesWSParams = {
     assignmentid: number; // The assignment id to operate on.
     applytoall: boolean; // If true, this grade will be applied to all members of the group (for group assignments).
     grades: {
@@ -6040,12 +6040,12 @@ export type ModAssignSaveGradesWSParams = {
 /**
  * Data returned by mod_assign_save_grades WS.
  */
-export type ModAssignSaveGradesWSResponse = {}; // WARNING: Null structure found;
+export type AddonModAssignSaveGradesWSResponse = {}; // WARNING: Null structure found;
 
 /**
  * Params of mod_assign_save_submission WS.
  */
-export type ModAssignSaveSubmissionWSParams = {
+export type AddonModAssignSaveSubmissionWSParams = {
     assignmentid: number; // The assignment id to operate on.
     plugindata: {
         onlinetext_editor?: {
@@ -6060,12 +6060,12 @@ export type ModAssignSaveSubmissionWSParams = {
 /**
  * Data returned by mod_assign_save_submission WS.
  */
-export type ModAssignSaveSubmissionWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignSaveSubmissionWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_save_user_extensions WS.
  */
-export type ModAssignSaveUserExtensionsWSParams = {
+export type AddonModAssignSaveUserExtensionsWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
     dates: number[]; // 1 or more extension dates (timestamp).
@@ -6074,12 +6074,12 @@ export type ModAssignSaveUserExtensionsWSParams = {
 /**
  * Data returned by mod_assign_save_user_extensions WS.
  */
-export type ModAssignSaveUserExtensionsWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignSaveUserExtensionsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_set_user_flags WS.
  */
-export type ModAssignSetUserFlagsWSParams = {
+export type AddonModAssignSetUserFlagsWSParams = {
     assignmentid: number; // Assignment id.
     userflags: {
         userid: number; // Student id.
@@ -6094,7 +6094,7 @@ export type ModAssignSetUserFlagsWSParams = {
 /**
  * Data returned by mod_assign_set_user_flags WS.
  */
-export type ModAssignSetUserFlagsWSResponse = {
+export type AddonModAssignSetUserFlagsWSResponse = {
     id: number; // Id of record if successful, -1 for failure.
     userid: number; // Userid of record.
     errormessage?: string; // Failure error message.
@@ -6103,7 +6103,7 @@ export type ModAssignSetUserFlagsWSResponse = {
 /**
  * Params of mod_assign_submit_for_grading WS.
  */
-export type ModAssignSubmitForGradingWSParams = {
+export type AddonModAssignSubmitForGradingWSParams = {
     assignmentid: number; // The assignment id to operate on.
     acceptsubmissionstatement: boolean; // Accept the assignment submission statement.
 };
@@ -6111,12 +6111,12 @@ export type ModAssignSubmitForGradingWSParams = {
 /**
  * Data returned by mod_assign_submit_for_grading WS.
  */
-export type ModAssignSubmitForGradingWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignSubmitForGradingWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_submit_grading_form WS.
  */
-export type ModAssignSubmitGradingFormWSParams = {
+export type AddonModAssignSubmitGradingFormWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userid: number; // The user id the submission belongs to.
     jsonformdata: string; // The data from the grading form, encoded as a json array.
@@ -6125,12 +6125,12 @@ export type ModAssignSubmitGradingFormWSParams = {
 /**
  * Data returned by mod_assign_submit_grading_form WS.
  */
-export type ModAssignSubmitGradingFormWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignSubmitGradingFormWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_unlock_submissions WS.
  */
-export type ModAssignUnlockSubmissionsWSParams = {
+export type AddonModAssignUnlockSubmissionsWSParams = {
     assignmentid: number; // The assignment id to operate on.
     userids: number[]; // 1 or more user ids.
 };
@@ -6138,55 +6138,55 @@ export type ModAssignUnlockSubmissionsWSParams = {
 /**
  * Data returned by mod_assign_unlock_submissions WS.
  */
-export type ModAssignUnlockSubmissionsWSResponse = CoreWSExternalWarning[];
+export type AddonModAssignUnlockSubmissionsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of mod_assign_view_assign WS.
  */
-export type ModAssignViewAssignWSParams = {
+export type AddonModAssignViewAssignWSParams = {
     assignid: number; // Assign instance id.
 };
 
 /**
  * Data returned by mod_assign_view_assign WS.
  */
-export type ModAssignViewAssignWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModAssignViewAssignWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_assign_view_grading_table WS.
  */
-export type ModAssignViewGradingTableWSParams = {
+export type AddonModAssignViewGradingTableWSParams = {
     assignid: number; // Assign instance id.
 };
 
 /**
  * Data returned by mod_assign_view_grading_table WS.
  */
-export type ModAssignViewGradingTableWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModAssignViewGradingTableWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_assign_view_submission_status WS.
  */
-export type ModAssignViewSubmissionStatusWSParams = {
+export type AddonModAssignViewSubmissionStatusWSParams = {
     assignid: number; // Assign instance id.
 };
 
 /**
  * Data returned by mod_assign_view_submission_status WS.
  */
-export type ModAssignViewSubmissionStatusWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModAssignViewSubmissionStatusWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_book_get_books_by_courses WS.
  */
-export type ModBookGetBooksByCoursesWSParams = {
+export type AddonModBookGetBooksByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_book_get_books_by_courses WS.
  */
-export type ModBookGetBooksByCoursesWSResponse = {
+export type AddonModBookGetBooksByCoursesWSResponse = {
     books: {
         id: number; // Book id.
         coursemodule: number; // Course module id.
@@ -6212,7 +6212,7 @@ export type ModBookGetBooksByCoursesWSResponse = {
 /**
  * Params of mod_book_view_book WS.
  */
-export type ModBookViewBookWSParams = {
+export type AddonModBookViewBookWSParams = {
     bookid: number; // Book instance id.
     chapterid?: number; // Chapter id.
 };
@@ -6220,12 +6220,12 @@ export type ModBookViewBookWSParams = {
 /**
  * Data returned by mod_book_view_book WS.
  */
-export type ModBookViewBookWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModBookViewBookWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_chat_get_chat_latest_messages WS.
  */
-export type ModChatGetChatLatestMessagesWSParams = {
+export type AddonModChatGetChatLatestMessagesWSParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
     chatlasttime?: number; // Last time messages were retrieved (epoch time).
 };
@@ -6233,7 +6233,7 @@ export type ModChatGetChatLatestMessagesWSParams = {
 /**
  * Data returned by mod_chat_get_chat_latest_messages WS.
  */
-export type ModChatGetChatLatestMessagesWSResponse = {
+export type AddonModChatGetChatLatestMessagesWSResponse = {
     messages: { // List of users.
         id: number; // Message id.
         userid: number; // User id.
@@ -6248,14 +6248,14 @@ export type ModChatGetChatLatestMessagesWSResponse = {
 /**
  * Params of mod_chat_get_chat_users WS.
  */
-export type ModChatGetChatUsersWSParams = {
+export type AddonModChatGetChatUsersWSParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
 };
 
 /**
  * Data returned by mod_chat_get_chat_users WS.
  */
-export type ModChatGetChatUsersWSResponse = {
+export type AddonModChatGetChatUsersWSResponse = {
     users: { // List of users.
         id: number; // User id.
         fullname: string; // User full name.
@@ -6267,14 +6267,14 @@ export type ModChatGetChatUsersWSResponse = {
 /**
  * Params of mod_chat_get_chats_by_courses WS.
  */
-export type ModChatGetChatsByCoursesWSParams = {
+export type AddonModChatGetChatsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_chat_get_chats_by_courses WS.
  */
-export type ModChatGetChatsByCoursesWSResponse = {
+export type AddonModChatGetChatsByCoursesWSResponse = {
     chats: {
         id: number; // Chat id.
         coursemodule: number; // Course module id.
@@ -6300,7 +6300,7 @@ export type ModChatGetChatsByCoursesWSResponse = {
 /**
  * Params of mod_chat_get_session_messages WS.
  */
-export type ModChatGetSessionMessagesWSParams = {
+export type AddonModChatGetSessionMessagesWSParams = {
     chatid: number; // Chat instance id.
     sessionstart: number; // The session start time (timestamp).
     sessionend: number; // The session end time (timestamp).
@@ -6312,7 +6312,7 @@ export type ModChatGetSessionMessagesWSParams = {
 /**
  * Data returned by mod_chat_get_session_messages WS.
  */
-export type ModChatGetSessionMessagesWSResponse = {
+export type AddonModChatGetSessionMessagesWSResponse = {
     messages: {
         id: number; // The message record id.
         chatid: number; // The chat id.
@@ -6328,7 +6328,7 @@ export type ModChatGetSessionMessagesWSResponse = {
 /**
  * Params of mod_chat_get_sessions WS.
  */
-export type ModChatGetSessionsWSParams = {
+export type AddonModChatGetSessionsWSParams = {
     chatid: number; // Chat instance id.
     groupid?: number; // Get messages from users in this group.
                                              // 0 means that the function will determine the user group.
@@ -6339,7 +6339,7 @@ export type ModChatGetSessionsWSParams = {
 /**
  * Data returned by mod_chat_get_sessions WS.
  */
-export type ModChatGetSessionsWSResponse = {
+export type AddonModChatGetSessionsWSResponse = {
     sessions: { // List of users.
         sessionstart: number; // Session start time.
         sessionend: number; // Session end time.
@@ -6355,7 +6355,7 @@ export type ModChatGetSessionsWSResponse = {
 /**
  * Params of mod_chat_login_user WS.
  */
-export type ModChatLoginUserWSParams = {
+export type AddonModChatLoginUserWSParams = {
     chatid: number; // Chat instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
@@ -6363,7 +6363,7 @@ export type ModChatLoginUserWSParams = {
 /**
  * Data returned by mod_chat_login_user WS.
  */
-export type ModChatLoginUserWSResponse = {
+export type AddonModChatLoginUserWSResponse = {
     chatsid: string; // Unique chat session id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -6371,7 +6371,7 @@ export type ModChatLoginUserWSResponse = {
 /**
  * Params of mod_chat_send_chat_message WS.
  */
-export type ModChatSendChatMessageWSParams = {
+export type AddonModChatSendChatMessageWSParams = {
     chatsid: string; // Chat session id (obtained via mod_chat_login_user).
     messagetext: string; // The message text.
     beepid?: string; // The beep id.
@@ -6380,7 +6380,7 @@ export type ModChatSendChatMessageWSParams = {
 /**
  * Data returned by mod_chat_send_chat_message WS.
  */
-export type ModChatSendChatMessageWSResponse = {
+export type AddonModChatSendChatMessageWSResponse = {
     messageid: number; // Message sent id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -6388,19 +6388,19 @@ export type ModChatSendChatMessageWSResponse = {
 /**
  * Params of mod_chat_view_chat WS.
  */
-export type ModChatViewChatWSParams = {
+export type AddonModChatViewChatWSParams = {
     chatid: number; // Chat instance id.
 };
 
 /**
  * Data returned by mod_chat_view_chat WS.
  */
-export type ModChatViewChatWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModChatViewChatWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_choice_delete_choice_responses WS.
  */
-export type ModChoiceDeleteChoiceResponsesWSParams = {
+export type AddonModChoiceDeleteChoiceResponsesWSParams = {
     choiceid: number; // Choice instance id.
     responses?: number[]; // Array of response ids, empty for deleting all the current user responses.
 };
@@ -6408,19 +6408,19 @@ export type ModChoiceDeleteChoiceResponsesWSParams = {
 /**
  * Data returned by mod_choice_delete_choice_responses WS.
  */
-export type ModChoiceDeleteChoiceResponsesWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModChoiceDeleteChoiceResponsesWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_choice_get_choice_options WS.
  */
-export type ModChoiceGetChoiceOptionsWSParams = {
+export type AddonModChoiceGetChoiceOptionsWSParams = {
     choiceid: number; // Choice instance id.
 };
 
 /**
  * Data returned by mod_choice_get_choice_options WS.
  */
-export type ModChoiceGetChoiceOptionsWSResponse = {
+export type AddonModChoiceGetChoiceOptionsWSResponse = {
     options: { // Options.
         id: number; // Option id.
         text: string; // Text of the choice.
@@ -6436,14 +6436,14 @@ export type ModChoiceGetChoiceOptionsWSResponse = {
 /**
  * Params of mod_choice_get_choice_results WS.
  */
-export type ModChoiceGetChoiceResultsWSParams = {
+export type AddonModChoiceGetChoiceResultsWSParams = {
     choiceid: number; // Choice instance id.
 };
 
 /**
  * Data returned by mod_choice_get_choice_results WS.
  */
-export type ModChoiceGetChoiceResultsWSResponse = {
+export type AddonModChoiceGetChoiceResultsWSResponse = {
     options: {
         id: number; // Choice instance id.
         text: string; // Text of the choice.
@@ -6464,14 +6464,14 @@ export type ModChoiceGetChoiceResultsWSResponse = {
 /**
  * Params of mod_choice_get_choices_by_courses WS.
  */
-export type ModChoiceGetChoicesByCoursesWSParams = {
+export type AddonModChoiceGetChoicesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_choice_get_choices_by_courses WS.
  */
-export type ModChoiceGetChoicesByCoursesWSResponse = {
+export type AddonModChoiceGetChoicesByCoursesWSResponse = {
     choices: {
         id: number; // Choice instance id.
         coursemodule: number; // Course module id.
@@ -6505,7 +6505,7 @@ export type ModChoiceGetChoicesByCoursesWSResponse = {
 /**
  * Params of mod_choice_submit_choice_response WS.
  */
-export type ModChoiceSubmitChoiceResponseWSParams = {
+export type AddonModChoiceSubmitChoiceResponseWSParams = {
     choiceid: number; // Choice instance id.
     responses: number[]; // Array of response ids.
 };
@@ -6513,7 +6513,7 @@ export type ModChoiceSubmitChoiceResponseWSParams = {
 /**
  * Data returned by mod_choice_submit_choice_response WS.
  */
-export type ModChoiceSubmitChoiceResponseWSResponse = {
+export type AddonModChoiceSubmitChoiceResponseWSResponse = {
     answers: {
         id: number; // Answer id.
         choiceid: number; // Choiceid.
@@ -6527,19 +6527,19 @@ export type ModChoiceSubmitChoiceResponseWSResponse = {
 /**
  * Params of mod_choice_view_choice WS.
  */
-export type ModChoiceViewChoiceWSParams = {
+export type AddonModChoiceViewChoiceWSParams = {
     choiceid: number; // Choice instance id.
 };
 
 /**
  * Data returned by mod_choice_view_choice WS.
  */
-export type ModChoiceViewChoiceWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModChoiceViewChoiceWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_data_add_entry WS.
  */
-export type ModDataAddEntryWSParams = {
+export type AddonModDataAddEntryWSParams = {
     databaseid: number; // Data instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     data: { // The fields data to be created.
@@ -6552,7 +6552,7 @@ export type ModDataAddEntryWSParams = {
 /**
  * Data returned by mod_data_add_entry WS.
  */
-export type ModDataAddEntryWSResponse = {
+export type AddonModDataAddEntryWSResponse = {
     newentryid: number; // True new created entry id. 0 if the entry was not created.
     generalnotifications: string[];
     fieldnotifications: {
@@ -6565,7 +6565,7 @@ export type ModDataAddEntryWSResponse = {
 /**
  * Params of mod_data_approve_entry WS.
  */
-export type ModDataApproveEntryWSParams = {
+export type AddonModDataApproveEntryWSParams = {
     entryid: number; // Record entry id.
     approve?: boolean; // Whether to approve (true) or unapprove the entry.
 };
@@ -6573,24 +6573,24 @@ export type ModDataApproveEntryWSParams = {
 /**
  * Data returned by mod_data_approve_entry WS.
  */
-export type ModDataApproveEntryWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModDataApproveEntryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_data_delete_entry WS.
  */
-export type ModDataDeleteEntryWSParams = {
+export type AddonModDataDeleteEntryWSParams = {
     entryid: number; // Record entry id.
 };
 
 /**
  * Data returned by mod_data_delete_entry WS.
  */
-export type ModDataDeleteEntryWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModDataDeleteEntryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_data_get_data_access_information WS.
  */
-export type ModDataGetDataAccessInformationWSParams = {
+export type AddonModDataGetDataAccessInformationWSParams = {
     databaseid: number; // Database instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
@@ -6598,7 +6598,7 @@ export type ModDataGetDataAccessInformationWSParams = {
 /**
  * Data returned by mod_data_get_data_access_information WS.
  */
-export type ModDataGetDataAccessInformationWSResponse = {
+export type AddonModDataGetDataAccessInformationWSResponse = {
     groupid: number; // User current group id (calculated).
     canaddentry: boolean; // Whether the user can add entries or not.
     canmanageentries: boolean; // Whether the user can manage entries or not.
@@ -6614,14 +6614,14 @@ export type ModDataGetDataAccessInformationWSResponse = {
 /**
  * Params of mod_data_get_databases_by_courses WS.
  */
-export type ModDataGetDatabasesByCoursesWSParams = {
+export type AddonModDataGetDatabasesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_data_get_databases_by_courses WS.
  */
-export type ModDataGetDatabasesByCoursesWSResponse = {
+export type AddonModDataGetDatabasesByCoursesWSResponse = {
     databases: {
         id: number; // Database id.
         course: number; // Course id.
@@ -6676,7 +6676,7 @@ export type ModDataGetDatabasesByCoursesWSResponse = {
 /**
  * Params of mod_data_get_entries WS.
  */
-export type ModDataGetEntriesWSParams = {
+export type AddonModDataGetEntriesWSParams = {
     databaseid: number; // Data instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     returncontents?: boolean; // Whether to return contents or not. This will return each entry
@@ -6700,7 +6700,7 @@ export type ModDataGetEntriesWSParams = {
 /**
  * Data returned by mod_data_get_entries WS.
  */
-export type ModDataGetEntriesWSResponse = {
+export type AddonModDataGetEntriesWSResponse = {
     entries: {
         id: number; // Record id.
         userid: number; // The id of the user who created the record.
@@ -6753,7 +6753,7 @@ export type ModDataGetEntriesWSResponse = {
 /**
  * Params of mod_data_get_entry WS.
  */
-export type ModDataGetEntryWSParams = {
+export type AddonModDataGetEntryWSParams = {
     entryid: number; // Record entry id.
     returncontents?: boolean; // Whether to return contents or not.
 };
@@ -6761,7 +6761,7 @@ export type ModDataGetEntryWSParams = {
 /**
  * Data returned by mod_data_get_entry WS.
  */
-export type ModDataGetEntryWSResponse = {
+export type AddonModDataGetEntryWSResponse = {
     entry: {
         id: number; // Record id.
         userid: number; // The id of the user who created the record.
@@ -6842,14 +6842,14 @@ export type ModDataGetEntryWSResponse = {
 /**
  * Params of mod_data_get_fields WS.
  */
-export type ModDataGetFieldsWSParams = {
+export type AddonModDataGetFieldsWSParams = {
     databaseid: number; // Database instance id.
 };
 
 /**
  * Data returned by mod_data_get_fields WS.
  */
-export type ModDataGetFieldsWSResponse = {
+export type AddonModDataGetFieldsWSResponse = {
     fields: {
         id: number; // Field id.
         dataid: number; // The field type of the content.
@@ -6874,7 +6874,7 @@ export type ModDataGetFieldsWSResponse = {
 /**
  * Params of mod_data_search_entries WS.
  */
-export type ModDataSearchEntriesWSParams = {
+export type AddonModDataSearchEntriesWSParams = {
     databaseid: number; // Data instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     returncontents?: boolean; // Whether to return contents or not.
@@ -6903,7 +6903,7 @@ export type ModDataSearchEntriesWSParams = {
 /**
  * Data returned by mod_data_search_entries WS.
  */
-export type ModDataSearchEntriesWSResponse = {
+export type AddonModDataSearchEntriesWSResponse = {
     entries: {
         id: number; // Record id.
         userid: number; // The id of the user who created the record.
@@ -6958,7 +6958,7 @@ export type ModDataSearchEntriesWSResponse = {
 /**
  * Params of mod_data_update_entry WS.
  */
-export type ModDataUpdateEntryWSParams = {
+export type AddonModDataUpdateEntryWSParams = {
     entryid: number; // The entry record id.
     data: { // The fields data to be updated.
         fieldid: number; // The field id.
@@ -6970,7 +6970,7 @@ export type ModDataUpdateEntryWSParams = {
 /**
  * Data returned by mod_data_update_entry WS.
  */
-export type ModDataUpdateEntryWSResponse = {
+export type AddonModDataUpdateEntryWSResponse = {
     updated: boolean; // True if the entry was successfully updated, false other wise.
     generalnotifications: string[];
     fieldnotifications: {
@@ -6983,19 +6983,19 @@ export type ModDataUpdateEntryWSResponse = {
 /**
  * Params of mod_data_view_database WS.
  */
-export type ModDataViewDatabaseWSParams = {
+export type AddonModDataViewDatabaseWSParams = {
     databaseid: number; // Data instance id.
 };
 
 /**
  * Data returned by mod_data_view_database WS.
  */
-export type ModDataViewDatabaseWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModDataViewDatabaseWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_feedback_get_analysis WS.
  */
-export type ModFeedbackGetAnalysisWSParams = {
+export type AddonModFeedbackGetAnalysisWSParams = {
     feedbackid: number; // Feedback instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
@@ -7004,7 +7004,7 @@ export type ModFeedbackGetAnalysisWSParams = {
 /**
  * Data returned by mod_feedback_get_analysis WS.
  */
-export type ModFeedbackGetAnalysisWSResponse = {
+export type AddonModFeedbackGetAnalysisWSResponse = {
     completedcount: number; // Number of completed submissions.
     itemscount: number; // Number of items (questions).
     itemsdata: {
@@ -7054,7 +7054,7 @@ export type ModFeedbackGetAnalysisWSResponse = {
 /**
  * Params of mod_feedback_get_current_completed_tmp WS.
  */
-export type ModFeedbackGetCurrentCompletedTmpWSParams = {
+export type AddonModFeedbackGetCurrentCompletedTmpWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7062,7 +7062,7 @@ export type ModFeedbackGetCurrentCompletedTmpWSParams = {
 /**
  * Data returned by mod_feedback_get_current_completed_tmp WS.
  */
-export type ModFeedbackGetCurrentCompletedTmpWSResponse = {
+export type AddonModFeedbackGetCurrentCompletedTmpWSResponse = {
     feedback: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7079,7 +7079,7 @@ export type ModFeedbackGetCurrentCompletedTmpWSResponse = {
 /**
  * Params of mod_feedback_get_feedback_access_information WS.
  */
-export type ModFeedbackGetFeedbackAccessInformationWSParams = {
+export type AddonModFeedbackGetFeedbackAccessInformationWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7087,7 +7087,7 @@ export type ModFeedbackGetFeedbackAccessInformationWSParams = {
 /**
  * Data returned by mod_feedback_get_feedback_access_information WS.
  */
-export type ModFeedbackGetFeedbackAccessInformationWSResponse = {
+export type AddonModFeedbackGetFeedbackAccessInformationWSResponse = {
     canviewanalysis: boolean; // Whether the user can view the analysis or not.
     cancomplete: boolean; // Whether the user can complete the feedback or not.
     cansubmit: boolean; // Whether the user can submit the feedback or not.
@@ -7104,14 +7104,14 @@ export type ModFeedbackGetFeedbackAccessInformationWSResponse = {
 /**
  * Params of mod_feedback_get_feedbacks_by_courses WS.
  */
-export type ModFeedbackGetFeedbacksByCoursesWSParams = {
+export type AddonModFeedbackGetFeedbacksByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_feedback_get_feedbacks_by_courses WS.
  */
-export type ModFeedbackGetFeedbacksByCoursesWSResponse = {
+export type AddonModFeedbackGetFeedbacksByCoursesWSResponse = {
     feedbacks: {
         id: number; // The primary key of the record.
         course: number; // Course id this feedback is part of.
@@ -7158,7 +7158,7 @@ export type ModFeedbackGetFeedbacksByCoursesWSResponse = {
 /**
  * Params of mod_feedback_get_finished_responses WS.
  */
-export type ModFeedbackGetFinishedResponsesWSParams = {
+export type AddonModFeedbackGetFinishedResponsesWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7166,7 +7166,7 @@ export type ModFeedbackGetFinishedResponsesWSParams = {
 /**
  * Data returned by mod_feedback_get_finished_responses WS.
  */
-export type ModFeedbackGetFinishedResponsesWSResponse = {
+export type AddonModFeedbackGetFinishedResponsesWSResponse = {
     responses: {
         id: number; // The record id.
         course_id: number; // The course id this record belongs to.
@@ -7181,7 +7181,7 @@ export type ModFeedbackGetFinishedResponsesWSResponse = {
 /**
  * Params of mod_feedback_get_items WS.
  */
-export type ModFeedbackGetItemsWSParams = {
+export type AddonModFeedbackGetItemsWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7189,7 +7189,7 @@ export type ModFeedbackGetItemsWSParams = {
 /**
  * Data returned by mod_feedback_get_items WS.
  */
-export type ModFeedbackGetItemsWSResponse = {
+export type AddonModFeedbackGetItemsWSResponse = {
     items: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7234,7 +7234,7 @@ export type ModFeedbackGetItemsWSResponse = {
 /**
  * Params of mod_feedback_get_last_completed WS.
  */
-export type ModFeedbackGetLastCompletedWSParams = {
+export type AddonModFeedbackGetLastCompletedWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7242,7 +7242,7 @@ export type ModFeedbackGetLastCompletedWSParams = {
 /**
  * Data returned by mod_feedback_get_last_completed WS.
  */
-export type ModFeedbackGetLastCompletedWSResponse = {
+export type AddonModFeedbackGetLastCompletedWSResponse = {
     completed: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7258,7 +7258,7 @@ export type ModFeedbackGetLastCompletedWSResponse = {
 /**
  * Params of mod_feedback_get_non_respondents WS.
  */
-export type ModFeedbackGetNonRespondentsWSParams = {
+export type AddonModFeedbackGetNonRespondentsWSParams = {
     feedbackid: number; // Feedback instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     sort?: string; // Sort param, must be firstname, lastname or lastaccess (default).
@@ -7270,7 +7270,7 @@ export type ModFeedbackGetNonRespondentsWSParams = {
 /**
  * Data returned by mod_feedback_get_non_respondents WS.
  */
-export type ModFeedbackGetNonRespondentsWSResponse = {
+export type AddonModFeedbackGetNonRespondentsWSResponse = {
     users: {
         courseid: number; // Course id.
         userid: number; // The user id.
@@ -7284,7 +7284,7 @@ export type ModFeedbackGetNonRespondentsWSResponse = {
 /**
  * Params of mod_feedback_get_page_items WS.
  */
-export type ModFeedbackGetPageItemsWSParams = {
+export type AddonModFeedbackGetPageItemsWSParams = {
     feedbackid: number; // Feedback instance id.
     page: number; // The page to get starting by 0.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
@@ -7293,7 +7293,7 @@ export type ModFeedbackGetPageItemsWSParams = {
 /**
  * Data returned by mod_feedback_get_page_items WS.
  */
-export type ModFeedbackGetPageItemsWSResponse = {
+export type AddonModFeedbackGetPageItemsWSResponse = {
     items: {
         id: number; // The record id.
         feedback: number; // The feedback instance id this records belongs to.
@@ -7340,7 +7340,7 @@ export type ModFeedbackGetPageItemsWSResponse = {
 /**
  * Params of mod_feedback_get_responses_analysis WS.
  */
-export type ModFeedbackGetResponsesAnalysisWSParams = {
+export type AddonModFeedbackGetResponsesAnalysisWSParams = {
     feedbackid: number; // Feedback instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     page?: number; // The page of records to return.
@@ -7351,7 +7351,7 @@ export type ModFeedbackGetResponsesAnalysisWSParams = {
 /**
  * Data returned by mod_feedback_get_responses_analysis WS.
  */
-export type ModFeedbackGetResponsesAnalysisWSResponse = {
+export type AddonModFeedbackGetResponsesAnalysisWSResponse = {
     attempts: {
         id: number; // Completed id.
         courseid: number; // Course id.
@@ -7384,7 +7384,7 @@ export type ModFeedbackGetResponsesAnalysisWSResponse = {
 /**
  * Params of mod_feedback_get_unfinished_responses WS.
  */
-export type ModFeedbackGetUnfinishedResponsesWSParams = {
+export type AddonModFeedbackGetUnfinishedResponsesWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7392,7 +7392,7 @@ export type ModFeedbackGetUnfinishedResponsesWSParams = {
 /**
  * Data returned by mod_feedback_get_unfinished_responses WS.
  */
-export type ModFeedbackGetUnfinishedResponsesWSResponse = {
+export type AddonModFeedbackGetUnfinishedResponsesWSResponse = {
     responses: {
         id: number; // The record id.
         course_id: number; // The course id this record belongs to.
@@ -7407,7 +7407,7 @@ export type ModFeedbackGetUnfinishedResponsesWSResponse = {
 /**
  * Params of mod_feedback_launch_feedback WS.
  */
-export type ModFeedbackLaunchFeedbackWSParams = {
+export type AddonModFeedbackLaunchFeedbackWSParams = {
     feedbackid: number; // Feedback instance id.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
 };
@@ -7415,7 +7415,7 @@ export type ModFeedbackLaunchFeedbackWSParams = {
 /**
  * Data returned by mod_feedback_launch_feedback WS.
  */
-export type ModFeedbackLaunchFeedbackWSResponse = {
+export type AddonModFeedbackLaunchFeedbackWSResponse = {
     gopage: number; // The next page to go (-1 if we were already in the last page). 0 for first page.
     warnings?: CoreWSExternalWarning[];
 };
@@ -7423,7 +7423,7 @@ export type ModFeedbackLaunchFeedbackWSResponse = {
 /**
  * Params of mod_feedback_process_page WS.
  */
-export type ModFeedbackProcessPageWSParams = {
+export type AddonModFeedbackProcessPageWSParams = {
     feedbackid: number; // Feedback instance id.
     page: number; // The page being processed.
     responses?: { // The data to be processed.
@@ -7437,7 +7437,7 @@ export type ModFeedbackProcessPageWSParams = {
 /**
  * Data returned by mod_feedback_process_page WS.
  */
-export type ModFeedbackProcessPageWSResponse = {
+export type AddonModFeedbackProcessPageWSResponse = {
     jumpto: number; // The page to jump to.
     completed: boolean; // If the user completed the feedback.
     completionpagecontents: string; // The completion page contents.
@@ -7448,7 +7448,7 @@ export type ModFeedbackProcessPageWSResponse = {
 /**
  * Params of mod_feedback_view_feedback WS.
  */
-export type ModFeedbackViewFeedbackWSParams = {
+export type AddonModFeedbackViewFeedbackWSParams = {
     feedbackid: number; // Feedback instance id.
     moduleviewed?: boolean; // If we need to mark the module as viewed for completion.
     courseid?: number; // Course where user completes the feedback (for site feedbacks only).
@@ -7457,19 +7457,19 @@ export type ModFeedbackViewFeedbackWSParams = {
 /**
  * Data returned by mod_feedback_view_feedback WS.
  */
-export type ModFeedbackViewFeedbackWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModFeedbackViewFeedbackWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_folder_get_folders_by_courses WS.
  */
-export type ModFolderGetFoldersByCoursesWSParams = {
+export type AddonModFolderGetFoldersByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_folder_get_folders_by_courses WS.
  */
-export type ModFolderGetFoldersByCoursesWSResponse = {
+export type AddonModFolderGetFoldersByCoursesWSResponse = {
     folders: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -7494,19 +7494,19 @@ export type ModFolderGetFoldersByCoursesWSResponse = {
 /**
  * Params of mod_folder_view_folder WS.
  */
-export type ModFolderViewFolderWSParams = {
+export type AddonModFolderViewFolderWSParams = {
     folderid: number; // Folder instance id.
 };
 
 /**
  * Data returned by mod_folder_view_folder WS.
  */
-export type ModFolderViewFolderWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModFolderViewFolderWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_add_discussion WS.
  */
-export type ModForumAddDiscussionWSParams = {
+export type AddonModForumAddDiscussionWSParams = {
     forumid: number; // Forum instance ID.
     subject: string; // New Discussion subject.
     message: string; // New Discussion message (only html format allowed).
@@ -7527,7 +7527,7 @@ export type ModForumAddDiscussionWSParams = {
 /**
  * Data returned by mod_forum_add_discussion WS.
  */
-export type ModForumAddDiscussionWSResponse = {
+export type AddonModForumAddDiscussionWSResponse = {
     discussionid: number; // New Discussion ID.
     warnings?: CoreWSExternalWarning[];
 };
@@ -7535,7 +7535,7 @@ export type ModForumAddDiscussionWSResponse = {
 /**
  * Params of mod_forum_add_discussion_post WS.
  */
-export type ModForumAddDiscussionPostWSParams = {
+export type AddonModForumAddDiscussionPostWSParams = {
     postid: number; // The post id we are going to reply to
                                              // (can be the initial discussion post.
 
@@ -7559,7 +7559,7 @@ export type ModForumAddDiscussionPostWSParams = {
 /**
  * Data returned by mod_forum_add_discussion_post WS.
  */
-export type ModForumAddDiscussionPostWSResponse = {
+export type AddonModForumAddDiscussionPostWSResponse = {
     postid: number; // New post id.
     warnings?: CoreWSExternalWarning[];
     post: {
@@ -7670,7 +7670,7 @@ export type ModForumAddDiscussionPostWSResponse = {
 /**
  * Params of mod_forum_can_add_discussion WS.
  */
-export type ModForumCanAddDiscussionWSParams = {
+export type AddonModForumCanAddDiscussionWSParams = {
     forumid: number; // Forum instance ID.
     groupid?: number; // The group to check, default to active group.
                                              // Use -1 to check if the user can post in all the groups.
@@ -7680,7 +7680,7 @@ export type ModForumCanAddDiscussionWSParams = {
 /**
  * Data returned by mod_forum_can_add_discussion WS.
  */
-export type ModForumCanAddDiscussionWSResponse = {
+export type AddonModForumCanAddDiscussionWSResponse = {
     status: boolean; // True if the user can add discussions, false otherwise.
     canpindiscussions?: boolean; // True if the user can pin discussions, false otherwise.
     cancreateattachment?: boolean; // True if the user can add attachments, false otherwise.
@@ -7690,26 +7690,26 @@ export type ModForumCanAddDiscussionWSResponse = {
 /**
  * Params of mod_forum_delete_post WS.
  */
-export type ModForumDeletePostWSParams = {
+export type AddonModForumDeletePostWSParams = {
     postid: number; // Post to be deleted. It can be a discussion topic post.
 };
 
 /**
  * Data returned by mod_forum_delete_post WS.
  */
-export type ModForumDeletePostWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModForumDeletePostWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_get_discussion_post WS.
  */
-export type ModForumGetDiscussionPostWSParams = {
+export type AddonModForumGetDiscussionPostWSParams = {
     postid: number; // Post to fetch.
 };
 
 /**
  * Data returned by mod_forum_get_discussion_post WS.
  */
-export type ModForumGetDiscussionPostWSResponse = {
+export type AddonModForumGetDiscussionPostWSResponse = {
     post: {
         id: number; // Id.
         subject: string; // Subject.
@@ -7815,7 +7815,7 @@ export type ModForumGetDiscussionPostWSResponse = {
 /**
  * Params of mod_forum_get_discussion_posts WS.
  */
-export type ModForumGetDiscussionPostsWSParams = {
+export type AddonModForumGetDiscussionPostsWSParams = {
     discussionid: number; // The ID of the discussion from which to fetch posts.
     sortby?: string; // Sort by this element: id, created or modified.
     sortdirection?: string; // Sort direction: ASC or DESC.
@@ -7824,7 +7824,7 @@ export type ModForumGetDiscussionPostsWSParams = {
 /**
  * Data returned by mod_forum_get_discussion_posts WS.
  */
-export type ModForumGetDiscussionPostsWSResponse = {
+export type AddonModForumGetDiscussionPostsWSResponse = {
     posts: {
         id: number; // Id.
         subject: string; // Subject.
@@ -7962,14 +7962,14 @@ export type ModForumGetDiscussionPostsWSResponse = {
 /**
  * Params of mod_forum_get_forum_access_information WS.
  */
-export type ModForumGetForumAccessInformationWSParams = {
+export type AddonModForumGetForumAccessInformationWSParams = {
     forumid: number; // Forum instance id.
 };
 
 /**
  * Data returned by mod_forum_get_forum_access_information WS.
  */
-export type ModForumGetForumAccessInformationWSResponse = {
+export type AddonModForumGetForumAccessInformationWSResponse = {
     warnings?: CoreWSExternalWarning[];
     canaddinstance?: boolean; // Whether the user has the capability mod/forum:addinstance allowed.
     canviewdiscussion?: boolean; // Whether the user has the capability mod/forum:viewdiscussion allowed.
@@ -8011,7 +8011,7 @@ export type ModForumGetForumAccessInformationWSResponse = {
 /**
  * Params of mod_forum_get_forum_discussion_posts WS.
  */
-export type ModForumGetForumDiscussionPostsWSParams = {
+export type AddonModForumGetForumDiscussionPostsWSParams = {
     discussionid: number; // Discussion ID.
     sortby?: string; // Sort by this element: id, created or modified.
     sortdirection?: string; // Sort direction: ASC or DESC.
@@ -8020,7 +8020,7 @@ export type ModForumGetForumDiscussionPostsWSParams = {
 /**
  * Data returned by mod_forum_get_forum_discussion_posts WS.
  */
-export type ModForumGetForumDiscussionPostsWSResponse = {
+export type AddonModForumGetForumDiscussionPostsWSResponse = {
     posts: {
         id: number; // Post id.
         discussion: number; // Discussion id.
@@ -8094,7 +8094,7 @@ export type ModForumGetForumDiscussionPostsWSResponse = {
 /**
  * Params of mod_forum_get_forum_discussions WS.
  */
-export type ModForumGetForumDiscussionsWSParams = {
+export type AddonModForumGetForumDiscussionsWSParams = {
     forumid: number; // Forum instance id.
     sortorder?: number; // Sort by this element: numreplies, , created or timemodified.
     page?: number; // Current page.
@@ -8105,7 +8105,7 @@ export type ModForumGetForumDiscussionsWSParams = {
 /**
  * Data returned by mod_forum_get_forum_discussions WS.
  */
-export type ModForumGetForumDiscussionsWSResponse = {
+export type AddonModForumGetForumDiscussionsWSResponse = {
     discussions: {
         id: number; // Post id.
         name: string; // Discussion name.
@@ -8148,7 +8148,7 @@ export type ModForumGetForumDiscussionsWSResponse = {
 /**
  * Params of mod_forum_get_forum_discussions_paginated WS.
  */
-export type ModForumGetForumDiscussionsPaginatedWSParams = {
+export type AddonModForumGetForumDiscussionsPaginatedWSParams = {
     forumid: number; // Forum instance id.
     sortby?: string; // Sort by this element: id, timemodified, timestart or timeend.
     sortdirection?: string; // Sort direction: ASC or DESC.
@@ -8159,7 +8159,7 @@ export type ModForumGetForumDiscussionsPaginatedWSParams = {
 /**
  * Data returned by mod_forum_get_forum_discussions_paginated WS.
  */
-export type ModForumGetForumDiscussionsPaginatedWSResponse = {
+export type AddonModForumGetForumDiscussionsPaginatedWSResponse = {
     discussions: {
         id: number; // Post id.
         name: string; // Discussion name.
@@ -8200,14 +8200,14 @@ export type ModForumGetForumDiscussionsPaginatedWSResponse = {
 /**
  * Params of mod_forum_get_forums_by_courses WS.
  */
-export type ModForumGetForumsByCoursesWSParams = {
+export type AddonModForumGetForumsByCoursesWSParams = {
     courseids?: number[]; // Array of Course IDs.
 };
 
 /**
  * Data returned by mod_forum_get_forums_by_courses WS.
  */
-export type ModForumGetForumsByCoursesWSResponse = {
+export type AddonModForumGetForumsByCoursesWSResponse = {
     id: number; // Forum id.
     course: number; // Course id.
     type: string; // The forum type.
@@ -8247,7 +8247,7 @@ export type ModForumGetForumsByCoursesWSResponse = {
 /**
  * Params of mod_forum_prepare_draft_area_for_post WS.
  */
-export type ModForumPrepareDraftAreaForPostWSParams = {
+export type AddonModForumPrepareDraftAreaForPostWSParams = {
     postid: number; // Post to prepare the draft area for.
     area: string; // Area to prepare: attachment or post.
     draftitemid?: number; // The draft item id to use. 0 to generate one.
@@ -8260,7 +8260,7 @@ export type ModForumPrepareDraftAreaForPostWSParams = {
 /**
  * Data returned by mod_forum_prepare_draft_area_for_post WS.
  */
-export type ModForumPrepareDraftAreaForPostWSResponse = {
+export type AddonModForumPrepareDraftAreaForPostWSResponse = {
     draftitemid: number; // Draft item id for the file area.
     files?: CoreWSExternalFile[];
     areaoptions: { // Draft file area options.
@@ -8274,7 +8274,7 @@ export type ModForumPrepareDraftAreaForPostWSResponse = {
 /**
  * Params of mod_forum_set_lock_state WS.
  */
-export type ModForumSetLockStateWSParams = {
+export type AddonModForumSetLockStateWSParams = {
     forumid: number; // Forum that the discussion is in.
     discussionid: number; // The discussion to lock / unlock.
     targetstate: number; // The timestamp for the lock state.
@@ -8283,7 +8283,7 @@ export type ModForumSetLockStateWSParams = {
 /**
  * Data returned by mod_forum_set_lock_state WS.
  */
-export type ModForumSetLockStateWSResponse = {
+export type AddonModForumSetLockStateWSResponse = {
     id: number; // The discussion we are locking.
     locked: boolean; // The locked state of the discussion.
     times: {
@@ -8294,7 +8294,7 @@ export type ModForumSetLockStateWSResponse = {
 /**
  * Params of mod_forum_set_pin_state WS.
  */
-export type ModForumSetPinStateWSParams = {
+export type AddonModForumSetPinStateWSParams = {
     discussionid: number; // The discussion to pin or unpin.
     targetstate: number; // The target state.
 };
@@ -8302,7 +8302,7 @@ export type ModForumSetPinStateWSParams = {
 /**
  * Data returned by mod_forum_set_pin_state WS.
  */
-export type ModForumSetPinStateWSResponse = {
+export type AddonModForumSetPinStateWSResponse = {
     id: number; // Id.
     forumid: number; // Forumid.
     pinned: boolean; // Pinned.
@@ -8352,7 +8352,7 @@ export type ModForumSetPinStateWSResponse = {
 /**
  * Params of mod_forum_set_subscription_state WS.
  */
-export type ModForumSetSubscriptionStateWSParams = {
+export type AddonModForumSetSubscriptionStateWSParams = {
     forumid: number; // Forum that the discussion is in.
     discussionid: number; // The discussion to subscribe or unsubscribe.
     targetstate: boolean; // The target state.
@@ -8361,7 +8361,7 @@ export type ModForumSetSubscriptionStateWSParams = {
 /**
  * Data returned by mod_forum_set_subscription_state WS.
  */
-export type ModForumSetSubscriptionStateWSResponse = {
+export type AddonModForumSetSubscriptionStateWSResponse = {
     id: number; // Id.
     forumid: number; // Forumid.
     pinned: boolean; // Pinned.
@@ -8411,7 +8411,7 @@ export type ModForumSetSubscriptionStateWSResponse = {
 /**
  * Params of mod_forum_toggle_favourite_state WS.
  */
-export type ModForumToggleFavouriteStateWSParams = {
+export type AddonModForumToggleFavouriteStateWSParams = {
     discussionid: number; // The discussion to subscribe or unsubscribe.
     targetstate: boolean; // The target state.
 };
@@ -8419,7 +8419,7 @@ export type ModForumToggleFavouriteStateWSParams = {
 /**
  * Data returned by mod_forum_toggle_favourite_state WS.
  */
-export type ModForumToggleFavouriteStateWSResponse = {
+export type AddonModForumToggleFavouriteStateWSResponse = {
     id: number; // Id.
     forumid: number; // Forumid.
     pinned: boolean; // Pinned.
@@ -8469,7 +8469,7 @@ export type ModForumToggleFavouriteStateWSResponse = {
 /**
  * Params of mod_forum_update_discussion_post WS.
  */
-export type ModForumUpdateDiscussionPostWSParams = {
+export type AddonModForumUpdateDiscussionPostWSParams = {
     postid: number; // Post to be updated. It can be a discussion topic post.
     subject?: string; // Updated post subject.
     message?: string; // Updated post message (HTML assumed if messageformat is not provided).
@@ -8488,36 +8488,36 @@ export type ModForumUpdateDiscussionPostWSParams = {
 /**
  * Data returned by mod_forum_update_discussion_post WS.
  */
-export type ModForumUpdateDiscussionPostWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModForumUpdateDiscussionPostWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_view_forum WS.
  */
-export type ModForumViewForumWSParams = {
+export type AddonModForumViewForumWSParams = {
     forumid: number; // Forum instance id.
 };
 
 /**
  * Data returned by mod_forum_view_forum WS.
  */
-export type ModForumViewForumWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModForumViewForumWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_forum_view_forum_discussion WS.
  */
-export type ModForumViewForumDiscussionWSParams = {
+export type AddonModForumViewForumDiscussionWSParams = {
     discussionid: number; // Discussion id.
 };
 
 /**
  * Data returned by mod_forum_view_forum_discussion WS.
  */
-export type ModForumViewForumDiscussionWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModForumViewForumDiscussionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_glossary_add_entry WS.
  */
-export type ModGlossaryAddEntryWSParams = {
+export type AddonModGlossaryAddEntryWSParams = {
     glossaryid: number; // Glossary id.
     concept: string; // Glossary concept.
     definition: string; // Glossary concept definition.
@@ -8539,7 +8539,7 @@ export type ModGlossaryAddEntryWSParams = {
 /**
  * Data returned by mod_glossary_add_entry WS.
  */
-export type ModGlossaryAddEntryWSResponse = {
+export type AddonModGlossaryAddEntryWSResponse = {
     entryid: number; // New glossary entry ID.
     warnings?: CoreWSExternalWarning[];
 };
@@ -8547,14 +8547,14 @@ export type ModGlossaryAddEntryWSResponse = {
 /**
  * Params of mod_glossary_delete_entry WS.
  */
-export type ModGlossaryDeleteEntryWSParams = {
+export type AddonModGlossaryDeleteEntryWSParams = {
     entryid: number; // Glossary entry id to delete.
 };
 
 /**
  * Data returned by mod_glossary_delete_entry WS.
  */
-export type ModGlossaryDeleteEntryWSResponse = {
+export type AddonModGlossaryDeleteEntryWSResponse = {
     result: boolean; // The processing result.
     warnings?: CoreWSExternalWarning[];
 };
@@ -8562,7 +8562,7 @@ export type ModGlossaryDeleteEntryWSResponse = {
 /**
  * Params of mod_glossary_get_authors WS.
  */
-export type ModGlossaryGetAuthorsWSParams = {
+export type AddonModGlossaryGetAuthorsWSParams = {
     id: number; // Glossary entry ID.
     from?: number; // Start returning records from here.
     limit?: number; // Number of records to return.
@@ -8574,7 +8574,7 @@ export type ModGlossaryGetAuthorsWSParams = {
 /**
  * Data returned by mod_glossary_get_authors WS.
  */
-export type ModGlossaryGetAuthorsWSResponse = {
+export type AddonModGlossaryGetAuthorsWSResponse = {
     count: number; // The total number of records.
     authors: {
         id: number; // The user ID.
@@ -8587,7 +8587,7 @@ export type ModGlossaryGetAuthorsWSResponse = {
 /**
  * Params of mod_glossary_get_categories WS.
  */
-export type ModGlossaryGetCategoriesWSParams = {
+export type AddonModGlossaryGetCategoriesWSParams = {
     id: number; // The glossary ID.
     from?: number; // Start returning records from here.
     limit?: number; // Number of records to return.
@@ -8596,7 +8596,7 @@ export type ModGlossaryGetCategoriesWSParams = {
 /**
  * Data returned by mod_glossary_get_categories WS.
  */
-export type ModGlossaryGetCategoriesWSResponse = {
+export type AddonModGlossaryGetCategoriesWSResponse = {
     count: number; // The total number of records.
     categories: {
         id: number; // The category ID.
@@ -8610,7 +8610,7 @@ export type ModGlossaryGetCategoriesWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_author WS.
  */
-export type ModGlossaryGetEntriesByAuthorWSParams = {
+export type AddonModGlossaryGetEntriesByAuthorWSParams = {
     id: number; // Glossary entry ID.
     letter: string; // First letter of firstname or lastname, or either keywords: 'ALL' or 'SPECIAL'.
     field?: string; // Search and order using: 'FIRSTNAME' or 'LASTNAME'.
@@ -8625,7 +8625,7 @@ export type ModGlossaryGetEntriesByAuthorWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_author WS.
  */
-export type ModGlossaryGetEntriesByAuthorWSResponse = {
+export type AddonModGlossaryGetEntriesByAuthorWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8697,7 +8697,7 @@ export type ModGlossaryGetEntriesByAuthorWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_author_id WS.
  */
-export type ModGlossaryGetEntriesByAuthorIdWSParams = {
+export type AddonModGlossaryGetEntriesByAuthorIdWSParams = {
     id: number; // Glossary entry ID.
     authorid: number; // The author ID.
     order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
@@ -8712,7 +8712,7 @@ export type ModGlossaryGetEntriesByAuthorIdWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_author_id WS.
  */
-export type ModGlossaryGetEntriesByAuthorIdWSResponse = {
+export type AddonModGlossaryGetEntriesByAuthorIdWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8784,7 +8784,7 @@ export type ModGlossaryGetEntriesByAuthorIdWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_category WS.
  */
-export type ModGlossaryGetEntriesByCategoryWSParams = {
+export type AddonModGlossaryGetEntriesByCategoryWSParams = {
     id: number; // The glossary ID.
     categoryid: number; // The category ID. Use '0' for all categories, or '-1' for uncategorised entries.
     from?: number; // Start returning records from here.
@@ -8797,7 +8797,7 @@ export type ModGlossaryGetEntriesByCategoryWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_category WS.
  */
-export type ModGlossaryGetEntriesByCategoryWSResponse = {
+export type AddonModGlossaryGetEntriesByCategoryWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8871,7 +8871,7 @@ export type ModGlossaryGetEntriesByCategoryWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_date WS.
  */
-export type ModGlossaryGetEntriesByDateWSParams = {
+export type AddonModGlossaryGetEntriesByDateWSParams = {
     id: number; // Glossary entry ID.
     order?: string; // Order the records by: 'CREATION' or 'UPDATE'.
     sort?: string; // The direction of the order: 'ASC' or 'DESC'.
@@ -8885,7 +8885,7 @@ export type ModGlossaryGetEntriesByDateWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_date WS.
  */
-export type ModGlossaryGetEntriesByDateWSResponse = {
+export type AddonModGlossaryGetEntriesByDateWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -8957,7 +8957,7 @@ export type ModGlossaryGetEntriesByDateWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_letter WS.
  */
-export type ModGlossaryGetEntriesByLetterWSParams = {
+export type AddonModGlossaryGetEntriesByLetterWSParams = {
     id: number; // Glossary entry ID.
     letter: string; // A letter, or either keywords: 'ALL' or 'SPECIAL'.
     from?: number; // Start returning records from here.
@@ -8970,7 +8970,7 @@ export type ModGlossaryGetEntriesByLetterWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_letter WS.
  */
-export type ModGlossaryGetEntriesByLetterWSResponse = {
+export type AddonModGlossaryGetEntriesByLetterWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9042,7 +9042,7 @@ export type ModGlossaryGetEntriesByLetterWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_search WS.
  */
-export type ModGlossaryGetEntriesBySearchWSParams = {
+export type AddonModGlossaryGetEntriesBySearchWSParams = {
     id: number; // Glossary entry ID.
     query: string; // The query string.
     fullsearch?: boolean; // The query.
@@ -9058,7 +9058,7 @@ export type ModGlossaryGetEntriesBySearchWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_search WS.
  */
-export type ModGlossaryGetEntriesBySearchWSResponse = {
+export type AddonModGlossaryGetEntriesBySearchWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9130,7 +9130,7 @@ export type ModGlossaryGetEntriesBySearchWSResponse = {
 /**
  * Params of mod_glossary_get_entries_by_term WS.
  */
-export type ModGlossaryGetEntriesByTermWSParams = {
+export type AddonModGlossaryGetEntriesByTermWSParams = {
     id: number; // Glossary entry ID.
     term: string; // The entry concept, or alias.
     from?: number; // Start returning records from here.
@@ -9143,7 +9143,7 @@ export type ModGlossaryGetEntriesByTermWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_by_term WS.
  */
-export type ModGlossaryGetEntriesByTermWSResponse = {
+export type AddonModGlossaryGetEntriesByTermWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9215,7 +9215,7 @@ export type ModGlossaryGetEntriesByTermWSResponse = {
 /**
  * Params of mod_glossary_get_entries_to_approve WS.
  */
-export type ModGlossaryGetEntriesToApproveWSParams = {
+export type AddonModGlossaryGetEntriesToApproveWSParams = {
     id: number; // Glossary entry ID.
     letter: string; // A letter, or either keywords: 'ALL' or 'SPECIAL'.
     order?: string; // Order by: 'CONCEPT', 'CREATION' or 'UPDATE'.
@@ -9229,7 +9229,7 @@ export type ModGlossaryGetEntriesToApproveWSParams = {
 /**
  * Data returned by mod_glossary_get_entries_to_approve WS.
  */
-export type ModGlossaryGetEntriesToApproveWSResponse = {
+export type AddonModGlossaryGetEntriesToApproveWSResponse = {
     count: number; // The total number of records matching the request.
     entries: {
         id: number; // The entry ID.
@@ -9301,14 +9301,14 @@ export type ModGlossaryGetEntriesToApproveWSResponse = {
 /**
  * Params of mod_glossary_get_entry_by_id WS.
  */
-export type ModGlossaryGetEntryByIdWSParams = {
+export type AddonModGlossaryGetEntryByIdWSParams = {
     id: number; // Glossary entry ID.
 };
 
 /**
  * Data returned by mod_glossary_get_entry_by_id WS.
  */
-export type ModGlossaryGetEntryByIdWSResponse = {
+export type AddonModGlossaryGetEntryByIdWSResponse = {
     entry: {
         id: number; // The entry ID.
         glossaryid: number; // The glossary ID.
@@ -9383,14 +9383,14 @@ export type ModGlossaryGetEntryByIdWSResponse = {
 /**
  * Params of mod_glossary_get_glossaries_by_courses WS.
  */
-export type ModGlossaryGetGlossariesByCoursesWSParams = {
+export type AddonModGlossaryGetGlossariesByCoursesWSParams = {
     courseids?: number[]; // Array of course IDs.
 };
 
 /**
  * Data returned by mod_glossary_get_glossaries_by_courses WS.
  */
-export type ModGlossaryGetGlossariesByCoursesWSResponse = {
+export type AddonModGlossaryGetGlossariesByCoursesWSResponse = {
     glossaries: {
         id: number; // Glossary id.
         coursemodule: number; // Course module id.
@@ -9435,14 +9435,14 @@ export type ModGlossaryGetGlossariesByCoursesWSResponse = {
 /**
  * Params of mod_glossary_prepare_entry_for_edition WS.
  */
-export type ModGlossaryPrepareEntryForEditionWSParams = {
+export type AddonModGlossaryPrepareEntryForEditionWSParams = {
     entryid: number; // Glossary entry id to update.
 };
 
 /**
  * Data returned by mod_glossary_prepare_entry_for_edition WS.
  */
-export type ModGlossaryPrepareEntryForEditionWSResponse = {
+export type AddonModGlossaryPrepareEntryForEditionWSResponse = {
     inlineattachmentsid: number; // Draft item id for the text editor.
     attachmentsid: number; // Draft item id for the file manager.
     areas: { // File areas including options.
@@ -9460,7 +9460,7 @@ export type ModGlossaryPrepareEntryForEditionWSResponse = {
 /**
  * Params of mod_glossary_update_entry WS.
  */
-export type ModGlossaryUpdateEntryWSParams = {
+export type AddonModGlossaryUpdateEntryWSParams = {
     entryid: number; // Glossary entry id to update.
     concept: string; // Glossary concept.
     definition: string; // Glossary concept definition.
@@ -9482,7 +9482,7 @@ export type ModGlossaryUpdateEntryWSParams = {
 /**
  * Data returned by mod_glossary_update_entry WS.
  */
-export type ModGlossaryUpdateEntryWSResponse = {
+export type AddonModGlossaryUpdateEntryWSResponse = {
     result: boolean; // The update result.
     warnings?: CoreWSExternalWarning[];
 };
@@ -9490,19 +9490,19 @@ export type ModGlossaryUpdateEntryWSResponse = {
 /**
  * Params of mod_glossary_view_entry WS.
  */
-export type ModGlossaryViewEntryWSParams = {
+export type AddonModGlossaryViewEntryWSParams = {
     id: number; // Glossary entry ID.
 };
 
 /**
  * Data returned by mod_glossary_view_entry WS.
  */
-export type ModGlossaryViewEntryWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModGlossaryViewEntryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_glossary_view_glossary WS.
  */
-export type ModGlossaryViewGlossaryWSParams = {
+export type AddonModGlossaryViewGlossaryWSParams = {
     id: number; // Glossary instance ID.
     mode: string; // The mode in which the glossary is viewed.
 };
@@ -9510,12 +9510,12 @@ export type ModGlossaryViewGlossaryWSParams = {
 /**
  * Data returned by mod_glossary_view_glossary WS.
  */
-export type ModGlossaryViewGlossaryWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModGlossaryViewGlossaryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_h5pactivity_get_attempts WS.
  */
-export type ModH5pactivityGetAttemptsWSParams = {
+export type AddonModH5pactivityGetAttemptsWSParams = {
     h5pactivityid: number; // H5p activity instance id.
     userids?: number[]; // User ids.
 };
@@ -9523,7 +9523,7 @@ export type ModH5pactivityGetAttemptsWSParams = {
 /**
  * Data returned by mod_h5pactivity_get_attempts WS.
  */
-export type ModH5pactivityGetAttemptsWSResponse = {
+export type AddonModH5pactivityGetAttemptsWSResponse = {
     activityid: number; // Activity course module ID.
     usersattempts: { // The complete users attempts list.
         userid: number; // The user id.
@@ -9566,14 +9566,14 @@ export type ModH5pactivityGetAttemptsWSResponse = {
 /**
  * Params of mod_h5pactivity_get_h5pactivities_by_courses WS.
  */
-export type ModH5pactivityGetH5pactivitiesByCoursesWSParams = {
+export type AddonModH5pactivityGetH5pactivitiesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_h5pactivity_get_h5pactivities_by_courses WS.
  */
-export type ModH5pactivityGetH5pactivitiesByCoursesWSResponse = {
+export type AddonModH5pactivityGetH5pactivitiesByCoursesWSResponse = {
     h5pactivities: {
         id: number; // The primary key of the record.
         course: number; // Course id this h5p activity is part of.
@@ -9624,14 +9624,14 @@ export type ModH5pactivityGetH5pactivitiesByCoursesWSResponse = {
 /**
  * Params of mod_h5pactivity_get_h5pactivity_access_information WS.
  */
-export type ModH5pactivityGetH5pactivityAccessInformationWSParams = {
+export type AddonModH5pactivityGetH5pactivityAccessInformationWSParams = {
     h5pactivityid: number; // H5p activity instance id.
 };
 
 /**
  * Data returned by mod_h5pactivity_get_h5pactivity_access_information WS.
  */
-export type ModH5pactivityGetH5pactivityAccessInformationWSResponse = {
+export type AddonModH5pactivityGetH5pactivityAccessInformationWSResponse = {
     warnings?: CoreWSExternalWarning[];
     canview?: boolean; // Whether the user has the capability mod/h5pactivity:view allowed.
     canaddinstance?: boolean; // Whether the user has the capability mod/h5pactivity:addinstance allowed.
@@ -9642,7 +9642,7 @@ export type ModH5pactivityGetH5pactivityAccessInformationWSResponse = {
 /**
  * Params of mod_h5pactivity_get_results WS.
  */
-export type ModH5pactivityGetResultsWSParams = {
+export type AddonModH5pactivityGetResultsWSParams = {
     h5pactivityid: number; // H5p activity instance id.
     attemptids?: number[]; // Attempt ids.
 };
@@ -9650,7 +9650,7 @@ export type ModH5pactivityGetResultsWSParams = {
 /**
  * Data returned by mod_h5pactivity_get_results WS.
  */
-export type ModH5pactivityGetResultsWSResponse = {
+export type AddonModH5pactivityGetResultsWSResponse = {
     activityid: number; // Activity course module ID.
     attempts: { // The complete attempts list.
         id: number; // ID of the context.
@@ -9714,26 +9714,26 @@ export type ModH5pactivityGetResultsWSResponse = {
 /**
  * Params of mod_h5pactivity_view_h5pactivity WS.
  */
-export type ModH5pactivityViewH5pactivityWSParams = {
+export type AddonModH5pactivityViewH5pactivityWSParams = {
     h5pactivityid: number; // H5P activity instance id.
 };
 
 /**
  * Data returned by mod_h5pactivity_view_h5pactivity WS.
  */
-export type ModH5pactivityViewH5pactivityWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModH5pactivityViewH5pactivityWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_imscp_get_imscps_by_courses WS.
  */
-export type ModImscpGetImscpsByCoursesWSParams = {
+export type AddonModImscpGetImscpsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_imscp_get_imscps_by_courses WS.
  */
-export type ModImscpGetImscpsByCoursesWSResponse = {
+export type AddonModImscpGetImscpsByCoursesWSResponse = {
     imscps: {
         id: number; // IMSCP id.
         coursemodule: number; // Course module id.
@@ -9757,26 +9757,26 @@ export type ModImscpGetImscpsByCoursesWSResponse = {
 /**
  * Params of mod_imscp_view_imscp WS.
  */
-export type ModImscpViewImscpWSParams = {
+export type AddonModImscpViewImscpWSParams = {
     imscpid: number; // Imscp instance id.
 };
 
 /**
  * Data returned by mod_imscp_view_imscp WS.
  */
-export type ModImscpViewImscpWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModImscpViewImscpWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_label_get_labels_by_courses WS.
  */
-export type ModLabelGetLabelsByCoursesWSParams = {
+export type AddonModLabelGetLabelsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_label_get_labels_by_courses WS.
  */
-export type ModLabelGetLabelsByCoursesWSResponse = {
+export type AddonModLabelGetLabelsByCoursesWSResponse = {
     labels: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -9797,7 +9797,7 @@ export type ModLabelGetLabelsByCoursesWSResponse = {
 /**
  * Params of mod_lesson_finish_attempt WS.
  */
-export type ModLessonFinishAttemptWSParams = {
+export type AddonModLessonFinishAttemptWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Optional password (the lesson may be protected).
     outoftime?: boolean; // If the user run out of time.
@@ -9807,7 +9807,7 @@ export type ModLessonFinishAttemptWSParams = {
 /**
  * Data returned by mod_lesson_finish_attempt WS.
  */
-export type ModLessonFinishAttemptWSResponse = {
+export type AddonModLessonFinishAttemptWSResponse = {
     data: { // The EOL page information data.
         name: string; // Data name.
         value: string; // Data value.
@@ -9825,7 +9825,7 @@ export type ModLessonFinishAttemptWSResponse = {
 /**
  * Params of mod_lesson_get_attempts_overview WS.
  */
-export type ModLessonGetAttemptsOverviewWSParams = {
+export type AddonModLessonGetAttemptsOverviewWSParams = {
     lessonid: number; // Lesson instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
 };
@@ -9833,7 +9833,7 @@ export type ModLessonGetAttemptsOverviewWSParams = {
 /**
  * Data returned by mod_lesson_get_attempts_overview WS.
  */
-export type ModLessonGetAttemptsOverviewWSResponse = {
+export type AddonModLessonGetAttemptsOverviewWSResponse = {
     data?: {
         lessonscored: boolean; // True if the lesson was scored.
         numofattempts: number; // Number of attempts.
@@ -9862,7 +9862,7 @@ export type ModLessonGetAttemptsOverviewWSResponse = {
 /**
  * Params of mod_lesson_get_content_pages_viewed WS.
  */
-export type ModLessonGetContentPagesViewedWSParams = {
+export type AddonModLessonGetContentPagesViewedWSParams = {
     lessonid: number; // Lesson instance id.
     lessonattempt: number; // Lesson attempt number.
     userid?: number; // The user id (empty for current user).
@@ -9871,7 +9871,7 @@ export type ModLessonGetContentPagesViewedWSParams = {
 /**
  * Data returned by mod_lesson_get_content_pages_viewed WS.
  */
-export type ModLessonGetContentPagesViewedWSResponse = {
+export type AddonModLessonGetContentPagesViewedWSResponse = {
     pages: {
         id: number; // The attempt id.
         lessonid: number; // The lesson id.
@@ -9888,7 +9888,7 @@ export type ModLessonGetContentPagesViewedWSResponse = {
 /**
  * Params of mod_lesson_get_lesson WS.
  */
-export type ModLessonGetLessonWSParams = {
+export type AddonModLessonGetLessonWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Lesson password.
 };
@@ -9896,7 +9896,7 @@ export type ModLessonGetLessonWSParams = {
 /**
  * Data returned by mod_lesson_get_lesson WS.
  */
-export type ModLessonGetLessonWSResponse = {
+export type AddonModLessonGetLessonWSResponse = {
     lesson: {
         id: number; // Standard Moodle primary key.
         course: number; // Foreign key reference to the course this lesson is part of.
@@ -9968,14 +9968,14 @@ export type ModLessonGetLessonWSResponse = {
 /**
  * Params of mod_lesson_get_lesson_access_information WS.
  */
-export type ModLessonGetLessonAccessInformationWSParams = {
+export type AddonModLessonGetLessonAccessInformationWSParams = {
     lessonid: number; // Lesson instance id.
 };
 
 /**
  * Data returned by mod_lesson_get_lesson_access_information WS.
  */
-export type ModLessonGetLessonAccessInformationWSResponse = {
+export type AddonModLessonGetLessonAccessInformationWSResponse = {
     canmanage: boolean; // Whether the user can manage the lesson or not.
     cangrade: boolean; // Whether the user can grade the lesson or not.
     canviewreports: boolean; // Whether the user can view the lesson reports or not.
@@ -9995,14 +9995,14 @@ export type ModLessonGetLessonAccessInformationWSResponse = {
 /**
  * Params of mod_lesson_get_lessons_by_courses WS.
  */
-export type ModLessonGetLessonsByCoursesWSParams = {
+export type AddonModLessonGetLessonsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_lesson_get_lessons_by_courses WS.
  */
-export type ModLessonGetLessonsByCoursesWSResponse = {
+export type AddonModLessonGetLessonsByCoursesWSResponse = {
     lessons: {
         id: number; // Standard Moodle primary key.
         course: number; // Foreign key reference to the course this lesson is part of.
@@ -10074,7 +10074,7 @@ export type ModLessonGetLessonsByCoursesWSResponse = {
 /**
  * Params of mod_lesson_get_page_data WS.
  */
-export type ModLessonGetPageDataWSParams = {
+export type AddonModLessonGetPageDataWSParams = {
     lessonid: number; // Lesson instance id.
     pageid: number; // The page id.
     password?: string; // Optional password (the lesson may be protected).
@@ -10085,7 +10085,7 @@ export type ModLessonGetPageDataWSParams = {
 /**
  * Data returned by mod_lesson_get_page_data WS.
  */
-export type ModLessonGetPageDataWSResponse = {
+export type AddonModLessonGetPageDataWSResponse = {
     page?: {
         id: number; // The id of this lesson page.
         lessonid: number; // The id of the lesson this page belongs to.
@@ -10138,7 +10138,7 @@ export type ModLessonGetPageDataWSResponse = {
 /**
  * Params of mod_lesson_get_pages WS.
  */
-export type ModLessonGetPagesWSParams = {
+export type AddonModLessonGetPagesWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Optional password (the lesson may be protected).
 };
@@ -10146,7 +10146,7 @@ export type ModLessonGetPagesWSParams = {
 /**
  * Data returned by mod_lesson_get_pages WS.
  */
-export type ModLessonGetPagesWSResponse = {
+export type AddonModLessonGetPagesWSResponse = {
     pages: {
         page: {
             id: number; // The id of this lesson page.
@@ -10178,14 +10178,14 @@ export type ModLessonGetPagesWSResponse = {
 /**
  * Params of mod_lesson_get_pages_possible_jumps WS.
  */
-export type ModLessonGetPagesPossibleJumpsWSParams = {
+export type AddonModLessonGetPagesPossibleJumpsWSParams = {
     lessonid: number; // Lesson instance id.
 };
 
 /**
  * Data returned by mod_lesson_get_pages_possible_jumps WS.
  */
-export type ModLessonGetPagesPossibleJumpsWSResponse = {
+export type AddonModLessonGetPagesPossibleJumpsWSResponse = {
     jumps: {
         pageid: number; // The page id.
         answerid: number; // The answer id.
@@ -10198,7 +10198,7 @@ export type ModLessonGetPagesPossibleJumpsWSResponse = {
 /**
  * Params of mod_lesson_get_questions_attempts WS.
  */
-export type ModLessonGetQuestionsAttemptsWSParams = {
+export type AddonModLessonGetQuestionsAttemptsWSParams = {
     lessonid: number; // Lesson instance id.
     attempt: number; // Lesson attempt number.
     correct?: boolean; // Only fetch correct attempts.
@@ -10209,7 +10209,7 @@ export type ModLessonGetQuestionsAttemptsWSParams = {
 /**
  * Data returned by mod_lesson_get_questions_attempts WS.
  */
-export type ModLessonGetQuestionsAttemptsWSResponse = {
+export type AddonModLessonGetQuestionsAttemptsWSResponse = {
     attempts: {
         id: number; // The attempt id.
         lessonid: number; // The attempt lessonid.
@@ -10227,7 +10227,7 @@ export type ModLessonGetQuestionsAttemptsWSResponse = {
 /**
  * Params of mod_lesson_get_user_attempt WS.
  */
-export type ModLessonGetUserAttemptWSParams = {
+export type AddonModLessonGetUserAttemptWSParams = {
     lessonid: number; // Lesson instance id.
     userid: number; // The user id. 0 for current user.
     lessonattempt: number; // The attempt number.
@@ -10236,7 +10236,7 @@ export type ModLessonGetUserAttemptWSParams = {
 /**
  * Data returned by mod_lesson_get_user_attempt WS.
  */
-export type ModLessonGetUserAttemptWSResponse = {
+export type AddonModLessonGetUserAttemptWSResponse = {
     answerpages: {
         page?: {
             id: number; // The id of this lesson page.
@@ -10288,7 +10288,7 @@ export type ModLessonGetUserAttemptWSResponse = {
 /**
  * Params of mod_lesson_get_user_attempt_grade WS.
  */
-export type ModLessonGetUserAttemptGradeWSParams = {
+export type AddonModLessonGetUserAttemptGradeWSParams = {
     lessonid: number; // Lesson instance id.
     lessonattempt: number; // Lesson attempt number.
     userid?: number; // The user id (empty for current user).
@@ -10297,7 +10297,7 @@ export type ModLessonGetUserAttemptGradeWSParams = {
 /**
  * Data returned by mod_lesson_get_user_attempt_grade WS.
  */
-export type ModLessonGetUserAttemptGradeWSResponse = {
+export type AddonModLessonGetUserAttemptGradeWSResponse = {
     grade: {
         nquestions: number; // Number of questions answered.
         attempts: number; // Number of question attempts.
@@ -10313,7 +10313,7 @@ export type ModLessonGetUserAttemptGradeWSResponse = {
 /**
  * Params of mod_lesson_get_user_grade WS.
  */
-export type ModLessonGetUserGradeWSParams = {
+export type AddonModLessonGetUserGradeWSParams = {
     lessonid: number; // Lesson instance id.
     userid?: number; // The user id (empty for current user).
 };
@@ -10321,7 +10321,7 @@ export type ModLessonGetUserGradeWSParams = {
 /**
  * Data returned by mod_lesson_get_user_grade WS.
  */
-export type ModLessonGetUserGradeWSResponse = {
+export type AddonModLessonGetUserGradeWSResponse = {
     grade: number; // The lesson final raw grade.
     formattedgrade: string; // The lesson final grade formatted.
     warnings?: CoreWSExternalWarning[];
@@ -10330,7 +10330,7 @@ export type ModLessonGetUserGradeWSResponse = {
 /**
  * Params of mod_lesson_get_user_timers WS.
  */
-export type ModLessonGetUserTimersWSParams = {
+export type AddonModLessonGetUserTimersWSParams = {
     lessonid: number; // Lesson instance id.
     userid?: number; // The user id (empty for current user).
 };
@@ -10338,7 +10338,7 @@ export type ModLessonGetUserTimersWSParams = {
 /**
  * Data returned by mod_lesson_get_user_timers WS.
  */
-export type ModLessonGetUserTimersWSResponse = {
+export type AddonModLessonGetUserTimersWSResponse = {
     timers: {
         id: number; // The attempt id.
         lessonid: number; // The lesson id.
@@ -10354,7 +10354,7 @@ export type ModLessonGetUserTimersWSResponse = {
 /**
  * Params of mod_lesson_launch_attempt WS.
  */
-export type ModLessonLaunchAttemptWSParams = {
+export type AddonModLessonLaunchAttemptWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Optional password (the lesson may be protected).
     pageid?: number; // Page id to continue from (only when continuing an attempt).
@@ -10364,7 +10364,7 @@ export type ModLessonLaunchAttemptWSParams = {
 /**
  * Data returned by mod_lesson_launch_attempt WS.
  */
-export type ModLessonLaunchAttemptWSResponse = {
+export type AddonModLessonLaunchAttemptWSResponse = {
     messages: {
         message: string; // Message.
         type: string; // Message type: usually a CSS identifier like:
@@ -10377,7 +10377,7 @@ export type ModLessonLaunchAttemptWSResponse = {
 /**
  * Params of mod_lesson_process_page WS.
  */
-export type ModLessonProcessPageWSParams = {
+export type AddonModLessonProcessPageWSParams = {
     lessonid: number; // Lesson instance id.
     pageid: number; // The page id.
     data: { // The data to be saved.
@@ -10391,7 +10391,7 @@ export type ModLessonProcessPageWSParams = {
 /**
  * Data returned by mod_lesson_process_page WS.
  */
-export type ModLessonProcessPageWSResponse = {
+export type AddonModLessonProcessPageWSResponse = {
     newpageid: number; // New page id (if a jump was made).
     inmediatejump: boolean; // Whether the page processing redirect directly to anoter page.
     nodefaultresponse: boolean; // Whether there is not a default response.
@@ -10420,7 +10420,7 @@ export type ModLessonProcessPageWSResponse = {
 /**
  * Params of mod_lesson_view_lesson WS.
  */
-export type ModLessonViewLessonWSParams = {
+export type AddonModLessonViewLessonWSParams = {
     lessonid: number; // Lesson instance id.
     password?: string; // Lesson password.
 };
@@ -10428,19 +10428,19 @@ export type ModLessonViewLessonWSParams = {
 /**
  * Data returned by mod_lesson_view_lesson WS.
  */
-export type ModLessonViewLessonWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModLessonViewLessonWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_lti_get_ltis_by_courses WS.
  */
-export type ModLtiGetLtisByCoursesWSParams = {
+export type AddonModLtiGetLtisByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_lti_get_ltis_by_courses WS.
  */
-export type ModLtiGetLtisByCoursesWSResponse = {
+export type AddonModLtiGetLtisByCoursesWSResponse = {
     ltis: {
         id: number; // External tool id.
         coursemodule: number; // Course module id.
@@ -10481,14 +10481,14 @@ export type ModLtiGetLtisByCoursesWSResponse = {
 /**
  * Params of mod_lti_get_tool_launch_data WS.
  */
-export type ModLtiGetToolLaunchDataWSParams = {
+export type AddonModLtiGetToolLaunchDataWSParams = {
     toolid: number; // External tool instance id.
 };
 
 /**
  * Data returned by mod_lti_get_tool_launch_data WS.
  */
-export type ModLtiGetToolLaunchDataWSResponse = {
+export type AddonModLtiGetToolLaunchDataWSResponse = {
     endpoint: string; // Endpoint URL.
     parameters: {
         name: string; // Parameter name.
@@ -10500,26 +10500,26 @@ export type ModLtiGetToolLaunchDataWSResponse = {
 /**
  * Params of mod_lti_view_lti WS.
  */
-export type ModLtiViewLtiWSParams = {
+export type AddonModLtiViewLtiWSParams = {
     ltiid: number; // Lti instance id.
 };
 
 /**
  * Data returned by mod_lti_view_lti WS.
  */
-export type ModLtiViewLtiWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModLtiViewLtiWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_page_get_pages_by_courses WS.
  */
-export type ModPageGetPagesByCoursesWSParams = {
+export type AddonModPageGetPagesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_page_get_pages_by_courses WS.
  */
-export type ModPageGetPagesByCoursesWSResponse = {
+export type AddonModPageGetPagesByCoursesWSResponse = {
     pages: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -10548,19 +10548,19 @@ export type ModPageGetPagesByCoursesWSResponse = {
 /**
  * Params of mod_page_view_page WS.
  */
-export type ModPageViewPageWSParams = {
+export type AddonModPageViewPageWSParams = {
     pageid: number; // Page instance id.
 };
 
 /**
  * Data returned by mod_page_view_page WS.
  */
-export type ModPageViewPageWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModPageViewPageWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_get_attempt_access_information WS.
  */
-export type ModQuizGetAttemptAccessInformationWSParams = {
+export type AddonModQuizGetAttemptAccessInformationWSParams = {
     quizid: number; // Quiz instance id.
     attemptid?: number; // Attempt id, 0 for the user last attempt if exists.
 };
@@ -10568,7 +10568,7 @@ export type ModQuizGetAttemptAccessInformationWSParams = {
 /**
  * Data returned by mod_quiz_get_attempt_access_information WS.
  */
-export type ModQuizGetAttemptAccessInformationWSResponse = {
+export type AddonModQuizGetAttemptAccessInformationWSResponse = {
     endtime?: number; // When the attempt must be submitted (determined by rules).
     isfinished: boolean; // Whether there is no way the user will ever be allowed to attempt.
     ispreflightcheckrequired?: boolean; // Whether a check is required before the user
@@ -10581,7 +10581,7 @@ export type ModQuizGetAttemptAccessInformationWSResponse = {
 /**
  * Params of mod_quiz_get_attempt_data WS.
  */
-export type ModQuizGetAttemptDataWSParams = {
+export type AddonModQuizGetAttemptDataWSParams = {
     attemptid: number; // Attempt id.
     page: number; // Page number.
     preflightdata?: { // Preflight required data (like passwords).
@@ -10593,7 +10593,7 @@ export type ModQuizGetAttemptDataWSParams = {
 /**
  * Data returned by mod_quiz_get_attempt_data WS.
  */
-export type ModQuizGetAttemptDataWSResponse = {
+export type AddonModQuizGetAttemptDataWSResponse = {
     attempt: {
         id?: number; // Attempt id.
         quiz?: number; // Foreign key reference to the quiz that was attempted.
@@ -10656,7 +10656,7 @@ export type ModQuizGetAttemptDataWSResponse = {
 /**
  * Params of mod_quiz_get_attempt_review WS.
  */
-export type ModQuizGetAttemptReviewWSParams = {
+export type AddonModQuizGetAttemptReviewWSParams = {
     attemptid: number; // Attempt id.
     page?: number; // Page number, empty for all the questions in all the pages.
 };
@@ -10664,7 +10664,7 @@ export type ModQuizGetAttemptReviewWSParams = {
 /**
  * Data returned by mod_quiz_get_attempt_review WS.
  */
-export type ModQuizGetAttemptReviewWSResponse = {
+export type AddonModQuizGetAttemptReviewWSResponse = {
     grade: string; // Grade for the quiz (or empty or "notyetgraded").
     attempt: {
         id?: number; // Attempt id.
@@ -10729,7 +10729,7 @@ export type ModQuizGetAttemptReviewWSResponse = {
 /**
  * Params of mod_quiz_get_attempt_summary WS.
  */
-export type ModQuizGetAttemptSummaryWSParams = {
+export type AddonModQuizGetAttemptSummaryWSParams = {
     attemptid: number; // Attempt id.
     preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
@@ -10740,7 +10740,7 @@ export type ModQuizGetAttemptSummaryWSParams = {
 /**
  * Data returned by mod_quiz_get_attempt_summary WS.
  */
-export type ModQuizGetAttemptSummaryWSResponse = {
+export type AddonModQuizGetAttemptSummaryWSResponse = {
     questions: {
         slot: number; // Slot number.
         type: string; // Question type, i.e: multichoice.
@@ -10773,7 +10773,7 @@ export type ModQuizGetAttemptSummaryWSResponse = {
 /**
  * Params of mod_quiz_get_combined_review_options WS.
  */
-export type ModQuizGetCombinedReviewOptionsWSParams = {
+export type AddonModQuizGetCombinedReviewOptionsWSParams = {
     quizid: number; // Quiz instance id.
     userid?: number; // User id (empty for current user).
 };
@@ -10781,7 +10781,7 @@ export type ModQuizGetCombinedReviewOptionsWSParams = {
 /**
  * Data returned by mod_quiz_get_combined_review_options WS.
  */
-export type ModQuizGetCombinedReviewOptionsWSResponse = {
+export type AddonModQuizGetCombinedReviewOptionsWSResponse = {
     someoptions: {
         name: string; // Option name.
         value: number; // Option value.
@@ -10796,14 +10796,14 @@ export type ModQuizGetCombinedReviewOptionsWSResponse = {
 /**
  * Params of mod_quiz_get_quiz_access_information WS.
  */
-export type ModQuizGetQuizAccessInformationWSParams = {
+export type AddonModQuizGetQuizAccessInformationWSParams = {
     quizid: number; // Quiz instance id.
 };
 
 /**
  * Data returned by mod_quiz_get_quiz_access_information WS.
  */
-export type ModQuizGetQuizAccessInformationWSResponse = {
+export type AddonModQuizGetQuizAccessInformationWSResponse = {
     canattempt: boolean; // Whether the user can do the quiz or not.
     canmanage: boolean; // Whether the user can edit the quiz settings or not.
     canpreview: boolean; // Whether the user can preview the quiz or not.
@@ -10820,7 +10820,7 @@ export type ModQuizGetQuizAccessInformationWSResponse = {
 /**
  * Params of mod_quiz_get_quiz_feedback_for_grade WS.
  */
-export type ModQuizGetQuizFeedbackForGradeWSParams = {
+export type AddonModQuizGetQuizFeedbackForGradeWSParams = {
     quizid: number; // Quiz instance id.
     grade: number; // The grade to check.
 };
@@ -10828,7 +10828,7 @@ export type ModQuizGetQuizFeedbackForGradeWSParams = {
 /**
  * Data returned by mod_quiz_get_quiz_feedback_for_grade WS.
  */
-export type ModQuizGetQuizFeedbackForGradeWSResponse = {
+export type AddonModQuizGetQuizFeedbackForGradeWSResponse = {
     feedbacktext: string; // The comment that corresponds to this grade (empty for none).
     feedbacktextformat?: number; // Feedbacktext format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     feedbackinlinefiles?: CoreWSExternalFile[];
@@ -10838,14 +10838,14 @@ export type ModQuizGetQuizFeedbackForGradeWSResponse = {
 /**
  * Params of mod_quiz_get_quiz_required_qtypes WS.
  */
-export type ModQuizGetQuizRequiredQtypesWSParams = {
+export type AddonModQuizGetQuizRequiredQtypesWSParams = {
     quizid: number; // Quiz instance id.
 };
 
 /**
  * Data returned by mod_quiz_get_quiz_required_qtypes WS.
  */
-export type ModQuizGetQuizRequiredQtypesWSResponse = {
+export type AddonModQuizGetQuizRequiredQtypesWSResponse = {
     questiontypes: string[]; // List of question types used in the quiz.
     warnings?: CoreWSExternalWarning[];
 };
@@ -10853,14 +10853,14 @@ export type ModQuizGetQuizRequiredQtypesWSResponse = {
 /**
  * Params of mod_quiz_get_quizzes_by_courses WS.
  */
-export type ModQuizGetQuizzesByCoursesWSParams = {
+export type AddonModQuizGetQuizzesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_quiz_get_quizzes_by_courses WS.
  */
-export type ModQuizGetQuizzesByCoursesWSResponse = {
+export type AddonModQuizGetQuizzesByCoursesWSResponse = {
     quizzes: {
         id: number; // Standard Moodle primary key.
         course: number; // Foreign key reference to the course this quiz is part of.
@@ -10984,7 +10984,7 @@ export type ModQuizGetQuizzesByCoursesWSResponse = {
 /**
  * Params of mod_quiz_get_user_attempts WS.
  */
-export type ModQuizGetUserAttemptsWSParams = {
+export type AddonModQuizGetUserAttemptsWSParams = {
     quizid: number; // Quiz instance id.
     userid?: number; // User id, empty for current user.
     status?: string; // Quiz status: all, finished or unfinished.
@@ -10994,7 +10994,7 @@ export type ModQuizGetUserAttemptsWSParams = {
 /**
  * Data returned by mod_quiz_get_user_attempts WS.
  */
-export type ModQuizGetUserAttemptsWSResponse = {
+export type AddonModQuizGetUserAttemptsWSResponse = {
     attempts: {
         id?: number; // Attempt id.
         quiz?: number; // Foreign key reference to the quiz that was attempted.
@@ -11027,7 +11027,7 @@ export type ModQuizGetUserAttemptsWSResponse = {
 /**
  * Params of mod_quiz_get_user_best_grade WS.
  */
-export type ModQuizGetUserBestGradeWSParams = {
+export type AddonModQuizGetUserBestGradeWSParams = {
     quizid: number; // Quiz instance id.
     userid?: number; // User id.
 };
@@ -11035,7 +11035,7 @@ export type ModQuizGetUserBestGradeWSParams = {
 /**
  * Data returned by mod_quiz_get_user_best_grade WS.
  */
-export type ModQuizGetUserBestGradeWSResponse = {
+export type AddonModQuizGetUserBestGradeWSResponse = {
     hasgrade: boolean; // Whether the user has a grade on the given quiz.
     grade?: number; // The grade (only if the user has a grade).
     warnings?: CoreWSExternalWarning[];
@@ -11044,7 +11044,7 @@ export type ModQuizGetUserBestGradeWSResponse = {
 /**
  * Params of mod_quiz_process_attempt WS.
  */
-export type ModQuizProcessAttemptWSParams = {
+export type AddonModQuizProcessAttemptWSParams = {
     attemptid: number; // Attempt id.
     data?: { // The data to be saved.
         name: string; // Data name.
@@ -11061,7 +11061,7 @@ export type ModQuizProcessAttemptWSParams = {
 /**
  * Data returned by mod_quiz_process_attempt WS.
  */
-export type ModQuizProcessAttemptWSResponse = {
+export type AddonModQuizProcessAttemptWSResponse = {
     state: string; // State: the new attempt state:
                                                                  // inprogress, finished, overdue, abandoned.
 
@@ -11071,7 +11071,7 @@ export type ModQuizProcessAttemptWSResponse = {
 /**
  * Params of mod_quiz_save_attempt WS.
  */
-export type ModQuizSaveAttemptWSParams = {
+export type AddonModQuizSaveAttemptWSParams = {
     attemptid: number; // Attempt id.
     data: { // The data to be saved.
         name: string; // Data name.
@@ -11086,12 +11086,12 @@ export type ModQuizSaveAttemptWSParams = {
 /**
  * Data returned by mod_quiz_save_attempt WS.
  */
-export type ModQuizSaveAttemptWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModQuizSaveAttemptWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_start_attempt WS.
  */
-export type ModQuizStartAttemptWSParams = {
+export type AddonModQuizStartAttemptWSParams = {
     quizid: number; // Quiz instance id.
     preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
@@ -11103,7 +11103,7 @@ export type ModQuizStartAttemptWSParams = {
 /**
  * Data returned by mod_quiz_start_attempt WS.
  */
-export type ModQuizStartAttemptWSResponse = {
+export type AddonModQuizStartAttemptWSResponse = {
     attempt: {
         id?: number; // Attempt id.
         quiz?: number; // Foreign key reference to the quiz that was attempted.
@@ -11136,7 +11136,7 @@ export type ModQuizStartAttemptWSResponse = {
 /**
  * Params of mod_quiz_view_attempt WS.
  */
-export type ModQuizViewAttemptWSParams = {
+export type AddonModQuizViewAttemptWSParams = {
     attemptid: number; // Attempt id.
     page: number; // Page number.
     preflightdata?: { // Preflight required data (like passwords).
@@ -11148,24 +11148,24 @@ export type ModQuizViewAttemptWSParams = {
 /**
  * Data returned by mod_quiz_view_attempt WS.
  */
-export type ModQuizViewAttemptWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModQuizViewAttemptWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_view_attempt_review WS.
  */
-export type ModQuizViewAttemptReviewWSParams = {
+export type AddonModQuizViewAttemptReviewWSParams = {
     attemptid: number; // Attempt id.
 };
 
 /**
  * Data returned by mod_quiz_view_attempt_review WS.
  */
-export type ModQuizViewAttemptReviewWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModQuizViewAttemptReviewWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_view_attempt_summary WS.
  */
-export type ModQuizViewAttemptSummaryWSParams = {
+export type AddonModQuizViewAttemptSummaryWSParams = {
     attemptid: number; // Attempt id.
     preflightdata?: { // Preflight required data (like passwords).
         name: string; // Data name.
@@ -11176,31 +11176,31 @@ export type ModQuizViewAttemptSummaryWSParams = {
 /**
  * Data returned by mod_quiz_view_attempt_summary WS.
  */
-export type ModQuizViewAttemptSummaryWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModQuizViewAttemptSummaryWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_quiz_view_quiz WS.
  */
-export type ModQuizViewQuizWSParams = {
+export type AddonModQuizViewQuizWSParams = {
     quizid: number; // Quiz instance id.
 };
 
 /**
  * Data returned by mod_quiz_view_quiz WS.
  */
-export type ModQuizViewQuizWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModQuizViewQuizWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_resource_get_resources_by_courses WS.
  */
-export type ModResourceGetResourcesByCoursesWSParams = {
+export type AddonModResourceGetResourcesByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_resource_get_resources_by_courses WS.
  */
-export type ModResourceGetResourcesByCoursesWSResponse = {
+export type AddonModResourceGetResourcesByCoursesWSResponse = {
     resources: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -11229,26 +11229,26 @@ export type ModResourceGetResourcesByCoursesWSResponse = {
 /**
  * Params of mod_resource_view_resource WS.
  */
-export type ModResourceViewResourceWSParams = {
+export type AddonModResourceViewResourceWSParams = {
     resourceid: number; // Resource instance id.
 };
 
 /**
  * Data returned by mod_resource_view_resource WS.
  */
-export type ModResourceViewResourceWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModResourceViewResourceWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_scorm_get_scorm_access_information WS.
  */
-export type ModScormGetScormAccessInformationWSParams = {
+export type AddonModScormGetScormAccessInformationWSParams = {
     scormid: number; // Scorm instance id.
 };
 
 /**
  * Data returned by mod_scorm_get_scorm_access_information WS.
  */
-export type ModScormGetScormAccessInformationWSResponse = {
+export type AddonModScormGetScormAccessInformationWSResponse = {
     warnings?: CoreWSExternalWarning[];
     canaddinstance?: boolean; // Whether the user has the capability mod/scorm:addinstance allowed.
     canviewreport?: boolean; // Whether the user has the capability mod/scorm:viewreport allowed.
@@ -11262,7 +11262,7 @@ export type ModScormGetScormAccessInformationWSResponse = {
 /**
  * Params of mod_scorm_get_scorm_attempt_count WS.
  */
-export type ModScormGetScormAttemptCountWSParams = {
+export type AddonModScormGetScormAttemptCountWSParams = {
     scormid: number; // SCORM instance id.
     userid: number; // User id.
     ignoremissingcompletion?: boolean; // Ignores attempts that haven't reported a grade/completion.
@@ -11271,7 +11271,7 @@ export type ModScormGetScormAttemptCountWSParams = {
 /**
  * Data returned by mod_scorm_get_scorm_attempt_count WS.
  */
-export type ModScormGetScormAttemptCountWSResponse = {
+export type AddonModScormGetScormAttemptCountWSResponse = {
     attemptscount: number; // Attempts count.
     warnings?: CoreWSExternalWarning[];
 };
@@ -11279,7 +11279,7 @@ export type ModScormGetScormAttemptCountWSResponse = {
 /**
  * Params of mod_scorm_get_scorm_sco_tracks WS.
  */
-export type ModScormGetScormScoTracksWSParams = {
+export type AddonModScormGetScormScoTracksWSParams = {
     scoid: number; // Sco id.
     userid: number; // User id.
     attempt?: number; // Attempt number (0 for last attempt).
@@ -11288,7 +11288,7 @@ export type ModScormGetScormScoTracksWSParams = {
 /**
  * Data returned by mod_scorm_get_scorm_sco_tracks WS.
  */
-export type ModScormGetScormScoTracksWSResponse = {
+export type AddonModScormGetScormScoTracksWSResponse = {
     data: {
         attempt: number; // Attempt number.
         tracks: {
@@ -11302,7 +11302,7 @@ export type ModScormGetScormScoTracksWSResponse = {
 /**
  * Params of mod_scorm_get_scorm_scoes WS.
  */
-export type ModScormGetScormScoesWSParams = {
+export type AddonModScormGetScormScoesWSParams = {
     scormid: number; // Scorm instance id.
     organization?: string; // Organization id.
 };
@@ -11310,7 +11310,7 @@ export type ModScormGetScormScoesWSParams = {
 /**
  * Data returned by mod_scorm_get_scorm_scoes WS.
  */
-export type ModScormGetScormScoesWSResponse = {
+export type AddonModScormGetScormScoesWSResponse = {
     scoes: {
         id: number; // Sco id.
         scorm: number; // Scorm id.
@@ -11333,7 +11333,7 @@ export type ModScormGetScormScoesWSResponse = {
 /**
  * Params of mod_scorm_get_scorm_user_data WS.
  */
-export type ModScormGetScormUserDataWSParams = {
+export type AddonModScormGetScormUserDataWSParams = {
     scormid: number; // Scorm instance id.
     attempt: number; // Attempt number.
 };
@@ -11341,7 +11341,7 @@ export type ModScormGetScormUserDataWSParams = {
 /**
  * Data returned by mod_scorm_get_scorm_user_data WS.
  */
-export type ModScormGetScormUserDataWSResponse = {
+export type AddonModScormGetScormUserDataWSResponse = {
     data: {
         scoid: number; // Sco id.
         userdata: {
@@ -11359,14 +11359,14 @@ export type ModScormGetScormUserDataWSResponse = {
 /**
  * Params of mod_scorm_get_scorms_by_courses WS.
  */
-export type ModScormGetScormsByCoursesWSParams = {
+export type AddonModScormGetScormsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_scorm_get_scorms_by_courses WS.
  */
-export type ModScormGetScormsByCoursesWSResponse = {
+export type AddonModScormGetScormsByCoursesWSResponse = {
     scorms: {
         id: number; // SCORM id.
         coursemodule: number; // Course module id.
@@ -11425,7 +11425,7 @@ export type ModScormGetScormsByCoursesWSResponse = {
 /**
  * Params of mod_scorm_insert_scorm_tracks WS.
  */
-export type ModScormInsertScormTracksWSParams = {
+export type AddonModScormInsertScormTracksWSParams = {
     scoid: number; // SCO id.
     attempt: number; // Attempt number.
     tracks: {
@@ -11437,7 +11437,7 @@ export type ModScormInsertScormTracksWSParams = {
 /**
  * Data returned by mod_scorm_insert_scorm_tracks WS.
  */
-export type ModScormInsertScormTracksWSResponse = {
+export type AddonModScormInsertScormTracksWSResponse = {
     trackids: number[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -11445,7 +11445,7 @@ export type ModScormInsertScormTracksWSResponse = {
 /**
  * Params of mod_scorm_launch_sco WS.
  */
-export type ModScormLaunchScoWSParams = {
+export type AddonModScormLaunchScoWSParams = {
     scormid: number; // SCORM instance id.
     scoid?: number; // SCO id (empty for launching the first SCO).
 };
@@ -11453,31 +11453,31 @@ export type ModScormLaunchScoWSParams = {
 /**
  * Data returned by mod_scorm_launch_sco WS.
  */
-export type ModScormLaunchScoWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModScormLaunchScoWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_scorm_view_scorm WS.
  */
-export type ModScormViewScormWSParams = {
+export type AddonModScormViewScormWSParams = {
     scormid: number; // Scorm instance id.
 };
 
 /**
  * Data returned by mod_scorm_view_scorm WS.
  */
-export type ModScormViewScormWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModScormViewScormWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_survey_get_questions WS.
  */
-export type ModSurveyGetQuestionsWSParams = {
+export type AddonModSurveyGetQuestionsWSParams = {
     surveyid: number; // Survey instance id.
 };
 
 /**
  * Data returned by mod_survey_get_questions WS.
  */
-export type ModSurveyGetQuestionsWSResponse = {
+export type AddonModSurveyGetQuestionsWSResponse = {
     questions: {
         id: number; // Question id.
         text: string; // Question text.
@@ -11494,14 +11494,14 @@ export type ModSurveyGetQuestionsWSResponse = {
 /**
  * Params of mod_survey_get_surveys_by_courses WS.
  */
-export type ModSurveyGetSurveysByCoursesWSParams = {
+export type AddonModSurveyGetSurveysByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_survey_get_surveys_by_courses WS.
  */
-export type ModSurveyGetSurveysByCoursesWSResponse = {
+export type AddonModSurveyGetSurveysByCoursesWSResponse = {
     surveys: {
         id: number; // Survey id.
         coursemodule: number; // Course module id.
@@ -11527,7 +11527,7 @@ export type ModSurveyGetSurveysByCoursesWSResponse = {
 /**
  * Params of mod_survey_submit_answers WS.
  */
-export type ModSurveySubmitAnswersWSParams = {
+export type AddonModSurveySubmitAnswersWSParams = {
     surveyid: number; // Survey id.
     answers: {
         key: string; // Answer key.
@@ -11538,31 +11538,31 @@ export type ModSurveySubmitAnswersWSParams = {
 /**
  * Data returned by mod_survey_submit_answers WS.
  */
-export type ModSurveySubmitAnswersWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModSurveySubmitAnswersWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_survey_view_survey WS.
  */
-export type ModSurveyViewSurveyWSParams = {
+export type AddonModSurveyViewSurveyWSParams = {
     surveyid: number; // Survey instance id.
 };
 
 /**
  * Data returned by mod_survey_view_survey WS.
  */
-export type ModSurveyViewSurveyWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModSurveyViewSurveyWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_url_get_urls_by_courses WS.
  */
-export type ModUrlGetUrlsByCoursesWSParams = {
+export type AddonModUrlGetUrlsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_url_get_urls_by_courses WS.
  */
-export type ModUrlGetUrlsByCoursesWSResponse = {
+export type AddonModUrlGetUrlsByCoursesWSResponse = {
     urls: {
         id: number; // Module id.
         coursemodule: number; // Course module id.
@@ -11587,19 +11587,19 @@ export type ModUrlGetUrlsByCoursesWSResponse = {
 /**
  * Params of mod_url_view_url WS.
  */
-export type ModUrlViewUrlWSParams = {
+export type AddonModUrlViewUrlWSParams = {
     urlid: number; // Url instance id.
 };
 
 /**
  * Data returned by mod_url_view_url WS.
  */
-export type ModUrlViewUrlWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModUrlViewUrlWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_wiki_edit_page WS.
  */
-export type ModWikiEditPageWSParams = {
+export type AddonModWikiEditPageWSParams = {
     pageid: number; // Page ID.
     content: string; // Page contents.
     section?: string; // Section page title.
@@ -11608,7 +11608,7 @@ export type ModWikiEditPageWSParams = {
 /**
  * Data returned by mod_wiki_edit_page WS.
  */
-export type ModWikiEditPageWSResponse = {
+export type AddonModWikiEditPageWSResponse = {
     pageid: number; // Edited page id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -11616,14 +11616,14 @@ export type ModWikiEditPageWSResponse = {
 /**
  * Params of mod_wiki_get_page_contents WS.
  */
-export type ModWikiGetPageContentsWSParams = {
+export type AddonModWikiGetPageContentsWSParams = {
     pageid: number; // Page ID.
 };
 
 /**
  * Data returned by mod_wiki_get_page_contents WS.
  */
-export type ModWikiGetPageContentsWSResponse = {
+export type AddonModWikiGetPageContentsWSResponse = {
     page: {
         id: number; // Page ID.
         wikiid: number; // Page's wiki ID.
@@ -11654,7 +11654,7 @@ export type ModWikiGetPageContentsWSResponse = {
 /**
  * Params of mod_wiki_get_page_for_editing WS.
  */
-export type ModWikiGetPageForEditingWSParams = {
+export type AddonModWikiGetPageForEditingWSParams = {
     pageid: number; // Page ID to edit.
     section?: string; // Section page title.
     lockonly?: boolean; // Just renew lock and not return content.
@@ -11663,7 +11663,7 @@ export type ModWikiGetPageForEditingWSParams = {
 /**
  * Data returned by mod_wiki_get_page_for_editing WS.
  */
-export type ModWikiGetPageForEditingWSResponse = {
+export type AddonModWikiGetPageForEditingWSResponse = {
     pagesection: {
         content?: string; // The contents of the page-section to be edited.
         contentformat?: string; // Format of the original content of the page.
@@ -11675,7 +11675,7 @@ export type ModWikiGetPageForEditingWSResponse = {
 /**
  * Params of mod_wiki_get_subwiki_files WS.
  */
-export type ModWikiGetSubwikiFilesWSParams = {
+export type AddonModWikiGetSubwikiFilesWSParams = {
     wikiid: number; // Wiki instance ID.
     groupid?: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
     userid?: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
@@ -11684,7 +11684,7 @@ export type ModWikiGetSubwikiFilesWSParams = {
 /**
  * Data returned by mod_wiki_get_subwiki_files WS.
  */
-export type ModWikiGetSubwikiFilesWSResponse = {
+export type AddonModWikiGetSubwikiFilesWSResponse = {
     files: CoreWSExternalFile[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -11692,7 +11692,7 @@ export type ModWikiGetSubwikiFilesWSResponse = {
 /**
  * Params of mod_wiki_get_subwiki_pages WS.
  */
-export type ModWikiGetSubwikiPagesWSParams = {
+export type AddonModWikiGetSubwikiPagesWSParams = {
     wikiid: number; // Wiki instance ID.
     groupid?: number; // Subwiki's group ID, -1 means current group. It will be ignored if the wiki doesn't use groups.
     userid?: number; // Subwiki's user ID, 0 means current user. It will be ignored in collaborative wikis.
@@ -11706,7 +11706,7 @@ export type ModWikiGetSubwikiPagesWSParams = {
 /**
  * Data returned by mod_wiki_get_subwiki_pages WS.
  */
-export type ModWikiGetSubwikiPagesWSResponse = {
+export type AddonModWikiGetSubwikiPagesWSResponse = {
     pages: {
         id: number; // Page ID.
         subwikiid: number; // Page's subwiki ID.
@@ -11741,14 +11741,14 @@ export type ModWikiGetSubwikiPagesWSResponse = {
 /**
  * Params of mod_wiki_get_subwikis WS.
  */
-export type ModWikiGetSubwikisWSParams = {
+export type AddonModWikiGetSubwikisWSParams = {
     wikiid: number; // Wiki instance ID.
 };
 
 /**
  * Data returned by mod_wiki_get_subwikis WS.
  */
-export type ModWikiGetSubwikisWSResponse = {
+export type AddonModWikiGetSubwikisWSResponse = {
     subwikis: {
         id: number; // Subwiki ID.
         wikiid: number; // Wiki ID.
@@ -11762,14 +11762,14 @@ export type ModWikiGetSubwikisWSResponse = {
 /**
  * Params of mod_wiki_get_wikis_by_courses WS.
  */
-export type ModWikiGetWikisByCoursesWSParams = {
+export type AddonModWikiGetWikisByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_wiki_get_wikis_by_courses WS.
  */
-export type ModWikiGetWikisByCoursesWSResponse = {
+export type AddonModWikiGetWikisByCoursesWSResponse = {
     wikis: {
         id: number; // Wiki ID.
         coursemodule: number; // Course module ID.
@@ -11798,7 +11798,7 @@ export type ModWikiGetWikisByCoursesWSResponse = {
 /**
  * Params of mod_wiki_new_page WS.
  */
-export type ModWikiNewPageWSParams = {
+export type AddonModWikiNewPageWSParams = {
     title: string; // New page title.
     content: string; // Page contents.
     contentformat?: string; // Page contents format. If an invalid format is provided, default
@@ -11813,7 +11813,7 @@ export type ModWikiNewPageWSParams = {
 /**
  * Data returned by mod_wiki_new_page WS.
  */
-export type ModWikiNewPageWSResponse = {
+export type AddonModWikiNewPageWSResponse = {
     pageid: number; // New page id.
     warnings?: CoreWSExternalWarning[];
 };
@@ -11821,31 +11821,31 @@ export type ModWikiNewPageWSResponse = {
 /**
  * Params of mod_wiki_view_page WS.
  */
-export type ModWikiViewPageWSParams = {
+export type AddonModWikiViewPageWSParams = {
     pageid: number; // Wiki page ID.
 };
 
 /**
  * Data returned by mod_wiki_view_page WS.
  */
-export type ModWikiViewPageWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWikiViewPageWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_wiki_view_wiki WS.
  */
-export type ModWikiViewWikiWSParams = {
+export type AddonModWikiViewWikiWSParams = {
     wikiid: number; // Wiki instance ID.
 };
 
 /**
  * Data returned by mod_wiki_view_wiki WS.
  */
-export type ModWikiViewWikiWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWikiViewWikiWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_add_submission WS.
  */
-export type ModWorkshopAddSubmissionWSParams = {
+export type AddonModWorkshopAddSubmissionWSParams = {
     workshopid: number; // Workshop id.
     title: string; // Submission title.
     content?: string; // Submission text content.
@@ -11857,7 +11857,7 @@ export type ModWorkshopAddSubmissionWSParams = {
 /**
  * Data returned by mod_workshop_add_submission WS.
  */
-export type ModWorkshopAddSubmissionWSResponse = {
+export type AddonModWorkshopAddSubmissionWSResponse = {
     status: boolean; // True if the submission was created false otherwise.
     submissionid?: number; // New workshop submission id.
     warnings?: CoreWSExternalWarning[];
@@ -11866,19 +11866,19 @@ export type ModWorkshopAddSubmissionWSResponse = {
 /**
  * Params of mod_workshop_delete_submission WS.
  */
-export type ModWorkshopDeleteSubmissionWSParams = {
+export type AddonModWorkshopDeleteSubmissionWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_delete_submission WS.
  */
-export type ModWorkshopDeleteSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWorkshopDeleteSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_evaluate_assessment WS.
  */
-export type ModWorkshopEvaluateAssessmentWSParams = {
+export type AddonModWorkshopEvaluateAssessmentWSParams = {
     assessmentid: number; // Assessment id.
     feedbacktext?: string; // The feedback for the reviewer.
     feedbackformat?: number; // The feedback format for text.
@@ -11889,12 +11889,12 @@ export type ModWorkshopEvaluateAssessmentWSParams = {
 /**
  * Data returned by mod_workshop_evaluate_assessment WS.
  */
-export type ModWorkshopEvaluateAssessmentWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWorkshopEvaluateAssessmentWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_evaluate_submission WS.
  */
-export type ModWorkshopEvaluateSubmissionWSParams = {
+export type AddonModWorkshopEvaluateSubmissionWSParams = {
     submissionid: number; // Submission id.
     feedbacktext?: string; // The feedback for the author.
     feedbackformat?: number; // The feedback format for text.
@@ -11905,19 +11905,19 @@ export type ModWorkshopEvaluateSubmissionWSParams = {
 /**
  * Data returned by mod_workshop_evaluate_submission WS.
  */
-export type ModWorkshopEvaluateSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWorkshopEvaluateSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_get_assessment WS.
  */
-export type ModWorkshopGetAssessmentWSParams = {
+export type AddonModWorkshopGetAssessmentWSParams = {
     assessmentid: number; // Assessment id.
 };
 
 /**
  * Data returned by mod_workshop_get_assessment WS.
  */
-export type ModWorkshopGetAssessmentWSResponse = {
+export type AddonModWorkshopGetAssessmentWSResponse = {
     assessment: {
         id: number; // The primary key of the record.
         submissionid: number; // The id of the assessed submission.
@@ -11973,7 +11973,7 @@ export type ModWorkshopGetAssessmentWSResponse = {
 /**
  * Params of mod_workshop_get_assessment_form_definition WS.
  */
-export type ModWorkshopGetAssessmentFormDefinitionWSParams = {
+export type AddonModWorkshopGetAssessmentFormDefinitionWSParams = {
     assessmentid: number; // Assessment id.
     mode?: string; // The form mode (assessment or preview).
 };
@@ -11981,7 +11981,7 @@ export type ModWorkshopGetAssessmentFormDefinitionWSParams = {
 /**
  * Data returned by mod_workshop_get_assessment_form_definition WS.
  */
-export type ModWorkshopGetAssessmentFormDefinitionWSResponse = {
+export type AddonModWorkshopGetAssessmentFormDefinitionWSResponse = {
     dimenssionscount: number; // The number of dimenssions used by the form.
     descriptionfiles: CoreWSExternalFile[];
     options: { // The form options.
@@ -12009,7 +12009,7 @@ export type ModWorkshopGetAssessmentFormDefinitionWSResponse = {
 /**
  * Params of mod_workshop_get_grades WS.
  */
-export type ModWorkshopGetGradesWSParams = {
+export type AddonModWorkshopGetGradesWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // User id (empty or 0 for current user).
 };
@@ -12017,7 +12017,7 @@ export type ModWorkshopGetGradesWSParams = {
 /**
  * Data returned by mod_workshop_get_grades WS.
  */
-export type ModWorkshopGetGradesWSResponse = {
+export type AddonModWorkshopGetGradesWSResponse = {
     assessmentrawgrade?: number; // The assessment raw (numeric) grade.
     assessmentlongstrgrade?: string; // The assessment string grade.
     assessmentgradehidden?: boolean; // Whether the grade is hidden or not.
@@ -12030,7 +12030,7 @@ export type ModWorkshopGetGradesWSResponse = {
 /**
  * Params of mod_workshop_get_grades_report WS.
  */
-export type ModWorkshopGetGradesReportWSParams = {
+export type AddonModWorkshopGetGradesReportWSParams = {
     workshopid: number; // Workshop instance id.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
     sortby?: string; // Sort by this element: lastname, firstname, submissiontitle,
@@ -12044,7 +12044,7 @@ export type ModWorkshopGetGradesReportWSParams = {
 /**
  * Data returned by mod_workshop_get_grades_report WS.
  */
-export type ModWorkshopGetGradesReportWSResponse = {
+export type AddonModWorkshopGetGradesReportWSResponse = {
     report: {
         grades: {
             userid: number; // The id of the user being displayed in the report.
@@ -12091,7 +12091,7 @@ export type ModWorkshopGetGradesReportWSResponse = {
 /**
  * Params of mod_workshop_get_reviewer_assessments WS.
  */
-export type ModWorkshopGetReviewerAssessmentsWSParams = {
+export type AddonModWorkshopGetReviewerAssessmentsWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // User id who did the assessment review (empty or 0 for current user).
 };
@@ -12099,7 +12099,7 @@ export type ModWorkshopGetReviewerAssessmentsWSParams = {
 /**
  * Data returned by mod_workshop_get_reviewer_assessments WS.
  */
-export type ModWorkshopGetReviewerAssessmentsWSResponse = {
+export type AddonModWorkshopGetReviewerAssessmentsWSResponse = {
     assessments: {
         id: number; // The primary key of the record.
         submissionid: number; // The id of the assessed submission.
@@ -12155,14 +12155,14 @@ export type ModWorkshopGetReviewerAssessmentsWSResponse = {
 /**
  * Params of mod_workshop_get_submission WS.
  */
-export type ModWorkshopGetSubmissionWSParams = {
+export type AddonModWorkshopGetSubmissionWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_get_submission WS.
  */
-export type ModWorkshopGetSubmissionWSResponse = {
+export type AddonModWorkshopGetSubmissionWSResponse = {
     submission: {
         id: number; // The primary key of the record.
         workshopid: number; // The id of the workshop instance.
@@ -12216,14 +12216,14 @@ export type ModWorkshopGetSubmissionWSResponse = {
 /**
  * Params of mod_workshop_get_submission_assessments WS.
  */
-export type ModWorkshopGetSubmissionAssessmentsWSParams = {
+export type AddonModWorkshopGetSubmissionAssessmentsWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_get_submission_assessments WS.
  */
-export type ModWorkshopGetSubmissionAssessmentsWSResponse = {
+export type AddonModWorkshopGetSubmissionAssessmentsWSResponse = {
     assessments: {
         id: number; // The primary key of the record.
         submissionid: number; // The id of the assessed submission.
@@ -12279,7 +12279,7 @@ export type ModWorkshopGetSubmissionAssessmentsWSResponse = {
 /**
  * Params of mod_workshop_get_submissions WS.
  */
-export type ModWorkshopGetSubmissionsWSParams = {
+export type AddonModWorkshopGetSubmissionsWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // Get submissions done by this user. Use 0 or empty for the current user.
     groupid?: number; // Group id, 0 means that the function will determine the user group.
@@ -12292,7 +12292,7 @@ export type ModWorkshopGetSubmissionsWSParams = {
 /**
  * Data returned by mod_workshop_get_submissions WS.
  */
-export type ModWorkshopGetSubmissionsWSResponse = {
+export type AddonModWorkshopGetSubmissionsWSResponse = {
     submissions: {
         id: number; // The primary key of the record.
         workshopid: number; // The id of the workshop instance.
@@ -12350,7 +12350,7 @@ export type ModWorkshopGetSubmissionsWSResponse = {
 /**
  * Params of mod_workshop_get_user_plan WS.
  */
-export type ModWorkshopGetUserPlanWSParams = {
+export type AddonModWorkshopGetUserPlanWSParams = {
     workshopid: number; // Workshop instance id.
     userid?: number; // User id (empty or 0 for current user).
 };
@@ -12358,7 +12358,7 @@ export type ModWorkshopGetUserPlanWSParams = {
 /**
  * Data returned by mod_workshop_get_user_plan WS.
  */
-export type ModWorkshopGetUserPlanWSResponse = {
+export type AddonModWorkshopGetUserPlanWSResponse = {
     userplan: {
         phases: {
             code: number; // Phase code.
@@ -12392,14 +12392,14 @@ export type ModWorkshopGetUserPlanWSResponse = {
 /**
  * Params of mod_workshop_get_workshop_access_information WS.
  */
-export type ModWorkshopGetWorkshopAccessInformationWSParams = {
+export type AddonModWorkshopGetWorkshopAccessInformationWSParams = {
     workshopid: number; // Workshop instance id.
 };
 
 /**
  * Data returned by mod_workshop_get_workshop_access_information WS.
  */
-export type ModWorkshopGetWorkshopAccessInformationWSResponse = {
+export type AddonModWorkshopGetWorkshopAccessInformationWSResponse = {
     creatingsubmissionallowed: boolean; // Is the given user allowed to create their submission?.
     modifyingsubmissionallowed: boolean; // Is the user allowed to modify his existing submission?.
     assessingallowed: boolean; // Is the user allowed to create/edit his assessments?.
@@ -12435,14 +12435,14 @@ export type ModWorkshopGetWorkshopAccessInformationWSResponse = {
 /**
  * Params of mod_workshop_get_workshops_by_courses WS.
  */
-export type ModWorkshopGetWorkshopsByCoursesWSParams = {
+export type AddonModWorkshopGetWorkshopsByCoursesWSParams = {
     courseids?: number[]; // Array of course ids.
 };
 
 /**
  * Data returned by mod_workshop_get_workshops_by_courses WS.
  */
-export type ModWorkshopGetWorkshopsByCoursesWSResponse = {
+export type AddonModWorkshopGetWorkshopsByCoursesWSResponse = {
     workshops: {
         id: number; // The primary key of the record.
         course: number; // Course id this workshop is part of.
@@ -12531,7 +12531,7 @@ export type ModWorkshopGetWorkshopsByCoursesWSResponse = {
 /**
  * Params of mod_workshop_update_assessment WS.
  */
-export type ModWorkshopUpdateAssessmentWSParams = {
+export type AddonModWorkshopUpdateAssessmentWSParams = {
     assessmentid: number; // Assessment id.
     data: { // Assessment data.
         name: string; // The assessment data (use WS get_assessment_form_definition for obtaining the data to sent).
@@ -12548,7 +12548,7 @@ export type ModWorkshopUpdateAssessmentWSParams = {
 /**
  * Data returned by mod_workshop_update_assessment WS.
  */
-export type ModWorkshopUpdateAssessmentWSResponse = {
+export type AddonModWorkshopUpdateAssessmentWSResponse = {
     status: boolean; // Status: true if the assessment was added or updated false otherwise.
     rawgrade?: number; // Raw percentual grade (0.00000 to 100.00000) for submission.
     warnings?: CoreWSExternalWarning[];
@@ -12557,7 +12557,7 @@ export type ModWorkshopUpdateAssessmentWSResponse = {
 /**
  * Params of mod_workshop_update_submission WS.
  */
-export type ModWorkshopUpdateSubmissionWSParams = {
+export type AddonModWorkshopUpdateSubmissionWSParams = {
     submissionid: number; // Submission id.
     title: string; // Submission title.
     content?: string; // Submission text content.
@@ -12569,31 +12569,31 @@ export type ModWorkshopUpdateSubmissionWSParams = {
 /**
  * Data returned by mod_workshop_update_submission WS.
  */
-export type ModWorkshopUpdateSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWorkshopUpdateSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_view_submission WS.
  */
-export type ModWorkshopViewSubmissionWSParams = {
+export type AddonModWorkshopViewSubmissionWSParams = {
     submissionid: number; // Submission id.
 };
 
 /**
  * Data returned by mod_workshop_view_submission WS.
  */
-export type ModWorkshopViewSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWorkshopViewSubmissionWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of mod_workshop_view_workshop WS.
  */
-export type ModWorkshopViewWorkshopWSParams = {
+export type AddonModWorkshopViewWorkshopWSParams = {
     workshopid: number; // Workshop instance id.
 };
 
 /**
  * Data returned by mod_workshop_view_workshop WS.
  */
-export type ModWorkshopViewWorkshopWSResponse = CoreStatusWithWarningsWSResponse;
+export type AddonModWorkshopViewWorkshopWSResponse = CoreStatusWithWarningsWSResponse;
 
 /**
  * Params of report_insights_action_executed WS.
@@ -14641,5 +14641,3 @@ export type ToolMoodlenetVerifyWebfingerWSResponse = {
     message: string; // Our message for the user.
     domain?: string; // Domain to redirect the user to.
 };
-
-
