@@ -65,7 +65,7 @@ export class AddonModAssignFeedbackCommentsComponent extends AddonModAssignFeedb
 
                     if (this.text) {
                         // Open a new state with the text.
-                        this.textUtils.viewText(this.plugin.name, this.text, {
+                        CoreTextUtils.viewText(this.plugin.name, this.text, {
                             component: this.component,
                             componentId: this.assign.cmid,
                             filter: true,
@@ -146,6 +146,6 @@ export class AddonModAssignFeedbackCommentsComponent extends AddonModAssignFeedb
     replacePluginfileUrls(text: string): string {
         const files = this.plugin.fileareas && this.plugin.fileareas[0] && this.plugin.fileareas[0].files;
 
-        return this.textUtils.replacePluginfileUrls(text, files || []);
+        return CoreTextUtils.replacePluginfileUrls(text, files || []);
     }
 }

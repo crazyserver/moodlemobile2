@@ -80,7 +80,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
      */
     protected loadFiles(): Promise<any> {
         if (this.path) {
-            this.title = this.fileProvider.getFileAndDirectoryFromPath(this.path).name;
+            this.title = CoreFile.getFileAndDirectoryFromPath(this.path).name;
         } else {
             this.title = Translate.instant('core.sharedfiles.sharedfiles');
         }
@@ -134,7 +134,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
      * @param folder The folder to open.
      */
     openFolder(folder: any): void {
-        const path = this.textUtils.concatenatePaths(this.path, folder.name);
+        const path = CoreTextUtils.concatenatePaths(this.path, folder.name);
         if (this.isModal) {
             // In Modal we don't want to open a new page because we cannot dismiss the modal from the new page.
             this.path = path;

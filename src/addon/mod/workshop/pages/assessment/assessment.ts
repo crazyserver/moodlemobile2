@@ -341,7 +341,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
 
         inputData.grade = inputData.grade >= 0 ? inputData.grade : '';
         // Add some HTML to the message if needed.
-        inputData.text = this.textUtils.formatHtmlLines(inputData.text);
+        inputData.text = CoreTextUtils.formatHtmlLines(inputData.text);
 
         // Try to send it to server.
         return this.workshopProvider.evaluateAssessment(this.workshopId, this.assessmentId, this.courseId, inputData.text,

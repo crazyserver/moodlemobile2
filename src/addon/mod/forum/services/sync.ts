@@ -270,7 +270,7 @@ export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
                                 result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                     component: this.componentTranslate,
                                     name: data.name,
-                                    error: this.textUtils.getErrorMessageFromError(errors[0])
+                                    error: CoreTextUtils.getErrorMessageFromError(errors[0])
                                 }));
                             }
                         });
@@ -485,7 +485,7 @@ export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
                             result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: this.componentTranslate,
                                 name: data.name,
-                                error: this.textUtils.getErrorMessageFromError(error)
+                                error: CoreTextUtils.getErrorMessageFromError(error)
                             }));
                         });
                     } else {

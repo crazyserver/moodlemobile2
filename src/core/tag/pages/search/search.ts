@@ -94,7 +94,7 @@ export class CoreTagSearchPage {
      * Go to tag index page.
      */
     openTag(tag: CoreTagCloudTag): void {
-        const url = this.textUtils.decodeURI(tag.viewurl);
+        const url = CoreTextUtils.decodeURI(tag.viewurl);
         this.contentLinksHelper.handleLink(url, undefined, this.navCtrl);
     }
 

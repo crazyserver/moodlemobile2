@@ -67,7 +67,7 @@ export class CoreAttachmentsComponent implements OnInit {
         if (this.maxSize == -1) {
             this.maxSizeReadable = Translate.instant('core.unknown');
         } else {
-            this.maxSizeReadable = this.textUtils.bytesToSize(this.maxSize, 2);
+            this.maxSizeReadable = CoreTextUtils.bytesToSize(this.maxSize, 2);
         }
 
         if (typeof this.maxSubmissions == 'undefined' || this.maxSubmissions < 0) {

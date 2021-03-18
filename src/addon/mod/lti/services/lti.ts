@@ -51,7 +51,7 @@ export class AddonModLtiProvider {
      * @return Promise resolved when the launcher file is deleted.
      */
     deleteLauncher(): Promise<any> {
-        return this.fileProvider.removeFile(this.LAUNCHER_FILE_NAME);
+        return CoreFile.removeFile(this.LAUNCHER_FILE_NAME);
     }
 
     /**
@@ -62,7 +62,7 @@ export class AddonModLtiProvider {
      * @return Promise resolved with the file URL.
      */
     async generateLauncher(url: string, params: AddonModLtiParam[]): Promise<string> {
-        if (!this.fileProvider.isAvailable()) {
+        if (!CoreFile.isAvailable()) {
             return url;
         }
 
@@ -73,9 +73,9 @@ export class AddonModLtiProvider {
             if (p.name == 'ext_submit') {
                 text += '    <input type="submit"';
             } else {
-                text += '    <input type="hidden" name="' + this.textUtils.escapeHTML(p.name) + '"';
+                text += '    <input type="hidden" name="' + CoreTextUtils.escapeHTML(p.name) + '"';
             }
-            text += ' value="' + this.textUtils.escapeHTML(p.value) + '"/>\n';
+            text += ' value="' + CoreTextUtils.escapeHTML(p.value) + '"/>\n';
         });
         text += '</form>\n';
 
@@ -86,7 +86,7 @@ export class AddonModLtiProvider {
             '    }; \n' +
             '</script> \n';
 
-        const entry = await this.fileProvider.writeFile(this.LAUNCHER_FILE_NAME, text);
+        const entry = await CoreFile.writeFile(this.LAUNCHER_FILE_NAME, text);
 
         if (CoreApp.isDesktop()) {
             return entry.toInternalURL();

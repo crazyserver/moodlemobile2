@@ -104,8 +104,8 @@ export class CoreUrlUtilsProvider {
         // Do not use tokenpluginfile if site doesn't use slash params, the URL doesn't work.
         // Also, only use it for "core" pluginfile endpoints. Some plugins can implement their own endpoint (like customcert).
         return accessKey && !url.match(/[\&?]file=/) && (
-                url.indexOf(this.textUtils.concatenatePaths(siteUrl, 'pluginfile.php')) === 0 ||
-                url.indexOf(this.textUtils.concatenatePaths(siteUrl, 'webservice/pluginfile.php')) === 0);
+                url.indexOf(CoreTextUtils.concatenatePaths(siteUrl, 'pluginfile.php')) === 0 ||
+                url.indexOf(CoreTextUtils.concatenatePaths(siteUrl, 'webservice/pluginfile.php')) === 0);
     }
 
     /**
@@ -132,7 +132,7 @@ export class CoreUrlUtilsProvider {
         }
 
         urlAndHash[0].replace(regex, (match: string, key: string, value: string): string => {
-            params[key] = typeof value != 'undefined' ? this.textUtils.decodeURIComponent(value) : '';
+            params[key] = typeof value != 'undefined' ? CoreTextUtils.decodeURIComponent(value) : '';
 
             if (subParams) {
                 params[key] = params[key].replace(subParamsPlaceholder, subParams);
@@ -178,7 +178,7 @@ export class CoreUrlUtilsProvider {
         }
 
         // Check if is a valid URL (contains the pluginfile endpoint) and belongs to the site.
-        if (!this.isPluginFileUrl(url) || url.indexOf(this.textUtils.addEndingSlash(siteUrl)) !== 0) {
+        if (!this.isPluginFileUrl(url) || url.indexOf(CoreTextUtils.addEndingSlash(siteUrl)) !== 0) {
             return url;
         }
 
@@ -187,7 +187,7 @@ export class CoreUrlUtilsProvider {
             url = url.replace(/(\/webservice)?\/pluginfile\.php/, '/tokenpluginfile.php/' + accessKey);
         } else {
             // Use pluginfile.php. Some webservices returns directly the correct download url, others not.
-            if (url.indexOf(this.textUtils.concatenatePaths(siteUrl, 'pluginfile.php')) === 0) {
+            if (url.indexOf(CoreTextUtils.concatenatePaths(siteUrl, 'pluginfile.php')) === 0) {
                 url = url.replace('/pluginfile', '/webservice/pluginfile');
             }
 
@@ -262,7 +262,7 @@ export class CoreUrlUtilsProvider {
         let videoId;
         const params: any = {};
 
-        url = this.textUtils.decodeHTML(url);
+        url = CoreTextUtils.decodeHTML(url);
 
         // Get the video ID.
         let match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
@@ -504,7 +504,7 @@ export class CoreUrlUtilsProvider {
         url = url.replace(/&amp;/g, '&');
 
         // It site URL is supplied, check if the URL belongs to the site.
-        if (siteUrl && url.indexOf(this.textUtils.addEndingSlash(siteUrl)) !== 0) {
+        if (siteUrl && url.indexOf(CoreTextUtils.addEndingSlash(siteUrl)) !== 0) {
             return url;
         }
 

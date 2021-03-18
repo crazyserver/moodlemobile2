@@ -171,13 +171,13 @@ export class CoreCoursesCourseLinkHandler extends CoreContentLinksHandlerBase {
                     modal.dismiss();
 
                     if (error) {
-                        error = this.textUtils.getErrorMessageFromError(error) || error;
+                        error = CoreTextUtils.getErrorMessageFromError(error) || error;
                     }
                     if (!error) {
                         error = Translate.instant('core.courses.notenroled');
                     }
 
-                    const body = this.textUtils.buildSeveralParagraphsMessage(
+                    const body = CoreTextUtils.buildSeveralParagraphsMessage(
                             [error, Translate.instant('core.confirmopeninbrowser')]);
 
                     CoreDomUtils.showConfirm(body).then(() => {

@@ -71,7 +71,7 @@ export class AddonNotificationsProvider {
             }
 
             if (typeof notification.customdata == 'string') {
-                notification.customdata = this.textUtils.parseJSON(notification.customdata, {});
+                notification.customdata = CoreTextUtils.parseJSON(notification.customdata, {});
             }
 
             // Try to set courseid the notification belongs to.

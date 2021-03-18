@@ -317,7 +317,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                     errors.forEach((error) => {
                         warnings.push(Translate.instant('addon.messages.warningconversationmessagenotsent', {
                             conversation: conversation.name ? conversation.name : conversationId,
-                            error: this.textUtils.getErrorMessageFromError(error)
+                            error: CoreTextUtils.getErrorMessageFromError(error)
                         }));
                     });
                 });
@@ -331,7 +331,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
                     errors.forEach((error) => {
                         warnings.push(Translate.instant('addon.messages.warningmessagenotsent', {
                             user: user.fullname ? user.fullname : userId,
-                            error: this.textUtils.getErrorMessageFromError(error)
+                            error: CoreTextUtils.getErrorMessageFromError(error)
                         }));
                     });
                 });

@@ -221,7 +221,7 @@ export class CoreQuestionBaseComponent {
                 this.question.textarea = {
                     id: textarea.id,
                     name: textarea.name,
-                    text: content ? this.textUtils.decodeHTML(content) : ''
+                    text: content ? CoreTextUtils.decodeHTML(content) : ''
                 };
 
                 if (input) {

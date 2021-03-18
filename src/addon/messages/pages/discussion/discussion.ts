@@ -900,7 +900,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
      * @param message Message to be copied.
      */
     copyMessage(message: AddonMessagesConversationMessageFormatted | AddonMessagesGetMessagesMessageFormatted): void {
-        const text = this.textUtils.decodeHTMLEntities(
+        const text = CoreTextUtils.decodeHTMLEntities(
                 (<AddonMessagesGetMessagesMessageFormatted> message).smallmessage || message.text || '');
         CoreUtils.copyToClipboard(text);
     }

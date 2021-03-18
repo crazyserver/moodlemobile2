@@ -46,7 +46,7 @@ export class ZipMock extends Zip {
             promise = promise.then(() => {
                 return this.file.createDir(destination, folder, true).then(() => {
                     // Folder created, add it to the destination path.
-                    destination = this.textUtils.concatenatePaths(destination, folder);
+                    destination = CoreTextUtils.concatenatePaths(destination, folder);
                 });
             });
         }
@@ -118,7 +118,7 @@ export class ZipMock extends Zip {
 
                     promise = Promise.all(filePromises).then(() => {
                         // File read and parent folder created, now write the file.
-                        const parentFolder = this.textUtils.concatenatePaths(destination, fileDir);
+                        const parentFolder = CoreTextUtils.concatenatePaths(destination, fileDir);
 
                         return this.file.writeFile(parentFolder, fileName, fileData, {replace: true});
                     });

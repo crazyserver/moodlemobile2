@@ -309,7 +309,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
             return Promise.reject(null);
         }
 
-        const noText = this.textUtils.htmlIsBlank(inputData.content);
+        const noText = CoreTextUtils.htmlIsBlank(inputData.content);
         const noFiles = !inputData.attachmentfiles.length;
 
         if ((this.textRequired && noText) || (this.fileRequired && noFiles) || (noText && noFiles)) {
@@ -326,7 +326,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
 
         // Add some HTML to the message if needed.
         if (this.textAvailable) {
-            inputData.content = this.textUtils.formatHtmlLines(inputData.content);
+            inputData.content = CoreTextUtils.formatHtmlLines(inputData.content);
         }
 
         // Upload attachments first if any.

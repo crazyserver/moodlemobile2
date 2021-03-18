@@ -129,7 +129,7 @@ export class AddonBlockTimelineEventsComponent implements OnChanges {
         e.stopPropagation();
 
         // Fix URL format.
-        url = this.textUtils.decodeHTMLEntities(url);
+        url = CoreTextUtils.decodeHTMLEntities(url);
 
         const modal = CoreDomUtils.showModalLoading();
         this.contentLinksHelper.handleLink(url, undefined, this.navCtrl).then((treated) => {

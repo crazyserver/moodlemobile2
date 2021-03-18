@@ -464,7 +464,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
         const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         // Add some HTML to the message if needed.
-        message = this.textUtils.formatHtmlLines(message);
+        message = CoreTextUtils.formatHtmlLines(message);
 
         if (pin) {
             options.discussionpinned = true;

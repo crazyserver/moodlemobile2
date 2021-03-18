@@ -92,7 +92,7 @@ export class CoreSendMessageFormComponent implements OnInit {
 
         CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
-        value = this.textUtils.replaceNewLines(value, '<br>');
+        value = CoreTextUtils.replaceNewLines(value, '<br>');
         this.onSubmit.emit(value);
     }
 

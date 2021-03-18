@@ -180,15 +180,15 @@ export class CoreFilterProvider {
         return promise.then((text) => {
 
             if (options.clean) {
-                text = this.textUtils.cleanTags(text, options.singleLine);
+                text = CoreTextUtils.cleanTags(text, options.singleLine);
             }
 
             if (options.shortenLength > 0) {
-                text = this.textUtils.shortenText(text, options.shortenLength);
+                text = CoreTextUtils.shortenText(text, options.shortenLength);
             }
 
             if (options.highlight) {
-                text = this.textUtils.highlightText(text, options.highlight);
+                text = CoreTextUtils.highlightText(text, options.highlight);
             }
 
             return text;

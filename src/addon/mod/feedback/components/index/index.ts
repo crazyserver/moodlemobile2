@@ -294,7 +294,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
 
             case 'info':
                 item.data = item.data.map((dataItem) => {
-                    dataItem = this.textUtils.parseJSON(dataItem);
+                    dataItem = CoreTextUtils.parseJSON(dataItem);
 
                     return typeof dataItem.show != 'undefined' ? dataItem.show : false;
                 }).filter((dataItem) => {
@@ -310,7 +310,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
             case 'multichoicerated':
             case 'multichoice':
                 item.data = item.data.map((dataItem) => {
-                    dataItem = this.textUtils.parseJSON(dataItem);
+                    dataItem = CoreTextUtils.parseJSON(dataItem);
 
                     return typeof dataItem.answertext != 'undefined' ? dataItem : false;
                 }).filter((dataItem) => {

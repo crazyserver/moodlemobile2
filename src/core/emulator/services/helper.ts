@@ -82,7 +82,7 @@ export class CoreEmulatorHelperProvider implements CoreInitHandler {
         const promises = [];
 
         promises.push((<any> this.file).load().then((basePath: string) => {
-            this.fileProvider.setHTMLBasePath(basePath);
+            CoreFile.setHTMLBasePath(basePath);
         }));
         promises.push((<any> this.localNotif).load());
         promises.push(this.captureHelper.load());

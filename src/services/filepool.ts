@@ -700,7 +700,7 @@ export class CoreFilepoolProvider {
         let fileId,
             queueDeferred;
 
-        if (!this.fileProvider.isAvailable()) {
+        if (!CoreFile.isAvailable()) {
             return Promise.reject(null);
         }
 
@@ -873,7 +873,7 @@ export class CoreFilepoolProvider {
      * is not accessible. Also, this will have no effect if the queue is already running.
      */
     protected checkQueueProcessing(): void {
-        if (!this.fileProvider.isAvailable() || !CoreApp.isOnline()) {
+        if (!CoreFile.isAvailable() || !CoreApp.isOnline()) {
             this.queueState = this.QUEUE_PAUSED;
 
             return;
@@ -1120,7 +1120,7 @@ export class CoreFilepoolProvider {
                 if (file.filepath !== '/') {
                     path = file.filepath.substr(1) + path;
                 }
-                path = this.textUtils.concatenatePaths(dirPath, path);
+                path = CoreTextUtils.concatenatePaths(dirPath, path);
             }
 
             if (prefetch) {
@@ -1200,7 +1200,7 @@ export class CoreFilepoolProvider {
                     if (file.filepath !== '/') {
                         path = file.filepath.substr(1) + path;
                     }
-                    path = this.textUtils.concatenatePaths(dirPath, path);
+                    path = CoreTextUtils.concatenatePaths(dirPath, path);
                 }
 
                 if (prefetch) {
@@ -1280,7 +1280,7 @@ export class CoreFilepoolProvider {
         let promise;
         let alreadyDownloaded = true;
 
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             return this.fixPluginfileURL(siteId, fileUrl).then((file) => {
 
                 fileUrl = file.fileurl;
@@ -1531,12 +1531,12 @@ export class CoreFilepoolProvider {
      * @return Resolved with the URL. Rejected otherwise.
      */
     getDirectoryUrlByUrl(siteId: string, fileUrl: string): Promise<string> {
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             return this.fixPluginfileURL(siteId, fileUrl).then((file) => {
                 const fileId = this.getFileIdByUrl(file.fileurl),
                     filePath = <string> this.getFilePath(siteId, fileId, ''); // No extension, the function will return a string.
 
-                return this.fileProvider.getDir(filePath).then((dirEntry) => {
+                return CoreFile.getDir(filePath).then((dirEntry) => {
                     return dirEntry.toURL();
                 });
             });
@@ -1603,7 +1603,7 @@ export class CoreFilepoolProvider {
         url = this.removeRevisionFromUrl(url);
 
         // Decode URL.
-        url = this.textUtils.decodeHTML(this.textUtils.decodeURIComponent(url));
+        url = CoreTextUtils.decodeHTML(CoreTextUtils.decodeURIComponent(url));
 
         if (url.indexOf('/webservice/pluginfile') !== -1) {
             // Remove attributes that do not matter.
@@ -1691,7 +1691,7 @@ export class CoreFilepoolProvider {
      * @return The root path to the filepool of the site.
      */
     getFilepoolFolderPath(siteId: string): string {
-        return this.fileProvider.getSiteFolder(siteId) + '/' + this.FOLDER;
+        return CoreFile.getSiteFolder(siteId) + '/' + this.FOLDER;
     }
 
     /**
@@ -1747,7 +1747,7 @@ export class CoreFilepoolProvider {
             let size = 0;
 
             files.forEach((file) => {
-                promises.push(this.fileProvider.getFileSize(file.path).then((fs) => {
+                promises.push(CoreFile.getFileSize(file.path).then((fs) => {
                     size += fs;
                 }).catch(() => {
                     // Ignore failures, maybe some file was deleted.
@@ -1915,10 +1915,10 @@ export class CoreFilepoolProvider {
      * @return Resolved with the internal URL. Rejected otherwise.
      */
     protected getInternalSrcById(siteId: string, fileId: string): Promise<string> {
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             return Promise.resolve(this.getFilePath(siteId, fileId)).then((path) => {
-                return this.fileProvider.getFile(path).then((fileEntry) => {
-                    return this.fileProvider.convertFileSrc(fileEntry.toURL());
+                return CoreFile.getFile(path).then((fileEntry) => {
+                    return CoreFile.convertFileSrc(fileEntry.toURL());
                 });
             });
         }
@@ -1934,9 +1934,9 @@ export class CoreFilepoolProvider {
      * @return Resolved with the URL. Rejected otherwise.
      */
     protected getInternalUrlById(siteId: string, fileId: string): Promise<string> {
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             return Promise.resolve(this.getFilePath(siteId, fileId)).then((path) => {
-                return this.fileProvider.getFile(path).then((fileEntry) => {
+                return CoreFile.getFile(path).then((fileEntry) => {
                     // This URL is usually used to launch files or put them in HTML. In desktop we need the internal URL.
                     if (CoreApp.isDesktop()) {
                         return fileEntry.toInternalURL();
@@ -1957,8 +1957,8 @@ export class CoreFilepoolProvider {
      * @return Resolved with the URL.
      */
     protected getInternalUrlByPath(filePath: string): Promise<string> {
-        if (this.fileProvider.isAvailable()) {
-            return this.fileProvider.getFile(filePath).then((fileEntry) => {
+        if (CoreFile.isAvailable()) {
+            return CoreFile.getFile(filePath).then((fileEntry) => {
                 return fileEntry.toURL();
             });
         }
@@ -1974,7 +1974,7 @@ export class CoreFilepoolProvider {
      * @return Resolved with the URL. Rejected otherwise.
      */
     getInternalUrlByUrl(siteId: string, fileUrl: string): Promise<string> {
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             return this.fixPluginfileURL(siteId, fileUrl).then((file) => {
                 const fileId = this.getFileIdByUrl(file.fileurl);
 
@@ -2054,12 +2054,12 @@ export class CoreFilepoolProvider {
      * @return Resolved with the URL.
      */
     getPackageDirUrlByUrl(siteId: string, url: string): Promise<string> {
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             return this.fixPluginfileURL(siteId, url).then((file) => {
                 const dirName = this.getPackageDirNameByUrl(file.fileurl),
                     dirPath = <string> this.getFilePath(siteId, dirName, ''); // No extension, the function will return a string.
 
-                return this.fileProvider.getDir(dirPath).then((dirEntry) => {
+                return CoreFile.getDir(dirPath).then((dirEntry) => {
                     return dirEntry.toURL();
                 });
             });
@@ -2391,7 +2391,7 @@ export class CoreFilepoolProvider {
             filename += '_' + hashes.join('_');
         }
 
-        return this.textUtils.removeSpecialCharactersForFiles(filename);
+        return CoreTextUtils.removeSpecialCharactersForFiles(filename);
     }
 
     /**
@@ -2428,7 +2428,7 @@ export class CoreFilepoolProvider {
             throw null;
         }
         // Convert the links to an object.
-        entry.links = this.textUtils.parseJSON(entry.links, []);
+        entry.links = CoreTextUtils.parseJSON(entry.links, []);
 
         return entry;
     }
@@ -2710,7 +2710,7 @@ export class CoreFilepoolProvider {
             // Silently ignore, the queue is on pause.
             promise = Promise.reject(this.ERR_QUEUE_ON_PAUSE);
 
-        } else if (!this.fileProvider.isAvailable() || !CoreApp.isOnline()) {
+        } else if (!CoreFile.isAvailable() || !CoreApp.isOnline()) {
             promise = Promise.reject(this.ERR_FS_OR_NETWORK_UNAVAILABLE);
 
         } else {
@@ -2758,7 +2758,7 @@ export class CoreFilepoolProvider {
             throw this.ERR_QUEUE_IS_EMPTY;
         }
         // Convert the links to an object.
-        item.links = this.textUtils.parseJSON(item.links, []);
+        item.links = CoreTextUtils.parseJSON(item.links, []);
 
         return this.processQueueItem(item);
     }
@@ -2933,8 +2933,8 @@ export class CoreFilepoolProvider {
                     promises.push(db.deleteRecords(this.LINKS_TABLE, conditions));
 
                     // Remove the file.
-                    if (this.fileProvider.isAvailable()) {
-                        promises.push(this.fileProvider.removeFile(path).catch((error) => {
+                    if (CoreFile.isAvailable()) {
+                        promises.push(CoreFile.removeFile(path).catch((error) => {
                             if (error && error.code == 1) {
                                 // Not found, ignore error since maybe it was deleted already.
                             } else {
@@ -3188,7 +3188,7 @@ export class CoreFilepoolProvider {
                         revision).then((fileUrl) => {
 
                     if (fileUrl != url) {
-                        cssCode = cssCode.replace(new RegExp(this.textUtils.escapeForRegex(url), 'g'), fileUrl);
+                        cssCode = cssCode.replace(new RegExp(CoreTextUtils.escapeForRegex(url), 'g'), fileUrl);
                         updated = true;
                     }
                 }).catch((error) => {
@@ -3201,7 +3201,7 @@ export class CoreFilepoolProvider {
         return Promise.all(promises).then(() => {
             // All files downloaded. Store the result if it has changed.
             if (updated) {
-                return this.fileProvider.writeFile(filePath, cssCode);
+                return CoreFile.writeFile(filePath, cssCode);
             }
         }).then(() => {
             return cssCode;

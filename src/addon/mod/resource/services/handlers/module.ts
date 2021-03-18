@@ -156,12 +156,12 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
         }));
 
         if (typeof module.customdata != 'undefined') {
-            options = this.textUtils.unserialize(this.textUtils.parseJSON(module.customdata));
+            options = CoreTextUtils.unserialize(CoreTextUtils.parseJSON(module.customdata));
         } else if (this.resourceProvider.isGetResourceWSAvailable()) {
             // Get the resource data.
             promises.push(this.resourceProvider.getResourceData(courseId, module.id).then((info) => {
                 infoFiles = info.contentfiles;
-                options = this.textUtils.unserialize(info.displayoptions);
+                options = CoreTextUtils.unserialize(info.displayoptions);
             }));
         }
 
@@ -179,7 +179,7 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
                 if (mimetype) {
                     resourceData.icon = this.mimetypeUtils.getMimetypeIcon(mimetype);
                 }
-                resourceData.extra = this.textUtils.cleanTags(module.afterlink);
+                resourceData.extra = CoreTextUtils.cleanTags(module.afterlink);
 
             } else if (files && files.length) {
                 const file = files[0];
@@ -196,7 +196,7 @@ export class AddonModResourceModuleHandler implements CoreCourseModuleHandler {
                         }, 0);
                     }
 
-                    extra.push(this.textUtils.bytesToSize(size, 1));
+                    extra.push(CoreTextUtils.bytesToSize(size, 1));
                 }
 
                 if (options.showtype) {

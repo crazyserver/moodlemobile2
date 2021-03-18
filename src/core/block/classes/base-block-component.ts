@@ -51,7 +51,7 @@ export class CoreBlockBaseComponent implements OnInit {
         this.loaded = false;
         if (this.block.configs && this.block.configs.length > 0) {
             this.block.configs.map((config) => {
-                config.value = this.textUtils.parseJSON(config.value);
+                config.value = CoreTextUtils.parseJSON(config.value);
 
                 return config;
             });

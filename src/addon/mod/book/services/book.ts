@@ -149,7 +149,7 @@ export class AddonModBookProvider {
             return Promise.reject(null);
         }
 
-        if (this.fileProvider.isAvailable()) {
+        if (CoreFile.isAvailable()) {
             promise = CoreFilepool.downloadUrl(siteId, indexUrl, false, AddonModBookProvider.COMPONENT, moduleId);
         } else {
             // We return the live URL.
@@ -210,7 +210,7 @@ export class AddonModBookProvider {
                             key = content.filepath.replace('/' + chapter + '/', '') + content.filename;
                         }
 
-                        map[chapter].paths[this.textUtils.decodeURIComponent(key)] = content.fileurl;
+                        map[chapter].paths[CoreTextUtils.decodeURIComponent(key)] = content.fileurl;
                     }
                 }
             }
@@ -286,7 +286,7 @@ export class AddonModBookProvider {
             return [];
         }
 
-        return this.textUtils.parseJSON(contents[0].content, []);
+        return CoreTextUtils.parseJSON(contents[0].content, []);
     }
 
     /**

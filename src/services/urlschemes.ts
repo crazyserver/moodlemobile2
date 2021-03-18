@@ -132,7 +132,7 @@ export class CoreCustomURLSchemesProvider {
         }
 
         this.lastUrls[url] = Date.now();
-        url = this.textUtils.decodeURIComponent(url);
+        url = CoreTextUtils.decodeURIComponent(url);
 
         // Wait for app to be ready.
         await this.ApplicationInit.donePromise;
@@ -194,7 +194,7 @@ export class CoreCustomURLSchemesProvider {
 
             if (data.redirect && !data.redirect.match(/^https?:\/\//)) {
                 // Redirect is a relative URL. Append the site URL.
-                data.redirect = this.textUtils.concatenatePaths(data.siteUrl, data.redirect);
+                data.redirect = CoreTextUtils.concatenatePaths(data.siteUrl, data.redirect);
             }
 
             let siteIds = [siteId];

@@ -117,7 +117,7 @@ export class InAppBrowserObjectMock {
             if (details.code) {
                 this.window.webContents.executeJavaScript(details.code, false, resolve);
             } else if (details.file) {
-                this.fileProvider.readFile(details.file).then((code) => {
+                CoreFile.readFile(details.file).then((code) => {
                     this.window.webContents.executeJavaScript(code, false, resolve);
                 }).catch(reject);
             } else {
@@ -181,7 +181,7 @@ export class InAppBrowserObjectMock {
                 this.window.webContents.insertCSS(details.code);
                 resolve();
             } else if (details.file) {
-                this.fileProvider.readFile(details.file).then((code) => {
+                CoreFile.readFile(details.file).then((code) => {
                     this.window.webContents.insertCSS(code);
                     resolve();
                 }).catch(reject);

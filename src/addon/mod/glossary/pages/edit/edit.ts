@@ -182,7 +182,7 @@ export class AddonModGlossaryEditPage implements OnInit {
         const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
         // Add some HTML to the definition if needed.
-        definition = this.textUtils.formatHtmlLines(definition);
+        definition = CoreTextUtils.formatHtmlLines(definition);
 
         // Upload attachments first if any.
         if (this.attachments.length > 0) {

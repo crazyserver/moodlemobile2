@@ -206,7 +206,7 @@ export class AddonModAssignFeedbackCommentsHandler implements AddonModAssignFeed
 
         if (draft) {
             // Add some HTML to the text if needed.
-            draft.text = this.textUtils.formatHtmlLines(draft.text);
+            draft.text = CoreTextUtils.formatHtmlLines(draft.text);
 
             pluginData.assignfeedbackcomments_editor = draft;
         }

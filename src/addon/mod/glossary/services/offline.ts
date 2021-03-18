@@ -248,10 +248,10 @@ export class AddonModGlossaryOfflineProvider {
      */
     getGlossaryFolder(glossaryId: number, siteId?: string): Promise<string> {
         return CoreSites.getSite(siteId).then((site) => {
-            const siteFolderPath = this.fileProvider.getSiteFolder(site.getId());
+            const siteFolderPath = CoreFile.getSiteFolder(site.getId());
             const folderPath = 'offlineglossary/' + glossaryId;
 
-            return this.textUtils.concatenatePaths(siteFolderPath, folderPath);
+            return CoreTextUtils.concatenatePaths(siteFolderPath, folderPath);
         });
     }
 
@@ -266,7 +266,7 @@ export class AddonModGlossaryOfflineProvider {
      */
     getEntryFolder(glossaryId: number, concept: string, timeCreated: number, siteId?: string): Promise<string> {
         return this.getGlossaryFolder(glossaryId, siteId).then((folderPath) => {
-            return this.textUtils.concatenatePaths(folderPath, 'newentry_' + concept + '_' + timeCreated);
+            return CoreTextUtils.concatenatePaths(folderPath, 'newentry_' + concept + '_' + timeCreated);
         });
     }
 
@@ -277,8 +277,8 @@ export class AddonModGlossaryOfflineProvider {
      * @return Record object with columns parsed.
      */
     protected parseRecord(record: any): any {
-        record.options = this.textUtils.parseJSON(record.options);
-        record.attachments = this.textUtils.parseJSON(record.attachments);
+        record.options = CoreTextUtils.parseJSON(record.options);
+        record.attachments = CoreTextUtils.parseJSON(record.attachments);
 
         return record;
     }

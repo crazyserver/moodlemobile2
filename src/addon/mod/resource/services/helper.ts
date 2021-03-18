@@ -84,7 +84,7 @@ export class AddonModResourceHelperProvider {
 
         return CoreFilepool.getPackageDirUrlByUrl(CoreSites.getCurrentSiteId(), module.url).then((dirPath) => {
             // This URL is going to be injected in an iframe, we need trustAsResourceUrl to make it work in a browser.
-            return this.textUtils.concatenatePaths(dirPath, mainFilePath);
+            return CoreTextUtils.concatenatePaths(dirPath, mainFilePath);
         }).catch(() => {
             // Error getting directory, there was an error downloading or we're in browser. Return online URL.
             if (CoreApp.isOnline() && mainFile.fileurl) {
@@ -106,7 +106,7 @@ export class AddonModResourceHelperProvider {
     isDisplayedEmbedded(module: any, display: number): boolean {
         const currentSite = CoreSites.getCurrentSite();
 
-        if ((!module.contents.length && !module.contentsinfo) || !this.fileProvider.isAvailable() ||
+        if ((!module.contents.length && !module.contentsinfo) || !CoreFile.isAvailable() ||
                 (currentSite && !currentSite.isVersionGreaterEqualThan('3.7') && this.isNextcloudFile(module))) {
             return false;
         }
@@ -129,7 +129,7 @@ export class AddonModResourceHelperProvider {
      * @return Whether the resource should be displayed in an iframe.
      */
     isDisplayedInIframe(module: any): boolean {
-        if ((!module.contents.length && !module.contentsinfo) || !this.fileProvider.isAvailable()) {
+        if ((!module.contents.length && !module.contentsinfo) || !CoreFile.isAvailable()) {
             return false;
         }
 

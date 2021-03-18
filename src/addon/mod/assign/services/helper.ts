@@ -156,7 +156,7 @@ export class AddonModAssignHelperProvider {
      */
     deleteStoredSubmissionFiles(assignId: number, folderName: string, userId?: number, siteId?: string): Promise<any> {
         return this.assignOffline.getSubmissionPluginFolder(assignId, folderName, userId, siteId).then((folderPath) => {
-            return this.fileProvider.removeDir(folderPath);
+            return CoreFile.removeDir(folderPath);
         });
     }
 
@@ -299,7 +299,7 @@ export class AddonModAssignHelperProvider {
      */
     getStoredSubmissionFiles(assignId: number, folderName: string, userId?: number, siteId?: string): Promise<any[]> {
         return this.assignOffline.getSubmissionPluginFolder(assignId, folderName, userId, siteId).then((folderPath) => {
-            return this.fileProvider.getDirectoryContents(folderPath);
+            return CoreFile.getDirectoryContents(folderPath);
         });
     }
 

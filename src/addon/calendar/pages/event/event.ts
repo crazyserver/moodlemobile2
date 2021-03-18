@@ -258,7 +258,7 @@ export class AddonCalendarEventPage implements OnDestroy {
                 promises.push(CoreCourses.getUserCourse(event.courseid, true).then((course) => {
                     this.courseId = course.id;
                     this.courseName = course.fullname;
-                    this.courseUrl = currentSite ? this.textUtils.concatenatePaths(currentSite.siteUrl,
+                    this.courseUrl = currentSite ? CoreTextUtils.concatenatePaths(currentSite.siteUrl,
                             '/course/view.php?id=' + event.courseid) : '';
                 }).catch(() => {
                     // Error getting course, just don't show the course name.
@@ -286,8 +286,8 @@ export class AddonCalendarEventPage implements OnDestroy {
 
             if (event.location) {
                 // Build a link to open the address in maps.
-                event.location = this.textUtils.decodeHTML(event.location);
-                event.encodedLocation = this.textUtils.buildAddressURL(event.location);
+                event.location = CoreTextUtils.decodeHTML(event.location);
+                event.encodedLocation = CoreTextUtils.buildAddressURL(event.location);
             }
 
             // Check if event was deleted in offine.

@@ -530,7 +530,7 @@ export class AddonQtypeDdwtosQuestion {
 
             // Find max height and width.
             groupItems.forEach((item) => {
-                item.innerHTML = this.textUtils.decodeHTML(item.innerHTML);
+                item.innerHTML = CoreTextUtils.decodeHTML(item.innerHTML);
                 maxWidth = Math.max(maxWidth, Math.ceil(item.offsetWidth));
                 maxHeight = Math.max(maxHeight, Math.ceil(item.offsetHeight));
             });

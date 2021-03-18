@@ -165,7 +165,7 @@ export class AddonModDataOfflineProvider {
                 const promises = [];
 
                 entry.fields.forEach((field) => {
-                    const value = this.textUtils.parseJSON(field.value);
+                    const value = CoreTextUtils.parseJSON(field.value);
                     if (!value.offline) {
                         return;
                     }
@@ -276,10 +276,10 @@ export class AddonModDataOfflineProvider {
     protected getDatabaseFolder(dataId: number, siteId?: string): Promise<string> {
         return CoreSites.getSite(siteId).then((site) => {
 
-            const siteFolderPath = this.fileProvider.getSiteFolder(site.getId()),
+            const siteFolderPath = CoreFile.getSiteFolder(site.getId()),
                 folderPath = 'offlinedatabase/' + dataId;
 
-            return this.textUtils.concatenatePaths(siteFolderPath, folderPath);
+            return CoreTextUtils.concatenatePaths(siteFolderPath, folderPath);
         });
     }
 
@@ -294,7 +294,7 @@ export class AddonModDataOfflineProvider {
      */
     getEntryFieldFolder(dataId: number, entryId: number, fieldId: number, siteId?: string): Promise<string> {
         return this.getDatabaseFolder(dataId, siteId).then((folderPath) => {
-            return this.textUtils.concatenatePaths(folderPath, entryId + '_' + fieldId);
+            return CoreTextUtils.concatenatePaths(folderPath, entryId + '_' + fieldId);
         });
     }
 
@@ -305,7 +305,7 @@ export class AddonModDataOfflineProvider {
      * @return Record object with columns parsed.
      */
     protected parseRecord(record: any): AddonModDataOfflineAction {
-        record.fields = this.textUtils.parseJSON(record.fields);
+        record.fields = CoreTextUtils.parseJSON(record.fields);
 
         return record;
     }

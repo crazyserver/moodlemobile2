@@ -188,7 +188,7 @@ export class CoreFileUploaderProvider {
                 deleteAfterUpload: !isFromAlbum,
                 mimeType: mimetype
             };
-        const fileName = this.fileProvider.getFileAndDirectoryFromPath(uri).name;
+        const fileName = CoreFile.getFileAndDirectoryFromPath(uri).name;
 
         if (isIOS && (mimetype == 'image/jpeg' || mimetype == 'image/png')) {
             // In iOS, the pictures can have repeated names, even if they come from the album.
@@ -204,7 +204,7 @@ export class CoreFileUploaderProvider {
 
         if (isFromAlbum) {
             // If the file was picked from the album, delete it only if it was copied to the app's folder.
-            options.deleteAfterUpload = this.fileProvider.isFileInAppFolder(uri);
+            options.deleteAfterUpload = CoreFile.isFileInAppFolder(uri);
 
             if (CoreApp.isAndroid()) {
                 // Picking an image from album in Android adds a timestamp at the end of the file. Delete it.
@@ -287,7 +287,7 @@ export class CoreFileUploaderProvider {
      * @return Promise resolved with the list of files.
      */
     getStoredFiles(folderPath: string): Promise<any[]> {
-        return this.fileProvider.getDirectoryContents(folderPath).then((files) => {
+        return CoreFile.getDirectoryContents(folderPath).then((files) => {
             return this.markOfflineFiles(files);
         });
     }
@@ -471,7 +471,7 @@ export class CoreFileUploaderProvider {
         }
 
         // Remove unused files from previous saves.
-        return this.fileProvider.removeUnusedFiles(folderPath, files).then(() => {
+        return CoreFile.removeUnusedFiles(folderPath, files).then(() => {
             const promises = [];
 
             files.forEach((file) => {
@@ -490,8 +490,8 @@ export class CoreFileUploaderProvider {
                 } else {
                     // Local file, copy it.
                     // Use copy instead of move to prevent having a unstable state if some copies succeed and others don't.
-                    const destFile = this.textUtils.concatenatePaths(folderPath, file.name);
-                    promises.push(this.fileProvider.copyFile(file.toURL(), destFile));
+                    const destFile = CoreTextUtils.concatenatePaths(folderPath, file.name);
+                    promises.push(CoreFile.copyFile(file.toURL(), destFile));
                     result.offline++;
                 }
             });
@@ -526,7 +526,7 @@ export class CoreFileUploaderProvider {
             if (deleteAfterUpload) {
                 setTimeout(() => {
                     // Use set timeout, otherwise in Electron the upload threw an error sometimes.
-                    this.fileProvider.removeExternalFile(uri);
+                    CoreFile.removeExternalFile(uri);
                 }, 500);
             }
 
@@ -561,7 +561,7 @@ export class CoreFileUploaderProvider {
             fileName = file.filename;
             promise = CoreFilepool.downloadUrl(siteId, file.url || file.fileurl, false, component, componentId,
                 file.timemodified, undefined, undefined, file).then((path) => {
-                    return this.fileProvider.getExternalFile(path);
+                    return CoreFile.getExternalFile(path);
                 });
         } else {
             // Local file, we already have the file entry.

@@ -138,7 +138,7 @@ export class CoreSharedFilesHelperProvider {
         if (isInbox) {
             return this.sharedFilesProvider.deleteInboxFile(fileEntry);
         } else {
-            return this.fileProvider.removeFileByFileEntry(fileEntry);
+            return CoreFile.removeFileByFileEntry(fileEntry);
         }
     }
 
@@ -160,7 +160,7 @@ export class CoreSharedFilesHelperProvider {
             let promise;
             if (path) {
                 // The app was launched with the path to the file, get the file.
-                promise = this.fileProvider.getExternalFile(path);
+                promise = CoreFile.getExternalFile(path);
             } else {
                 // No path received, search if there is any file in the Inbox folder.
                 promise = this.sharedFilesProvider.checkIOSNewFiles();
@@ -201,7 +201,7 @@ export class CoreSharedFilesHelperProvider {
         // First of all check if there's already a file with the same name in the shared files folder.
         const sharedFilesDirPath = this.sharedFilesProvider.getSiteSharedFilesDirPath(siteId);
 
-        return this.fileProvider.getUniqueNameInFolder(sharedFilesDirPath, fileEntry.name).then((newName) => {
+        return CoreFile.getUniqueNameInFolder(sharedFilesDirPath, fileEntry.name).then((newName) => {
             if (newName.toLowerCase() == fileEntry.name.toLowerCase()) {
                 // No file with the same name. Use the original file name.
                 return newName;

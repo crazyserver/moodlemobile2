@@ -181,7 +181,7 @@ export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
                                 // Completion deleted, add a warning.
                                 result.warnings.push(Translate.instant('core.course.warningofflinemanualcompletiondeleted', {
                                     name: entry.coursename || courseId,
-                                    error: this.textUtils.getErrorMessageFromError(error)
+                                    error: CoreTextUtils.getErrorMessageFromError(error)
                                 }));
                             });
                         }

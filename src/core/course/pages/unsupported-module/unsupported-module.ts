@@ -37,7 +37,7 @@ export class CoreCourseUnsupportedModulePage {
      * Expand the description.
      */
     expandDescription(): void {
-        this.textUtils.viewText(Translate.instant('core.description'), this.module.description, {
+        CoreTextUtils.viewText(Translate.instant('core.description'), this.module.description, {
             filter: true,
             contextLevel: 'module',
             instanceId: this.module.id,

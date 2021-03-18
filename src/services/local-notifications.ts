@@ -450,7 +450,7 @@ export class CoreLocalNotificationsProvider {
         if (!data) {
             return {};
         } else if (typeof data == 'string') {
-            return this.textUtils.parseJSON(data, {});
+            return CoreTextUtils.parseJSON(data, {});
         } else {
             return data;
         }

@@ -143,7 +143,7 @@ export class FileTransferObjectMock extends FileTransferObject {
                 if (!response) {
                     reject();
                 } else {
-                    const basePath = this.fileProvider.getBasePathInstant();
+                    const basePath = CoreFile.getBasePathInstant();
                     target = target.replace(basePath, ''); // Remove basePath from the target.
                     target = target.replace(/%20/g, ' '); // Replace all %20 with spaces.
                     if (isDesktop) {
@@ -151,7 +151,7 @@ export class FileTransferObjectMock extends FileTransferObject {
                         response = Buffer.from(<any> new Uint8Array(response));
                     }
 
-                    this.fileProvider.writeFile(target, response).then(resolve, reject);
+                    CoreFile.writeFile(target, response).then(resolve, reject);
                 }
             };
 
@@ -335,8 +335,8 @@ export class FileTransferObjectMock extends FileTransferObject {
             delete headers['Content-Type'];
 
             // Get the file to upload.
-            this.fileProvider.getFile(fileUrl).then((fileEntry) => {
-                return this.fileProvider.getFileObjectFromFileEntry(fileEntry);
+            CoreFile.getFile(fileUrl).then((fileEntry) => {
+                return CoreFile.getFileObjectFromFileEntry(fileEntry);
             }).then((file) => {
                 // Use XMLHttpRequest instead of HttpClient to support onprogress and abort.
                 const xhr = new XMLHttpRequest();

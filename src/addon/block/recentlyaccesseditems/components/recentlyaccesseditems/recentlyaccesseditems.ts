@@ -78,7 +78,7 @@ export class AddonBlockRecentlyAccessedItemsComponent extends CoreBlockBaseCompo
         e.preventDefault();
         e.stopPropagation();
 
-        const url = this.textUtils.decodeHTMLEntities(item.viewurl);
+        const url = CoreTextUtils.decodeHTMLEntities(item.viewurl);
         const modal = CoreDomUtils.showModalLoading();
         this.contentLinksHelper.handleLink(url, undefined, this.navCtrl).then((treated) => {
             if (!treated) {

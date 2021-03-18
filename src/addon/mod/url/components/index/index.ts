@@ -105,7 +105,7 @@ export class AddonModUrlIndexComponent extends CoreCourseModuleMainResourceCompo
             this.dataRetrieved.emit(url);
 
             if (canGetUrl && url.displayoptions) {
-                const unserialized = this.textUtils.unserialize(url.displayoptions);
+                const unserialized = CoreTextUtils.unserialize(url.displayoptions);
                 this.displayDescription = typeof unserialized.printintro == 'undefined' || !!unserialized.printintro;
             }
 

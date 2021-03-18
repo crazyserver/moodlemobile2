@@ -205,7 +205,7 @@ export class AddonModLessonProvider {
             className: string): string {
 
         // Add a table row containing the answer.
-        feedback += '<tr><td class="cell c0 lastcol">' + (answerFormat ? answer : this.textUtils.cleanTags(answer)) +
+        feedback += '<tr><td class="cell c0 lastcol">' + (answerFormat ? answer : CoreTextUtils.cleanTags(answer)) +
                 '</td></tr>';
 
         // If the response exists, add a table row containing the response. If not, add en empty row.
@@ -422,7 +422,7 @@ export class AddonModLessonProvider {
             }
 
             // Progress calculation as a percent.
-            return this.textUtils.roundToDecimals(viewedPagesIds.length / Object.keys(validPages).length, 2) * 100;
+            return CoreTextUtils.roundToDecimals(viewedPagesIds.length / Object.keys(validPages).length, 2) * 100;
         });
     }
 
@@ -590,7 +590,7 @@ export class AddonModLessonProvider {
                 return;
             }
 
-            value = this.textUtils.decodeHTML(value);
+            value = CoreTextUtils.decodeHTML(value);
             userResponse.push(value);
 
             if (typeof answers[id] != 'undefined') {
@@ -840,7 +840,7 @@ export class AddonModLessonProvider {
                 }
             } else {
                 expectedAnswer = expectedAnswer.replace('*', '#####');
-                expectedAnswer = this.textUtils.escapeForRegex(expectedAnswer);
+                expectedAnswer = CoreTextUtils.escapeForRegex(expectedAnswer);
                 expectedAnswer = expectedAnswer.replace('#####', '.*');
             }
 
@@ -920,7 +920,7 @@ export class AddonModLessonProvider {
         this.checkOtherAnswers(lesson, pageData, result);
 
         result.userresponse = studentAnswer;
-        result.studentanswer = this.textUtils.s(studentAnswer); // Clean student answer as it goes to output.
+        result.studentanswer = CoreTextUtils.s(studentAnswer); // Clean student answer as it goes to output.
     }
 
     /**
@@ -1093,7 +1093,7 @@ export class AddonModLessonProvider {
 
                             if (lesson.grade != CoreGradesProvider.TYPE_NONE) {
                                 entryData = {
-                                    grade: this.textUtils.roundToDecimals(gradeInfo.grade * lesson.grade / 100, 1),
+                                    grade: CoreTextUtils.roundToDecimals(gradeInfo.grade * lesson.grade / 100, 1),
                                     total: lesson.grade
                                 };
                                 this.addResultValueEolPage(result, 'yourcurrentgradeisoutof', entryData, true);
@@ -1169,7 +1169,7 @@ export class AddonModLessonProvider {
                 response.data.forEach((entry) => {
                     if (entry.value && typeof entry.value == 'string' && entry.value !== '1') {
                         // It's a JSON encoded object. Try to decode it.
-                        entry.value = this.textUtils.parseJSON(entry.value);
+                        entry.value = CoreTextUtils.parseJSON(entry.value);
                     }
 
                     map[entry.name] = entry;
@@ -1894,7 +1894,7 @@ export class AddonModLessonProvider {
 
                             if (lesson.grade != CoreGradesProvider.TYPE_NONE) {
                                 this.addMessage(messages, 'addon.mod_lesson.yourcurrentgradeisoutof', {$a: {
-                                    grade: this.textUtils.roundToDecimals(gradeInfo.grade * lesson.grade / 100, 1),
+                                    grade: CoreTextUtils.roundToDecimals(gradeInfo.grade * lesson.grade / 100, 1),
                                     total: lesson.grade
                                 }});
                             }
@@ -2910,7 +2910,7 @@ export class AddonModLessonProvider {
             });
         }).then(() => {
             if (total) { // Not zero.
-                theGrade = this.textUtils.roundToDecimals(earned * 100 / total, 5);
+                theGrade = CoreTextUtils.roundToDecimals(earned * 100 / total, 5);
             }
 
             return {

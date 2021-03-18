@@ -65,7 +65,7 @@ export class AddonModPageHelperProvider {
                     // Add the folders without the leading slash.
                     key = content.filepath.substr(1) + key;
                 }
-                paths[this.textUtils.decodeURIComponent(key)] = url;
+                paths[CoreTextUtils.decodeURIComponent(key)] = url;
             }
         });
 
@@ -74,7 +74,7 @@ export class AddonModPageHelperProvider {
             // If ever that happens.
             this.logger.debug('Could not locate the index page');
             promise = Promise.reject(null);
-        } else if (this.fileProvider.isAvailable()) {
+        } else if (CoreFile.isAvailable()) {
             // The file system is available.
             promise = CoreFilepool.downloadUrl(CoreSites.getCurrentSiteId(), indexUrl, false,
                 AddonModPageProvider.COMPONENT, moduleId);

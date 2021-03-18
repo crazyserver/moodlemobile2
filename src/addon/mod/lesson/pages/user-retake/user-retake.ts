@@ -131,7 +131,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
                 return Promise.reject(Translate.instant('addon.mod_lesson.cannotfindattempt'));
             }
 
-            student.bestgrade = this.textUtils.roundToDecimals(student.bestgrade, 2);
+            student.bestgrade = CoreTextUtils.roundToDecimals(student.bestgrade, 2);
             student.attempts.forEach((retake) => {
                 if (!this.selectedRetake && this.retakeNumber == retake.try) {
                     // The retake specified as parameter exists. Use it.
@@ -201,7 +201,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
 
             if (data && data.completed != -1) {
                 // Completed.
-                data.userstats.grade = this.textUtils.roundToDecimals(data.userstats.grade, 2);
+                data.userstats.grade = CoreTextUtils.roundToDecimals(data.userstats.grade, 2);
                 data.userstats.timetakenReadable = CoreTimeUtils.formatTime(data.userstats.timetotake);
             }
 

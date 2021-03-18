@@ -69,7 +69,7 @@ export class AddonFilterMediaPluginHandler extends CoreFilterDefaultHandler {
             return;
         }
 
-        const data = this.textUtils.parseJSON(video.getAttribute('data-setup') || video.getAttribute('data-setup-lazy') || '{}'),
+        const data = CoreTextUtils.parseJSON(video.getAttribute('data-setup') || video.getAttribute('data-setup-lazy') || '{}'),
             youtubeUrl = data.techOrder && data.techOrder[0] && data.techOrder[0] == 'youtube' &&
                     this.urlUtils.getYoutubeEmbedUrl(data.sources && data.sources[0] && data.sources[0].src);
 

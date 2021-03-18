@@ -124,7 +124,7 @@ export class CoreFileUploaderHelperProvider {
         if (size < 0) {
             return CoreDomUtils.showConfirm(Translate.instant('core.fileuploader.confirmuploadunknownsize'));
         } else if (size >= wifiThreshold || (CoreApp.isNetworkAccessLimited() && size >= limitedThreshold)) {
-            const readableSize = this.textUtils.bytesToSize(size, 2);
+            const readableSize = CoreTextUtils.bytesToSize(size, 2);
 
             return CoreDomUtils.showConfirm(Translate.instant('core.fileuploader.confirmuploadfile', { size: readableSize }));
         } else if (alwaysConfirm) {
@@ -148,11 +148,11 @@ export class CoreFileUploaderHelperProvider {
         const modal = CoreDomUtils.showModalLoading('core.fileuploader.readingfile', true);
 
         // Get unique name for the copy.
-        return this.fileProvider.getUniqueNameInFolder(CoreFileProvider.TMPFOLDER, name).then((newName) => {
-            const filePath = this.textUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, newName);
+        return CoreFile.getUniqueNameInFolder(CoreFileProvider.TMPFOLDER, name).then((newName) => {
+            const filePath = CoreTextUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, newName);
 
             // Write the data into the file.
-            return this.fileProvider.writeFileDataInFile(file, filePath, (progress: CoreFileProgressEvent) => {
+            return CoreFile.writeFileDataInFile(file, filePath, (progress: CoreFileProgressEvent) => {
                 this.showProgressModal(modal, 'core.fileuploader.readingfileperc', progress);
             });
         }).catch((error) => {
@@ -184,14 +184,14 @@ export class CoreFileUploaderHelperProvider {
     protected copyToTmpFolder(path: string, shouldDelete: boolean, maxSize?: number, defaultExt?: string,
             options?: CoreFileUploaderOptions): Promise<any> {
 
-        const fileName = (options && options.fileName) || this.fileProvider.getFileAndDirectoryFromPath(path).name;
+        const fileName = (options && options.fileName) || CoreFile.getFileAndDirectoryFromPath(path).name;
         let promise;
         let fileTooLarge;
 
         // Check that size isn't too large.
         if (typeof maxSize != 'undefined' && maxSize != -1) {
-            promise = this.fileProvider.getExternalFile(path).then((fileEntry) => {
-                return this.fileProvider.getFileObjectFromFileEntry(fileEntry).then((file) => {
+            promise = CoreFile.getExternalFile(path).then((fileEntry) => {
+                return CoreFile.getFileObjectFromFileEntry(fileEntry).then((file) => {
                     if (file.size > maxSize) {
                         fileTooLarge = file;
                     }
@@ -210,14 +210,14 @@ export class CoreFileUploaderHelperProvider {
 
             // File isn't too large.
             // Get a unique name in the folder to prevent overriding another file.
-            return this.fileProvider.getUniqueNameInFolder(CoreFileProvider.TMPFOLDER, fileName, defaultExt);
+            return CoreFile.getUniqueNameInFolder(CoreFileProvider.TMPFOLDER, fileName, defaultExt);
         }).then((newName) => {
             // Now move or copy the file.
-            const destPath = this.textUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, newName);
+            const destPath = CoreTextUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, newName);
             if (shouldDelete) {
-                return this.fileProvider.moveExternalFile(path, destPath);
+                return CoreFile.moveExternalFile(path, destPath);
             } else {
-                return this.fileProvider.copyExternalFile(path, destPath);
+                return CoreFile.copyExternalFile(path, destPath);
             }
         });
     }
@@ -233,7 +233,7 @@ export class CoreFileUploaderHelperProvider {
         const errorMessage = Translate.instant('core.fileuploader.maxbytesfile', {
             $a: {
                 file: fileName,
-                size: this.textUtils.bytesToSize(maxSize, 2)
+                size: CoreTextUtils.bytesToSize(maxSize, 2)
             }
         });
 
@@ -273,7 +273,7 @@ export class CoreFileUploaderHelperProvider {
      * @return File name, undefined if cannot get it.
      */
     protected getChosenFileNameFromPath(result: ChooserResult): string {
-        const nameAndDir = this.fileProvider.getFileAndDirectoryFromPath(result.uri);
+        const nameAndDir = CoreFile.getFileAndDirectoryFromPath(result.uri);
 
         if (!nameAndDir.name) {
             return;
@@ -381,9 +381,9 @@ export class CoreFileUploaderHelperProvider {
                                 return this.uploadFileEntry(data.fileEntry, data.delete, maxSize, upload, allowOffline);
                             } else if (data.path) {
                                 // The handler provided a path. First treat it like it's a relative path.
-                                return this.fileProvider.getFile(data.path).catch(() => {
+                                return CoreFile.getFile(data.path).catch(() => {
                                     // File not found, it's probably an absolute path.
-                                    return this.fileProvider.getExternalFile(data.path);
+                                    return CoreFile.getExternalFile(data.path);
                                 }).then((fileEntry) => {
                                     // File found, treat it.
                                     return this.uploadFileEntry(fileEntry, data.delete, maxSize, upload, allowOffline);
@@ -433,7 +433,7 @@ export class CoreFileUploaderHelperProvider {
      * @return Promise resolved when the file is uploaded.
      */
     showConfirmAndUploadInSite(fileEntry: any, deleteAfterUpload?: boolean, siteId?: string): Promise<void> {
-        return this.fileProvider.getFileObjectFromFileEntry(fileEntry).then((file) => {
+        return CoreFile.getFileObjectFromFileEntry(fileEntry).then((file) => {
             return this.confirmUploadFile(file.size).then(() => {
                 return this.uploadGenericFile(fileEntry.toURL(), file.name, file.type, deleteAfterUpload, siteId).then(() => {
                     CoreDomUtils.showToast('core.fileuploader.fileuploaded', true, undefined, 'core-toast-success');
@@ -674,11 +674,11 @@ export class CoreFileUploaderHelperProvider {
      */
     uploadFileEntry(fileEntry: any, deleteAfter: boolean, maxSize?: number, upload?: boolean, allowOffline?: boolean,
             name?: string): Promise<any> {
-        return this.fileProvider.getFileObjectFromFileEntry(fileEntry).then((file) => {
+        return CoreFile.getFileObjectFromFileEntry(fileEntry).then((file) => {
             return this.uploadFileObject(file, maxSize, upload, allowOffline, name).then((result) => {
                 if (deleteAfter) {
                     // We have uploaded and deleted a copy of the file. Now delete the original one.
-                    this.fileProvider.removeFileByFileEntry(fileEntry);
+                    CoreFile.removeFileByFileEntry(fileEntry);
                 }
 
                 return result;
@@ -733,7 +733,7 @@ export class CoreFileUploaderHelperProvider {
                 }, () => {
                     // User cancelled. Delete the file if needed.
                     if (options.deleteAfterUpload) {
-                        this.fileProvider.removeExternalFile(path);
+                        CoreFile.removeExternalFile(path);
                     }
 
                     return Promise.reject(CoreDomUtils.createCanceledError());
@@ -749,8 +749,8 @@ export class CoreFileUploaderHelperProvider {
 
         if (checkSize) {
             // Check that file size is the right one.
-            promise = this.fileProvider.getExternalFile(path).then((fileEntry) => {
-                return this.fileProvider.getFileObjectFromFileEntry(fileEntry).then((f) => {
+            promise = CoreFile.getExternalFile(path).then((fileEntry) => {
+                return CoreFile.getFileObjectFromFileEntry(fileEntry).then((f) => {
                     file = f;
 
                     return file.size;

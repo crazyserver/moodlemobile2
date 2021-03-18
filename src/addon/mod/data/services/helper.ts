@@ -88,9 +88,9 @@ export class AddonModDataHelperProvider {
 
                         if (offlineContent.subfield) {
                             offlineContents[offlineContent.fieldid][offlineContent.subfield] =
-                                this.textUtils.parseJSON(offlineContent.value);
+                                CoreTextUtils.parseJSON(offlineContent.value);
                         } else {
-                            offlineContents[offlineContent.fieldid][''] = this.textUtils.parseJSON(offlineContent.value);
+                            offlineContents[offlineContent.fieldid][''] = CoreTextUtils.parseJSON(offlineContent.value);
                         }
                     });
 

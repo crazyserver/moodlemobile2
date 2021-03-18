@@ -427,7 +427,7 @@ export class AddonModLessonSyncProvider extends CoreCourseActivitySyncBaseProvid
                                 result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                     component: this.componentTranslate,
                                     name: lesson.name,
-                                    error: this.textUtils.getErrorMessageFromError(error)
+                                    error: CoreTextUtils.getErrorMessageFromError(error)
                                 }));
                             });
                         } else {
@@ -494,7 +494,7 @@ export class AddonModLessonSyncProvider extends CoreCourseActivitySyncBaseProvid
                     result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                         component: this.componentTranslate,
                         name: lesson.name,
-                        error: this.textUtils.getErrorMessageFromError(error)
+                        error: CoreTextUtils.getErrorMessageFromError(error)
                     }));
                 });
             } else {

@@ -175,7 +175,7 @@ export class AddonModAssignSubmissionOnlineTextHandler implements AddonModAssign
         const text = inputData.onlinetext_editor_text,
             files = plugin.fileareas && plugin.fileareas[0] ? plugin.fileareas[0].files : [];
 
-        return this.textUtils.restorePluginfileUrls(text, files);
+        return CoreTextUtils.restorePluginfileUrls(text, files);
     }
 
     /**
@@ -250,7 +250,7 @@ export class AddonModAssignSubmissionOnlineTextHandler implements AddonModAssign
         // Check word limit.
         const configs = this.assignHelper.getPluginConfig(assign, 'assignsubmission', plugin.type);
         if (parseInt(configs.wordlimitenabled, 10)) {
-            const words = this.textUtils.countWords(text);
+            const words = CoreTextUtils.countWords(text);
             const wordlimit = parseInt(configs.wordlimit, 10);
             if (words > wordlimit) {
                 const params = {$a: {count: words, limit: wordlimit}};
@@ -261,7 +261,7 @@ export class AddonModAssignSubmissionOnlineTextHandler implements AddonModAssign
         }
 
         // Add some HTML to the text if needed.
-        text = this.textUtils.formatHtmlLines(text);
+        text = CoreTextUtils.formatHtmlLines(text);
 
         pluginData.onlinetext_editor = {
             text: text,

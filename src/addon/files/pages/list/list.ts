@@ -161,8 +161,8 @@ export class AddonFilesListPage implements OnDestroy {
                         // Get the info to calculate the available size.
                         return this.filesProvider.getPrivateFilesInfo().then((info) => {
                             this.filesInfo = info;
-                            this.spaceUsed = this.textUtils.bytesToSize(info.filesizewithoutreferences, 1);
-                            this.userQuotaReadable = this.textUtils.bytesToSize(this.userQuota, 1);
+                            this.spaceUsed = CoreTextUtils.bytesToSize(info.filesizewithoutreferences, 1);
+                            this.userQuotaReadable = CoreTextUtils.bytesToSize(this.userQuota, 1);
 
                             return files;
                         });

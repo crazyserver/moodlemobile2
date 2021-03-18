@@ -105,7 +105,7 @@ export class AddonModPageIndexComponent extends CoreCourseModuleMainResourceComp
 
                         // Check if description and timemodified should be displayed.
                         if (this.page.displayoptions) {
-                            const options = this.textUtils.unserialize(this.page.displayoptions) || {};
+                            const options = CoreTextUtils.unserialize(this.page.displayoptions) || {};
                             this.displayDescription = typeof options.printintro == 'undefined' ||
                                     CoreUtils.isTrueOrOne(options.printintro);
                             this.displayTimemodified = typeof options.printlastmodified == 'undefined' ||

@@ -51,7 +51,7 @@ export class AddonUserProfileFieldTextHandler implements CoreUserProfileFieldHan
         return {
             type: 'text',
             name: name,
-            value: this.textUtils.cleanTags(formValues[name])
+            value: CoreTextUtils.cleanTags(formValues[name])
         };
     }
 

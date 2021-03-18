@@ -567,7 +567,7 @@ export class LocalNotificationsMock extends LocalNotifications {
             notification.trigger = {
                 at: new Date(notification.at),
             };
-            notification.data = this.textUtils.parseJSON(notification.data);
+            notification.data = CoreTextUtils.parseJSON(notification.data);
             notification.triggered = !!notification.triggered;
 
             this.mergeWithDefaults(notification);

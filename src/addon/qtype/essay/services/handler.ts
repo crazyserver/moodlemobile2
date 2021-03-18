@@ -147,7 +147,7 @@ export class AddonQtypeEssayHandler implements CoreQuestionHandler {
 
         if (textarea && typeof answers[textarea.name] != 'undefined') {
             // Add some HTML to the text if needed.
-            answers[textarea.name] = this.textUtils.formatHtmlLines(answers[textarea.name]);
+            answers[textarea.name] = CoreTextUtils.formatHtmlLines(answers[textarea.name]);
         }
     }
 }

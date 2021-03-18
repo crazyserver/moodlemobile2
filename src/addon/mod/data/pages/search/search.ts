@@ -64,15 +64,15 @@ export class AddonModDataSearchPage {
             Object.keys(this.search.advanced).forEach((index) => {
                 if (typeof this.search.advanced[index] != 'undefined' && typeof this.search.advanced[index].name != 'undefined') {
                     advanced[this.search.advanced[index].name] = this.search.advanced[index].value ?
-                        this.textUtils.parseJSON(this.search.advanced[index].value) : '';
+                        CoreTextUtils.parseJSON(this.search.advanced[index].value) : '';
                 } else {
                     advanced[index] = this.search.advanced[index] ?
-                        this.textUtils.parseJSON(this.search.advanced[index]) : '';
+                        CoreTextUtils.parseJSON(this.search.advanced[index]) : '';
                 }
             });
         } else {
             this.search.advanced.forEach((field) => {
-                advanced[field.name] = field.value ? this.textUtils.parseJSON(field.value) : '';
+                advanced[field.name] = field.value ? CoreTextUtils.parseJSON(field.value) : '';
             });
         }
         this.search.advanced = advanced;

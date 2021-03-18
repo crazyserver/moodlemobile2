@@ -91,7 +91,7 @@ export class AddonModFeedbackOfflineProvider {
         return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE).then((entries) => {
                 entries.forEach((entry) => {
-                    entry.responses = this.textUtils.parseJSON(entry.responses);
+                    entry.responses = CoreTextUtils.parseJSON(entry.responses);
                 });
 
                 return entries;
@@ -111,7 +111,7 @@ export class AddonModFeedbackOfflineProvider {
             return site.getDb().getRecords(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE, {feedbackid: feedbackId});
         }).then((entries) => {
             entries.forEach((entry) => {
-                entry.responses = this.textUtils.parseJSON(entry.responses);
+                entry.responses = CoreTextUtils.parseJSON(entry.responses);
             });
 
             return entries;
@@ -130,7 +130,7 @@ export class AddonModFeedbackOfflineProvider {
         return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getRecord(AddonModFeedbackOfflineProvider.FEEDBACK_TABLE, {feedbackid: feedbackId, page: page});
         }).then((entry) => {
-            entry.responses = this.textUtils.parseJSON(entry.responses);
+            entry.responses = CoreTextUtils.parseJSON(entry.responses);
 
             return entry;
         });

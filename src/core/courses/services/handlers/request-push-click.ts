@@ -60,7 +60,7 @@ export class CoreCoursesRequestPushClickHandler implements CorePushNotifications
         if (notification.name == 'courserequested') {
             // Feature not supported in the app, open in browser.
             return CoreSites.getSite(notification.site).then((site) => {
-                const url = this.textUtils.concatenatePaths(site.getURL(), 'course/pending.php');
+                const url = CoreTextUtils.concatenatePaths(site.getURL(), 'course/pending.php');
 
                 return site.openInBrowserWithAutoLogin(url);
             });

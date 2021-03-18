@@ -57,7 +57,7 @@ export class CoreRecaptchaComponent {
      */
     answerRecaptcha(): void {
         // Set the iframe src. We use an iframe because reCaptcha V2 doesn't work with file:// protocol.
-        const src = this.textUtils.concatenatePaths(this.siteUrl, 'webservice/recaptcha.php?lang=' + this.lang);
+        const src = CoreTextUtils.concatenatePaths(this.siteUrl, 'webservice/recaptcha.php?lang=' + this.lang);
 
         // Modal to answer the recaptcha.
         // This is because the size of the recaptcha is dynamic, so it could cause problems if it was displayed inline.

@@ -73,7 +73,7 @@ export class CoreSharedFilesProvider {
     checkIOSNewFiles(): Promise<any> {
         this.logger.debug('Search for new files on iOS');
 
-        return this.fileProvider.getDirectoryContents('Inbox').then((entries) => {
+        return CoreFile.getDirectoryContents('Inbox').then((entries) => {
             if (entries.length > 0) {
                 const promises = [];
                 let fileToReturn;
@@ -125,7 +125,7 @@ export class CoreSharedFilesProvider {
     deleteInboxFile(entry: any): Promise<any> {
         this.logger.debug('Delete inbox file: ' + entry.name);
 
-        return this.fileProvider.removeFileByFileEntry(entry).catch(() => {
+        return CoreFile.removeFileByFileEntry(entry).catch(() => {
             // Ignore errors.
         }).then(() => {
             return this.unmarkAsTreated(this.getFileId(entry)).then(() => {
@@ -159,10 +159,10 @@ export class CoreSharedFilesProvider {
     getSiteSharedFiles(siteId?: string, path?: string, mimetypes?: string[]): Promise<any[]> {
         let pathToGet = this.getSiteSharedFilesDirPath(siteId);
         if (path) {
-            pathToGet = this.textUtils.concatenatePaths(pathToGet, path);
+            pathToGet = CoreTextUtils.concatenatePaths(pathToGet, path);
         }
 
-        return this.fileProvider.getDirectoryContents(pathToGet).then((files) => {
+        return CoreFile.getDirectoryContents(pathToGet).then((files) => {
             if (mimetypes) {
                 // Only show files with the right mimetype and the ones we cannot determine the mimetype.
                 files = files.filter((file) => {
@@ -189,7 +189,7 @@ export class CoreSharedFilesProvider {
     getSiteSharedFilesDirPath(siteId?: string): string {
         siteId = siteId || CoreSites.getCurrentSiteId();
 
-        return this.fileProvider.getSiteFolder(siteId) + '/' + CoreSharedFilesProvider.SHARED_FILES_FOLDER;
+        return CoreFile.getSiteFolder(siteId) + '/' + CoreSharedFilesProvider.SHARED_FILES_FOLDER;
     }
 
     /**
@@ -240,11 +240,11 @@ export class CoreSharedFilesProvider {
         newName = newName || entry.name;
 
         const sharedFilesFolder = this.getSiteSharedFilesDirPath(siteId),
-            newPath = this.textUtils.concatenatePaths(sharedFilesFolder, newName);
+            newPath = CoreTextUtils.concatenatePaths(sharedFilesFolder, newName);
 
         // Create dir if it doesn't exist already.
-        return this.fileProvider.createDir(sharedFilesFolder).then(() => {
-            return this.fileProvider.moveExternalFile(entry.toURL(), newPath).then((newFile) => {
+        return CoreFile.createDir(sharedFilesFolder).then(() => {
+            return CoreFile.moveExternalFile(entry.toURL(), newPath).then((newFile) => {
                 CoreEvents.trigger(CoreEvents.FILE_SHARED, { siteId: siteId, name: newName });
 
                 return newFile;

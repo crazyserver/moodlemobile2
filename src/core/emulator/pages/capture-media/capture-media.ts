@@ -109,7 +109,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
      */
     protected async initCordovaMediaPlugin(): Promise<void> {
         this.filePath = this.getFilePath();
-        let absolutePath = this.textUtils.concatenatePaths(this.fileProvider.getBasePathInstant(), this.filePath);
+        let absolutePath = CoreTextUtils.concatenatePaths(CoreFile.getBasePathInstant(), this.filePath);
 
         if (this.plaform.is('ios')) {
             // In iOS we need to remove the file:// part.
@@ -118,7 +118,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
 
         try {
             // First create the file.
-            this.fileEntry = await this.fileProvider.createFile(this.filePath);
+            this.fileEntry = await CoreFile.createFile(this.filePath);
 
             // Now create the media instance.
             this.mediaFile = this.media.create(absolutePath);
@@ -372,7 +372,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
 
         if (this.isCordovaAudioCapture) {
             // Delete the tmp file.
-            this.fileProvider.removeFile(this.filePath);
+            CoreFile.removeFile(this.filePath);
         }
     }
 
@@ -442,14 +442,14 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
                     throw new Error('Please capture the media first.');
                 }
 
-                fileEntry = await this.fileProvider.writeFile(this.getFilePath(), this.mediaBlob);
+                fileEntry = await CoreFile.writeFile(this.getFilePath(), this.mediaBlob);
             }
 
             if (this.isImage && !this.isCaptureImage) {
                 this.dismissWithData(fileEntry.toURL());
             } else {
                 // The capture plugin should return a MediaFile, not a FileEntry. Convert it.
-                const metadata = await this.fileProvider.getMetadata(fileEntry);
+                const metadata = await CoreFile.getMetadata(fileEntry);
 
                 let mimetype = null;
                 if (this.extension) {
@@ -484,7 +484,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
     protected getFilePath(): string {
         const fileName = this.type + '_' + CoreTimeUtils.readableTimestamp() + '.' + this.extension;
 
-        return this.textUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, 'media/' + fileName);
+        return CoreTextUtils.concatenatePaths(CoreFileProvider.TMPFOLDER, 'media/' + fileName);
     }
 
     /**
@@ -496,7 +496,7 @@ export class CoreEmulatorCaptureMediaPage implements OnInit, OnDestroy {
 
         if (this.isCordovaAudioCapture) {
             this.mediaFile.stopRecord();
-            this.previewMedia.src = this.fileProvider.convertFileSrc(this.fileEntry.toURL());
+            this.previewMedia.src = CoreFile.convertFileSrc(this.fileEntry.toURL());
         } else {
             this.streamVideo && this.streamVideo.nativeElement.pause();
             this.audioDrawer && this.audioDrawer.stop();

@@ -322,7 +322,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
                 this.fetchArguments = [this.glossary.id, 'ALL'];
                 this.getDivider = (entry: any): string => {
                     // Try to get the first letter without HTML tags.
-                    const noTags = this.textUtils.cleanTags(entry.concept);
+                    const noTags = CoreTextUtils.cleanTags(entry.concept);
 
                     return (noTags || entry.concept).substr(0, 1).toUpperCase();
                 };

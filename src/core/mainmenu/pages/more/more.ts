@@ -192,7 +192,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
                     });
                 } else {
                     // It's not a URL, open it in a modal so the user can see it and copy it.
-                    this.textUtils.viewText(Translate.instant('core.qrscanner'), text, {
+                    CoreTextUtils.viewText(Translate.instant('core.qrscanner'), text, {
                         displayCopyButton: true,
                     });
                 }

@@ -212,7 +212,7 @@ export class AddonModAssignOfflineProvider {
 
             // Parse the plugin data.
             submissions.forEach((submission) => {
-                submission.plugindata = this.textUtils.parseJSON(submission.plugindata, {});
+                submission.plugindata = CoreTextUtils.parseJSON(submission.plugindata, {});
             });
 
             return submissions;
@@ -232,8 +232,8 @@ export class AddonModAssignOfflineProvider {
 
             // Parse the plugin data and outcomes.
             submissions.forEach((submission) => {
-                submission.outcomes = this.textUtils.parseJSON(submission.outcomes, {});
-                submission.plugindata = this.textUtils.parseJSON(submission.plugindata, {});
+                submission.outcomes = CoreTextUtils.parseJSON(submission.outcomes, {});
+                submission.plugindata = CoreTextUtils.parseJSON(submission.plugindata, {});
             });
 
             return submissions;
@@ -254,7 +254,7 @@ export class AddonModAssignOfflineProvider {
 
             // Parse the plugin data.
             submissions.forEach((submission) => {
-                submission.plugindata = this.textUtils.parseJSON(submission.plugindata, {});
+                submission.plugindata = CoreTextUtils.parseJSON(submission.plugindata, {});
             });
 
             return submissions;
@@ -275,8 +275,8 @@ export class AddonModAssignOfflineProvider {
 
             // Parse the plugin data and outcomes.
             submissions.forEach((submission) => {
-                submission.outcomes = this.textUtils.parseJSON(submission.outcomes, {});
-                submission.plugindata = this.textUtils.parseJSON(submission.plugindata, {});
+                submission.outcomes = CoreTextUtils.parseJSON(submission.outcomes, {});
+                submission.plugindata = CoreTextUtils.parseJSON(submission.plugindata, {});
             });
 
             return submissions;
@@ -299,7 +299,7 @@ export class AddonModAssignOfflineProvider {
         }).then((submission) => {
 
             // Parse the plugin data.
-            submission.plugindata = this.textUtils.parseJSON(submission.plugindata, {});
+            submission.plugindata = CoreTextUtils.parseJSON(submission.plugindata, {});
 
             return submission;
         });
@@ -317,10 +317,10 @@ export class AddonModAssignOfflineProvider {
         return CoreSites.getSite(siteId).then((site) => {
             userId = userId || site.getUserId();
 
-            const siteFolderPath = this.fileProvider.getSiteFolder(site.getId()),
+            const siteFolderPath = CoreFile.getSiteFolder(site.getId()),
                 submissionFolderPath = 'offlineassign/' + assignId + '/' + userId;
 
-            return this.textUtils.concatenatePaths(siteFolderPath, submissionFolderPath);
+            return CoreTextUtils.concatenatePaths(siteFolderPath, submissionFolderPath);
         });
     }
 
@@ -342,8 +342,8 @@ export class AddonModAssignOfflineProvider {
         }).then((submission) => {
 
             // Parse the plugin data and outcomes.
-            submission.outcomes = this.textUtils.parseJSON(submission.outcomes, {});
-            submission.plugindata = this.textUtils.parseJSON(submission.plugindata, {});
+            submission.outcomes = CoreTextUtils.parseJSON(submission.outcomes, {});
+            submission.plugindata = CoreTextUtils.parseJSON(submission.plugindata, {});
 
             return submission;
         });
@@ -360,7 +360,7 @@ export class AddonModAssignOfflineProvider {
      */
     getSubmissionPluginFolder(assignId: number, pluginName: string, userId?: number, siteId?: string): Promise<string> {
         return this.getSubmissionFolder(assignId, userId, siteId).then((folderPath) => {
-            return this.textUtils.concatenatePaths(folderPath, pluginName);
+            return CoreTextUtils.concatenatePaths(folderPath, pluginName);
         });
     }
 

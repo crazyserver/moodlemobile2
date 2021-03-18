@@ -160,7 +160,7 @@ export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
                         rating.itemid, rating.scaleid, rating.rating, rating.rateduserid, rating.aggregation, siteId)
                         .catch((error) => {
                     if (CoreUtils.isWebServiceError(error)) {
-                        warnings.push(this.textUtils.getErrorMessageFromError(error));
+                        warnings.push(CoreTextUtils.getErrorMessageFromError(error));
                     } else {
                         // Couldn't connect to server, reject.
                         return Promise.reject(error);

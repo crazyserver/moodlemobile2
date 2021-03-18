@@ -98,7 +98,7 @@ export class AddonModResourceIndexComponent extends CoreCourseModuleMainResource
         }).then((resource) => {
             if (resource) {
                 this.description = resource.intro || resource.description;
-                const options = this.textUtils.unserialize(resource.displayoptions) || {};
+                const options = CoreTextUtils.unserialize(resource.displayoptions) || {};
                 this.displayDescription = typeof options.printintro == 'undefined' || !!options.printintro;
                 this.dataRetrieved.emit(resource);
             }

@@ -753,7 +753,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
      */
     showAdvancedGrade(): void {
         if (this.feedback && this.feedback.advancedgrade) {
-            this.textUtils.viewText(Translate.instant('core.grades.grade'), this.feedback.gradefordisplay, {
+            CoreTextUtils.viewText(Translate.instant('core.grades.grade'), this.feedback.gradefordisplay, {
                 component: AddonModAssignProvider.COMPONENT,
                 componentId: this.moduleId,
             });

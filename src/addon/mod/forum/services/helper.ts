@@ -218,7 +218,7 @@ export class AddonModForumHelperProvider {
      */
     deleteNewDiscussionStoredFiles(forumId: number, timecreated: number, siteId?: string): Promise<any> {
         return this.forumOffline.getNewDiscussionFolder(forumId, timecreated, siteId).then((folderPath) => {
-            return this.fileProvider.removeDir(folderPath).catch(() => {
+            return CoreFile.removeDir(folderPath).catch(() => {
                 // Ignore any errors, CoreFileProvider.removeDir fails if folder doesn't exists.
             });
         });
@@ -235,7 +235,7 @@ export class AddonModForumHelperProvider {
      */
     deleteReplyStoredFiles(forumId: number, postId: number, siteId?: string, userId?: number): Promise<any> {
         return this.forumOffline.getReplyFolder(forumId, postId, siteId, userId).then((folderPath) => {
-            return this.fileProvider.removeDir(folderPath).catch(() => {
+            return CoreFile.removeDir(folderPath).catch(() => {
                 // Ignore any errors, CoreFileProvider.removeDir fails if folder doesn't exists.
             });
         });

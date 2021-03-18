@@ -258,7 +258,7 @@ export class AddonMessagesOfflineProvider {
 
         messages.forEach((message) => {
             if (message.conversation) {
-                message.conversation = this.textUtils.parseJSON(message.conversation, {});
+                message.conversation = CoreTextUtils.parseJSON(message.conversation, {});
             }
         });
 

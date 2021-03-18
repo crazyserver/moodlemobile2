@@ -83,7 +83,7 @@ export class AddonModAssignSubmissionOnlineTextComponent extends AddonModAssignS
 
                     if (text) {
                         // Open a new state with the interpolated contents.
-                        this.textUtils.viewText(this.plugin.name, text, {
+                        CoreTextUtils.viewText(this.plugin.name, text, {
                             component: this.component,
                             componentId: this.assign.cmid,
                             filter: true,
@@ -100,7 +100,7 @@ export class AddonModAssignSubmissionOnlineTextComponent extends AddonModAssignS
 
             // Calculate initial words.
             if (this.wordLimitEnabled) {
-                this.words = this.textUtils.countWords(text);
+                this.words = CoreTextUtils.countWords(text);
             }
         }).finally(() => {
             this.loaded = true;
@@ -121,7 +121,7 @@ export class AddonModAssignSubmissionOnlineTextComponent extends AddonModAssignS
             // Wait before calculating, if the user keeps inputing we won't calculate.
             // This is to prevent slowing down devices, this calculation can be slow if the text is long.
             this.wordCountTimeout = setTimeout(() => {
-                this.words = this.textUtils.countWords(text);
+                this.words = CoreTextUtils.countWords(text);
             }, 1500);
         }
     }

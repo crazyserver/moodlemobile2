@@ -168,7 +168,7 @@ export class AddonModForumOfflineProvider {
             };
 
             return site.getDb().getRecord(AddonModForumOfflineProvider.DISCUSSIONS_TABLE, conditions).then((record) => {
-                record.options = this.textUtils.parseJSON(record.options);
+                record.options = CoreTextUtils.parseJSON(record.options);
 
                 return record;
             });
@@ -407,9 +407,9 @@ export class AddonModForumOfflineProvider {
      */
     getForumFolder(forumId: number, siteId?: string): Promise<string> {
         return CoreSites.getSite(siteId).then((site) => {
-            const siteFolderPath = this.fileProvider.getSiteFolder(site.getId());
+            const siteFolderPath = CoreFile.getSiteFolder(site.getId());
 
-            return this.textUtils.concatenatePaths(siteFolderPath, 'offlineforum/' + forumId);
+            return CoreTextUtils.concatenatePaths(siteFolderPath, 'offlineforum/' + forumId);
         });
     }
 
@@ -423,7 +423,7 @@ export class AddonModForumOfflineProvider {
      */
     getNewDiscussionFolder(forumId: number, timeCreated: number, siteId?: string): Promise<string> {
         return this.getForumFolder(forumId, siteId).then((folderPath) => {
-            return this.textUtils.concatenatePaths(folderPath, 'newdisc_' + timeCreated);
+            return CoreTextUtils.concatenatePaths(folderPath, 'newdisc_' + timeCreated);
         });
     }
 
@@ -441,7 +441,7 @@ export class AddonModForumOfflineProvider {
             return CoreSites.getSite(siteId).then((site) => {
                 userId = userId || site.getUserId();
 
-                return this.textUtils.concatenatePaths(folderPath, 'reply_' + postId + '_' + userId);
+                return CoreTextUtils.concatenatePaths(folderPath, 'reply_' + postId + '_' + userId);
             });
         });
     }
@@ -454,7 +454,7 @@ export class AddonModForumOfflineProvider {
      */
     protected parseRecordOptions(records: any[]): any[] {
         records.forEach((record) => {
-            record.options = this.textUtils.parseJSON(record.options);
+            record.options = CoreTextUtils.parseJSON(record.options);
         });
 
         return records;

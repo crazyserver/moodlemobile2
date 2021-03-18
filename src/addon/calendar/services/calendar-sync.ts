@@ -241,7 +241,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
                         result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                             component: Translate.instant('addon.calendar.calendarevent'),
                             name: data.name,
-                            error: this.textUtils.getErrorMessageFromError(error)
+                            error: CoreTextUtils.getErrorMessageFromError(error)
                         }));
                     });
                 }
@@ -286,7 +286,7 @@ export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
                             result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: Translate.instant('addon.calendar.calendarevent'),
                                 name: event.name,
-                                error: this.textUtils.getErrorMessageFromError(error)
+                                error: CoreTextUtils.getErrorMessageFromError(error)
                             }));
                         });
                     }

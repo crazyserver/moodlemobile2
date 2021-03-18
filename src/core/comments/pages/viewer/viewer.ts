@@ -214,7 +214,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
      * @param warnings the warnings
      */
     private showSyncWarnings(warnings: string[]): void {
-        const message = this.textUtils.buildMessage(warnings);
+        const message = CoreTextUtils.buildMessage(warnings);
         if (message) {
             CoreDomUtils.showErrorModal(message);
         }

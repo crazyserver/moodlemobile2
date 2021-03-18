@@ -51,12 +51,12 @@ export class AddonModDataFieldTextareaHandler extends AddonModDataFieldTextHandl
     getFieldEditData(field: any, inputData: any, originalFieldData: any): any {
         const fieldName = 'f_' + field.id;
         const files = this.getFieldEditFiles(field, inputData, originalFieldData);
-        let text = this.textUtils.restorePluginfileUrls(inputData[fieldName] || '', files);
+        let text = CoreTextUtils.restorePluginfileUrls(inputData[fieldName] || '', files);
         // Add some HTML to the text if needed.
-        text = this.textUtils.formatHtmlLines(text);
+        text = CoreTextUtils.formatHtmlLines(text);
 
         // WS does not properly check if HTML content is blank when the field is required.
-        if (this.textUtils.htmlIsBlank(text)) {
+        if (CoreTextUtils.htmlIsBlank(text)) {
             text = '';
         }
 
@@ -105,7 +105,7 @@ export class AddonModDataFieldTextareaHandler extends AddonModDataFieldTextHandl
 
             const value = inputData.find((value) => value.subfield == '');
 
-            if (!value || this.textUtils.htmlIsBlank(value.value)) {
+            if (!value || CoreTextUtils.htmlIsBlank(value.value)) {
                 return Translate.instant('addon.mod_data.errormustsupplyvalue');
             }
         }
@@ -125,7 +125,7 @@ export class AddonModDataFieldTextareaHandler extends AddonModDataFieldTextHandl
         originalContent.content = offlineContent[''] || '';
         if (originalContent.content.length > 0 && originalContent.files && originalContent.files.length > 0) {
             // Take the original files since we cannot edit them on the app.
-            originalContent.content = this.textUtils.replacePluginfileUrls(originalContent.content, originalContent.files);
+            originalContent.content = CoreTextUtils.replacePluginfileUrls(originalContent.content, originalContent.files);
         }
 
         return originalContent;

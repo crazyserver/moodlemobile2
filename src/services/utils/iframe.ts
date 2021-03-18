@@ -361,9 +361,9 @@ export class CoreIframeUtilsProvider {
             // It's a relative URL, use the frame src to create the full URL.
             const src = element && (element.src || element.data);
             if (src) {
-                const dirAndFile = this.fileProvider.getFileAndDirectoryFromPath(src);
+                const dirAndFile = CoreFile.getFileAndDirectoryFromPath(src);
                 if (dirAndFile.directory) {
-                    url = this.textUtils.concatenatePaths(dirAndFile.directory, url);
+                    url = CoreTextUtils.concatenatePaths(dirAndFile.directory, url);
                 } else {
                     this.logger.warn('Cannot get iframe dir path to open relative url', url, element);
 

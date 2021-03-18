@@ -210,7 +210,7 @@ export class AddonModImscpProvider {
         let indexUrl;
         contents.forEach((content) => {
             if (content.type == 'file' && !indexUrl) {
-                const filePath = this.textUtils.concatenatePaths(content.filepath, content.filename);
+                const filePath = CoreTextUtils.concatenatePaths(content.filepath, content.filename);
                 const filePathAlt = filePath.charAt(0) === '/' ? filePath.substr(1) : '/' + filePath;
                 // Check if it's main file.
                 if (filePath === targetFilePath || filePathAlt === targetFilePath) {
@@ -241,7 +241,7 @@ export class AddonModImscpProvider {
         const siteId = CoreSites.getCurrentSiteId();
 
         return CoreFilepool.getPackageDirUrlByUrl(siteId, module.url).then((dirPath) => {
-            return this.textUtils.concatenatePaths(dirPath, itemHref);
+            return CoreTextUtils.concatenatePaths(dirPath, itemHref);
         }).catch(() => {
             // Error getting directory, there was an error downloading or we're in browser. Return online URL if connected.
             if (CoreApp.isOnline()) {

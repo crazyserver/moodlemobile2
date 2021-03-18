@@ -430,7 +430,7 @@ export class AddonModScormProvider {
         if (scorm.grademethod !== AddonModScormProvider.GRADESCOES && scorm.maxgrade > 0) {
             grade = (grade / scorm.maxgrade) * 100;
 
-            return Translate.instant('core.percentagenumber', {$a: this.textUtils.roundToDecimals(grade, 2)});
+            return Translate.instant('core.percentagenumber', {$a: CoreTextUtils.roundToDecimals(grade, 2)});
         }
 
         return String(grade);
@@ -996,7 +996,7 @@ export class AddonModScormProvider {
         }
 
         return CoreFilepool.getPackageDirUrlByUrl(siteId, scorm.moduleurl).then((dirPath) => {
-            return this.textUtils.concatenatePaths(dirPath, launchUrl);
+            return CoreTextUtils.concatenatePaths(dirPath, launchUrl);
         });
     }
 

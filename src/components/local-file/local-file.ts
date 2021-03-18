@@ -74,9 +74,9 @@ export class CoreLocalFileComponent implements OnInit {
         this.loadFileBasicData();
 
         // Get the size and timemodified.
-        this.fileProvider.getMetadata(this.file).then((metadata) => {
+        CoreFile.getMetadata(this.file).then((metadata) => {
             if (metadata.size >= 0) {
-                this.size = this.textUtils.bytesToSize(metadata.size, 2);
+                this.size = CoreTextUtils.bytesToSize(metadata.size, 2);
             }
 
             this.timemodified = CoreTimeUtils.userDate(metadata.modificationTime.getTime(), 'core.strftimedatetimeshort');
@@ -92,7 +92,7 @@ export class CoreLocalFileComponent implements OnInit {
         this.fileExtension = this.mimeUtils.getFileExtension(this.file.name);
 
         // Let's calculate the relative path for the file.
-        this.relativePath = this.fileProvider.removeBasePath(this.file.toURL());
+        this.relativePath = CoreFile.removeBasePath(this.file.toURL());
         if (!this.relativePath) {
             // Didn't find basePath, use fullPath but if the user tries to manage the file it'll probably fail.
             this.relativePath = this.file.fullPath;
@@ -158,16 +158,16 @@ export class CoreLocalFileComponent implements OnInit {
         }
 
         const modal = CoreDomUtils.showModalLoading(),
-            fileAndDir = this.fileProvider.getFileAndDirectoryFromPath(this.relativePath),
-            newPath = this.textUtils.concatenatePaths(fileAndDir.directory, newName);
+            fileAndDir = CoreFile.getFileAndDirectoryFromPath(this.relativePath),
+            newPath = CoreTextUtils.concatenatePaths(fileAndDir.directory, newName);
 
         // Check if there's a file with this name.
-        this.fileProvider.getFile(newPath).then(() => {
+        CoreFile.getFile(newPath).then(() => {
             // There's a file with this name, show error and stop.
             CoreDomUtils.showErrorModal('core.errorfileexistssamename', true);
         }).catch(() => {
             // File doesn't exist, move it.
-            return this.fileProvider.moveFile(this.relativePath, newPath).then((fileEntry) => {
+            return CoreFile.moveFile(this.relativePath, newPath).then((fileEntry) => {
 
                 CoreDomUtils.triggerFormSubmittedEvent(this.formElement, false, CoreSites.getCurrentSiteId());
 
@@ -196,7 +196,7 @@ export class CoreLocalFileComponent implements OnInit {
         CoreDomUtils.showDeleteConfirm('core.confirmdeletefile').then(() => {
             const modal = CoreDomUtils.showModalLoading('core.deleting', true);
 
-            return this.fileProvider.removeFile(this.relativePath).then(() => {
+            return CoreFile.removeFile(this.relativePath).then(() => {
                 this.onDelete.emit();
             }).finally(() => {
                 modal.dismiss();

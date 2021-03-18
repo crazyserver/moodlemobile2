@@ -514,9 +514,9 @@ export class CoreSitesProvider {
                     }
 
                     // Site doesn't exist. Return the error message.
-                    if (this.textUtils.getErrorMessageFromError(error)) {
+                    if (CoreTextUtils.getErrorMessageFromError(error)) {
                         return Promise.reject(error);
-                    } else if (this.textUtils.getErrorMessageFromError(secondError)) {
+                    } else if (CoreTextUtils.getErrorMessageFromError(secondError)) {
                         return Promise.reject(secondError);
                     } else {
                         return Translate.instant('core.cannotconnecttrouble');
@@ -558,7 +558,7 @@ export class CoreSitesProvider {
                 }
 
                 // Return the error message.
-                if (this.textUtils.getErrorMessageFromError(error)) {
+                if (CoreTextUtils.getErrorMessageFromError(error)) {
                     return Promise.reject(error);
                 } else {
                     return Promise.reject(secondError);
@@ -1315,8 +1315,8 @@ export class CoreSitesProvider {
             config = entry.config;
 
         // Parse info and config.
-        info = info ? this.textUtils.parseJSON(info) : info;
-        config = config ? this.textUtils.parseJSON(config) : config;
+        info = info ? CoreTextUtils.parseJSON(info) : info;
+        config = config ? CoreTextUtils.parseJSON(config) : config;
 
         site = this.sitesFactory.makeSite(entry.id, entry.siteUrl, entry.token,
             info, entry.privateToken, config, entry.loggedOut == 1);
@@ -1385,7 +1385,7 @@ export class CoreSitesProvider {
         sites.forEach((site) => {
             if (!ids || ids.indexOf(site.id) > -1) {
                 // Parse info.
-                const siteInfo = site.info ? this.textUtils.parseJSON(site.info) : site.info;
+                const siteInfo = site.info ? CoreTextUtils.parseJSON(site.info) : site.info;
                 const basicInfo: CoreSiteBasicInfo = {
                         id: site.id,
                         siteUrl: site.siteUrl,
@@ -1966,8 +1966,8 @@ export class CoreSitesProvider {
             if (siteIds.length > 0) {
                 // If more than one site is returned it usually means there are different users stored. Use any of them.
                 return this.getSite(siteIds[0]).then((site) => {
-                    const siteUrl = this.textUtils.removeEndingSlash(this.urlUtils.removeProtocolAndWWW(site.getURL())),
-                        treatedUrl = this.textUtils.removeEndingSlash(this.urlUtils.removeProtocolAndWWW(url));
+                    const siteUrl = CoreTextUtils.removeEndingSlash(this.urlUtils.removeProtocolAndWWW(site.getURL())),
+                        treatedUrl = CoreTextUtils.removeEndingSlash(this.urlUtils.removeProtocolAndWWW(url));
 
                     if (siteUrl == treatedUrl) {
                         result.site = site;

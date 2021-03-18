@@ -541,7 +541,7 @@ export class CoreLoginSitePage {
         }
 
         // Now display the error.
-        error.error = this.textUtils.addTextToError(error.error,
+        error.error = CoreTextUtils.addTextToError(error.error,
                 '<br><br>' + Translate.instant('core.login.youcanstillconnectwithcredentials'));
 
         this.urlSchemesProvider.treatHandleCustomURLError(error);

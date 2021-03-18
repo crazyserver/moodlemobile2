@@ -422,7 +422,7 @@ export class CoreMimetypeUtilsProvider {
             const value = attr[key];
             translateParams[key] = value;
             translateParams[key.toUpperCase()] = value.toUpperCase();
-            translateParams[this.textUtils.ucFirst(key)] = this.textUtils.ucFirst(value);
+            translateParams[CoreTextUtils.ucFirst(key)] = CoreTextUtils.ucFirst(value);
         }
 
         // MIME types may include + symbol but this is not permitted in string ids.
@@ -442,7 +442,7 @@ export class CoreMimetypeUtilsProvider {
         }
 
         if (capitalise) {
-            result = this.textUtils.ucFirst(result);
+            result = CoreTextUtils.ucFirst(result);
         }
 
         return result;

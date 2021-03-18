@@ -181,7 +181,7 @@ export class AddonFilterMathJaxLoaderHandler extends CoreFilterDefaultHandler {
      * @return The whole text with the span inserted around the defined substring.
      */
     protected insertSpan(text: string, start: number, end: number): string {
-        return this.textUtils.substrReplace(text,
+        return CoreTextUtils.substrReplace(text,
                 '<span class="nolink">' + text.substr(start, end - start + 1) + '</span>',
                 start,
                 end - start + 1);

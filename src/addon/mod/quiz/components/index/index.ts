@@ -168,7 +168,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
             return this.quizSync.getSyncWarnings(this.quizData.id).then((warnings) => {
                 if (warnings && warnings.length) {
                     // Show warnings and delete them so they aren't shown again.
-                    CoreDomUtils.showErrorModal(this.textUtils.buildMessage(warnings));
+                    CoreDomUtils.showErrorModal(CoreTextUtils.buildMessage(warnings));
 
                     return this.quizSync.setSyncWarnings(this.quizData.id, []);
                 }

@@ -177,7 +177,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
             onProgress && onProgress({message: 'core.unzipping'});
 
             // Unzip and delete the zip when finished.
-            return this.fileProvider.unzipFile(zipPath, dirPath, this.downloadProgress.bind(this, false, onProgress)).then(() => {
+            return CoreFile.unzipFile(zipPath, dirPath, this.downloadProgress.bind(this, false, onProgress)).then(() => {
                 return CoreFilepool.removeFileByUrl(siteId, packageUrl).catch(() => {
                     // Ignore errors.
                 });
@@ -319,7 +319,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
             // Get the folder where SCORM should be unzipped.
             return this.scormProvider.getScormFolder(scorm.moduleurl);
         }).then((path) => {
-            return this.fileProvider.getDirectorySize(path);
+            return CoreFile.getDirectorySize(path);
         });
     }
 
@@ -423,7 +423,7 @@ export class AddonModScormPrefetchHandler extends CoreCourseActivityPrefetchHand
             const promises = [];
 
             // Remove the unzipped folder.
-            promises.push(this.fileProvider.removeDir(path).catch((error) => {
+            promises.push(CoreFile.removeDir(path).catch((error) => {
                 if (error && (error.code == 1 || !CoreApp.isMobile())) {
                     // Not found, ignore error.
                 } else {

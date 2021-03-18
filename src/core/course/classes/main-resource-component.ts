@@ -265,7 +265,7 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      * Expand the description.
      */
     expandDescription(): void {
-        this.textUtils.viewText(Translate.instant('core.description'), this.description, {
+        CoreTextUtils.viewText(Translate.instant('core.description'), this.description, {
             component: this.component,
             componentId: this.module.id,
             filter: true,
@@ -316,12 +316,12 @@ export class CoreCourseModuleMainResourceComponent implements OnInit, OnDestroy,
      */
     protected getErrorDownloadingSomeFilesMessage(error: string | CoreTextErrorObject, multiLine?: boolean): string {
         if (multiLine) {
-            return this.textUtils.buildSeveralParagraphsMessage([
+            return CoreTextUtils.buildSeveralParagraphsMessage([
                 Translate.instant('core.errordownloadingsomefiles'),
                 error,
             ]);
         } else {
-            error = this.textUtils.getErrorMessageFromError(error);
+            error = CoreTextUtils.getErrorMessageFromError(error);
 
             return Translate.instant('core.errordownloadingsomefiles') + (error ? ' ' + error : '');
         }

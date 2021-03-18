@@ -40,7 +40,7 @@ export class FileMock extends File {
      * @return Returns a Promise that resolves to true if the directory exists or rejects with an error.
      */
     checkDir(path: string, dir: string): Promise<boolean> {
-        const fullPath = this.textUtils.concatenatePaths(path, dir);
+        const fullPath = CoreTextUtils.concatenatePaths(path, dir);
 
         return this.resolveDirectoryUrl(fullPath).then(() => {
             return true;
@@ -55,7 +55,7 @@ export class FileMock extends File {
      * @return Returns a Promise that resolves with a boolean or rejects with an error.
      */
     checkFile(path: string, file: string): Promise<boolean> {
-        return this.resolveLocalFilesystemUrl(this.textUtils.concatenatePaths(path, file)).then((fse) => {
+        return this.resolveLocalFilesystemUrl(CoreTextUtils.concatenatePaths(path, file)).then((fse) => {
             if (fse.isFile) {
                 return true;
             } else {
@@ -126,7 +126,7 @@ export class FileMock extends File {
     async copyFileOrDir(sourcePath: string, sourceName: string, destPath: string, destName: string): Promise<Entry> {
         const destFixed = this.fixPathAndName(destPath, destName);
 
-        const source = await this.resolveLocalFilesystemUrl(this.textUtils.concatenatePaths(sourcePath, sourceName));
+        const source = await this.resolveLocalFilesystemUrl(CoreTextUtils.concatenatePaths(sourcePath, sourceName));
 
         const destParentDir = await this.resolveDirectoryUrl(destFixed.path);
 
@@ -380,7 +380,7 @@ export class FileMock extends File {
                     return;
                 }
 
-                basePath = this.textUtils.concatenatePaths(basePath.replace(/\\/g, '/'), CoreConstants.CONFIG.app_id) + '/';
+                basePath = CoreTextUtils.concatenatePaths(basePath.replace(/\\/g, '/'), CoreConstants.CONFIG.app_id) + '/';
 
                 // Create the folder if needed.
                 fs.mkdir(basePath, (e) => {
@@ -464,7 +464,7 @@ export class FileMock extends File {
     async moveFileOrDir(sourcePath: string, sourceName: string, destPath: string, destName: string): Promise<Entry> {
         const destFixed = this.fixPathAndName(destPath, destName);
 
-        const source = await this.resolveLocalFilesystemUrl(this.textUtils.concatenatePaths(sourcePath, sourceName));
+        const source = await this.resolveLocalFilesystemUrl(CoreTextUtils.concatenatePaths(sourcePath, sourceName));
 
         const destParentDir = await this.resolveDirectoryUrl(destFixed.path);
 
@@ -480,7 +480,7 @@ export class FileMock extends File {
      */
     protected fixPathAndName(path: string, name: string): {path: string, name: string} {
 
-        const fullPath = this.textUtils.concatenatePaths(path, name);
+        const fullPath = CoreTextUtils.concatenatePaths(path, name);
 
         return {
             path: fullPath.substring(0, fullPath.lastIndexOf('/')),

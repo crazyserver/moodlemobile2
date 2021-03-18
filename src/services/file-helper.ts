@@ -79,7 +79,7 @@ export class CoreFileHelperProvider {
                 return;
             } catch (error) {
                 // Error opening the file, some apps don't allow opening online files.
-                if (!this.fileProvider.isAvailable()) {
+                if (!CoreFile.isAvailable()) {
                     throw error;
                 }
 
@@ -126,7 +126,7 @@ export class CoreFileHelperProvider {
             return site.checkAndFixPluginfileURL(fileUrl);
         }).then((fixedUrl) => {
 
-            if (this.fileProvider.isAvailable()) {
+            if (CoreFile.isAvailable()) {
                 let promise;
                 if (state) {
                     promise = Promise.resolve(state);
@@ -311,8 +311,8 @@ export class CoreFileHelperProvider {
                 const siteId = CoreSites.getCurrentSiteId();
 
                 const path = await CoreFilepool.getFilePathByUrl(siteId, file.fileurl);
-                const fileEntry = await this.fileProvider.getFile(path);
-                const fileObject = await this.fileProvider.getFileObjectFromFileEntry(fileEntry);
+                const fileEntry = await CoreFile.getFile(path);
+                const fileObject = await CoreFile.getFileObjectFromFileEntry(fileEntry);
 
                 return fileObject.size;
             } catch (error) {
@@ -329,7 +329,7 @@ export class CoreFileHelperProvider {
 
         // If it's a local file, get its size.
         if (file.name) {
-            const fileObject = await this.fileProvider.getFileObjectFromFileEntry(file);
+            const fileObject = await CoreFile.getFileObjectFromFileEntry(file);
 
             return fileObject.size;
         }

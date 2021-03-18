@@ -272,7 +272,7 @@ export class AddonModQuizReviewPage implements OnInit {
                     };
 
                     if (this.quiz.grade != 100) {
-                        gradeObject.percent = this.textUtils.roundToDecimals(this.attempt.sumgrades * 100 / this.quiz.sumgrades, 0);
+                        gradeObject.percent = CoreTextUtils.roundToDecimals(this.attempt.sumgrades * 100 / this.quiz.sumgrades, 0);
                         this.attempt.readableGrade = Translate.instant('addon.mod_quiz.outofpercent', {$a: gradeObject});
                     } else {
                         this.attempt.readableGrade = Translate.instant('addon.mod_quiz.outof', {$a: gradeObject});

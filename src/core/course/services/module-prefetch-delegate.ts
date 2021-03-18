@@ -658,7 +658,7 @@ export class CoreCourseModulePrefetchDelegate extends CoreDelegate {
                         files.forEach((file) => {
                             const fileUrl = file.url || file.fileurl;
                             promises.push(CoreFilepool.getFilePathByUrl(siteId, fileUrl).then((path) => {
-                                return this.fileProvider.getFileSize(path).catch(() => {
+                                return CoreFile.getFileSize(path).catch(() => {
                                     // Error getting size. Check if the file is being downloaded.
                                     return CoreFilepool.isFileDownloadingByUrl(siteId, fileUrl).then(() => {
                                         // If downloading, count as downloaded.

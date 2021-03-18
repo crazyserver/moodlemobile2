@@ -247,7 +247,7 @@ export class CoreSitePluginsProvider {
                         const value = result.otherdata[name];
 
                         if (typeof value == 'string' && (value[0] == '{' || value[0] == '[')) {
-                            result.otherdata[name] = this.textUtils.parseJSON(value);
+                            result.otherdata[name] = CoreTextUtils.parseJSON(value);
                         }
                     }
                 } else {

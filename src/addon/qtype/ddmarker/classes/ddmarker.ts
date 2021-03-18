@@ -328,7 +328,7 @@ export class AddonQtypeDdMarkerQuestion {
         }
 
         // Check that a function to draw this shape exists.
-        const drawFunc = 'drawShape' + this.textUtils.ucFirst(shape);
+        const drawFunc = 'drawShape' + CoreTextUtils.ucFirst(shape);
         if (this[drawFunc] instanceof Function) {
 
             // Call the function.

@@ -133,7 +133,7 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
         ev && ev.stopPropagation();
 
         if (this.assign && (this.description || this.assign.introattachments)) {
-            this.textUtils.viewText(Translate.instant('core.description'), this.description, {
+            CoreTextUtils.viewText(Translate.instant('core.description'), this.description, {
                 component: this.component,
                 componentId: this.module.id,
                 files: this.assign.introattachments,

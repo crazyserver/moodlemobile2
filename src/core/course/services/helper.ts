@@ -602,7 +602,7 @@ export class CoreCourseHelperProvider {
 
                         CoreUtils.openInBrowser(fixedUrl);
 
-                        if (this.fileProvider.isAvailable()) {
+                        if (CoreFile.isAvailable()) {
                             // Download the file if needed (file outdated or not downloaded).
                             // Download will be in background, don't return the promise.
                             this.downloadModule(module, courseId, component, componentId, files, siteId);
@@ -630,7 +630,7 @@ export class CoreCourseHelperProvider {
 
                     return CoreUtils.openOnlineFile(result.path).catch((error) => {
                         // Error opening the file, some apps don't allow opening online files.
-                        if (!this.fileProvider.isAvailable()) {
+                        if (!CoreFile.isAvailable()) {
                             return Promise.reject(error);
                         } else if (result.status === CoreConstants.DOWNLOADING) {
                             return Promise.reject(Translate.instant('core.erroropenfiledownloading'));
@@ -693,7 +693,7 @@ export class CoreCourseHelperProvider {
         }).then((fixedUrl) => {
             result.fixedUrl = fixedUrl;
 
-            if (this.fileProvider.isAvailable()) {
+            if (CoreFile.isAvailable()) {
                 // The file system is available.
                 return CoreFilepool.getPackageStatus(siteId, component, componentId).then((status) => {
                     result.status = status;
@@ -855,7 +855,7 @@ export class CoreCourseHelperProvider {
                 // Debounce the update size function to prevent too many calls when downloading or deleting a whole activity.
                 const debouncedUpdateSize = CoreUtils.debounce(() => {
                     this.prefetchDelegate.getModuleStoredSize(module, courseId).then((moduleSize) => {
-                        instance.size = moduleSize > 0 ? this.textUtils.bytesToSize(moduleSize, 2) : 0;
+                        instance.size = moduleSize > 0 ? CoreTextUtils.bytesToSize(moduleSize, 2) : 0;
                     });
                 }, 1000);
 
@@ -1137,7 +1137,7 @@ export class CoreCourseHelperProvider {
 
         promises.push(this.prefetchDelegate.getModuleStoredSize(module, courseId).then((moduleSize) => {
             moduleInfo.size = moduleSize;
-            moduleInfo.sizeReadable = this.textUtils.bytesToSize(moduleSize, 2);
+            moduleInfo.sizeReadable = CoreTextUtils.bytesToSize(moduleSize, 2);
         }));
 
         promises.push(this.prefetchDelegate.getModuleStatus(module, courseId).then((moduleStatus) => {

@@ -142,14 +142,14 @@ export class CoreDomUtilsProvider {
      */
     confirmDownloadSize(size: any, message?: string, unknownMessage?: string, wifiThreshold?: number, limitedThreshold?: number,
             alwaysConfirm?: boolean): Promise<void> {
-        const readableSize = this.textUtils.bytesToSize(size.size, 2);
+        const readableSize = CoreTextUtils.bytesToSize(size.size, 2);
 
         const getAvailableBytes = new Promise((resolve): void => {
             if (CoreApp.isDesktop()) {
                 // Free space calculation is not supported on desktop.
                 resolve(null);
             } else {
-                this.fileProvider.calculateFreeSpace().then((availableBytes) => {
+                CoreFile.calculateFreeSpace().then((availableBytes) => {
                     if (CoreApp.isAndroid()) {
                         return availableBytes;
                     } else {
@@ -171,7 +171,7 @@ export class CoreDomUtilsProvider {
             if (availableBytes === null) {
                 return '';
             } else {
-                const availableSize = this.textUtils.bytesToSize(availableBytes, 2);
+                const availableSize = CoreTextUtils.bytesToSize(availableBytes, 2);
                 if (CoreApp.isAndroid() && size.size > availableBytes - CoreConstants.MINIMUM_FREE_SPACE) {
                     return Promise.reject(Translate.instant('core.course.insufficientavailablespace', { size: readableSize }));
                 }
@@ -639,7 +639,7 @@ export class CoreDomUtilsProvider {
             return this.sanitizer.bypassSecurityTrustHtml(this.getConnectionWarningIconHtml());
         }
 
-        return this.textUtils.decodeHTML(Translate.instant('core.error'));
+        return CoreTextUtils.decodeHTML(Translate.instant('core.error'));
     }
 
     /**
@@ -656,11 +656,11 @@ export class CoreDomUtilsProvider {
             if (this.debugDisplay) {
                 // Get the debug info. Escape the HTML so it is displayed as it is in the view.
                 if (error.debuginfo) {
-                    extraInfo = '<br><br>' + this.textUtils.escapeHTML(error.debuginfo, false);
+                    extraInfo = '<br><br>' + CoreTextUtils.escapeHTML(error.debuginfo, false);
                 }
                 if (error.backtrace) {
-                    extraInfo += '<br><br>' + this.textUtils.replaceNewLines(
-                            this.textUtils.escapeHTML(error.backtrace, false), '<br>');
+                    extraInfo += '<br><br>' + CoreTextUtils.replaceNewLines(
+                            CoreTextUtils.escapeHTML(error.backtrace, false), '<br>');
                 }
 
                 // tslint:disable-next-line
@@ -673,7 +673,7 @@ export class CoreDomUtilsProvider {
                 return null;
             }
 
-            error = this.textUtils.getErrorMessageFromError(error);
+            error = CoreTextUtils.getErrorMessageFromError(error);
             if (!error) {
                 // No common properties found, just stringify it.
                 error = JSON.stringify(error);
@@ -692,7 +692,7 @@ export class CoreDomUtilsProvider {
             return null;
         }
 
-        let message = this.textUtils.decodeHTML(needsTranslate ? Translate.instant(error) : error);
+        let message = CoreTextUtils.decodeHTML(needsTranslate ? Translate.instant(error) : error);
 
         if (extraInfo) {
             message += extraInfo;
@@ -971,7 +971,7 @@ export class CoreDomUtilsProvider {
         // Treat elements with src (img, audio, video, ...).
         media = Array.from(element.querySelectorAll('img, video, audio, source, track'));
         media.forEach((media: HTMLElement) => {
-            let newSrc = paths[this.textUtils.decodeURIComponent(media.getAttribute('src'))];
+            let newSrc = paths[CoreTextUtils.decodeURIComponent(media.getAttribute('src'))];
 
             if (typeof newSrc != 'undefined') {
                 media.setAttribute('src', newSrc);
@@ -979,7 +979,7 @@ export class CoreDomUtilsProvider {
 
             // Treat video posters.
             if (media.tagName == 'VIDEO' && media.getAttribute('poster')) {
-                newSrc = paths[this.textUtils.decodeURIComponent(media.getAttribute('poster'))];
+                newSrc = paths[CoreTextUtils.decodeURIComponent(media.getAttribute('poster'))];
                 if (typeof newSrc !== 'undefined') {
                     media.setAttribute('poster', newSrc);
                 }
@@ -989,7 +989,7 @@ export class CoreDomUtilsProvider {
         // Now treat links.
         anchors = Array.from(element.querySelectorAll('a'));
         anchors.forEach((anchor: HTMLElement) => {
-            const href = this.textUtils.decodeURIComponent(anchor.getAttribute('href')),
+            const href = CoreTextUtils.decodeURIComponent(anchor.getAttribute('href')),
                 newUrl = paths[href];
 
             if (typeof newUrl != 'undefined') {
@@ -1163,11 +1163,11 @@ export class CoreDomUtilsProvider {
      * @return Promise resolved with the alert modal.
      */
     async showAlertWithOptions(options: AlertOptions = {}, autocloseTime?: number): Promise<CoreAlert> {
-        const hasHTMLTags = this.textUtils.hasHTMLTags(options.message || '');
+        const hasHTMLTags = CoreTextUtils.hasHTMLTags(options.message || '');
 
         if (hasHTMLTags) {
             // Format the text.
-            options.message = await this.textUtils.formatText(options.message);
+            options.message = await CoreTextUtils.formatText(options.message);
         }
 
         const alertId = <string> Md5.hashAsciiStr((options.title || '') + '#' + (options.message || ''));
@@ -1331,7 +1331,7 @@ export class CoreDomUtilsProvider {
         let errorMessage = error;
 
         if (error && typeof error != 'string') {
-            errorMessage = this.textUtils.getErrorMessageFromError(error);
+            errorMessage = CoreTextUtils.getErrorMessageFromError(error);
         }
 
         return this.showErrorModal(typeof errorMessage == 'string' ? error : defaultError, needsTranslate, autocloseTime);

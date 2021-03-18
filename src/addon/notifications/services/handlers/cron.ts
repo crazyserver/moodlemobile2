@@ -110,7 +110,7 @@ export class AddonNotificationsCronHandler implements CoreCronHandler {
             title: notification.subject || notification.userfromfullname,
             text: notification.mobiletext.replace(/-{4,}/ig, '')
         };
-        data.text = this.textUtils.replaceNewLines(data.text, '<br>');
+        data.text = CoreTextUtils.replaceNewLines(data.text, '<br>');
 
         return Promise.resolve(data);
     }

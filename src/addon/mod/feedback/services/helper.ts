@@ -308,7 +308,7 @@ export class AddonModFeedbackHelperProvider {
     protected getItemFormLabel(item: any): any {
         item.template = 'label';
         item.name = '';
-        item.presentation = this.textUtils.replacePluginfileUrls(item.presentation, item.itemfiles);
+        item.presentation = CoreTextUtils.replacePluginfileUrls(item.presentation, item.itemfiles);
 
         return item;
     }
@@ -449,7 +449,7 @@ export class AddonModFeedbackHelperProvider {
      * @return Item processed to show form.
      */
     protected getItemFormCaptcha(item: any): any {
-        const data = this.textUtils.parseJSON(item.otherdata);
+        const data = CoreTextUtils.parseJSON(item.otherdata);
         if (data && data.length > 3) {
             item.captcha = {
                 recaptchapublickey: data[3]

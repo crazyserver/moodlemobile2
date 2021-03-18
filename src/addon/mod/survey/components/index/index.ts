@@ -156,7 +156,7 @@ export class AddonModSurveyIndexComponent extends CoreCourseModuleMainActivityCo
                 if (q.multiArray && !q.multiArray.length && q.parent === 0 && q.type > 0) {
                     // Options shown in a select. Remove all HTML.
                     q.optionsArray = q.optionsArray.map((option) => {
-                        return this.textUtils.cleanTags(option);
+                        return CoreTextUtils.cleanTags(option);
                     });
                 }
             });

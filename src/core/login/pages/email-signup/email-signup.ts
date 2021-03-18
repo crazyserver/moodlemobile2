@@ -145,7 +145,7 @@ export class CoreLoginEmailSignupPage {
         try {
             // Get site config.
             this.siteConfig = await CoreSites.getSitePublicConfig(this.siteUrl);
-            this.signupUrl = this.textUtils.concatenatePaths(this.siteConfig.httpswwwroot, 'login/signup.php');
+            this.signupUrl = CoreTextUtils.concatenatePaths(this.siteConfig.httpswwwroot, 'login/signup.php');
 
             if (this.treatSiteConfig(this.siteConfig)) {
                 // Check content verification.
@@ -258,10 +258,10 @@ export class CoreLoginEmailSignupPage {
             const params: any = {
                     username: this.signupForm.value.username.trim().toLowerCase(),
                     password: this.signupForm.value.password,
-                    firstname: this.textUtils.cleanTags(this.signupForm.value.firstname),
-                    lastname: this.textUtils.cleanTags(this.signupForm.value.lastname),
+                    firstname: CoreTextUtils.cleanTags(this.signupForm.value.firstname),
+                    lastname: CoreTextUtils.cleanTags(this.signupForm.value.lastname),
                     email: this.signupForm.value.email.trim(),
-                    city: this.textUtils.cleanTags(this.signupForm.value.city),
+                    city: CoreTextUtils.cleanTags(this.signupForm.value.city),
                     country: this.signupForm.value.country
                 },
                 modal = CoreDomUtils.showModalLoading('core.sending', true);
@@ -318,14 +318,14 @@ export class CoreLoginEmailSignupPage {
      * @return Escaped mail.
      */
     escapeMail(text: string): string {
-        return this.textUtils.escapeForRegex(text);
+        return CoreTextUtils.escapeForRegex(text);
     }
 
     /**
      * Show authentication instructions.
      */
     protected showAuthInstructions(): void {
-        this.textUtils.viewText(Translate.instant('core.login.instructions'), this.authInstructions);
+        CoreTextUtils.viewText(Translate.instant('core.login.instructions'), this.authInstructions);
     }
 
     /**

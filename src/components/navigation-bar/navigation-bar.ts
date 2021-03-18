@@ -47,7 +47,7 @@ export class CoreNavigationBarComponent {
     }
 
     showInfo(): void {
-        this.textUtils.viewText(this.title, this.info, {
+        CoreTextUtils.viewText(this.title, this.info, {
             component: this.component,
             componentId: this.componentId,
             filter: true,

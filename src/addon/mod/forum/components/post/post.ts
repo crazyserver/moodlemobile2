@@ -236,7 +236,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
         modal.onDidDismiss((data) => {
             if (typeof data != 'undefined') {
                 // Add some HTML to the message if needed.
-                const message = this.textUtils.formatHtmlLines(data.message);
+                const message = CoreTextUtils.formatHtmlLines(data.message);
                 const files = data.files || [];
                 const sendingModal = CoreDomUtils.showModalLoading('core.sending', true);
                 let promise;
@@ -372,7 +372,7 @@ export class AddonModForumPostComponent implements OnInit, OnDestroy, OnChanges 
         let promise;
 
         // Add some HTML to the message if needed.
-        message = this.textUtils.formatHtmlLines(message);
+        message = CoreTextUtils.formatHtmlLines(message);
 
         // Set private option if checked.
         if (this.replyData.isprivatereply) {

@@ -207,7 +207,7 @@ export class AddonNotificationsListPage {
 
         notification.mobiletext = notification.displayfullhtml ?
                         notification.fullmessagehtml :
-                        this.textUtils.replaceNewLines(notification.mobiletext.replace(/-{4,}/ig, ''), '<br>');
+                        CoreTextUtils.replaceNewLines(notification.mobiletext.replace(/-{4,}/ig, ''), '<br>');
     }
 
     /**

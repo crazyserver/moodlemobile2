@@ -177,7 +177,7 @@ export class CoreSyncBaseProvider {
      */
     getSyncWarnings(id: string | number, siteId?: string): Promise<string[]> {
         return this.syncProvider.getSyncRecord(this.component, id, siteId).then((entry) => {
-            return this.textUtils.parseJSON(entry.warnings, []);
+            return CoreTextUtils.parseJSON(entry.warnings, []);
         }).catch(() => {
             return [];
         });

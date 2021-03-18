@@ -192,7 +192,7 @@ export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvid
                             result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                                 component: this.componentTranslate,
                                 name: data.name,
-                                error: this.textUtils.getErrorMessageFromError(error)
+                                error: CoreTextUtils.getErrorMessageFromError(error)
                             }));
                         });
                     }

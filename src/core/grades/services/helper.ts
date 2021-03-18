@@ -60,9 +60,9 @@ export class CoreGradesHelperProvider {
                     row['rowclass'] += tableRow[name].class.indexOf('dimmed_text') >= 0 ? ' dimmed_text' : '';
 
                     content = content.replace(/<\/span>/gi, '\n');
-                    content = this.textUtils.cleanTags(content);
+                    content = CoreTextUtils.cleanTags(content);
                 } else {
-                    content = this.textUtils.replaceNewLines(content, '<br>');
+                    content = CoreTextUtils.replaceNewLines(content, '<br>');
                 }
 
                 if (content == '&nbsp;') {
@@ -99,10 +99,10 @@ export class CoreGradesHelperProvider {
                     row['rowclass'] += tableRow[name].class.indexOf('dimmed_text') >= 0 ? ' dimmed_text' : '';
 
                     content = content.replace(/<\/span>/gi, '\n');
-                    content = this.textUtils.cleanTags(content);
+                    content = CoreTextUtils.cleanTags(content);
                     name = 'gradeitem';
                 } else {
-                    content = this.textUtils.replaceNewLines(content, '<br>');
+                    content = CoreTextUtils.replaceNewLines(content, '<br>');
                 }
 
                 if (content == '&nbsp;') {

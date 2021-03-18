@@ -106,7 +106,7 @@ export class CoreQuestionHelperProvider {
                     id: input.id,
                     name: input.name,
                     value: input.value,
-                    text: this.textUtils.cleanTags(label.innerHTML),
+                    text: CoreTextUtils.cleanTags(label.innerHTML),
                     disabled: input.disabled
                 });
 
@@ -272,7 +272,7 @@ export class CoreQuestionHelperProvider {
                     initMatch = initMatch.substr(0, initMatch.length - 2);
 
                     // Try to convert it to an object and add it to the question.
-                    question.initObjects = this.textUtils.parseJSON(initMatch, null);
+                    question.initObjects = CoreTextUtils.parseJSON(initMatch, null);
                 }
 
                 const amdRegExp = new RegExp('require\\(\\[["\']qtype_' + question.type + '/question["\']\\],[^f]*' +
@@ -282,7 +282,7 @@ export class CoreQuestionHelperProvider {
 
                 if (amdMatch) {
                     // Try to convert the arguments to an array and add them to the question.
-                    question.amdArgs = this.textUtils.parseJSON('[' + amdMatch[1] + ']', null);
+                    question.amdArgs = CoreTextUtils.parseJSON('[' + amdMatch[1] + ']', null);
                 }
             });
         }
@@ -377,7 +377,7 @@ export class CoreQuestionHelperProvider {
 
             // Check anchor is valid.
             if (anchor.href && content) {
-                content = this.textUtils.cleanTags(content, true).trim();
+                content = CoreTextUtils.cleanTags(content, true).trim();
                 attachments.push({
                     filename: content,
                     fileurl: anchor.href
@@ -709,7 +709,7 @@ export class CoreQuestionHelperProvider {
             if (span) {
                 // There's a hidden feedback, show it when the icon is clicked.
                 icon.addEventListener('click', (event) => {
-                    this.textUtils.viewText(title, span.innerHTML, {
+                    CoreTextUtils.viewText(title, span.innerHTML, {
                         component: component,
                         componentId: componentId,
                         filter: true,

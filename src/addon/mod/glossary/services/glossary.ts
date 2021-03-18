@@ -945,7 +945,7 @@ export class AddonModGlossaryProvider {
 
             // Workaround for bug MDL-57737.
             if (!site.isVersionGreaterEqualThan('3.2.2')) {
-                params.definition = this.textUtils.cleanTags(params.definition);
+                params.definition = CoreTextUtils.cleanTags(params.definition);
             }
 
             return site.write('mod_glossary_add_entry', params).then((response) => {

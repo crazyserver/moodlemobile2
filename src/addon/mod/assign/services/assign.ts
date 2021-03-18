@@ -435,7 +435,7 @@ export class AddonModAssignProvider {
             });
 
             if (!keepUrls && submissionPlugin.fileareas && submissionPlugin.fileareas[0]) {
-                text = this.textUtils.replacePluginfileUrls(text, submissionPlugin.fileareas[0].files);
+                text = CoreTextUtils.replacePluginfileUrls(text, submissionPlugin.fileareas[0].files);
             }
         }
 

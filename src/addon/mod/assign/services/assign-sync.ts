@@ -385,7 +385,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
             // A WebService has thrown an error, this means it cannot be submitted. Discard the submission.
             this.addOfflineDataDeletedWarning(warnings, this.componentTranslate, assign.name,
-                this.textUtils.getErrorMessageFromError(error));
+                CoreTextUtils.getErrorMessageFromError(error));
         }
 
         // Delete the offline data.
@@ -506,7 +506,7 @@ export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
             // A WebService has thrown an error, this means it cannot be submitted. Discard the submission.
             this.addOfflineDataDeletedWarning(warnings, this.componentTranslate, assign.name,
-                this.textUtils.getErrorMessageFromError(error));
+                CoreTextUtils.getErrorMessageFromError(error));
         }
 
         // Delete the offline data.

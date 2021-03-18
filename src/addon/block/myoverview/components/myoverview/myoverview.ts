@@ -238,7 +238,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
                     config.displaygroupingcustomfield.value == '1' && config.customfieldsexport && config.customfieldsexport.value,
                     false);
             if (this.showFilters.custom == 'show') {
-                this.customFilter = this.textUtils.parseJSON(config.customfieldsexport.value);
+                this.customFilter = CoreTextUtils.parseJSON(config.customfieldsexport.value);
             } else {
                 this.customFilter = [];
             }

@@ -82,7 +82,7 @@ export class AddonModQuizProvider {
             return Translate.instant('addon.mod_quiz.notyetgraded');
         }
 
-        return CoreUtils.formatFloat(this.textUtils.roundToDecimals(grade, decimals));
+        return CoreUtils.formatFloat(CoreTextUtils.roundToDecimals(grade, decimals));
     }
 
     /**

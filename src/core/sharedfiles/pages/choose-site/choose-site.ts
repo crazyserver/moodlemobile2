@@ -54,11 +54,11 @@ export class CoreSharedFilesChooseSitePage implements OnInit {
             return;
         }
 
-        const fileAndDir = this.fileProvider.getFileAndDirectoryFromPath(this.filePath);
+        const fileAndDir = CoreFile.getFileAndDirectoryFromPath(this.filePath);
         this.fileName = fileAndDir.name;
 
         // Get the file.
-        this.fileProvider.getExternalFile(this.filePath).then((fe) => {
+        CoreFile.getExternalFile(this.filePath).then((fe) => {
             this.fileEntry = fe;
             this.fileName = this.fileEntry.name;
         }).catch(() => {

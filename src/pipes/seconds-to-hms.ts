@@ -63,6 +63,6 @@ export class CoreSecondsToHMSPipe implements PipeTransform {
         minutes = Math.floor(seconds / CoreConstants.SECONDS_MINUTE);
         seconds -= minutes * CoreConstants.SECONDS_MINUTE;
 
-        return this.textUtils.twoDigits(hours) + ':' + this.textUtils.twoDigits(minutes) + ':' + this.textUtils.twoDigits(seconds);
+        return CoreTextUtils.twoDigits(hours) + ':' + CoreTextUtils.twoDigits(minutes) + ':' + CoreTextUtils.twoDigits(seconds);
     }
 }

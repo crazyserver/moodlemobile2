@@ -69,7 +69,7 @@ export class AddonModFeedbackAttemptPage {
             // Add responses and format items.
             this.items = items.items.map((item) => {
                 if (item.typ == 'label') {
-                    item.submittedValue = this.textUtils.replacePluginfileUrls(item.presentation, item.itemfiles);
+                    item.submittedValue = CoreTextUtils.replacePluginfileUrls(item.presentation, item.itemfiles);
                 } else {
                     for (const x in this.attempt.responses) {
                         if (this.attempt.responses[x].id == item.id) {

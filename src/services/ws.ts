@@ -288,7 +288,7 @@ export class CoreWSProvider {
                 }
             } else if (typeof value == 'string') {
                 if (stripUnicode) {
-                    const stripped = this.textUtils.stripUnicode(value);
+                    const stripped = CoreTextUtils.stripUnicode(value);
                     if (stripped != value && stripped.trim().length == 0) {
                         return null;
                     }
@@ -359,7 +359,7 @@ export class CoreWSProvider {
         const tmpPath = path + '.tmp';
 
         // Create the tmp file as an empty file.
-        return this.fileProvider.createFile(tmpPath).then((fileEntry) => {
+        return CoreFile.createFile(tmpPath).then((fileEntry) => {
             const transfer = this.fileTransfer.create();
             transfer.onProgress(onProgress);
 
@@ -397,7 +397,7 @@ export class CoreWSProvider {
                 }
 
                 return promise.then((extension) => {
-                    return this.fileProvider.moveFile(tmpPath, path).then((movedEntry) => {
+                    return CoreFile.moveFile(tmpPath, path).then((movedEntry) => {
                         // Save the extension.
                         movedEntry.extension = extension;
                         movedEntry.path = path;
@@ -844,7 +844,7 @@ export class CoreWSProvider {
         }
 
         // Treat response.
-        data = this.textUtils.parseJSON(data);
+        data = CoreTextUtils.parseJSON(data);
 
         // Some moodle web services return null.
         // If the responseExpected value is set then so long as no data is returned, we create a blank object.
@@ -908,7 +908,7 @@ export class CoreWSProvider {
         };
 
         return transfer.upload(filePath, uploadUrl, options, true).then((success) => {
-            const data = this.textUtils.parseJSON(success.response, null,
+            const data = CoreTextUtils.parseJSON(success.response, null,
                     this.logger.error.bind(this.logger, 'Error parsing response from upload', success.response));
             if (data === null) {
                 return Promise.reject(Translate.instant('core.errorinvalidresponse'));
@@ -984,7 +984,7 @@ export class CoreWSProvider {
                 // We cannot load local files using the http native plugin. Use file provider instead.
                 const format = options.responseType == 'json' ? CoreFileProvider.FORMATJSON : CoreFileProvider.FORMATTEXT;
 
-                const content = await this.fileProvider.readFile(url, format);
+                const content = await CoreFile.readFile(url, format);
 
                 return new HttpResponse({
                     body: content,

@@ -87,7 +87,7 @@ export class CoreFileComponent implements OnInit, OnDestroy {
         this.fileName = this.file.filename;
 
         if (CoreUtils.isTrueOrOne(this.showSize) && this.fileSize >= 0) {
-            this.fileSizeReadable = this.textUtils.bytesToSize(this.fileSize, 2);
+            this.fileSizeReadable = CoreTextUtils.bytesToSize(this.fileSize, 2);
         }
 
         this.showTime = CoreUtils.isTrueOrOne(this.showTime) && this.timemodified > 0;

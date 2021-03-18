@@ -460,7 +460,7 @@ export class CorePushNotificationsProvider {
         CoreSites.getSite(data.site).then((site) => {
 
             if (typeof data.customdata == 'string') {
-                data.customdata = this.textUtils.parseJSON(data.customdata, {});
+                data.customdata = CoreTextUtils.parseJSON(data.customdata, {});
             }
 
             if (CoreUtils.isTrueOrOne(data.foreground)) {
@@ -845,7 +845,7 @@ export class CorePushNotificationsProvider {
         return Promise.all(results.map((result) => {
             // Create a temporary site to unregister.
             const tmpSite = this.sitesFactory.makeSite(result.siteid, result.siteurl, result.token,
-                    this.textUtils.parseJSON(result.info, {}));
+                    CoreTextUtils.parseJSON(result.info, {}));
 
             return this.unregisterDeviceOnMoodle(tmpSite);
         }));

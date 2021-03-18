@@ -55,7 +55,7 @@ export class CoreMarkRequiredComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         if (this.coreMarkRequired) {
             // Add the "required" to the aria-label.
-            const ariaLabel = this.element.getAttribute('aria-label') || this.textUtils.cleanTags(this.element.innerHTML, true);
+            const ariaLabel = this.element.getAttribute('aria-label') || CoreTextUtils.cleanTags(this.element.innerHTML, true);
             if (ariaLabel) {
                 this.element.setAttribute('aria-label', ariaLabel + ' ' + this.requiredLabel);
             }

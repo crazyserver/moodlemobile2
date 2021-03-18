@@ -290,7 +290,7 @@ export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProv
                     result.warnings.push(Translate.instant('core.warningofflinedatadeleted', {
                         component: this.componentTranslate,
                         name: feedback.name,
-                        error: this.textUtils.getErrorMessageFromError(error)
+                        error: CoreTextUtils.getErrorMessageFromError(error)
                     }));
                 });
             } else {

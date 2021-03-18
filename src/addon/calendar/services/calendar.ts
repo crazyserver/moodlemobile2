@@ -892,9 +892,9 @@ export class AddonCalendarProvider {
                     event.iscourseevent = event.eventtype == AddonCalendarProvider.TYPE_COURSE;
                     event.iscategoryevent = event.eventtype == AddonCalendarProvider.TYPE_CATEGORY;
                     event.normalisedeventtype = this.getEventType(event);
-                    event.category = this.textUtils.parseJSON(event.category, null);
-                    event.course = this.textUtils.parseJSON(event.course, null);
-                    event.subscription = this.textUtils.parseJSON(event.subscription, null);
+                    event.category = CoreTextUtils.parseJSON(event.category, null);
+                    event.course = CoreTextUtils.parseJSON(event.course, null);
+                    event.subscription = CoreTextUtils.parseJSON(event.subscription, null);
                 }
 
                 return event;
@@ -1329,7 +1329,7 @@ export class AddonCalendarProvider {
      */
     getViewUrl(view: string, time?: number, courseId?: string, siteId?: string): Promise<string> {
         return CoreSites.getSite(siteId).then((site) => {
-            let url = this.textUtils.concatenatePaths(site.getURL(), 'calendar/view.php?view=' + view);
+            let url = CoreTextUtils.concatenatePaths(site.getURL(), 'calendar/view.php?view=' + view);
 
             if (time) {
                 url += '&time=' + time;

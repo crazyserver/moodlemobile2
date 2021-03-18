@@ -42,7 +42,7 @@ export class AddonModDataFieldTextareaComponent extends AddonModDataFieldPluginC
     format(value: any): string {
         const files = (value && value.files) || [];
 
-        return value ? this.textUtils.replacePluginfileUrls(value.content, files) : '';
+        return value ? CoreTextUtils.replacePluginfileUrls(value.content, files) : '';
     }
 
     /**
@@ -60,7 +60,7 @@ export class AddonModDataFieldTextareaComponent extends AddonModDataFieldPluginC
         // Check if rich text editor is enabled.
         if (this.mode == 'edit') {
             const files = (this.value && this.value.files) || [];
-            text = this.value ? this.textUtils.replacePluginfileUrls(this.value.content, files) : '';
+            text = this.value ? CoreTextUtils.replacePluginfileUrls(this.value.content, files) : '';
         }
 
         this.addControl('f_' + this.field.id, text);

@@ -179,7 +179,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
                 return this.wikiProvider.getPageForEditing(this.pageId, this.section);
             }).then((editContents) => {
                 // Get the original page contents, treating file URLs if needed.
-                const content = this.textUtils.replacePluginfileUrls(editContents.content, this.subwikiFiles);
+                const content = CoreTextUtils.replacePluginfileUrls(editContents.content, this.subwikiFiles);
 
                 this.contentControl.setValue(content);
                 this.originalContent = content;
@@ -422,8 +422,8 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
         let promise,
             text = values.text;
 
-        text = this.textUtils.restorePluginfileUrls(text, this.subwikiFiles);
-        text = this.textUtils.formatHtmlLines(text);
+        text = CoreTextUtils.restorePluginfileUrls(text, this.subwikiFiles);
+        text = CoreTextUtils.formatHtmlLines(text);
 
         if (this.editing) {
             // Edit existing page.

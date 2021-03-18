@@ -95,7 +95,7 @@ export class AddonModSurveyOfflineProvider {
         return CoreSites.getSite(siteId).then((site) => {
             return site.getDb().getAllRecords(AddonModSurveyOfflineProvider.SURVEY_TABLE).then((entries) => {
                 entries.forEach((entry) => {
-                    entry.answers = this.textUtils.parseJSON(entry.answers);
+                    entry.answers = CoreTextUtils.parseJSON(entry.answers);
                 });
 
                 return entries;
@@ -133,7 +133,7 @@ export class AddonModSurveyOfflineProvider {
 
             return site.getDb().getRecord(AddonModSurveyOfflineProvider.SURVEY_TABLE, {surveyid: surveyId, userid: userId});
         }).then((entry) => {
-            entry.answers = this.textUtils.parseJSON(entry.answers);
+            entry.answers = CoreTextUtils.parseJSON(entry.answers);
 
             return entry;
         });

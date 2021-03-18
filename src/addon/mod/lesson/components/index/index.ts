@@ -470,20 +470,20 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
 
             if (data && data.lessonscored) {
                 if (data.numofattempts) {
-                    data.avescore = this.textUtils.roundToDecimals(data.avescore, 2);
+                    data.avescore = CoreTextUtils.roundToDecimals(data.avescore, 2);
                 }
                 if (data.highscore != null) {
-                    data.highscore = this.textUtils.roundToDecimals(data.highscore, 2);
+                    data.highscore = CoreTextUtils.roundToDecimals(data.highscore, 2);
                 }
                 if (data.lowscore != null) {
-                    data.lowscore = this.textUtils.roundToDecimals(data.lowscore, 2);
+                    data.lowscore = CoreTextUtils.roundToDecimals(data.lowscore, 2);
                 }
             }
 
             if (data && data.students) {
                 // Get the user data for each student returned.
                 data.students.forEach((student) => {
-                    student.bestgrade = this.textUtils.roundToDecimals(student.bestgrade, 2);
+                    student.bestgrade = CoreTextUtils.roundToDecimals(student.bestgrade, 2);
 
                     promises.push(this.userProvider.getProfile(student.id, this.courseId, true).then((user) => {
                         student.profileimageurl = user.profileimageurl;

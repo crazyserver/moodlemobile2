@@ -44,7 +44,7 @@ export class EntryMock {
 
         // There is no function to copy a file, read the source and write the dest.
         const srcPath = this.fullPath,
-            destPath = this.textUtils.concatenatePaths(parent.fullPath, newName),
+            destPath = CoreTextUtils.concatenatePaths(parent.fullPath, newName),
             reader = this.fs.createReadStream(srcPath),
             writer = this.fs.createWriteStream(destPath);
 
@@ -120,7 +120,7 @@ export class EntryMock {
         newName = newName || this.name;
 
         const srcPath = this.fullPath,
-            destPath = this.textUtils.concatenatePaths(parent.fullPath, newName);
+            destPath = CoreTextUtils.concatenatePaths(parent.fullPath, newName);
 
         this.fs.rename(srcPath, destPath, (err) => {
             if (err) {
@@ -267,7 +267,7 @@ export class DirectoryEntryMock extends EntryMock {
         };
 
         const fileName = path.substr(path.lastIndexOf('/') + 1),
-            fileDirPath = this.textUtils.concatenatePaths(this.fullPath, path);
+            fileDirPath = CoreTextUtils.concatenatePaths(this.fullPath, path);
 
         // Check if file/dir exists.
         this.fs.stat(fileDirPath, (err) => {
@@ -377,7 +377,7 @@ export class DirectoryEntryMock extends EntryMock {
                         // Remove all the files and directories.
                         let removed = 0;
                         files.forEach((filename) => {
-                            this.removeRecursiveFn(this.textUtils.concatenatePaths(path, filename), () => {
+                            this.removeRecursiveFn(CoreTextUtils.concatenatePaths(path, filename), () => {
                                 // Success deleting the file/dir.
                                 removed++;
                                 if (removed == files.length) {
@@ -483,7 +483,7 @@ export class DirectoryReaderMock implements DirectoryReader {
 
                     for (let i = 0; i < files.length; i++) {
                         const fileName = files[i],
-                            filePath = this.textUtils.concatenatePaths(this.localURL, fileName),
+                            filePath = CoreTextUtils.concatenatePaths(this.localURL, fileName),
                             stats = this.fs.statSync(filePath); // Use sync function to make code simpler.
 
                         if (stats.isDirectory()) {

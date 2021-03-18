@@ -210,7 +210,7 @@ export class CoreFormatTextDirective implements OnChanges {
                 return;
             }
 
-            const imgSrc = this.textUtils.escapeHTML(img.getAttribute('data-original-src') || img.getAttribute('src')),
+            const imgSrc = CoreTextUtils.escapeHTML(img.getAttribute('data-original-src') || img.getAttribute('src')),
             label = Translate.instant('core.openfullimage'),
             anchor = document.createElement('a');
 
@@ -305,7 +305,7 @@ export class CoreFormatTextDirective implements OnChanges {
             // Open a new state with the contents.
             const filter = typeof this.filter != 'undefined' ? CoreUtils.isTrueOrOne(this.filter) : undefined;
 
-            this.textUtils.viewText(this.fullTitle || Translate.instant('core.description'), this.text, {
+            CoreTextUtils.viewText(this.fullTitle || Translate.instant('core.description'), this.text, {
                 component: this.component,
                 componentId: this.componentId,
                 filter: filter,
@@ -686,7 +686,7 @@ export class CoreFormatTextDirective implements OnChanges {
             // Check if it's a Vimeo video. If it is, use the wsplayer script instead to make restricted videos work.
             const matches = iframe.src.match(/https?:\/\/player\.vimeo\.com\/video\/([0-9]+)/);
             if (matches && matches[1]) {
-                let newUrl = this.textUtils.concatenatePaths(site.getURL(), '/media/player/vimeo/wsplayer.php?video=') +
+                let newUrl = CoreTextUtils.concatenatePaths(site.getURL(), '/media/player/vimeo/wsplayer.php?video=') +
                     matches[1] + '&token=' + site.getToken();
 
                 // Width and height are mandatory, we need to calculate them.

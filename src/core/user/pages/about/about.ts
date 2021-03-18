@@ -66,7 +66,7 @@ export class CoreUserAboutPage {
 
             if (user.address) {
                 user.address = this.userHelper.formatAddress(user.address, user.city, user.country);
-                user.encodedAddress = this.textUtils.buildAddressURL(user.address);
+                user.encodedAddress = CoreTextUtils.buildAddressURL(user.address);
             }
 
             this.hasContact = user.email || user.phone1 || user.phone2 || user.city || user.country || user.address;

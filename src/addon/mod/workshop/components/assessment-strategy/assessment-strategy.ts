@@ -240,7 +240,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
         }
 
         // Compare feedback text.
-        const text = this.textUtils.restorePluginfileUrls(this.feedbackText, this.data.assessment.feedbackcontentfiles || []);
+        const text = CoreTextUtils.restorePluginfileUrls(this.feedbackText, this.data.assessment.feedbackcontentfiles || []);
         if (this.originalData.text != text) {
             return true;
         }
@@ -283,7 +283,7 @@ export class AddonModWorkshopAssessmentStrategyComponent implements OnInit {
 
             return this.workshopHelper.uploadOrStoreAssessmentFiles(this.workshop.id, this.assessmentId, files, saveOffline);
         }).then((attachmentsId) => {
-            const text = this.textUtils.restorePluginfileUrls(this.feedbackText, this.data.assessment.feedbackcontentfiles || []);
+            const text = CoreTextUtils.restorePluginfileUrls(this.feedbackText, this.data.assessment.feedbackcontentfiles || []);
 
             return this.workshopHelper.prepareAssessmentData(this.workshop, this.data.selectedValues, text, files,
                     this.data.assessment.form, attachmentsId).catch((errors) => {

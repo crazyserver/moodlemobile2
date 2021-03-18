@@ -518,8 +518,8 @@ export class AddonModLessonOfflineProvider {
      * @return The treated attempt.
      */
     protected parsePageAttempt(attempt: any): any {
-        attempt.data = this.textUtils.parseJSON(attempt.data);
-        attempt.useranswer = this.textUtils.parseJSON(attempt.useranswer);
+        attempt.data = CoreTextUtils.parseJSON(attempt.data);
+        attempt.useranswer = CoreTextUtils.parseJSON(attempt.useranswer);
 
         return attempt;
     }

@@ -102,7 +102,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
                 const notesList: AddonNotesNoteFormatted[] = notes[this.type + 'notes'] || [];
 
                 notesList.forEach((note) => {
-                    note.content = this.textUtils.decodeHTML(note.content);
+                    note.content = CoreTextUtils.decodeHTML(note.content);
                 });
 
                 return this.notesProvider.setOfflineDeletedNotes(notesList, this.courseId).then((notesList) => {
@@ -270,7 +270,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
      * @param warnings the warnings
      */
     private showSyncWarnings(warnings: string[]): void {
-        const message = this.textUtils.buildMessage(warnings);
+        const message = CoreTextUtils.buildMessage(warnings);
         if (message) {
             CoreDomUtils.showErrorModal(message);
         }

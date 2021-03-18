@@ -446,7 +446,7 @@ export class CoreSite {
      */
     setConfig(config: any): void {
         if (config) {
-            config.tool_mobile_disabledfeatures = this.textUtils.treatDisabledFeatures(config.tool_mobile_disabledfeatures);
+            config.tool_mobile_disabledfeatures = CoreTextUtils.treatDisabledFeatures(config.tool_mobile_disabledfeatures);
         }
 
         this.config = config;
@@ -653,7 +653,7 @@ export class CoreSite {
             responseExpected: preSets.responseExpected
         };
 
-        if (wsPreSets.cleanUnicode && this.textUtils.hasUnicodeData(data)) {
+        if (wsPreSets.cleanUnicode && CoreTextUtils.hasUnicodeData(data)) {
             // Data will be cleaned, notify the user.
             CoreDomUtils.showToast('core.unicodenotsupported', true, 3000);
         } else {
@@ -746,7 +746,7 @@ export class CoreSite {
                     error.message = Translate.instant('core.login.sitepolicynotagreederror');
 
                     return Promise.reject(error);
-                } else if (error.errorcode === 'dmlwriteexception' && this.textUtils.hasUnicodeData(data)) {
+                } else if (error.errorcode === 'dmlwriteexception' && CoreTextUtils.hasUnicodeData(data)) {
                     if (!this.cleanUnicode) {
                         // Try again cleaning unicode.
                         this.cleanUnicode = true;
@@ -953,9 +953,9 @@ export class CoreSite {
                     // Request not executed, enqueue again.
                     this.enqueueRequest(request);
                 } else if (response.error) {
-                    request.deferred.reject(this.textUtils.parseJSON(response.exception));
+                    request.deferred.reject(CoreTextUtils.parseJSON(response.exception));
                 } else {
-                    let responseData = this.textUtils.parseJSON(response.data);
+                    let responseData = CoreTextUtils.parseJSON(response.data);
                     // Match the behaviour of CoreWSProvider.call when no response is expected.
                     const responseExpected = typeof wsPresets.responseExpected == 'undefined' || wsPresets.responseExpected;
                     if (!responseExpected && (responseData == null || responseData === '')) {
@@ -1093,7 +1093,7 @@ export class CoreSite {
                     this.logger.info(`Cached element found, id: ${id}. Expires in expires in ${expires} seconds`);
                 }
 
-                return this.textUtils.parseJSON(entry.data, {});
+                return CoreTextUtils.parseJSON(entry.data, {});
             }
 
             return Promise.reject(null);
@@ -1360,10 +1360,10 @@ export class CoreSite {
      * @return Promise to be resolved when the DB is deleted.
      */
     deleteFolder(): Promise<any> {
-        if (this.fileProvider.isAvailable()) {
-            const siteFolder = this.fileProvider.getSiteFolder(this.id);
+        if (CoreFile.isAvailable()) {
+            const siteFolder = CoreFile.getSiteFolder(this.id);
 
-            return this.fileProvider.removeDir(siteFolder).catch(() => {
+            return CoreFile.removeDir(siteFolder).catch(() => {
                 // Ignore any errors, CoreFileProvider.removeDir fails if folder doesn't exists.
             });
         } else {
@@ -1377,10 +1377,10 @@ export class CoreSite {
      * @return Promise resolved with the site space usage (size).
      */
     getSpaceUsage(): Promise<number> {
-        if (this.fileProvider.isAvailable()) {
-            const siteFolderPath = this.fileProvider.getSiteFolder(this.id);
+        if (CoreFile.isAvailable()) {
+            const siteFolderPath = CoreFile.getSiteFolder(this.id);
 
-            return this.fileProvider.getDirectorySize(siteFolderPath).catch(() => {
+            return CoreFile.getDirectorySize(siteFolderPath).catch(() => {
                 return 0;
             });
         } else {
@@ -1559,8 +1559,8 @@ export class CoreSite {
             return false;
         }
 
-        const siteUrl = this.textUtils.addEndingSlash(this.urlUtils.removeProtocolAndWWW(this.siteUrl));
-        url = this.textUtils.addEndingSlash(this.urlUtils.removeProtocolAndWWW(url));
+        const siteUrl = CoreTextUtils.addEndingSlash(this.urlUtils.removeProtocolAndWWW(this.siteUrl));
+        url = CoreTextUtils.addEndingSlash(this.urlUtils.removeProtocolAndWWW(url));
 
         return url.indexOf(siteUrl) == 0;
     }
@@ -1801,7 +1801,7 @@ export class CoreSite {
             return false;
         }
 
-        const regEx = new RegExp('(,|^)' + this.textUtils.escapeForRegex(name) + '(,|$)', 'g');
+        const regEx = new RegExp('(,|^)' + CoreTextUtils.escapeForRegex(name) + '(,|$)', 'g');
 
         return !!disabledFeatures.match(regEx);
     }

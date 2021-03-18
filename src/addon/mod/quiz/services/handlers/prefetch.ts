@@ -340,7 +340,7 @@ export class AddonModQuizPrefetchHandler extends CoreCourseActivityPrefetchHandl
             if (canStart && (!attempt || this.quizProvider.isAttemptFinished(attempt.state))) {
                 // Check if the user can attempt the quiz.
                 if (attemptAccessInfo.preventnewattemptreasons.length) {
-                    return Promise.reject(this.textUtils.buildMessage(attemptAccessInfo.preventnewattemptreasons));
+                    return Promise.reject(CoreTextUtils.buildMessage(attemptAccessInfo.preventnewattemptreasons));
                 }
 
                 startAttempt = true;

@@ -173,7 +173,7 @@ export class CoreSitePluginsHelperProvider {
             // Get the absolute URL. If it's a relative URL, add the site URL to it.
             let url = handlerSchema.styles && handlerSchema.styles.url;
             if (url && !this.urlUtils.isAbsoluteURL(url)) {
-                url = this.textUtils.concatenatePaths(site.getURL(), url);
+                url = CoreTextUtils.concatenatePaths(site.getURL(), url);
             }
 
             if (url && handlerSchema.styles.version) {
@@ -340,7 +340,7 @@ export class CoreSitePluginsHelperProvider {
         if (!site.isFeatureDisabled('sitePlugin_' + plugin.component + '_' + plugin.addon) && plugin.handlers) {
             // Site plugin not disabled. Check if it has handlers.
             if (!plugin.parsedHandlers) {
-                plugin.parsedHandlers = this.textUtils.parseJSON(plugin.handlers, null,
+                plugin.parsedHandlers = CoreTextUtils.parseJSON(plugin.handlers, null,
                     this.logger.error.bind(this.logger, 'Error parsing site plugin handlers'));
             }
 
@@ -379,11 +379,11 @@ export class CoreSitePluginsHelperProvider {
         this.logger.debug('Load site plugin:', plugin);
 
         if (!plugin.parsedHandlers) {
-            plugin.parsedHandlers = this.textUtils.parseJSON(plugin.handlers, null,
+            plugin.parsedHandlers = CoreTextUtils.parseJSON(plugin.handlers, null,
                 this.logger.error.bind(this.logger, 'Error parsing site plugin handlers'));
         }
         if (!plugin.parsedLang && plugin.lang) {
-            plugin.parsedLang = this.textUtils.parseJSON(plugin.lang, null,
+            plugin.parsedLang = CoreTextUtils.parseJSON(plugin.lang, null,
                 this.logger.error.bind(this.logger, 'Error parsing site plugin lang'));
         }
 

@@ -355,7 +355,7 @@ export class CoreLoginHelperProvider {
             return '';
         }
 
-        return this.textUtils.treatDisabledFeatures(disabledFeatures);
+        return CoreTextUtils.treatDisabledFeatures(disabledFeatures);
     }
 
     /**
@@ -481,8 +481,8 @@ export class CoreLoginHelperProvider {
         }
 
         const validProviders = [],
-            httpUrl = this.textUtils.concatenatePaths(siteConfig.wwwroot, 'auth/oauth2/'),
-            httpsUrl = this.textUtils.concatenatePaths(siteConfig.httpswwwroot, 'auth/oauth2/');
+            httpUrl = CoreTextUtils.concatenatePaths(siteConfig.wwwroot, 'auth/oauth2/'),
+            httpsUrl = CoreTextUtils.concatenatePaths(siteConfig.httpswwwroot, 'auth/oauth2/');
 
         if (siteConfig.identityproviders && siteConfig.identityproviders.length) {
             siteConfig.identityproviders.forEach((provider) => {
@@ -1351,13 +1351,13 @@ export class CoreLoginHelperProvider {
      */
     treatUserTokenError(siteUrl: string, error: any, username?: string, password?: string): void {
         if (error.errorcode == 'forcepasswordchangenotice') {
-            this.openChangePassword(siteUrl, this.textUtils.getErrorMessageFromError(error));
+            this.openChangePassword(siteUrl, CoreTextUtils.getErrorMessageFromError(error));
         } else if (error.errorcode == 'usernotconfirmed') {
             this.showNotConfirmedModal(siteUrl, undefined, username, password);
         } else if (error.errorcode == 'connecttomoodleapp') {
-            this.showMoodleAppNoticeModal(this.textUtils.getErrorMessageFromError(error));
+            this.showMoodleAppNoticeModal(CoreTextUtils.getErrorMessageFromError(error));
         } else if (error.errorcode == 'connecttoworkplaceapp') {
-            this.showWorkplaceNoticeModal(this.textUtils.getErrorMessageFromError(error));
+            this.showWorkplaceNoticeModal(CoreTextUtils.getErrorMessageFromError(error));
         } else {
             CoreDomUtils.showErrorModal(error);
         }
@@ -1374,7 +1374,7 @@ export class CoreLoginHelperProvider {
         const params = url.split(':::');
 
         return this.configProvider.get(CoreConstants.LOGIN_LAUNCH_DATA).then((data): any => {
-            data = this.textUtils.parseJSON(data, null);
+            data = CoreTextUtils.parseJSON(data, null);
             if (data === null) {
                 return Promise.reject(null);
             }

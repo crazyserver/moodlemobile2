@@ -216,7 +216,7 @@ export class AddonModWorkshopHelperProvider {
      */
     deleteSubmissionStoredFiles(workshopId: number, submissionId: number, editing: boolean, siteId?: string): Promise<any> {
         return this.workshopOffline.getSubmissionFolder(workshopId, submissionId, editing, siteId).then((folderPath) => {
-            return this.fileProvider.removeDir(folderPath).catch(() => {
+            return CoreFile.removeDir(folderPath).catch(() => {
                 // Ignore any errors, CoreFileProvider.removeDir fails if folder doesn't exists.
             });
         });
@@ -305,7 +305,7 @@ export class AddonModWorkshopHelperProvider {
      */
     deleteAssessmentStoredFiles(workshopId: number, assessmentId: number, siteId?: string): Promise<any> {
         return this.workshopOffline.getAssessmentFolder(workshopId, assessmentId, siteId).then((folderPath) => {
-            return this.fileProvider.removeDir(folderPath).catch(() => {
+            return CoreFile.removeDir(folderPath).catch(() => {
                 // Ignore any errors, CoreFileProvider.removeDir fails if folder doesn't exists.
             });
         });
@@ -493,7 +493,7 @@ export class AddonModWorkshopHelperProvider {
         } else if (max == 0) {
             return '0';
         } else {
-            value = this.textUtils.roundToDecimals(max * value / 100, decimals);
+            value = CoreTextUtils.roundToDecimals(max * value / 100, decimals);
 
             return CoreUtils.formatFloat(value);
         }

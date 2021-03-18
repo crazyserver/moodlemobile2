@@ -311,7 +311,7 @@ export class AddonModScormOfflineProvider {
 
                 case 'cmi.core.score.raw':
                 case 'cmi.score.raw':
-                    formatted.score_raw = this.textUtils.roundToDecimals(value, 2); // Round to 2 decimals max.
+                    formatted.score_raw = CoreTextUtils.roundToDecimals(value, 2); // Round to 2 decimals max.
                     break;
 
                 case 'cmi.core.session_time':
@@ -342,7 +342,7 @@ export class AddonModScormOfflineProvider {
             return db.getAllRecords(AddonModScormOfflineProvider.ATTEMPTS_TABLE);
         }).then((attempts) => {
             attempts.forEach((attempt) => {
-                attempt.snapshot = this.textUtils.parseJSON(attempt.snapshot);
+                attempt.snapshot = CoreTextUtils.parseJSON(attempt.snapshot);
             });
 
             return attempts;
@@ -365,7 +365,7 @@ export class AddonModScormOfflineProvider {
             return site.getDb().getRecord(AddonModScormOfflineProvider.ATTEMPTS_TABLE, {scormid: scormId, userid: userId,
                     attempt: attempt});
         }).then((entry) => {
-            entry.snapshot = this.textUtils.parseJSON(entry.snapshot);
+            entry.snapshot = CoreTextUtils.parseJSON(entry.snapshot);
 
             return entry;
         });
@@ -403,7 +403,7 @@ export class AddonModScormOfflineProvider {
             return site.getDb().getRecords(AddonModScormOfflineProvider.ATTEMPTS_TABLE, {scormid: scormId, userid: userId});
         }).then((attempts) => {
             attempts.forEach((attempt) => {
-                attempt.snapshot = this.textUtils.parseJSON(attempt.snapshot);
+                attempt.snapshot = CoreTextUtils.parseJSON(attempt.snapshot);
             });
 
             return attempts;
@@ -481,7 +481,7 @@ export class AddonModScormOfflineProvider {
             return site.getDb().getRecords(AddonModScormOfflineProvider.TRACKS_TABLE, conditions);
         }).then((tracks) => {
             tracks.forEach((track) => {
-                track.value = this.textUtils.parseJSON(track.value);
+                track.value = CoreTextUtils.parseJSON(track.value);
             });
 
             return tracks;

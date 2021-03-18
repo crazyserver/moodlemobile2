@@ -106,7 +106,7 @@ export class CoreUtilsProvider {
         let errorMessage = error;
 
         if (error && typeof error != 'string') {
-            errorMessage = this.textUtils.getErrorMessageFromError(error);
+            errorMessage = CoreTextUtils.getErrorMessageFromError(error);
         }
 
         if (typeof errorMessage != 'string') {

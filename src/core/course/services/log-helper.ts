@@ -340,7 +340,7 @@ export class CoreCourseLogHelperProvider {
      */
     protected syncLogs(logs: any[], siteId: string): Promise<any> {
         return Promise.all(logs.map((log) => {
-            const data = this.textUtils.parseJSON(log.data);
+            const data = CoreTextUtils.parseJSON(log.data);
 
             return this.logOnline(log.ws, data, siteId).catch((error) => {
                 const promise = CoreUtils.isWebServiceError(error) ? this.deleteWSLogs(log.ws, data, siteId) : Promise.resolve();

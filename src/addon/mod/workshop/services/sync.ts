@@ -353,7 +353,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
                     }).catch((error) => {
                         if (error && CoreUtils.isWebServiceError(error)) {
                             // The WebService has thrown an error, this means it cannot be performed. Discard.
-                            discardError = this.textUtils.getErrorMessageFromError(error);
+                            discardError = CoreTextUtils.getErrorMessageFromError(error);
                         } else {
                             // Couldn't connect to server, reject.
                             return Promise.reject(error);
@@ -445,7 +445,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
             }).catch((error) => {
                 if (error && CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means it cannot be performed. Discard.
-                    discardError = this.textUtils.getErrorMessageFromError(error);
+                    discardError = CoreTextUtils.getErrorMessageFromError(error);
                 } else {
                     // Couldn't connect to server, reject.
                     return Promise.reject(error);
@@ -509,7 +509,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
                 evaluate.gradeover, siteId).catch((error) => {
                 if (error && CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means it cannot be performed. Discard.
-                    discardError = this.textUtils.getErrorMessageFromError(error);
+                    discardError = CoreTextUtils.getErrorMessageFromError(error);
                 } else {
                     // Couldn't connect to server, reject.
                     return Promise.reject(error);
@@ -571,7 +571,7 @@ export class AddonModWorkshopSyncProvider extends CoreSyncBaseProvider {
                 evaluate.gradinggradeover, siteId).catch((error) => {
                 if (error && CoreUtils.isWebServiceError(error)) {
                     // The WebService has thrown an error, this means it cannot be performed. Discard.
-                    discardError = this.textUtils.getErrorMessageFromError(error);
+                    discardError = CoreTextUtils.getErrorMessageFromError(error);
                 } else {
                     // Couldn't connect to server, reject.
                     return Promise.reject(error);

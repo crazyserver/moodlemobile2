@@ -105,9 +105,9 @@ export class CoreCoursesCoursePreviewPage implements OnDestroy {
 
         this.paypalEnabled = this.course.enrollmentmethods && this.course.enrollmentmethods.indexOf('paypal') > -1;
         this.guestWSAvailable = CoreCourses.isGuestWSAvailable();
-        this.enrolUrl = this.textUtils.concatenatePaths(currentSiteUrl, 'enrol/index.php?id=' + this.course.id);
-        this.courseUrl = this.textUtils.concatenatePaths(currentSiteUrl, 'course/view.php?id=' + this.course.id);
-        this.paypalReturnUrl = this.textUtils.concatenatePaths(currentSiteUrl, 'enrol/paypal/return.php');
+        this.enrolUrl = CoreTextUtils.concatenatePaths(currentSiteUrl, 'enrol/index.php?id=' + this.course.id);
+        this.courseUrl = CoreTextUtils.concatenatePaths(currentSiteUrl, 'course/view.php?id=' + this.course.id);
+        this.paypalReturnUrl = CoreTextUtils.concatenatePaths(currentSiteUrl, 'enrol/paypal/return.php');
         if (this.course.overviewfiles && this.course.overviewfiles.length > 0) {
             this.course.courseImage = this.course.overviewfiles[0].fileurl;
         }

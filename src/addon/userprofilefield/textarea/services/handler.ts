@@ -51,7 +51,7 @@ export class AddonUserProfileFieldTextareaHandler implements CoreUserProfileFiel
         if (formValues[name]) {
             let text = formValues[name] || '';
             // Add some HTML to the message in case the user edited with textarea.
-            text = this.textUtils.formatHtmlLines(text);
+            text = CoreTextUtils.formatHtmlLines(text);
 
             return {
                 type: 'textarea',

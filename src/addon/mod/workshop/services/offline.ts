@@ -391,7 +391,7 @@ export class AddonModWorkshopOfflineProvider {
      * @param record Submission record, modified in place.
      */
     protected parseSubmissionRecord(record: any): void {
-        record.attachmentsid = this.textUtils.parseJSON(record.attachmentsid);
+        record.attachmentsid = CoreTextUtils.parseJSON(record.attachmentsid);
     }
 
     /**
@@ -503,7 +503,7 @@ export class AddonModWorkshopOfflineProvider {
      * @param record Assessnent record, modified in place.
      */
     protected parseAssessmentRecord(record: any): void {
-        record.inputdata = this.textUtils.parseJSON(record.inputdata);
+        record.inputdata = CoreTextUtils.parseJSON(record.inputdata);
     }
 
     /**
@@ -622,7 +622,7 @@ export class AddonModWorkshopOfflineProvider {
      */
     protected parseEvaluateSubmissionRecord(record: any): void {
         record.published = Boolean(record.published);
-        record.gradeover = this.textUtils.parseJSON(record.gradeover);
+        record.gradeover = CoreTextUtils.parseJSON(record.gradeover);
     }
 
     /**
@@ -740,7 +740,7 @@ export class AddonModWorkshopOfflineProvider {
      * @param record Evaluate assessment record, modified in place.
      */
     protected parseEvaluateAssessmentRecord(record: any): void {
-        record.gradinggradeover = this.textUtils.parseJSON(record.gradinggradeover);
+        record.gradinggradeover = CoreTextUtils.parseJSON(record.gradinggradeover);
     }
 
     /**
@@ -753,10 +753,10 @@ export class AddonModWorkshopOfflineProvider {
     getWorkshopFolder(workshopId: number, siteId?: string): Promise<string> {
         return CoreSites.getSite(siteId).then((site) => {
 
-            const siteFolderPath = this.fileProvider.getSiteFolder(site.getId());
+            const siteFolderPath = CoreFile.getSiteFolder(site.getId());
             const workshopFolderPath = 'offlineworkshop/' + workshopId + '/';
 
-            return this.textUtils.concatenatePaths(siteFolderPath, workshopFolderPath);
+            return CoreTextUtils.concatenatePaths(siteFolderPath, workshopFolderPath);
         });
     }
 
@@ -774,7 +774,7 @@ export class AddonModWorkshopOfflineProvider {
             folderPath += 'submission/';
             const folder = editing ? 'update_' + submissionId : 'add';
 
-            return this.textUtils.concatenatePaths(folderPath, folder);
+            return CoreTextUtils.concatenatePaths(folderPath, folder);
         });
     }
 
@@ -790,7 +790,7 @@ export class AddonModWorkshopOfflineProvider {
         return this.getWorkshopFolder(workshopId, siteId).then((folderPath) => {
             folderPath += 'assessment/';
 
-            return this.textUtils.concatenatePaths(folderPath, String(assessmentId));
+            return CoreTextUtils.concatenatePaths(folderPath, String(assessmentId));
         });
     }
 }

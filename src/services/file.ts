@@ -491,7 +491,7 @@ export class CoreFileProvider {
      * @return The file name normalized.
      */
     normalizeFileName(filename: string): string {
-        filename = this.textUtils.decodeURIComponent(filename);
+        filename = CoreTextUtils.decodeURIComponent(filename);
 
         return filename;
     }
@@ -522,7 +522,7 @@ export class CoreFileProvider {
                 return this.file.readAsArrayBuffer(this.basePath, path);
             case CoreFileProvider.FORMATJSON:
                 return this.file.readAsText(this.basePath, path).then((text) => {
-                    const parsed = this.textUtils.parseJSON(text, null);
+                    const parsed = CoreTextUtils.parseJSON(text, null);
 
                     if (parsed == null && text != null) {
                         return Promise.reject('Error parsing JSON file: ' + path);
@@ -559,7 +559,7 @@ export class CoreFileProvider {
                 if (target.result !== undefined && target.result !== null) {
                     if (format == CoreFileProvider.FORMATJSON) {
                         // Convert to object.
-                        const parsed = this.textUtils.parseJSON(target.result, null);
+                        const parsed = CoreTextUtils.parseJSON(target.result, null);
 
                         if (parsed == null) {
                             reject('Error parsing JSON file.');
@@ -927,7 +927,7 @@ export class CoreFileProvider {
         if (path.indexOf(this.basePath) > -1) {
             return path;
         } else {
-            return this.textUtils.concatenatePaths(this.basePath, path);
+            return CoreTextUtils.concatenatePaths(this.basePath, path);
         }
     }
 
@@ -1120,8 +1120,8 @@ export class CoreFileProvider {
                 newName;
 
             // Clean the file name.
-            fileNameWithoutExtension = this.textUtils.removeSpecialCharactersForFiles(
-                this.textUtils.decodeURIComponent(fileNameWithoutExtension));
+            fileNameWithoutExtension = CoreTextUtils.removeSpecialCharactersForFiles(
+                CoreTextUtils.decodeURIComponent(fileNameWithoutExtension));
 
             // Index the files by name.
             entries.forEach((entry) => {
@@ -1151,7 +1151,7 @@ export class CoreFileProvider {
             }
         }).catch(() => {
             // Folder doesn't exist, name is unique. Clean it and return it.
-            return this.textUtils.removeSpecialCharactersForFiles(this.textUtils.decodeURIComponent(fileName));
+            return CoreTextUtils.removeSpecialCharactersForFiles(CoreTextUtils.decodeURIComponent(fileName));
         });
     }
 
@@ -1236,7 +1236,7 @@ export class CoreFileProvider {
      */
     getWWWAbsolutePath(): string {
         if (cordova && cordova.file && cordova.file.applicationDirectory) {
-            return this.textUtils.concatenatePaths(cordova.file.applicationDirectory, 'www');
+            return CoreTextUtils.concatenatePaths(cordova.file.applicationDirectory, 'www');
         }
 
         // Cannot use Cordova to get it, use the WebView URL.
