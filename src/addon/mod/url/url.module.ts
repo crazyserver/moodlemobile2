@@ -25,7 +25,7 @@ import { CoreCourseModuleDelegate } from '@core/course/providers/module-delegate
 import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-prefetch-delegate';
 
 // List of providers (without handlers).
-export const ADDON_MOD_URL_PROVIDERS: any[] = [
+export const ADDON_MOD_URL_SERVICES: Type<unknown>[] = [
     AddonModUrlProvider,
     AddonModUrlHelperProvider
 ];

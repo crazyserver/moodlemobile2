@@ -28,7 +28,7 @@ import { AddonModChoiceSyncCronHandler } from './providers/sync-cron-handler';
 import { AddonModChoiceOfflineProvider } from './providers/offline';
 
 // List of providers (without handlers).
-export const ADDON_MOD_CHOICE_PROVIDERS: any[] = [
+export const ADDON_MOD_CHOICE_SERVICES: Type<unknown>[] = [
     AddonModChoiceProvider,
     AddonModChoiceSyncProvider,
     AddonModChoiceOfflineProvider

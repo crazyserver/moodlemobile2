@@ -21,7 +21,7 @@ import { CoreQuestionBehaviourDefaultHandler } from './providers/default-behavio
 import { CoreQuestionHelperProvider } from './providers/helper';
 
 // List of providers (without handlers).
-export const CORE_QUESTION_PROVIDERS: any[] = [
+export const CORE_QUESTION_SERVICES: Type<unknown>[] = [
     CoreQuestionProvider,
     CoreQuestionDelegate,
     CoreQuestionBehaviourDelegate,

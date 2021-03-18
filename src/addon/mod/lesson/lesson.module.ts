@@ -33,7 +33,7 @@ import { AddonModLessonListLinkHandler } from './providers/list-link-handler';
 import { AddonModLessonPushClickHandler } from './providers/push-click-handler';
 
 // List of providers (without handlers).
-export const ADDON_MOD_LESSON_PROVIDERS: any[] = [
+export const ADDON_MOD_LESSON_SERVICES: Type<unknown>[] = [
     AddonModLessonProvider,
     AddonModLessonOfflineProvider,
     AddonModLessonSyncProvider,

@@ -31,7 +31,7 @@ import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate'
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 
 // List of providers (without handlers).
-export const ADDON_COMPETENCY_PROVIDERS: any[] = [
+export const ADDON_COMPETENCY_SERVICES: Type<unknown>[] = [
     AddonCompetencyProvider,
     AddonCompetencyHelperProvider
 ];

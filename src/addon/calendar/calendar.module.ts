@@ -29,7 +29,7 @@ import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate'
 import { AddonCalendarComponentsModule } from './components/components.module';
 
 // List of providers (without handlers).
-export const ADDON_CALENDAR_PROVIDERS: any[] = [
+export const ADDON_CALENDAR_SERVICES: Type<unknown>[] = [
     AddonCalendarProvider,
     AddonCalendarOfflineProvider,
     AddonCalendarHelperProvider,

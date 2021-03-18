@@ -30,7 +30,7 @@ import { CoreSitesProvider } from '@services/sites';
 import { CoreUserProvider } from '@core/user/providers/user';
 
 // List of providers (without handlers).
-export const CORE_GRADES_PROVIDERS: any[] = [
+export const CORE_GRADES_SERVICES: Type<unknown>[] = [
     CoreGradesProvider,
     CoreGradesHelperProvider
 ];

@@ -20,7 +20,7 @@ import { CoreEvents } from '@singletons/events';
 import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 // List of providers (without handlers).
-export const CORE_H5P_PROVIDERS: any[] = [
+export const CORE_H5P_SERVICES: Type<unknown>[] = [
     CoreH5PProvider,
 ];
 

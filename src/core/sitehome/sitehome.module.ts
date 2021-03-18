@@ -18,7 +18,7 @@ import { CoreSiteHomeIndexLinkHandler } from './providers/index-link-handler';
 import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate';
 
 // List of providers (without handlers).
-export const CORE_SITEHOME_PROVIDERS: any[] = [
+export const CORE_SITEHOME_SERVICES: Type<unknown>[] = [
     CoreSiteHomeProvider
 ];
 

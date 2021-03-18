@@ -28,7 +28,7 @@ import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 
 // List of providers (without handlers).
-export const ADDON_NOTIFICATIONS_PROVIDERS: any[] = [
+export const ADDON_NOTIFICATIONS_SERVICES: Type<unknown>[] = [
     AddonNotificationsProvider,
     AddonNotificationsHelperProvider
 ];

@@ -30,7 +30,7 @@ import { AddonModScormSyncProvider } from './providers/scorm-sync';
 import { AddonModScormComponentsModule } from './components/components.module';
 
 // List of providers (without handlers).
-export const ADDON_MOD_SCORM_PROVIDERS: any[] = [
+export const ADDON_MOD_SCORM_SERVICES: Type<unknown>[] = [
     AddonModScormProvider,
     AddonModScormOfflineProvider,
     AddonModScormHelperProvider,

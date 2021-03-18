@@ -36,7 +36,7 @@ import { AddonModFeedbackSyncCronHandler } from './providers/sync-cron-handler';
 import { AddonModFeedbackOfflineProvider } from './providers/offline';
 
 // List of providers (without handlers).
-export const ADDON_MOD_FEEDBACK_PROVIDERS: any[] = [
+export const ADDON_MOD_FEEDBACK_SERVICES: Type<unknown>[] = [
     AddonModFeedbackProvider,
     AddonModFeedbackHelperProvider,
     AddonModFeedbackSyncProvider,

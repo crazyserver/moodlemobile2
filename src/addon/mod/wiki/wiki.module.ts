@@ -33,7 +33,7 @@ import { AddonModWikiListLinkHandler } from './providers/list-link-handler';
 import { AddonModWikiTagAreaHandler } from './providers/tag-area-handler';
 
 // List of providers (without handlers).
-export const ADDON_MOD_WIKI_PROVIDERS: any[] = [
+export const ADDON_MOD_WIKI_SERVICES: Type<unknown>[] = [
     AddonModWikiProvider,
     AddonModWikiOfflineProvider,
     AddonModWikiSyncProvider

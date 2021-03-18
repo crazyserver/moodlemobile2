@@ -40,7 +40,7 @@ import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers
 import { CoreUtilsProvider } from '@services/utils/utils';
 
 // List of providers (without handlers).
-export const ADDON_MESSAGES_PROVIDERS: any[] = [
+export const ADDON_MESSAGES_SERVICES: Type<unknown>[] = [
     AddonMessagesProvider,
     AddonMessagesOfflineProvider,
     AddonMessagesSyncProvider

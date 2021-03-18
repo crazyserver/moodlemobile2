@@ -19,7 +19,7 @@ import { CoreBlockDefaultHandler } from './providers/default-block-handler';
 import { CoreBlockComponentsModule } from './components/components.module';
 
 // List of providers (without handlers).
-export const CORE_BLOCK_PROVIDERS: any[] = [
+export const CORE_BLOCK_SERVICES: Type<unknown>[] = [
     CoreBlockDelegate
 ];
 

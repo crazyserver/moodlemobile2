@@ -19,7 +19,7 @@ import { CoreFilterDefaultHandler } from './providers/default-filter';
 import { CoreFilterHelperProvider } from './providers/helper';
 
 // List of providers (without handlers).
-export const CORE_FILTER_PROVIDERS: any[] = [
+export const CORE_FILTER_SERVICES: Type<unknown>[] = [
     CoreFilterProvider,
     CoreFilterDelegate,
     CoreFilterHelperProvider

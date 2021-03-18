@@ -22,7 +22,7 @@ import { CoreEvents } from '@singletons/events';
 import { CoreAppProvider } from '@services/app';
 
 // List of providers (without handlers).
-export const CORE_SHAREDFILES_PROVIDERS: any[] = [
+export const CORE_SHAREDFILES_SERVICES: Type<unknown>[] = [
     CoreSharedFilesProvider,
     CoreSharedFilesHelperProvider
 ];

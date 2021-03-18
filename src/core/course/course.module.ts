@@ -38,7 +38,7 @@ import { CoreCourseTagAreaHandler } from './providers/course-tag-area-handler';
 import { CoreCourseModulesTagAreaHandler } from './providers/modules-tag-area-handler';
 
 // List of providers (without handlers).
-export const CORE_COURSE_PROVIDERS: any[] = [
+export const CORE_COURSE_SERVICES: Type<unknown>[] = [
     CoreCourseProvider,
     CoreCourseHelperProvider,
     CoreCourseLogHelperProvider,

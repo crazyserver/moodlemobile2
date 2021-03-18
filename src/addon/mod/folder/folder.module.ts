@@ -27,7 +27,7 @@ import { CoreCourseModulePrefetchDelegate } from '@core/course/providers/module-
 import { CorePluginFileDelegate } from '@services/plugin-file-delegate';
 
 // List of providers (without handlers).
-export const ADDON_MOD_FOLDER_PROVIDERS: any[] = [
+export const ADDON_MOD_FOLDER_SERVICES: Type<unknown>[] = [
     AddonModFolderProvider,
     AddonModFolderHelperProvider
 ];

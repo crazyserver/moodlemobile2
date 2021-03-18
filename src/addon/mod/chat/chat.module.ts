@@ -25,7 +25,7 @@ import { AddonModChatModuleHandler } from './providers/module-handler';
 import { AddonModChatPrefetchHandler } from './providers/prefetch-handler';
 
 // List of providers (without handlers).
-export const ADDON_MOD_CHAT_PROVIDERS: any[] = [
+export const ADDON_MOD_CHAT_SERVICES: Type<unknown>[] = [
     AddonModChatProvider
 ];
 

@@ -36,7 +36,7 @@ import { AddonModAssignSubmissionModule } from './submission/submission.module';
 import { AddonModAssignFeedbackModule } from './feedback/feedback.module';
 
 // List of providers (without handlers).
-export const ADDON_MOD_ASSIGN_PROVIDERS: any[] = [
+export const ADDON_MOD_ASSIGN_SERVICES: Type<unknown>[] = [
     AddonModAssignProvider,
     AddonModAssignOfflineProvider,
     AddonModAssignSyncProvider,

@@ -17,7 +17,7 @@ import { CoreXAPIProvider } from './providers/xapi';
 import { CoreXAPIOfflineProvider } from './providers/offline';
 
 // List of providers (without handlers).
-export const CORE_XAPI_PROVIDERS: any[] = [
+export const CORE_XAPI_SERVICES: Type<unknown>[] = [
     CoreXAPIProvider,
     CoreXAPIOfflineProvider,
 ];

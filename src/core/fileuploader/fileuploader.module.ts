@@ -23,7 +23,7 @@ import { CoreFileUploaderFileHandler } from './providers/file-handler';
 import { CoreFileUploaderVideoHandler } from './providers/video-handler';
 
 // List of providers (without handlers).
-export const CORE_FILEUPLOADER_PROVIDERS: any[] = [
+export const CORE_FILEUPLOADER_SERVICES: Type<unknown>[] = [
     CoreFileUploaderProvider,
     CoreFileUploaderHelperProvider,
     CoreFileUploaderDelegate

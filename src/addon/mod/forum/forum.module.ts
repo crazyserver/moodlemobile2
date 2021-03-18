@@ -35,7 +35,7 @@ import { AddonModForumTagAreaHandler } from './providers/tag-area-handler';
 import { AddonModForumComponentsModule } from './components/components.module';
 
 // List of providers (without handlers).
-export const ADDON_MOD_FORUM_PROVIDERS: any[] = [
+export const ADDON_MOD_FORUM_SERVICES: Type<unknown>[] = [
     AddonModForumProvider,
     AddonModForumOfflineProvider,
     AddonModForumHelperProvider,

@@ -23,7 +23,7 @@ import { CoreUserDelegate } from '@core/user/providers/user-delegate';
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 
 // List of providers (without handlers).
-export const ADDON_BADGES_PROVIDERS: any[] = [
+export const ADDON_BADGES_SERVICES: Type<unknown>[] = [
     AddonBadgesProvider
 ];
 

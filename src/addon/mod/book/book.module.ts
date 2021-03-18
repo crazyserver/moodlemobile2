@@ -26,7 +26,7 @@ import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';
 import { AddonModBookTagAreaHandler } from './providers/tag-area-handler';
 
 // List of providers (without handlers).
-export const ADDON_MOD_BOOK_PROVIDERS: any[] = [
+export const ADDON_MOD_BOOK_SERVICES: Type<unknown>[] = [
     AddonModBookProvider
 ];
 

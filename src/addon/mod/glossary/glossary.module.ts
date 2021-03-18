@@ -33,7 +33,7 @@ import { AddonModGlossaryTagAreaHandler } from './providers/tag-area-handler';
 import { AddonModGlossaryComponentsModule } from './components/components.module';
 
 // List of providers (without handlers).
-export const ADDON_MOD_GLOSSARY_PROVIDERS: any[] = [
+export const ADDON_MOD_GLOSSARY_SERVICES: Type<unknown>[] = [
     AddonModGlossaryProvider,
     AddonModGlossaryOfflineProvider,
     AddonModGlossaryHelperProvider,

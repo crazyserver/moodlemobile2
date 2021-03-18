@@ -34,7 +34,7 @@ import { CoreTagAreaDelegate } from '@core/tag/providers/area-delegate';
 import { CoreUserTagAreaHandler } from './providers/tag-area-handler';
 
 // List of providers (without handlers).
-export const CORE_USER_PROVIDERS: any[] = [
+export const CORE_USER_SERVICES: Type<unknown>[] = [
     CoreUserDelegate,
     CoreUserProfileFieldDelegate,
     CoreUserProvider,

@@ -169,7 +169,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
 }
 
 // List of providers.
-export const CORE_PROVIDERS: any[] = [
+export const CORE_SERVICES: Type<unknown>[] = [
     CoreLoggerProvider,
     CoreDbProvider,
     CoreAppProvider,

@@ -31,7 +31,7 @@ import { AddonModWorkshopPrefetchHandler } from './providers/prefetch-handler';
 import { AddonModWorkshopSyncCronHandler } from './providers/sync-cron-handler';
 
 // List of providers (without handlers).
-export const ADDON_MOD_WORKSHOP_PROVIDERS: any[] = [
+export const ADDON_MOD_WORKSHOP_SERVICES: Type<unknown>[] = [
     AddonModWorkshopProvider,
     AddonModWorkshopOfflineProvider,
     AddonModWorkshopSyncProvider,

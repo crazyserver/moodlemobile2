@@ -19,7 +19,7 @@ import { AddonFilesMainMenuHandler } from './providers/mainmenu-handler';
 import { CoreMainMenuDelegate } from '@core/mainmenu/providers/delegate';
 
 // List of providers (without handlers).
-export const ADDON_FILES_PROVIDERS: any[] = [
+export const ADDON_FILES_SERVICES: Type<unknown>[] = [
     AddonFilesProvider,
     AddonFilesHelperProvider
 ];

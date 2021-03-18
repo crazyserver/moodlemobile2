@@ -29,7 +29,7 @@ import { AddonModSurveySyncCronHandler } from './providers/sync-cron-handler';
 import { AddonModSurveyOfflineProvider } from './providers/offline';
 
 // List of providers (without handlers).
-export const ADDON_MOD_SURVEY_PROVIDERS: any[] = [
+export const ADDON_MOD_SURVEY_SERVICES: Type<unknown>[] = [
     AddonModSurveyProvider,
     AddonModSurveyHelperProvider,
     AddonModSurveySyncProvider,

@@ -27,7 +27,7 @@ import { CoreContentLinksDelegate } from '@core/contentlinks/providers/delegate'
 import { CorePushNotificationsDelegate } from '@core/pushnotifications/providers/delegate';
 
 // List of providers (without handlers).
-export const CORE_COURSES_PROVIDERS: any[] = [
+export const CORE_COURSES_SERVICES: Type<unknown>[] = [
     CoreCoursesProvider,
     CoreCoursesDashboardProvider,
     CoreCoursesHelperProvider

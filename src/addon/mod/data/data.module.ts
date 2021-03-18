@@ -38,7 +38,7 @@ import { AddonModDataTagAreaHandler } from './providers/tag-area-handler';
 import { AddonModDataFieldModule } from './fields/field.module';
 
 // List of providers (without handlers).
-export const ADDON_MOD_DATA_PROVIDERS: any[] = [
+export const ADDON_MOD_DATA_SERVICES: Type<unknown>[] = [
     AddonModDataProvider,
     AddonModDataHelperProvider,
     AddonModDataSyncProvider,

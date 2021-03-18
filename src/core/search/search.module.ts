@@ -17,7 +17,7 @@ import { CoreSearchComponentsModule } from './components/components.module';
 import { CoreSearchHistoryProvider } from './providers/search-history';
 
 // List of providers (without handlers).
-export const CORE_SEARCH_PROVIDERS: any[] = [
+export const CORE_SEARCH_SERVICES: Type<unknown>[] = [
     CoreSearchHistoryProvider,
 ];
 

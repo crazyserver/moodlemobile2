@@ -29,7 +29,7 @@ import { AddonModH5PActivityReportLinkHandler } from './providers/report-link-ha
 import { AddonModH5PActivitySyncCronHandler } from './providers/sync-cron-handler';
 
 // List of providers (without handlers).
-export const ADDON_MOD_H5P_ACTIVITY_PROVIDERS: any[] = [
+export const ADDON_MOD_H5P_ACTIVITY_SERVICES: Type<unknown>[] = [
     AddonModH5PActivityProvider,
     AddonModH5PActivitySyncProvider,
 ];

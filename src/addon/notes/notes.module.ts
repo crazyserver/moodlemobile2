@@ -25,7 +25,7 @@ import { CoreCronDelegate } from '@services/cron';
 import { CoreUserDelegate } from '@core/user/providers/user-delegate';
 
 // List of providers (without handlers).
-export const ADDON_NOTES_PROVIDERS: any[] = [
+export const ADDON_NOTES_SERVICES: Type<unknown>[] = [
     AddonNotesProvider,
     AddonNotesOfflineProvider,
     AddonNotesSyncProvider

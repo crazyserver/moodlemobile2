@@ -20,7 +20,7 @@ import { CoreLogger } from '@singletons/logger';
 import { CoreSitesProvider } from '@services/sites';
 
 // List of providers (without handlers).
-export const ADDON_REMOTETHEMES_PROVIDERS: any[] = [
+export const ADDON_REMOTETHEMES_SERVICES: Type<unknown>[] = [
     AddonRemoteThemesProvider
 ];
 

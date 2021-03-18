@@ -45,7 +45,7 @@ import { AddonModQuizAccessSecureWindowModule } from './accessrules/securewindow
 import { AddonModQuizAccessTimeLimitModule } from './accessrules/timelimit/timelimit.module';
 
 // List of providers (without handlers).
-export const ADDON_MOD_QUIZ_PROVIDERS: any[] = [
+export const ADDON_MOD_QUIZ_SERVICES: Type<unknown>[] = [
     AddonModQuizAccessRuleDelegate,
     AddonModQuizProvider,
     AddonModQuizOfflineProvider,

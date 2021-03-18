@@ -24,7 +24,7 @@ import { CoreLogger } from '@singletons/logger';
 import { CoreLocalNotificationsProvider } from '@services/local-notifications';
 
 // List of providers (without handlers).
-export const CORE_PUSHNOTIFICATIONS_PROVIDERS: any[] = [
+export const CORE_PUSHNOTIFICATIONS_SERVICES: Type<unknown>[] = [
     CorePushNotificationsProvider,
     CorePushNotificationsDelegate
 ];
