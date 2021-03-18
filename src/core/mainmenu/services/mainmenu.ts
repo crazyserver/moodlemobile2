@@ -51,8 +51,8 @@ export interface CoreMainMenuCustomItem {
  */
 @Injectable({ providedIn: 'root' })
 export class CoreMainMenuProvider {
-    static NUM_MAIN_HANDLERS = 4;
-    static ITEM_MIN_WIDTH = 72; // Min with of every item, based on 5 items on a 360 pixel wide screen.
+    static readonly NUM_MAIN_HANDLERS = 4;
+    static readonly ITEM_MIN_WIDTH = 72; // Min with of every item, based on 5 items on a 360 pixel wide screen.
     protected tablet = false;
 
     constructor(protected langProvider: CoreLangProvider,

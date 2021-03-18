@@ -143,7 +143,7 @@ export class CoreH5PHelper {
      * @param onProgress Function to call on progress.
      * @return Promise resolved when done.
      */
-    static async saveH5P(fileUrl: string, file: FileEntry, siteId?: string, onProgress?: (event: any) => any): Promise<void> {
+    static readonly async saveH5P(fileUrl: string, file: FileEntry, siteId?: string, onProgress?: (event: any) => any): Promise<void> {
         siteId = siteId || CoreSites.getCurrentSiteId();
 
         // Notify that the unzip is starting.
@@ -163,7 +163,7 @@ export class CoreH5PHelper {
      * @param onProgress Function to call on progress.
      * @return Promise resolved when done.
      */
-    protected static async performSave(fileUrl: string, file: FileEntry, siteId?: string, onProgress?: (event: any) => any)
+    protected static readonly async performSave(fileUrl: string, file: FileEntry, siteId?: string, onProgress?: (event: any) => any)
             : Promise<void> {
 
         const folderName = CoreMimetypeUtils.removeExtension(file.name);

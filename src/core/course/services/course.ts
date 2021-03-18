@@ -36,22 +36,22 @@ import { makeSingleton } from '@singletons/core.singletons';
  */
 @Injectable({ providedIn: 'root' })
 export class CoreCourseProvider {
-    static ALL_SECTIONS_ID = -2;
-    static STEALTH_MODULES_SECTION_ID = -1;
-    static ACCESS_GUEST = 'courses_access_guest';
-    static ACCESS_DEFAULT = 'courses_access_default';
-    static ALL_COURSES_CLEARED = -1;
+    static readonly ALL_SECTIONS_ID = -2;
+    static readonly STEALTH_MODULES_SECTION_ID = -1;
+    static readonly ACCESS_GUEST = 'courses_access_guest';
+    static readonly ACCESS_DEFAULT = 'courses_access_default';
+    static readonly ALL_COURSES_CLEARED = -1;
 
-    static COMPLETION_TRACKING_NONE = 0;
-    static COMPLETION_TRACKING_MANUAL = 1;
-    static COMPLETION_TRACKING_AUTOMATIC = 2;
+    static readonly COMPLETION_TRACKING_NONE = 0;
+    static readonly COMPLETION_TRACKING_MANUAL = 1;
+    static readonly COMPLETION_TRACKING_AUTOMATIC = 2;
 
-    static COMPLETION_INCOMPLETE = 0;
-    static COMPLETION_COMPLETE = 1;
-    static COMPLETION_COMPLETE_PASS = 2;
-    static COMPLETION_COMPLETE_FAIL = 3;
+    static readonly COMPLETION_INCOMPLETE = 0;
+    static readonly COMPLETION_COMPLETE = 1;
+    static readonly COMPLETION_COMPLETE_PASS = 2;
+    static readonly COMPLETION_COMPLETE_FAIL = 3;
 
-    static COMPONENT = 'CoreCourse';
+    static readonly COMPONENT = 'CoreCourse';
 
     protected ROOT_CACHE_KEY = 'mmCourse:';
 

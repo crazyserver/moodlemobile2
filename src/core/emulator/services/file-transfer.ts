@@ -21,11 +21,11 @@ import { CoreFileProvider } from '@services/file';
  * Mock the File Transfer Error.
  */
 export class FileTransferErrorMock implements FileTransferError {
-    static FILE_NOT_FOUND_ERR = 1;
-    static INVALID_URL_ERR = 2;
-    static CONNECTION_ERR = 3;
-    static ABORT_ERR = 4;
-    static NOT_MODIFIED_ERR = 5;
+    static readonly FILE_NOT_FOUND_ERR = 1;
+    static readonly INVALID_URL_ERR = 2;
+    static readonly CONNECTION_ERR = 3;
+    static readonly ABORT_ERR = 4;
+    static readonly NOT_MODIFIED_ERR = 5;
 
     // tslint:disable-next-line: variable-name
     constructor(public code: number, public source: string, public target: string, public http_status: number,

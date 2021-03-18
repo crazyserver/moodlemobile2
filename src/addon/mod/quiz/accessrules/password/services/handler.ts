@@ -24,7 +24,7 @@ import { AddonModQuizAccessPasswordComponent } from '../component/password';
 @Injectable({ providedIn: 'root' })
 export class AddonModQuizAccessPasswordHandler implements AddonModQuizAccessRuleHandler {
     // Variables for database.
-    static PASSWORD_TABLE = 'addon_mod_quiz_access_password';
+    static readonly PASSWORD_TABLE = 'addon_mod_quiz_access_password';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModQuizAccessPasswordHandler',
         version: 1,

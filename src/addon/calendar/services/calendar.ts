@@ -39,31 +39,31 @@ import * as moment from 'moment';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonCalendarProvider {
-    static DAYS_INTERVAL = 30;
-    static COMPONENT = 'AddonCalendarEvents';
-    static DEFAULT_NOTIFICATION_TIME_CHANGED = 'AddonCalendarDefaultNotificationTimeChangedEvent';
-    static DEFAULT_NOTIFICATION_TIME_SETTING = 'mmaCalendarDefaultNotifTime';
-    static DEFAULT_NOTIFICATION_TIME = 60;
-    static STARTING_WEEK_DAY = 'addon_calendar_starting_week_day';
-    static NEW_EVENT_EVENT = 'addon_calendar_new_event';
-    static NEW_EVENT_DISCARDED_EVENT = 'addon_calendar_new_event_discarded';
-    static EDIT_EVENT_EVENT = 'addon_calendar_edit_event';
-    static DELETED_EVENT_EVENT = 'addon_calendar_deleted_event';
-    static UNDELETED_EVENT_EVENT = 'addon_calendar_undeleted_event';
-    static FILTER_CHANGED_EVENT = 'addon_calendar_filter_changed_event';
-    static TYPE_CATEGORY = 'category';
-    static TYPE_COURSE = 'course';
-    static TYPE_GROUP = 'group';
-    static TYPE_SITE = 'site';
-    static TYPE_USER = 'user';
-    static ALL_TYPES = [ AddonCalendarProvider.TYPE_SITE,
+    static readonly DAYS_INTERVAL = 30;
+    static readonly COMPONENT = 'AddonCalendarEvents';
+    static readonly DEFAULT_NOTIFICATION_TIME_CHANGED = 'AddonCalendarDefaultNotificationTimeChangedEvent';
+    static readonly DEFAULT_NOTIFICATION_TIME_SETTING = 'mmaCalendarDefaultNotifTime';
+    static readonly DEFAULT_NOTIFICATION_TIME = 60;
+    static readonly STARTING_WEEK_DAY = 'addon_calendar_starting_week_day';
+    static readonly NEW_EVENT_EVENT = 'addon_calendar_new_event';
+    static readonly NEW_EVENT_DISCARDED_EVENT = 'addon_calendar_new_event_discarded';
+    static readonly EDIT_EVENT_EVENT = 'addon_calendar_edit_event';
+    static readonly DELETED_EVENT_EVENT = 'addon_calendar_deleted_event';
+    static readonly UNDELETED_EVENT_EVENT = 'addon_calendar_undeleted_event';
+    static readonly FILTER_CHANGED_EVENT = 'addon_calendar_filter_changed_event';
+    static readonly TYPE_CATEGORY = 'category';
+    static readonly TYPE_COURSE = 'course';
+    static readonly TYPE_GROUP = 'group';
+    static readonly TYPE_SITE = 'site';
+    static readonly TYPE_USER = 'user';
+    static readonly ALL_TYPES = [ AddonCalendarProvider.TYPE_SITE,
         AddonCalendarProvider.TYPE_CATEGORY,
         AddonCalendarProvider.TYPE_COURSE,
         AddonCalendarProvider.TYPE_GROUP,
         AddonCalendarProvider.TYPE_USER ];
 
-    static CALENDAR_TF_24 = '%H:%M'; // Calendar time in 24 hours format.
-    static CALENDAR_TF_12 = '%I:%M %p'; // Calendar time in 12 hours format.
+    static readonly CALENDAR_TF_24 = '%H:%M'; // Calendar time in 24 hours format.
+    static readonly CALENDAR_TF_12 = '%I:%M %p'; // Calendar time in 12 hours format.
 
     protected ROOT_CACHE_KEY = 'mmaCalendar:';
 
@@ -99,8 +99,8 @@ export class AddonCalendarProvider {
     ];
 
     // Variables for database.
-    static EVENTS_TABLE = 'addon_calendar_events_3';
-    static REMINDERS_TABLE = 'addon_calendar_reminders';
+    static readonly EVENTS_TABLE = 'addon_calendar_events_3';
+    static readonly REMINDERS_TABLE = 'addon_calendar_reminders';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonCalendarProvider',
         version: 3,

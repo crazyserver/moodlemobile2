@@ -38,8 +38,8 @@ import { CoreRatingSyncProvider } from '@core/rating/providers/sync';
 @Injectable({ providedIn: 'root' })
 export class AddonModForumSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_forum_autom_synced';
-    static MANUAL_SYNCED = 'addon_mod_forum_manual_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_forum_autom_synced';
+    static readonly MANUAL_SYNCED = 'addon_mod_forum_manual_synced';
 
     protected componentTranslate: string;
 

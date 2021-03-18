@@ -27,12 +27,12 @@ import { Translate } from '@singletons/core.singletons';
  */
 export class CoreH5PCore {
 
-    static STYLES = [
+    static readonly STYLES = [
         'styles/h5p.css',
         'styles/h5p-confirmation-dialog.css',
         'styles/h5p-core-button.css'
     ];
-    static SCRIPTS = [
+    static readonly SCRIPTS = [
         'js/jquery.js',
         'js/h5p.js',
         'js/h5p-event-dispatcher.js',
@@ -43,28 +43,28 @@ export class CoreH5PCore {
         'js/h5p-action-bar.js',
         'js/request-queue.js',
     ];
-    static ADMIN_SCRIPTS = [
+    static readonly ADMIN_SCRIPTS = [
         'js/jquery.js',
         'js/h5p-utils.js',
     ];
 
     // Disable flags
-    static DISABLE_NONE = 0;
-    static DISABLE_FRAME = 1;
-    static DISABLE_DOWNLOAD = 2;
-    static DISABLE_EMBED = 4;
-    static DISABLE_COPYRIGHT = 8;
-    static DISABLE_ABOUT = 16;
+    static readonly DISABLE_NONE = 0;
+    static readonly DISABLE_FRAME = 1;
+    static readonly DISABLE_DOWNLOAD = 2;
+    static readonly DISABLE_EMBED = 4;
+    static readonly DISABLE_COPYRIGHT = 8;
+    static readonly DISABLE_ABOUT = 16;
 
-    static DISPLAY_OPTION_FRAME = 'frame';
-    static DISPLAY_OPTION_DOWNLOAD = 'export';
-    static DISPLAY_OPTION_EMBED = 'embed';
-    static DISPLAY_OPTION_COPYRIGHT = 'copyright';
-    static DISPLAY_OPTION_ABOUT = 'icon';
-    static DISPLAY_OPTION_COPY = 'copy';
+    static readonly DISPLAY_OPTION_FRAME = 'frame';
+    static readonly DISPLAY_OPTION_DOWNLOAD = 'export';
+    static readonly DISPLAY_OPTION_EMBED = 'embed';
+    static readonly DISPLAY_OPTION_COPYRIGHT = 'copyright';
+    static readonly DISPLAY_OPTION_ABOUT = 'icon';
+    static readonly DISPLAY_OPTION_COPY = 'copy';
 
     // Map to slugify characters.
-    static SLUGIFY_MAP = {
+    static readonly SLUGIFY_MAP = {
         æ: 'ae', ø: 'oe', ö: 'o', ó: 'o', ô: 'o', Ò: 'oe', Õ: 'o', Ý: 'o', ý: 'y', ÿ: 'y', ā: 'y', ă: 'a', ą: 'a', œ: 'a', å: 'a',
         ä: 'a', á: 'a', à: 'a', â: 'a', ã: 'a', ç: 'c', ć: 'c', ĉ: 'c', ċ: 'c', č: 'c', é: 'e', è: 'e', ê: 'e', ë: 'e', í: 'i',
         ì: 'i', î: 'i', ï: 'i', ú: 'u', ñ: 'n', ü: 'u', ù: 'u', û: 'u', ß: 'es', ď: 'd', đ: 'd', ē: 'e', ĕ: 'e', ė: 'e', ę: 'e',
@@ -846,23 +846,23 @@ export class CoreH5PCore {
  * Display options behaviour constants.
  */
 export class CoreH5PDisplayOptionBehaviour {
-    static NEVER_SHOW = 0;
-    static CONTROLLED_BY_AUTHOR_DEFAULT_ON = 1;
-    static CONTROLLED_BY_AUTHOR_DEFAULT_OFF = 2;
-    static ALWAYS_SHOW = 3;
-    static CONTROLLED_BY_PERMISSIONS = 4;
+    static readonly NEVER_SHOW = 0;
+    static readonly CONTROLLED_BY_AUTHOR_DEFAULT_ON = 1;
+    static readonly CONTROLLED_BY_AUTHOR_DEFAULT_OFF = 2;
+    static readonly ALWAYS_SHOW = 3;
+    static readonly CONTROLLED_BY_PERMISSIONS = 4;
 }
 
 /**
  * Permission constants.
  */
 export class CoreH5PPermission {
-    static DOWNLOAD_H5P = 0;
-    static EMBED_H5P = 1;
-    static CREATE_RESTRICTED = 2;
-    static UPDATE_LIBRARIES = 3;
-    static INSTALL_RECOMMENDED = 4;
-    static COPY_H5P = 4;
+    static readonly DOWNLOAD_H5P = 0;
+    static readonly EMBED_H5P = 1;
+    static readonly CREATE_RESTRICTED = 2;
+    static readonly UPDATE_LIBRARIES = 3;
+    static readonly INSTALL_RECOMMENDED = 4;
+    static readonly COPY_H5P = 4;
 }
 
 /**

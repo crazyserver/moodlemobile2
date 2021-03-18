@@ -29,7 +29,7 @@ import * as moment from 'moment';
 export class AddonCalendarHelperProvider {
     protected logger: CoreLogger;
 
-    static EVENTICONS = {
+    static readonly EVENTICONS = {
         course: 'fa-graduation-cap',
         group: 'people',
         site: 'globe',

@@ -24,8 +24,8 @@ import { CoreWSExternalWarning } from '@services/ws';
 @Injectable({ providedIn: 'root' })
 export class AddonFilesProvider {
     protected ROOT_CACHE_KEY = 'mmaFiles:';
-    static PRIVATE_FILES_COMPONENT = 'mmaFilesMy';
-    static SITE_FILES_COMPONENT = 'mmaFilesSite';
+    static readonly PRIVATE_FILES_COMPONENT = 'mmaFilesMy';
+    static readonly SITE_FILES_COMPONENT = 'mmaFilesSite';
 
     constructor(private sitesProvider: CoreSitesProvider, private mimeUtils: CoreMimetypeUtilsProvider) { }
 

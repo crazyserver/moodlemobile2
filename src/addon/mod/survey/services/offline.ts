@@ -26,7 +26,7 @@ export class AddonModSurveyOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static SURVEY_TABLE = 'addon_mod_survey_answers';
+    static readonly SURVEY_TABLE = 'addon_mod_survey_answers';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModSurveyOfflineProvider',
         version: 1,

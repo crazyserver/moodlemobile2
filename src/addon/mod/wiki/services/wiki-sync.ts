@@ -88,8 +88,8 @@ export interface AddonModWikiSyncWikiResult {
 @Injectable({ providedIn: 'root' })
 export class AddonModWikiSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_wiki_autom_synced';
-    static MANUAL_SYNCED = 'addon_mod_wiki_manual_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_wiki_autom_synced';
+    static readonly MANUAL_SYNCED = 'addon_mod_wiki_manual_synced';
 
     protected componentTranslate: string;
 

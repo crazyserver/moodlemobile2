@@ -31,7 +31,7 @@ import { makeSingleton } from '@singletons/core.singletons';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModLtiProvider {
-    static COMPONENT = 'mmaModLti';
+    static readonly COMPONENT = 'mmaModLti';
 
     protected ROOT_CACHE_KEY = 'mmaModLti:';
     protected LAUNCHER_FILE_NAME = 'lti_launcher.html';

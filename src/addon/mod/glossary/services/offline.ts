@@ -25,7 +25,7 @@ import { CoreTextUtilsProvider } from '@services/utils/text';
 export class AddonModGlossaryOfflineProvider {
 
     // Variables for database.
-    static ENTRIES_TABLE = 'addon_mod_glossary_entrues';
+    static readonly ENTRIES_TABLE = 'addon_mod_glossary_entrues';
 
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModGlossaryOfflineProvider',

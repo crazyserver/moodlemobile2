@@ -25,7 +25,7 @@ export class AddonModWikiOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static NEW_PAGES_TABLE = 'addon_mod_wiki_new_pages_store';
+    static readonly NEW_PAGES_TABLE = 'addon_mod_wiki_new_pages_store';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModWikiOfflineProvider',
         version: 1,

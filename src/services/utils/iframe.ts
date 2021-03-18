@@ -36,7 +36,7 @@ import { WKUserScriptWindow, WKUserScriptInjectionTime } from 'cordova-plugin-wk
  */
 @Injectable({ providedIn: 'root' })
 export class CoreIframeUtilsProvider {
-    static FRAME_TAGS = ['iframe', 'frame', 'object', 'embed'];
+    static readonly FRAME_TAGS = ['iframe', 'frame', 'object', 'embed'];
 
     protected logger: CoreLogger;
 

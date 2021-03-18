@@ -23,8 +23,8 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 export class CoreCommentsOfflineProvider {
 
     // Variables for database.
-    static COMMENTS_TABLE = 'core_comments_offline_comments';
-    static COMMENTS_DELETED_TABLE = 'core_comments_deleted_offline_comments';
+    static readonly COMMENTS_TABLE = 'core_comments_offline_comments';
+    static readonly COMMENTS_DELETED_TABLE = 'core_comments_deleted_offline_comments';
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreCommentsOfflineProvider',
         version: 1,

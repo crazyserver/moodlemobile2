@@ -52,12 +52,12 @@ export interface AddonModLessonSyncResult {
 @Injectable({ providedIn: 'root' })
 export class AddonModLessonSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_lesson_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_lesson_autom_synced';
 
     protected componentTranslate: string;
 
     // Variables for database.
-    static RETAKES_FINISHED_TABLE = 'addon_mod_lesson_retakes_finished_sync';
+    static readonly RETAKES_FINISHED_TABLE = 'addon_mod_lesson_retakes_finished_sync';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModLessonSyncProvider',
         version: 1,

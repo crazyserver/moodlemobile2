@@ -29,9 +29,9 @@ import { makeSingleton } from '@singletons/core.singletons';
  */
 @Injectable({ providedIn: 'root' })
 export class CoreUserProvider {
-    static PARTICIPANTS_LIST_LIMIT = 50; // Max of participants to retrieve in each WS call.
-    static PROFILE_REFRESHED = 'CoreUserProfileRefreshed';
-    static PROFILE_PICTURE_UPDATED = 'CoreUserProfilePictureUpdated';
+    static readonly PARTICIPANTS_LIST_LIMIT = 50; // Max of participants to retrieve in each WS call.
+    static readonly PROFILE_REFRESHED = 'CoreUserProfileRefreshed';
+    static readonly PROFILE_PICTURE_UPDATED = 'CoreUserProfilePictureUpdated';
     protected ROOT_CACHE_KEY = 'mmUser:';
 
     // Variables for database.

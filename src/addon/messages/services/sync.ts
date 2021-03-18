@@ -34,7 +34,7 @@ import { CoreConstants } from '@core/constants';
 @Injectable({ providedIn: 'root' })
 export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_messages_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_messages_autom_synced';
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             translate: TranslateService, syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider,

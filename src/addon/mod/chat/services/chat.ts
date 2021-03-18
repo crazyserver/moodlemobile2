@@ -28,8 +28,8 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModChatProvider {
-    static COMPONENT = 'mmaModChat';
-    static POLL_INTERVAL = 4000;
+    static readonly COMPONENT = 'mmaModChat';
+    static readonly POLL_INTERVAL = 4000;
 
     protected ROOT_CACHE_KEY = 'AddonModChat:';
 

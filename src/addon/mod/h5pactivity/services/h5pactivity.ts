@@ -31,8 +31,8 @@ import { makeSingleton, Translate } from '@singletons/core.singletons';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModH5PActivityProvider {
-    static COMPONENT = 'mmaModH5PActivity';
-    static TRACK_COMPONENT = 'mod_h5pactivity'; // Component for tracking.
+    static readonly COMPONENT = 'mmaModH5PActivity';
+    static readonly TRACK_COMPONENT = 'mod_h5pactivity'; // Component for tracking.
 
     protected ROOT_CACHE_KEY = 'mmaModH5PActivity:';
 

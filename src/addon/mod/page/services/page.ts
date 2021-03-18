@@ -27,7 +27,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModPageProvider {
-    static COMPONENT = 'mmaModPage';
+    static readonly COMPONENT = 'mmaModPage';
 
     protected ROOT_CACHE_KEY = 'mmaModPage:';
     protected logger: CoreLogger;

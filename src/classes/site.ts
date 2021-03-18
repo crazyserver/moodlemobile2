@@ -184,15 +184,15 @@ interface RequestQueueItem {
  * the tables are created in all the sites, not just the current one.
  */
 export class CoreSite {
-    static REQUEST_QUEUE_DELAY = 50; // Maximum number of miliseconds to wait before processing the queue.
-    static REQUEST_QUEUE_LIMIT = 10; // Maximum number of requests allowed in the queue.
-    static REQUEST_QUEUE_FORCE_WS = false; // Use "tool_mobile_call_external_functions" even for calling a single function.
+    static readonly REQUEST_QUEUE_DELAY = 50; // Maximum number of miliseconds to wait before processing the queue.
+    static readonly REQUEST_QUEUE_LIMIT = 10; // Maximum number of requests allowed in the queue.
+    static readonly REQUEST_QUEUE_FORCE_WS = false; // Use "tool_mobile_call_external_functions" even for calling a single function.
 
     // Constants for cache update frequency.
-    static FREQUENCY_USUALLY = 0;
-    static FREQUENCY_OFTEN = 1;
-    static FREQUENCY_SOMETIMES = 2;
-    static FREQUENCY_RARELY = 3;
+    static readonly FREQUENCY_USUALLY = 0;
+    static readonly FREQUENCY_OFTEN = 1;
+    static readonly FREQUENCY_SOMETIMES = 2;
+    static readonly FREQUENCY_RARELY = 3;
 
     // List of injected services. This class isn't injectable, so it cannot use DI.
     protected appProvider: CoreAppProvider;
@@ -208,8 +208,8 @@ export class CoreSite {
     protected wsProvider: CoreWSProvider;
 
     // Variables for the database.
-    static WS_CACHE_TABLE = 'wscache_2';
-    static CONFIG_TABLE = 'core_site_config';
+    static readonly WS_CACHE_TABLE = 'wscache_2';
+    static readonly CONFIG_TABLE = 'core_site_config';
 
     // Versions of Moodle releases.
     protected MOODLE_RELEASES = {
@@ -221,7 +221,7 @@ export class CoreSite {
         3.6: 2018120300,
         3.7: 2019052000
     };
-    static MINIMUM_MOODLE_VERSION = '3.1';
+    static readonly MINIMUM_MOODLE_VERSION = '3.1';
 
     // Possible cache update frequencies.
     protected UPDATE_FREQUENCIES = [

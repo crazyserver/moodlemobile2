@@ -52,7 +52,7 @@ export interface AddonModQuizSyncResult {
 @Injectable({ providedIn: 'root' })
 export class AddonModQuizSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_quiz_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_quiz_autom_synced';
 
     protected componentTranslate: string;
 

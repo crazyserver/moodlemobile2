@@ -42,7 +42,7 @@ import { CoreDynamicComponent } from '@components/dynamic-component/dynamic-comp
     templateUrl: 'core-course-format.html'
 })
 export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
-    static LOAD_MORE_ACTIVITIES = 20; // How many activities should load each time showMoreActivities is called.
+    static readonly LOAD_MORE_ACTIVITIES = 20; // How many activities should load each time showMoreActivities is called.
 
     @Input() course: any; // The course to render.
     @Input() sections: any[]; // List of course sections.

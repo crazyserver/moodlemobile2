@@ -29,7 +29,7 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModSurveyProvider {
-    static COMPONENT = 'mmaModSurvey';
+    static readonly COMPONENT = 'mmaModSurvey';
 
     protected ROOT_CACHE_KEY = 'mmaModSurvey:';
     protected logger: CoreLogger;

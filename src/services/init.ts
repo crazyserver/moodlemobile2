@@ -50,8 +50,8 @@ export interface CoreInitHandler {
  */
 @Injectable({ providedIn: 'root' })
 export class CoreInitDelegate {
-    static DEFAULT_PRIORITY = 100; // Default priority for init processes.
-    static MAX_RECOMMENDED_PRIORITY = 600;
+    static readonly DEFAULT_PRIORITY = 100; // Default priority for init processes.
+    static readonly MAX_RECOMMENDED_PRIORITY = 600;
 
     protected initProcesses = {};
     protected logger: CoreLogger;

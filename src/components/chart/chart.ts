@@ -33,7 +33,7 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 export class CoreChartComponent implements OnDestroy, OnInit, OnChanges {
     // The first 6 colors will be the app colors, the following will be randomly generated.
     // It will use the same colors in the whole session.
-    protected static backgroundColors = [
+    protected static readonly backgroundColors = [
         'rgba(0,100,210, 0.6)',
         'rgba(203,61,77, 0.6)',
         'rgba(0,121,130, 0.6)',

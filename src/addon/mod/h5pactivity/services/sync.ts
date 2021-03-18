@@ -39,7 +39,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 @Injectable({ providedIn: 'root' })
 export class AddonModH5PActivitySyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_h5pactivity_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_h5pactivity_autom_synced';
     protected componentTranslate: string;
 
     constructor(sitesProvider: CoreSitesProvider,

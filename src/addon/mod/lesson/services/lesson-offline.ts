@@ -29,8 +29,8 @@ export class AddonModLessonOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database. We use lowercase in the names to match the WS responses.
-    static RETAKES_TABLE = 'addon_mod_lesson_retakes';
-    static PAGE_ATTEMPTS_TABLE = 'addon_mod_lesson_page_attempts';
+    static readonly RETAKES_TABLE = 'addon_mod_lesson_retakes';
+    static readonly PAGE_ATTEMPTS_TABLE = 'addon_mod_lesson_page_attempts';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModLessonOfflineProvider',
         version: 1,

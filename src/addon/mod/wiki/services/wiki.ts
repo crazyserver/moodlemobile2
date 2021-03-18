@@ -57,9 +57,9 @@ export interface AddonModWikiSubwikiListData {
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModWikiProvider {
-    static COMPONENT = 'mmaModWiki';
-    static PAGE_CREATED_EVENT = 'addon_mod_wiki_page_created';
-    static RENEW_LOCK_TIME = 30000; // Milliseconds.
+    static readonly COMPONENT = 'mmaModWiki';
+    static readonly PAGE_CREATED_EVENT = 'addon_mod_wiki_page_created';
+    static readonly RENEW_LOCK_TIME = 30000; // Milliseconds.
 
     protected ROOT_CACHE_KEY = 'mmaModWiki:';
     protected logger: CoreLogger;

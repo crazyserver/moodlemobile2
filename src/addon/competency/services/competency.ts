@@ -28,16 +28,16 @@ import { CoreCourseSummary, CoreCourseModuleSummary } from '@core/course/provide
 export class AddonCompetencyProvider {
 
     // Learning plan status.
-    static STATUS_DRAFT = 0;
-    static STATUS_ACTIVE = 1;
-    static STATUS_COMPLETE = 2;
-    static STATUS_WAITING_FOR_REVIEW = 3;
-    static STATUS_IN_REVIEW = 4;
+    static readonly STATUS_DRAFT = 0;
+    static readonly STATUS_ACTIVE = 1;
+    static readonly STATUS_COMPLETE = 2;
+    static readonly STATUS_WAITING_FOR_REVIEW = 3;
+    static readonly STATUS_IN_REVIEW = 4;
 
     // Competency status.
-    static REVIEW_STATUS_IDLE = 0;
-    static REVIEW_STATUS_WAITING_FOR_REVIEW = 1;
-    static REVIEW_STATUS_IN_REVIEW = 2;
+    static readonly REVIEW_STATUS_IDLE = 0;
+    static readonly REVIEW_STATUS_WAITING_FOR_REVIEW = 1;
+    static readonly REVIEW_STATUS_IN_REVIEW = 2;
 
     protected ROOT_CACHE_KEY = 'mmaCompetency:';
 

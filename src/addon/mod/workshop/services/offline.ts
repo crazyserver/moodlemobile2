@@ -25,10 +25,10 @@ import { CoreTimeUtilsProvider } from '@services/utils/time';
 export class AddonModWorkshopOfflineProvider {
 
     // Variables for database.
-    static SUBMISSIONS_TABLE = 'addon_mod_workshop_submissions';
-    static ASSESSMENTS_TABLE = 'addon_mod_workshop_assessments';
-    static EVALUATE_SUBMISSIONS_TABLE = 'addon_mod_workshop_evaluate_submissions';
-    static EVALUATE_ASSESSMENTS_TABLE = 'addon_mod_workshop_evaluate_assessments';
+    static readonly SUBMISSIONS_TABLE = 'addon_mod_workshop_submissions';
+    static readonly ASSESSMENTS_TABLE = 'addon_mod_workshop_assessments';
+    static readonly EVALUATE_SUBMISSIONS_TABLE = 'addon_mod_workshop_evaluate_submissions';
+    static readonly EVALUATE_ASSESSMENTS_TABLE = 'addon_mod_workshop_evaluate_assessments';
 
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModWorkshopOfflineProvider',

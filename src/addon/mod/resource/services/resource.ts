@@ -27,7 +27,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModResourceProvider {
-    static COMPONENT = 'mmaModResource';
+    static readonly COMPONENT = 'mmaModResource';
 
     protected ROOT_CACHE_KEY = 'mmaModResource:';
     protected logger: CoreLogger;

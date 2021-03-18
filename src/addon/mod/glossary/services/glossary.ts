@@ -30,18 +30,18 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModGlossaryProvider {
-    static COMPONENT = 'mmaModGlossary';
-    static LIMIT_ENTRIES = 25;
-    static LIMIT_CATEGORIES = 10;
-    static SHOW_ALL_CATEGORIES = 0;
-    static SHOW_NOT_CATEGORISED = -1;
+    static readonly COMPONENT = 'mmaModGlossary';
+    static readonly LIMIT_ENTRIES = 25;
+    static readonly LIMIT_CATEGORIES = 10;
+    static readonly SHOW_ALL_CATEGORIES = 0;
+    static readonly SHOW_NOT_CATEGORISED = -1;
 
-    static ADD_ENTRY_EVENT = 'addon_mod_glossary_add_entry';
+    static readonly ADD_ENTRY_EVENT = 'addon_mod_glossary_add_entry';
 
     protected ROOT_CACHE_KEY = 'mmaModGlossary:';
 
     // Variables for database.
-    static ENTRIES_TABLE = 'addon_mod_glossary_entry_glossaryid';
+    static readonly ENTRIES_TABLE = 'addon_mod_glossary_entry_glossaryid';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModGlossaryProvider',
         version: 1,

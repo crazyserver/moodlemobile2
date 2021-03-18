@@ -34,7 +34,7 @@ import { CoreCourseLogHelperProvider } from './log-helper';
 @Injectable({ providedIn: 'root' })
 export class CoreCourseSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'core_course_autom_synced';
+    static readonly AUTO_SYNCED = 'core_course_autom_synced';
 
     constructor(protected sitesProvider: CoreSitesProvider,
             protected appProvider: CoreAppProvider, private courseOffline: CoreCourseOfflineProvider,

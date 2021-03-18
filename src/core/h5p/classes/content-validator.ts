@@ -23,7 +23,7 @@ import { CoreH5PCore, CoreH5PLibraryData, CoreH5PLibraryAddonData, CoreH5PConten
  * It's also used to build the dependency list.
  */
 export class CoreH5PContentValidator {
-    protected static ALLOWED_STYLEABLE_TAGS = ['span', 'p', 'div', 'h1', 'h2', 'h3', 'td'];
+    protected static readonly ALLOWED_STYLEABLE_TAGS = ['span', 'p', 'div', 'h1', 'h2', 'h3', 'td'];
 
     protected typeMap = {
         text:  'validateText',

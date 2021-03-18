@@ -23,8 +23,8 @@ import { CoreUtilsProvider } from '@services/utils/utils';
 export class AddonCalendarOfflineProvider {
 
     // Variables for database.
-    static EVENTS_TABLE = 'addon_calendar_offline_events';
-    static DELETED_EVENTS_TABLE = 'addon_calendar_deleted_events';
+    static readonly EVENTS_TABLE = 'addon_calendar_offline_events';
+    static readonly DELETED_EVENTS_TABLE = 'addon_calendar_deleted_events';
 
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonCalendarOfflineProvider',

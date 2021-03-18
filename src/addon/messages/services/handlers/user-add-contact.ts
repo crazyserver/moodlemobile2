@@ -29,7 +29,7 @@ export class AddonMessagesAddContactUserHandler implements CoreUserProfileHandle
     /**
      * Update handler information event.
      */
-    static UPDATED_EVENT = 'AddonMessagesAddContactUserHandler_updated_event';
+    static readonly UPDATED_EVENT = 'AddonMessagesAddContactUserHandler_updated_event';
 
     name = 'AddonMessages:addContact';
     priority = 800;

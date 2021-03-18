@@ -44,8 +44,8 @@ export interface CoreFileUploaderOptions extends CoreWSFileUploadOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class CoreFileUploaderProvider {
-    static LIMITED_SIZE_WARNING = 1048576; // 1 MB.
-    static WIFI_SIZE_WARNING = 10485760; // 10 MB.
+    static readonly LIMITED_SIZE_WARNING = 1048576; // 1 MB.
+    static readonly WIFI_SIZE_WARNING = 10485760; // 10 MB.
 
     protected logger: CoreLogger;
 

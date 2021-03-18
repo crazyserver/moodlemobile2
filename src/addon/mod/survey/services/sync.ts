@@ -36,7 +36,7 @@ import { AddonModSurveyPrefetchHandler } from './prefetch-handler';
 @Injectable({ providedIn: 'root' })
 export class AddonModSurveySyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_survey_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_survey_autom_synced';
     protected componentTranslate: string;
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,

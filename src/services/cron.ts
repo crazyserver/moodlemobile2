@@ -86,10 +86,10 @@ export interface CoreCronHandler {
 @Injectable({ providedIn: 'root' })
 export class CoreCronDelegate {
     // Constants.
-    static DEFAULT_INTERVAL = 3600000; // Default interval is 1 hour.
-    static MIN_INTERVAL = 300000; // Minimum interval is 5 minutes.
-    static DESKTOP_MIN_INTERVAL = 60000; // Minimum interval in desktop is 1 minute.
-    static MAX_TIME_PROCESS = 120000; // Max time a process can block the queue. Defaults to 2 minutes.
+    static readonly DEFAULT_INTERVAL = 3600000; // Default interval is 1 hour.
+    static readonly MIN_INTERVAL = 300000; // Minimum interval is 5 minutes.
+    static readonly DESKTOP_MIN_INTERVAL = 60000; // Minimum interval in desktop is 1 minute.
+    static readonly MAX_TIME_PROCESS = 120000; // Max time a process can block the queue. Defaults to 2 minutes.
 
     // Variables for database.
     protected CRON_TABLE = 'cron';

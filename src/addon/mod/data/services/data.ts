@@ -90,9 +90,9 @@ export interface AddonModDataSubfieldData {
  */
 @Injectable({providedIn: 'root' })
 export class AddonModDataProvider {
-    static COMPONENT = 'mmaModData';
-    static PER_PAGE = 25;
-    static ENTRY_CHANGED = 'addon_mod_data_entry_changed';
+    static readonly COMPONENT = 'mmaModData';
+    static readonly PER_PAGE = 25;
+    static readonly ENTRY_CHANGED = 'addon_mod_data_entry_changed';
 
     protected ROOT_CACHE_KEY = AddonModDataProvider.COMPONENT + ':';
     protected logger: CoreLogger;

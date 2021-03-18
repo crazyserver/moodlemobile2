@@ -28,8 +28,8 @@ export class AddonModAssignOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static SUBMISSIONS_TABLE = 'addon_mod_assign_submissions';
-    static SUBMISSIONS_GRADES_TABLE = 'addon_mod_assign_submissions_grading';
+    static readonly SUBMISSIONS_TABLE = 'addon_mod_assign_submissions';
+    static readonly SUBMISSIONS_GRADES_TABLE = 'addon_mod_assign_submissions_grading';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModAssignOfflineProvider',
         version: 1,

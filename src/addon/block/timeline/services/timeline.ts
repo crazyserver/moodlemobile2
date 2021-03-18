@@ -23,8 +23,8 @@ import * as moment from 'moment';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonBlockTimelineProvider {
-    static EVENTS_LIMIT = 20;
-    static EVENTS_LIMIT_PER_COURSE = 10;
+    static readonly EVENTS_LIMIT = 20;
+    static readonly EVENTS_LIMIT_PER_COURSE = 10;
     // Cache key was maintained when moving the functions to this file. It comes from core myoverview.
     protected ROOT_CACHE_KEY = 'myoverview:';
 

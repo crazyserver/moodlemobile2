@@ -25,12 +25,12 @@ import { CoreCommentsOfflineProvider } from './offline';
 @Injectable({ providedIn: 'root' })
 export class CoreCommentsProvider {
 
-    static REFRESH_COMMENTS_EVENT = 'core_comments_refresh_comments';
-    static COMMENTS_COUNT_CHANGED_EVENT = 'core_comments_count_changed';
+    static readonly REFRESH_COMMENTS_EVENT = 'core_comments_refresh_comments';
+    static readonly COMMENTS_COUNT_CHANGED_EVENT = 'core_comments_count_changed';
 
     protected ROOT_CACHE_KEY = 'mmComments:';
-    static pageSize = 1; // At least it will be one.
-    static pageSizeOK = false; // If true, the pageSize is definitive. If not, it's a temporal value to reduce WS calls.
+    static readonly pageSize = 1; // At least it will be one.
+    static readonly pageSizeOK = false; // If true, the pageSize is definitive. If not, it's a temporal value to reduce WS calls.
 
     constructor(private sitesProvider: CoreSitesProvider, private utils: CoreUtilsProvider, private appProvider: CoreAppProvider,
         private commentsOffline: CoreCommentsOfflineProvider) {}

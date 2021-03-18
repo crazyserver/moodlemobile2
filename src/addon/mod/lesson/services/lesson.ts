@@ -107,53 +107,53 @@ export interface AddonModLessonGrade {
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModLessonProvider {
-    static COMPONENT = 'mmaModLesson';
-    static DATA_SENT_EVENT = 'addon_mod_lesson_data_sent';
+    static readonly COMPONENT = 'mmaModLesson';
+    static readonly DATA_SENT_EVENT = 'addon_mod_lesson_data_sent';
 
     // This page.
-    static LESSON_THISPAGE = 0;
+    static readonly LESSON_THISPAGE = 0;
     // Next page -> any page not seen before.
-    static LESSON_UNSEENPAGE = 1;
+    static readonly LESSON_UNSEENPAGE = 1;
     // Next page -> any page not answered correctly.
-    static LESSON_UNANSWEREDPAGE = 2;
+    static readonly LESSON_UNANSWEREDPAGE = 2;
     // Jump to Next Page.
-    static LESSON_NEXTPAGE = -1;
+    static readonly LESSON_NEXTPAGE = -1;
     // End of Lesson.
-    static LESSON_EOL = -9;
+    static readonly LESSON_EOL = -9;
     // Jump to an unseen page within a branch and end of branch or end of lesson.
-    static LESSON_UNSEENBRANCHPAGE = -50;
+    static readonly LESSON_UNSEENBRANCHPAGE = -50;
     // Jump to a random page within a branch and end of branch or end of lesson.
-    static LESSON_RANDOMPAGE = -60;
+    static readonly LESSON_RANDOMPAGE = -60;
     // Jump to a random Branch.
-    static LESSON_RANDOMBRANCH = -70;
+    static readonly LESSON_RANDOMBRANCH = -70;
     // Cluster Jump.
-    static LESSON_CLUSTERJUMP = -80;
+    static readonly LESSON_CLUSTERJUMP = -80;
 
     // Type of page: question or structure (content).
-    static TYPE_QUESTION = 0;
-    static TYPE_STRUCTURE = 1;
+    static readonly TYPE_QUESTION = 0;
+    static readonly TYPE_STRUCTURE = 1;
 
     // Type of question pages.
-    static LESSON_PAGE_SHORTANSWER =  1;
-    static LESSON_PAGE_TRUEFALSE =    2;
-    static LESSON_PAGE_MULTICHOICE =  3;
-    static LESSON_PAGE_MATCHING =     5;
-    static LESSON_PAGE_NUMERICAL =    8;
-    static LESSON_PAGE_ESSAY =        10;
-    static LESSON_PAGE_BRANCHTABLE =  20; // Content page.
-    static LESSON_PAGE_ENDOFBRANCH =  21;
-    static LESSON_PAGE_CLUSTER =      30;
-    static LESSON_PAGE_ENDOFCLUSTER = 31;
+    static readonly LESSON_PAGE_SHORTANSWER =  1;
+    static readonly LESSON_PAGE_TRUEFALSE =    2;
+    static readonly LESSON_PAGE_MULTICHOICE =  3;
+    static readonly LESSON_PAGE_MATCHING =     5;
+    static readonly LESSON_PAGE_NUMERICAL =    8;
+    static readonly LESSON_PAGE_ESSAY =        10;
+    static readonly LESSON_PAGE_BRANCHTABLE =  20; // Content page.
+    static readonly LESSON_PAGE_ENDOFBRANCH =  21;
+    static readonly LESSON_PAGE_CLUSTER =      30;
+    static readonly LESSON_PAGE_ENDOFCLUSTER = 31;
 
     /**
      * Constant used as a delimiter when parsing multianswer questions
      */
-    static MULTIANSWER_DELIMITER = '@^#|';
+    static readonly MULTIANSWER_DELIMITER = '@^#|';
 
-    static LESSON_OTHER_ANSWERS = '@#wronganswer#@';
+    static readonly LESSON_OTHER_ANSWERS = '@#wronganswer#@';
 
     // Variables for database.
-    static PASSWORD_TABLE = 'addon_mod_lesson_password';
+    static readonly PASSWORD_TABLE = 'addon_mod_lesson_password';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModLessonProvider',
         version: 1,

@@ -54,17 +54,17 @@ export type CoreFileProgressFunction = (event: CoreFileProgressEvent) => void;
 @Injectable({ providedIn: 'root' })
 export class CoreFileProvider {
     // Formats to read a file.
-    static FORMATTEXT = 0;
-    static FORMATDATAURL = 1;
-    static FORMATBINARYSTRING = 2;
-    static FORMATARRAYBUFFER = 3;
-    static FORMATJSON = 4;
+    static readonly FORMATTEXT = 0;
+    static readonly FORMATDATAURL = 1;
+    static readonly FORMATBINARYSTRING = 2;
+    static readonly FORMATARRAYBUFFER = 3;
+    static readonly FORMATJSON = 4;
 
     // Folders.
-    static SITESFOLDER = 'sites';
-    static TMPFOLDER = 'tmp';
+    static readonly SITESFOLDER = 'sites';
+    static readonly TMPFOLDER = 'tmp';
 
-    static CHUNK_SIZE = 1048576; // 1 MB. Same chunk size as Ionic Native.
+    static readonly CHUNK_SIZE = 1048576; // 1 MB. Same chunk size as Ionic Native.
 
     protected logger: CoreLogger;
     protected initialized = false;

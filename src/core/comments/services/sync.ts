@@ -32,7 +32,7 @@ import { CoreSyncProvider } from '@services/sync';
 @Injectable({ providedIn: 'root' })
 export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'core_comments_autom_synced';
+    static readonly AUTO_SYNCED = 'core_comments_autom_synced';
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,

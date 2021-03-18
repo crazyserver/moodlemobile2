@@ -44,7 +44,7 @@ export class AddonModDataOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static DATA_ENTRY_TABLE = 'addon_mod_data_entry_1';
+    static readonly DATA_ENTRY_TABLE = 'addon_mod_data_entry_1';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModDataOfflineProvider',
         version: 1,

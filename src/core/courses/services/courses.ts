@@ -35,21 +35,21 @@ export type CoreCoursesMyCoursesUpdatedEventData = {
  */
 @Injectable({ providedIn: 'root' })
 export class CoreCoursesProvider {
-    static SEARCH_PER_PAGE = 20;
-    static ENROL_INVALID_KEY = 'CoreCoursesEnrolInvalidKey';
-    static EVENT_MY_COURSES_CHANGED = 'courses_my_courses_changed'; // User course list changed while app is running.
-    static EVENT_MY_COURSES_UPDATED = 'courses_my_courses_updated'; // A course was hidden/favourite, or user enroled in a course.
-    static EVENT_MY_COURSES_REFRESHED = 'courses_my_courses_refreshed';
-    static EVENT_DASHBOARD_DOWNLOAD_ENABLED_CHANGED = 'dashboard_download_enabled_changed';
+    static readonly SEARCH_PER_PAGE = 20;
+    static readonly ENROL_INVALID_KEY = 'CoreCoursesEnrolInvalidKey';
+    static readonly EVENT_MY_COURSES_CHANGED = 'courses_my_courses_changed'; // User course list changed while app is running.
+    static readonly EVENT_MY_COURSES_UPDATED = 'courses_my_courses_updated'; // A course was hidden/favourite, or user enroled in a course.
+    static readonly EVENT_MY_COURSES_REFRESHED = 'courses_my_courses_refreshed';
+    static readonly EVENT_DASHBOARD_DOWNLOAD_ENABLED_CHANGED = 'dashboard_download_enabled_changed';
 
     // Actions for event EVENT_MY_COURSES_UPDATED.
-    static ACTION_ENROL = 'enrol'; // User enrolled in a course.
-    static ACTION_STATE_CHANGED = 'state_changed'; // Course state changed (hidden, favourite).
-    static ACTION_VIEW = 'view'; // Course viewed.
+    static readonly ACTION_ENROL = 'enrol'; // User enrolled in a course.
+    static readonly ACTION_STATE_CHANGED = 'state_changed'; // Course state changed (hidden, favourite).
+    static readonly ACTION_VIEW = 'view'; // Course viewed.
 
     // Possible states changed.
-    static STATE_HIDDEN = 'hidden';
-    static STATE_FAVOURITE = 'favourite';
+    static readonly STATE_HIDDEN = 'hidden';
+    static readonly STATE_FAVOURITE = 'favourite';
 
     protected ROOT_CACHE_KEY = 'mmCourses:';
     protected logger: CoreLogger;

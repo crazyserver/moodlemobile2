@@ -32,8 +32,8 @@ export class AddonModScormOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static ATTEMPTS_TABLE = 'addon_mod_scorm_offline_attempts';
-    static TRACKS_TABLE = 'addon_mod_scorm_offline_scos_tracks';
+    static readonly ATTEMPTS_TABLE = 'addon_mod_scorm_offline_attempts';
+    static readonly TRACKS_TABLE = 'addon_mod_scorm_offline_scos_tracks';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModScormOfflineProvider',
         version: 1,

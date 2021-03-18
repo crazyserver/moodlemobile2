@@ -27,23 +27,23 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModWorkshopProvider {
-    static COMPONENT = 'mmaModWorkshop';
-    static PER_PAGE = 10;
-    static PHASE_SETUP = 10;
-    static PHASE_SUBMISSION = 20;
-    static PHASE_ASSESSMENT = 30;
-    static PHASE_EVALUATION = 40;
-    static PHASE_CLOSED = 50;
-    static EXAMPLES_VOLUNTARY = 0;
-    static EXAMPLES_BEFORE_SUBMISSION = 1;
-    static EXAMPLES_BEFORE_ASSESSMENT = 2;
-    static SUBMISSION_TYPE_DISABLED = 0;
-    static SUBMISSION_TYPE_AVAILABLE = 1;
-    static SUBMISSION_TYPE_REQUIRED = 2;
+    static readonly COMPONENT = 'mmaModWorkshop';
+    static readonly PER_PAGE = 10;
+    static readonly PHASE_SETUP = 10;
+    static readonly PHASE_SUBMISSION = 20;
+    static readonly PHASE_ASSESSMENT = 30;
+    static readonly PHASE_EVALUATION = 40;
+    static readonly PHASE_CLOSED = 50;
+    static readonly EXAMPLES_VOLUNTARY = 0;
+    static readonly EXAMPLES_BEFORE_SUBMISSION = 1;
+    static readonly EXAMPLES_BEFORE_ASSESSMENT = 2;
+    static readonly SUBMISSION_TYPE_DISABLED = 0;
+    static readonly SUBMISSION_TYPE_AVAILABLE = 1;
+    static readonly SUBMISSION_TYPE_REQUIRED = 2;
 
-    static SUBMISSION_CHANGED = 'addon_mod_workshop_submission_changed';
-    static ASSESSMENT_SAVED = 'addon_mod_workshop_assessment_saved';
-    static ASSESSMENT_INVALIDATED = 'addon_mod_workshop_assessment_invalidated';
+    static readonly SUBMISSION_CHANGED = 'addon_mod_workshop_submission_changed';
+    static readonly ASSESSMENT_SAVED = 'addon_mod_workshop_assessment_saved';
+    static readonly ASSESSMENT_INVALIDATED = 'addon_mod_workshop_assessment_invalidated';
 
     protected ROOT_CACHE_KEY = 'mmaModWorkshop:';
 

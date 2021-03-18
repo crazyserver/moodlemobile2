@@ -25,8 +25,8 @@ export class AddonNotesOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static NOTES_TABLE = 'addon_notes_offline_notes';
-    static NOTES_DELETED_TABLE = 'addon_notes_deleted_offline_notes';
+    static readonly NOTES_TABLE = 'addon_notes_offline_notes';
+    static readonly NOTES_DELETED_TABLE = 'addon_notes_deleted_offline_notes';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonNotesOfflineProvider',
         version: 2,

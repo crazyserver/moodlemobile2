@@ -25,8 +25,8 @@ import { AddonModForumProvider } from './forum';
 export class AddonModForumOfflineProvider {
 
     // Variables for database.
-    static DISCUSSIONS_TABLE = 'addon_mod_forum_discussions';
-    static REPLIES_TABLE = 'addon_mod_forum_replies';
+    static readonly DISCUSSIONS_TABLE = 'addon_mod_forum_discussions';
+    static readonly REPLIES_TABLE = 'addon_mod_forum_replies';
 
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModForumOfflineProvider',

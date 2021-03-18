@@ -85,12 +85,12 @@ export class CorePushNotificationsProvider {
     protected pushID: string;
     protected appDB: SQLiteDB;
     protected dbReady: Promise<any>; // Promise resolved when the app DB is initialized.
-    static COMPONENT = 'CorePushNotificationsProvider';
+    static readonly COMPONENT = 'CorePushNotificationsProvider';
 
     // Variables for database. The name still contains the name "addon" for backwards compatibility.
-    static BADGE_TABLE = 'addon_pushnotifications_badge';
-    static PENDING_UNREGISTER_TABLE = 'addon_pushnotifications_pending_unregister';
-    static REGISTERED_DEVICES_TABLE = 'addon_pushnotifications_registered_devices';
+    static readonly BADGE_TABLE = 'addon_pushnotifications_badge';
+    static readonly PENDING_UNREGISTER_TABLE = 'addon_pushnotifications_pending_unregister';
+    static readonly REGISTERED_DEVICES_TABLE = 'addon_pushnotifications_registered_devices';
     protected appTablesSchema: CoreAppSchema = {
         name: 'CorePushNotificationsProvider',
         version: 1,

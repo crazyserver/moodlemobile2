@@ -34,9 +34,9 @@ import { AddonCalendarHelperProvider } from './helper';
 @Injectable({ providedIn: 'root' })
 export class AddonCalendarSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_calendar_autom_synced';
-    static MANUAL_SYNCED = 'addon_calendar_manual_synced';
-    static SYNC_ID = 'calendar';
+    static readonly AUTO_SYNCED = 'addon_calendar_autom_synced';
+    static readonly MANUAL_SYNCED = 'addon_calendar_manual_synced';
+    static readonly SYNC_ID = 'calendar';
 
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,

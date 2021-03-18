@@ -80,17 +80,17 @@ export interface CoreRatingItemRating {
 @Injectable({ providedIn: 'root' })
 export class CoreRatingProvider {
 
-    static AGGREGATE_NONE = 0; // No ratings.
-    static AGGREGATE_AVERAGE = 1;
-    static AGGREGATE_COUNT = 2;
-    static AGGREGATE_MAXIMUM = 3;
-    static AGGREGATE_MINIMUM = 4;
-    static AGGREGATE_SUM = 5;
+    static readonly AGGREGATE_NONE = 0; // No ratings.
+    static readonly AGGREGATE_AVERAGE = 1;
+    static readonly AGGREGATE_COUNT = 2;
+    static readonly AGGREGATE_MAXIMUM = 3;
+    static readonly AGGREGATE_MINIMUM = 4;
+    static readonly AGGREGATE_SUM = 5;
 
-    static UNSET_RATING = -999;
+    static readonly UNSET_RATING = -999;
 
-    static AGGREGATE_CHANGED_EVENT = 'core_rating_aggregate_changed';
-    static RATING_SAVED_EVENT = 'core_rating_rating_saved';
+    static readonly AGGREGATE_CHANGED_EVENT = 'core_rating_aggregate_changed';
+    static readonly RATING_SAVED_EVENT = 'core_rating_rating_saved';
 
     protected ROOT_CACHE_KEY = 'CoreRating:';
 

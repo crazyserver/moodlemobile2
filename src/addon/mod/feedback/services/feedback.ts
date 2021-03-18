@@ -28,13 +28,13 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModFeedbackProvider {
-    static COMPONENT = 'mmaModFeedback';
-    static FORM_SUBMITTED = 'addon_mod_feedback_form_submitted';
-    static LINE_SEP = '|';
-    static MULTICHOICE_TYPE_SEP = '>>>>>';
-    static MULTICHOICE_ADJUST_SEP = '<<<<<';
-    static MULTICHOICE_HIDENOSELECT = 'h';
-    static MULTICHOICERATED_VALUE_SEP = '####';
+    static readonly COMPONENT = 'mmaModFeedback';
+    static readonly FORM_SUBMITTED = 'addon_mod_feedback_form_submitted';
+    static readonly LINE_SEP = '|';
+    static readonly MULTICHOICE_TYPE_SEP = '>>>>>';
+    static readonly MULTICHOICE_ADJUST_SEP = '<<<<<';
+    static readonly MULTICHOICE_HIDENOSELECT = 'h';
+    static readonly MULTICHOICERATED_VALUE_SEP = '####';
 
     protected ROOT_CACHE_KEY = '';
     protected logger: CoreLogger;

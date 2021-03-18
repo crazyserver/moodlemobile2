@@ -28,7 +28,7 @@ import { Md5 } from 'ts-md5/dist/md5';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonRemoteThemesProvider {
-    static COMPONENT = 'mmaRemoteStyles';
+    static readonly COMPONENT = 'mmaRemoteStyles';
     protected SEPARATOR_35 = /\/\*\*? *3\.5(\.0)? *styles? *\*\//i; // A comment like "/* 3.5 styles */".
     protected TMP_SITE_ID = 'tmpsite';
 

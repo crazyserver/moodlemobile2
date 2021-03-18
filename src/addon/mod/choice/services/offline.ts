@@ -22,7 +22,7 @@ import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 export class AddonModChoiceOfflineProvider {
 
     // Variables for database.
-    static CHOICE_TABLE = 'addon_mod_choice_responses';
+    static readonly CHOICE_TABLE = 'addon_mod_choice_responses';
 
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModChoiceOfflineProvider',

@@ -36,7 +36,7 @@ import { AddonModChoicePrefetchHandler } from './prefetch-handler';
 @Injectable({ providedIn: 'root' })
 export class AddonModChoiceSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_choice_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_choice_autom_synced';
     protected componentTranslate: string;
 
     constructor(protected sitesProvider: CoreSitesProvider,

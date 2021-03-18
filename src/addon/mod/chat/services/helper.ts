@@ -24,7 +24,7 @@ import { AddonModChatMessageWithUserData, AddonModChatSessionMessageWithUserData
 @Injectable({ providedIn: 'root' })
 export class AddonModChatHelperProvider {
 
-    static patternto = new RegExp(/^To\s([^:]+):(.*)/);
+    static readonly patternto = new RegExp(/^To\s([^:]+):(.*)/);
 
     constructor(protected translate: TranslateService,
         protected textUtils: CoreTextUtilsProvider) {

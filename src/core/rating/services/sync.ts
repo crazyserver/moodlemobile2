@@ -32,7 +32,7 @@ import { CoreEvents } from '@singletons/events';
 @Injectable({ providedIn: 'root' })
 export class CoreRatingSyncProvider extends CoreSyncBaseProvider {
 
-    static SYNCED_EVENT = 'core_rating_synced';
+    static readonly SYNCED_EVENT = 'core_rating_synced';
 
     constructor(translate: TranslateService,
             appProvider: CoreAppProvider,

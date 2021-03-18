@@ -242,9 +242,9 @@ export type CoreSitesCommonWSOptions = {
 @Injectable({ providedIn: 'root' })
 export class CoreSitesProvider {
     // Variables for the database.
-    static SITES_TABLE = 'sites_2';
-    static CURRENT_SITE_TABLE = 'current_site';
-    static SCHEMA_VERSIONS_TABLE = 'schema_versions';
+    static readonly SITES_TABLE = 'sites_2';
+    static readonly CURRENT_SITE_TABLE = 'current_site';
+    static readonly SCHEMA_VERSIONS_TABLE = 'schema_versions';
     protected appTablesSchema: CoreAppSchema = {
         name: 'CoreSitesProvider',
         version: 2,

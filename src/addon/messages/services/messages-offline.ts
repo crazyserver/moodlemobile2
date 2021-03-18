@@ -27,8 +27,8 @@ export class AddonMessagesOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static MESSAGES_TABLE = 'addon_messages_offline_messages'; // When group messaging isn't available or a new conversation starts.
-    static CONVERSATION_MESSAGES_TABLE = 'addon_messages_offline_conversation_messages'; // Conversation messages.
+    static readonly MESSAGES_TABLE = 'addon_messages_offline_messages'; // When group messaging isn't available or a new conversation starts.
+    static readonly CONVERSATION_MESSAGES_TABLE = 'addon_messages_offline_conversation_messages'; // Conversation messages.
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonMessagesOfflineProvider',
         version: 1,

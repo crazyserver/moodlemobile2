@@ -60,37 +60,37 @@ export interface AddonModScormAttemptCountResult {
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModScormProvider {
-    static COMPONENT = 'mmaModScorm';
+    static readonly COMPONENT = 'mmaModScorm';
 
     // Public constants.
-    static GRADESCOES     = 0;
-    static GRADEHIGHEST   = 1;
-    static GRADEAVERAGE   = 2;
-    static GRADESUM       = 3;
+    static readonly GRADESCOES     = 0;
+    static readonly GRADEHIGHEST   = 1;
+    static readonly GRADEAVERAGE   = 2;
+    static readonly GRADESUM       = 3;
 
-    static HIGHESTATTEMPT = 0;
-    static AVERAGEATTEMPT = 1;
-    static FIRSTATTEMPT   = 2;
-    static LASTATTEMPT    = 3;
+    static readonly HIGHESTATTEMPT = 0;
+    static readonly AVERAGEATTEMPT = 1;
+    static readonly FIRSTATTEMPT   = 2;
+    static readonly LASTATTEMPT    = 3;
 
-    static MODEBROWSE = 'browse';
-    static MODENORMAL = 'normal';
-    static MODEREVIEW = 'review';
+    static readonly MODEBROWSE = 'browse';
+    static readonly MODENORMAL = 'normal';
+    static readonly MODEREVIEW = 'review';
 
-    static SCORM_FORCEATTEMPT_NO         = 0;
-    static SCORM_FORCEATTEMPT_ONCOMPLETE = 1;
-    static SCORM_FORCEATTEMPT_ALWAYS     = 2;
+    static readonly SCORM_FORCEATTEMPT_NO         = 0;
+    static readonly SCORM_FORCEATTEMPT_ONCOMPLETE = 1;
+    static readonly SCORM_FORCEATTEMPT_ALWAYS     = 2;
 
-    static SKIPVIEW_NEVER = 0;
-    static SKIPVIEW_FIRST = 1;
-    static SKIPVIEW_ALWAYS = 2;
+    static readonly SKIPVIEW_NEVER = 0;
+    static readonly SKIPVIEW_FIRST = 1;
+    static readonly SKIPVIEW_ALWAYS = 2;
 
     // Events.
-    static LAUNCH_NEXT_SCO_EVENT = 'addon_mod_scorm_launch_next_sco';
-    static LAUNCH_PREV_SCO_EVENT = 'addon_mod_scorm_launch_prev_sco';
-    static UPDATE_TOC_EVENT = 'addon_mod_scorm_update_toc';
-    static GO_OFFLINE_EVENT = 'addon_mod_scorm_go_offline';
-    static DATA_SENT_EVENT = 'addon_mod_scorm_data_sent';
+    static readonly LAUNCH_NEXT_SCO_EVENT = 'addon_mod_scorm_launch_next_sco';
+    static readonly LAUNCH_PREV_SCO_EVENT = 'addon_mod_scorm_launch_prev_sco';
+    static readonly UPDATE_TOC_EVENT = 'addon_mod_scorm_update_toc';
+    static readonly GO_OFFLINE_EVENT = 'addon_mod_scorm_go_offline';
+    static readonly DATA_SENT_EVENT = 'addon_mod_scorm_data_sent';
 
     // Protected constants.
     protected VALID_STATUSES = ['notattempted', 'passed', 'completed', 'failed', 'incomplete', 'browsed', 'suspend'];
@@ -108,7 +108,7 @@ export class AddonModScormProvider {
         'b': 'browsed',
         'n': 'notattempted'
     };
-    protected static STATUS_TO_ICON = {
+    protected static readonly STATUS_TO_ICON = {
         assetc: 'fa-file-archive-o',
         asset: 'fa-file-archive-o',
         browsed: 'fa-book',

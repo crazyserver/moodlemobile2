@@ -29,7 +29,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 export class CoreCourseLogHelperProvider {
 
     // Variables for database.
-    static ACTIVITY_LOG_TABLE = 'course_activity_log';
+    static readonly ACTIVITY_LOG_TABLE = 'course_activity_log';
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreCourseLogHelperProvider',
         version: 1,

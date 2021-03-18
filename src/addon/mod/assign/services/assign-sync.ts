@@ -59,8 +59,8 @@ export interface AddonModAssignSyncResult {
 @Injectable({ providedIn: 'root' })
 export class AddonModAssignSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_assign_autom_synced';
-    static MANUAL_SYNCED = 'addon_mod_assign_manual_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_assign_autom_synced';
+    static readonly MANUAL_SYNCED = 'addon_mod_assign_manual_synced';
 
     protected componentTranslate: string;
 

@@ -27,7 +27,7 @@ export class AddonModFeedbackOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static FEEDBACK_TABLE = 'addon_mod_feedback_answers';
+    static readonly FEEDBACK_TABLE = 'addon_mod_feedback_answers';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModFeedbackOfflineProvider',
         version: 1,

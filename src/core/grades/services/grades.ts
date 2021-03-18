@@ -24,10 +24,10 @@ import { CorePushNotificationsProvider } from '@core/pushnotifications/providers
 @Injectable({ providedIn: 'root' })
 export class CoreGradesProvider {
 
-    static TYPE_NONE = 0; // Moodle's GRADE_TYPE_NONE.
-    static TYPE_VALUE = 1; // Moodle's GRADE_TYPE_VALUE.
-    static TYPE_SCALE = 2; // Moodle's GRADE_TYPE_SCALE.
-    static TYPE_TEXT = 3; // Moodle's GRADE_TYPE_TEXT.
+    static readonly TYPE_NONE = 0; // Moodle's GRADE_TYPE_NONE.
+    static readonly TYPE_VALUE = 1; // Moodle's GRADE_TYPE_VALUE.
+    static readonly TYPE_SCALE = 2; // Moodle's GRADE_TYPE_SCALE.
+    static readonly TYPE_TEXT = 3; // Moodle's GRADE_TYPE_TEXT.
 
     protected ROOT_CACHE_KEY = 'mmGrades:';
 

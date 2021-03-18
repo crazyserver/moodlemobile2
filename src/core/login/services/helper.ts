@@ -75,10 +75,10 @@ export interface CoreLoginSSOData {
  */
 @Injectable({ providedIn: 'root' })
 export class CoreLoginHelperProvider {
-    static OPEN_COURSE = 'open_course';
-    static ONBOARDING_DONE = 'onboarding_done';
-    static FAQ_URL_IMAGE_HTML = '<img src="assets/img/login/faq_url.png" role="presentation">';
-    static FAQ_QRCODE_IMAGE_HTML = '<img src="assets/img/login/faq_qrcode.png" role="presentation">';
+    static readonly OPEN_COURSE = 'open_course';
+    static readonly ONBOARDING_DONE = 'onboarding_done';
+    static readonly FAQ_URL_IMAGE_HTML = '<img src="assets/img/login/faq_url.png" role="presentation">';
+    static readonly FAQ_QRCODE_IMAGE_HTML = '<img src="assets/img/login/faq_qrcode.png" role="presentation">';
 
     protected logger: CoreLogger;
     protected isSSOConfirmShown = false;

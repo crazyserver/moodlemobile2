@@ -52,7 +52,7 @@ export interface CoreRatingItemSet {
 export class CoreRatingOfflineProvider {
 
     // Variables for database.
-    static RATINGS_TABLE = 'rating_ratings';
+    static readonly RATINGS_TABLE = 'rating_ratings';
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreRatingOfflineProvider',
         version: 1,

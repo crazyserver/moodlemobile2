@@ -31,7 +31,7 @@ import { CoreSyncProvider } from '@services/sync';
 @Injectable({ providedIn: 'root' })
 export class CoreUserSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'core_user_autom_synced';
+    static readonly AUTO_SYNCED = 'core_user_autom_synced';
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             translate: TranslateService, syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider,

@@ -28,15 +28,15 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModChoiceProvider {
-    static COMPONENT = 'mmaModChoice';
+    static readonly COMPONENT = 'mmaModChoice';
 
-    static RESULTS_NOT = 0;
-    static RESULTS_AFTER_ANSWER = 1;
-    static RESULTS_AFTER_CLOSE = 2;
-    static RESULTS_ALWAYS = 3;
+    static readonly RESULTS_NOT = 0;
+    static readonly RESULTS_AFTER_ANSWER = 1;
+    static readonly RESULTS_AFTER_CLOSE = 2;
+    static readonly RESULTS_ALWAYS = 3;
 
-    static PUBLISH_ANONYMOUS = false;
-    static PUBLISH_NAMES = true;
+    static readonly PUBLISH_ANONYMOUS = false;
+    static readonly PUBLISH_NAMES = true;
 
     protected ROOT_CACHE_KEY = 'mmaModChoice:';
 

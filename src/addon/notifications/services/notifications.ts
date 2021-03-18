@@ -30,10 +30,10 @@ import { CoreWSExternalWarning } from '@services/ws';
 @Injectable({ providedIn: 'root' })
 export class AddonNotificationsProvider {
 
-    static READ_CHANGED_EVENT = 'addon_notifications_read_changed_event';
-    static READ_CRON_EVENT = 'addon_notifications_read_cron_event';
-    static PUSH_SIMULATION_COMPONENT = 'AddonNotificationsPushSimulation';
-    static LIST_LIMIT = 20;
+    static readonly READ_CHANGED_EVENT = 'addon_notifications_read_changed_event';
+    static readonly READ_CRON_EVENT = 'addon_notifications_read_cron_event';
+    static readonly PUSH_SIMULATION_COMPONENT = 'AddonNotificationsPushSimulation';
+    static readonly LIST_LIMIT = 20;
 
     protected ROOT_CACHE_KEY = 'mmaNotifications:';
     protected logger: CoreLogger;

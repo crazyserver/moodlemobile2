@@ -50,9 +50,9 @@ export interface CoreGroupInfo {
 @Injectable({ providedIn: 'root' })
 export class CoreGroupsProvider {
     // Group mode constants.
-    static NOGROUPS = 0;
-    static SEPARATEGROUPS = 1;
-    static VISIBLEGROUPS = 2;
+    static readonly NOGROUPS = 0;
+    static readonly SEPARATEGROUPS = 1;
+    static readonly VISIBLEGROUPS = 2;
     protected ROOT_CACHE_KEY = 'mmGroups:';
 
     constructor(private sitesProvider: CoreSitesProvider, private translate: TranslateService,

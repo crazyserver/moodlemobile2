@@ -36,7 +36,7 @@ import { AddonModFeedbackPrefetchHandler } from './prefetch-handler';
 @Injectable({ providedIn: 'root' })
 export class AddonModFeedbackSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_feedback_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_feedback_autom_synced';
     protected componentTranslate: string;
 
     constructor(protected sitesProvider: CoreSitesProvider, protected

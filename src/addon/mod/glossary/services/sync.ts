@@ -37,7 +37,7 @@ import { CoreRatingSyncProvider } from '@core/rating/providers/sync';
 @Injectable({ providedIn: 'root' })
 export class AddonModGlossarySyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_glossary_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_glossary_autom_synced';
 
     protected componentTranslate: string;
 

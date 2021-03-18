@@ -31,7 +31,7 @@ import { AddonModAssignSubmissionFileComponent } from '../component/file';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModAssignSubmissionFileHandler implements AddonModAssignSubmissionHandler {
-    static FOLDER_NAME = 'submission_file';
+    static readonly FOLDER_NAME = 'submission_file';
 
     name = 'AddonModAssignSubmissionFileHandler';
     type = 'file';

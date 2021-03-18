@@ -35,27 +35,27 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModQuizProvider {
-    static COMPONENT = 'mmaModQuiz';
-    static ATTEMPT_FINISHED_EVENT = 'addon_mod_quiz_attempt_finished';
+    static readonly COMPONENT = 'mmaModQuiz';
+    static readonly ATTEMPT_FINISHED_EVENT = 'addon_mod_quiz_attempt_finished';
 
     // Grade methods.
-    static GRADEHIGHEST = 1;
-    static GRADEAVERAGE = 2;
-    static ATTEMPTFIRST = 3;
-    static ATTEMPTLAST  = 4;
+    static readonly GRADEHIGHEST = 1;
+    static readonly GRADEAVERAGE = 2;
+    static readonly ATTEMPTFIRST = 3;
+    static readonly ATTEMPTLAST  = 4;
 
     // Question options.
-    static QUESTION_OPTIONS_MAX_ONLY = 1;
-    static QUESTION_OPTIONS_MARK_AND_MAX = 2;
+    static readonly QUESTION_OPTIONS_MAX_ONLY = 1;
+    static readonly QUESTION_OPTIONS_MARK_AND_MAX = 2;
 
     // Attempt state.
-    static ATTEMPT_IN_PROGRESS = 'inprogress';
-    static ATTEMPT_OVERDUE     = 'overdue';
-    static ATTEMPT_FINISHED    = 'finished';
-    static ATTEMPT_ABANDONED   = 'abandoned';
+    static readonly ATTEMPT_IN_PROGRESS = 'inprogress';
+    static readonly ATTEMPT_OVERDUE     = 'overdue';
+    static readonly ATTEMPT_FINISHED    = 'finished';
+    static readonly ATTEMPT_ABANDONED   = 'abandoned';
 
     // Show the countdown timer if there is less than this amount of time left before the the quiz close date.
-    static QUIZ_SHOW_TIME_BEFORE_DEADLINE = 3600;
+    static readonly QUIZ_SHOW_TIME_BEFORE_DEADLINE = 3600;
 
     protected ROOT_CACHE_KEY = 'mmaModQuiz:';
     protected logger: CoreLogger;

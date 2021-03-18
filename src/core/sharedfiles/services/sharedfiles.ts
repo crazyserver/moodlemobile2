@@ -28,7 +28,7 @@ import { SQLiteDB } from '@classes/sqlitedb';
  */
 @Injectable({ providedIn: 'root' })
 export class CoreSharedFilesProvider {
-    static SHARED_FILES_FOLDER = 'sharedfiles';
+    static readonly SHARED_FILES_FOLDER = 'sharedfiles';
 
     // Variables for the database.
     protected SHARED_FILES_TABLE = 'shared_files';

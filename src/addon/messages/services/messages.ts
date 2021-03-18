@@ -32,29 +32,29 @@ import { CoreWSExternalWarning } from '@services/ws';
 export class AddonMessagesProvider {
     protected ROOT_CACHE_KEY = 'mmaMessages:';
     protected LIMIT_MESSAGES = AddonMessagesProvider.LIMIT_MESSAGES;
-    static NEW_MESSAGE_EVENT = 'addon_messages_new_message_event';
-    static READ_CHANGED_EVENT = 'addon_messages_read_changed_event';
-    static OPEN_CONVERSATION_EVENT = 'addon_messages_open_conversation_event'; // Notify that a conversation should be opened.
-    static SPLIT_VIEW_LOAD_EVENT = 'addon_messages_split_view_load_event';
-    static UPDATE_CONVERSATION_LIST_EVENT = 'addon_messages_update_conversation_list_event';
-    static MEMBER_INFO_CHANGED_EVENT = 'addon_messages_member_changed_event';
-    static UNREAD_CONVERSATION_COUNTS_EVENT = 'addon_messages_unread_conversation_counts_event';
-    static CONTACT_REQUESTS_COUNT_EVENT = 'addon_messages_contact_requests_count_event';
-    static POLL_INTERVAL = 10000;
-    static PUSH_SIMULATION_COMPONENT = 'AddonMessagesPushSimulation';
+    static readonly NEW_MESSAGE_EVENT = 'addon_messages_new_message_event';
+    static readonly READ_CHANGED_EVENT = 'addon_messages_read_changed_event';
+    static readonly OPEN_CONVERSATION_EVENT = 'addon_messages_open_conversation_event'; // Notify that a conversation should be opened.
+    static readonly SPLIT_VIEW_LOAD_EVENT = 'addon_messages_split_view_load_event';
+    static readonly UPDATE_CONVERSATION_LIST_EVENT = 'addon_messages_update_conversation_list_event';
+    static readonly MEMBER_INFO_CHANGED_EVENT = 'addon_messages_member_changed_event';
+    static readonly UNREAD_CONVERSATION_COUNTS_EVENT = 'addon_messages_unread_conversation_counts_event';
+    static readonly CONTACT_REQUESTS_COUNT_EVENT = 'addon_messages_contact_requests_count_event';
+    static readonly POLL_INTERVAL = 10000;
+    static readonly PUSH_SIMULATION_COMPONENT = 'AddonMessagesPushSimulation';
 
-    static MESSAGE_PRIVACY_COURSEMEMBER = 0; // Privacy setting for being messaged by anyone within courses user is member of.
-    static MESSAGE_PRIVACY_ONLYCONTACTS = 1; // Privacy setting for being messaged only by contacts.
-    static MESSAGE_PRIVACY_SITE = 2; // Privacy setting for being messaged by anyone on the site.
-    static MESSAGE_CONVERSATION_TYPE_INDIVIDUAL = 1; // An individual conversation.
-    static MESSAGE_CONVERSATION_TYPE_GROUP = 2; // A group conversation.
-    static MESSAGE_CONVERSATION_TYPE_SELF = 3; // A self conversation.
-    static LIMIT_CONTACTS = 50;
-    static LIMIT_MESSAGES = 50;
-    static LIMIT_INITIAL_USER_SEARCH = 3;
-    static LIMIT_SEARCH = 50;
+    static readonly MESSAGE_PRIVACY_COURSEMEMBER = 0; // Privacy setting for being messaged by anyone within courses user is member of.
+    static readonly MESSAGE_PRIVACY_ONLYCONTACTS = 1; // Privacy setting for being messaged only by contacts.
+    static readonly MESSAGE_PRIVACY_SITE = 2; // Privacy setting for being messaged by anyone on the site.
+    static readonly MESSAGE_CONVERSATION_TYPE_INDIVIDUAL = 1; // An individual conversation.
+    static readonly MESSAGE_CONVERSATION_TYPE_GROUP = 2; // A group conversation.
+    static readonly MESSAGE_CONVERSATION_TYPE_SELF = 3; // A self conversation.
+    static readonly LIMIT_CONTACTS = 50;
+    static readonly LIMIT_MESSAGES = 50;
+    static readonly LIMIT_INITIAL_USER_SEARCH = 3;
+    static readonly LIMIT_SEARCH = 50;
 
-    static NOTIFICATION_PREFERENCES_KEY = 'message_provider_moodle_instantmessage';
+    static readonly NOTIFICATION_PREFERENCES_KEY = 'message_provider_moodle_instantmessage';
 
     protected logger: CoreLogger;
 

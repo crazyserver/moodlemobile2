@@ -20,10 +20,10 @@ import { CoreAppProvider } from '@services/app';
  * Mock the Globalization Error.
  */
 export class GlobalizationErrorMock implements GlobalizationError {
-    static UNKNOWN_ERROR = 0;
-    static FORMATTING_ERROR = 1;
-    static PARSING_ERROR = 2;
-    static PATTERN_ERROR = 3;
+    static readonly UNKNOWN_ERROR = 0;
+    static readonly FORMATTING_ERROR = 1;
+    static readonly PARSING_ERROR = 2;
+    static readonly PATTERN_ERROR = 3;
 
     constructor(public code: number, public message: string) { }
 }

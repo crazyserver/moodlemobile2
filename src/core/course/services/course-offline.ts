@@ -22,7 +22,7 @@ import { CoreSitesProvider, CoreSiteSchema } from '@services/sites';
 export class CoreCourseOfflineProvider {
 
     // Variables for database.
-    static MANUAL_COMPLETION_TABLE = 'course_manual_completion';
+    static readonly MANUAL_COMPLETION_TABLE = 'course_manual_completion';
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreCourseOfflineProvider',
         version: 1,

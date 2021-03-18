@@ -24,7 +24,7 @@ import { makeSingleton } from '@singletons/core.singletons';
 export class CoreXAPIOfflineProvider {
 
     // Variables for database.
-    static STATEMENTS_TABLE = 'core_xapi_statements';
+    static readonly STATEMENTS_TABLE = 'core_xapi_statements';
 
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreXAPIOfflineProvider',

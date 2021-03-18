@@ -32,7 +32,7 @@ export class AddonModQuizOfflineProvider {
     protected logger: CoreLogger;
 
     // Variables for database.
-    static ATTEMPTS_TABLE = 'addon_mod_quiz_attempts';
+    static readonly ATTEMPTS_TABLE = 'addon_mod_quiz_attempts';
     protected siteSchema: CoreSiteSchema = {
         name: 'AddonModQuizOfflineProvider',
         version: 1,

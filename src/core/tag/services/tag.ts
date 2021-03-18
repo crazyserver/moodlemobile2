@@ -23,7 +23,7 @@ import { CoreSite, CoreSiteWSPreSets } from '@classes/site';
 @Injectable({ providedIn: 'root' })
 export class CoreTagProvider {
 
-    static SEARCH_LIMIT = 150;
+    static readonly SEARCH_LIMIT = 150;
 
     protected ROOT_CACHE_KEY = 'CoreTag:';
 

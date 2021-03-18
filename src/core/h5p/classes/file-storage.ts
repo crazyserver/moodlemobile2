@@ -27,7 +27,7 @@ import { CoreH5PLibrariesCachedAssetsDBData } from './framework';
  */
 export class CoreH5PFileStorage {
 
-    static CACHED_ASSETS_FOLDER_NAME = 'cachedassets';
+    static readonly CACHED_ASSETS_FOLDER_NAME = 'cachedassets';
 
     /**
      * Will concatenate all JavaScrips and Stylesheets into two files in order to improve page performance.

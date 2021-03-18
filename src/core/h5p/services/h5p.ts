@@ -36,11 +36,11 @@ import { makeSingleton } from '@singletons/core.singletons';
 export class CoreH5PProvider {
 
     // DB table names.
-    static CONTENT_TABLE = 'h5p_content'; // H5P content.
-    static LIBRARIES_TABLE = 'h5p_libraries'; // Installed libraries.
-    static LIBRARY_DEPENDENCIES_TABLE = 'h5p_library_dependencies'; // Library dependencies.
-    static CONTENTS_LIBRARIES_TABLE = 'h5p_contents_libraries'; // Which library is used in which content.
-    static LIBRARIES_CACHEDASSETS_TABLE = 'h5p_libraries_cachedassets'; // H5P cached library assets.
+    static readonly CONTENT_TABLE = 'h5p_content'; // H5P content.
+    static readonly LIBRARIES_TABLE = 'h5p_libraries'; // Installed libraries.
+    static readonly LIBRARY_DEPENDENCIES_TABLE = 'h5p_library_dependencies'; // Library dependencies.
+    static readonly CONTENTS_LIBRARIES_TABLE = 'h5p_contents_libraries'; // Which library is used in which content.
+    static readonly LIBRARIES_CACHEDASSETS_TABLE = 'h5p_libraries_cachedassets'; // H5P cached library assets.
 
     h5pCore: CoreH5PCore;
     h5pFramework: CoreH5PFramework;

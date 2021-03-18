@@ -133,20 +133,20 @@ export class CoreUserDelegate extends CoreDelegate {
     /**
      * User profile handler type for communication.
      */
-    static TYPE_COMMUNICATION = 'communication';
+    static readonly TYPE_COMMUNICATION = 'communication';
     /**
      * User profile handler type for new page.
      */
-    static TYPE_NEW_PAGE = 'newpage';
+    static readonly TYPE_NEW_PAGE = 'newpage';
     /**
      * User profile handler type for actions.
      */
-    static TYPE_ACTION = 'action';
+    static readonly TYPE_ACTION = 'action';
 
     /**
      * Update handler information event.
      */
-    static UPDATE_HANDLER_EVENT = 'CoreUserDelegate_update_handler_event';
+    static readonly UPDATE_HANDLER_EVENT = 'CoreUserDelegate_update_handler_event';
 
     protected featurePrefix = 'CoreUserDelegate_';
 

@@ -50,7 +50,7 @@ export const enum AddonModBookNavStyle {
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModBookProvider {
-    static COMPONENT = 'mmaModBook';
+    static readonly COMPONENT = 'mmaModBook';
 
     protected ROOT_CACHE_KEY = 'mmaModBook:';
     protected logger: CoreLogger;

@@ -26,8 +26,8 @@ import { CoreTagItem } from '@core/tag/providers/tag';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonBlogProvider {
-    static ENTRIES_PER_PAGE = 10;
-    static COMPONENT = 'blog';
+    static readonly ENTRIES_PER_PAGE = 10;
+    static readonly COMPONENT = 'blog';
     protected ROOT_CACHE_KEY = 'addonBlog:';
     protected logger: CoreLogger;
 

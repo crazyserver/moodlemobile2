@@ -35,35 +35,35 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModAssignProvider {
-    static COMPONENT = 'mmaModAssign';
-    static SUBMISSION_COMPONENT = 'mmaModAssignSubmission';
-    static UNLIMITED_ATTEMPTS = -1;
+    static readonly COMPONENT = 'mmaModAssign';
+    static readonly SUBMISSION_COMPONENT = 'mmaModAssignSubmission';
+    static readonly UNLIMITED_ATTEMPTS = -1;
 
     // Submission status.
-    static SUBMISSION_STATUS_NEW = 'new';
-    static SUBMISSION_STATUS_REOPENED = 'reopened';
-    static SUBMISSION_STATUS_DRAFT = 'draft';
-    static SUBMISSION_STATUS_SUBMITTED = 'submitted';
+    static readonly SUBMISSION_STATUS_NEW = 'new';
+    static readonly SUBMISSION_STATUS_REOPENED = 'reopened';
+    static readonly SUBMISSION_STATUS_DRAFT = 'draft';
+    static readonly SUBMISSION_STATUS_SUBMITTED = 'submitted';
 
     // "Re-open" methods (to retry the assign).
-    static ATTEMPT_REOPEN_METHOD_NONE = 'none';
-    static ATTEMPT_REOPEN_METHOD_MANUAL = 'manual';
+    static readonly ATTEMPT_REOPEN_METHOD_NONE = 'none';
+    static readonly ATTEMPT_REOPEN_METHOD_MANUAL = 'manual';
 
     // Grading status.
-    static GRADING_STATUS_GRADED = 'graded';
-    static GRADING_STATUS_NOT_GRADED = 'notgraded';
-    static MARKING_WORKFLOW_STATE_RELEASED = 'released';
-    static NEED_GRADING = 'needgrading';
-    static GRADED_FOLLOWUP_SUBMIT = 'gradedfollowupsubmit';
+    static readonly GRADING_STATUS_GRADED = 'graded';
+    static readonly GRADING_STATUS_NOT_GRADED = 'notgraded';
+    static readonly MARKING_WORKFLOW_STATE_RELEASED = 'released';
+    static readonly NEED_GRADING = 'needgrading';
+    static readonly GRADED_FOLLOWUP_SUBMIT = 'gradedfollowupsubmit';
 
     // Group submissions warnings.
-    static WARN_GROUPS_REQUIRED = 'warnrequired';
-    static WARN_GROUPS_OPTIONAL = 'warnoptional';
+    static readonly WARN_GROUPS_REQUIRED = 'warnrequired';
+    static readonly WARN_GROUPS_OPTIONAL = 'warnoptional';
 
     // Events.
-    static SUBMISSION_SAVED_EVENT = 'addon_mod_assign_submission_saved';
-    static SUBMITTED_FOR_GRADING_EVENT = 'addon_mod_assign_submitted_for_grading';
-    static GRADED_EVENT = 'addon_mod_assign_graded';
+    static readonly SUBMISSION_SAVED_EVENT = 'addon_mod_assign_submission_saved';
+    static readonly SUBMITTED_FOR_GRADING_EVENT = 'addon_mod_assign_submitted_for_grading';
+    static readonly GRADED_EVENT = 'addon_mod_assign_graded';
 
     protected ROOT_CACHE_KEY = 'mmaModAssign:';
 

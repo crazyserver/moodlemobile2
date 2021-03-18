@@ -29,7 +29,7 @@ export class AddonMessagesBlockContactUserHandler implements CoreUserProfileHand
     /**
      * Update handler information event.
      */
-    static UPDATED_EVENT = 'AddonMessagesBlockContactUserHandler_updated_event';
+    static readonly UPDATED_EVENT = 'AddonMessagesBlockContactUserHandler_updated_event';
 
     name = 'AddonMessages:blockContact';
     priority = 600;

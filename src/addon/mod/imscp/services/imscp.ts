@@ -28,7 +28,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModImscpProvider {
-    static COMPONENT = 'mmaModImscp';
+    static readonly COMPONENT = 'mmaModImscp';
 
     protected ROOT_CACHE_KEY = 'mmaModImscp:';
 

@@ -51,9 +51,9 @@ import { CoreConstants } from '@core/constants';
 export class CoreTabsComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     // Minimum tab's width to display fully the word "Competencies" which is the longest tab in the app.
-    static MIN_TAB_WIDTH = 107;
+    static readonly MIN_TAB_WIDTH = 107;
     // Max height that allows tab hiding.
-    static MAX_HEIGHT_TO_HIDE_TABS = 768;
+    static readonly MAX_HEIGHT_TO_HIDE_TABS = 768;
 
     @Input() selectedIndex = 0; // Index of the tab to select.
     @Input() hideUntil = true; // Determine when should the contents be shown.

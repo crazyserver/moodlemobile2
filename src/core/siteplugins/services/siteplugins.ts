@@ -55,7 +55,7 @@ export interface CoreSitePluginsHandler {
  */
 @Injectable({ providedIn: 'root' })
 export class CoreSitePluginsProvider {
-    static COMPONENT = 'CoreSitePlugins';
+    static readonly COMPONENT = 'CoreSitePlugins';
 
     protected ROOT_CACHE_KEY = 'CoreSitePlugins:';
 

@@ -32,8 +32,8 @@ export interface CoreSearchHistoryItem {
 @Injectable({ providedIn: 'root' })
 export class CoreSearchHistoryProvider {
 
-    protected static HISTORY_TABLE = 'seach_history';
-    protected static HISTORY_LIMIT = 10;
+    protected static readonly HISTORY_TABLE = 'seach_history';
+    protected static readonly HISTORY_LIMIT = 10;
 
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreSearchHistoryProvider',

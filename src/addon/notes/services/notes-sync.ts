@@ -33,7 +33,7 @@ import { CoreSyncProvider } from '@services/sync';
 @Injectable({ providedIn: 'root' })
 export class AddonNotesSyncProvider extends CoreSyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_notes_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_notes_autom_synced';
 
     constructor(sitesProvider: CoreSitesProvider, appProvider: CoreAppProvider,
             syncProvider: CoreSyncProvider, textUtils: CoreTextUtilsProvider, translate: TranslateService,

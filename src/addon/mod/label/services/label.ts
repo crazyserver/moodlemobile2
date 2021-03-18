@@ -24,7 +24,7 @@ import { CoreWSExternalWarning, CoreWSExternalFile } from '@services/ws';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModLabelProvider {
-    static COMPONENT = 'mmaModLabel';
+    static readonly COMPONENT = 'mmaModLabel';
 
     protected ROOT_CACHE_KEY = 'mmaModLabel:';
 

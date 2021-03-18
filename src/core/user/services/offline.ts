@@ -31,7 +31,7 @@ export interface CoreUserOfflinePreference {
 export class CoreUserOfflineProvider {
 
     // Variables for database.
-    static PREFERENCES_TABLE = 'user_preferences';
+    static readonly PREFERENCES_TABLE = 'user_preferences';
     protected siteSchema: CoreSiteSchema = {
         name: 'CoreUserOfflineProvider',
         version: 1,

@@ -56,7 +56,7 @@ export interface AddonModScormSyncResult {
 @Injectable({ providedIn: 'root' })
 export class AddonModScormSyncProvider extends CoreCourseActivitySyncBaseProvider {
 
-    static AUTO_SYNCED = 'addon_mod_scorm_autom_synced';
+    static readonly AUTO_SYNCED = 'addon_mod_scorm_autom_synced';
 
     protected componentTranslate: string;
 

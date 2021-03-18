@@ -31,25 +31,25 @@ import { CoreCourseCommonModWSOptions } from '@core/course/providers/course';
  */
 @Injectable({ providedIn: 'root' })
 export class AddonModForumProvider {
-    static COMPONENT = 'mmaModForum';
-    static DISCUSSIONS_PER_PAGE = 10; // Max of discussions per page.
-    static NEW_DISCUSSION_EVENT = 'addon_mod_forum_new_discussion';
-    static REPLY_DISCUSSION_EVENT = 'addon_mod_forum_reply_discussion';
-    static VIEW_DISCUSSION_EVENT = 'addon_mod_forum_view_discussion';
-    static CHANGE_DISCUSSION_EVENT = 'addon_mod_forum_change_discussion_status';
-    static MARK_READ_EVENT = 'addon_mod_forum_mark_read';
-    static LEAVING_POSTS_PAGE = 'addon_mod_forum_leaving_posts_page';
+    static readonly COMPONENT = 'mmaModForum';
+    static readonly DISCUSSIONS_PER_PAGE = 10; // Max of discussions per page.
+    static readonly NEW_DISCUSSION_EVENT = 'addon_mod_forum_new_discussion';
+    static readonly REPLY_DISCUSSION_EVENT = 'addon_mod_forum_reply_discussion';
+    static readonly VIEW_DISCUSSION_EVENT = 'addon_mod_forum_view_discussion';
+    static readonly CHANGE_DISCUSSION_EVENT = 'addon_mod_forum_change_discussion_status';
+    static readonly MARK_READ_EVENT = 'addon_mod_forum_mark_read';
+    static readonly LEAVING_POSTS_PAGE = 'addon_mod_forum_leaving_posts_page';
 
-    static PREFERENCE_SORTORDER = 'forum_discussionlistsortorder';
-    static SORTORDER_LASTPOST_DESC = 1;
-    static SORTORDER_LASTPOST_ASC = 2;
-    static SORTORDER_CREATED_DESC = 3;
-    static SORTORDER_CREATED_ASC = 4;
-    static SORTORDER_REPLIES_DESC = 5;
-    static SORTORDER_REPLIES_ASC = 6;
+    static readonly PREFERENCE_SORTORDER = 'forum_discussionlistsortorder';
+    static readonly SORTORDER_LASTPOST_DESC = 1;
+    static readonly SORTORDER_LASTPOST_ASC = 2;
+    static readonly SORTORDER_CREATED_DESC = 3;
+    static readonly SORTORDER_CREATED_ASC = 4;
+    static readonly SORTORDER_REPLIES_DESC = 5;
+    static readonly SORTORDER_REPLIES_ASC = 6;
 
-    static ALL_PARTICIPANTS = -1;
-    static ALL_GROUPS = -2;
+    static readonly ALL_PARTICIPANTS = -1;
+    static readonly ALL_GROUPS = -2;
 
     protected ROOT_CACHE_KEY = 'mmaModForum:';
 
