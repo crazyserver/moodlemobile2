@@ -59,7 +59,7 @@ export class AddonModGlossaryEntryPage {
      */
     ngOnInit(): void {
         this.tagsEnabled = CoreTag.areTagsAvailableInSite();
-        this.commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
+        this.commentsEnabled = !CoreComments.areCommentsDisabledInSite();
 
         this.fetchEntry().then(() => {
             this.glossaryProvider.logEntryView(this.entry.id, this.componentId, this.glossary.name).catch(() => {

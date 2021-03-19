@@ -91,7 +91,7 @@ export class AddonModAssignSubmissionCommentsHandler implements AddonModAssignSu
     prefetch(assign: AddonModAssignAssign, submission: AddonModAssignSubmission,
             plugin: AddonModAssignPlugin, siteId?: string): Promise<any> {
 
-        return this.commentsProvider.getComments('module', assign.cmid, 'assignsubmission_comments', submission.id,
+        return CoreComments.getComments('module', assign.cmid, 'assignsubmission_comments', submission.id,
                 'submission_comments', 0, siteId).catch(() => {
             // Fail silently (Moodle < 3.1.1, 3.2)
         });

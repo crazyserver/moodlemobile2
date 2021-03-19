@@ -292,7 +292,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
         return this.getDatabaseInfoHelper(module, courseId, false, options).then((info) => {
             // Prefetch the database data.
             const database = info.database,
-                commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite(),
+                commentsEnabled = !CoreComments.areCommentsDisabledInSite(),
                 promises = [];
 
             promises.push(AddonModData.getFields(database.id, options));
@@ -310,7 +310,7 @@ export class AddonModDataPrefetchHandler extends CoreCourseActivityPrefetchHandl
                 promises.push(AddonModData.getEntry(database.id, entry.id, options));
 
                 if (commentsEnabled && database.comments) {
-                    promises.push(this.commentsProvider.getComments('module', database.coursemodule, 'mod_data', entry.id,
+                    promises.push(CoreComments.getComments('module', database.coursemodule, 'mod_data', entry.id,
                         'database_entry', 0, siteId));
                 }
             });

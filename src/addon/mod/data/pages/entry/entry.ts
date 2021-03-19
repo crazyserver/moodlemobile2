@@ -94,7 +94,7 @@ export class AddonModDataEntryPage implements OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        this.commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
+        this.commentsEnabled = !CoreComments.areCommentsDisabledInSite();
         this.fetchEntryData().then(() => {
             this.logView();
         });

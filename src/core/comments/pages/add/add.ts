@@ -67,7 +67,7 @@ export class CoreCommentsAddPage {
         const loadingModal = CoreDomUtils.showModalLoading('core.sending', true);
         // Freeze the add comment button.
         this.processing = true;
-        this.commentsProvider.addComment(this.content, this.contextLevel, this.instanceId, this.componentName, this.itemId,
+        CoreComments.addComment(this.content, this.contextLevel, this.instanceId, this.componentName, this.itemId,
                 this.area).then((commentsResponse) => {
 
             CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!commentsResponse, CoreSites.getCurrentSiteId());

@@ -54,13 +54,13 @@ export class CoreCommentsCommentsComponent implements OnChanges, OnDestroy {
 
         this.onLoading = new EventEmitter<boolean>();
 
-        this.disabled = this.commentsProvider.areCommentsDisabledInSite();
+        this.disabled = CoreComments.areCommentsDisabledInSite();
 
         // Update visibility if current site info is updated.
         this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             const wasDisabled = this.disabled;
 
-            this.disabled = this.commentsProvider.areCommentsDisabledInSite();
+            this.disabled = CoreComments.areCommentsDisabledInSite();
 
             if (wasDisabled && !this.disabled) {
                 this.fetchData();
@@ -123,7 +123,7 @@ export class CoreCommentsCommentsComponent implements OnChanges, OnDestroy {
         this.commentsLoaded = false;
         this.onLoading.emit(true);
 
-        this.commentsProvider.getCommentsCount(this.contextLevel, this.instanceId, this.component, this.itemId, this.area)
+        CoreComments.getCommentsCount(this.contextLevel, this.instanceId, this.component, this.itemId, this.area)
                 .then((commentsCount) => {
             this.commentsCount = commentsCount;
             this.countError = parseInt(this.commentsCount, 10) < 0;
@@ -149,7 +149,7 @@ export class CoreCommentsCommentsComponent implements OnChanges, OnDestroy {
      * @return Promise resolved when done.
      */
     invalidateComments(): Promise<any> {
-        return this.commentsProvider.invalidateCommentsData(this.contextLevel, this.instanceId, this.component, this.itemId,
+        return CoreComments.invalidateCommentsData(this.contextLevel, this.instanceId, this.component, this.itemId,
                 this.area);
     }
 

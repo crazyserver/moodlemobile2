@@ -46,7 +46,7 @@ export class AddonModBookTagAreaHandler implements CoreTagAreaHandler {
      * @return Area items (or promise resolved with the items).
      */
     parseContent(content: string): any[] | Promise<any[]> {
-        const items = this.tagHelper.parseFeedContent(content);
+        const items = CoreTagHelper.parseFeedContent(content);
 
         // Find module ids of the returned books, they are needed by the link delegate.
         return Promise.all(items.map((item) => {

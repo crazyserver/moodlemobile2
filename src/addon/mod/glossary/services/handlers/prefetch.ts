@@ -176,13 +176,13 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
             promises.push(this.glossaryProvider.fetchAllEntries(this.glossaryProvider.getEntriesByLetter, [glossary.id, 'ALL'],
                     options).then((entries) => {
                 const promises = [];
-                const commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
+                const commentsEnabled = !CoreComments.areCommentsDisabledInSite();
 
                 entries.forEach((entry) => {
                     // Don't fetch individual entries, it's too many WS calls.
 
                     if (glossary.allowcomments && commentsEnabled) {
-                        promises.push(this.commentsProvider.getComments('module', glossary.coursemodule, 'mod_glossary', entry.id,
+                        promises.push(CoreComments.getComments('module', glossary.coursemodule, 'mod_glossary', entry.id,
                             'glossary_entry', 0, siteId));
                     }
                 });

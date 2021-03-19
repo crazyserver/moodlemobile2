@@ -108,7 +108,7 @@ export class AddonBlogEntriesComponent implements OnInit {
             this.contextInstanceId = 0;
         }
 
-        this.commentsEnabled = !this.commentsProvider.areCommentsDisabledInSite();
+        this.commentsEnabled = !CoreComments.areCommentsDisabledInSite();
         this.tagsEnabled = CoreTag.areTagsAvailableInSite();
 
         this.fetchEntries().then(() => {
@@ -245,7 +245,7 @@ export class AddonBlogEntriesComponent implements OnInit {
      */
     refresh(refresher?: any): void {
         const promises = this.entries.map((entry) => {
-            return this.commentsProvider.invalidateCommentsData('user', entry.userid, this.component, entry.id, 'format_blog');
+            return CoreComments.invalidateCommentsData('user', entry.userid, this.component, entry.id, 'format_blog');
         });
 
         promises.push(this.blogProvider.invalidateEntries(this.filter));

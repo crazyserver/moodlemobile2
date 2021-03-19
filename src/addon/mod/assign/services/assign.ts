@@ -757,7 +757,7 @@ export class AddonModAssignProvider {
             promises.push(this.invalidateAssignmentUserMappingsData(assign.id, siteId));
             promises.push(this.invalidateAssignmentGradesData(assign.id, siteId));
             promises.push(this.invalidateListParticipantsData(assign.id, siteId));
-            promises.push(this.commentsProvider.invalidateCommentsByInstance('module', assign.id, siteId));
+            promises.push(CoreComments.invalidateCommentsByInstance('module', assign.id, siteId));
             promises.push(this.invalidateAssignmentData(courseId, siteId));
             promises.push(this.gradesProvider.invalidateAllCourseGradesData(courseId));
 

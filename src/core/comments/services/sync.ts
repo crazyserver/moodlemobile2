@@ -165,7 +165,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
                 if (comment.commentid) {
                     deleteCommentIds.push(comment.commentid);
                 } else {
-                    promises.push(this.commentsProvider.addCommentOnline(comment.content, contextLevel, instanceId, component,
+                    promises.push(CoreComments.addCommentOnline(comment.content, contextLevel, instanceId, component,
                         itemId, area, siteId).then((response) => {
                             countChange++;
 
@@ -175,7 +175,7 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
             });
 
             if (deleteCommentIds.length > 0) {
-                promises.push(this.commentsProvider.deleteCommentsOnline(deleteCommentIds, contextLevel, instanceId, component,
+                promises.push(CoreComments.deleteCommentsOnline(deleteCommentIds, contextLevel, instanceId, component,
                     itemId, area, siteId).then((response) => {
                         countChange--;
 
@@ -196,9 +196,9 @@ export class CoreCommentsSyncProvider extends CoreSyncBaseProvider {
                     }, CoreSites.getCurrentSiteId());
 
                 // Fetch the comments from server to be sure they're up to date.
-                return this.commentsProvider.invalidateCommentsData(contextLevel, instanceId, component, itemId, area, siteId)
+                return CoreComments.invalidateCommentsData(contextLevel, instanceId, component, itemId, area, siteId)
                         .then(() => {
-                    return this.commentsProvider.getComments(contextLevel, instanceId, component, itemId, area, 0, siteId);
+                    return CoreComments.getComments(contextLevel, instanceId, component, itemId, area, 0, siteId);
                 }).catch(() => {
                     // Ignore errors.
                 });

@@ -109,7 +109,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        this.commentsProvider.isAddCommentsAvailable().then((enabled) => {
+        CoreComments.isAddCommentsAvailable().then((enabled) => {
             // Is implicit the user can delete if he can add.
             this.addDeleteCommentsAvailable = enabled;
         });
@@ -134,7 +134,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
             // Ignore errors.
         }).then(() => {
             // Get comments data.
-            return this.commentsProvider.getComments(this.contextLevel, this.instanceId, this.componentName, this.itemId,
+            return CoreComments.getComments(this.contextLevel, this.instanceId, this.componentName, this.itemId,
                     this.area, this.page).then((response) => {
                 this.canAddComments = this.addDeleteCommentsAvailable && response.canpost;
 
@@ -305,7 +305,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
 
         CoreDomUtils.showDeleteConfirm('core.comments.deletecommentbyon', {$a:
                 { user: deleteComment.fullname || '', time: time } }).then(() => {
-            this.commentsProvider.deleteComment(deleteComment).then((deletedOnline) => {
+            CoreComments.deleteComment(deleteComment).then((deletedOnline) => {
                 this.showDelete = false;
 
                 if (deletedOnline) {
@@ -343,7 +343,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
      * @return Resolved when done.
      */
     protected invalidateComments(): Promise<void> {
-        return this.commentsProvider.invalidateCommentsData(this.contextLevel, this.instanceId, this.componentName, this.itemId,
+        return CoreComments.invalidateCommentsData(this.contextLevel, this.instanceId, this.componentName, this.itemId,
                     this.area);
     }
 

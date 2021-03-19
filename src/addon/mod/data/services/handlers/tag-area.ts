@@ -43,7 +43,7 @@ export class AddonModDataTagAreaHandler implements CoreTagAreaHandler {
      * @return Area items (or promise resolved with the items).
      */
     parseContent(content: string): any[] | Promise<any[]> {
-        return this.tagHelper.parseFeedContent(content);
+        return CoreTagHelper.parseFeedContent(content);
     }
 
     /**
