@@ -524,7 +524,7 @@ export class AddonCalendarDayPage implements OnInit, OnDestroy {
             // It's an offline event, go to the edit page.
             this.openEdit(eventId);
         } else {
-            this.navCtrl.push('AddonCalendarEventPage', {
+            CoreNavigator.navigate('AddonCalendarEventPage', {
                 id: eventId
             });
         }
@@ -565,7 +565,7 @@ export class AddonCalendarDayPage implements OnInit, OnDestroy {
             params.courseId = this.filter['courseId'];
         }
 
-        this.navCtrl.push('AddonCalendarEditEventPage', params);
+        CoreNavigator.navigate('AddonCalendarEditEventPage', params);
     }
 
     /**

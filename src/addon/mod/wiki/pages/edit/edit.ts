@@ -261,7 +261,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
      */
     protected forceLeavePage(): void {
         this.forceLeave = true;
-        this.navCtrl.pop();
+        CoreNavigator.back();
     }
 
     /**
@@ -368,7 +368,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
     ionViewDidLeave(): void {
         if (this.pageParamsToLoad) {
             // Go to the page we've just created/edited.
-            this.navCtrl.push('AddonModWikiIndexPage', this.pageParamsToLoad);
+            CoreNavigator.navigate('AddonModWikiIndexPage', this.pageParamsToLoad);
         }
     }
 
@@ -379,7 +379,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
      */
     protected previousViewIsDifferentPageOnline(): boolean {
         // We cannot precisely detect when the state is the same but this is close to it.
-        const previousView = this.navCtrl.getPrevious();
+        const previousView = CoreNavigator.getPrevious();
 
         return !this.editing || previousView.component.name != 'AddonModWikiIndexPage' ||
                 previousView.data.module.id != this.module.id || previousView.data.pageId != this.pageId;
@@ -393,7 +393,7 @@ export class AddonModWikiEditPage implements OnInit, OnDestroy {
      */
     protected previousViewPageIsDifferentOffline(title: string): boolean {
         // We cannot precisely detect when the state is the same but this is close to it.
-        const previousView = this.navCtrl.getPrevious();
+        const previousView = CoreNavigator.getPrevious();
 
         if (previousView.component.name != 'AddonModWikiIndexPage' || previousView.data.module.id != this.module.id ||
                 previousView.data.wikiId != this.wikiId || previousView.data.pageTitle != title) {

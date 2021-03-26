@@ -39,9 +39,9 @@ export class CoreAutoFocusDirective implements OnInit {
      * Component being initialized.
      */
     ngOnInit(): void {
-        if (this.navCtrl.isTransitioning()) {
+        if (CoreNavigator.isTransitioning()) {
             // Navigating to a new page. Wait for the transition to be over.
-            const subscription = this.navCtrl.viewDidEnter.subscribe(() => {
+            const subscription = CoreNavigator.viewDidEnter.subscribe(() => {
                 this.autoFocus();
                 subscription.unsubscribe();
             });

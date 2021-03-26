@@ -95,7 +95,7 @@ export class AddonModChatIndexComponent extends CoreCourseModuleMainActivityComp
      */
     enterChat(): void {
         const title = this.chat.name || this.moduleName;
-        this.navCtrl.push('AddonModChatChatPage', {
+        CoreNavigator.navigate('AddonModChatChatPage', {
             chatId: this.chat.id,
             courseId: this.courseId,
             title: title,
@@ -107,6 +107,6 @@ export class AddonModChatIndexComponent extends CoreCourseModuleMainActivityComp
      * View past sessions.
      */
     viewSessions(): void {
-        this.navCtrl.push('AddonModChatSessionsPage', {courseId: this.courseId, chatId: this.chat.id, cmId: this.module.id});
+        CoreNavigator.navigate('AddonModChatSessionsPage', {courseId: this.courseId, chatId: this.chat.id, cmId: this.module.id});
     }
 }

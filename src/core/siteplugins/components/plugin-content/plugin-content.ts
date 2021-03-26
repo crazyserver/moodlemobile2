@@ -140,7 +140,7 @@ export class CoreSitePluginsPluginContentComponent implements OnInit, DoCheck {
             jsData = this.data;
         }
 
-        this.navCtrl.push('CoreSitePluginsPluginPage', {
+        CoreNavigator.navigate('CoreSitePluginsPluginPage', {
             title: title,
             component: component || this.component,
             method: method || this.method,

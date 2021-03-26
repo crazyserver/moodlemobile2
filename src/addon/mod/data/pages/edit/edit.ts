@@ -185,7 +185,7 @@ export class AddonModDataEditPage {
 
                     // Go back to entry list.
                     this.forceLeave = true;
-                    this.navCtrl.pop();
+                    CoreNavigator.back();
 
                     return;
                 }
@@ -377,7 +377,7 @@ export class AddonModDataEditPage {
         }).finally(() => {
             // Go back to entry list.
             this.forceLeave = true;
-            this.navCtrl.pop();
+            CoreNavigator.back();
         });
     }
 
@@ -386,7 +386,7 @@ export class AddonModDataEditPage {
      */
     protected scrollToFirstError(): void {
         if (!CoreDomUtils.scrollToElementBySelector(this.content, '.addon-data-error')) {
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
         }
     }
 }

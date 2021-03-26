@@ -85,7 +85,7 @@ export class AddonModFeedbackNonRespondentsPage {
 
             if (!refresh) {
                 // Some call failed on first fetch, go back.
-                this.navCtrl.pop();
+                CoreNavigator.back();
             }
 
             return Promise.reject(null);

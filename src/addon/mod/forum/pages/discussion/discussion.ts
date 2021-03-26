@@ -257,7 +257,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
                             if (this.svComponent && this.svComponent.isOn()) {
                                 this.svComponent.emptyDetails();
                             } else {
-                                this.navCtrl.pop();
+                                CoreNavigator.back();
                             }
                         } else {
                             this.discussionLoaded = false;
@@ -571,7 +571,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
      * @return Promise resolved when done.
      */
     refreshPosts(sync?: boolean, showErrors?: boolean): Promise<any> {
-        CoreDomUtils.scrollToTop(this.content);
+        this.content.scrollToTop();
         this.refreshIcon = 'spinner';
         this.syncIcon = 'spinner';
 
@@ -599,7 +599,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
         this.discussionLoaded = false;
         this.sort = type;
         CoreSites.getCurrentSite().setLocalSiteConfig('AddonModForumDiscussionSort', this.sort);
-        CoreDomUtils.scrollToTop(this.content);
+        this.content.scrollToTop();
 
         return this.fetchPosts();
     }

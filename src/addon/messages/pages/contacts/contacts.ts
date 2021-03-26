@@ -65,7 +65,7 @@ export class AddonMessagesContactsPage implements OnDestroy {
      * Navigate to the search page.
      */
     gotoSearch(): void {
-        this.navCtrl.push('AddonMessagesSearchPage');
+        CoreNavigator.navigate('AddonMessagesSearchPage');
     }
 
     /**

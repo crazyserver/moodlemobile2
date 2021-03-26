@@ -283,7 +283,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
 
             if (!this.svComponent || !this.svComponent.isOn()) {
                 this.originalData = null; // Avoid asking for confirmation.
-                this.navCtrl.pop();
+                CoreNavigator.back();
             }
         });
     }
@@ -549,7 +549,7 @@ export class AddonCalendarEditEventPage implements OnInit, OnDestroy {
             this.originalData = CoreUtils.clone(this.eventForm.value);
         } else {
             this.originalData = null; // Avoid asking for confirmation.
-            this.navCtrl.pop();
+            CoreNavigator.back();
         }
     }
 

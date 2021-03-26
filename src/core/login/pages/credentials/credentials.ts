@@ -248,7 +248,7 @@ export class CoreLoginCredentialsPage {
         }).catch((error) => {
             this.loginHelper.treatUserTokenError(siteUrl, error, username, password);
             if (error.loggedout) {
-                this.navCtrl.setRoot('CoreLoginSitesPage');
+                CoreNavigator.setRoot('CoreLoginSitesPage');
             } else if (error.errorcode == 'forcepasswordchangenotice') {
                 // Reset password field.
                 this.credForm.controls.password.reset();
@@ -282,7 +282,7 @@ export class CoreLoginCredentialsPage {
      * Signup button was clicked.
      */
     signup(): void {
-        this.navCtrl.push('CoreLoginEmailSignupPage', { siteUrl: this.siteUrl });
+        CoreNavigator.navigate('CoreLoginEmailSignupPage', { siteUrl: this.siteUrl });
     }
 
     /**

@@ -87,7 +87,7 @@ export class CoreLoginForgottenPasswordPage {
                 CoreDomUtils.triggerFormSubmittedEvent(this.formElement, true);
 
                 CoreDomUtils.showAlert(Translate.instant('core.success'), response.notice);
-                this.navCtrl.pop();
+                CoreNavigator.back();
             }
         }).catch((error) => {
             CoreDomUtils.showErrorModal(error);

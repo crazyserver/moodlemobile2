@@ -222,7 +222,7 @@ export class AddonModWorkshopEditSubmissionPage implements OnInit, OnDestroy {
      */
     protected forceLeavePage(): void {
         this.forceLeave = true;
-        this.navCtrl.pop();
+        CoreNavigator.back();
     }
 
     /**

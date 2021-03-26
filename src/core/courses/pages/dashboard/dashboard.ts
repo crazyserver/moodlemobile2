@@ -125,14 +125,14 @@ export class CoreCoursesDashboardPage implements OnDestroy {
      * Open page to manage courses storage.
      */
     manageCoursesStorage(): void {
-        this.navCtrl.push('AddonStorageManagerCoursesStoragePage');
+        CoreNavigator.navigate('AddonStorageManagerCoursesStoragePage');
     }
 
     /**
      * Go to search courses.
      */
     openSearch(): void {
-        this.navCtrl.push('CoreCoursesSearchPage');
+        CoreNavigator.navigate('CoreCoursesSearchPage');
     }
 
     /**

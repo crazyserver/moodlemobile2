@@ -162,7 +162,7 @@ export class AddonModAssignSubmissionReviewPage implements OnInit {
                 // Grade submitted, leave the view if not in tablet.
                 if (!CoreApp.isWide()) {
                     this.forceLeave = true;
-                    this.navCtrl.pop();
+                    CoreNavigator.back();
                 }
             }).catch((error) => {
                 CoreDomUtils.showErrorModalDefault(error, 'core.error', true);

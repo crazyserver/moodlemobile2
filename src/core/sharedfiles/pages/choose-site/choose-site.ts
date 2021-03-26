@@ -49,7 +49,7 @@ export class CoreSharedFilesChooseSitePage implements OnInit {
     ngOnInit(): void {
         if (!this.filePath) {
             CoreDomUtils.showErrorModal('Error reading file.');
-            this.navCtrl.pop();
+            CoreNavigator.back();
 
             return;
         }
@@ -63,7 +63,7 @@ export class CoreSharedFilesChooseSitePage implements OnInit {
             this.fileName = this.fileEntry.name;
         }).catch(() => {
             CoreDomUtils.showErrorModal('Error reading file.');
-            this.navCtrl.pop();
+            CoreNavigator.back();
         });
 
         // Get the sites.
@@ -82,7 +82,7 @@ export class CoreSharedFilesChooseSitePage implements OnInit {
     storeInSite(siteId: string): void {
         this.loaded = false;
         this.sharedFilesHelper.storeSharedFileInSite(this.fileEntry, siteId, this.isInbox).then(() => {
-            this.navCtrl.pop();
+            CoreNavigator.back();
         }).finally(() => {
             this.loaded = true;
         });

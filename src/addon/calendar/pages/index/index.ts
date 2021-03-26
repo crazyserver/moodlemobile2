@@ -305,7 +305,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
             // It's an offline event, go to the edit page.
             this.openEdit(eventId);
         } else {
-            this.navCtrl.push('AddonCalendarEventPage', {
+            CoreNavigator.navigate('AddonCalendarEventPage', {
                 id: eventId
             });
         }
@@ -327,7 +327,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
             params[key] = this.filter[key];
         });
 
-        this.navCtrl.push('AddonCalendarDayPage', params);
+        CoreNavigator.navigate('AddonCalendarDayPage', params);
     }
 
     /**
@@ -361,14 +361,14 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
             params.courseId = this.filter.courseId;
         }
 
-        this.navCtrl.push('AddonCalendarEditEventPage', params);
+        CoreNavigator.navigate('AddonCalendarEditEventPage', params);
     }
 
     /**
      * Open calendar events settings.
      */
     openSettings(): void {
-        this.navCtrl.push('AddonCalendarSettingsPage');
+        CoreNavigator.navigate('AddonCalendarSettingsPage');
     }
 
     /**

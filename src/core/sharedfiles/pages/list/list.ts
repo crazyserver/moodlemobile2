@@ -141,7 +141,7 @@ export class CoreSharedFilesListPage implements OnInit, OnDestroy {
             this.filesLoaded = false;
             this.loadFiles();
         } else {
-            this.navCtrl.push('CoreSharedFilesListPage', {
+            CoreNavigator.navigate('CoreSharedFilesListPage', {
                 path: path,
                 manage: this.manage,
                 pick: this.pick,

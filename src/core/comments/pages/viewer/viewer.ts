@@ -96,7 +96,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
                 this.refreshIcon = 'spinner';
                 this.syncIcon = 'spinner';
 
-                CoreDomUtils.scrollToTop(this.content);
+                this.content.scrollToTop();
 
                 this.page = 0;
                 this.comments = [];

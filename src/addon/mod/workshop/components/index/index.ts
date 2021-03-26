@@ -169,7 +169,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (this.workshop && syncEventData.workshopId == this.workshop.id) {
             // Refresh the data.
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             return true;
         }
@@ -297,7 +297,7 @@ export class AddonModWorkshopIndexComponent extends CoreCourseModuleMainActivity
                 submissionId: this.submission && this.submission.id
             };
 
-            this.navCtrl.push('AddonModWorkshopEditSubmissionPage', params);
+            CoreNavigator.navigate('AddonModWorkshopEditSubmissionPage', params);
         }
     }
 

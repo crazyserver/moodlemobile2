@@ -145,7 +145,7 @@ export class CoreUserParticipantsComponent implements OnInit {
 
         if (this.showSearchBox) {
             // Make search bar visible.
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
         } else if (!this.showSearchBox && this.displaySearchResults) {
             this.clearSearch();
         }

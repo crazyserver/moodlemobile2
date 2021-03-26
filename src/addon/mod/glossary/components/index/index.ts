@@ -404,7 +404,7 @@ export class AddonModGlossaryIndexComponent extends CoreCourseModuleMainActivity
     changeFetchMode(mode: FetchMode): void {
         this.isSearch = false;
         this.loadingMessage = Translate.instant('core.loading');
-        CoreDomUtils.scrollToTop(this.content);
+        this.content.scrollToTop();
         this.switchMode(mode);
         this.loaded = false;
         this.loadContent();

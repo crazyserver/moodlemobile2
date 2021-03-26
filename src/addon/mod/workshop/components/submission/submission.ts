@@ -97,7 +97,7 @@ export class AddonModWorkshopSubmissionComponent implements OnInit {
         }
 
         this.viewDetails = !this.summary && this.workshop.phase == AddonModWorkshopProvider.PHASE_CLOSED &&
-            this.navCtrl.getActive().name !== 'AddonModWorkshopSubmissionPage';
+            CoreNavigator.getActive().name !== 'AddonModWorkshopSubmissionPage';
 
         if (this.viewDetails && this.submission.gradeoverby) {
             promises.push(this.userProvider.getProfile(this.submission.gradeoverby, this.courseId, true).then((profile) => {
@@ -125,7 +125,7 @@ export class AddonModWorkshopSubmissionComponent implements OnInit {
                 assessment: this.assessment,
             };
 
-            this.navCtrl.push('AddonModWorkshopSubmissionPage', params);
+            CoreNavigator.navigate('AddonModWorkshopSubmissionPage', params);
         }
     }
 }

@@ -423,7 +423,7 @@ export class AddonModForumNewDiscussionPage implements OnDestroy {
             }, CoreSites.getCurrentSiteId());
         } else {
             this.forceLeave = true; // Avoid asking for confirmation.
-            this.navCtrl.pop();
+            CoreNavigator.back();
         }
     }
 

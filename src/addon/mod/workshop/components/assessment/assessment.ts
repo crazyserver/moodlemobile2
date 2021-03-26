@@ -119,14 +119,14 @@ export class AddonModWorkshopAssessmentComponent implements OnInit {
                         {cmId: this.workshop.coursemodule}).then((submissionData) => {
 
                     params.submission = submissionData;
-                    this.navCtrl.push('AddonModWorkshopAssessmentPage', params);
+                    CoreNavigator.navigate('AddonModWorkshopAssessmentPage', params);
                 }).catch((message) => {
                     CoreDomUtils.showErrorModalDefault(message, 'Cannot load submission');
                 }).finally(() => {
                     modal.dismiss();
                 });
             } else {
-                this.navCtrl.push('AddonModWorkshopAssessmentPage', params);
+                CoreNavigator.navigate('AddonModWorkshopAssessmentPage', params);
             }
         }
     }
@@ -149,7 +149,7 @@ export class AddonModWorkshopAssessmentComponent implements OnInit {
                 assessment: this.assessment
             };
 
-            this.navCtrl.push('AddonModWorkshopSubmissionPage', params);
+            CoreNavigator.navigate('AddonModWorkshopSubmissionPage', params);
         }
     }
 }

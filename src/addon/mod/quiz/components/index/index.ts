@@ -382,7 +382,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
 
         if (this.quizAccessInfo.canreviewmyattempts) {
             return this.quizProvider.getAttemptReview(attemptId, {page: -1, cmId: this.module.id}).then(() => {
-                this.navCtrl.push('AddonModQuizReviewPage', {courseId: this.courseId, quizId: this.quizData.id, attemptId});
+                CoreNavigator.navigate('AddonModQuizReviewPage', {courseId: this.courseId, quizId: this.quizData.id, attemptId});
             }).catch(() => {
                 // Ignore errors.
             });
@@ -431,7 +431,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
             this.loaded = false;
             this.refreshIcon = 'spinner';
             this.syncIcon = 'spinner';
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             promise.then(() => {
                 this.refreshContent().finally(() => {
@@ -452,7 +452,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
         super.ionViewDidLeave();
         this.autoReview = undefined;
 
-        if (this.navCtrl.getActive().component.name == 'AddonModQuizPlayerPage') {
+        if (CoreNavigator.getActive().component.name == 'AddonModQuizPlayerPage') {
             this.hasPlayed = true;
         }
     }
@@ -493,7 +493,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
         }
 
         if (this.quizData && syncEventData.quizId == this.quizData.id) {
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             return true;
         }
@@ -505,7 +505,7 @@ export class AddonModQuizIndexComponent extends CoreCourseModuleMainActivityComp
      * Open a quiz to attempt it.
      */
     protected openQuiz(): void {
-        this.navCtrl.push('AddonModQuizPlayerPage', {courseId: this.courseId, quizId: this.quiz.id, moduleUrl: this.module.url});
+        CoreNavigator.navigate('AddonModQuizPlayerPage', {courseId: this.courseId, quizId: this.quiz.id, moduleUrl: this.module.url});
     }
 
     /**

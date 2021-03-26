@@ -475,7 +475,7 @@ export class AddonCalendarEventPage implements OnDestroy {
 
                         // Event deleted, close the view.
                         if (!this.svComponent || !this.svComponent.isOn()) {
-                            this.navCtrl.pop();
+                            CoreNavigator.back();
                         }
                     } else {
                         // Event deleted in offline, just mark it as deleted.
@@ -530,7 +530,7 @@ export class AddonCalendarEventPage implements OnDestroy {
 
             // Event was deleted, close the view.
             if (!this.svComponent || !this.svComponent.isOn()) {
-                this.navCtrl.pop();
+                CoreNavigator.back();
             }
         } else if (data.events && (!isManual || data.source != 'event')) {
             const event = data.events.find((ev) => {

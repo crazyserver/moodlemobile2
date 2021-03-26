@@ -74,9 +74,9 @@ export class AddonCompetencyCourseComponent {
      */
     openCompetency(competencyId: number): void {
         if (CoreApp.isWide()) {
-            this.navCtrl.push('AddonCompetencyCompetenciesPage', {competencyId, courseId: this.courseId, userId: this.userId});
+            CoreNavigator.navigate('AddonCompetencyCompetenciesPage', {competencyId, courseId: this.courseId, userId: this.userId});
         } else {
-            this.navCtrl.push('AddonCompetencyCompetencyPage', {competencyId, courseId: this.courseId, userId: this.userId});
+            CoreNavigator.navigate('AddonCompetencyCompetencyPage', {competencyId, courseId: this.courseId, userId: this.userId});
         }
     }
 
@@ -86,7 +86,7 @@ export class AddonCompetencyCourseComponent {
      * @param competencyId
      */
     openCompetencySummary(competencyId: number): void {
-        this.navCtrl.push('AddonCompetencyCompetencySummaryPage', {
+        CoreNavigator.navigate('AddonCompetencyCompetencySummaryPage', {
             competencyId,
             contextLevel: 'course',
             contextInstanceId: this.courseId

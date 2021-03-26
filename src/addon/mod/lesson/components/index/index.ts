@@ -278,7 +278,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
 
         this.tabsComponent && this.tabsComponent.ionViewDidLeave();
 
-        if (this.navCtrl.getActive().component.name == 'AddonModLessonPlayerPage') {
+        if (CoreNavigator.getActive().component.name == 'AddonModLessonPlayerPage') {
             this.hasPlayed = true;
 
             // Detect if anything was sent to server.
@@ -378,7 +378,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
         }
 
         return promise.then((pageId) => {
-            this.navCtrl.push('AddonModLessonPlayerPage', {
+            CoreNavigator.navigate('AddonModLessonPlayerPage', {
                 courseId: this.courseId,
                 lessonId: this.lesson.id,
                 pageId: pageId,
@@ -416,7 +416,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
             return;
         }
 
-        this.navCtrl.push('AddonModLessonPlayerPage', {
+        CoreNavigator.navigate('AddonModLessonPlayerPage', {
             courseId: this.courseId,
             lessonId: this.lesson.id,
             pageId: this.retakeToReview.pageid,

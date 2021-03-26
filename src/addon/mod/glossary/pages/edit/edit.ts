@@ -265,7 +265,7 @@ export class AddonModGlossaryEditPage implements OnInit {
             CoreDomUtils.triggerFormSubmittedEvent(this.formElement, !!entryId, CoreSites.getCurrentSiteId());
 
             this.saved = true;
-            this.navCtrl.pop();
+            CoreNavigator.back();
         }).catch((error) => {
             CoreDomUtils.showErrorModalDefault(error, 'addon.mod_glossary.cannoteditentry', true);
         }).finally(() => {

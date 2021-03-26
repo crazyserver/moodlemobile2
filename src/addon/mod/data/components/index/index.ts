@@ -164,7 +164,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
         if (this.data && syncEventData.dataId == this.data.id && typeof syncEventData.entryId == 'undefined') {
             this.loaded = false;
             // Refresh the data.
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             return true;
         }
@@ -416,7 +416,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             group: this.selectedGroup
         };
 
-        this.navCtrl.push('AddonModDataEditPage', params);
+        CoreNavigator.navigate('AddonModDataEditPage', params);
     }
 
     /**
@@ -439,7 +439,7 @@ export class AddonModDataIndexComponent extends CoreCourseModuleMainActivityComp
             params.offset = this.search.page * AddonModDataProvider.PER_PAGE + pageXOffset;
         }
 
-        this.navCtrl.push('AddonModDataEntryPage', params);
+        CoreNavigator.navigate('AddonModDataEntryPage', params);
     }
 
     /**

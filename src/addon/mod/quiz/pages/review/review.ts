@@ -107,7 +107,7 @@ export class AddonModQuizReviewPage implements OnInit {
         }
 
         this.loaded = false;
-        CoreDomUtils.scrollToTop(this.content);
+        this.content.scrollToTop();
 
         this.loadPage(page).catch((error) => {
             CoreDomUtils.showErrorModalDefault(error, 'addon.mod_quiz.errorgetquestions', true);

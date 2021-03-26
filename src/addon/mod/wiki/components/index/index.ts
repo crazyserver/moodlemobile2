@@ -414,7 +414,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
             return;
         }
 
-        const views = this.navCtrl.getViews();
+        const views = CoreNavigator.getViews();
 
         // Go back in history until we find a page that doesn't belong to current wiki.
         for (let i = views.length - 2; i >= 0; i--) {
@@ -444,7 +444,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
      * Open the view to create the first page of the wiki.
      */
     protected goToCreateFirstPage(): void {
-        this.navCtrl.push('AddonModWikiEditPage', {
+        CoreNavigator.navigate('AddonModWikiEditPage', {
             module: this.module,
             courseId: this.courseId,
             pageTitle: this.wiki.firstpagetitle,
@@ -478,7 +478,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                 pageParams.groupId = this.currentSubwiki.groupid;
             }
 
-            this.navCtrl.push('AddonModWikiEditPage', pageParams);
+            CoreNavigator.navigate('AddonModWikiEditPage', pageParams);
         } else if (this.currentSubwiki) {
             // No page loaded, the wiki doesn't have first page.
             this.goToCreateFirstPage();
@@ -507,7 +507,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
                 pageParams.groupId = this.currentSubwiki.groupid;
             }
 
-            this.navCtrl.push('AddonModWikiEditPage', pageParams);
+            CoreNavigator.navigate('AddonModWikiEditPage', pageParams);
         } else if (this.currentSubwiki) {
             // No page loaded, the wiki doesn't have first page.
             this.goToCreateFirstPage();
@@ -523,7 +523,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
         if (!page.id) {
             // It's an offline page. Check if we are already in the same offline page.
             if (this.currentPage || !this.pageTitle || page.title != this.pageTitle) {
-                this.navCtrl.push('AddonModWikiIndexPage', {
+                CoreNavigator.navigate('AddonModWikiIndexPage', {
                     module: this.module,
                     courseId: this.courseId,
                     pageTitle: page.title,
@@ -536,7 +536,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
         } else if (this.currentPage != page.id) {
             // Add a new State.
             this.fetchPageContents(page.id).then((page) => {
-                this.navCtrl.push('AddonModWikiIndexPage', {
+                CoreNavigator.navigate('AddonModWikiIndexPage', {
                     module: this.module,
                     courseId: this.courseId,
                     pageTitle: page.title,
@@ -573,7 +573,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
             if (page) {
                 if (page.type == 'home') {
                     // Go back to the initial page of the wiki.
-                    this.navCtrl.popTo(page.goto);
+                    CoreNavigator.popTo(page.goto);
                 } else {
                     this.goToPage(page.goto);
                 }
@@ -599,7 +599,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
             if (subwikiId != this.currentSubwiki.id || userId != this.currentSubwiki.userid ||
                     groupId != this.currentSubwiki.groupid) {
 
-                this.navCtrl.push('AddonModWikiIndexPage', {
+                CoreNavigator.navigate('AddonModWikiIndexPage', {
                     module: this.module,
                     courseId: this.courseId,
                     wikiId: this.wiki.id,
@@ -709,7 +709,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
     ionViewDidLeave(): void {
         super.ionViewDidLeave();
 
-        if (this.navCtrl.getActive().component.name == 'AddonModWikiEditPage') {
+        if (CoreNavigator.getActive().component.name == 'AddonModWikiEditPage') {
             this.hasEdited = true;
         }
     }

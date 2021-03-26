@@ -392,7 +392,7 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
         // Display the full page when returning to the page.
         this.skip = false;
 
-        if (this.navCtrl.getActive().component.name == 'AddonModScormPlayerPage') {
+        if (CoreNavigator.getActive().component.name == 'AddonModScormPlayerPage') {
             this.hasPlayed = true;
 
             // Detect if anything was sent to server.
@@ -537,7 +537,7 @@ export class AddonModScormIndexComponent extends CoreCourseModuleMainActivityCom
      * @param scoId SCO ID.
      */
     protected openScorm(scoId: number, preview: boolean = false): void {
-        this.navCtrl.push('AddonModScormPlayerPage', {
+        CoreNavigator.navigate('AddonModScormPlayerPage', {
             scorm: this.scorm,
             mode: preview ? AddonModScormProvider.MODEBROWSE : AddonModScormProvider.MODENORMAL,
             newAttempt: !!this.startNewAttempt,

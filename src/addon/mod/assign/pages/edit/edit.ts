@@ -226,7 +226,7 @@ export class AddonModAssignEditPage implements OnInit, OnDestroy {
      */
     protected leaveWithoutCheck(): void {
         this.forceLeave = true;
-        this.navCtrl.pop();
+        CoreNavigator.back();
     }
 
     /**

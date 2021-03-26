@@ -277,14 +277,14 @@ export class AddonModAssignIndexComponent extends CoreCourseModuleMainActivityCo
      */
     goToSubmissionList(status: string, count: number): void {
         if (typeof status == 'undefined') {
-            this.navCtrl.push('AddonModAssignSubmissionListPage', {
+            CoreNavigator.navigate('AddonModAssignSubmissionListPage', {
                 courseId: this.courseId,
                 groupId: this.group || 0,
                 moduleId: this.module.id,
                 moduleName: this.moduleName
             });
         } else if (count || !this.showNumbers) {
-            this.navCtrl.push('AddonModAssignSubmissionListPage', {
+            CoreNavigator.navigate('AddonModAssignSubmissionListPage', {
                 status: status,
                 courseId: this.courseId,
                 groupId: this.group || 0,

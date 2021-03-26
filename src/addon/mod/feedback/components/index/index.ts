@@ -155,7 +155,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (this.feedback && syncEventData.feedbackId == this.feedback.id) {
             // Refresh the data.
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             return true;
         }
@@ -369,7 +369,7 @@ export class AddonModFeedbackIndexComponent extends CoreCourseModuleMainActivity
             courseId: this.courseId,
             preview: preview
         };
-        this.navCtrl.push('AddonModFeedbackFormPage', stateParams);
+        CoreNavigator.navigate('AddonModFeedbackFormPage', stateParams);
     }
 
     /**

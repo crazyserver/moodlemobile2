@@ -412,7 +412,7 @@ export class CoreCourseSectionPage implements OnDestroy {
             scrollLeft = scrollElement.scrollLeft || 0;
 
         this.dataLoaded = false;
-        CoreDomUtils.scrollToTop(this.content); // Scroll top so the spinner is seen.
+        this.content.scrollToTop(); // Scroll top so the spinner is seen.
 
         this.loadData(true, sync).then(() => {
             return this.formatComponent.doRefresh(undefined, undefined, true);
@@ -474,7 +474,7 @@ export class CoreCourseSectionPage implements OnDestroy {
      * Open the course summary
      */
     openCourseSummary(): void {
-        this.navCtrl.push('CoreCoursesCoursePreviewPage', {course: this.course, avoidOpenCourse: true});
+        CoreNavigator.navigate('CoreCoursesCoursePreviewPage', {course: this.course, avoidOpenCourse: true});
     }
 
     /**
@@ -484,7 +484,7 @@ export class CoreCourseSectionPage implements OnDestroy {
      */
     openMenuItem(item: CoreCourseOptionsMenuHandlerToDisplay): void {
         const params = Object.assign({ course: this.course}, item.data.pageParams);
-        this.navCtrl.push(item.data.page, params);
+        CoreNavigator.navigate(item.data.page, params);
     }
 
     /**

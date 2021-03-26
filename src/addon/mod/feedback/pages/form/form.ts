@@ -175,7 +175,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
         }).catch((message) => {
             CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
             this.forceLeave = true;
-            this.navCtrl.pop();
+            CoreNavigator.back();
 
             return Promise.reject(null);
         }).finally(() => {
@@ -264,7 +264,7 @@ export class AddonModFeedbackFormPage implements OnDestroy {
      * @return Resolved when done.
      */
     gotoPage(goPrevious: boolean): Promise<void> {
-        CoreDomUtils.scrollToTop(this.content);
+        this.content.scrollToTop();
         this.feedbackLoaded = false;
 
         const responses = this.feedbackHelper.getPageItemsResponses(this.items),

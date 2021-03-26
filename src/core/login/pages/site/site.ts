@@ -238,13 +238,13 @@ export class CoreLoginSitePage {
                 }, (error) => {
                     this.loginHelper.treatUserTokenError(siteData.url, error, siteData.username, siteData.password);
                     if (error.loggedout) {
-                        this.navCtrl.setRoot('CoreLoginSitesPage');
+                        CoreNavigator.setRoot('CoreLoginSitesPage');
                     }
                 });
             }, (error) => {
                 this.loginHelper.treatUserTokenError(siteData.url, error, siteData.username, siteData.password);
                 if (error.loggedout) {
-                    this.navCtrl.setRoot('CoreLoginSitesPage');
+                    CoreNavigator.setRoot('CoreLoginSitesPage');
                 }
             }).finally(() => {
                 modal.dismiss();
@@ -414,7 +414,7 @@ export class CoreLoginSitePage {
                     pageParams['logoUrl'] = foundSite.imageurl;
                 }
 
-                this.navCtrl.push('CoreLoginCredentialsPage', pageParams);
+                CoreNavigator.navigate('CoreLoginCredentialsPage', pageParams);
             }
         }).catch(() => {
             // Ignore errors.
@@ -529,7 +529,7 @@ export class CoreLoginSitePage {
 
             if (!this.loginHelper.isSSOLoginNeeded(response.code)) {
                 // No SSO, go to credentials page.
-                await this.navCtrl.push('CoreLoginCredentialsPage', {
+                await CoreNavigator.navigate('CoreLoginCredentialsPage', {
                     siteUrl: response.siteUrl,
                     siteConfig: response.config,
                 });

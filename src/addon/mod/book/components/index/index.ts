@@ -186,7 +186,7 @@ export class AddonModBookIndexComponent extends CoreCourseModuleMainResourceComp
      */
     protected loadChapter(chapterId: string, logChapterId: boolean): Promise<void> {
         this.currentChapter = chapterId;
-        CoreDomUtils.scrollToTop(this.content);
+        this.content.scrollToTop();
 
         return this.bookProvider.getChapterContent(this.contentsMap, chapterId, this.module.id).then((content) => {
             this.chapterContent = content;

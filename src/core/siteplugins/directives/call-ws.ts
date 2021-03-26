@@ -72,7 +72,7 @@ export class CoreSitePluginsCallWSDirective extends CoreSitePluginsCallWSOnClick
         }
 
         if (CoreUtils.isTrueOrOne(this.goBackOnSuccess)) {
-            this.navCtrl.pop();
+            CoreNavigator.back();
         } else if (CoreUtils.isTrueOrOne(this.refreshOnSuccess) && this.parentContent) {
             this.parentContent.refreshContent(true);
         }

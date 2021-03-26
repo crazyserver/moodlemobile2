@@ -110,7 +110,7 @@ export class CoreContentLinksChooseSitePage implements OnInit {
      */
     protected leaveView(): void {
         CoreSites.logout().finally(() => {
-            this.navCtrl.setRoot('CoreLoginSitesPage');
+            CoreNavigator.setRoot('CoreLoginSitesPage');
         });
     }
 }

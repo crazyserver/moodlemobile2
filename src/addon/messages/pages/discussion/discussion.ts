@@ -196,7 +196,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
      */
     ngOnInit(): void {
         // Disable the profile button if we're already coming from a profile.
-        const backViewPage = this.navCtrl.getPrevious() && this.navCtrl.getPrevious().component.name;
+        const backViewPage = CoreNavigator.getPrevious() && CoreNavigator.getPrevious().component.name;
         this.showInfo = !backViewPage || backViewPage !== 'CoreUserProfilePage';
 
         // Recalculate footer position when keyboard is shown or hidden.
@@ -1226,7 +1226,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
                         CoreEvents.trigger(AddonMessagesProvider.OPEN_CONVERSATION_EVENT, {userId: userId}, this.siteId);
                     } else {
                         // Open the discussion in a new view.
-                        this.navCtrl.push('AddonMessagesDiscussionPage', {userId: userId});
+                        CoreNavigator.navigate('AddonMessagesDiscussionPage', {userId: userId});
                     }
                 }
             });

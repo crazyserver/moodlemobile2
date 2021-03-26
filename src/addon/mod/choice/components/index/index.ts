@@ -109,7 +109,7 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
      */
     protected isRefreshSyncNeeded(syncEventData: any): boolean {
         if (this.choice && syncEventData.choiceId == this.choice.id && syncEventData.userId == this.userId) {
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             return true;
         }
@@ -363,7 +363,7 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
                 // Success!
                 // Check completion since it could be configured to complete once the user answers the choice.
                 CoreCourse.checkModuleCompletion(this.courseId, this.module.completiondata);
-                CoreDomUtils.scrollToTop(this.content);
+                this.content.scrollToTop();
 
                 if (online) {
                     CoreEvents.trigger(CoreEvents.ACTIVITY_DATA_SENT, { module: this.moduleName });
@@ -385,7 +385,7 @@ export class AddonModChoiceIndexComponent extends CoreCourseModuleMainActivityCo
         CoreDomUtils.showDeleteConfirm().then(() => {
             const modal = CoreDomUtils.showModalLoading('core.sending', true);
             this.choiceProvider.deleteResponses(this.choice.id, this.choice.name, this.courseId).then(() => {
-                CoreDomUtils.scrollToTop(this.content);
+                this.content.scrollToTop();
 
                 // Refresh the data. Don't call dataUpdated because deleting an answer doesn't mark the choice as outdated.
                 return this.refreshContent(false);

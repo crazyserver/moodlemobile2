@@ -322,7 +322,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
             return promise.then(() => {
                 CoreDomUtils.showErrorModalDefault(error, 'core.course.errorgetmodule', true);
                 this.forceLeave = true;
-                this.navCtrl.pop();
+                CoreNavigator.back();
 
                 return false;
             });
@@ -353,7 +353,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
                         if (info.attemptscount != this.accessInfo.attemptscount) {
                             // The retake has changed. Leave the view and show the error.
                             this.forceLeave = true;
-                            this.navCtrl.pop();
+                            CoreNavigator.back();
 
                             return Promise.reject(error);
                         }
@@ -422,7 +422,7 @@ export class AddonModLessonPlayerPage implements OnInit, OnDestroy {
             // Not a valid page, return to entry view.
             // This happens, for example, when the user clicks to go to previous page and there is no previous page.
             this.forceLeave = true;
-            this.navCtrl.pop();
+            CoreNavigator.back();
 
             return Promise.resolve();
         } else if (pageId == AddonModLessonProvider.LESSON_EOL) {

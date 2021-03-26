@@ -66,7 +66,7 @@ export class AddonNotesListComponent implements OnInit, OnDestroy {
                 this.refreshIcon = 'spinner';
                 this.syncIcon = 'spinner';
 
-                CoreDomUtils.scrollToTop(this.content);
+                this.content.scrollToTop();
                 this.fetchNotes(false);
             }
         }, sitesProvider.getCurrentSiteId());

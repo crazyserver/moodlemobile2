@@ -32,6 +32,6 @@ export class CoreCoursesMyCoursesPage {
      * Go to search courses.
      */
     openSearch(): void {
-        this.navCtrl.push('CoreCoursesSearchPage');
+        CoreNavigator.navigate('CoreCoursesSearchPage');
     }
 }

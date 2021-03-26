@@ -359,7 +359,7 @@ export class AddonModH5PActivityIndexComponent extends CoreCourseModuleMainActiv
         this.isOpeningPage = true;
 
         try {
-            await this.navCtrl.push('AddonModH5PActivityUserAttemptsPage', {
+            await CoreNavigator.navigate('AddonModH5PActivityUserAttemptsPage', {
                 courseId: this.courseId,
                 h5pActivityId: this.h5pActivity.id,
             });

@@ -127,7 +127,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
 
                 if (isNewer) {
                     // The last message is newer than the previous one, scroll to top to keep viewing the conversation.
-                    CoreDomUtils.scrollToTop(this.content);
+                    this.content.scrollToTop();
                 }
             }
         }, this.siteId);
@@ -700,7 +700,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
      * Navigate to the search page.
      */
     gotoSearch(): void {
-        this.navCtrl.push('AddonMessagesSearchPage');
+        CoreNavigator.navigate('AddonMessagesSearchPage');
     }
 
     /**

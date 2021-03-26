@@ -85,7 +85,7 @@ export class AddonModFeedbackAttemptPage {
         }).catch((message) => {
             CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
             // Some call failed on first fetch, go back.
-            this.navCtrl.pop();
+            CoreNavigator.back();
 
             return Promise.reject(null);
         }).finally(() => {

@@ -235,7 +235,7 @@ export class AddonCalendarListPage implements OnDestroy {
 
             this.filterEvents();
 
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
         });
 
         // Refresh online status when changes.
@@ -658,7 +658,7 @@ export class AddonCalendarListPage implements OnDestroy {
      * Open calendar events settings.
      */
     openSettings(): void {
-        this.navCtrl.push('AddonCalendarSettingsPage');
+        CoreNavigator.navigate('AddonCalendarSettingsPage');
     }
 
     /**

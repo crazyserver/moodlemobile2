@@ -296,7 +296,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
      * Go to the page to add or edit submission.
      */
     goToEdit(): void {
-        this.navCtrl.push('AddonModAssignEditPage', {
+        CoreNavigator.navigate('AddonModAssignEditPage', {
             moduleId: this.moduleId,
             courseId: this.courseId,
             userId: this.submitId,

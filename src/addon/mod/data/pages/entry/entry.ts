@@ -104,7 +104,7 @@ export class AddonModDataEntryPage implements OnDestroy {
             if ((data.entryId == this.entryId || data.offlineEntryId == this.entryId) && this.data.id == data.dataId) {
                 if (data.deleted) {
                     // If deleted, go back.
-                    this.navCtrl.pop();
+                    CoreNavigator.back();
                 } else {
                     this.entryId = data.entryid;
                     this.entryLoaded = false;
@@ -118,7 +118,7 @@ export class AddonModDataEntryPage implements OnDestroy {
             if (data.entryId == this.entryId && this.data.id == data.dataId) {
                 if (data.deleted) {
                     // If deleted, go back.
-                    this.navCtrl.pop();
+                    CoreNavigator.back();
                 } else {
                     this.entryLoaded = false;
                     this.fetchEntryData(true);
@@ -183,7 +183,7 @@ export class AddonModDataEntryPage implements OnDestroy {
 
             CoreDomUtils.showErrorModalDefault(message, 'core.course.errorgetmodule', true);
         }).finally(() => {
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
             this.entryLoaded = true;
         });
     }

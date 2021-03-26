@@ -119,6 +119,6 @@ export class CoreCoursesCategoriesPage {
      * @param categoryId The category ID.
      */
     openCategory(categoryId: number): void {
-        this.navCtrl.push('CoreCoursesCategoriesPage', { categoryId: categoryId });
+        CoreNavigator.navigate('CoreCoursesCategoriesPage', { categoryId: categoryId });
     }
 }

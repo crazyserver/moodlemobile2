@@ -222,7 +222,7 @@ export class CoreLoginEmailSignupPage {
         } else {
             CoreDomUtils.showErrorModal(
                 Translate.instant('core.login.signupplugindisabled', { $a: Translate.instant('core.login.auth_email') }));
-            this.navCtrl.pop();
+            CoreNavigator.back();
 
             return false;
         }
@@ -290,7 +290,7 @@ export class CoreLoginEmailSignupPage {
                         // Show alert and ho back.
                         const message = Translate.instant('core.login.emailconfirmsent', { $a: params.email });
                         CoreDomUtils.showAlert(Translate.instant('core.success'), message);
-                        this.navCtrl.pop();
+                        CoreNavigator.back();
                     } else {
                         if (result.warnings && result.warnings.length) {
                             let error = result.warnings[0].message;

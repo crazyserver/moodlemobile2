@@ -89,11 +89,11 @@ export class AddonModChatChatPage {
                 this.startPolling();
             }).catch((error) => {
                 CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileretrievingmessages', true);
-                this.navCtrl.pop();
+                CoreNavigator.back();
             });
         }).catch((error) => {
             CoreDomUtils.showErrorModalDefault(error, 'addon.mod_chat.errorwhileconnecting', true);
-            this.navCtrl.pop();
+            CoreNavigator.back();
         }).finally(() => {
             this.loaded = true;
         });

@@ -144,7 +144,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
      * @param handler Handler to open.
      */
     openHandler(handler: CoreMainMenuHandlerData): void {
-        this.navCtrl.push(handler.page, handler.pageParams);
+        CoreNavigator.navigate(handler.page, handler.pageParams);
     }
 
     /**
@@ -153,21 +153,21 @@ export class CoreMainMenuMorePage implements OnDestroy {
      * @param item Item to open.
      */
     openItem(item: CoreMainMenuCustomItem): void {
-        this.navCtrl.push('CoreViewerIframePage', {title: item.label, url: item.url});
+        CoreNavigator.navigate('CoreViewerIframePage', {title: item.label, url: item.url});
     }
 
     /**
      * Open app settings page.
      */
     openAppSettings(): void {
-        this.navCtrl.push('CoreAppSettingsPage');
+        CoreNavigator.navigate('CoreAppSettingsPage');
     }
 
     /**
      * Open site settings page.
      */
     openSitePreferences(): void {
-        this.navCtrl.push('CoreSitePreferencesPage');
+        CoreNavigator.navigate('CoreSitePreferencesPage');
     }
 
     /**

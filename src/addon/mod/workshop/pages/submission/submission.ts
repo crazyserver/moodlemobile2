@@ -166,7 +166,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
             submissionId: this.submission.id
         };
 
-        this.navCtrl.push('AddonModWorkshopEditSubmissionPage', params);
+        CoreNavigator.navigate('AddonModWorkshopEditSubmissionPage', params);
     }
 
     /**
@@ -176,7 +176,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
      */
     protected eventReceived(data: any): void {
         if (this.workshopId === data.workshopId) {
-            CoreDomUtils.scrollToTop(this.content);
+            this.content.scrollToTop();
 
             this.loaded = false;
             this.refreshAllData();
@@ -353,7 +353,7 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
      */
     protected forceLeavePage(): void {
         this.forceLeave = true;
-        this.navCtrl.pop();
+        CoreNavigator.back();
     }
 
     /**
