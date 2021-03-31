@@ -231,7 +231,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
                 promises.push(this.prefetchGroupsInfo(forum, courseId, forum.cancreatediscussions, siteId));
 
                 // Prefetch avatars.
-                promises.push(this.userProvider.prefetchUserAvatars(posts, 'userpictureurl', siteId));
+                promises.push(CoreUser.prefetchUserAvatars(posts, 'userpictureurl', siteId));
 
                 return Promise.all(promises);
             }));
@@ -241,7 +241,7 @@ export class AddonModForumPrefetchHandler extends CoreCourseActivityPrefetchHand
 
             // Prefetch sort order preference.
             if (this.forumProvider.isDiscussionListSortingAvailable()) {
-               promises.push(this.userProvider.getUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER, siteId));
+               promises.push(CoreUser.getUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER, siteId));
             }
 
             return Promise.all(promises);

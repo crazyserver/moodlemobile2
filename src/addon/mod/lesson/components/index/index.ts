@@ -485,7 +485,7 @@ export class AddonModLessonIndexComponent extends CoreCourseModuleMainActivityCo
                 data.students.forEach((student) => {
                     student.bestgrade = CoreTextUtils.roundToDecimals(student.bestgrade, 2);
 
-                    promises.push(this.userProvider.getProfile(student.id, this.courseId, true).then((user) => {
+                    promises.push(CoreUser.getProfile(student.id, this.courseId, true).then((user) => {
                         student.profileimageurl = user.profileimageurl;
                     }).catch(() => {
                         // Error getting profile, resolve promise without adding any extra data.

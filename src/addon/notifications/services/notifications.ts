@@ -86,7 +86,7 @@ export class AddonNotificationsProvider {
 
             if (notification.useridfrom > 0) {
                 // Try to get the profile picture of the user.
-                return this.userProvider.getProfile(notification.useridfrom, notification.courseid, true).then((user) => {
+                return CoreUser.getProfile(notification.useridfrom, notification.courseid, true).then((user) => {
                     notification.profileimageurlfrom = user.profileimageurl;
                     notification.userfromfullname = user.fullname;
 

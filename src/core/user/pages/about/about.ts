@@ -62,7 +62,7 @@ export class CoreUserAboutPage {
      * Fetches the user and updates the view.
      */
     fetchUser(): Promise<any> {
-        return this.userProvider.getProfile(this.userId, this.courseId).then((user) => {
+        return CoreUser.getProfile(this.userId, this.courseId).then((user) => {
 
             if (user.address) {
                 user.address = this.userHelper.formatAddress(user.address, user.city, user.country);
@@ -85,7 +85,7 @@ export class CoreUserAboutPage {
      * @param refresher Refresher.
      */
     refreshUser(refresher?: any): void {
-        this.userProvider.invalidateUserCache(this.userId).finally(() => {
+        CoreUser.invalidateUserCache(this.userId).finally(() => {
             this.fetchUser().finally(() => {
                 CoreEvents.trigger(CoreUserProvider.PROFILE_REFRESHED, {
                     courseId: this.courseId, userId: this.userId,

@@ -91,7 +91,7 @@ export class AddonModWorkshopSubmissionComponent implements OnInit {
         }
 
         if (this.userId) {
-            promises.push(this.userProvider.getProfile(this.userId, this.courseId, true).then((profile) => {
+            promises.push(CoreUser.getProfile(this.userId, this.courseId, true).then((profile) => {
                 this.profile = profile;
             }));
         }
@@ -100,7 +100,7 @@ export class AddonModWorkshopSubmissionComponent implements OnInit {
             CoreNavigator.getActive().name !== 'AddonModWorkshopSubmissionPage';
 
         if (this.viewDetails && this.submission.gradeoverby) {
-            promises.push(this.userProvider.getProfile(this.submission.gradeoverby, this.courseId, true).then((profile) => {
+            promises.push(CoreUser.getProfile(this.submission.gradeoverby, this.courseId, true).then((profile) => {
                 this.evaluateByProfile = profile;
             }));
         }

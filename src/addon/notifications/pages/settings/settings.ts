@@ -216,7 +216,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
 
         processorState.updating = true;
 
-        this.userProvider.updateUserPreference(preferenceName, value).then(() => {
+        CoreUser.updateUserPreference(preferenceName, value).then(() => {
             // Update the preferences since they were modified.
             this.updatePreferencesAfterDelay();
         }).catch((message) => {
@@ -233,7 +233,7 @@ export class AddonNotificationsSettingsPage implements OnDestroy {
      */
     enableAll(enable: boolean): void {
         const modal = CoreDomUtils.showModalLoading('core.sending', true);
-        this.userProvider.updateUserPreferences([], !enable).then(() => {
+        CoreUser.updateUserPreferences([], !enable).then(() => {
             // Update the preferences since they were modified.
             this.updatePreferencesAfterDelay();
         }).catch((message) => {

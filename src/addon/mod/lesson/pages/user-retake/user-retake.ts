@@ -147,7 +147,7 @@ export class AddonModLessonUserRetakePage implements OnInit {
             }
 
             // Get the profile image of the user.
-           return this.userProvider.getProfile(student.id, this.courseId, true).then((user) => {
+           return CoreUser.getProfile(student.id, this.courseId, true).then((user) => {
                 student.profileimageurl = user.profileimageurl;
 
                 return student;

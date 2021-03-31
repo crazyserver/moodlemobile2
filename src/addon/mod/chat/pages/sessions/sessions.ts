@@ -81,7 +81,7 @@ export class AddonModChatSessionsPage {
                 session.sessionusers.forEach((sessionUser: AddonModChatUserSessionFormatted) => {
                     if (!sessionUser.userfullname) {
                         // The WS does not return the user name, fetch user profile.
-                        promises.push(this.userProvider.getProfile(sessionUser.userid, this.courseId, true).then((user) => {
+                        promises.push(CoreUser.getProfile(sessionUser.userid, this.courseId, true).then((user) => {
                             sessionUser.userfullname = user.fullname;
                         }).catch(() => {
                             // Error getting profile, most probably the user is deleted.

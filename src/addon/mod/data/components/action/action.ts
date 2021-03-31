@@ -59,7 +59,7 @@ export class AddonModDataActionComponent implements OnInit {
      */
     ngOnInit(): void {
         if (this.action == 'userpicture') {
-            this.userProvider.getProfile(this.entry.userid, this.database.courseid).then((profile) => {
+            CoreUser.getProfile(this.entry.userid, this.database.courseid).then((profile) => {
                 this.userPicture = profile.profileimageurl;
             });
         }

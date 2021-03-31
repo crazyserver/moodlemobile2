@@ -40,7 +40,7 @@ export class AddonCompetencyHelperProvider {
         }
 
         // Get the user profile to retrieve the user image.
-        return this.userProvider.getProfile(userId, null, true).then((user) => {
+        return CoreUser.getProfile(userId, null, true).then((user) => {
             user.profileimageurl = user.profileimageurl || true;
 
             return user;

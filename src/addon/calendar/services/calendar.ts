@@ -716,7 +716,7 @@ export class AddonCalendarProvider {
      */
     getCalendarLookAhead(siteId?: string): Promise<number> {
         return CoreSites.getSite(siteId).then((site) => {
-            return this.userProvider.getUserPreference('calendar_lookahead').catch((error) => {
+            return CoreUser.getUserPreference('calendar_lookahead').catch((error) => {
                 // Ignore errors.
             }).then((value): any => {
                 if (value != null) {
@@ -736,7 +736,7 @@ export class AddonCalendarProvider {
      */
     getCalendarTimeFormat(siteId?: string): Promise<string> {
         return CoreSites.getSite(siteId).then((site) => {
-            return this.userProvider.getUserPreference('calendar_timeformat').catch((error) => {
+            return CoreUser.getUserPreference('calendar_timeformat').catch((error) => {
                 // Ignore errors.
             }).then((format) => {
 
@@ -1498,7 +1498,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateLookAhead(siteId?: string): Promise<any> {
-        return this.userProvider.invalidateUserPreference('calendar_lookahead', siteId);
+        return CoreUser.invalidateUserPreference('calendar_lookahead', siteId);
     }
 
     /**
@@ -1508,7 +1508,7 @@ export class AddonCalendarProvider {
      * @return Promise resolved when the data is invalidated.
      */
     invalidateTimeFormat(siteId?: string): Promise<any> {
-        return this.userProvider.invalidateUserPreference('calendar_timeformat', siteId);
+        return CoreUser.invalidateUserPreference('calendar_timeformat', siteId);
     }
 
     /**

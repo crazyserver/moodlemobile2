@@ -510,7 +510,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
      * @return Promise resolved when done.
      */
     protected async loadSubmissionUserProfile(): Promise<void> {
-        this.user = await this.userProvider.getProfile(this.submitId, this.courseId);
+        this.user = await CoreUser.getProfile(this.submitId, this.courseId);
     }
 
     /**
@@ -563,7 +563,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
 
             // If we have data about the grader, get its profile.
             if (feedback.grade && feedback.grade.grader > 0) {
-                this.userProvider.getProfile(feedback.grade.grader, this.courseId).then((profile) => {
+                CoreUser.getProfile(feedback.grade.grader, this.courseId).then((profile) => {
                     this.grader = profile;
                 }).catch(() => {
                     // Ignore errors.
@@ -1002,7 +1002,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy {
                             this.membersToSubmit.push(blindId);
                         }));
                     } else {
-                        promises.push(this.userProvider.getProfile(member, this.courseId).then((profile) => {
+                        promises.push(CoreUser.getProfile(member, this.courseId).then((profile) => {
                             this.membersToSubmit.push(profile);
                         }));
                     }

@@ -66,7 +66,7 @@ export class AddonModWorkshopAssessmentComponent implements OnInit {
         this.canSelfAssess = canAssess && userId == this.currentUserId;
 
         if (userId) {
-            promises.push(this.userProvider.getProfile(userId, this.courseId, true).then((profile) => {
+            promises.push(CoreUser.getProfile(userId, this.courseId, true).then((profile) => {
                 this.profile = profile;
             }));
         }

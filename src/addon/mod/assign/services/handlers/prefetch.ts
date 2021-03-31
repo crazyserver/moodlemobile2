@@ -382,7 +382,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
                         }).then(() => {
                             // Participiants already fetched, we don't need to ignore cache now.
                             return this.assignHelper.getParticipants(assign, group.id, {siteId}).then((participants) => {
-                                return this.userProvider.prefetchUserAvatars(participants, 'profileimageurl', siteId);
+                                return CoreUser.prefetchUserAvatars(participants, 'profileimageurl', siteId);
                             }).catch(() => {
                                 // Fail silently (Moodle < 3.2).
                             });
@@ -497,7 +497,7 @@ export class AddonModAssignPrefetchHandler extends CoreCourseActivityPrefetchHan
         }
 
         // Prefetch user profiles.
-        promises.push(this.userProvider.prefetchProfiles(userIds, courseId, siteId));
+        promises.push(CoreUser.prefetchProfiles(userIds, courseId, siteId));
 
         return Promise.all(promises);
     }

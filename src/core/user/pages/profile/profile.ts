@@ -68,7 +68,7 @@ export class CoreUserProfilePage {
             this.userId == this.site.getUserId() &&
             this.site.canUploadFiles() &&
             this.site.wsAvailable('core_user_update_picture') &&
-            !this.userProvider.isUpdatePictureDisabledInSite(this.site);
+            !CoreUser.isUpdatePictureDisabledInSite(this.site);
 
         this.obsProfileRefreshed = CoreEvents.on(CoreUserProvider.PROFILE_REFRESHED, (data) => {
             if (this.user && typeof data.user != 'undefined') {
@@ -83,7 +83,7 @@ export class CoreUserProfilePage {
      */
     ngOnInit(): void {
         this.fetchUser().then(() => {
-            return this.userProvider.logView(this.userId, this.courseId, this.user.fullname).catch((error) => {
+            return CoreUser.logView(this.userId, this.courseId, this.user.fullname).catch((error) => {
                 this.isDeleted = error.errorcode === 'userdeleted';
                 this.isEnrolled = error.errorcode !== 'notenrolledprofile';
             });
@@ -96,7 +96,7 @@ export class CoreUserProfilePage {
      * Fetches the user and updates the view.
      */
     fetchUser(): Promise<any> {
-        return this.userProvider.getProfile(this.userId, this.courseId).then((user) => {
+        return CoreUser.getProfile(this.userId, this.courseId).then((user) => {
 
             user.address = this.userHelper.formatAddress('', user.city, user.country);
             user.roles = this.userHelper.formatRoleList(user.roles);
@@ -171,7 +171,7 @@ export class CoreUserProfilePage {
         return this.fileUploaderHelper.selectAndUploadFile(maxSize, title, mimetypes).then((result) => {
             const modal = CoreDomUtils.showModalLoading('core.sending', true);
 
-            return this.userProvider.changeProfilePicture(result.itemid, this.userId).then((profileImageURL) => {
+            return CoreUser.changeProfilePicture(result.itemid, this.userId).then((profileImageURL) => {
                 CoreEvents.trigger(CoreUserProvider.PROFILE_PICTURE_UPDATED, {
                     userId: this.userId,
                     picture: profileImageURL
@@ -196,7 +196,7 @@ export class CoreUserProfilePage {
     refreshUser(refresher?: any): void {
         const promises = [];
 
-        promises.push(this.userProvider.invalidateUserCache(this.userId));
+        promises.push(CoreUser.invalidateUserCache(this.userId));
         promises.push(CoreCourses.invalidateUserNavigationOptions());
         promises.push(CoreCourses.invalidateUserAdministrationOptions());
 

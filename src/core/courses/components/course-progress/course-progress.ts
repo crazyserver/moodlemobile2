@@ -254,7 +254,7 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
         this.showSpinner = true;
 
         // We should use null to unset the preference.
-        this.userProvider.updateUserPreference('block_myoverview_hidden_course_' + this.course.id, hide ? 1 : null).then(() => {
+        CoreUser.updateUserPreference('block_myoverview_hidden_course_' + this.course.id, hide ? 1 : null).then(() => {
             this.course.hidden = hide;
             CoreEvents.trigger(CoreCoursesProvider.EVENT_MY_COURSES_UPDATED, {
                 courseId: this.course.id,

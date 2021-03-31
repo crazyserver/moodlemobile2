@@ -398,7 +398,7 @@ export class AddonModWorkshopPrefetchHandler extends CoreCourseActivityPrefetchH
             });
         }).then(() => {
             // Prefetch user profiles.
-            return this.userProvider.prefetchProfiles(userIds, courseId, siteId);
+            return CoreUser.prefetchProfiles(userIds, courseId, siteId);
         });
     }
 

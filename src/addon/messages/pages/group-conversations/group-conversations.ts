@@ -555,7 +555,7 @@ export class AddonMessagesGroupConversationsPage implements OnInit, OnDestroy {
                     }
                 } else {
                     // Get the user data and create a new conversation if it belongs to the current option.
-                    promises.push(this.userProvider.getProfile(message.touserid, undefined, true).catch(() => {
+                    promises.push(CoreUser.getProfile(message.touserid, undefined, true).catch(() => {
                         // User not found.
                     }).then((user) => {
                         const conversation = {

@@ -252,7 +252,7 @@ export class AddonModFeedbackHelperProvider {
      */
     protected addImageProfileToAttempts(attempts: any): Promise<any> {
         const promises = attempts.map((attempt) => {
-            return this.userProvider.getProfile(attempt.userid, attempt.courseid, true).then((user) => {
+            return CoreUser.getProfile(attempt.userid, attempt.courseid, true).then((user) => {
                 attempt.profileimageurl = user.profileimageurl;
             }).catch(() => {
                 // Error getting profile, resolve promise without adding any extra data.

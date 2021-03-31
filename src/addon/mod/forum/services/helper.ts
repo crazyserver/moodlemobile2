@@ -194,7 +194,7 @@ export class AddonModForumHelperProvider {
         }
 
         // Get user data.
-        promises.push(this.userProvider.getProfile(offlineReply.userid, offlineReply.courseid, true).then((user) => {
+        promises.push(CoreUser.getProfile(offlineReply.userid, offlineReply.courseid, true).then((user) => {
             reply.author.fullname = user.fullname;
             reply.author.urls = { profileimage: user.profileimageurl };
         }).catch(() => {

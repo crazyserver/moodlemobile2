@@ -53,7 +53,7 @@ export class CoreUserParticipantsComponent implements OnInit {
      * View loaded.
      */
     ngOnInit(): void {
-        this.canSearch = this.userProvider.canSearchParticipantsInSite();
+        this.canSearch = CoreUser.canSearchParticipantsInSite();
 
         // Get first participants.
         this.fetchData(true).then(() => {
@@ -62,7 +62,7 @@ export class CoreUserParticipantsComponent implements OnInit {
                 this.gotoParticipant(this.participants[0].id);
             }
             // Add log in Moodle.
-            this.userProvider.logParticipantsView(this.courseId).catch(() => {
+            CoreUser.logParticipantsView(this.courseId).catch(() => {
                 // Ignore errors.
             });
         }).finally(() => {
@@ -81,7 +81,7 @@ export class CoreUserParticipantsComponent implements OnInit {
         const firstToGet = refresh ? 0 : this.participants.length;
         this.loadMoreError = false;
 
-        return this.userProvider.getParticipants(this.courseId, firstToGet).then((data) => {
+        return CoreUser.getParticipants(this.courseId, firstToGet).then((data) => {
             if (refresh) {
                 this.participants = data.participants;
             } else {
@@ -120,7 +120,7 @@ export class CoreUserParticipantsComponent implements OnInit {
      * @param refresher Refresher.
      */
     refreshParticipants(refresher: any): void {
-        this.userProvider.invalidateParticipantsList(this.courseId).finally(() => {
+        CoreUser.invalidateParticipantsList(this.courseId).finally(() => {
             this.fetchData(true).finally(() => {
                 refresher?.detail.complete();
             });
@@ -192,7 +192,7 @@ export class CoreUserParticipantsComponent implements OnInit {
             this.splitviewCtrl.emptyDetails();
         }
 
-        return this.userProvider.searchParticipants(this.courseId, query, true, this.searchPage).then((result) => {
+        return CoreUser.searchParticipants(this.courseId, query, true, this.searchPage).then((result) => {
 
             this.participants.push(...result.participants);
             this.canLoadMore = result.canLoadMore;

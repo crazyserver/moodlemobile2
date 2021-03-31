@@ -220,7 +220,7 @@ export class AddonMessagesDiscussionPage implements OnDestroy {
 
         if (!this.groupMessagingEnabled && this.userId) {
             // Get the user profile to retrieve the user fullname and image.
-            this.userProvider.getProfile(this.userId, undefined, true).then((user) => {
+            CoreUser.getProfile(this.userId, undefined, true).then((user) => {
                 if (!this.title) {
                     this.title = user.fullname;
                 }

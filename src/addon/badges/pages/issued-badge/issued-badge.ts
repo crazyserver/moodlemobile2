@@ -70,7 +70,7 @@ export class AddonBadgesIssuedBadgePage {
         const promises = [];
 
         this.currentTime = CoreTimeUtils.timestamp();
-        promises.push(this.userProvider.getProfile(this.userId, this.courseId, true).then((user) => {
+        promises.push(CoreUser.getProfile(this.userId, this.courseId, true).then((user) => {
             this.user = user;
         }));
 

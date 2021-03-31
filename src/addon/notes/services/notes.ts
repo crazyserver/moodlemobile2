@@ -366,7 +366,7 @@ export class AddonNotesProvider {
     getNotesUserData(notes: AddonNotesNoteFormatted[], courseId: number): Promise<AddonNotesNoteFormatted[]> {
         const promises = notes.map((note) => {
             // Get the user profile to retrieve the user image.
-            return this.userProvider.getProfile(note.userid, note.courseid, true).then((user) => {
+            return CoreUser.getProfile(note.userid, note.courseid, true).then((user) => {
                 note.userfullname = user.fullname;
                 note.userprofileimageurl = user.profileimageurl || null;
             }).catch(() => {

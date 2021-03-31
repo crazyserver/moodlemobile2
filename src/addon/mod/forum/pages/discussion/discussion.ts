@@ -168,7 +168,7 @@ export class AddonModForumDiscussionPage implements OnDestroy {
             return value;
         } catch (error) {
             try {
-                const value = await this.userProvider.getUserPreference('forum_displaymode');
+                const value = await CoreUser.getUserPreference('forum_displaymode');
 
                 switch (Number(value)) {
                     case 1:

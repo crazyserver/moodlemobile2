@@ -146,7 +146,7 @@ export class CoreCourseModuleCompletionComponent implements OnChanges {
                 if (this.completion.overrideby > 0) {
                     langKey += '-override';
 
-                    promise = this.userProvider.getProfile(this.completion.overrideby, this.completion.courseId, true).then(
+                    promise = CoreUser.getProfile(this.completion.overrideby, this.completion.courseId, true).then(
                         (profile) => {
                             return {
                                 overrideuser: profile.fullname,

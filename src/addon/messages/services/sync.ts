@@ -324,7 +324,7 @@ export class AddonMessagesSyncProvider extends CoreSyncBaseProvider {
             } else {
 
                 // Get user full name and add errors to warnings array.
-                return this.userProvider.getProfile(userId, undefined, true).catch(() => {
+                return CoreUser.getProfile(userId, undefined, true).catch(() => {
                     // Ignore errors.
                     return {};
                 }).then((user) => {

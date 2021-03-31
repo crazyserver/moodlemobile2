@@ -97,6 +97,6 @@ export class CoreUserParticipantsLinkHandler extends CoreContentLinksHandlerBase
             return false;
         }
 
-        return this.userProvider.isPluginEnabledForCourse(courseId, siteId);
+        return CoreUser.isPluginEnabledForCourse(courseId, siteId);
     }
 }

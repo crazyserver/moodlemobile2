@@ -42,7 +42,7 @@ export class CoreUserParticipantsCourseOptionHandler implements CoreCourseOption
             return Promise.resolve();
         }
 
-        return this.userProvider.invalidateParticipantsList(courseId);
+        return CoreUser.invalidateParticipantsList(courseId);
     }
 
     /**
@@ -72,7 +72,7 @@ export class CoreUserParticipantsCourseOptionHandler implements CoreCourseOption
             return navOptions.participants;
         }
 
-        return this.userProvider.isPluginEnabledForCourse(courseId);
+        return CoreUser.isPluginEnabledForCourse(courseId);
     }
 
     /**
@@ -108,7 +108,7 @@ export class CoreUserParticipantsCourseOptionHandler implements CoreCourseOption
      * @return Promise resolved when done.
      */
     protected getParticipantsPage(courseId: number, limitFrom: number): Promise<any> {
-        return this.userProvider.getParticipants(courseId, limitFrom, undefined, undefined, true).then((result) => {
+        return CoreUser.getParticipants(courseId, limitFrom, undefined, undefined, true).then((result) => {
             if (result.canLoadMore) {
                 // There are more participants, load the next ones.
                 return this.getParticipantsPage(courseId, limitFrom + result.participants.length);

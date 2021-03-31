@@ -301,14 +301,14 @@ export class AddonModWorkshopSubmissionPage implements OnInit, OnDestroy {
                 }));
             } else if (this.workshop.phase == AddonModWorkshopProvider.PHASE_CLOSED && submissionData.gradeoverby &&
                     this.evaluate && this.evaluate.text) {
-                promises.push(this.userProvider.getProfile(submissionData.gradeoverby, this.courseId, true).then((profile) => {
+                promises.push(CoreUser.getProfile(submissionData.gradeoverby, this.courseId, true).then((profile) => {
                     this.evaluateByProfile = profile;
                 }));
             }
 
             if (this.assessmentId && !this.access.assessingallowed && this.assessment.feedbackreviewer &&
                     this.assessment.gradinggradeoverby) {
-                promises.push(this.userProvider.getProfile(this.assessment.gradinggradeoverby, this.courseId, true)
+                promises.push(CoreUser.getProfile(this.assessment.gradinggradeoverby, this.courseId, true)
                         .then((profile) => {
                     this.evaluateGradingByProfile = profile;
                 }));

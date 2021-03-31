@@ -164,7 +164,7 @@ export class AddonModChatProvider {
             : Promise<(AddonModChatMessageForView | AddonModChatSessionMessageForView)[]> {
 
         const promises = messages.map((message: AddonModChatMessageForView | AddonModChatSessionMessageForView) => {
-            return this.userProvider.getProfile(message.userid, courseId, true).then((user) => {
+            return CoreUser.getProfile(message.userid, courseId, true).then((user) => {
                 message.userfullname = user.fullname;
                 message.userprofileimageurl = user.profileimageurl;
             }).catch(() => {

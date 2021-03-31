@@ -355,7 +355,7 @@ export class CoreCommentsViewerPage implements OnDestroy {
      */
     protected loadCommentProfile(comment: any): Promise<any> {
         // Get the user profile image.
-        return this.userProvider.getProfile(comment.userid, undefined, true).then((user) => {
+        return CoreUser.getProfile(comment.userid, undefined, true).then((user) => {
             comment.profileimageurl = user.profileimageurl;
             comment.fullname = user.fullname;
             comment.userid = user.id;

@@ -191,7 +191,7 @@ export class AddonModGlossaryPrefetchHandler extends CoreCourseActivityPrefetchH
                 promises.push(CoreFilepool.addFilesToQueue(siteId, files, this.component, module.id));
 
                 // Prefetch user avatars.
-                promises.push(this.userProvider.prefetchUserAvatars(entries, 'userpictureurl', siteId));
+                promises.push(CoreUser.prefetchUserAvatars(entries, 'userpictureurl', siteId));
 
                 return Promise.all(promises);
             }));

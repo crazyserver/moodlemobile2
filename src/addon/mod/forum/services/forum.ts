@@ -833,7 +833,7 @@ export class AddonModForumProvider {
             });
 
             if (this.isDiscussionListSortingAvailable()) {
-                promises.push(this.userProvider.invalidateUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER));
+                promises.push(CoreUser.invalidateUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER));
             }
 
             return CoreUtils.allPromises(promises);
@@ -1140,7 +1140,7 @@ export class AddonModForumProvider {
             }
         });
 
-        this.userProvider.storeUsers(CoreUtils.objectToArray(users));
+        CoreUser.storeUsers(CoreUtils.objectToArray(users));
     }
 
     /**

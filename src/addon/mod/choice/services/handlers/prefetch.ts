@@ -99,7 +99,7 @@ export class AddonModChoicePrefetchHandler extends CoreCourseActivityPrefetchHan
                 options.forEach((option) => {
                     option.userresponses.forEach((response) => {
                         if (response.userid) {
-                            subPromises.push(this.userProvider.getProfile(response.userid, courseId, false, siteId));
+                            subPromises.push(CoreUser.getProfile(response.userid, courseId, false, siteId));
                         }
                         if (response.profileimageurl) {
                             subPromises.push(CoreFilepool.addToQueueByUrl(siteId, response.profileimageurl).catch(() => {

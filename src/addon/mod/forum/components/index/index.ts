@@ -318,7 +318,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                     offlineDiscussions.forEach((discussion) => {
                         if (discussion.parent != 0 || this.forum.type != 'single') {
                             // Do not show author for first post and type single.
-                            userPromises.push(this.userProvider.getProfile(discussion.userid, this.courseId, true)
+                            userPromises.push(CoreUser.getProfile(discussion.userid, this.courseId, true)
                                     .then((user) => {
                                 discussion.userfullname = user.fullname;
                                 discussion.userpictureurl = user.profileimageurl;
@@ -441,7 +441,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
     protected fetchSortOrderPreference(): Promise<any> {
         let promise;
         if (this.sortingAvailable) {
-            promise = this.userProvider.getUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER).then((value) => {
+            promise = CoreUser.getUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER).then((value) => {
                 return value ? parseInt(value, 10) : null;
             });
         } else {
@@ -471,7 +471,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
         }
 
         if (this.sortingAvailable) {
-            promises.push(this.userProvider.invalidateUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER));
+            promises.push(CoreUser.invalidateUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER));
         }
 
         return Promise.all(promises);
@@ -596,7 +596,7 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
             if (sortOrder && sortOrder.value != this.selectedSortOrder.value) {
                 this.selectedSortOrder = sortOrder;
                 this.page = 0;
-                this.userProvider.setUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER, sortOrder.value.toFixed(0))
+                CoreUser.setUserPreference(AddonModForumProvider.PREFERENCE_SORTORDER, sortOrder.value.toFixed(0))
                         .then(() => {
                     this.showLoadingAndFetch();
                 }).catch((error) => {

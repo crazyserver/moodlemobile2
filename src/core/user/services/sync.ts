@@ -74,13 +74,13 @@ export class CoreUserSyncProvider extends CoreSyncBaseProvider {
 
         const syncPromise = this.userOffline.getChangedPreferences(siteId).then((preferences) => {
             return CoreUtils.allPromises(preferences.map((preference) => {
-                return this.userProvider.getUserPreferenceOnline(preference.name, siteId).then((onlineValue) => {
+                return CoreUser.getUserPreferenceOnline(preference.name, siteId).then((onlineValue) => {
                     if (preference.onlinevalue != onlineValue) {
                         // Prefernce was changed on web while the app was offline, do not sync.
                         return this.userOffline.setPreference(preference.name, onlineValue, onlineValue, siteId);
                     }
 
-                    return this.userProvider.setUserPreference(preference.name, preference.value, siteId).catch((error) => {
+                    return CoreUser.setUserPreference(preference.name, preference.value, siteId).catch((error) => {
                         if (CoreUtils.isWebServiceError(error)) {
                             warnings.push(CoreTextUtils.getErrorMessageFromError(error));
                         } else {

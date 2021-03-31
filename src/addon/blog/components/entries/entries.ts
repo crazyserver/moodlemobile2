@@ -165,7 +165,7 @@ export class AddonBlogEntriesComponent implements OnInit {
 
                 entry.summary = CoreTextUtils.replacePluginfileUrls(entry.summary, entry.summaryfiles || []);
 
-                return this.userProvider.getProfile(entry.userid, entry.courseid, true).then((user) => {
+                return CoreUser.getProfile(entry.userid, entry.courseid, true).then((user) => {
                     entry.user = user;
                 }).catch(() => {
                     // Ignore errors.

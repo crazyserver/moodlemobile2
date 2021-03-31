@@ -513,7 +513,7 @@ export class AddonModScormOfflineProvider {
                 fullName = site.getInfo().fullname;
                 userName = site.getInfo().username;
             } else {
-                return this.userProvider.getProfile(userId).then((profile) => {
+                return CoreUser.getProfile(userId).then((profile) => {
                     fullName = profile.fullname;
                     userName = profile.username || '';
                 }).catch(() => {

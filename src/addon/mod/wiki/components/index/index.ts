@@ -863,7 +863,7 @@ export class AddonModWikiIndexComponent extends CoreCourseModuleMainActivityComp
 
                 if (userId != 0) {
                     // Get user if it has userId.
-                    promises.push(this.userProvider.getProfile(userId, this.courseId, true).then((user) => {
+                    promises.push(CoreUser.getProfile(userId, this.courseId, true).then((user) => {
                         subwikiList.push({
                             name: user.fullname,
                             id: subwiki.id,

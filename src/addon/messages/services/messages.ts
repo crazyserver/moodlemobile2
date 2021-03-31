@@ -653,7 +653,7 @@ export class AddonMessagesProvider {
                     return { contacts: [], canLoadMore: false };
                 }
 
-                this.userProvider.storeUsers(contacts, site.id);
+                CoreUser.storeUsers(contacts, site.id);
 
                 if (limitNum <= 0) {
                     return { contacts, canLoadMore: false };
@@ -697,7 +697,7 @@ export class AddonMessagesProvider {
                     return { requests: [], canLoadMore: false };
                 }
 
-                this.userProvider.storeUsers(requests, site.id);
+                CoreUser.storeUsers(requests, site.id);
 
                 if (limitNum <= 0) {
                     return { requests, canLoadMore: false };
@@ -1275,7 +1275,7 @@ export class AddonMessagesProvider {
         for (const userId in discussions) {
             if (!discussions[userId].profileimageurl) {
                 // We don't have the user image. Try to retrieve it.
-                promises.push(this.userProvider.getProfile(discussions[userId].message.user, 0, true, siteId).then((user) => {
+                promises.push(CoreUser.getProfile(discussions[userId].message.user, 0, true, siteId).then((user) => {
                     discussions[userId].profileimageurl = user.profileimageurl;
                 }).catch(() => {
                     // Error getting profile, resolve promise without adding any extra data.
@@ -2271,7 +2271,7 @@ export class AddonMessagesProvider {
                 if (limit && contacts.length > limit) {
                     contacts = contacts.splice(0, limit);
                 }
-                this.userProvider.storeUsers(contacts);
+                CoreUser.storeUsers(contacts);
 
                 return contacts;
             });
@@ -2313,7 +2313,7 @@ export class AddonMessagesProvider {
                     contact.id = contact.userid;
                 });
 
-                this.userProvider.storeUsers(result.contacts, site.id);
+                CoreUser.storeUsers(result.contacts, site.id);
 
                 if (limitNum <= 0) {
                     return { messages: result.contacts, canLoadMore: false };
@@ -2356,8 +2356,8 @@ export class AddonMessagesProvider {
                 const contacts = result.contacts || [];
                 const nonContacts = result.noncontacts || [];
 
-                this.userProvider.storeUsers(contacts, site.id);
-                this.userProvider.storeUsers(nonContacts, site.id);
+                CoreUser.storeUsers(contacts, site.id);
+                CoreUser.storeUsers(nonContacts, site.id);
 
                 if (limitNum <= 0) {
                     return { contacts, nonContacts, canLoadMoreContacts: false, canLoadMoreNonContacts: false };
@@ -2728,7 +2728,7 @@ export class AddonMessagesProvider {
      */
     protected storeUsersFromAllContacts(contactTypes: AddonMessagesGetContactsResult): void {
         for (const x in contactTypes) {
-            this.userProvider.storeUsers(contactTypes[x]);
+            CoreUser.storeUsers(contactTypes[x]);
         }
     }
 
@@ -2747,7 +2747,7 @@ export class AddonMessagesProvider {
                 profileimageurl: discussions[userId].profileimageurl
             });
         }
-        this.userProvider.storeUsers(users, siteId);
+        CoreUser.storeUsers(users, siteId);
     }
 
     /**

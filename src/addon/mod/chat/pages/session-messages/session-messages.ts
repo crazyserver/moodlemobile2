@@ -100,7 +100,7 @@ export class AddonModChatSessionMessagesPage {
             return Promise.resolve(id);
         }
 
-        return this.userProvider.getProfile(parseInt(id, 10), this.courseId, true).then((user) => {
+        return CoreUser.getProfile(parseInt(id, 10), this.courseId, true).then((user) => {
             return user.fullname;
         }).catch(() => {
             // Error getting profile.

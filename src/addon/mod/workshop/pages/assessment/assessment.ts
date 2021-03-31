@@ -227,7 +227,7 @@ export class AddonModWorkshopAssessmentPage implements OnInit, OnDestroy {
                         });
 
                     } else if (this.workshop.phase == AddonModWorkshopProvider.PHASE_CLOSED && this.assessment.gradinggradeoverby) {
-                        return this.userProvider.getProfile(this.assessment.gradinggradeoverby, this.courseId, true)
+                        return CoreUser.getProfile(this.assessment.gradinggradeoverby, this.courseId, true)
                                 .then((profile) => {
                             this.evaluateByProfile = profile;
                         });

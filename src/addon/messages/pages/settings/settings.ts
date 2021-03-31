@@ -150,7 +150,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
             value = value ? 1 : 0;
         }
 
-        this.userProvider.updateUserPreference('message_blocknoncontacts', value).then(() => {
+        CoreUser.updateUserPreference('message_blocknoncontacts', value).then(() => {
             // Update the preferences since they were modified.
             this.updatePreferencesAfterDelay();
             this.previousContactableValue = this.contactablePrivacy;
@@ -191,8 +191,8 @@ export class AddonMessagesSettingsPage implements OnDestroy {
 
             notification.updating = true;
 
-            promises.push(this.userProvider.updateUserPreference(notification.preferencekey + '_loggedin', value));
-            promises.push(this.userProvider.updateUserPreference(notification.preferencekey + '_loggedoff', value));
+            promises.push(CoreUser.updateUserPreference(notification.preferencekey + '_loggedin', value));
+            promises.push(CoreUser.updateUserPreference(notification.preferencekey + '_loggedoff', value));
 
             Promise.all(promises).then(() => {
                 // Update the preferences since they were modified.
@@ -226,7 +226,7 @@ export class AddonMessagesSettingsPage implements OnDestroy {
             }
 
             notification.updating[state] = true;
-            this.userProvider.updateUserPreference(preferenceName, value).then(() => {
+            CoreUser.updateUserPreference(preferenceName, value).then(() => {
                 // Update the preferences since they were modified.
                 this.updatePreferencesAfterDelay();
             }).catch((message) => {

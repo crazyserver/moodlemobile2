@@ -266,7 +266,7 @@ export class CoreRatingProvider {
 
                 // We need to fetch profiles because the returned profile pictures are incorrect.
                 const promises = response.ratings.map((rating: CoreRatingItemRating) => {
-                    return this.userProvider.getProfile(rating.userid, courseId, true, site.id).then((user) => {
+                    return CoreUser.getProfile(rating.userid, courseId, true, site.id).then((user) => {
                         rating.userpictureurl = user.profileimageurl;
                     }).catch(() => {
                         // Ignore error.
@@ -389,7 +389,7 @@ export class CoreRatingProvider {
                         scaleId, undefined, courseId, site.id, true).then((ratings) => {
                     const userIds = ratings.map((rating: CoreRatingItemRating) => rating.userid);
 
-                    return this.userProvider.prefetchProfiles(userIds, courseId, site.id);
+                    return CoreUser.prefetchProfiles(userIds, courseId, site.id);
                 });
             });
 
