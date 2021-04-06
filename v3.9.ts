@@ -1170,6 +1170,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
             navigation: string; // Navigation.
             haslastdayofevent: boolean; // Haslastdayofevent.
             popovertitle: string; // Popovertitle.
+            daytitle: string; // Daytitle.
         }[];
     }[];
     daynames: { // Daynames.

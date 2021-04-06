@@ -406,6 +406,7 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -470,7 +471,6 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
-        url: string; // Url.
         action?: {
             name: string; // Name.
             url: string; // Url.
@@ -478,6 +478,7 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
             actionable: boolean; // Actionable.
             showitemcount: boolean; // Showitemcount.
         };
+        url: string; // Url.
     }[];
     firstid: number; // Firstid.
     lastid: number; // Lastid.
@@ -509,6 +510,7 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
             userid?: number; // Userid.
             repeatid?: number; // Repeatid.
             eventcount?: number; // Eventcount.
+            component?: string; // Component.
             modulename?: string; // Modulename.
             instance?: number; // Instance.
             eventtype: string; // Eventtype.
@@ -573,7 +575,6 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
             groupname?: string; // Groupname.
             normalisedeventtype: string; // Normalisedeventtype.
             normalisedeventtypetext: string; // Normalisedeventtypetext.
-            url: string; // Url.
             action?: {
                 name: string; // Name.
                 url: string; // Url.
@@ -581,6 +582,7 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
                 actionable: boolean; // Actionable.
                 showitemcount: boolean; // Showitemcount.
             };
+            url: string; // Url.
         }[];
         firstid: number; // Firstid.
         lastid: number; // Lastid.
@@ -615,6 +617,7 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -679,7 +682,6 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
-        url: string; // Url.
         action?: {
             name: string; // Name.
             url: string; // Url.
@@ -687,6 +689,7 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
             actionable: boolean; // Actionable.
             showitemcount: boolean; // Showitemcount.
         };
+        url: string; // Url.
     }[];
     firstid: number; // Firstid.
     lastid: number; // Lastid.
@@ -750,6 +753,7 @@ export type CoreCalendarGetCalendarDayViewWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -814,6 +818,13 @@ export type CoreCalendarGetCalendarDayViewWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
         url: string; // Url.
         islastday: boolean; // Islastday.
         popupname: string; // Popupname.
@@ -898,6 +909,7 @@ export type CoreCalendarGetCalendarEventByIdWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -962,7 +974,6 @@ export type CoreCalendarGetCalendarEventByIdWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
-        url: string; // Url.
         action?: {
             name: string; // Name.
             url: string; // Url.
@@ -970,6 +981,7 @@ export type CoreCalendarGetCalendarEventByIdWSResponse = {
             actionable: boolean; // Actionable.
             showitemcount: boolean; // Showitemcount.
         };
+        url: string; // Url.
     };
     warnings?: CoreWSExternalWarning[];
 };
@@ -1070,6 +1082,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
                 userid?: number; // Userid.
                 repeatid?: number; // Repeatid.
                 eventcount?: number; // Eventcount.
+                component?: string; // Component.
                 modulename?: string; // Modulename.
                 instance?: number; // Instance.
                 eventtype: string; // Eventtype.
@@ -1134,6 +1147,13 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
                 groupname?: string; // Groupname.
                 normalisedeventtype: string; // Normalisedeventtype.
                 normalisedeventtypetext: string; // Normalisedeventtypetext.
+                action?: {
+                    name: string; // Name.
+                    url: string; // Url.
+                    itemcount: number; // Itemcount.
+                    actionable: boolean; // Actionable.
+                    showitemcount: boolean; // Showitemcount.
+                };
                 url: string; // Url.
                 islastday: boolean; // Islastday.
                 popupname: string; // Popupname.
@@ -1233,6 +1253,7 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -1297,6 +1318,13 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
         url: string; // Url.
         islastday: boolean; // Islastday.
         popupname: string; // Popupname.
@@ -1348,6 +1376,7 @@ export type CoreCalendarSubmitCreateUpdateFormWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -1412,7 +1441,6 @@ export type CoreCalendarSubmitCreateUpdateFormWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
-        url: string; // Url.
         action?: {
             name: string; // Name.
             url: string; // Url.
@@ -1420,6 +1448,7 @@ export type CoreCalendarSubmitCreateUpdateFormWSResponse = {
             actionable: boolean; // Actionable.
             showitemcount: boolean; // Showitemcount.
         };
+        url: string; // Url.
     };
     validationerror?: boolean; // Invalid form data.
 };
@@ -1447,6 +1476,7 @@ export type CoreCalendarUpdateEventStartDayWSResponse = {
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
         eventcount?: number; // Eventcount.
+        component?: string; // Component.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -1511,7 +1541,6 @@ export type CoreCalendarUpdateEventStartDayWSResponse = {
         groupname?: string; // Groupname.
         normalisedeventtype: string; // Normalisedeventtype.
         normalisedeventtypetext: string; // Normalisedeventtypetext.
-        url: string; // Url.
         action?: {
             name: string; // Name.
             url: string; // Url.
@@ -1519,6 +1548,7 @@ export type CoreCalendarUpdateEventStartDayWSResponse = {
             actionable: boolean; // Actionable.
             showitemcount: boolean; // Showitemcount.
         };
+        url: string; // Url.
     };
 };
 
@@ -2831,6 +2861,7 @@ export type CoreGradesGraderGradingpanelPointFetchWSResponse = {
         grade: number; // The numeric grade.
         usergrade: string; // Current user grade.
         maxgrade: string; // Max possible grade.
+        gradedby: string; // The assumed grader of this grading instance.
         timecreated: number; // The time that the grade was created.
         timemodified: number; // The time that the grade was last updated.
     };
@@ -2859,6 +2890,7 @@ export type CoreGradesGraderGradingpanelPointStoreWSResponse = {
         grade: number; // The numeric grade.
         usergrade: string; // Current user grade.
         maxgrade: string; // Max possible grade.
+        gradedby: string; // The assumed grader of this grading instance.
         timecreated: number; // The time that the grade was created.
         timemodified: number; // The time that the grade was last updated.
     };
@@ -2889,6 +2921,7 @@ export type CoreGradesGraderGradingpanelScaleFetchWSResponse = {
         }[];
         usergrade: string; // Current user grade.
         maxgrade: string; // Max possible grade.
+        gradedby: string; // The assumed grader of this grading instance.
         timecreated: number; // The time that the grade was created.
         timemodified: number; // The time that the grade was last updated.
     };
@@ -2921,6 +2954,7 @@ export type CoreGradesGraderGradingpanelScaleStoreWSResponse = {
         }[];
         usergrade: string; // Current user grade.
         maxgrade: string; // Max possible grade.
+        gradedby: string; // The assumed grader of this grading instance.
         timecreated: number; // The time that the grade was created.
         timemodified: number; // The time that the grade was last updated.
     };
@@ -4113,6 +4147,7 @@ export type CoreMessageMarkAllMessagesAsReadWSResponse = boolean;
 export type CoreMessageMarkAllNotificationsAsReadWSParams = {
     useridto: number; // The user id who received the message, 0 for any user.
     useridfrom?: number; // The user id who send the message, 0 for any user. -10 or -20 for no-reply or support user.
+    timecreatedto?: number; // Mark messages created before this time as read, 0 for all messages.
 };
 
 /**
@@ -4558,6 +4593,39 @@ export type CoreRatingGetItemRatingsWSResponse = {
         rating: string; // Rating on scale.
         timemodified: number; // Time modified (timestamp).
     }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_table_get_dynamic_table_content WS.
+ */
+export type CoreTableGetDynamicTableContentWSParams = {
+    component: string; // Component.
+    handler: string; // Handler.
+    uniqueid: string; // Unique ID for the container.
+    sortdata?: { // The combined sort order of the table. Multiple fields can be specified.
+        sortby: string; // The name of a sortable column.
+        sortorder: string; // The direction that this column should be sorted by.
+    }[];
+    filters?: { // The filters that will be applied in the request.
+        name: string; // Name of the filter.
+        jointype: number; // Type of join for filter values.
+        values: string[]; // The value to filter on.
+    }[];
+    jointype: number; // Type of join to join all filters together.
+    firstinitial: string; // The first initial to sort filter on.
+    lastinitial: string; // The last initial to sort filter on.
+    pagenumber: number; // The page number.
+    pagesize: number; // The number of records per page.
+    hiddencolumns: string[];
+    resetpreferences: boolean; // Whether the table preferences should be reset.
+};
+
+/**
+ * Data returned by core_table_get_dynamic_table_content WS.
+ */
+export type CoreTableGetDynamicTableContentWSResponse = {
+    html: string; // The raw html of the requested table.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5088,6 +5156,19 @@ export type CoreWebserviceGetSiteInfoWSResponse = {
     userissiteadmin?: boolean; // Whether the user is a site admin or not.
     theme?: string; // Current theme for the user.
 };
+
+/**
+ * Params of core_xapi_statement_post WS.
+ */
+export type CoreXapiStatementPostWSParams = {
+    component: string; // Component name.
+    requestjson: string; // Json object with all the statements to post.
+};
+
+/**
+ * Data returned by core_xapi_statement_post WS.
+ */
+export type CoreXapiStatementPostWSResponse = boolean[];
 
 /**
  * Params of enrol_guest_get_instance_info WS.
@@ -9575,6 +9656,220 @@ export type ModGlossaryViewGlossaryWSParams = {
  */
 export type ModGlossaryViewGlossaryWSResponse = {
     status: boolean; // True on success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_h5pactivity_get_attempts WS.
+ */
+export type ModH5pactivityGetAttemptsWSParams = {
+    h5pactivityid: number; // H5p activity instance id.
+    userids?: number[]; // User ids.
+};
+
+/**
+ * Data returned by mod_h5pactivity_get_attempts WS.
+ */
+export type ModH5pactivityGetAttemptsWSResponse = {
+    activityid: number; // Activity course module ID.
+    usersattempts: { // The complete users attempts list.
+        userid: number; // The user id.
+        attempts: { // The complete attempts list.
+            id: number; // ID of the context.
+            h5pactivityid: number; // ID of the H5P activity.
+            userid: number; // ID of the user.
+            timecreated: number; // Attempt creation.
+            timemodified: number; // Attempt modified.
+            attempt: number; // Attempt number.
+            rawscore: number; // Attempt score value.
+            maxscore: number; // Attempt max score.
+            duration: number; // Attempt duration in seconds.
+            completion?: number; // Attempt completion.
+            success?: number; // Attempt success.
+            scaled: number; // Attempt scaled.
+        }[];
+        scored?: {
+            title: string; // Scored attempts title.
+            grademethod: string; // Scored attempts title.
+            attempts: { // List of the grading attempts.
+                id: number; // ID of the context.
+                h5pactivityid: number; // ID of the H5P activity.
+                userid: number; // ID of the user.
+                timecreated: number; // Attempt creation.
+                timemodified: number; // Attempt modified.
+                attempt: number; // Attempt number.
+                rawscore: number; // Attempt score value.
+                maxscore: number; // Attempt max score.
+                duration: number; // Attempt duration in seconds.
+                completion?: number; // Attempt completion.
+                success?: number; // Attempt success.
+                scaled: number; // Attempt scaled.
+            }[];
+        }; // Attempts used to grade the activity.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_h5pactivity_get_h5pactivities_by_courses WS.
+ */
+export type ModH5pactivityGetH5pactivitiesByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_h5pactivity_get_h5pactivities_by_courses WS.
+ */
+export type ModH5pactivityGetH5pactivitiesByCoursesWSResponse = {
+    h5pactivities: {
+        id: number; // The primary key of the record.
+        course: number; // Course id this h5p activity is part of.
+        name: string; // The name of the activity module instance.
+        timecreated?: number; // Timestamp of when the instance was added to the course.
+        timemodified?: number; // Timestamp of when the instance was last modified.
+        intro: string; // H5P activity description.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        grade?: number; // The maximum grade for submission.
+        displayoptions: number; // H5P Button display options.
+        enabletracking: number; // Enable xAPI tracking.
+        grademethod: number; // Which H5P attempt is used for grading.
+        contenthash?: string; // Sha1 hash of file content.
+        coursemodule: number; // Coursemodule.
+        context: number; // Context.
+        introfiles: { // Introfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        package: { // Package.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        deployedfile?: {
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+        };
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_h5pactivity_get_h5pactivity_access_information WS.
+ */
+export type ModH5pactivityGetH5pactivityAccessInformationWSParams = {
+    h5pactivityid: number; // H5p activity instance id.
+};
+
+/**
+ * Data returned by mod_h5pactivity_get_h5pactivity_access_information WS.
+ */
+export type ModH5pactivityGetH5pactivityAccessInformationWSResponse = {
+    warnings?: CoreWSExternalWarning[];
+    canview?: boolean; // Whether the user has the capability mod/h5pactivity:view allowed.
+    canaddinstance?: boolean; // Whether the user has the capability mod/h5pactivity:addinstance allowed.
+    cansubmit?: boolean; // Whether the user has the capability mod/h5pactivity:submit allowed.
+    canreviewattempts?: boolean; // Whether the user has the capability mod/h5pactivity:reviewattempts allowed.
+};
+
+/**
+ * Params of mod_h5pactivity_get_results WS.
+ */
+export type ModH5pactivityGetResultsWSParams = {
+    h5pactivityid: number; // H5p activity instance id.
+    attemptids?: number[]; // Attempt ids.
+};
+
+/**
+ * Data returned by mod_h5pactivity_get_results WS.
+ */
+export type ModH5pactivityGetResultsWSResponse = {
+    activityid: number; // Activity course module ID.
+    attempts: { // The complete attempts list.
+        id: number; // ID of the context.
+        h5pactivityid: number; // ID of the H5P activity.
+        userid: number; // ID of the user.
+        timecreated: number; // Attempt creation.
+        timemodified: number; // Attempt modified.
+        attempt: number; // Attempt number.
+        rawscore: number; // Attempt score value.
+        maxscore: number; // Attempt max score.
+        duration: number; // Attempt duration in seconds.
+        completion?: number; // Attempt completion.
+        success?: number; // Attempt success.
+        scaled: number; // Attempt scaled.
+        results?: { // The results of the attempt.
+            id: number; // ID of the context.
+            attemptid: number; // ID of the H5P attempt.
+            subcontent: string; // Subcontent identifier.
+            timecreated: number; // Result creation.
+            interactiontype: string; // Interaction type.
+            description: string; // Result description.
+            content?: string; // Result extra content.
+            rawscore: number; // Result score value.
+            maxscore: number; // Result max score.
+            duration?: number; // Result duration in seconds.
+            completion?: number; // Result completion.
+            success?: number; // Result success.
+            optionslabel?: string; // Label used for result options.
+            correctlabel?: string; // Label used for correct answers.
+            answerlabel?: string; // Label used for user answers.
+            track?: boolean; // If the result has valid track information.
+            options?: { // The statement options.
+                description?: string; // Option description.
+                id?: string; // Option string identifier.
+                correctanswer?: {
+                    answer?: string; // Option text value.
+                    correct?: boolean; // If has to be displayed as correct.
+                    incorrect?: boolean; // If has to be displayed as incorrect.
+                    text?: boolean; // If has to be displayed as simple text.
+                    checked?: boolean; // If has to be displayed as a checked option.
+                    unchecked?: boolean; // If has to be displayed as a unchecked option.
+                    pass?: boolean; // If has to be displayed as passed.
+                    fail?: boolean; // If has to be displayed as failed.
+                }; // The option correct answer.
+                useranswer?: {
+                    answer?: string; // Option text value.
+                    correct?: boolean; // If has to be displayed as correct.
+                    incorrect?: boolean; // If has to be displayed as incorrect.
+                    text?: boolean; // If has to be displayed as simple text.
+                    checked?: boolean; // If has to be displayed as a checked option.
+                    unchecked?: boolean; // If has to be displayed as a unchecked option.
+                    pass?: boolean; // If has to be displayed as passed.
+                    fail?: boolean; // If has to be displayed as failed.
+                }; // The option user answer.
+            }[];
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_h5pactivity_view_h5pactivity WS.
+ */
+export type ModH5pactivityViewH5pactivityWSParams = {
+    h5pactivityid: number; // H5P activity instance id.
+};
+
+/**
+ * Data returned by mod_h5pactivity_view_h5pactivity WS.
+ */
+export type ModH5pactivityViewH5pactivityWSResponse = {
+    status: boolean; // Status: true if success.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -14481,4 +14776,75 @@ export type ToolMobileGetPublicConfigWSResponse = {
     tool_mobile_androidappid?: string; // Android app's unique identifier.
     tool_mobile_setuplink?: string; // App download page.
     warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of tool_mobile_get_tokens_for_qr_login WS.
+ */
+export type ToolMobileGetTokensForQrLoginWSParams = {
+    qrloginkey: string; // The user key for validating the request.
+    userid: number; // The user the key belongs to.
+};
+
+/**
+ * Data returned by tool_mobile_get_tokens_for_qr_login WS.
+ */
+export type ToolMobileGetTokensForQrLoginWSResponse = {
+    token: string; // A valid WebService token for the official mobile app service.
+    privatetoken: string; // Private token used for auto-login processes.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of tool_mobile_validate_subscription_key WS.
+ */
+export type ToolMobileValidateSubscriptionKeyWSParams = {
+    key: string; // Site subscription temporary key.
+};
+
+/**
+ * Data returned by tool_mobile_validate_subscription_key WS.
+ */
+export type ToolMobileValidateSubscriptionKeyWSResponse = {
+    validated: boolean; // Whether the key is validated or not.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of tool_moodlenet_search_courses WS.
+ */
+export type ToolMoodlenetSearchCoursesWSParams = {
+    searchvalue: string; // Search value.
+};
+
+/**
+ * Data returned by tool_moodlenet_search_courses WS.
+ */
+export type ToolMoodlenetSearchCoursesWSResponse = {
+    courses: {
+        id: number; // Course id.
+        fullname: string; // Course full name.
+        hidden: number; // Is the course visible.
+        viewurl: string; // Next step of import.
+        coursecategory: string; // Category name.
+        courseimage: string; // Course image.
+    }[];
+};
+
+/**
+ * Params of tool_moodlenet_verify_webfinger WS.
+ */
+export type ToolMoodlenetVerifyWebfingerWSParams = {
+    profileurl: string; // The profile url that the user has given us.
+    course: number; // The course we are adding to.
+    section: number; // The section within the course we are adding to.
+};
+
+/**
+ * Data returned by tool_moodlenet_verify_webfinger WS.
+ */
+export type ToolMoodlenetVerifyWebfingerWSResponse = {
+    result: boolean; // Was the passed content a valid WebFinger?.
+    message: string; // Our message for the user.
+    domain?: string; // Domain to redirect the user to.
 };
