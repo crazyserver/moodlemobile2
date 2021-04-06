@@ -147,9 +147,11 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
         name: string; // Name.
         description?: string; // Description.
         descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -158,18 +160,23 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
         timesort: number; // Timesort.
         visible: number; // Visible.
         timemodified: number; // Timemodified.
-        url: string; // Url.
         icon: {
             key: string; // Key.
             component: string; // Component.
             alttext: string; // Alttext.
         };
-        action?: {
+        category?: {
+            id: number; // Id.
             name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
             url: string; // Url.
-            itemcount: number; // Itemcount.
-            actionable: boolean; // Actionable.
-            showitemcount: boolean; // Showitemcount.
         };
         course?: {
             id: number; // Id.
@@ -182,6 +189,29 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
             enddate: number; // Enddate.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
+        };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        url: string; // Url.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
         };
     }[];
     firstid: number; // Firstid.
@@ -208,9 +238,11 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
             name: string; // Name.
             description?: string; // Description.
             descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            categoryid?: number; // Categoryid.
             groupid?: number; // Groupid.
             userid?: number; // Userid.
             repeatid?: number; // Repeatid.
+            eventcount?: number; // Eventcount.
             modulename?: string; // Modulename.
             instance?: number; // Instance.
             eventtype: string; // Eventtype.
@@ -219,18 +251,23 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
             timesort: number; // Timesort.
             visible: number; // Visible.
             timemodified: number; // Timemodified.
-            url: string; // Url.
             icon: {
                 key: string; // Key.
                 component: string; // Component.
                 alttext: string; // Alttext.
             };
-            action?: {
+            category?: {
+                id: number; // Id.
                 name: string; // Name.
+                idnumber: string; // Idnumber.
+                description?: string; // Description.
+                parent: number; // Parent.
+                coursecount: number; // Coursecount.
+                visible: number; // Visible.
+                timemodified: number; // Timemodified.
+                depth: number; // Depth.
+                nestedname: string; // Nestedname.
                 url: string; // Url.
-                itemcount: number; // Itemcount.
-                actionable: boolean; // Actionable.
-                showitemcount: boolean; // Showitemcount.
             };
             course?: {
                 id: number; // Id.
@@ -243,6 +280,29 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
                 enddate: number; // Enddate.
                 fullnamedisplay: string; // Fullnamedisplay.
                 viewurl: string; // Viewurl.
+            };
+            subscription?: {
+                displayeventsource: boolean; // Displayeventsource.
+                subscriptionname?: string; // Subscriptionname.
+                subscriptionurl?: string; // Subscriptionurl.
+            };
+            canedit: boolean; // Canedit.
+            candelete: boolean; // Candelete.
+            deleteurl: string; // Deleteurl.
+            editurl: string; // Editurl.
+            viewurl: string; // Viewurl.
+            formattedtime: string; // Formattedtime.
+            isactionevent: boolean; // Isactionevent.
+            iscourseevent: boolean; // Iscourseevent.
+            iscategoryevent: boolean; // Iscategoryevent.
+            groupname?: string; // Groupname.
+            url: string; // Url.
+            action?: {
+                name: string; // Name.
+                url: string; // Url.
+                itemcount: number; // Itemcount.
+                actionable: boolean; // Actionable.
+                showitemcount: boolean; // Showitemcount.
             };
         }[];
         firstid: number; // Firstid.
@@ -270,9 +330,11 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
         name: string; // Name.
         description?: string; // Description.
         descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        categoryid?: number; // Categoryid.
         groupid?: number; // Groupid.
         userid?: number; // Userid.
         repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
         modulename?: string; // Modulename.
         instance?: number; // Instance.
         eventtype: string; // Eventtype.
@@ -281,18 +343,23 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
         timesort: number; // Timesort.
         visible: number; // Visible.
         timemodified: number; // Timemodified.
-        url: string; // Url.
         icon: {
             key: string; // Key.
             component: string; // Component.
             alttext: string; // Alttext.
         };
-        action?: {
+        category?: {
+            id: number; // Id.
             name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
             url: string; // Url.
-            itemcount: number; // Itemcount.
-            actionable: boolean; // Actionable.
-            showitemcount: boolean; // Showitemcount.
         };
         course?: {
             id: number; // Id.
@@ -306,9 +373,259 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
         };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        url: string; // Url.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
     }[];
     firstid: number; // Firstid.
     lastid: number; // Lastid.
+};
+
+/**
+ * Params of core_calendar_get_calendar_day_view WS.
+ */
+export type CoreCalendarGetCalendarDayViewWSParams = {
+    year: number; // Year to be viewed.
+    month: number; // Month to be viewed.
+    day: number; // Day to be viewed.
+    courseid?: number; // Course being viewed.
+    categoryid?: number; // Category being viewed.
+};
+
+/**
+ * Data returned by core_calendar_get_calendar_day_view WS.
+ */
+export type CoreCalendarGetCalendarDayViewWSResponse = {
+    events: { // Events.
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        categoryid?: number; // Categoryid.
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        category?: {
+            id: number; // Id.
+            name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
+            url: string; // Url.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+        };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        url: string; // Url.
+        islastday: boolean; // Islastday.
+        calendareventtype: string; // Calendareventtype.
+        popupname: string; // Popupname.
+        mindaytimestamp?: number; // Mindaytimestamp.
+        mindayerror?: string; // Mindayerror.
+        maxdaytimestamp?: number; // Maxdaytimestamp.
+        maxdayerror?: string; // Maxdayerror.
+        draggable: boolean; // Draggable.
+    }[];
+    defaulteventcontext: number; // Defaulteventcontext.
+    filter_selector: string; // Filter_selector.
+    courseid: number; // Courseid.
+    categoryid?: number; // Categoryid.
+    neweventtimestamp: number; // Neweventtimestamp.
+    date: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
+    periodname: string; // Periodname.
+    previousperiod: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
+    previousperiodlink: string; // Previousperiodlink.
+    previousperiodname: string; // Previousperiodname.
+    nextperiod: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
+    nextperiodname: string; // Nextperiodname.
+    nextperiodlink: string; // Nextperiodlink.
+    larrow: string; // Larrow.
+    rarrow: string; // Rarrow.
+};
+
+/**
+ * Params of core_calendar_get_calendar_event_by_id WS.
+ */
+export type CoreCalendarGetCalendarEventByIdWSParams = {
+    eventid: number; // The event id to be retrieved.
+};
+
+/**
+ * Data returned by core_calendar_get_calendar_event_by_id WS.
+ */
+export type CoreCalendarGetCalendarEventByIdWSResponse = {
+    event: {
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        categoryid?: number; // Categoryid.
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        category?: {
+            id: number; // Id.
+            name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
+            url: string; // Url.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+        };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        url: string; // Url.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
+    };
+    warnings?: CoreWSExternalWarning[];
 };
 
 /**
@@ -319,6 +636,7 @@ export type CoreCalendarGetCalendarEventsWSParams = {
         eventids?: number[]; // List of event ids.
         courseids?: number[]; // List of course ids for which events will be returned.
         groupids?: number[]; // List of group ids for which events should be returned.
+        categoryids?: number[]; // List of category ids for which events will be returned.
     }; // Event details.
     options?: {
         userevents?: boolean; // Set to true to return current user's user events.
@@ -354,6 +672,271 @@ export type CoreCalendarGetCalendarEventsWSResponse = {
         subscriptionid?: number; // Subscription id.
     }[];
     warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_calendar_get_calendar_monthly_view WS.
+ */
+export type CoreCalendarGetCalendarMonthlyViewWSParams = {
+    year: number; // Month to be viewed.
+    month: number; // Year to be viewed.
+    courseid?: number; // Course being viewed.
+    categoryid?: number; // Category being viewed.
+    includenavigation?: boolean; // Whether to show course navigation.
+};
+
+/**
+ * Data returned by core_calendar_get_calendar_monthly_view WS.
+ */
+export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
+    url: string; // Url.
+    courseid: number; // Courseid.
+    categoryid?: number; // Categoryid.
+    filter_selector: string; // Filter_selector.
+    weeks: { // Weeks.
+        prepadding: number[]; // Prepadding.
+        postpadding: number[]; // Postpadding.
+        days: { // Days.
+            seconds: number; // Seconds.
+            minutes: number; // Minutes.
+            hours: number; // Hours.
+            mday: number; // Mday.
+            wday: number; // Wday.
+            year: number; // Year.
+            yday: number; // Yday.
+            istoday: boolean; // Istoday.
+            isweekend: boolean; // Isweekend.
+            timestamp: number; // Timestamp.
+            neweventtimestamp: number; // Neweventtimestamp.
+            viewdaylink?: string; // Viewdaylink.
+            events: { // Events.
+                id: number; // Id.
+                name: string; // Name.
+                description?: string; // Description.
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                categoryid?: number; // Categoryid.
+                groupid?: number; // Groupid.
+                userid?: number; // Userid.
+                repeatid?: number; // Repeatid.
+                eventcount?: number; // Eventcount.
+                modulename?: string; // Modulename.
+                instance?: number; // Instance.
+                eventtype: string; // Eventtype.
+                timestart: number; // Timestart.
+                timeduration: number; // Timeduration.
+                timesort: number; // Timesort.
+                visible: number; // Visible.
+                timemodified: number; // Timemodified.
+                icon: {
+                    key: string; // Key.
+                    component: string; // Component.
+                    alttext: string; // Alttext.
+                };
+                category?: {
+                    id: number; // Id.
+                    name: string; // Name.
+                    idnumber: string; // Idnumber.
+                    description?: string; // Description.
+                    parent: number; // Parent.
+                    coursecount: number; // Coursecount.
+                    visible: number; // Visible.
+                    timemodified: number; // Timemodified.
+                    depth: number; // Depth.
+                    nestedname: string; // Nestedname.
+                    url: string; // Url.
+                };
+                course?: {
+                    id: number; // Id.
+                    fullname: string; // Fullname.
+                    shortname: string; // Shortname.
+                    idnumber: string; // Idnumber.
+                    summary: string; // Summary.
+                    summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                    startdate: number; // Startdate.
+                    enddate: number; // Enddate.
+                    fullnamedisplay: string; // Fullnamedisplay.
+                    viewurl: string; // Viewurl.
+                };
+                subscription?: {
+                    displayeventsource: boolean; // Displayeventsource.
+                    subscriptionname?: string; // Subscriptionname.
+                    subscriptionurl?: string; // Subscriptionurl.
+                };
+                canedit: boolean; // Canedit.
+                candelete: boolean; // Candelete.
+                deleteurl: string; // Deleteurl.
+                editurl: string; // Editurl.
+                viewurl: string; // Viewurl.
+                formattedtime: string; // Formattedtime.
+                isactionevent: boolean; // Isactionevent.
+                iscourseevent: boolean; // Iscourseevent.
+                iscategoryevent: boolean; // Iscategoryevent.
+                groupname?: string; // Groupname.
+                url: string; // Url.
+                islastday: boolean; // Islastday.
+                calendareventtype: string; // Calendareventtype.
+                popupname: string; // Popupname.
+                mindaytimestamp?: number; // Mindaytimestamp.
+                mindayerror?: string; // Mindayerror.
+                maxdaytimestamp?: number; // Maxdaytimestamp.
+                maxdayerror?: string; // Maxdayerror.
+                draggable: boolean; // Draggable.
+            }[];
+            hasevents: boolean; // Hasevents.
+            calendareventtypes: string[]; // Calendareventtypes.
+            previousperiod: number; // Previousperiod.
+            nextperiod: number; // Nextperiod.
+            navigation: string; // Navigation.
+            haslastdayofevent: boolean; // Haslastdayofevent.
+            popovertitle: string; // Popovertitle.
+        }[];
+    }[];
+    daynames: { // Daynames.
+        dayno: number; // Dayno.
+        shortname: string; // Shortname.
+        fullname: string; // Fullname.
+    }[];
+    view: string; // View.
+    date: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
+    periodname: string; // Periodname.
+    includenavigation: boolean; // Includenavigation.
+    previousperiod: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
+    previousperiodlink: string; // Previousperiodlink.
+    previousperiodname: string; // Previousperiodname.
+    nextperiod: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
+    nextperiodname: string; // Nextperiodname.
+    nextperiodlink: string; // Nextperiodlink.
+    larrow: string; // Larrow.
+    rarrow: string; // Rarrow.
+    defaulteventcontext: number; // Defaulteventcontext.
+};
+
+/**
+ * Params of core_calendar_get_calendar_upcoming_view WS.
+ */
+export type CoreCalendarGetCalendarUpcomingViewWSParams = {
+    courseid?: number; // Course being viewed.
+    categoryid?: number; // Category being viewed.
+};
+
+/**
+ * Data returned by core_calendar_get_calendar_upcoming_view WS.
+ */
+export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
+    events: { // Events.
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        categoryid?: number; // Categoryid.
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        category?: {
+            id: number; // Id.
+            name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
+            url: string; // Url.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+        };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        url: string; // Url.
+        islastday: boolean; // Islastday.
+        calendareventtype: string; // Calendareventtype.
+        popupname: string; // Popupname.
+        mindaytimestamp?: number; // Mindaytimestamp.
+        mindayerror?: string; // Mindayerror.
+        maxdaytimestamp?: number; // Maxdaytimestamp.
+        maxdayerror?: string; // Maxdayerror.
+        draggable: boolean; // Draggable.
+    }[];
+    defaulteventcontext: number; // Defaulteventcontext.
+    filter_selector: string; // Filter_selector.
+    courseid: number; // Courseid.
+    categoryid?: number; // Categoryid.
+    isloggedin: boolean; // Isloggedin.
 };
 
 /**
@@ -596,6 +1179,7 @@ export type CoreCompletionGetActivitiesCompletionStatusWSResponse = {
         tracking: number; // Type of tracking:
                                                                  // 0 means none, 1 manual, 2 automatic.
 
+        overrideby?: number; // The user id who has overriden the status, or null.
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -759,6 +1343,8 @@ export type CoreCourseGetContentsWSParams = {
         name: string; // The expected keys (value format) are:
                                              // excludemodules (bool) Do not return modules, return only the sections structure
                                              // excludecontents (bool) Do not return module contents (i.e: files inside a resource)
+                                             // includestealthmodules (bool) Return stealth modules for students in a special
+                                                 // section (with id -1)
                                              // sectionid (int) Return only this section
                                              // sectionnumber (int) Return only this section with number (order)
                                              // cmid (int) Return only this module information (among the whole sections structure)
@@ -1341,6 +1927,35 @@ export type CoreFilesGetFilesWSResponse = {
 };
 
 /**
+ * Params of core_filters_get_available_in_context WS.
+ */
+export type CoreFiltersGetAvailableInContextWSParams = {
+    contexts: { // The list of contexts to check.
+        contextlevel: string; // The context level where the filters are:
+                             // (coursecat, course, module).
+
+        instanceid: number; // The instance id of item associated with the context.
+    }[];
+};
+
+/**
+ * Data returned by core_filters_get_available_in_context WS.
+ */
+export type CoreFiltersGetAvailableInContextWSResponse = {
+    filters: { // Available filters.
+        contextlevel: string; // The context level where the filters are:
+                             // (coursecat, course, module).
+
+        instanceid: number; // The instance id of item associated with the context.
+        contextid: number; // The context id.
+        filter: string; // Filter plugin name.
+        localstate: number; // Filter state: 1 for on, -1 for off, 0 if inherit.
+        inheritedstate: number; // 1 or 0 to use when localstate is set to inherit.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of core_get_component_strings WS.
  */
 export type CoreGetComponentStringsWSParams = {
@@ -1376,6 +1991,7 @@ export type CoreGroupGetActivityAllowedGroupsWSResponse = {
         idnumber: string; // Id number.
         courseid?: number; // Course id.
     }[];
+    canaccessallgroups?: boolean; // Whether the user will be able to access all the activity groups.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -2193,7 +2809,7 @@ export type CoreUserGetCourseUserProfilesWSResponse = {
     interests?: string; // User interests (separated by commas).
     firstaccess?: number; // First access to the site (0 if never).
     lastaccess?: number; // Last access to the site (0 if never).
-    auth?: string; // Auth plugins include manual, ldap, imap, etc.
+    auth?: string; // Auth plugins include manual, ldap, etc.
     suspended?: boolean; // Suspend user account, either false to enable user login or true to disable it.
     confirmed?: boolean; // Active user: 1 if confirmed, 0 otherwise.
     lang?: string; // Language code such as "en", must exist on server.
@@ -2236,6 +2852,24 @@ export type CoreUserGetCourseUserProfilesWSResponse = {
         shortname: string; // Shortname of the course.
     }[];
 }[];
+
+/**
+ * Params of core_user_get_private_files_info WS.
+ */
+export type CoreUserGetPrivateFilesInfoWSParams = {
+    userid?: number; // Id of the user, default to current user.
+};
+
+/**
+ * Data returned by core_user_get_private_files_info WS.
+ */
+export type CoreUserGetPrivateFilesInfoWSResponse = {
+    filecount: number; // Number of files in the area.
+    foldercount: number; // Number of folders in the area.
+    filesize: number; // Total size of the files in the area.
+    filesizewithoutreferences: number; // Total size of the area excluding file references.
+    warnings?: CoreWSExternalWarning[];
+};
 
 /**
  * Params of core_user_get_user_preferences WS.
@@ -2290,7 +2924,7 @@ export type CoreUserGetUsersByFieldWSResponse = {
     interests?: string; // User interests (separated by commas).
     firstaccess?: number; // First access to the site (0 if never).
     lastaccess?: number; // Last access to the site (0 if never).
-    auth?: string; // Auth plugins include manual, ldap, imap, etc.
+    auth?: string; // Auth plugins include manual, ldap, etc.
     suspended?: boolean; // Suspend user account, either false to enable user login or true to disable it.
     confirmed?: boolean; // Active user: 1 if confirmed, 0 otherwise.
     lang?: string; // Language code such as "en", must exist on server.
@@ -2445,6 +3079,8 @@ export type CoreWebserviceGetSiteInfoWSResponse = {
     usermaxuploadfilesize?: number; // User max upload file size (bytes). -1 means the user can ignore the upload file size.
     userhomepage?: number; // The default home page for the user: 0 for the site home, 1 for dashboard.
     siteid?: number; // Site course ID.
+    sitecalendartype?: string; // Calendar type set in the site.
+    usercalendartype?: string; // Calendar typed used by the user.
 };
 
 /**
@@ -2962,7 +3598,7 @@ export type ModAssignGetParticipantWSResponse = {
         interests?: string; // User interests (separated by commas).
         firstaccess?: number; // First access to the site (0 if never).
         lastaccess?: number; // Last access to the site (0 if never).
-        auth?: string; // Auth plugins include manual, ldap, imap, etc.
+        auth?: string; // Auth plugins include manual, ldap, etc.
         suspended?: boolean; // Suspend user account, either false to enable user login or true to disable it.
         confirmed?: boolean; // Active user: 1 if confirmed, 0 otherwise.
         lang?: string; // Language code such as "en", must exist on server.
@@ -4186,6 +4822,36 @@ export type ModDataGetEntryWSResponse = {
         }[];
     };
     entryviewcontents?: string; // The entry as is rendered in the site.
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -4285,7 +4951,10 @@ export type ModDataSearchEntriesWSResponse = {
             }[];
         }[];
     }[];
-    totalcount: number; // Total count of records.
+    totalcount: number; // Total count of records returned by the search.
+    maxcount?: number; // Total count of records that the user could see in the database
+                 // (if all the search criterias were removed).
+
     listviewcontents?: string; // The list view contents as is rendered in the site.
     warnings?: CoreWSExternalWarning[];
 };
@@ -4946,6 +5615,36 @@ export type ModForumGetForumDiscussionPostsWSResponse = {
         userpictureurl?: string; // Post author picture.
         deleted: boolean; // This post has been removed.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5193,6 +5892,36 @@ export type ModGlossaryGetEntriesByAuthorWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5238,6 +5967,36 @@ export type ModGlossaryGetEntriesByAuthorIdWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5283,6 +6042,36 @@ export type ModGlossaryGetEntriesByCategoryWSResponse = {
         categoryid?: number; // The category ID. This may be '-1' when the entry is not categorised.
         categoryname?: string; // The category name. May be empty when the entry is not categorised, or the request was limited to one category.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5327,6 +6116,36 @@ export type ModGlossaryGetEntriesByDateWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5370,6 +6189,36 @@ export type ModGlossaryGetEntriesByLetterWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5416,6 +6265,36 @@ export type ModGlossaryGetEntriesBySearchWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5459,6 +6338,36 @@ export type ModGlossaryGetEntriesByTermWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5503,6 +6412,36 @@ export type ModGlossaryGetEntriesToApproveWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5539,6 +6478,36 @@ export type ModGlossaryGetEntryByIdWSResponse = {
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
     };
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -6143,6 +7112,25 @@ export type ModLessonGetUserAttemptWSParams = {
  */
 export type ModLessonGetUserAttemptWSResponse = {
     answerpages: {
+        page?: {
+            id: number; // The id of this lesson page.
+            lessonid: number; // The id of the lesson this page belongs to.
+            prevpageid: number; // The id of the page before this one.
+            nextpageid: number; // The id of the next page in the page sequence.
+            qtype: number; // Identifies the page type of this page.
+            qoption: number; // Used to record page type specific options.
+            layout: number; // Used to record page specific layout selections.
+            display: number; // Used to record page specific display selections.
+            timecreated: number; // Timestamp for when the page was created.
+            timemodified: number; // Timestamp for when the page was last modified.
+            title?: string; // The title of this page.
+            contents?: string; // The contents of this page.
+            contentsformat?: number; // Contents format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            displayinmenublock: boolean; // Toggles display in the left menu block.
+            type: number; // The type of the page [question | structure].
+            typeid: number; // The unique identifier for the page type.
+            typestring: string; // The string that describes this page type.
+        }; // Page fields.
         title: string; // Page title.
         contents: string; // Page contents.
         qtype: string; // Identifies the page type of this page.
@@ -7716,6 +8704,805 @@ export type ModWikiViewWikiWSParams = {
  */
 export type ModWikiViewWikiWSResponse = {
     status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_add_submission WS.
+ */
+export type ModWorkshopAddSubmissionWSParams = {
+    workshopid: number; // Workshop id.
+    title: string; // Submission title.
+    content?: string; // Submission text content.
+    contentformat?: number; // The format used for the content.
+    inlineattachmentsid?: number; // The draft file area id for inline attachments in the content.
+    attachmentsid?: number; // The draft file area id for attachments.
+};
+
+/**
+ * Data returned by mod_workshop_add_submission WS.
+ */
+export type ModWorkshopAddSubmissionWSResponse = {
+    status: boolean; // True if the submission was created false otherwise.
+    submissionid?: number; // New workshop submission id.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_delete_submission WS.
+ */
+export type ModWorkshopDeleteSubmissionWSParams = {
+    submissionid: number; // Submission id.
+};
+
+/**
+ * Data returned by mod_workshop_delete_submission WS.
+ */
+export type ModWorkshopDeleteSubmissionWSResponse = {
+    status: boolean; // True if the submission was deleted.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_evaluate_assessment WS.
+ */
+export type ModWorkshopEvaluateAssessmentWSParams = {
+    assessmentid: number; // Assessment id.
+    feedbacktext?: string; // The feedback for the reviewer.
+    feedbackformat?: number; // The feedback format for text.
+    weight?: number; // The new weight for the assessment.
+    gradinggradeover?: string; // The new grading grade.
+};
+
+/**
+ * Data returned by mod_workshop_evaluate_assessment WS.
+ */
+export type ModWorkshopEvaluateAssessmentWSResponse = {
+    status: boolean; // Status: true if the assessment was evaluated, false otherwise.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_evaluate_submission WS.
+ */
+export type ModWorkshopEvaluateSubmissionWSParams = {
+    submissionid: number; // Submission id.
+    feedbacktext?: string; // The feedback for the author.
+    feedbackformat?: number; // The feedback format for text.
+    published?: boolean; // Publish the submission for others?.
+    gradeover?: string; // The new submission grade.
+};
+
+/**
+ * Data returned by mod_workshop_evaluate_submission WS.
+ */
+export type ModWorkshopEvaluateSubmissionWSResponse = {
+    status: boolean; // Status: true if the submission was evaluated, false otherwise.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_assessment WS.
+ */
+export type ModWorkshopGetAssessmentWSParams = {
+    assessmentid: number; // Assessment id.
+};
+
+/**
+ * Data returned by mod_workshop_get_assessment WS.
+ */
+export type ModWorkshopGetAssessmentWSResponse = {
+    assessment: {
+        id: number; // The primary key of the record.
+        submissionid: number; // The id of the assessed submission.
+        reviewerid: number; // The id of the reviewer who makes this assessment.
+        weight: number; // The weight of the assessment for the purposes of aggregation.
+        timecreated: number; // If 0 then the assessment was allocated but the reviewer has not assessed yet.
+                 // If greater than 0 then the timestamp of when the reviewer assessed for the first time.
+
+        timemodified: number; // If 0 then the assessment was allocated but the reviewer has not assessed yet.
+                 // If greater than 0 then the timestamp of when the reviewer assessed for the last time.
+
+        grade: number; // The aggregated grade for submission suggested by the reviewer.
+                 // The grade 0..100 is computed from the values assigned to the assessment dimensions fields. If NULL then it has not been aggregated yet.
+
+        gradinggrade: number; // The computed grade 0..100 for this assessment. If NULL then it has not been computed yet.
+        gradinggradeover: number; // Grade for the assessment manually overridden by a teacher.
+                 // Grade is always from interval 0..100. If NULL then the grade is not overriden.
+
+        gradinggradeoverby: number; // The id of the user who has overridden the grade for submission.
+        feedbackauthor: string; // The comment/feedback from the reviewer for the author.
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorattachment: number; // Are there some files attached to the feedbackauthor field?
+                 // Sets to 1 by file_postupdate_standard_filemanager().
+
+        feedbackreviewer?: string; // The comment/feedback from the teacher for the reviewer.
+                 // For example the reason why the grade for assessment was overridden.
+
+        feedbackreviewerformat?: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackcontentfiles: { // Feedbackcontentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        feedbackattachmentfiles: { // Feedbackattachmentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_assessment_form_definition WS.
+ */
+export type ModWorkshopGetAssessmentFormDefinitionWSParams = {
+    assessmentid: number; // Assessment id.
+    mode?: string; // The form mode (assessment or preview).
+};
+
+/**
+ * Data returned by mod_workshop_get_assessment_form_definition WS.
+ */
+export type ModWorkshopGetAssessmentFormDefinitionWSResponse = {
+    dimenssionscount: number; // The number of dimenssions used by the form.
+    descriptionfiles: CoreWSExternalFile[];
+    options: { // The form options.
+        name: string; // Option name.
+        value: string; // Option value.
+    }[];
+    fields: { // The form fields.
+        name: string; // Field name.
+        value: string; // Field default value.
+    }[];
+    current: { // The current field values.
+        name: string; // Field name.
+        value: string; // Current field value.
+    }[];
+    dimensionsinfo: { // The dimensions general information.
+        id: number; // Dimension id.
+        min: number; // Minimum grade for the dimension.
+        max: number; // Maximum grade for the dimension.
+        weight: string; // The weight of the dimension.
+        scale?: string; // Scale items (if used).
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_grades WS.
+ */
+export type ModWorkshopGetGradesWSParams = {
+    workshopid: number; // Workshop instance id.
+    userid?: number; // User id (empty or 0 for current user).
+};
+
+/**
+ * Data returned by mod_workshop_get_grades WS.
+ */
+export type ModWorkshopGetGradesWSResponse = {
+    assessmentrawgrade?: number; // The assessment raw (numeric) grade.
+    assessmentlongstrgrade?: string; // The assessment string grade.
+    assessmentgradehidden?: boolean; // Whether the grade is hidden or not.
+    submissionrawgrade?: number; // The submission raw (numeric) grade.
+    submissionlongstrgrade?: string; // The submission string grade.
+    submissiongradehidden?: boolean; // Whether the grade is hidden or not.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_grades_report WS.
+ */
+export type ModWorkshopGetGradesReportWSParams = {
+    workshopid: number; // Workshop instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    sortby?: string; // Sort by this element: lastname, firstname, submissiontitle,
+                 // submissionmodified, submissiongrade, gradinggrade.
+
+    sortdirection?: string; // Sort direction: ASC or DESC.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+};
+
+/**
+ * Data returned by mod_workshop_get_grades_report WS.
+ */
+export type ModWorkshopGetGradesReportWSResponse = {
+    report: {
+        grades: {
+            userid: number; // The id of the user being displayed in the report.
+            submissionid: number; // Submission id.
+            submissiontitle: string; // Submission title.
+            submissionmodified: number; // Timestamp submission was updated.
+            submissiongrade?: number; // Aggregated grade for the submission.
+            gradinggrade?: number; // Computed grade for the assessment.
+            submissiongradeover?: number; // Grade for the assessment overrided
+                                     // by the teacher.
+
+            submissiongradeoverby?: number; // The id of the user who overrided
+                                     // the grade.
+
+            submissionpublished?: number; // Whether is a submission published.
+            reviewedby?: { // The users who reviewed the
+                                     // user submission.
+
+                userid: number; // The id of the user (0 when is configured to do not display names).
+                assessmentid: number; // The id of the assessment.
+                submissionid: number; // The id of the submission assessed.
+                grade: number; // The grade for submission.
+                gradinggrade: number; // The grade for assessment.
+                gradinggradeover: number; // The aggregated grade overrided.
+                weight: number; // The weight of the assessment for aggregation.
+            }[];
+            reviewerof?: { // The assessments the user
+                                     // reviewed.
+
+                userid: number; // The id of the user (0 when is configured to do not display names).
+                assessmentid: number; // The id of the assessment.
+                submissionid: number; // The id of the submission assessed.
+                grade: number; // The grade for submission.
+                gradinggrade: number; // The grade for assessment.
+                gradinggradeover: number; // The aggregated grade overrided.
+                weight: number; // The weight of the assessment for aggregation.
+            }[];
+        }[];
+        totalcount: number; // Number of total submissions.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_reviewer_assessments WS.
+ */
+export type ModWorkshopGetReviewerAssessmentsWSParams = {
+    workshopid: number; // Workshop instance id.
+    userid?: number; // User id who did the assessment review (empty or 0 for current user).
+};
+
+/**
+ * Data returned by mod_workshop_get_reviewer_assessments WS.
+ */
+export type ModWorkshopGetReviewerAssessmentsWSResponse = {
+    assessments: {
+        id: number; // The primary key of the record.
+        submissionid: number; // The id of the assessed submission.
+        reviewerid: number; // The id of the reviewer who makes this assessment.
+        weight: number; // The weight of the assessment for the purposes of aggregation.
+        timecreated: number; // If 0 then the assessment was allocated but the reviewer has not assessed yet.
+                 // If greater than 0 then the timestamp of when the reviewer assessed for the first time.
+
+        timemodified: number; // If 0 then the assessment was allocated but the reviewer has not assessed yet.
+                 // If greater than 0 then the timestamp of when the reviewer assessed for the last time.
+
+        grade: number; // The aggregated grade for submission suggested by the reviewer.
+                 // The grade 0..100 is computed from the values assigned to the assessment dimensions fields. If NULL then it has not been aggregated yet.
+
+        gradinggrade: number; // The computed grade 0..100 for this assessment. If NULL then it has not been computed yet.
+        gradinggradeover: number; // Grade for the assessment manually overridden by a teacher.
+                 // Grade is always from interval 0..100. If NULL then the grade is not overriden.
+
+        gradinggradeoverby: number; // The id of the user who has overridden the grade for submission.
+        feedbackauthor: string; // The comment/feedback from the reviewer for the author.
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorattachment: number; // Are there some files attached to the feedbackauthor field?
+                 // Sets to 1 by file_postupdate_standard_filemanager().
+
+        feedbackreviewer?: string; // The comment/feedback from the teacher for the reviewer.
+                 // For example the reason why the grade for assessment was overridden.
+
+        feedbackreviewerformat?: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackcontentfiles: { // Feedbackcontentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        feedbackattachmentfiles: { // Feedbackattachmentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_submission WS.
+ */
+export type ModWorkshopGetSubmissionWSParams = {
+    submissionid: number; // Submission id.
+};
+
+/**
+ * Data returned by mod_workshop_get_submission WS.
+ */
+export type ModWorkshopGetSubmissionWSResponse = {
+    submission: {
+        id: number; // The primary key of the record.
+        workshopid: number; // The id of the workshop instance.
+        example: boolean; // Is this submission an example from teacher.
+        authorid: number; // The author of the submission.
+        timecreated: number; // Timestamp when the work was submitted for the first time.
+        timemodified: number; // Timestamp when the submission has been updated.
+        title: string; // The submission title.
+        content: string; // Submission text.
+        contentformat?: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        contenttrust: number; // The trust mode of the data.
+        attachment: number; // Used by File API file_postupdate_standard_filemanager.
+        grade?: number; // Aggregated grade for the submission. The grade is a decimal number from interval 0..100.
+                 // If NULL then the grade for submission has not been aggregated yet.
+
+        gradeover?: number; // Grade for the submission manually overridden by a teacher. Grade is always from interval 0..100.
+                 // If NULL then the grade is not overriden.
+
+        gradeoverby?: number; // The id of the user who has overridden the grade for submission.
+        feedbackauthor?: string; // Teacher comment/feedback for the author of the submission, for example describing the reasons
+                 // for the grade overriding.
+
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        timegraded?: number; // The timestamp when grade or gradeover was recently modified.
+        published: boolean; // Shall the submission be available to other when the workshop is closed.
+        late: number; // Has this submission been submitted after the deadline or during the assessment phase?.
+        contentfiles?: { // Contentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        attachmentfiles?: { // Attachmentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_submission_assessments WS.
+ */
+export type ModWorkshopGetSubmissionAssessmentsWSParams = {
+    submissionid: number; // Submission id.
+};
+
+/**
+ * Data returned by mod_workshop_get_submission_assessments WS.
+ */
+export type ModWorkshopGetSubmissionAssessmentsWSResponse = {
+    assessments: {
+        id: number; // The primary key of the record.
+        submissionid: number; // The id of the assessed submission.
+        reviewerid: number; // The id of the reviewer who makes this assessment.
+        weight: number; // The weight of the assessment for the purposes of aggregation.
+        timecreated: number; // If 0 then the assessment was allocated but the reviewer has not assessed yet.
+                 // If greater than 0 then the timestamp of when the reviewer assessed for the first time.
+
+        timemodified: number; // If 0 then the assessment was allocated but the reviewer has not assessed yet.
+                 // If greater than 0 then the timestamp of when the reviewer assessed for the last time.
+
+        grade: number; // The aggregated grade for submission suggested by the reviewer.
+                 // The grade 0..100 is computed from the values assigned to the assessment dimensions fields. If NULL then it has not been aggregated yet.
+
+        gradinggrade: number; // The computed grade 0..100 for this assessment. If NULL then it has not been computed yet.
+        gradinggradeover: number; // Grade for the assessment manually overridden by a teacher.
+                 // Grade is always from interval 0..100. If NULL then the grade is not overriden.
+
+        gradinggradeoverby: number; // The id of the user who has overridden the grade for submission.
+        feedbackauthor: string; // The comment/feedback from the reviewer for the author.
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackauthorattachment: number; // Are there some files attached to the feedbackauthor field?
+                 // Sets to 1 by file_postupdate_standard_filemanager().
+
+        feedbackreviewer?: string; // The comment/feedback from the teacher for the reviewer.
+                 // For example the reason why the grade for assessment was overridden.
+
+        feedbackreviewerformat?: number; // Feedbackreviewer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        feedbackcontentfiles: { // Feedbackcontentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        feedbackattachmentfiles: { // Feedbackattachmentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_submissions WS.
+ */
+export type ModWorkshopGetSubmissionsWSParams = {
+    workshopid: number; // Workshop instance id.
+    userid?: number; // Get submissions done by this user. Use 0 or empty for the current user.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+                                                // It will return submissions done by users in the given group.
+
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+};
+
+/**
+ * Data returned by mod_workshop_get_submissions WS.
+ */
+export type ModWorkshopGetSubmissionsWSResponse = {
+    submissions: {
+        id: number; // The primary key of the record.
+        workshopid: number; // The id of the workshop instance.
+        example: boolean; // Is this submission an example from teacher.
+        authorid: number; // The author of the submission.
+        timecreated: number; // Timestamp when the work was submitted for the first time.
+        timemodified: number; // Timestamp when the submission has been updated.
+        title: string; // The submission title.
+        content: string; // Submission text.
+        contentformat?: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        contenttrust: number; // The trust mode of the data.
+        attachment: number; // Used by File API file_postupdate_standard_filemanager.
+        grade?: number; // Aggregated grade for the submission. The grade is a decimal number from interval 0..100.
+                 // If NULL then the grade for submission has not been aggregated yet.
+
+        gradeover?: number; // Grade for the submission manually overridden by a teacher. Grade is always from interval 0..100.
+                 // If NULL then the grade is not overriden.
+
+        gradeoverby?: number; // The id of the user who has overridden the grade for submission.
+        feedbackauthor?: string; // Teacher comment/feedback for the author of the submission, for example describing the reasons
+                 // for the grade overriding.
+
+        feedbackauthorformat?: number; // Feedbackauthor format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        timegraded?: number; // The timestamp when grade or gradeover was recently modified.
+        published: boolean; // Shall the submission be available to other when the workshop is closed.
+        late: number; // Has this submission been submitted after the deadline or during the assessment phase?.
+        contentfiles?: { // Contentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        attachmentfiles?: { // Attachmentfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    totalcount: number; // Total count of submissions.
+    totalfilesize: number; // Total size (bytes) of the files attached to all the
+                 // submissions (even the ones not returned due to pagination).
+
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_user_plan WS.
+ */
+export type ModWorkshopGetUserPlanWSParams = {
+    workshopid: number; // Workshop instance id.
+    userid?: number; // User id (empty or 0 for current user).
+};
+
+/**
+ * Data returned by mod_workshop_get_user_plan WS.
+ */
+export type ModWorkshopGetUserPlanWSResponse = {
+    userplan: {
+        phases: {
+            code: number; // Phase code.
+            title: string; // Phase title.
+            active: boolean; // Whether is the active task.
+            tasks: {
+                code: string; // Task code.
+                title: string; // Task title.
+                link: string; // Link to task.
+                details?: string; // Task details.
+                completed: string; // Completion information (maybe empty, maybe a boolean or generic info.
+            }[];
+            actions: {
+                type?: string; // Action type.
+                label?: string; // Action label.
+                url: string; // Link to action.
+                method?: string; // Get or post.
+            }[];
+        }[];
+        examples: {
+            id: number; // Example submission id.
+            title: string; // Example submission title.
+            assessmentid: number; // Example submission assessment id.
+            grade: number; // The submission grade.
+            gradinggrade: number; // The assessment grade.
+        }[];
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_get_workshop_access_information WS.
+ */
+export type ModWorkshopGetWorkshopAccessInformationWSParams = {
+    workshopid: number; // Workshop instance id.
+};
+
+/**
+ * Data returned by mod_workshop_get_workshop_access_information WS.
+ */
+export type ModWorkshopGetWorkshopAccessInformationWSResponse = {
+    creatingsubmissionallowed: boolean; // Is the given user allowed to create their submission?.
+    modifyingsubmissionallowed: boolean; // Is the user allowed to modify his existing submission?.
+    assessingallowed: boolean; // Is the user allowed to create/edit his assessments?.
+    assessingexamplesallowed: boolean; // Are reviewers allowed to create/edit their assessments of the example submissions?.
+    examplesassessedbeforesubmission: boolean; // Whether the given user has assessed all his required examples before submission
+             // (always true if there are not examples to assess or not configured to check before submission).
+
+    examplesassessedbeforeassessment: boolean; // Whether the given user has assessed all his required examples before assessment
+             // (always true if there are not examples to assessor not configured to check before assessment).
+
+    warnings?: CoreWSExternalWarning[];
+    canview: boolean; // Whether the user has the capability mod/workshop:view allowed.
+    canaddinstance: boolean; // Whether the user has the capability mod/workshop:addinstance allowed.
+    canswitchphase: boolean; // Whether the user has the capability mod/workshop:switchphase allowed.
+    caneditdimensions: boolean; // Whether the user has the capability mod/workshop:editdimensions allowed.
+    cansubmit: boolean; // Whether the user has the capability mod/workshop:submit allowed.
+    canpeerassess: boolean; // Whether the user has the capability mod/workshop:peerassess allowed.
+    canmanageexamples: boolean; // Whether the user has the capability mod/workshop:manageexamples allowed.
+    canallocate: boolean; // Whether the user has the capability mod/workshop:allocate allowed.
+    canpublishsubmissions: boolean; // Whether the user has the capability mod/workshop:publishsubmissions allowed.
+    canviewauthornames: boolean; // Whether the user has the capability mod/workshop:viewauthornames allowed.
+    canviewreviewernames: boolean; // Whether the user has the capability mod/workshop:viewreviewernames allowed.
+    canviewallsubmissions: boolean; // Whether the user has the capability mod/workshop:viewallsubmissions allowed.
+    canviewpublishedsubmissions: boolean; // Whether the user has the capability mod/workshop:viewpublishedsubmissions allowed.
+    canviewauthorpublished: boolean; // Whether the user has the capability mod/workshop:viewauthorpublished allowed.
+    canviewallassessments: boolean; // Whether the user has the capability mod/workshop:viewallassessments allowed.
+    canoverridegrades: boolean; // Whether the user has the capability mod/workshop:overridegrades allowed.
+    canignoredeadlines: boolean; // Whether the user has the capability mod/workshop:ignoredeadlines allowed.
+    candeletesubmissions: boolean; // Whether the user has the capability mod/workshop:deletesubmissions allowed.
+    canexportsubmissions: boolean; // Whether the user has the capability mod/workshop:exportsubmissions allowed.
+};
+
+/**
+ * Params of mod_workshop_get_workshops_by_courses WS.
+ */
+export type ModWorkshopGetWorkshopsByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_workshop_get_workshops_by_courses WS.
+ */
+export type ModWorkshopGetWorkshopsByCoursesWSResponse = {
+    workshops: {
+        id: number; // The primary key of the record.
+        course: number; // Course id this workshop is part of.
+        name: string; // Workshop name.
+        intro: string; // Workshop introduction text.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        instructauthors?: string; // Instructions for the submission phase.
+        instructauthorsformat?: number; // Instructauthors format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        instructreviewers?: string; // Instructions for the assessment phase.
+        instructreviewersformat?: number; // Instructreviewers format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        timemodified?: number; // The timestamp when the module was modified.
+        phase?: number; // The current phase of workshop (0 = not available, 1 = submission, 2 = assessment, 3 = closed).
+        useexamples?: boolean; // Optional feature: students practise evaluating on example submissions from teacher.
+        usepeerassessment?: boolean; // Optional feature: students perform peer assessment of others' work.
+        useselfassessment?: boolean; // Optional feature: students perform self assessment of their own work.
+        grade?: number; // The maximum grade for submission.
+        gradinggrade?: number; // The maximum grade for assessment.
+        strategy?: string; // The type of the current grading strategy used in this workshop.
+        evaluation?: string; // The recently used grading evaluation method.
+        gradedecimals?: number; // Number of digits that should be shown after the decimal point when displaying grades.
+        nattachments?: number; // Number of required submission attachments.
+        submissionfiletypes?: string; // Comma separated list of file extensions.
+        latesubmissions?: boolean; // Allow submitting the work after the deadline.
+        maxbytes?: number; // Maximum size of the one attached file.
+        examplesmode?: number; // 0 = example assessments are voluntary, 1 = examples must be assessed before submission,
+                 // 2 = examples are available after own submission and must be assessed before peer/self assessment phase.
+
+        submissionstart?: number; // 0 = will be started manually, greater than 0 the timestamp of the start of the submission phase.
+        submissionend?: number; // 0 = will be closed manually, greater than 0 the timestamp of the end of the submission phase.
+        assessmentstart?: number; // 0 = will be started manually, greater than 0 the timestamp of the start of the assessment phase.
+        assessmentend?: number; // 0 = will be closed manually, greater than 0 the timestamp of the end of the assessment phase.
+        phaseswitchassessment?: boolean; // Automatically switch to the assessment phase after the submissions deadline.
+        conclusion?: string; // A text to be displayed at the end of the workshop.
+        conclusionformat?: number; // Conclusion format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        overallfeedbackmode?: number; // Mode of the overall feedback support.
+        overallfeedbackfiles?: number; // Number of allowed attachments to the overall feedback.
+        overallfeedbackfiletypes?: string; // Comma separated list of file extensions.
+        overallfeedbackmaxbytes?: number; // Maximum size of one file attached to the overall feedback.
+        coursemodule: number; // Coursemodule.
+        introfiles: { // Introfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        instructauthorsfiles?: { // Instructauthorsfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        instructreviewersfiles?: { // Instructreviewersfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        conclusionfiles?: { // Conclusionfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_update_assessment WS.
+ */
+export type ModWorkshopUpdateAssessmentWSParams = {
+    assessmentid: number; // Assessment id.
+    data: { // Assessment data.
+        name: string; // The assessment data (use WS get_assessment_form_definition for obtaining the data to sent).
+                             // Apart from that data, you can optionally send:
+                             // feedbackauthor (str); the feedback for the submission author
+                             // feedbackauthorformat (int); the format of the feedbackauthor
+                             // feedbackauthorinlineattachmentsid (int); the draft file area for the editor attachments
+                             // feedbackauthorattachmentsid (int); the draft file area id for the feedback attachments.
+
+        value: string; // The value of the option.
+    }[];
+};
+
+/**
+ * Data returned by mod_workshop_update_assessment WS.
+ */
+export type ModWorkshopUpdateAssessmentWSResponse = {
+    status: boolean; // Status: true if the assessment was added or updated false otherwise.
+    rawgrade?: number; // Raw percentual grade (0.00000 to 100.00000) for submission.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_update_submission WS.
+ */
+export type ModWorkshopUpdateSubmissionWSParams = {
+    submissionid: number; // Submission id.
+    title: string; // Submission title.
+    content?: string; // Submission text content.
+    contentformat?: number; // The format used for the content.
+    inlineattachmentsid?: number; // The draft file area id for inline attachments in the content.
+    attachmentsid?: number; // The draft file area id for attachments.
+};
+
+/**
+ * Data returned by mod_workshop_update_submission WS.
+ */
+export type ModWorkshopUpdateSubmissionWSResponse = {
+    status: boolean; // True if the submission was updated false otherwise.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_view_submission WS.
+ */
+export type ModWorkshopViewSubmissionWSParams = {
+    submissionid: number; // Submission id.
+};
+
+/**
+ * Data returned by mod_workshop_view_submission WS.
+ */
+export type ModWorkshopViewSubmissionWSResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_workshop_view_workshop WS.
+ */
+export type ModWorkshopViewWorkshopWSParams = {
+    workshopid: number; // Workshop instance id.
+};
+
+/**
+ * Data returned by mod_workshop_view_workshop WS.
+ */
+export type ModWorkshopViewWorkshopWSResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of report_insights_set_fixed_prediction WS.
+ */
+export type ReportInsightsSetFixedPredictionWSParams = {
+    predictionid: number; // The prediction id.
+};
+
+/**
+ * Data returned by report_insights_set_fixed_prediction WS.
+ */
+export type ReportInsightsSetFixedPredictionWSResponse = {
+    success: boolean; // True if the prediction was successfully flagged as fixed.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of report_insights_set_notuseful_prediction WS.
+ */
+export type ReportInsightsSetNotusefulPredictionWSParams = {
+    predictionid: number; // The prediction id.
+};
+
+/**
+ * Data returned by report_insights_set_notuseful_prediction WS.
+ */
+export type ReportInsightsSetNotusefulPredictionWSResponse = {
+    success: boolean; // True if the prediction was successfully flagged as not useful.
     warnings?: CoreWSExternalWarning[];
 };
 
