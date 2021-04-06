@@ -10824,6 +10824,7 @@ export type ToolLpDataForCourseCompetenciesPageWSResponse = {
         };
     }[];
     manageurl: string; // Url to the manage competencies page.
+    pluginbaseurl: string; // Url to the course competencies page.
 };
 
 /**
