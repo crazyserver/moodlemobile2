@@ -319,6 +319,7 @@ export type CoreCalendarGetActionEventsByTimesortWSParams = {
     timesortto?: number; // Time sort to.
     aftereventid?: number; // The last seen event id.
     limitnum?: number; // Limit number.
+    limittononsuspendedevents?: boolean; // Limit the events to courses the user is not suspended in.
 };
 
 /**
@@ -657,6 +658,7 @@ export type CoreCalendarGetCalendarEventsWSResponse = {
         description?: string; // Description.
         format: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         courseid: number; // Course id.
+        categoryid?: number; // Category id (only for category events).
         groupid: number; // Group id.
         userid: number; // User id.
         repeatid: number; // Repeat id.
@@ -683,6 +685,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSParams = {
     courseid?: number; // Course being viewed.
     categoryid?: number; // Category being viewed.
     includenavigation?: boolean; // Whether to show course navigation.
+    mini?: boolean; // Whether to return the mini month view or not.
 };
 
 /**
@@ -692,7 +695,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
     url: string; // Url.
     courseid: number; // Courseid.
     categoryid?: number; // Categoryid.
-    filter_selector: string; // Filter_selector.
+    filter_selector?: string; // Filter_selector.
     weeks: { // Weeks.
         prepadding: number[]; // Prepadding.
         postpadding: number[]; // Postpadding.
@@ -812,6 +815,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
     };
     periodname: string; // Periodname.
     includenavigation: boolean; // Includenavigation.
+    initialeventsloaded: boolean; // Initialeventsloaded.
     previousperiod: {
         seconds: number; // Seconds.
         minutes: number; // Minutes.
@@ -1623,6 +1627,10 @@ export type CoreCourseGetCoursesByFieldWSResponse = {
             filter: string; // Filter plugin name.
             localstate: number; // Filter state: 1 for on, -1 for off, 0 if inherit.
             inheritedstate: number; // 1 or 0 to use when localstate is set to inherit.
+        }[];
+        courseformatoptions?: { // Additional options for particular course format.
+            name: string; // Course format option name.
+            value: string; // Course format option value.
         }[];
     }[];
     warnings?: CoreWSExternalWarning[];
@@ -2473,7 +2481,7 @@ export type CoreMessageMarkAllNotificationsAsReadWSResponse = boolean;
  * Params of core_message_mark_message_read WS.
  */
 export type CoreMessageMarkMessageReadWSParams = {
-    messageid: number; // Id of the message (in the message table).
+    messageid: number; // Id of the message in the messages table.
     timeread?: number; // Timestamp for when the message should be marked read.
 };
 
@@ -2481,7 +2489,23 @@ export type CoreMessageMarkMessageReadWSParams = {
  * Data returned by core_message_mark_message_read WS.
  */
 export type CoreMessageMarkMessageReadWSResponse = {
-    messageid: number; // The id of the message in the message_read table.
+    messageid: number; // The id of the message in the messages table.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_message_mark_notification_read WS.
+ */
+export type CoreMessageMarkNotificationReadWSParams = {
+    notificationid: number; // Id of the notification.
+    timeread?: number; // Timestamp for when the notification should be marked read.
+};
+
+/**
+ * Data returned by core_message_mark_notification_read WS.
+ */
+export type CoreMessageMarkNotificationReadWSResponse = {
+    notificationid: number; // Id of the notification.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -3632,6 +3656,9 @@ export type ModAssignGetParticipantWSResponse = {
 export type ModAssignGetSubmissionStatusWSParams = {
     assignid: number; // Assignment instance id.
     userid?: number; // User id (empty for current user).
+    groupid?: number; // Filter by users in group (used for generating the grading summary).
+                 // Empty or 0 for all groups information.
+
 };
 
 /**
@@ -4374,6 +4401,61 @@ export type ModChatGetChatsByCoursesWSResponse = {
         visible?: boolean; // Visible.
         groupmode?: number; // Group mode.
         groupingid?: number; // Group id.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_chat_get_session_messages WS.
+ */
+export type ModChatGetSessionMessagesWSParams = {
+    chatid: number; // Chat instance id.
+    sessionstart: number; // The session start time (timestamp).
+    sessionend: number; // The session end time (timestamp).
+    groupid?: number; // Get messages from users in this group.
+                                             // 0 means that the function will determine the user group.
+
+};
+
+/**
+ * Data returned by mod_chat_get_session_messages WS.
+ */
+export type ModChatGetSessionMessagesWSResponse = {
+    messages: {
+        id: number; // The message record id.
+        chatid: number; // The chat id.
+        userid: number; // The user who wrote the message.
+        groupid: number; // The group this message belongs to.
+        issystem: boolean; // Whether is a system message or not.
+        message: string; // The message text.
+        timestamp: number; // The message timestamp (indicates when the message was sent).
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_chat_get_sessions WS.
+ */
+export type ModChatGetSessionsWSParams = {
+    chatid: number; // Chat instance id.
+    groupid?: number; // Get messages from users in this group.
+                                             // 0 means that the function will determine the user group.
+
+    showall?: boolean; // Whether to show completed sessions or not.
+};
+
+/**
+ * Data returned by mod_chat_get_sessions WS.
+ */
+export type ModChatGetSessionsWSResponse = {
+    sessions: { // List of users.
+        sessionstart: number; // Session start time.
+        sessionend: number; // Session end time.
+        sessionusers: { // Session users.
+            userid: number; // User id.
+            messagecount: number; // Number of messages in the session.
+        }[];
+        iscomplete: boolean; // Whether the session is completed or not.
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -8251,7 +8333,7 @@ export type ModScormGetScormsByCoursesWSResponse = {
         whatgrade?: number; // What grade.
         maxattempt?: number; // Maximum number of attemtps.
         forcecompleted?: boolean; // Status current attempt is forced to "completed".
-        forcenewattempt?: boolean; // Hides the "Start new attempt" checkbox.
+        forcenewattempt?: number; // Controls re-entry behaviour.
         lastattemptlock?: boolean; // Prevents to launch new attempts once finished.
         displayattemptstatus?: number; // How to display attempt status.
         displaycoursestructure?: boolean; // Display contents structure.
@@ -9634,6 +9716,7 @@ export type ToolLpDataForCourseCompetenciesPageWSResponse = {
         };
     }[];
     manageurl: string; // Url to the manage competencies page.
+    pluginbaseurl: string; // Url to the course competencies page.
 };
 
 /**
@@ -11050,6 +11133,38 @@ export type ToolMobileGetConfigWSResponse = {
 };
 
 /**
+ * Params of tool_mobile_get_content WS.
+ */
+export type ToolMobileGetContentWSParams = {
+    component: string; // Component where the class is e.g. mod_assign.
+    method: string; // Method to execute in class \$component\output\mobile.
+    args?: { // Args for the method are optional.
+        name: string; // Param name.
+        value: string; // Param value.
+    }[];
+};
+
+/**
+ * Data returned by tool_mobile_get_content WS.
+ */
+export type ToolMobileGetContentWSResponse = {
+    templates: { // Templates required by the generated content.
+        id: string; // ID of the template.
+        html: string; // HTML code.
+    }[];
+    javascript: string; // JavaScript code.
+    otherdata: { // Other data that can be used or manipulated by the template via 2-way data-binding.
+        name: string; // Field name.
+        value: string; // Field value.
+    }[];
+    files: CoreWSExternalFile[];
+    restrict: {
+        users?: number[]; // List of allowed users.
+        courses?: number[]; // List of allowed courses.
+    }; // Restrict this content to certain users or courses.
+};
+
+/**
  * Params of tool_mobile_get_plugins_supporting_mobile WS.
  */
 export type ToolMobileGetPluginsSupportingMobileWSParams = {
@@ -11069,6 +11184,8 @@ export type ToolMobileGetPluginsSupportingMobileWSResponse = {
 
         filehash: string; // The addon package hash or empty if it doesn't exist.
         filesize: number; // The addon package size or empty if it doesn't exist.
+        handlers?: string; // Handlers definition (JSON).
+        lang?: string; // Language strings used by the handlers (JSON).
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -11108,5 +11225,22 @@ export type ToolMobileGetPublicConfigWSResponse = {
         iconurl: string; // The icon URL for the provider.
         url: string; // The URL of the provider.
     }[];
+    country?: string; // Default site country.
+    agedigitalconsentverification?: boolean; // Whether age digital consent verification
+                 // is enabled.
+
+    supportname?: string; // Site support contact name
+                 // (only if age verification is enabled).
+
+    supportemail?: string; // Site support contact email
+                 // (only if age verification is enabled).
+
+    autolang?: number; // Whether to detect default language
+                 // from browser setting.
+
+    lang?: string; // Default language for the site.
+    langmenu?: number; // Whether the language menu should be displayed.
+    langlist?: string; // Languages on language menu.
+    locale?: string; // Sitewide locale.
     warnings?: CoreWSExternalWarning[];
 };
