@@ -45,6 +45,273 @@ export type CoreBadgesGetUserBadgesWSResponse = {
 };
 
 /**
+ * Params of core_block_get_course_blocks WS.
+ */
+export type CoreBlockGetCourseBlocksWSParams = {
+    courseid: number; // Course id.
+};
+
+/**
+ * Data returned by core_block_get_course_blocks WS.
+ */
+export type CoreBlockGetCourseBlocksWSResponse = {
+    blocks: { // List of blocks in the course.
+        instanceid: number; // Block instance id.
+        name: string; // Block name.
+        region: string; // Block region.
+        positionid: number; // Position id.
+        collapsible: boolean; // Whether the block is collapsible.
+        dockable: boolean; // Hether the block is  dockable.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_calendar_create_calendar_events WS.
+ */
+export type CoreCalendarCreateCalendarEventsWSParams = {
+    events: {
+        name: string; // Event name.
+        description?: string; // Description.
+        format?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        courseid?: number; // Course id.
+        groupid?: number; // Group id.
+        repeats?: number; // Number of repeats.
+        eventtype?: string; // Event type.
+        timestart?: number; // Timestart.
+        timeduration?: number; // Time duration.
+        visible?: number; // Visible.
+        sequence?: number; // Sequence.
+    }[];
+};
+
+/**
+ * Data returned by core_calendar_create_calendar_events WS.
+ */
+export type CoreCalendarCreateCalendarEventsWSResponse = {
+    events: {
+        id: number; // Event id.
+        name: string; // Event name.
+        description?: string; // Description.
+        format: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        courseid: number; // Course id.
+        groupid: number; // Group id.
+        userid: number; // User id.
+        repeatid?: number; // Repeat id.
+        modulename?: string; // Module name.
+        instance: number; // Instance id.
+        eventtype: string; // Event type.
+        timestart: number; // Timestart.
+        timeduration: number; // Time duration.
+        visible: number; // Visible.
+        uuid?: string; // Unique id of ical events.
+        sequence: number; // Sequence.
+        timemodified: number; // Time modified.
+        subscriptionid?: number; // Subscription id.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_calendar_delete_calendar_events WS.
+ */
+export type CoreCalendarDeleteCalendarEventsWSParams = {
+    events: {
+        eventid: number; // Event ID.
+        repeat: boolean; // Delete comeplete series if repeated event.
+    }[];
+};
+
+/**
+ * Data returned by core_calendar_delete_calendar_events WS.
+ */
+export type CoreCalendarDeleteCalendarEventsWSResponse = {}; // WARNING: Null structure found;
+
+/**
+ * Params of core_calendar_get_action_events_by_course WS.
+ */
+export type CoreCalendarGetActionEventsByCourseWSParams = {
+    courseid: number; // Course id.
+    timesortfrom?: number; // Time sort from.
+    timesortto?: number; // Time sort to.
+    aftereventid?: number; // The last seen event id.
+    limitnum?: number; // Limit number.
+};
+
+/**
+ * Data returned by core_calendar_get_action_events_by_course WS.
+ */
+export type CoreCalendarGetActionEventsByCourseWSResponse = {
+    events: { // Events.
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        url: string; // Url.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+        };
+    }[];
+    firstid: number; // Firstid.
+    lastid: number; // Lastid.
+};
+
+/**
+ * Params of core_calendar_get_action_events_by_courses WS.
+ */
+export type CoreCalendarGetActionEventsByCoursesWSParams = {
+    courseids: number[];
+    timesortfrom?: number; // Time sort from.
+    timesortto?: number; // Time sort to.
+    limitnum?: number; // Limit number.
+};
+
+/**
+ * Data returned by core_calendar_get_action_events_by_courses WS.
+ */
+export type CoreCalendarGetActionEventsByCoursesWSResponse = {
+    groupedbycourse: { // Groupedbycourse.
+        events: { // Events.
+            id: number; // Id.
+            name: string; // Name.
+            description?: string; // Description.
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            groupid?: number; // Groupid.
+            userid?: number; // Userid.
+            repeatid?: number; // Repeatid.
+            modulename?: string; // Modulename.
+            instance?: number; // Instance.
+            eventtype: string; // Eventtype.
+            timestart: number; // Timestart.
+            timeduration: number; // Timeduration.
+            timesort: number; // Timesort.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            url: string; // Url.
+            icon: {
+                key: string; // Key.
+                component: string; // Component.
+                alttext: string; // Alttext.
+            };
+            action?: {
+                name: string; // Name.
+                url: string; // Url.
+                itemcount: number; // Itemcount.
+                actionable: boolean; // Actionable.
+                showitemcount: boolean; // Showitemcount.
+            };
+            course?: {
+                id: number; // Id.
+                fullname: string; // Fullname.
+                shortname: string; // Shortname.
+                idnumber: string; // Idnumber.
+                summary: string; // Summary.
+                summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                startdate: number; // Startdate.
+                enddate: number; // Enddate.
+                fullnamedisplay: string; // Fullnamedisplay.
+                viewurl: string; // Viewurl.
+            };
+        }[];
+        firstid: number; // Firstid.
+        lastid: number; // Lastid.
+        courseid: number; // Courseid.
+    }[];
+};
+
+/**
+ * Params of core_calendar_get_action_events_by_timesort WS.
+ */
+export type CoreCalendarGetActionEventsByTimesortWSParams = {
+    timesortfrom?: number; // Time sort from.
+    timesortto?: number; // Time sort to.
+    aftereventid?: number; // The last seen event id.
+    limitnum?: number; // Limit number.
+};
+
+/**
+ * Data returned by core_calendar_get_action_events_by_timesort WS.
+ */
+export type CoreCalendarGetActionEventsByTimesortWSResponse = {
+    events: { // Events.
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        url: string; // Url.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+        };
+    }[];
+    firstid: number; // Firstid.
+    lastid: number; // Lastid.
+};
+
+/**
  * Params of core_calendar_get_calendar_events WS.
  */
 export type CoreCalendarGetCalendarEventsWSParams = {
@@ -515,6 +782,8 @@ export type CoreCourseGetContentsWSResponse = {
     summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     section?: number; // Section number inside the course.
     hiddenbynumsections?: number; // Whether is a section hidden in the course format.
+    uservisible?: boolean; // Is the section visible for the user?.
+    availabilityinfo?: string; // Availability information.
     modules: { // List of module.
         id: number; // Activity id.
         url?: string; // Activity url.
@@ -522,6 +791,9 @@ export type CoreCourseGetContentsWSResponse = {
         instance?: number; // Instance id.
         description?: string; // Activity description.
         visible?: number; // Is the module visible.
+        uservisible?: boolean; // Is the module visible for the user?.
+        availabilityinfo?: string; // Availability information.
+        visibleoncoursepage?: number; // Is the module visible on course page.
         modicon: string; // Activity icon url.
         modname: string; // Activity module type.
         modplural: string; // Activity module plural name.
@@ -537,6 +809,9 @@ export type CoreCourseGetContentsWSResponse = {
             timecreated: number; // Time created.
             timemodified: number; // Time modified.
             sortorder: number; // Content sort order.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for external files.
             userid: number; // User who added this content to moodle.
             author: string; // Content owner.
             license: string; // Content license.
@@ -572,6 +847,7 @@ export type CoreCourseGetCourseModuleWSResponse = {
         score?: number; // Score.
         indent?: number; // Indentation.
         visible?: number; // If visible.
+        visibleoncoursepage?: number; // If visible on course page.
         visibleold?: number; // Visible old.
         completiongradeitemnumber?: number; // Completion grade item.
         completionview?: number; // Completion view setting.
@@ -624,6 +900,7 @@ export type CoreCourseGetCourseModuleByInstanceWSResponse = {
         score?: number; // Score.
         indent?: number; // Indentation.
         visible?: number; // If visible.
+        visibleoncoursepage?: number; // If visible on course page.
         visibleold?: number; // Visible old.
         completiongradeitemnumber?: number; // Completion grade item.
         completionview?: number; // Completion view setting.
@@ -723,6 +1000,7 @@ export type CoreCourseGetCoursesByFieldWSResponse = {
         shortname: string; // Course short name.
         categoryid: number; // Category id.
         categoryname: string; // Category name.
+        sortorder?: number; // Sort order in the category.
         summary: string; // Summary.
         summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         summaryfiles?: CoreWSExternalFile[];
@@ -737,6 +1015,7 @@ export type CoreCourseGetCoursesByFieldWSResponse = {
         showgrades?: number; // 1 if grades are shown, otherwise 0.
         newsitems?: number; // Number of recent items appearing on the course page.
         startdate?: number; // Timestamp when the course start.
+        enddate?: number; // Timestamp when the course end.
         maxbytes?: number; // Largest size of file that can be uploaded into.
         showreports?: number; // Are activity report shown (yes = 1, no =0).
         visible?: number; // 1: available to student, 0:not available.
@@ -747,7 +1026,6 @@ export type CoreCourseGetCoursesByFieldWSResponse = {
         completionnotify?: number; // 1: yes 0: no.
         lang?: string; // Forced course language.
         theme?: string; // Fame of the forced theme.
-        sortorder?: number; // Sort order in the category.
         marker?: number; // Current course marker.
         legacyfiles?: number; // If legacy files are enabled.
         calendartype?: string; // Calendar type.
@@ -755,6 +1033,36 @@ export type CoreCourseGetCoursesByFieldWSResponse = {
         timemodified?: number; // Last time  the course was updated.
         requested?: number; // If is a requested course.
         cacherev?: number; // Cache revision number.
+        filters?: { // Course filters.
+            filter: string; // Filter plugin name.
+            localstate: number; // Filter state: 1 for on, -1 for off, 0 if inherit.
+            inheritedstate: number; // 1 or 0 to use when localstate is set to inherit.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_course_get_updates_since WS.
+ */
+export type CoreCourseGetUpdatesSinceWSParams = {
+    courseid: number; // Course id to check.
+    since: number; // Check updates since this time stamp.
+    filter?: string[]; // Check only for updates in these areas.
+};
+
+/**
+ * Data returned by core_course_get_updates_since WS.
+ */
+export type CoreCourseGetUpdatesSinceWSResponse = {
+    instances: {
+        contextlevel: string; // The context level.
+        id: number; // Instance id.
+        updates: {
+            name: string; // Name of the area updated.
+            timeupdated?: number; // Last time was updated.
+            itemids?: number[]; // The ids of the items updated.
+        }[];
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -827,6 +1135,7 @@ export type CoreCourseSearchCoursesWSResponse = {
         shortname: string; // Course short name.
         categoryid: number; // Category id.
         categoryname: string; // Category name.
+        sortorder?: number; // Sort order in the category.
         summary: string; // Summary.
         summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         summaryfiles?: CoreWSExternalFile[];
@@ -982,6 +1291,9 @@ export type CoreEnrolGetUsersCoursesWSResponse = {
     lang?: string; // Forced course language.
     enablecompletion?: boolean; // True if completion is enabled, otherwise false.
     category?: number; // Course category id.
+    progress?: number; // Progress percentage.
+    startdate?: number; // Timestamp when the course start.
+    enddate?: number; // Timestamp when the course end.
 }[];
 
 /**
@@ -1137,6 +1449,105 @@ export type CoreMessageCreateContactsWSParams = {
  * Data returned by core_message_create_contacts WS.
  */
 export type CoreMessageCreateContactsWSResponse = CoreWSExternalWarning[];
+
+/**
+ * Params of core_message_data_for_messagearea_contacts WS.
+ */
+export type CoreMessageDataForMessageareaContactsWSParams = {
+    userid: number; // The id of the user who we are viewing conversations for.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
+};
+
+/**
+ * Data returned by core_message_data_for_messagearea_contacts WS.
+ */
+export type CoreMessageDataForMessageareaContactsWSResponse = {
+    contacts: {
+        userid: number; // The user's id.
+        fullname: string; // The user's name.
+        profileimageurl: string; // User picture URL.
+        profileimageurlsmall: string; // Small user picture URL.
+        ismessaging: boolean; // If we are messaging the user.
+        sentfromcurrentuser: boolean; // Was the last message sent from the current user?.
+        lastmessage: string; // The user's last message.
+        messageid?: number; // The unique search message id.
+        showonlinestatus: boolean; // Show the user's online status?.
+        isonline: boolean; // The user's online status.
+        isread: boolean; // If the user has read the message.
+        isblocked: boolean; // If the user has been blocked.
+        unreadcount?: number; // The number of unread messages in this conversation.
+    }[];
+};
+
+/**
+ * Params of core_message_data_for_messagearea_conversations WS.
+ */
+export type CoreMessageDataForMessageareaConversationsWSParams = {
+    userid: number; // The id of the user who we are viewing conversations for.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
+};
+
+/**
+ * Data returned by core_message_data_for_messagearea_conversations WS.
+ */
+export type CoreMessageDataForMessageareaConversationsWSResponse = {
+    contacts: {
+        userid: number; // The user's id.
+        fullname: string; // The user's name.
+        profileimageurl: string; // User picture URL.
+        profileimageurlsmall: string; // Small user picture URL.
+        ismessaging: boolean; // If we are messaging the user.
+        sentfromcurrentuser: boolean; // Was the last message sent from the current user?.
+        lastmessage: string; // The user's last message.
+        messageid?: number; // The unique search message id.
+        showonlinestatus: boolean; // Show the user's online status?.
+        isonline: boolean; // The user's online status.
+        isread: boolean; // If the user has read the message.
+        isblocked: boolean; // If the user has been blocked.
+        unreadcount?: number; // The number of unread messages in this conversation.
+    }[];
+};
+
+/**
+ * Params of core_message_data_for_messagearea_messages WS.
+ */
+export type CoreMessageDataForMessageareaMessagesWSParams = {
+    currentuserid: number; // The current user's id.
+    otheruserid: number; // The other user's id.
+    limitfrom?: number; // Limit from.
+    limitnum?: number; // Limit number.
+    newest?: boolean; // Newest first?.
+    timefrom?: number; // The timestamp from which the messages were created.
+};
+
+/**
+ * Data returned by core_message_data_for_messagearea_messages WS.
+ */
+export type CoreMessageDataForMessageareaMessagesWSResponse = {
+    iscurrentuser: boolean; // Is the currently logged in user the user we are viewing
+                 // the messages on behalf of?.
+
+    currentuserid: number; // The current user's id.
+    otheruserid: number; // The other user's id.
+    otheruserfullname: string; // The other user's fullname.
+    showonlinestatus: boolean; // Show the user's online status?.
+    isonline: boolean; // The user's online status.
+    messages: {
+        id: number; // The id of the message.
+        useridfrom: number; // The id of the user who sent the message.
+        useridto: number; // The id of the user who received the message.
+        text: string; // The text of the message.
+        displayblocktime: boolean; // Should we display the block time?.
+        blocktime: string; // The time to display above the message.
+        position: string; // The position of the text.
+        timesent: string; // The time the message was sent.
+        timecreated: number; // The timecreated timestamp for the message.
+        isread: number; // Determines if the message was read or not.
+    }[];
+    isblocked?: boolean; // Is this user blocked by the current user?.
+};
 
 /**
  * Params of core_message_data_for_messagearea_search_messages WS.
@@ -1805,7 +2216,7 @@ export type CoreUserGetCourseUserProfilesWSResponse = {
     }[];
     preferences?: { // Users preferences.
         name: string; // The name of the preferences.
-        value: string; // The value of the custom field.
+        value: string; // The value of the preference.
     }[];
     groups?: { // User groups.
         id: number; // Group id.
@@ -1902,7 +2313,7 @@ export type CoreUserGetUsersByFieldWSResponse = {
     }[];
     preferences?: { // Users preferences.
         name: string; // The name of the preferences.
-        value: string; // The value of the custom field.
+        value: string; // The value of the preference.
     }[];
 }[];
 
@@ -2006,7 +2417,7 @@ export type CoreWebserviceGetSiteInfoWSResponse = {
     firstname: string; // First name.
     lastname: string; // Last name.
     fullname: string; // User full name.
-    lang: string; // User language.
+    lang: string; // Current language.
     userid: number; // User id.
     siteurl: string; // Site url.
     userpictureurl: string; // The user profile picture.
@@ -2150,6 +2561,7 @@ export type GradereportUserGetGradeItemsWSResponse = {
         maxdepth: number; // Table max depth (needed for printing it).
         gradeitems: {
             id: number; // Grade item id.
+            itemname: string; // Grade item name.
             itemtype: string; // Grade item type.
             itemmodule: string; // Grade item module.
             iteminstance: number; // Grade item instance.
@@ -2444,6 +2856,7 @@ export type ModAssignGetAssignmentsWSResponse = {
             timemodified: number; // Last time assignment was modified.
             completionsubmit: number; // If enabled, set activity as complete following submission.
             cutoffdate: number; // Date after which submission is not accepted without an extension.
+            gradingduedate: number; // The expected date for marking the submissions.
             teamsubmission: number; // If enabled, students submit as a team.
             requireallteammemberssubmit: number; // If enabled, all team members must submit.
             teamsubmissiongroupingid: number; // The grouping id for the team submission groups.
@@ -2520,6 +2933,7 @@ export type ModAssignGetParticipantWSResponse = {
     fullname: string; // The fullname of the user.
     submitted: boolean; // Have they submitted their assignment.
     requiregrading: boolean; // Is their submission waiting for grading.
+    grantedextension: boolean; // Have they been granted an extension.
     blindmarking: boolean; // Is blind marking enabled for this assignment.
     allowsubmissionsfromdate: number; // Allowsubmissionsfromdate for the user.
     duedate: number; // Duedate for the user.
@@ -2571,7 +2985,7 @@ export type ModAssignGetParticipantWSResponse = {
         }[];
         preferences?: { // Users preferences.
             name: string; // The name of the preferences.
-            value: string; // The value of the custom field.
+            value: string; // The value of the preference.
         }[];
     };
 };
@@ -2896,7 +3310,7 @@ export type ModAssignListParticipantsWSResponse = {
     }[];
     preferences?: { // Users preferences.
         name: string; // The name of the preferences.
-        value: string; // The value of the custom field.
+        value: string; // The value of the preference.
     }[];
     groups?: { // User groups.
         id: number; // Group id.
@@ -2916,6 +3330,7 @@ export type ModAssignListParticipantsWSResponse = {
     }[];
     submitted: boolean; // Have they submitted their assignment.
     requiregrading: boolean; // Is their submission waiting for grading.
+    grantedextension: boolean; // Have they been granted an extension.
     groupid?: number; // For group assignments this is the group id.
     groupname?: string; // For group assignments this is the group name.
 }[];
@@ -3380,7 +3795,7 @@ export type ModChatViewChatWSResponse = {
  */
 export type ModChoiceDeleteChoiceResponsesWSParams = {
     choiceid: number; // Choice instance id.
-    responses?: number[]; // Array of response ids, empty for deleting all the user responses.
+    responses?: number[]; // Array of response ids, empty for deleting all the current user responses.
 };
 
 /**
@@ -3520,6 +3935,87 @@ export type ModChoiceViewChoiceWSResponse = {
 };
 
 /**
+ * Params of mod_data_add_entry WS.
+ */
+export type ModDataAddEntryWSParams = {
+    databaseid: number; // Data instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    data: { // The fields data to be created.
+        fieldid: number; // The field id.
+        subfield?: string; // The subfield name (if required).
+        value: string; // The contents for the field always JSON encoded.
+    }[];
+};
+
+/**
+ * Data returned by mod_data_add_entry WS.
+ */
+export type ModDataAddEntryWSResponse = {
+    newentryid: number; // True new created entry id. 0 if the entry was not created.
+    generalnotifications: string[];
+    fieldnotifications: {
+        fieldname: string; // The field name.
+        notification: string; // The notification for the field.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_approve_entry WS.
+ */
+export type ModDataApproveEntryWSParams = {
+    entryid: number; // Record entry id.
+    approve?: boolean; // Whether to approve (true) or unapprove the entry.
+};
+
+/**
+ * Data returned by mod_data_approve_entry WS.
+ */
+export type ModDataApproveEntryWSResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_delete_entry WS.
+ */
+export type ModDataDeleteEntryWSParams = {
+    entryid: number; // Record entry id.
+};
+
+/**
+ * Data returned by mod_data_delete_entry WS.
+ */
+export type ModDataDeleteEntryWSResponse = {
+    status: boolean; // Always true. If we see this field it means that the entry was deleted.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_get_data_access_information WS.
+ */
+export type ModDataGetDataAccessInformationWSParams = {
+    databaseid: number; // Database instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+};
+
+/**
+ * Data returned by mod_data_get_data_access_information WS.
+ */
+export type ModDataGetDataAccessInformationWSResponse = {
+    groupid: number; // User current group id (calculated).
+    canaddentry: boolean; // Whether the user can add entries or not.
+    canmanageentries: boolean; // Whether the user can manage entries or not.
+    canapprove: boolean; // Whether the user can approve entries or not.
+    timeavailable: boolean; // Whether the database is available or not by time restrictions.
+    inreadonlyperiod: boolean; // Whether the database is in read mode only.
+    numentries: number; // The number of entries the current user added.
+    entrieslefttoadd: number; // The number of entries left to complete the activity.
+    entrieslefttoview: number; // The number of entries left to view other users entries.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of mod_data_get_databases_by_courses WS.
  */
 export type ModDataGetDatabasesByCoursesWSParams = {
@@ -3532,42 +4028,790 @@ export type ModDataGetDatabasesByCoursesWSParams = {
 export type ModDataGetDatabasesByCoursesWSResponse = {
     databases: {
         id: number; // Database id.
-        coursemodule: number; // Course module id.
         course: number; // Course id.
         name: string; // Database name.
         intro: string; // The Database intro.
-        introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
-        introfiles?: CoreWSExternalFile[];
-        comments?: boolean; // Comments enabled.
-        timeavailablefrom?: number; // Timeavailablefrom field.
-        timeavailableto?: number; // Timeavailableto field.
-        timeviewfrom?: number; // Timeviewfrom field.
-        timeviewto?: number; // Timeviewto field.
-        requiredentries?: number; // Requiredentries field.
-        requiredentriestoview?: number; // Requiredentriestoview field.
-        maxentries?: number; // Maxentries field.
-        rssarticles?: number; // Rssarticles field.
-        singletemplate?: string; // Singletemplate field.
-        listtemplate?: string; // Listtemplate field.
-        listtemplateheader?: string; // Listtemplateheader field.
-        listtemplatefooter?: string; // Listtemplatefooter field.
-        addtemplate?: string; // Addtemplate field.
-        rsstemplate?: string; // Rsstemplate field.
-        rsstitletemplate?: string; // Rsstitletemplate field.
-        csstemplate?: string; // Csstemplate field.
-        jstemplate?: string; // Jstemplate field.
-        asearchtemplate?: string; // Asearchtemplate field.
-        approval?: boolean; // Approval field.
-        manageapproved?: boolean; // Manageapproved field.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        comments: boolean; // Comments enabled.
+        timeavailablefrom: number; // Timeavailablefrom field.
+        timeavailableto: number; // Timeavailableto field.
+        timeviewfrom: number; // Timeviewfrom field.
+        timeviewto: number; // Timeviewto field.
+        requiredentries: number; // Requiredentries field.
+        requiredentriestoview: number; // Requiredentriestoview field.
+        maxentries: number; // Maxentries field.
+        rssarticles: number; // Rssarticles field.
+        singletemplate: string; // Singletemplate field.
+        listtemplate: string; // Listtemplate field.
+        listtemplateheader: string; // Listtemplateheader field.
+        listtemplatefooter: string; // Listtemplatefooter field.
+        addtemplate: string; // Addtemplate field.
+        rsstemplate: string; // Rsstemplate field.
+        rsstitletemplate: string; // Rsstitletemplate field.
+        csstemplate: string; // Csstemplate field.
+        jstemplate: string; // Jstemplate field.
+        asearchtemplate: string; // Asearchtemplate field.
+        approval: boolean; // Approval field.
+        manageapproved: boolean; // Manageapproved field.
         scale?: number; // Scale field.
         assessed?: number; // Assessed field.
         assesstimestart?: number; // Assesstimestart field.
         assesstimefinish?: number; // Assesstimefinish field.
-        defaultsort?: number; // Defaultsort field.
-        defaultsortdir?: number; // Defaultsortdir field.
-        editany?: boolean; // Editany field.
-        notification?: number; // Notification field.
+        defaultsort: number; // Defaultsort field.
+        defaultsortdir: number; // Defaultsortdir field.
+        editany?: boolean; // Editany field (not used any more).
+        notification?: number; // Notification field (not used any more).
         timemodified?: number; // Time modified.
+        coursemodule: number; // Coursemodule.
+        introfiles?: { // Introfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_get_entries WS.
+ */
+export type ModDataGetEntriesWSParams = {
+    databaseid: number; // Data instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    returncontents?: boolean; // Whether to return contents or not. This will return each entry
+                                                     // raw contents and the complete list view (using the template).
+
+    sort?: number; // Sort the records by this field id, reserved ids are:
+                                             // 0: timeadded
+                                             // -1: firstname
+                                             // -2: lastname
+                                             // -3: approved
+                                             // -4: timemodified.
+                                             // Empty for using the default database setting.
+
+    order?: string; // The direction of the sorting: 'ASC' or 'DESC'.
+                                             // Empty for using the default database setting.
+
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+};
+
+/**
+ * Data returned by mod_data_get_entries WS.
+ */
+export type ModDataGetEntriesWSResponse = {
+    entries: {
+        id: number; // Record id.
+        userid: number; // The id of the user who created the record.
+        groupid: number; // The group id this record belongs to (0 for no groups).
+        dataid: number; // The database id this record belongs to.
+        timecreated: number; // Time the record was created.
+        timemodified: number; // Last time the record was modified.
+        approved: boolean; // Whether the entry has been approved (if the database is configured in that way).
+        canmanageentry: boolean; // Whether the current user can manage this entry.
+        fullname?: string; // The user who created the entry fullname.
+        contents?: { // The record contents.
+            id: number; // Content id.
+            fieldid: number; // The field type of the content.
+            recordid: number; // The record this content belongs to.
+            content: string; // Contents.
+            content1: string; // Contents.
+            content2: string; // Contents.
+            content3: string; // Contents.
+            content4: string; // Contents.
+            files?: { // Files.
+                filename?: string; // File name.
+                filepath?: string; // File path.
+                filesize?: number; // File size.
+                fileurl?: string; // Downloadable file url.
+                timemodified?: number; // Time modified.
+                mimetype?: string; // File mime type.
+                isexternalfile?: boolean; // Whether is an external file.
+                repositorytype?: string; // The repository type for the external files.
+            }[];
+        }[];
+    }[];
+    totalcount: number; // Total count of records.
+    totalfilesize: number; // Total size (bytes) of the files included in the records.
+    listviewcontents?: string; // The list view contents as is rendered in the site.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_get_entry WS.
+ */
+export type ModDataGetEntryWSParams = {
+    entryid: number; // Record entry id.
+    returncontents?: boolean; // Whether to return contents or not.
+};
+
+/**
+ * Data returned by mod_data_get_entry WS.
+ */
+export type ModDataGetEntryWSResponse = {
+    entry: {
+        id: number; // Record id.
+        userid: number; // The id of the user who created the record.
+        groupid: number; // The group id this record belongs to (0 for no groups).
+        dataid: number; // The database id this record belongs to.
+        timecreated: number; // Time the record was created.
+        timemodified: number; // Last time the record was modified.
+        approved: boolean; // Whether the entry has been approved (if the database is configured in that way).
+        canmanageentry: boolean; // Whether the current user can manage this entry.
+        fullname?: string; // The user who created the entry fullname.
+        contents?: { // The record contents.
+            id: number; // Content id.
+            fieldid: number; // The field type of the content.
+            recordid: number; // The record this content belongs to.
+            content: string; // Contents.
+            content1: string; // Contents.
+            content2: string; // Contents.
+            content3: string; // Contents.
+            content4: string; // Contents.
+            files?: { // Files.
+                filename?: string; // File name.
+                filepath?: string; // File path.
+                filesize?: number; // File size.
+                fileurl?: string; // Downloadable file url.
+                timemodified?: number; // Time modified.
+                mimetype?: string; // File mime type.
+                isexternalfile?: boolean; // Whether is an external file.
+                repositorytype?: string; // The repository type for the external files.
+            }[];
+        }[];
+    };
+    entryviewcontents?: string; // The entry as is rendered in the site.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_get_fields WS.
+ */
+export type ModDataGetFieldsWSParams = {
+    databaseid: number; // Database instance id.
+};
+
+/**
+ * Data returned by mod_data_get_fields WS.
+ */
+export type ModDataGetFieldsWSResponse = {
+    fields: {
+        id: number; // Field id.
+        dataid: number; // The field type of the content.
+        type: string; // The field type.
+        name: string; // The field name.
+        description: string; // The field description.
+        required: boolean; // Whether is a field required or not.
+        param1: string; // Field parameters.
+        param2: string; // Field parameters.
+        param3: string; // Field parameters.
+        param4: string; // Field parameters.
+        param5: string; // Field parameters.
+        param6: string; // Field parameters.
+        param7: string; // Field parameters.
+        param8: string; // Field parameters.
+        param9: string; // Field parameters.
+        param10: string; // Field parameters.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_search_entries WS.
+ */
+export type ModDataSearchEntriesWSParams = {
+    databaseid: number; // Data instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    returncontents?: boolean; // Whether to return contents or not.
+    search?: string; // Search string (empty when using advanced).
+    advsearch?: { // Advanced search.
+        name: string; // Field key for search.
+                                                         // Use fn or ln for first or last name.
+
+        value: string; // JSON encoded value for search.
+    }[];
+    sort?: number; // Sort the records by this field id, reserved ids are:
+                                             // 0: timeadded
+                                             // -1: firstname
+                                             // -2: lastname
+                                             // -3: approved
+                                             // -4: timemodified.
+                                             // Empty for using the default database setting.
+
+    order?: string; // The direction of the sorting: 'ASC' or 'DESC'.
+                                             // Empty for using the default database setting.
+
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+};
+
+/**
+ * Data returned by mod_data_search_entries WS.
+ */
+export type ModDataSearchEntriesWSResponse = {
+    entries: {
+        id: number; // Record id.
+        userid: number; // The id of the user who created the record.
+        groupid: number; // The group id this record belongs to (0 for no groups).
+        dataid: number; // The database id this record belongs to.
+        timecreated: number; // Time the record was created.
+        timemodified: number; // Last time the record was modified.
+        approved: boolean; // Whether the entry has been approved (if the database is configured in that way).
+        canmanageentry: boolean; // Whether the current user can manage this entry.
+        fullname?: string; // The user who created the entry fullname.
+        contents?: { // The record contents.
+            id: number; // Content id.
+            fieldid: number; // The field type of the content.
+            recordid: number; // The record this content belongs to.
+            content: string; // Contents.
+            content1: string; // Contents.
+            content2: string; // Contents.
+            content3: string; // Contents.
+            content4: string; // Contents.
+            files?: { // Files.
+                filename?: string; // File name.
+                filepath?: string; // File path.
+                filesize?: number; // File size.
+                fileurl?: string; // Downloadable file url.
+                timemodified?: number; // Time modified.
+                mimetype?: string; // File mime type.
+                isexternalfile?: boolean; // Whether is an external file.
+                repositorytype?: string; // The repository type for the external files.
+            }[];
+        }[];
+    }[];
+    totalcount: number; // Total count of records.
+    listviewcontents?: string; // The list view contents as is rendered in the site.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_update_entry WS.
+ */
+export type ModDataUpdateEntryWSParams = {
+    entryid: number; // The entry record id.
+    data: { // The fields data to be updated.
+        fieldid: number; // The field id.
+        subfield?: string; // The subfield name (if required).
+        value: string; // The new contents for the field always JSON encoded.
+    }[];
+};
+
+/**
+ * Data returned by mod_data_update_entry WS.
+ */
+export type ModDataUpdateEntryWSResponse = {
+    updated: boolean; // True if the entry was successfully updated, false other wise.
+    generalnotifications: string[];
+    fieldnotifications: {
+        fieldname: string; // The field name.
+        notification: string; // The notification for the field.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_data_view_database WS.
+ */
+export type ModDataViewDatabaseWSParams = {
+    databaseid: number; // Data instance id.
+};
+
+/**
+ * Data returned by mod_data_view_database WS.
+ */
+export type ModDataViewDatabaseWSResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_analysis WS.
+ */
+export type ModFeedbackGetAnalysisWSParams = {
+    feedbackid: number; // Feedback instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+};
+
+/**
+ * Data returned by mod_feedback_get_analysis WS.
+ */
+export type ModFeedbackGetAnalysisWSResponse = {
+    completedcount: number; // Number of completed submissions.
+    itemscount: number; // Number of items (questions).
+    itemsdata: {
+        item: {
+            id: number; // The record id.
+            feedback: number; // The feedback instance id this records belongs to.
+            template: number; // If it belogns to a template, the template id.
+            name: string; // The item name.
+            label: string; // The item label.
+            presentation: string; // The text describing the item or the available possible answers.
+            typ: string; // The type of the item.
+            hasvalue: number; // Whether it has a value or not.
+            position: number; // The position in the list of questions.
+            required: boolean; // Whether is a item (question) required or not.
+            dependitem: number; // The item id this item depend on.
+            dependvalue: string; // The depend value.
+            options: string; // Different additional settings for the item (question).
+            itemfiles: { // Itemfiles.
+                contextid: number; // Contextid.
+                component: string; // Component.
+                filearea: string; // Filearea.
+                itemid: number; // Itemid.
+                filepath: string; // Filepath.
+                filename: string; // Filename.
+                isdir: boolean; // Isdir.
+                timemodified: number; // Timemodified.
+                timecreated: number; // Timecreated.
+                filesize: number; // Filesize.
+                author: string; // Author.
+                license: string; // License.
+                filenameshort: string; // Filenameshort.
+                filesizeformatted: string; // Filesizeformatted.
+                icon: string; // Icon.
+                timecreatedformatted: string; // Timecreatedformatted.
+                timemodifiedformatted: string; // Timemodifiedformatted.
+                url: string; // Url.
+            }[];
+            itemnumber: number; // The item position number.
+            otherdata: string; // Additional data that may be required by external functions.
+        };
+        data: string[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_current_completed_tmp WS.
+ */
+export type ModFeedbackGetCurrentCompletedTmpWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_get_current_completed_tmp WS.
+ */
+export type ModFeedbackGetCurrentCompletedTmpWSResponse = {
+    feedback: {
+        id: number; // The record id.
+        feedback: number; // The feedback instance id this records belongs to.
+        userid: number; // The user who completed the feedback (0 for anonymous).
+        guestid: string; // For guests, this is the session key.
+        timemodified: number; // The last time the feedback was completed.
+        random_response: number; // The response number (used when shuffling anonymous responses).
+        anonymous_response: number; // Whether is an anonymous response.
+        courseid: number; // The course id where the feedback was completed.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_feedback_access_information WS.
+ */
+export type ModFeedbackGetFeedbackAccessInformationWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_get_feedback_access_information WS.
+ */
+export type ModFeedbackGetFeedbackAccessInformationWSResponse = {
+    canviewanalysis: boolean; // Whether the user can view the analysis or not.
+    cancomplete: boolean; // Whether the user can complete the feedback or not.
+    cansubmit: boolean; // Whether the user can submit the feedback or not.
+    candeletesubmissions: boolean; // Whether the user can delete submissions or not.
+    canviewreports: boolean; // Whether the user can view the feedback reports or not.
+    canedititems: boolean; // Whether the user can edit feedback items or not.
+    isempty: boolean; // Whether the feedback has questions or not.
+    isopen: boolean; // Whether the feedback has active access time restrictions or not.
+    isalreadysubmitted: boolean; // Whether the feedback is already submitted or not.
+    isanonymous: boolean; // Whether the feedback is anonymous or not.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_feedbacks_by_courses WS.
+ */
+export type ModFeedbackGetFeedbacksByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_feedback_get_feedbacks_by_courses WS.
+ */
+export type ModFeedbackGetFeedbacksByCoursesWSResponse = {
+    feedbacks: {
+        id: number; // The primary key of the record.
+        course: number; // Course id this feedback is part of.
+        name: string; // Feedback name.
+        intro: string; // Feedback introduction text.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        anonymous: number; // Whether the feedback is anonymous.
+        email_notification?: boolean; // Whether email notifications will be sent to teachers.
+        multiple_submit: boolean; // Whether multiple submissions are allowed.
+        autonumbering: boolean; // Whether questions should be auto-numbered.
+        site_after_submit?: string; // Link to next page after submission.
+        page_after_submit?: string; // Text to display after submission.
+        page_after_submitformat?: number; // Page_after_submit format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        publish_stats: boolean; // Whether stats should be published.
+        timeopen?: number; // Allow answers from this time.
+        timeclose?: number; // Allow answers until this time.
+        timemodified?: number; // The time this record was modified.
+        completionsubmit: boolean; // If this field is set to 1, then the activity will be automatically marked as complete on submission.
+        coursemodule: number; // Coursemodule.
+        introfiles: { // Introfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        pageaftersubmitfiles?: { // Pageaftersubmitfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_finished_responses WS.
+ */
+export type ModFeedbackGetFinishedResponsesWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_get_finished_responses WS.
+ */
+export type ModFeedbackGetFinishedResponsesWSResponse = {
+    responses: {
+        id: number; // The record id.
+        course_id: number; // The course id this record belongs to.
+        item: number; // The item id that was responded.
+        completed: number; // Reference to the feedback_completed table.
+        tmp_completed: number; // Old field - not used anymore.
+        value: string; // The response value.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_items WS.
+ */
+export type ModFeedbackGetItemsWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_get_items WS.
+ */
+export type ModFeedbackGetItemsWSResponse = {
+    items: {
+        id: number; // The record id.
+        feedback: number; // The feedback instance id this records belongs to.
+        template: number; // If it belogns to a template, the template id.
+        name: string; // The item name.
+        label: string; // The item label.
+        presentation: string; // The text describing the item or the available possible answers.
+        typ: string; // The type of the item.
+        hasvalue: number; // Whether it has a value or not.
+        position: number; // The position in the list of questions.
+        required: boolean; // Whether is a item (question) required or not.
+        dependitem: number; // The item id this item depend on.
+        dependvalue: string; // The depend value.
+        options: string; // Different additional settings for the item (question).
+        itemfiles: { // Itemfiles.
+            contextid: number; // Contextid.
+            component: string; // Component.
+            filearea: string; // Filearea.
+            itemid: number; // Itemid.
+            filepath: string; // Filepath.
+            filename: string; // Filename.
+            isdir: boolean; // Isdir.
+            timemodified: number; // Timemodified.
+            timecreated: number; // Timecreated.
+            filesize: number; // Filesize.
+            author: string; // Author.
+            license: string; // License.
+            filenameshort: string; // Filenameshort.
+            filesizeformatted: string; // Filesizeformatted.
+            icon: string; // Icon.
+            timecreatedformatted: string; // Timecreatedformatted.
+            timemodifiedformatted: string; // Timemodifiedformatted.
+            url: string; // Url.
+        }[];
+        itemnumber: number; // The item position number.
+        otherdata: string; // Additional data that may be required by external functions.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_last_completed WS.
+ */
+export type ModFeedbackGetLastCompletedWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_get_last_completed WS.
+ */
+export type ModFeedbackGetLastCompletedWSResponse = {
+    completed: {
+        id: number; // The record id.
+        feedback: number; // The feedback instance id this records belongs to.
+        userid: number; // The user who completed the feedback (0 for anonymous).
+        timemodified: number; // The last time the feedback was completed.
+        random_response: number; // The response number (used when shuffling anonymous responses).
+        anonymous_response: number; // Whether is an anonymous response.
+        courseid: number; // The course id where the feedback was completed.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_non_respondents WS.
+ */
+export type ModFeedbackGetNonRespondentsWSParams = {
+    feedbackid: number; // Feedback instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    sort?: string; // Sort param, must be firstname, lastname or lastaccess (default).
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+};
+
+/**
+ * Data returned by mod_feedback_get_non_respondents WS.
+ */
+export type ModFeedbackGetNonRespondentsWSResponse = {
+    users: {
+        courseid: number; // Course id.
+        userid: number; // The user id.
+        fullname: string; // User full name.
+        started: boolean; // If the user has started the attempt.
+    }[];
+    total: number; // Total number of non respondents.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_page_items WS.
+ */
+export type ModFeedbackGetPageItemsWSParams = {
+    feedbackid: number; // Feedback instance id.
+    page: number; // The page to get starting by 0.
+};
+
+/**
+ * Data returned by mod_feedback_get_page_items WS.
+ */
+export type ModFeedbackGetPageItemsWSResponse = {
+    items: {
+        id: number; // The record id.
+        feedback: number; // The feedback instance id this records belongs to.
+        template: number; // If it belogns to a template, the template id.
+        name: string; // The item name.
+        label: string; // The item label.
+        presentation: string; // The text describing the item or the available possible answers.
+        typ: string; // The type of the item.
+        hasvalue: number; // Whether it has a value or not.
+        position: number; // The position in the list of questions.
+        required: boolean; // Whether is a item (question) required or not.
+        dependitem: number; // The item id this item depend on.
+        dependvalue: string; // The depend value.
+        options: string; // Different additional settings for the item (question).
+        itemfiles: { // Itemfiles.
+            contextid: number; // Contextid.
+            component: string; // Component.
+            filearea: string; // Filearea.
+            itemid: number; // Itemid.
+            filepath: string; // Filepath.
+            filename: string; // Filename.
+            isdir: boolean; // Isdir.
+            timemodified: number; // Timemodified.
+            timecreated: number; // Timecreated.
+            filesize: number; // Filesize.
+            author: string; // Author.
+            license: string; // License.
+            filenameshort: string; // Filenameshort.
+            filesizeformatted: string; // Filesizeformatted.
+            icon: string; // Icon.
+            timecreatedformatted: string; // Timecreatedformatted.
+            timemodifiedformatted: string; // Timemodifiedformatted.
+            url: string; // Url.
+        }[];
+        itemnumber: number; // The item position number.
+        otherdata: string; // Additional data that may be required by external functions.
+    }[];
+    hasprevpage: boolean; // Whether is a previous page.
+    hasnextpage: boolean; // Whether there are more pages.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_responses_analysis WS.
+ */
+export type ModFeedbackGetResponsesAnalysisWSParams = {
+    feedbackid: number; // Feedback instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+    page?: number; // The page of records to return.
+    perpage?: number; // The number of records to return per page.
+};
+
+/**
+ * Data returned by mod_feedback_get_responses_analysis WS.
+ */
+export type ModFeedbackGetResponsesAnalysisWSResponse = {
+    attempts: {
+        id: number; // Completed id.
+        courseid: number; // Course id.
+        userid: number; // User who responded.
+        timemodified: number; // Time modified for the response.
+        fullname: string; // User full name.
+        responses: {
+            id: number; // Response id.
+            name: string; // Response name.
+            printval: string; // Response ready for output.
+            rawval: string; // Response raw value.
+        }[];
+    }[];
+    totalattempts: number; // Total responses count.
+    anonattempts: {
+        id: number; // Completed id.
+        courseid: number; // Course id.
+        number: number; // Response number.
+        responses: {
+            id: number; // Response id.
+            name: string; // Response name.
+            printval: string; // Response ready for output.
+            rawval: string; // Response raw value.
+        }[];
+    }[];
+    totalanonattempts: number; // Total anonymous responses count.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_get_unfinished_responses WS.
+ */
+export type ModFeedbackGetUnfinishedResponsesWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_get_unfinished_responses WS.
+ */
+export type ModFeedbackGetUnfinishedResponsesWSResponse = {
+    responses: {
+        id: number; // The record id.
+        course_id: number; // The course id this record belongs to.
+        item: number; // The item id that was responded.
+        completed: number; // Reference to the feedback_completedtmp table.
+        tmp_completed: number; // Old field - not used anymore.
+        value: string; // The response value.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_launch_feedback WS.
+ */
+export type ModFeedbackLaunchFeedbackWSParams = {
+    feedbackid: number; // Feedback instance id.
+};
+
+/**
+ * Data returned by mod_feedback_launch_feedback WS.
+ */
+export type ModFeedbackLaunchFeedbackWSResponse = {
+    gopage: number; // The next page to go (-1 if we were already in the last page). 0 for first page.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_process_page WS.
+ */
+export type ModFeedbackProcessPageWSParams = {
+    feedbackid: number; // Feedback instance id.
+    page: number; // The page being processed.
+    responses?: { // The data to be processed.
+        name: string; // The response name (usually type[index]_id).
+        value: string; // The response value.
+    }[];
+    goprevious?: boolean; // Whether we want to jump to previous page.
+};
+
+/**
+ * Data returned by mod_feedback_process_page WS.
+ */
+export type ModFeedbackProcessPageWSResponse = {
+    jumpto: number; // The page to jump to.
+    completed: boolean; // If the user completed the feedback.
+    completionpagecontents: string; // The completion page contents.
+    siteaftersubmit: string; // The link (could be relative) to show after submit.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_feedback_view_feedback WS.
+ */
+export type ModFeedbackViewFeedbackWSParams = {
+    feedbackid: number; // Feedback instance id.
+    moduleviewed?: boolean; // If we need to mark the module as viewed for completion.
+};
+
+/**
+ * Data returned by mod_feedback_view_feedback WS.
+ */
+export type ModFeedbackViewFeedbackWSResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_folder_get_folders_by_courses WS.
+ */
+export type ModFolderGetFoldersByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_folder_get_folders_by_courses WS.
+ */
+export type ModFolderGetFoldersByCoursesWSResponse = {
+    folders: {
+        id: number; // Module id.
+        coursemodule: number; // Course module id.
+        course: number; // Course id.
+        name: string; // Page name.
+        intro: string; // Summary.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introfiles: CoreWSExternalFile[];
+        revision: number; // Incremented when after each file changes, to avoid cache.
+        timemodified: number; // Last time the folder was modified.
+        display: number; // Display type of folder contents on a separate page or inline.
+        showexpanded: number; // 1 = expanded, 0 = collapsed for sub-folders.
+        showdownloadfolder: number; // Whether to show the download folder button.
+        section: number; // Course section id.
+        visible: number; // Module visibility.
+        groupmode: number; // Group mode.
+        groupingid: number; // Grouping id.
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -3660,6 +4904,8 @@ export type ModForumCanAddDiscussionWSParams = {
  */
 export type ModForumCanAddDiscussionWSResponse = {
     status: boolean; // True if the user can add discussions, false otherwise.
+    canpindiscussions?: boolean; // True if the user can pin discussions, false otherwise.
+    cancreateattachment?: boolean; // True if the user can add attachments, false otherwise.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -3698,6 +4944,7 @@ export type ModForumGetForumDiscussionPostsWSResponse = {
         postread: boolean; // The post was read.
         userfullname: string; // Post author full name.
         userpictureurl?: string; // Post author picture.
+        deleted: boolean; // This post has been removed.
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -3792,6 +5039,8 @@ export type ModForumGetForumsByCoursesWSResponse = {
     numdiscussions?: number; // Number of discussions in the forum.
     cancreatediscussions?: boolean; // If the user can create discussions.
     lockdiscussionafter?: number; // After what period a discussion is locked.
+    istracked?: boolean; // If the user is tracking the forum.
+    unreadpostscount?: number; // The number of unread posts for tracked forums.
 }[];
 
 /**
@@ -4423,6 +5672,654 @@ export type ModImscpViewImscpWSResponse = {
 };
 
 /**
+ * Params of mod_label_get_labels_by_courses WS.
+ */
+export type ModLabelGetLabelsByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_label_get_labels_by_courses WS.
+ */
+export type ModLabelGetLabelsByCoursesWSResponse = {
+    labels: {
+        id: number; // Module id.
+        coursemodule: number; // Course module id.
+        course: number; // Course id.
+        name: string; // Label name.
+        intro: string; // Label contents.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introfiles: CoreWSExternalFile[];
+        timemodified: number; // Last time the label was modified.
+        section: number; // Course section id.
+        visible: number; // Module visibility.
+        groupmode: number; // Group mode.
+        groupingid: number; // Grouping id.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_finish_attempt WS.
+ */
+export type ModLessonFinishAttemptWSParams = {
+    lessonid: number; // Lesson instance id.
+    password?: string; // Optional password (the lesson may be protected).
+    outoftime?: boolean; // If the user run out of time.
+    review?: boolean; // If we want to review just after finishing (1 hour margin).
+};
+
+/**
+ * Data returned by mod_lesson_finish_attempt WS.
+ */
+export type ModLessonFinishAttemptWSResponse = {
+    data: { // The EOL page information data.
+        name: string; // Data name.
+        value: string; // Data value.
+        message: string; // Data message (translated string).
+    }[];
+    messages: {
+        message: string; // Message.
+        type: string; // Message type: usually a CSS identifier like:
+                             // success, info, warning, error, notifyproblem, notifyerror, notifytiny, notifysuccess.
+
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_attempts_overview WS.
+ */
+export type ModLessonGetAttemptsOverviewWSParams = {
+    lessonid: number; // Lesson instance id.
+    groupid?: number; // Group id, 0 means that the function will determine the user group.
+};
+
+/**
+ * Data returned by mod_lesson_get_attempts_overview WS.
+ */
+export type ModLessonGetAttemptsOverviewWSResponse = {
+    data?: {
+        lessonscored: boolean; // True if the lesson was scored.
+        numofattempts: number; // Number of attempts.
+        avescore: number; // Average score.
+        highscore: number; // High score.
+        lowscore: number; // Low score.
+        avetime: number; // Average time (spent in taking the lesson).
+        hightime: number; // High time.
+        lowtime: number; // Low time.
+        students?: { // Students data, including attempts.
+            id: number; // User id.
+            fullname: string; // User full name.
+            bestgrade: number; // Best grade.
+            attempts: {
+                try: number; // Attempt number.
+                grade: number; // Attempt grade.
+                timestart: number; // Attempt time started.
+                timeend: number; // Attempt last time continued.
+                end: number; // Attempt time ended.
+            }[];
+        }[];
+    }; // Attempts overview data (empty for no attemps).
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_content_pages_viewed WS.
+ */
+export type ModLessonGetContentPagesViewedWSParams = {
+    lessonid: number; // Lesson instance id.
+    lessonattempt: number; // Lesson attempt number.
+    userid?: number; // The user id (empty for current user).
+};
+
+/**
+ * Data returned by mod_lesson_get_content_pages_viewed WS.
+ */
+export type ModLessonGetContentPagesViewedWSResponse = {
+    pages: {
+        id: number; // The attempt id.
+        lessonid: number; // The lesson id.
+        pageid: number; // The page id.
+        userid: number; // The user who viewed the page.
+        retry: number; // The lesson attempt number.
+        flag: number; // 1 if the next page was calculated randomly.
+        timeseen: number; // The time the page was seen.
+        nextpageid: number; // The next page chosen id.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_lesson WS.
+ */
+export type ModLessonGetLessonWSParams = {
+    lessonid: number; // Lesson instance id.
+    password?: string; // Lesson password.
+};
+
+/**
+ * Data returned by mod_lesson_get_lesson WS.
+ */
+export type ModLessonGetLessonWSResponse = {
+    lesson: {
+        id: number; // Standard Moodle primary key.
+        course: number; // Foreign key reference to the course this lesson is part of.
+        coursemodule: number; // Course module id.
+        name: string; // Lesson name.
+        intro?: string; // Lesson introduction text.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        practice?: boolean; // Practice lesson?.
+        modattempts?: boolean; // Allow student review?.
+        usepassword?: boolean; // Password protected lesson?.
+        password?: string; // Password.
+        dependency?: number; // Dependent on (another lesson id).
+        conditions?: string; // Conditions to enable the lesson.
+        grade?: number; // The total that the grade is scaled to be out of.
+        custom?: boolean; // Custom scoring?.
+        ongoing?: boolean; // Display ongoing score?.
+        usemaxgrade?: number; // How to calculate the final grade.
+        maxanswers?: number; // Maximum answers per page.
+        maxattempts?: number; // Maximum attempts.
+        review?: boolean; // Provide option to try a question again.
+        nextpagedefault?: number; // Action for a correct answer.
+        feedback?: boolean; // Display default feedback.
+        minquestions?: number; // Minimum number of questions.
+        maxpages?: number; // Number of pages to show.
+        timelimit?: number; // Time limit.
+        retake?: boolean; // Re-takes allowed.
+        activitylink?: number; // Id of the next activity to be linked once the lesson is completed.
+        mediafile?: string; // Local file path or full external URL.
+        mediaheight?: number; // Popup for media file height.
+        mediawidth?: number; // Popup for media with.
+        mediaclose?: number; // Display a close button in the popup?.
+        slideshow?: boolean; // Display lesson as slideshow.
+        width?: number; // Slideshow width.
+        height?: number; // Slideshow height.
+        bgcolor?: string; // Slideshow bgcolor.
+        displayleft?: boolean; // Display left pages menu?.
+        displayleftif?: number; // Minimum grade to display menu.
+        progressbar?: boolean; // Display progress bar?.
+        available?: number; // Available from.
+        deadline?: number; // Available until.
+        timemodified?: number; // Last time settings were updated.
+        completionendreached?: number; // Require end reached for completion?.
+        completiontimespent?: number; // Student must do this activity at least for.
+        allowofflineattempts: boolean; // Whether to allow the lesson to be attempted offline in the mobile app.
+        introfiles?: { // Introfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        mediafiles?: { // Mediafiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_lesson_access_information WS.
+ */
+export type ModLessonGetLessonAccessInformationWSParams = {
+    lessonid: number; // Lesson instance id.
+};
+
+/**
+ * Data returned by mod_lesson_get_lesson_access_information WS.
+ */
+export type ModLessonGetLessonAccessInformationWSResponse = {
+    canmanage: boolean; // Whether the user can manage the lesson or not.
+    cangrade: boolean; // Whether the user can grade the lesson or not.
+    canviewreports: boolean; // Whether the user can view the lesson reports or not.
+    reviewmode: boolean; // Whether the lesson is in review mode for the current user.
+    attemptscount: number; // The number of attempts done by the user.
+    lastpageseen: number; // The last page seen id.
+    leftduringtimedsession: boolean; // Whether the user left during a timed session.
+    firstpageid: number; // The lesson first page id.
+    preventaccessreasons: {
+        reason: string; // Reason lang string code.
+        data: string; // Additional data.
+        message: string; // Complete html message.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_lessons_by_courses WS.
+ */
+export type ModLessonGetLessonsByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_lesson_get_lessons_by_courses WS.
+ */
+export type ModLessonGetLessonsByCoursesWSResponse = {
+    lessons: {
+        id: number; // Standard Moodle primary key.
+        course: number; // Foreign key reference to the course this lesson is part of.
+        coursemodule: number; // Course module id.
+        name: string; // Lesson name.
+        intro?: string; // Lesson introduction text.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        practice?: boolean; // Practice lesson?.
+        modattempts?: boolean; // Allow student review?.
+        usepassword?: boolean; // Password protected lesson?.
+        password?: string; // Password.
+        dependency?: number; // Dependent on (another lesson id).
+        conditions?: string; // Conditions to enable the lesson.
+        grade?: number; // The total that the grade is scaled to be out of.
+        custom?: boolean; // Custom scoring?.
+        ongoing?: boolean; // Display ongoing score?.
+        usemaxgrade?: number; // How to calculate the final grade.
+        maxanswers?: number; // Maximum answers per page.
+        maxattempts?: number; // Maximum attempts.
+        review?: boolean; // Provide option to try a question again.
+        nextpagedefault?: number; // Action for a correct answer.
+        feedback?: boolean; // Display default feedback.
+        minquestions?: number; // Minimum number of questions.
+        maxpages?: number; // Number of pages to show.
+        timelimit?: number; // Time limit.
+        retake?: boolean; // Re-takes allowed.
+        activitylink?: number; // Id of the next activity to be linked once the lesson is completed.
+        mediafile?: string; // Local file path or full external URL.
+        mediaheight?: number; // Popup for media file height.
+        mediawidth?: number; // Popup for media with.
+        mediaclose?: number; // Display a close button in the popup?.
+        slideshow?: boolean; // Display lesson as slideshow.
+        width?: number; // Slideshow width.
+        height?: number; // Slideshow height.
+        bgcolor?: string; // Slideshow bgcolor.
+        displayleft?: boolean; // Display left pages menu?.
+        displayleftif?: number; // Minimum grade to display menu.
+        progressbar?: boolean; // Display progress bar?.
+        available?: number; // Available from.
+        deadline?: number; // Available until.
+        timemodified?: number; // Last time settings were updated.
+        completionendreached?: number; // Require end reached for completion?.
+        completiontimespent?: number; // Student must do this activity at least for.
+        allowofflineattempts: boolean; // Whether to allow the lesson to be attempted offline in the mobile app.
+        introfiles?: { // Introfiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+        mediafiles?: { // Mediafiles.
+            filename?: string; // File name.
+            filepath?: string; // File path.
+            filesize?: number; // File size.
+            fileurl?: string; // Downloadable file url.
+            timemodified?: number; // Time modified.
+            mimetype?: string; // File mime type.
+            isexternalfile?: boolean; // Whether is an external file.
+            repositorytype?: string; // The repository type for the external files.
+        }[];
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_page_data WS.
+ */
+export type ModLessonGetPageDataWSParams = {
+    lessonid: number; // Lesson instance id.
+    pageid: number; // The page id.
+    password?: string; // Optional password (the lesson may be protected).
+    review?: boolean; // If we want to review just after finishing (1 hour margin).
+    returncontents?: boolean; // If we must return the complete page contents once rendered.
+};
+
+/**
+ * Data returned by mod_lesson_get_page_data WS.
+ */
+export type ModLessonGetPageDataWSResponse = {
+    page?: {
+        id: number; // The id of this lesson page.
+        lessonid: number; // The id of the lesson this page belongs to.
+        prevpageid: number; // The id of the page before this one.
+        nextpageid: number; // The id of the next page in the page sequence.
+        qtype: number; // Identifies the page type of this page.
+        qoption: number; // Used to record page type specific options.
+        layout: number; // Used to record page specific layout selections.
+        display: number; // Used to record page specific display selections.
+        timecreated: number; // Timestamp for when the page was created.
+        timemodified: number; // Timestamp for when the page was last modified.
+        title?: string; // The title of this page.
+        contents?: string; // The contents of this page.
+        contentsformat?: number; // Contents format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        displayinmenublock: boolean; // Toggles display in the left menu block.
+        type: number; // The type of the page [question | structure].
+        typeid: number; // The unique identifier for the page type.
+        typestring: string; // The string that describes this page type.
+    }; // Page fields.
+    newpageid: number; // New page id (if a jump was made).
+    pagecontent?: string; // Page html content.
+    ongoingscore: string; // The ongoing score message.
+    progress: number; // Progress percentage in the lesson.
+    contentfiles: CoreWSExternalFile[];
+    answers: {
+        id: number; // The ID of this answer in the database.
+        answerfiles: CoreWSExternalFile[];
+        responsefiles: CoreWSExternalFile[];
+        jumpto?: number; // Identifies where the user goes upon completing a page with this answer.
+        grade?: number; // The grade this answer is worth.
+        score?: number; // The score this answer will give.
+        flags?: number; // Used to store options for the answer.
+        timecreated?: number; // A timestamp of when the answer was created.
+        timemodified?: number; // A timestamp of when the answer was modified.
+        answer?: string; // Possible answer text.
+        answerformat?: number; // Answer format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        response?: string; // Response text for the answer.
+        responseformat?: number; // Response format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    }[];
+    messages: {
+        message: string; // Message.
+        type: string; // Message type: usually a CSS identifier like:
+                             // success, info, warning, error, notifyproblem, notifyerror, notifytiny, notifysuccess.
+
+    }[];
+    displaymenu: boolean; // Whether we should display the menu or not in this page.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_pages WS.
+ */
+export type ModLessonGetPagesWSParams = {
+    lessonid: number; // Lesson instance id.
+    password?: string; // Optional password (the lesson may be protected).
+};
+
+/**
+ * Data returned by mod_lesson_get_pages WS.
+ */
+export type ModLessonGetPagesWSResponse = {
+    pages: {
+        page: {
+            id: number; // The id of this lesson page.
+            lessonid: number; // The id of the lesson this page belongs to.
+            prevpageid: number; // The id of the page before this one.
+            nextpageid: number; // The id of the next page in the page sequence.
+            qtype: number; // Identifies the page type of this page.
+            qoption: number; // Used to record page type specific options.
+            layout: number; // Used to record page specific layout selections.
+            display: number; // Used to record page specific display selections.
+            timecreated: number; // Timestamp for when the page was created.
+            timemodified: number; // Timestamp for when the page was last modified.
+            title?: string; // The title of this page.
+            contents?: string; // The contents of this page.
+            contentsformat?: number; // Contents format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            displayinmenublock: boolean; // Toggles display in the left menu block.
+            type: number; // The type of the page [question | structure].
+            typeid: number; // The unique identifier for the page type.
+            typestring: string; // The string that describes this page type.
+        }; // Page fields.
+        answerids: number[]; // List of answers ids (empty for content pages in  Moodle 1.9).
+        jumps: number[]; // List of possible page jumps.
+        filescount: number; // The total number of files attached to the page.
+        filessizetotal: number; // The total size of the files.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_pages_possible_jumps WS.
+ */
+export type ModLessonGetPagesPossibleJumpsWSParams = {
+    lessonid: number; // Lesson instance id.
+};
+
+/**
+ * Data returned by mod_lesson_get_pages_possible_jumps WS.
+ */
+export type ModLessonGetPagesPossibleJumpsWSResponse = {
+    jumps: {
+        pageid: number; // The page id.
+        answerid: number; // The answer id.
+        jumpto: number; // The jump (page id or type of jump).
+        calculatedjump: number; // The real page id (or EOL) to jump.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_questions_attempts WS.
+ */
+export type ModLessonGetQuestionsAttemptsWSParams = {
+    lessonid: number; // Lesson instance id.
+    attempt: number; // Lesson attempt number.
+    correct?: boolean; // Only fetch correct attempts.
+    pageid?: number; // Only fetch attempts at the given page.
+    userid?: number; // Only fetch attempts of the given user.
+};
+
+/**
+ * Data returned by mod_lesson_get_questions_attempts WS.
+ */
+export type ModLessonGetQuestionsAttemptsWSResponse = {
+    attempts: {
+        id: number; // The attempt id.
+        lessonid: number; // The attempt lessonid.
+        pageid: number; // The attempt pageid.
+        userid: number; // The user who did the attempt.
+        answerid: number; // The attempt answerid.
+        retry: number; // The lesson attempt number.
+        correct: number; // If it was the correct answer.
+        useranswer: string; // The complete user answer.
+        timeseen: number; // The time the question was seen.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_user_attempt WS.
+ */
+export type ModLessonGetUserAttemptWSParams = {
+    lessonid: number; // Lesson instance id.
+    userid: number; // The user id. 0 for current user.
+    lessonattempt: number; // The attempt number.
+};
+
+/**
+ * Data returned by mod_lesson_get_user_attempt WS.
+ */
+export type ModLessonGetUserAttemptWSResponse = {
+    answerpages: {
+        title: string; // Page title.
+        contents: string; // Page contents.
+        qtype: string; // Identifies the page type of this page.
+        grayout: number; // If is required to apply a grayout.
+        answerdata?: {
+            score: string; // The score (text version).
+            response: string; // The response text.
+            responseformat: number; // Response. format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            answers?: string[][]; // User answers.
+        }; // Answer data (empty in content pages created in Moodle 1.x).
+    }[];
+    userstats: {
+        grade: number; // Attempt final grade.
+        completed: number; // Time completed.
+        timetotake: number; // Time taken.
+        gradeinfo?: {
+            nquestions: number; // Number of questions answered.
+            attempts: number; // Number of question attempts.
+            total: number; // Max points possible.
+            earned: number; // Points earned by student.
+            grade: number; // Calculated percentage grade.
+            nmanual: number; // Number of manually graded questions.
+            manualpoints: number; // Point value for manually graded questions.
+        }; // Attempt grade.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_user_attempt_grade WS.
+ */
+export type ModLessonGetUserAttemptGradeWSParams = {
+    lessonid: number; // Lesson instance id.
+    lessonattempt: number; // Lesson attempt number.
+    userid?: number; // The user id (empty for current user).
+};
+
+/**
+ * Data returned by mod_lesson_get_user_attempt_grade WS.
+ */
+export type ModLessonGetUserAttemptGradeWSResponse = {
+    grade: {
+        nquestions: number; // Number of questions answered.
+        attempts: number; // Number of question attempts.
+        total: number; // Max points possible.
+        earned: number; // Points earned by student.
+        grade: number; // Calculated percentage grade.
+        nmanual: number; // Number of manually graded questions.
+        manualpoints: number; // Point value for manually graded questions.
+    }; // Attempt grade.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_user_grade WS.
+ */
+export type ModLessonGetUserGradeWSParams = {
+    lessonid: number; // Lesson instance id.
+    userid?: number; // The user id (empty for current user).
+};
+
+/**
+ * Data returned by mod_lesson_get_user_grade WS.
+ */
+export type ModLessonGetUserGradeWSResponse = {
+    grade: number; // The lesson final raw grade.
+    formattedgrade: string; // The lesson final grade formatted.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_get_user_timers WS.
+ */
+export type ModLessonGetUserTimersWSParams = {
+    lessonid: number; // Lesson instance id.
+    userid?: number; // The user id (empty for current user).
+};
+
+/**
+ * Data returned by mod_lesson_get_user_timers WS.
+ */
+export type ModLessonGetUserTimersWSResponse = {
+    timers: {
+        id: number; // The attempt id.
+        lessonid: number; // The lesson id.
+        userid: number; // The user id.
+        starttime: number; // First access time for a new timer session.
+        lessontime: number; // Last access time to the lesson during the timer session.
+        completed: number; // If the lesson for this timer was completed.
+        timemodifiedoffline: number; // Last modified time via webservices.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_launch_attempt WS.
+ */
+export type ModLessonLaunchAttemptWSParams = {
+    lessonid: number; // Lesson instance id.
+    password?: string; // Optional password (the lesson may be protected).
+    pageid?: number; // Page id to continue from (only when continuing an attempt).
+    review?: boolean; // If we want to review just after finishing.
+};
+
+/**
+ * Data returned by mod_lesson_launch_attempt WS.
+ */
+export type ModLessonLaunchAttemptWSResponse = {
+    messages: {
+        message: string; // Message.
+        type: string; // Message type: usually a CSS identifier like:
+                             // success, info, warning, error, notifyproblem, notifyerror, notifytiny, notifysuccess.
+
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_process_page WS.
+ */
+export type ModLessonProcessPageWSParams = {
+    lessonid: number; // Lesson instance id.
+    pageid: number; // The page id.
+    data: { // The data to be saved.
+        name: string; // Data name.
+        value: string; // Data value.
+    }[];
+    password?: string; // Optional password (the lesson may be protected).
+    review?: boolean; // If we want to review just after finishing (1 hour margin).
+};
+
+/**
+ * Data returned by mod_lesson_process_page WS.
+ */
+export type ModLessonProcessPageWSResponse = {
+    newpageid: number; // New page id (if a jump was made).
+    inmediatejump: boolean; // Whether the page processing redirect directly to anoter page.
+    nodefaultresponse: boolean; // Whether there is not a default response.
+    feedback: string; // The response feedback.
+    attemptsremaining: number; // Number of attempts remaining.
+    correctanswer: boolean; // Whether the answer is correct.
+    noanswer: boolean; // Whether there aren't answers.
+    isessayquestion: boolean; // Whether is a essay question.
+    maxattemptsreached: boolean; // Whether we reachered the max number of attempts.
+    response: string; // The response.
+    studentanswer: string; // The student answer.
+    userresponse: string; // The user response.
+    reviewmode: boolean; // Whether the user is reviewing.
+    ongoingscore: string; // The ongoing message.
+    progress: number; // Progress percentage in the lesson.
+    displaymenu: boolean; // Whether we should display the menu or not in this page.
+    messages: {
+        message: string; // Message.
+        type: string; // Message type: usually a CSS identifier like:
+                             // success, info, warning, error, notifyproblem, notifyerror, notifytiny, notifysuccess.
+
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_lesson_view_lesson WS.
+ */
+export type ModLessonViewLessonWSParams = {
+    lessonid: number; // Lesson instance id.
+    password?: string; // Lesson password.
+};
+
+/**
+ * Data returned by mod_lesson_view_lesson WS.
+ */
+export type ModLessonViewLessonWSResponse = {
+    status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of mod_lti_get_ltis_by_courses WS.
  */
 export type ModLtiGetLtisByCoursesWSParams = {
@@ -4501,6 +6398,42 @@ export type ModLtiViewLtiWSParams = {
  */
 export type ModLtiViewLtiWSResponse = {
     status: boolean; // Status: true if success.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_page_get_pages_by_courses WS.
+ */
+export type ModPageGetPagesByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_page_get_pages_by_courses WS.
+ */
+export type ModPageGetPagesByCoursesWSResponse = {
+    pages: {
+        id: number; // Module id.
+        coursemodule: number; // Course module id.
+        course: number; // Course id.
+        name: string; // Page name.
+        intro: string; // Summary.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introfiles: CoreWSExternalFile[];
+        content: string; // Page content.
+        contentformat?: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        contentfiles: CoreWSExternalFile[];
+        legacyfiles: number; // Legacy files flag.
+        legacyfileslast: number; // Legacy files last control flag.
+        display: number; // How to display the page.
+        displayoptions: string; // Display options (width, height).
+        revision: number; // Incremented when after each file changes, to avoid cache.
+        timemodified: number; // Last time the page was modified.
+        section: number; // Course section id.
+        visible: number; // Module visibility.
+        groupmode: number; // Group mode.
+        groupingid: number; // Grouping id.
+    }[];
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -5156,6 +7089,42 @@ export type ModQuizViewQuizWSResponse = {
 };
 
 /**
+ * Params of mod_resource_get_resources_by_courses WS.
+ */
+export type ModResourceGetResourcesByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_resource_get_resources_by_courses WS.
+ */
+export type ModResourceGetResourcesByCoursesWSResponse = {
+    resources: {
+        id: number; // Module id.
+        coursemodule: number; // Course module id.
+        course: number; // Course id.
+        name: string; // Page name.
+        intro: string; // Summary.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introfiles: CoreWSExternalFile[];
+        contentfiles: CoreWSExternalFile[];
+        tobemigrated: number; // Whether this resource was migrated.
+        legacyfiles: number; // Legacy files flag.
+        legacyfileslast: number; // Legacy files last control flag.
+        display: number; // How to display the resource.
+        displayoptions: string; // Display options (width, height).
+        filterfiles: number; // If filters should be applied to the resource content.
+        revision: number; // Incremented when after each file changes, to avoid cache.
+        timemodified: number; // Last time the resource was modified.
+        section: number; // Course section id.
+        visible: number; // Module visibility.
+        groupmode: number; // Group mode.
+        groupingid: number; // Grouping id.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of mod_resource_view_resource WS.
  */
 export type ModResourceViewResourceWSParams = {
@@ -5476,6 +7445,38 @@ export type ModSurveyViewSurveyWSResponse = {
 };
 
 /**
+ * Params of mod_url_get_urls_by_courses WS.
+ */
+export type ModUrlGetUrlsByCoursesWSParams = {
+    courseids?: number[]; // Array of course ids.
+};
+
+/**
+ * Data returned by mod_url_get_urls_by_courses WS.
+ */
+export type ModUrlGetUrlsByCoursesWSResponse = {
+    urls: {
+        id: number; // Module id.
+        coursemodule: number; // Course module id.
+        course: number; // Course id.
+        name: string; // URL name.
+        intro: string; // Summary.
+        introformat?: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        introfiles: CoreWSExternalFile[];
+        externalurl: string; // External URL.
+        display: number; // How to display the url.
+        displayoptions: string; // Display options (width, height).
+        parameters: string; // Parameters to append to the URL.
+        timemodified: number; // Last time the url was modified.
+        section: number; // Course section id.
+        visible: number; // Module visibility.
+        groupmode: number; // Group mode.
+        groupingid: number; // Grouping id.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of mod_url_view_url WS.
  */
 export type ModUrlViewUrlWSParams = {
@@ -5749,7 +7750,7 @@ export type ToolLpDataForCourseCompetenciesPageWSResponse = {
         proficientcompetencycount: number; // Proficientcompetencycount.
         proficientcompetencypercentage: number; // Proficientcompetencypercentage.
         proficientcompetencypercentageformatted: string; // Proficientcompetencypercentageformatted.
-        leastproficient: {
+        leastproficient: { // Leastproficient.
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
@@ -5827,7 +7828,7 @@ export type ToolLpDataForCourseCompetenciesPageWSResponse = {
             selected: boolean; // If this is the currently selected option.
         }[];
         comppath: {
-            ancestors: {
+            ancestors: { // Ancestors.
                 id: number; // Id.
                 name: string; // Name.
                 first: boolean; // First.
@@ -5905,7 +7906,7 @@ export type ToolLpDataForPlanPageWSResponse = {
             canpost: boolean; // Canpost.
             canview: boolean; // Canview.
             count: number; // Count.
-            collapsediconurl: string; // Collapsediconurl.
+            collapsediconkey: string; // Collapsediconkey.
             displaytotalcount: boolean; // Displaytotalcount.
             displaycancel: boolean; // Displaycancel.
             fullwidth: boolean; // Fullwidth.
@@ -5972,7 +7973,7 @@ export type ToolLpDataForPlanPageWSResponse = {
             usermodified: number; // Usermodified.
         };
         comppath: {
-            ancestors: {
+            ancestors: { // Ancestors.
                 id: number; // Id.
                 name: string; // Name.
                 first: boolean; // First.
@@ -6107,7 +8108,7 @@ export type ToolLpDataForPlansPageWSResponse = {
             canpost: boolean; // Canpost.
             canview: boolean; // Canview.
             count: number; // Count.
-            collapsediconurl: string; // Collapsediconurl.
+            collapsediconkey: string; // Collapsediconkey.
             displaytotalcount: boolean; // Displaytotalcount.
             displaycancel: boolean; // Displaycancel.
             fullwidth: boolean; // Fullwidth.
@@ -6172,14 +8173,19 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
     showrelatedcompetencies: boolean; // Showrelatedcompetencies.
     cangrade: boolean; // Cangrade.
     competency: {
-        linkedcourses: {
+        linkedcourses: { // Linkedcourses.
             id: number; // Id.
             fullname: string; // Fullname.
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
         }[];
-        relatedcompetencies: {
+        relatedcompetencies: { // Relatedcompetencies.
             shortname: string; // Shortname.
             idnumber: string; // Idnumber.
             description: string; // Description.
@@ -6242,7 +8248,7 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
         scaleconfiguration: string; // Scaleconfiguration.
         taxonomyterm: string; // Taxonomyterm.
         comppath: {
-            ancestors: {
+            ancestors: { // Ancestors.
                 id: number; // Id.
                 name: string; // Name.
                 first: boolean; // First.
@@ -6340,7 +8346,7 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
         gradename: string; // Gradename.
         proficiencyname: string; // Proficiencyname.
     };
-    evidence: {
+    evidence: { // Evidence.
         usercompetencyid: number; // Usercompetencyid.
         contextid: number; // Contextid.
         action: number; // Action.
@@ -6385,7 +8391,7 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
         canpost: boolean; // Canpost.
         canview: boolean; // Canview.
         count: number; // Count.
-        collapsediconurl: string; // Collapsediconurl.
+        collapsediconkey: string; // Collapsediconkey.
         displaytotalcount: boolean; // Displaytotalcount.
         displaycancel: boolean; // Displaycancel.
         fullwidth: boolean; // Fullwidth.
@@ -6413,14 +8419,19 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
         showrelatedcompetencies: boolean; // Showrelatedcompetencies.
         cangrade: boolean; // Cangrade.
         competency: {
-            linkedcourses: {
+            linkedcourses: { // Linkedcourses.
                 id: number; // Id.
                 fullname: string; // Fullname.
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
+                summary: string; // Summary.
+                summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                startdate: number; // Startdate.
+                enddate: number; // Enddate.
+                fullnamedisplay: string; // Fullnamedisplay.
                 viewurl: string; // Viewurl.
             }[];
-            relatedcompetencies: {
+            relatedcompetencies: { // Relatedcompetencies.
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
@@ -6483,7 +8494,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
             scaleconfiguration: string; // Scaleconfiguration.
             taxonomyterm: string; // Taxonomyterm.
             comppath: {
-                ancestors: {
+                ancestors: { // Ancestors.
                     id: number; // Id.
                     name: string; // Name.
                     first: boolean; // First.
@@ -6581,7 +8592,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
             gradename: string; // Gradename.
             proficiencyname: string; // Proficiencyname.
         };
-        evidence: {
+        evidence: { // Evidence.
             usercompetencyid: number; // Usercompetencyid.
             contextid: number; // Contextid.
             action: number; // Action.
@@ -6626,7 +8637,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
             canpost: boolean; // Canpost.
             canview: boolean; // Canview.
             count: number; // Count.
-            collapsediconurl: string; // Collapsediconurl.
+            collapsediconkey: string; // Collapsediconkey.
             displaytotalcount: boolean; // Displaytotalcount.
             displaycancel: boolean; // Displaycancel.
             fullwidth: boolean; // Fullwidth.
@@ -6641,9 +8652,14 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
         fullname: string; // Fullname.
         shortname: string; // Shortname.
         idnumber: string; // Idnumber.
+        summary: string; // Summary.
+        summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        startdate: number; // Startdate.
+        enddate: number; // Enddate.
+        fullnamedisplay: string; // Fullnamedisplay.
         viewurl: string; // Viewurl.
     };
-    coursemodules: {
+    coursemodules: { // Coursemodules.
         id: number; // Id.
         name: string; // Name.
         url?: string; // Url.
@@ -6667,14 +8683,19 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
         showrelatedcompetencies: boolean; // Showrelatedcompetencies.
         cangrade: boolean; // Cangrade.
         competency: {
-            linkedcourses: {
+            linkedcourses: { // Linkedcourses.
                 id: number; // Id.
                 fullname: string; // Fullname.
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
+                summary: string; // Summary.
+                summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                startdate: number; // Startdate.
+                enddate: number; // Enddate.
+                fullnamedisplay: string; // Fullnamedisplay.
                 viewurl: string; // Viewurl.
             }[];
-            relatedcompetencies: {
+            relatedcompetencies: { // Relatedcompetencies.
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
                 description: string; // Description.
@@ -6737,7 +8758,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
             scaleconfiguration: string; // Scaleconfiguration.
             taxonomyterm: string; // Taxonomyterm.
             comppath: {
-                ancestors: {
+                ancestors: { // Ancestors.
                     id: number; // Id.
                     name: string; // Name.
                     first: boolean; // First.
@@ -6835,7 +8856,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
             gradename: string; // Gradename.
             proficiencyname: string; // Proficiencyname.
         };
-        evidence: {
+        evidence: { // Evidence.
             usercompetencyid: number; // Usercompetencyid.
             contextid: number; // Contextid.
             action: number; // Action.
@@ -6880,7 +8901,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
             canpost: boolean; // Canpost.
             canview: boolean; // Canview.
             count: number; // Count.
-            collapsediconurl: string; // Collapsediconurl.
+            collapsediconkey: string; // Collapsediconkey.
             displaytotalcount: boolean; // Displaytotalcount.
             displaycancel: boolean; // Displaycancel.
             fullwidth: boolean; // Fullwidth.
@@ -6936,7 +8957,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
             canpost: boolean; // Canpost.
             canview: boolean; // Canview.
             count: number; // Count.
-            collapsediconurl: string; // Collapsediconurl.
+            collapsediconkey: string; // Collapsediconkey.
             displaytotalcount: boolean; // Displaytotalcount.
             displaycancel: boolean; // Displaycancel.
             fullwidth: boolean; // Fullwidth.
@@ -7008,7 +9029,7 @@ export type ToolLpDataForUserEvidenceListPageWSResponse = {
         usermodified: number; // Usermodified.
         canmanage: boolean; // Canmanage.
         filecount: number; // Filecount.
-        files: {
+        files: { // Files.
             contextid: number; // Contextid.
             component: string; // Component.
             filearea: string; // Filearea.
@@ -7024,7 +9045,6 @@ export type ToolLpDataForUserEvidenceListPageWSResponse = {
             filenameshort: string; // Filenameshort.
             filesizeformatted: string; // Filesizeformatted.
             icon: string; // Icon.
-            iconurl: string; // Iconurl.
             timecreatedformatted: string; // Timecreatedformatted.
             timemodifiedformatted: string; // Timemodifiedformatted.
             url: string; // Url.
@@ -7032,7 +9052,7 @@ export type ToolLpDataForUserEvidenceListPageWSResponse = {
         hasurlorfiles: boolean; // Hasurlorfiles.
         urlshort: string; // Urlshort.
         competencycount: number; // Competencycount.
-        usercompetencies?: {
+        usercompetencies?: { // Usercompetencies.
             competency: {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
@@ -7120,7 +9140,7 @@ export type ToolLpDataForUserEvidencePageWSResponse = {
         usermodified: number; // Usermodified.
         canmanage: boolean; // Canmanage.
         filecount: number; // Filecount.
-        files: {
+        files: { // Files.
             contextid: number; // Contextid.
             component: string; // Component.
             filearea: string; // Filearea.
@@ -7136,7 +9156,6 @@ export type ToolLpDataForUserEvidencePageWSResponse = {
             filenameshort: string; // Filenameshort.
             filesizeformatted: string; // Filesizeformatted.
             icon: string; // Icon.
-            iconurl: string; // Iconurl.
             timecreatedformatted: string; // Timecreatedformatted.
             timemodifiedformatted: string; // Timemodifiedformatted.
             url: string; // Url.
@@ -7144,7 +9163,7 @@ export type ToolLpDataForUserEvidencePageWSResponse = {
         hasurlorfiles: boolean; // Hasurlorfiles.
         urlshort: string; // Urlshort.
         competencycount: number; // Competencycount.
-        usercompetencies?: {
+        usercompetencies?: { // Usercompetencies.
             competency: {
                 shortname: string; // Shortname.
                 idnumber: string; // Idnumber.
@@ -7294,6 +9313,13 @@ export type ToolMobileGetPublicConfigWSResponse = {
     logourl?: string; // The site logo URL.
     compactlogourl?: string; // The site compact logo URL.
     typeoflogin: number; // The type of login. 1 for app, 2 for browser, 3 for embedded.
-    launchurl?: string; // SSO login launch URL. Empty if it won't be used.
+    launchurl?: string; // SSO login launch URL.
+    mobilecssurl?: string; // Mobile custom CSS theme.
+    tool_mobile_disabledfeatures?: string; // Disabled features in the app.
+    identityproviders?: { // Identity providers.
+        name: string; // The identity provider name.
+        iconurl: string; // The icon URL for the provider.
+        url: string; // The URL of the provider.
+    }[];
     warnings?: CoreWSExternalWarning[];
 };
