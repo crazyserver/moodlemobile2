@@ -1058,6 +1058,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
             timestamp: number; // Timestamp.
             neweventtimestamp: number; // Neweventtimestamp.
             viewdaylink?: string; // Viewdaylink.
+            viewdaylinktitle?: string; // Viewdaylinktitle.
             events: { // Events.
                 id: number; // Id.
                 name: string; // Name.
