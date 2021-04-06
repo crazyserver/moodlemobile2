@@ -592,7 +592,7 @@ export type CoreCourseSearchCoursesWSParams = {
     criteriavalue: string; // Criteria value.
     page?: number; // Page number (0 based).
     perpage?: number; // Items per page.
-    requiredcapabilities: string[]; // 2.
+    requiredcapabilities?: string[]; // Optional list of required capabilities (used to filter the list).
     limittoenrolled?: boolean; // Limit to enrolled courses.
 };
 
@@ -4911,7 +4911,7 @@ export type ToolLpDataForCourseCompetenciesPageWSResponse = {
         coursemodules: {
             id: number; // Id.
             name: string; // Name.
-            url: string; // Url.
+            url?: string; // Url.
             iconurl: string; // Iconurl.
         }[];
         usercompetencycourse?: {
@@ -5752,7 +5752,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
     coursemodules: {
         id: number; // Id.
         name: string; // Name.
-        url: string; // Url.
+        url?: string; // Url.
         iconurl: string; // Iconurl.
     }[];
 };
