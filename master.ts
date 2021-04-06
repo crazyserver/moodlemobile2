@@ -164,6 +164,11 @@ export type CoreBlockGetCourseBlocksWSResponse = {
             footer: string; // Block footer.
             files: CoreWSExternalFile[];
         }; // Block contents (if required).
+        configs?: { // Block instance and plugin configuration settings.
+            name: string; // Name.
+            value: string; // JSON encoded representation of the config value.
+            type: string; // Type (instance or plugin).
+        }[];
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -196,6 +201,11 @@ export type CoreBlockGetDashboardBlocksWSResponse = {
             footer: string; // Block footer.
             files: CoreWSExternalFile[];
         }; // Block contents (if required).
+        configs?: { // Block instance and plugin configuration settings.
+            name: string; // Name.
+            value: string; // JSON encoded representation of the config value.
+            type: string; // Type (instance or plugin).
+        }[];
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -976,7 +986,7 @@ export type CoreCalendarGetCalendarEventsWSParams = {
     }; // Event details.
     options?: {
         userevents?: boolean; // Set to true to return current user's user events.
-        siteevents?: boolean; // Set to true to return global events.
+        siteevents?: boolean; // Set to true to return site events.
         timestart?: number; // Time from which events should be returned.
         timeend?: number; // Time to which the events should be returned. We treat 0 and null as no end.
         ignorehidden?: boolean; // Ignore hidden events or not.
@@ -1021,6 +1031,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSParams = {
     categoryid?: number; // Category being viewed.
     includenavigation?: boolean; // Whether to show course navigation.
     mini?: boolean; // Whether to return the mini month view or not.
+    day?: number; // Day to be viewed.
 };
 
 /**
@@ -1139,6 +1150,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
             navigation: string; // Navigation.
             haslastdayofevent: boolean; // Haslastdayofevent.
             popovertitle: string; // Popovertitle.
+            daytitle: string; // Daytitle.
         }[];
     }[];
     daynames: { // Daynames.
@@ -1299,6 +1311,19 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
     courseid: number; // Courseid.
     categoryid?: number; // Categoryid.
     isloggedin: boolean; // Isloggedin.
+    date: {
+        seconds: number; // Seconds.
+        minutes: number; // Minutes.
+        hours: number; // Hours.
+        mday: number; // Mday.
+        wday: number; // Wday.
+        mon: number; // Mon.
+        year: number; // Year.
+        yday: number; // Yday.
+        weekday: string; // Weekday.
+        month: string; // Month.
+        timestamp: number; // Timestamp.
+    };
 };
 
 /**
@@ -1498,6 +1523,49 @@ export type CoreCalendarUpdateEventStartDayWSResponse = {
 };
 
 /**
+ * Params of core_comment_add_comments WS.
+ */
+export type CoreCommentAddCommentsWSParams = {
+    comments: {
+        contextlevel: string; // Contextlevel system, course, user...
+        instanceid: number; // The id of item associated with the contextlevel.
+        component: string; // Component.
+        content: string; // Component.
+        itemid: number; // Associated id.
+        area?: string; // String comment area.
+    }[];
+};
+
+/**
+ * Data returned by core_comment_add_comments WS.
+ */
+export type CoreCommentAddCommentsWSResponse = {
+    id: number; // Comment ID.
+    content: string; // The content text formatted.
+    format: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    timecreated: number; // Time created (timestamp).
+    strftimeformat: string; // Time format.
+    profileurl: string; // URL profile.
+    fullname: string; // Fullname.
+    time: string; // Time in human format.
+    avatar: string; // HTML user picture.
+    userid: number; // User ID.
+    delete?: boolean; // Permission to delete=true/false.
+}[];
+
+/**
+ * Params of core_comment_delete_comments WS.
+ */
+export type CoreCommentDeleteCommentsWSParams = {
+    comments: number[];
+};
+
+/**
+ * Data returned by core_comment_delete_comments WS.
+ */
+export type CoreCommentDeleteCommentsWSResponse = CoreWSExternalWarning[];
+
+/**
  * Params of core_comment_get_comments WS.
  */
 export type CoreCommentGetCommentsWSParams = {
@@ -1507,6 +1575,7 @@ export type CoreCommentGetCommentsWSParams = {
     itemid: number; // Associated id.
     area?: string; // String comment area.
     page?: number; // Page number (0 based).
+    sortdirection?: string; // Sort direction: ASC or DESC.
 };
 
 /**
@@ -1515,7 +1584,7 @@ export type CoreCommentGetCommentsWSParams = {
 export type CoreCommentGetCommentsWSResponse = {
     comments: { // List of comments.
         id: number; // Comment ID.
-        content: string; // The content text formated.
+        content: string; // The content text formatted.
         format: number; // Content format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         timecreated: number; // Time created (timestamp).
         strftimeformat: string; // Time format.
@@ -1526,6 +1595,9 @@ export type CoreCommentGetCommentsWSResponse = {
         userid: number; // User ID.
         delete?: boolean; // Permission to delete=true/false.
     }[];
+    count?: number; // Total number of comments.
+    perpage?: number; // Number of comments per page.
+    canpost?: boolean; // Whether the user can post in this comment area.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -1840,27 +1912,6 @@ export type CoreCourseCheckUpdatesWSResponse = {
 };
 
 /**
- * Params of core_course_get_activities_overview WS.
- */
-export type CoreCourseGetActivitiesOverviewWSParams = {
-    courseids: number[];
-};
-
-/**
- * Data returned by core_course_get_activities_overview WS.
- */
-export type CoreCourseGetActivitiesOverviewWSResponse = {
-    courses: { // List of courses.
-        id: number; // Course id.
-        overviews: {
-            module: string; // Module name.
-            overviewtext: string; // Overview text.
-        }[];
-    }[];
-    warnings?: CoreWSExternalWarning[];
-};
-
-/**
  * Params of core_course_get_categories WS.
  */
 export type CoreCourseGetCategoriesWSParams = {
@@ -1949,6 +2000,7 @@ export type CoreCourseGetContentsWSResponse = {
         onclick?: string; // Onclick action.
         afterlink?: string; // After link info to be displayed.
         customdata?: string; // Custom data (JSON encoded).
+        noviewlink?: boolean; // Whether the module has no view page.
         completion?: number; // Type of completion tracking:
                                      // 0 means none, 1 manual, 2 automatic.
 
@@ -2252,6 +2304,8 @@ export type CoreCourseGetEnrolledCoursesByTimelineClassificationWSParams = {
     limit?: number; // Result set limit.
     offset?: number; // Result set offset.
     sort?: string; // Sort string.
+    customfieldname?: string; // Used when classification = customfield.
+    customfieldvalue?: string; // Used when classification = customfield.
 };
 
 /**
@@ -2607,6 +2661,68 @@ export type CoreEnrolGetUsersCoursesWSResponse = {
 }[];
 
 /**
+ * Params of core_enrol_search_users WS.
+ */
+export type CoreEnrolSearchUsersWSParams = {
+    courseid: number; // Course id.
+    search: string; // Query.
+    searchanywhere: boolean; // Find a match anywhere, or only at the beginning.
+    page: number; // Page number.
+    perpage: number; // Number per page.
+};
+
+/**
+ * Data returned by core_enrol_search_users WS.
+ */
+export type CoreEnrolSearchUsersWSResponse = {
+    id: number; // ID of the user.
+    username?: string; // The username.
+    firstname?: string; // The first name(s) of the user.
+    lastname?: string; // The family name of the user.
+    fullname: string; // The fullname of the user.
+    email?: string; // An email address - allow email as root@localhost.
+    address?: string; // Postal address.
+    phone1?: string; // Phone 1.
+    phone2?: string; // Phone 2.
+    icq?: string; // Icq number.
+    skype?: string; // Skype id.
+    yahoo?: string; // Yahoo id.
+    aim?: string; // Aim id.
+    msn?: string; // Msn number.
+    department?: string; // Department.
+    institution?: string; // Institution.
+    idnumber?: string; // An arbitrary ID code number perhaps from the institution.
+    interests?: string; // User interests (separated by commas).
+    firstaccess?: number; // First access to the site (0 if never).
+    lastaccess?: number; // Last access to the site (0 if never).
+    auth?: string; // Auth plugins include manual, ldap, etc.
+    suspended?: boolean; // Suspend user account, either false to enable user login or true to disable it.
+    confirmed?: boolean; // Active user: 1 if confirmed, 0 otherwise.
+    lang?: string; // Language code such as "en", must exist on server.
+    calendartype?: string; // Calendar type such as "gregorian", must exist on server.
+    theme?: string; // Theme name such as "standard", must exist on server.
+    timezone?: string; // Timezone code such as Australia/Perth, or 99 for default.
+    mailformat?: number; // Mail format code is 0 for plain text, 1 for HTML etc.
+    description?: string; // User profile description.
+    descriptionformat?: number; // Int format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    city?: string; // Home city of the user.
+    url?: string; // URL of the user.
+    country?: string; // Home country code of the user, such as AU or CZ.
+    profileimageurlsmall: string; // User image profile URL - small version.
+    profileimageurl: string; // User image profile URL - big version.
+    customfields?: { // User custom fields (also known as user profile fields).
+        type: string; // The type of the custom field - text field, checkbox...
+        value: string; // The value of the custom field.
+        name: string; // The name of the custom field.
+        shortname: string; // The shortname of the custom field - to be able to build the field class in the code.
+    }[];
+    preferences?: { // Users preferences.
+        name: string; // The name of the preferences.
+        value: string; // The value of the preference.
+    }[];
+}[];
+
+/**
  * Params of core_files_get_files WS.
  */
 export type CoreFilesGetFilesWSParams = {
@@ -2696,6 +2812,122 @@ export type CoreGetComponentStringsWSResponse = {
 }[];
 
 /**
+ * Params of core_grades_grader_gradingpanel_point_fetch WS.
+ */
+export type CoreGradesGraderGradingpanelPointFetchWSParams = {
+    component: string; // The name of the component.
+    contextid: number; // The ID of the context being graded.
+    itemname: string; // The grade item itemname being graded.
+    gradeduserid: number; // The ID of the user show.
+};
+
+/**
+ * Data returned by core_grades_grader_gradingpanel_point_fetch WS.
+ */
+export type CoreGradesGraderGradingpanelPointFetchWSResponse = {
+    templatename: string; // The template to use when rendering this data.
+    hasgrade: boolean; // Does the user have a grade?.
+    grade: {
+        grade: number; // The numeric grade.
+        usergrade: string; // Current user grade.
+        maxgrade: string; // Max possible grade.
+        timecreated: number; // The time that the grade was created.
+        timemodified: number; // The time that the grade was last updated.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_grades_grader_gradingpanel_point_store WS.
+ */
+export type CoreGradesGraderGradingpanelPointStoreWSParams = {
+    component: string; // The name of the component.
+    contextid: number; // The ID of the context being graded.
+    itemname: string; // The grade item itemname being graded.
+    gradeduserid: number; // The ID of the user show.
+    notifyuser?: boolean; // Wheteher to notify the user or not.
+    formdata: string; // The serialised form data representing the grade.
+};
+
+/**
+ * Data returned by core_grades_grader_gradingpanel_point_store WS.
+ */
+export type CoreGradesGraderGradingpanelPointStoreWSResponse = {
+    templatename: string; // The template to use when rendering this data.
+    hasgrade: boolean; // Does the user have a grade?.
+    grade: {
+        grade: number; // The numeric grade.
+        usergrade: string; // Current user grade.
+        maxgrade: string; // Max possible grade.
+        timecreated: number; // The time that the grade was created.
+        timemodified: number; // The time that the grade was last updated.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_grades_grader_gradingpanel_scale_fetch WS.
+ */
+export type CoreGradesGraderGradingpanelScaleFetchWSParams = {
+    component: string; // The name of the component.
+    contextid: number; // The ID of the context being graded.
+    itemname: string; // The grade item itemname being graded.
+    gradeduserid: number; // The ID of the user show.
+};
+
+/**
+ * Data returned by core_grades_grader_gradingpanel_scale_fetch WS.
+ */
+export type CoreGradesGraderGradingpanelScaleFetchWSResponse = {
+    templatename: string; // The template to use when rendering this data.
+    hasgrade: boolean; // Does the user have a grade?.
+    grade: {
+        options: { // The description of the grade option.
+            value: number; // The grade value.
+            title: string; // The description fo the option.
+            selected: boolean; // Whether this item is currently selected.
+        }[];
+        usergrade: string; // Current user grade.
+        maxgrade: string; // Max possible grade.
+        timecreated: number; // The time that the grade was created.
+        timemodified: number; // The time that the grade was last updated.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_grades_grader_gradingpanel_scale_store WS.
+ */
+export type CoreGradesGraderGradingpanelScaleStoreWSParams = {
+    component: string; // The name of the component.
+    contextid: number; // The ID of the context being graded.
+    itemname: string; // The grade item itemname being graded.
+    gradeduserid: number; // The ID of the user show.
+    notifyuser?: boolean; // Wheteher to notify the user or not.
+    formdata: string; // The serialised form data representing the grade.
+};
+
+/**
+ * Data returned by core_grades_grader_gradingpanel_scale_store WS.
+ */
+export type CoreGradesGraderGradingpanelScaleStoreWSResponse = {
+    templatename: string; // The template to use when rendering this data.
+    hasgrade: boolean; // Does the user have a grade?.
+    grade: {
+        options: { // The description of the grade option.
+            value: number; // The grade value.
+            title: string; // The description fo the option.
+            selected: boolean; // Whether this item is currently selected.
+        }[];
+        usergrade: string; // Current user grade.
+        maxgrade: string; // Max possible grade.
+        timecreated: number; // The time that the grade was created.
+        timemodified: number; // The time that the grade was last updated.
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of core_group_get_activity_allowed_groups WS.
  */
 export type CoreGroupGetActivityAllowedGroupsWSParams = {
@@ -2737,6 +2969,45 @@ export type CoreGroupGetActivityGroupmodeWSResponse = {
 };
 
 /**
+ * Params of core_group_get_course_groupings WS.
+ */
+export type CoreGroupGetCourseGroupingsWSParams = {
+    courseid: number; // Id of course.
+};
+
+/**
+ * Data returned by core_group_get_course_groupings WS.
+ */
+export type CoreGroupGetCourseGroupingsWSResponse = {
+    id: number; // Grouping record id.
+    courseid: number; // Id of course.
+    name: string; // Multilang compatible name, course unique.
+    description: string; // Grouping description text.
+    descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    idnumber: string; // Id number.
+}[];
+
+/**
+ * Params of core_group_get_course_groups WS.
+ */
+export type CoreGroupGetCourseGroupsWSParams = {
+    courseid: number; // Id of course.
+};
+
+/**
+ * Data returned by core_group_get_course_groups WS.
+ */
+export type CoreGroupGetCourseGroupsWSResponse = {
+    id: number; // Group record id.
+    courseid: number; // Id of course.
+    name: string; // Multilang compatible name, course unique.
+    description: string; // Group description text.
+    descriptionformat: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    enrolmentkey: string; // Group enrol secret phrase.
+    idnumber: string; // Id number.
+}[];
+
+/**
  * Params of core_group_get_course_user_groups WS.
  */
 export type CoreGroupGetCourseUserGroupsWSParams = {
@@ -2757,6 +3028,25 @@ export type CoreGroupGetCourseUserGroupsWSResponse = {
         idnumber: string; // Id number.
         courseid?: number; // Course id.
     }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_h5p_get_trusted_h5p_file WS.
+ */
+export type CoreH5pGetTrustedH5pFileWSParams = {
+    url: string; // H5P file url.
+    frame?: number; // The frame allow to show the bar options below the content.
+    export?: number; // The export allow to download the package.
+    embed?: number; // The embed allow to copy the code to your site.
+    copyright?: number; // The copyright option.
+};
+
+/**
+ * Data returned by core_h5p_get_trusted_h5p_file WS.
+ */
+export type CoreH5pGetTrustedH5pFileWSResponse = {
+    files: CoreWSExternalFile[];
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -3102,6 +3392,7 @@ export type CoreMessageGetContactRequestsWSResponse = {
     isblocked: boolean; // If the user has been blocked.
     iscontact: boolean; // Is the user a contact?.
     isdeleted: boolean; // Is the user deleted?.
+    canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
     canmessage: boolean; // If the user can be messaged.
     requirescontact: boolean; // If the user requires to be contacts.
     contactrequests?: { // The contact requests.
@@ -3191,6 +3482,7 @@ export type CoreMessageGetConversationWSResponse = {
         isblocked: boolean; // If the user has been blocked.
         iscontact: boolean; // Is the user a contact?.
         isdeleted: boolean; // Is the user deleted?.
+        canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
         canmessage: boolean; // If the user can be messaged.
         requirescontact: boolean; // If the user requires to be contacts.
         contactrequests?: { // The contact requests.
@@ -3255,6 +3547,7 @@ export type CoreMessageGetConversationBetweenUsersWSResponse = {
         isblocked: boolean; // If the user has been blocked.
         iscontact: boolean; // Is the user a contact?.
         isdeleted: boolean; // Is the user deleted?.
+        canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
         canmessage: boolean; // If the user can be messaged.
         requirescontact: boolean; // If the user requires to be contacts.
         contactrequests?: { // The contact requests.
@@ -3324,6 +3617,7 @@ export type CoreMessageGetConversationMembersWSResponse = {
     isblocked: boolean; // If the user has been blocked.
     iscontact: boolean; // Is the user a contact?.
     isdeleted: boolean; // Is the user deleted?.
+    canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
     canmessage: boolean; // If the user can be messaged.
     requirescontact: boolean; // If the user requires to be contacts.
     contactrequests?: { // The contact requests.
@@ -3368,6 +3662,7 @@ export type CoreMessageGetConversationMessagesWSResponse = {
         isblocked: boolean; // If the user has been blocked.
         iscontact: boolean; // Is the user a contact?.
         isdeleted: boolean; // Is the user deleted?.
+        canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
         canmessage: boolean; // If the user can be messaged.
         requirescontact: boolean; // If the user requires to be contacts.
         contactrequests?: { // The contact requests.
@@ -3433,6 +3728,7 @@ export type CoreMessageGetConversationsWSResponse = {
             isblocked: boolean; // If the user has been blocked.
             iscontact: boolean; // Is the user a contact?.
             isdeleted: boolean; // Is the user deleted?.
+            canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
             canmessage: boolean; // If the user can be messaged.
             requirescontact: boolean; // If the user requires to be contacts.
             contactrequests?: { // The contact requests.
@@ -3482,6 +3778,7 @@ export type CoreMessageGetMemberInfoWSResponse = {
     isblocked: boolean; // If the user has been blocked.
     iscontact: boolean; // Is the user a contact?.
     isdeleted: boolean; // Is the user deleted?.
+    canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
     canmessage: boolean; // If the user can be messaged.
     requirescontact: boolean; // If the user requires to be contacts.
     contactrequests?: { // The contact requests.
@@ -3588,6 +3885,7 @@ export type CoreMessageGetSelfConversationWSResponse = {
         isblocked: boolean; // If the user has been blocked.
         iscontact: boolean; // Is the user a contact?.
         isdeleted: boolean; // Is the user deleted?.
+        canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
         canmessage: boolean; // If the user can be messaged.
         requirescontact: boolean; // If the user requires to be contacts.
         contactrequests?: { // The contact requests.
@@ -3666,6 +3964,7 @@ export type CoreMessageGetUserContactsWSResponse = {
     isblocked: boolean; // If the user has been blocked.
     iscontact: boolean; // Is the user a contact?.
     isdeleted: boolean; // Is the user deleted?.
+    canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
     canmessage: boolean; // If the user can be messaged.
     requirescontact: boolean; // If the user requires to be contacts.
     contactrequests?: { // The contact requests.
@@ -3895,6 +4194,7 @@ export type CoreMessageMessageSearchUsersWSResponse = {
         isblocked: boolean; // If the user has been blocked.
         iscontact: boolean; // Is the user a contact?.
         isdeleted: boolean; // Is the user deleted?.
+        canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
         canmessage: boolean; // If the user can be messaged.
         requirescontact: boolean; // If the user requires to be contacts.
         contactrequests?: { // The contact requests.
@@ -3921,6 +4221,7 @@ export type CoreMessageMessageSearchUsersWSResponse = {
         isblocked: boolean; // If the user has been blocked.
         iscontact: boolean; // Is the user a contact?.
         isdeleted: boolean; // Is the user deleted?.
+        canmessageevenifblocked: boolean; // If the user can still message even if they get blocked.
         canmessage: boolean; // If the user can be messaged.
         requirescontact: boolean; // If the user requires to be contacts.
         contactrequests?: { // The contact requests.
@@ -4780,9 +5081,11 @@ export type CoreWebserviceGetSiteInfoWSResponse = {
     userquota?: number; // User quota (bytes). 0 means user can ignore the quota.
     usermaxuploadfilesize?: number; // User max upload file size (bytes). -1 means the user can ignore the upload file size.
     userhomepage?: number; // The default home page for the user: 0 for the site home, 1 for dashboard.
+    userprivateaccesskey?: string; // Private user access key for fetching files.
     siteid?: number; // Site course ID.
     sitecalendartype?: string; // Calendar type set in the site.
     usercalendartype?: string; // Calendar typed used by the user.
+    userissiteadmin?: boolean; // Whether the user is a site admin or not.
     theme?: string; // Current theme for the user.
 };
 
@@ -5357,8 +5660,10 @@ export type ModAssignGetSubmissionStatusWSResponse = {
         submissionsenabled: boolean; // Whether submissions are enabled or not.
         submissionssubmittedcount: number; // Number of submissions in submitted status.
         submissionsneedgradingcount: number; // Number of submissions that need grading.
-        warnofungroupedusers: boolean; // Whether we need to warn people that there
-                                                                     // are users without groups.
+        warnofungroupedusers: string; // Whether we need to warn people that there
+                                                                     // are users without groups ('warningrequired'), warn
+                                                                     // people there are users who will submit in the default
+                                                                     // group ('warningoptional') or no warning ('').
 
     }; // Grading information.
     lastattempt?: {
@@ -7390,6 +7695,7 @@ export type ModForumAddDiscussionPostWSResponse = {
         author: {
             id?: number; // Id.
             fullname?: string; // Fullname.
+            isdeleted?: boolean; // Isdeleted.
             groups?: { // Groups.
                 id: number; // Id.
                 name: string; // Name.
@@ -7411,6 +7717,7 @@ export type ModForumAddDiscussionPostWSResponse = {
         isprivatereply: boolean; // Isprivatereply.
         haswordcount: boolean; // Haswordcount.
         wordcount?: number; // Wordcount.
+        charcount?: number; // Charcount.
         capabilities: {
             view: boolean; // Whether the user can view the post.
             edit: boolean; // Whether the user can edit the post.
@@ -7505,19 +7812,32 @@ export type ModForumCanAddDiscussionWSResponse = {
 };
 
 /**
- * Params of mod_forum_get_discussion_posts WS.
+ * Params of mod_forum_delete_post WS.
  */
-export type ModForumGetDiscussionPostsWSParams = {
-    discussionid: number; // The ID of the discussion from which to fetch posts.
-    sortby?: string; // Sort by this element: id, created or modified.
-    sortdirection?: string; // Sort direction: ASC or DESC.
+export type ModForumDeletePostWSParams = {
+    postid: number; // Post to be deleted. It can be a discussion topic post.
 };
 
 /**
- * Data returned by mod_forum_get_discussion_posts WS.
+ * Data returned by mod_forum_delete_post WS.
  */
-export type ModForumGetDiscussionPostsWSResponse = {
-    posts: {
+export type ModForumDeletePostWSResponse = {
+    status: boolean; // True if the post/discussion was deleted, false otherwise.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_forum_get_discussion_post WS.
+ */
+export type ModForumGetDiscussionPostWSParams = {
+    postid: number; // Post to fetch.
+};
+
+/**
+ * Data returned by mod_forum_get_discussion_post WS.
+ */
+export type ModForumGetDiscussionPostWSResponse = {
+    post: {
         id: number; // Id.
         subject: string; // Subject.
         replysubject: string; // Replysubject.
@@ -7526,6 +7846,7 @@ export type ModForumGetDiscussionPostsWSResponse = {
         author: {
             id?: number; // Id.
             fullname?: string; // Fullname.
+            isdeleted?: boolean; // Isdeleted.
             groups?: { // Groups.
                 id: number; // Id.
                 name: string; // Name.
@@ -7547,6 +7868,122 @@ export type ModForumGetDiscussionPostsWSResponse = {
         isprivatereply: boolean; // Isprivatereply.
         haswordcount: boolean; // Haswordcount.
         wordcount?: number; // Wordcount.
+        charcount?: number; // Charcount.
+        capabilities: {
+            view: boolean; // Whether the user can view the post.
+            edit: boolean; // Whether the user can edit the post.
+            delete: boolean; // Whether the user can delete the post.
+            split: boolean; // Whether the user can split the post.
+            reply: boolean; // Whether the user can reply to the post.
+            selfenrol: boolean; // Whether the user can self enrol into the course.
+            export: boolean; // Whether the user can export the post.
+            controlreadstatus: boolean; // Whether the user can control the read status of the post.
+            canreplyprivately: boolean; // Whether the user can post a private reply.
+        };
+        urls?: {
+            view?: string; // The URL used to view the post.
+            viewisolated?: string; // The URL used to view the post in isolation.
+            viewparent?: string; // The URL used to view the parent of the post.
+            edit?: string; // The URL used to edit the post.
+            delete?: string; // The URL used to delete the post.
+            split?: string; // The URL used to split the discussion with the selected post being the first post in the new discussion.
+            reply?: string; // The URL used to reply to the post.
+            export?: string; // The URL used to export the post.
+            markasread?: string; // The URL used to mark the post as read.
+            markasunread?: string; // The URL used to mark the post as unread.
+            discuss?: string; // Discuss.
+        };
+        attachments: { // Attachments.
+            contextid: number; // Contextid.
+            component: string; // Component.
+            filearea: string; // Filearea.
+            itemid: number; // Itemid.
+            filepath: string; // Filepath.
+            filename: string; // Filename.
+            isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
+            timemodified: number; // Timemodified.
+            timecreated: number; // Timecreated.
+            filesize: number; // Filesize.
+            author: string; // Author.
+            license: string; // License.
+            filenameshort: string; // Filenameshort.
+            filesizeformatted: string; // Filesizeformatted.
+            icon: string; // Icon.
+            timecreatedformatted: string; // Timecreatedformatted.
+            timemodifiedformatted: string; // Timemodifiedformatted.
+            url: string; // Url.
+            urls: {
+                export?: string; // The URL used to export the attachment.
+            };
+            html: {
+                plagiarism?: string; // The HTML source for the Plagiarism Response.
+            };
+        }[];
+        tags?: { // Tags.
+            id: number; // The ID of the Tag.
+            tagid: number; // The tagid.
+            isstandard: boolean; // Whether this is a standard tag.
+            displayname: string; // The display name of the tag.
+            flag: boolean; // Wehther this tag is flagged.
+            urls: {
+                view: string; // The URL to view the tag.
+            };
+        }[];
+        html?: {
+            rating?: string; // The HTML source to rate the post.
+            taglist?: string; // The HTML source to view the list of tags.
+            authorsubheading?: string; // The HTML source to view the author details.
+        };
+    };
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_forum_get_discussion_posts WS.
+ */
+export type ModForumGetDiscussionPostsWSParams = {
+    discussionid: number; // The ID of the discussion from which to fetch posts.
+    sortby?: string; // Sort by this element: id, created or modified.
+    sortdirection?: string; // Sort direction: ASC or DESC.
+};
+
+/**
+ * Data returned by mod_forum_get_discussion_posts WS.
+ */
+export type ModForumGetDiscussionPostsWSResponse = {
+    posts: {
+        id: number; // Id.
+        subject: string; // Subject.
+        replysubject: string; // Replysubject.
+        message: string; // Message.
+        messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        author: {
+            id?: number; // Id.
+            fullname?: string; // Fullname.
+            isdeleted?: boolean; // Isdeleted.
+            groups?: { // Groups.
+                id: number; // Id.
+                name: string; // Name.
+                urls: {
+                    image?: string; // Image.
+                };
+            }[];
+            urls: {
+                profile?: string; // The URL for the use profile page.
+                profileimage?: string; // The URL for the use profile image.
+            };
+        };
+        discussionid: number; // Discussionid.
+        hasparent: boolean; // Hasparent.
+        parentid?: number; // Parentid.
+        timecreated: number; // Timecreated.
+        unread?: boolean; // Unread.
+        isdeleted: boolean; // Isdeleted.
+        isprivatereply: boolean; // Isprivatereply.
+        haswordcount: boolean; // Haswordcount.
+        wordcount?: number; // Wordcount.
+        charcount?: number; // Charcount.
         capabilities: {
             view: boolean; // Whether the user can view the post.
             edit: boolean; // Whether the user can edit the post.
@@ -7684,6 +8121,7 @@ export type ModForumGetForumAccessInformationWSResponse = {
     canmanagesubscriptions?: boolean; // Whether the user has the capability mod/forum:managesubscriptions allowed.
     canpostwithoutthrottling?: boolean; // Whether the user has the capability mod/forum:postwithoutthrottling allowed.
     canexportdiscussion?: boolean; // Whether the user has the capability mod/forum:exportdiscussion allowed.
+    canexportforum?: boolean; // Whether the user has the capability mod/forum:exportforum allowed.
     canexportpost?: boolean; // Whether the user has the capability mod/forum:exportpost allowed.
     canexportownpost?: boolean; // Whether the user has the capability mod/forum:exportownpost allowed.
     canaddquestion?: boolean; // Whether the user has the capability mod/forum:addquestion allowed.
@@ -7692,6 +8130,7 @@ export type ModForumGetForumAccessInformationWSResponse = {
     cancanoverridediscussionlock?: boolean; // Whether the user has the capability mod/forum:canoverridediscussionlock allowed.
     cancanoverridecutoff?: boolean; // Whether the user has the capability mod/forum:canoverridecutoff allowed.
     cancantogglefavourite?: boolean; // Whether the user has the capability mod/forum:cantogglefavourite allowed.
+    cangrade?: boolean; // Whether the user has the capability mod/forum:grade allowed.
 };
 
 /**
@@ -7907,6 +8346,8 @@ export type ModForumGetForumsByCoursesWSResponse = {
     assesstimestart: number; // Assess start time.
     assesstimefinish: number; // Assess finish time.
     scale: number; // Scale.
+    grade_forum: number; // Whole forum grade.
+    grade_forum_notify: number; // Whether to send notifications to students upon grading by default.
     maxbytes: number; // Maximum attachment size.
     maxattachments: number; // Maximum number of attachments.
     forcesubscribe: number; // Force users to subscribe.
@@ -7927,6 +8368,33 @@ export type ModForumGetForumsByCoursesWSResponse = {
     istracked?: boolean; // If the user is tracking the forum.
     unreadpostscount?: number; // The number of unread posts for tracked forums.
 }[];
+
+/**
+ * Params of mod_forum_prepare_draft_area_for_post WS.
+ */
+export type ModForumPrepareDraftAreaForPostWSParams = {
+    postid: number; // Post to prepare the draft area for.
+    area: string; // Area to prepare: attachment or post.
+    draftitemid?: number; // The draft item id to use. 0 to generate one.
+    filestokeep?: { // Only keep these files in the draft file area. Empty for keeping all.
+        filename: string; // File name.
+        filepath: string; // File path.
+    }[];
+};
+
+/**
+ * Data returned by mod_forum_prepare_draft_area_for_post WS.
+ */
+export type ModForumPrepareDraftAreaForPostWSResponse = {
+    draftitemid: number; // Draft item id for the file area.
+    files?: CoreWSExternalFile[];
+    areaoptions: { // Draft file area options.
+        name: string; // Name of option.
+        value: string; // Value of option.
+    }[];
+    messagetext: string; // Message text with URLs rewritten.
+    warnings?: CoreWSExternalWarning[];
+};
 
 /**
  * Params of mod_forum_set_lock_state WS.
@@ -8121,6 +8589,33 @@ export type ModForumToggleFavouriteStateWSResponse = {
         istimed?: boolean; // Istimed.
         visible?: boolean; // Visible.
     };
+};
+
+/**
+ * Params of mod_forum_update_discussion_post WS.
+ */
+export type ModForumUpdateDiscussionPostWSParams = {
+    postid: number; // Post to be updated. It can be a discussion topic post.
+    subject?: string; // Updated post subject.
+    message?: string; // Updated post message (HTML assumed if messageformat is not provided).
+    messageformat?: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+    options?: { // Configuration options for the post.
+        name: string; // The allowed keys (value format) are:
+                             // pinned (bool); (only for discussions) whether to pin this discussion or not
+                             // discussionsubscribe (bool); whether to subscribe to the post or not
+                             // inlineattachmentsid (int); the draft file area id for inline attachments in the text
+                             // attachmentsid (int); the draft file area id for attachments.
+
+        value: string; // The value of the option.
+    }[];
+};
+
+/**
+ * Data returned by mod_forum_update_discussion_post WS.
+ */
+export type ModForumUpdateDiscussionPostWSResponse = {
+    status: boolean; // True if the post/discussion was updated, false otherwise.
+    warnings?: CoreWSExternalWarning[];
 };
 
 /**
@@ -12013,6 +12508,21 @@ export type ModWorkshopViewWorkshopWSResponse = {
 };
 
 /**
+ * Params of report_insights_action_executed WS.
+ */
+export type ReportInsightsActionExecutedWSParams = {
+    actionname: string; // The name of the action.
+    predictionids: number[]; // Array of prediction ids.
+};
+
+/**
+ * Data returned by report_insights_action_executed WS.
+ */
+export type ReportInsightsActionExecutedWSResponse = {
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
  * Params of report_insights_set_fixed_prediction WS.
  */
 export type ReportInsightsSetFixedPredictionWSParams = {
@@ -12041,6 +12551,22 @@ export type ReportInsightsSetNotusefulPredictionWSResponse = {
     success: boolean; // True if the prediction was successfully flagged as not useful.
     warnings?: CoreWSExternalWarning[];
 };
+
+/**
+ * Params of tool_analytics_potential_contexts WS.
+ */
+export type ToolAnalyticsPotentialContextsWSParams = {
+    query?: string; // The model id.
+    modelid?: number; // The model id.
+};
+
+/**
+ * Data returned by tool_analytics_potential_contexts WS.
+ */
+export type ToolAnalyticsPotentialContextsWSResponse = {
+    id: number; // ID of the context.
+    name: string; // The context name.
+}[];
 
 /**
  * Params of tool_lp_data_for_course_competencies_page WS.
@@ -13869,6 +14395,7 @@ export type ToolMobileGetContentWSResponse = {
         users?: number[]; // List of allowed users.
         courses?: number[]; // List of allowed courses.
     }; // Restrict this content to certain users or courses.
+    disabled?: boolean; // Whether we consider this disabled or not.
 };
 
 /**
@@ -13949,5 +14476,9 @@ export type ToolMobileGetPublicConfigWSResponse = {
     langmenu?: number; // Whether the language menu should be displayed.
     langlist?: string; // Languages on language menu.
     locale?: string; // Sitewide locale.
+    tool_mobile_minimumversion?: string; // Minimum required version to access.
+    tool_mobile_iosappid?: string; // IOS app's unique identifier.
+    tool_mobile_androidappid?: string; // Android app's unique identifier.
+    tool_mobile_setuplink?: string; // App download page.
     warnings?: CoreWSExternalWarning[];
 };
