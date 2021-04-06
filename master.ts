@@ -53,6 +53,7 @@ export type BlockStarredcoursesGetStarredCoursesWSResponse = {
     hidden: boolean; // Hidden.
     timeaccess?: number; // Timeaccess.
     showshortname: boolean; // Showshortname.
+    coursecategory: string; // Coursecategory.
 }[];
 
 /**
@@ -115,14 +116,14 @@ export type CoreBadgesGetUserBadgesWSResponse = {
             claimcomment: string; // Claim comment.
             dateissued: number; // Date issued.
         };
-        competencies: { // Badge competencies (alignment).
-            id: number; // Competency id.
-            badgeid: number; // Badge id.
-            targetname: string; // Target name.
-            targeturl: string; // Target URL.
-            targetdescription?: string; // Target description.
-            targetframework?: string; // Target framework.
-            targetcode?: string; // Target code.
+        alignment: { // Badge alignments.
+            id?: number; // Alignment id.
+            badgeid?: number; // Badge id.
+            targetName?: string; // Target name.
+            targetUrl?: string; // Target URL.
+            targetDescription?: string; // Target description.
+            targetFramework?: string; // Target framework.
+            targetCode?: string; // Target code.
         }[];
         relatedbadges: { // Related badges.
             id: number; // Badge id.
@@ -263,6 +264,18 @@ export type CoreBlogGetEntriesWSResponse = {
             mimetype?: string; // File mime type.
             isexternalfile?: boolean; // Whether is an external file.
             repositorytype?: string; // The repository type for the external files.
+        }[];
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
         }[];
     }[];
     totalentries: number; // The total number of entries found.
@@ -428,6 +441,7 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
             hidden: boolean; // Hidden.
             timeaccess?: number; // Timeaccess.
             showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
         };
         subscription?: {
             displayeventsource: boolean; // Displayeventsource.
@@ -444,6 +458,8 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
         iscourseevent: boolean; // Iscourseevent.
         iscategoryevent: boolean; // Iscategoryevent.
         groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
         url: string; // Url.
         action?: {
             name: string; // Name.
@@ -528,6 +544,7 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
                 hidden: boolean; // Hidden.
                 timeaccess?: number; // Timeaccess.
                 showshortname: boolean; // Showshortname.
+                coursecategory: string; // Coursecategory.
             };
             subscription?: {
                 displayeventsource: boolean; // Displayeventsource.
@@ -544,6 +561,8 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
             iscourseevent: boolean; // Iscourseevent.
             iscategoryevent: boolean; // Iscategoryevent.
             groupname?: string; // Groupname.
+            normalisedeventtype: string; // Normalisedeventtype.
+            normalisedeventtypetext: string; // Normalisedeventtypetext.
             url: string; // Url.
             action?: {
                 name: string; // Name.
@@ -568,6 +587,7 @@ export type CoreCalendarGetActionEventsByTimesortWSParams = {
     aftereventid?: number; // The last seen event id.
     limitnum?: number; // Limit number.
     limittononsuspendedevents?: boolean; // Limit the events to courses the user is not suspended in.
+    userid?: number; // The user id.
 };
 
 /**
@@ -630,6 +650,7 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
             hidden: boolean; // Hidden.
             timeaccess?: number; // Timeaccess.
             showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
         };
         subscription?: {
             displayeventsource: boolean; // Displayeventsource.
@@ -646,6 +667,8 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
         iscourseevent: boolean; // Iscourseevent.
         iscategoryevent: boolean; // Iscategoryevent.
         groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
         url: string; // Url.
         action?: {
             name: string; // Name.
@@ -657,6 +680,38 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
     }[];
     firstid: number; // Firstid.
     lastid: number; // Lastid.
+};
+
+/**
+ * Params of core_calendar_get_allowed_event_types WS.
+ */
+export type CoreCalendarGetAllowedEventTypesWSParams = {
+    courseid?: number; // Course to check, empty for site.
+};
+
+/**
+ * Data returned by core_calendar_get_allowed_event_types WS.
+ */
+export type CoreCalendarGetAllowedEventTypesWSResponse = {
+    allowedeventtypes: string[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_calendar_get_calendar_access_information WS.
+ */
+export type CoreCalendarGetCalendarAccessInformationWSParams = {
+    courseid?: number; // Course to check, empty for site calendar events.
+};
+
+/**
+ * Data returned by core_calendar_get_calendar_access_information WS.
+ */
+export type CoreCalendarGetCalendarAccessInformationWSResponse = {
+    canmanageentries: boolean; // Whether the user can manage entries.
+    canmanageownentries: boolean; // Whether the user can manage its own entries.
+    canmanagegroupentries: boolean; // Whether the user can manage group entries.
+    warnings?: CoreWSExternalWarning[];
 };
 
 /**
@@ -730,6 +785,7 @@ export type CoreCalendarGetCalendarDayViewWSResponse = {
             hidden: boolean; // Hidden.
             timeaccess?: number; // Timeaccess.
             showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
         };
         subscription?: {
             displayeventsource: boolean; // Displayeventsource.
@@ -746,9 +802,10 @@ export type CoreCalendarGetCalendarDayViewWSResponse = {
         iscourseevent: boolean; // Iscourseevent.
         iscategoryevent: boolean; // Iscategoryevent.
         groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
         url: string; // Url.
         islastday: boolean; // Islastday.
-        calendareventtype: string; // Calendareventtype.
         popupname: string; // Popupname.
         mindaytimestamp?: number; // Mindaytimestamp.
         mindayerror?: string; // Mindayerror.
@@ -876,6 +933,7 @@ export type CoreCalendarGetCalendarEventByIdWSResponse = {
             hidden: boolean; // Hidden.
             timeaccess?: number; // Timeaccess.
             showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
         };
         subscription?: {
             displayeventsource: boolean; // Displayeventsource.
@@ -892,6 +950,8 @@ export type CoreCalendarGetCalendarEventByIdWSResponse = {
         iscourseevent: boolean; // Iscourseevent.
         iscategoryevent: boolean; // Iscategoryevent.
         groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
         url: string; // Url.
         action?: {
             name: string; // Name.
@@ -987,6 +1047,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
             timestamp: number; // Timestamp.
             neweventtimestamp: number; // Neweventtimestamp.
             viewdaylink?: string; // Viewdaylink.
+            viewdaylinktitle?: string; // Viewdaylinktitle.
             events: { // Events.
                 id: number; // Id.
                 name: string; // Name.
@@ -1043,6 +1104,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
                     hidden: boolean; // Hidden.
                     timeaccess?: number; // Timeaccess.
                     showshortname: boolean; // Showshortname.
+                    coursecategory: string; // Coursecategory.
                 };
                 subscription?: {
                     displayeventsource: boolean; // Displayeventsource.
@@ -1059,9 +1121,10 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
                 iscourseevent: boolean; // Iscourseevent.
                 iscategoryevent: boolean; // Iscategoryevent.
                 groupname?: string; // Groupname.
+                normalisedeventtype: string; // Normalisedeventtype.
+                normalisedeventtypetext: string; // Normalisedeventtypetext.
                 url: string; // Url.
                 islastday: boolean; // Islastday.
-                calendareventtype: string; // Calendareventtype.
                 popupname: string; // Popupname.
                 mindaytimestamp?: number; // Mindaytimestamp.
                 mindayerror?: string; // Mindayerror.
@@ -1203,6 +1266,7 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
             hidden: boolean; // Hidden.
             timeaccess?: number; // Timeaccess.
             showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
         };
         subscription?: {
             displayeventsource: boolean; // Displayeventsource.
@@ -1219,9 +1283,10 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
         iscourseevent: boolean; // Iscourseevent.
         iscategoryevent: boolean; // Iscategoryevent.
         groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
         url: string; // Url.
         islastday: boolean; // Islastday.
-        calendareventtype: string; // Calendareventtype.
         popupname: string; // Popupname.
         mindaytimestamp?: number; // Mindaytimestamp.
         mindayerror?: string; // Mindayerror.
@@ -1234,6 +1299,202 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
     courseid: number; // Courseid.
     categoryid?: number; // Categoryid.
     isloggedin: boolean; // Isloggedin.
+};
+
+/**
+ * Params of core_calendar_submit_create_update_form WS.
+ */
+export type CoreCalendarSubmitCreateUpdateFormWSParams = {
+    formdata: string; // The data from the event form.
+};
+
+/**
+ * Data returned by core_calendar_submit_create_update_form WS.
+ */
+export type CoreCalendarSubmitCreateUpdateFormWSResponse = {
+    event?: {
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        location?: string; // Location.
+        categoryid?: number; // Categoryid.
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        category?: {
+            id: number; // Id.
+            name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
+            url: string; // Url.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            visible: boolean; // Visible.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+            courseimage: string; // Courseimage.
+            progress?: number; // Progress.
+            hasprogress: boolean; // Hasprogress.
+            isfavourite: boolean; // Isfavourite.
+            hidden: boolean; // Hidden.
+            timeaccess?: number; // Timeaccess.
+            showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
+        };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
+        url: string; // Url.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
+    };
+    validationerror?: boolean; // Invalid form data.
+};
+
+/**
+ * Params of core_calendar_update_event_start_day WS.
+ */
+export type CoreCalendarUpdateEventStartDayWSParams = {
+    eventid: number; // Id of event to be updated.
+    daytimestamp: number; // Timestamp for the new start day.
+};
+
+/**
+ * Data returned by core_calendar_update_event_start_day WS.
+ */
+export type CoreCalendarUpdateEventStartDayWSResponse = {
+    event: {
+        id: number; // Id.
+        name: string; // Name.
+        description?: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        location?: string; // Location.
+        categoryid?: number; // Categoryid.
+        groupid?: number; // Groupid.
+        userid?: number; // Userid.
+        repeatid?: number; // Repeatid.
+        eventcount?: number; // Eventcount.
+        modulename?: string; // Modulename.
+        instance?: number; // Instance.
+        eventtype: string; // Eventtype.
+        timestart: number; // Timestart.
+        timeduration: number; // Timeduration.
+        timesort: number; // Timesort.
+        visible: number; // Visible.
+        timemodified: number; // Timemodified.
+        icon: {
+            key: string; // Key.
+            component: string; // Component.
+            alttext: string; // Alttext.
+        };
+        category?: {
+            id: number; // Id.
+            name: string; // Name.
+            idnumber: string; // Idnumber.
+            description?: string; // Description.
+            parent: number; // Parent.
+            coursecount: number; // Coursecount.
+            visible: number; // Visible.
+            timemodified: number; // Timemodified.
+            depth: number; // Depth.
+            nestedname: string; // Nestedname.
+            url: string; // Url.
+        };
+        course?: {
+            id: number; // Id.
+            fullname: string; // Fullname.
+            shortname: string; // Shortname.
+            idnumber: string; // Idnumber.
+            summary: string; // Summary.
+            summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            startdate: number; // Startdate.
+            enddate: number; // Enddate.
+            visible: boolean; // Visible.
+            fullnamedisplay: string; // Fullnamedisplay.
+            viewurl: string; // Viewurl.
+            courseimage: string; // Courseimage.
+            progress?: number; // Progress.
+            hasprogress: boolean; // Hasprogress.
+            isfavourite: boolean; // Isfavourite.
+            hidden: boolean; // Hidden.
+            timeaccess?: number; // Timeaccess.
+            showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
+        };
+        subscription?: {
+            displayeventsource: boolean; // Displayeventsource.
+            subscriptionname?: string; // Subscriptionname.
+            subscriptionurl?: string; // Subscriptionurl.
+        };
+        canedit: boolean; // Canedit.
+        candelete: boolean; // Candelete.
+        deleteurl: string; // Deleteurl.
+        editurl: string; // Editurl.
+        viewurl: string; // Viewurl.
+        formattedtime: string; // Formattedtime.
+        isactionevent: boolean; // Isactionevent.
+        iscourseevent: boolean; // Iscourseevent.
+        iscategoryevent: boolean; // Iscategoryevent.
+        groupname?: string; // Groupname.
+        normalisedeventtype: string; // Normalisedeventtype.
+        normalisedeventtypetext: string; // Normalisedeventtypetext.
+        url: string; // Url.
+        action?: {
+            name: string; // Name.
+            url: string; // Url.
+            itemcount: number; // Itemcount.
+            actionable: boolean; // Actionable.
+            showitemcount: boolean; // Showitemcount.
+        };
+    };
 };
 
 /**
@@ -1477,6 +1738,9 @@ export type CoreCompletionGetActivitiesCompletionStatusWSResponse = {
                                                                  // 0 means none, 1 manual, 2 automatic.
 
         overrideby?: number; // The user id who has overriden the status, or null.
+        valueused?: boolean; // Whether the completion status affects the availability
+                                 // of another activity.
+
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -1696,6 +1960,9 @@ export type CoreCourseGetContentsWSResponse = {
             overrideby: number; // The user id who has overriden the
                                              // status.
 
+            valueused?: boolean; // Whether the completion status affects
+                                             // the availability of another activity.
+
         }; // Module completion data.
         contents: {
             type: string; // A file or a folder or external link.
@@ -1713,7 +1980,28 @@ export type CoreCourseGetContentsWSResponse = {
             userid: number; // User who added this content to moodle.
             author: string; // Content owner.
             license: string; // Content license.
+            tags?: { // Tags.
+                id: number; // Tag id.
+                name: string; // Tag name.
+                rawname: string; // The raw, unnormalised name for the tag as entered by users.
+                isstandard: boolean; // Whether this tag is standard.
+                tagcollid: number; // Tag collection id.
+                taginstanceid: number; // Tag instance id.
+                taginstancecontextid: number; // Context the tag instance belongs to.
+                itemid: number; // Id of the record tagged.
+                ordering: number; // Tag ordering.
+                flag: number; // Whether the tag is flagged as inappropriate.
+            }[];
         }[];
+        contentsinfo?: {
+            filescount: number; // Total number of files.
+            filessize: number; // Total files size.
+            lastmodified: number; // Last time files were modified.
+            mimetypes: string[]; // Files mime types.
+            repositorytype?: string; // The repository type for
+                                             // the main file.
+
+        }; // Contents summary information.
     }[];
 }[];
 
@@ -1871,6 +2159,12 @@ export type CoreCourseGetCoursesWSResponse = {
         name: string; // Course format option name.
         value: string; // Course format option value.
     }[];
+    customfields?: { // Custom fields and associated values.
+        name: string; // The name of the custom field.
+        shortname: string; // The shortname of the custom field.
+        type: string; // The type of the custom field - text, checkbox...
+        value: string; // The value of the custom field.
+    }[];
 }[];
 
 /**
@@ -1908,6 +2202,12 @@ export type CoreCourseGetCoursesByFieldWSResponse = {
             fullname: string; // Contact user fullname.
         }[];
         enrollmentmethods: string[]; // Enrollment methods list.
+        customfields?: { // Custom fields.
+            name: string; // The name of the custom field.
+            shortname: string; // The shortname of the custom field - to be able to build the field class in the code.
+            type: string; // The type of the custom field - text field, checkbox...
+            value: string; // The value of the custom field.
+        }[];
         idnumber?: string; // Id number.
         format?: string; // Course format: weeks, topics, social, site,..
         showgrades?: number; // 1 if grades are shown, otherwise 0.
@@ -1977,6 +2277,7 @@ export type CoreCourseGetEnrolledCoursesByTimelineClassificationWSResponse = {
         hidden: boolean; // Hidden.
         timeaccess?: number; // Timeaccess.
         showshortname: boolean; // Showshortname.
+        coursecategory: string; // Coursecategory.
     }[];
     nextoffset: number; // Offset for the next request.
 };
@@ -2013,6 +2314,7 @@ export type CoreCourseGetRecentCoursesWSResponse = { // Courses.
     hidden: boolean; // Hidden.
     timeaccess?: number; // Timeaccess.
     showshortname: boolean; // Showshortname.
+    coursecategory: string; // Coursecategory.
 }[];
 
 /**
@@ -2094,6 +2396,7 @@ export type CoreCourseSearchCoursesWSParams = {
     perpage?: number; // Items per page.
     requiredcapabilities?: string[]; // Optional list of required capabilities (used to filter the list).
     limittoenrolled?: boolean; // Limit to enrolled courses.
+    onlywithcompletion?: boolean; // Limit to courses where completion is enabled.
 };
 
 /**
@@ -2118,6 +2421,12 @@ export type CoreCourseSearchCoursesWSResponse = {
             fullname: string; // Contact user fullname.
         }[];
         enrollmentmethods: string[]; // Enrollment methods list.
+        customfields?: { // Custom fields.
+            name: string; // The name of the custom field.
+            shortname: string; // The shortname of the custom field - to be able to build the field class in the code.
+            type: string; // The type of the custom field - text field, checkbox...
+            value: string; // The value of the custom field.
+        }[];
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -2221,6 +2530,7 @@ export type CoreEnrolGetEnrolledUsersWSResponse = {
     interests?: string; // User interests (separated by commas).
     firstaccess?: number; // First access to the site (0 if never).
     lastaccess?: number; // Last access to the site (0 if never).
+    lastcourseaccess?: number; // Last access to the course (0 if never).
     description?: string; // User profile description.
     descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     city?: string; // Home city of the user.
@@ -2262,6 +2572,7 @@ export type CoreEnrolGetEnrolledUsersWSResponse = {
  */
 export type CoreEnrolGetUsersCoursesWSParams = {
     userid: number; // User id.
+    returnusercount?: boolean; // Include count of enrolled users for each course? This can add several seconds to the response time if a user is on several large courses, so set this to false if the value will not be used to improve performance.
 };
 
 /**
@@ -2272,7 +2583,7 @@ export type CoreEnrolGetUsersCoursesWSResponse = {
     shortname: string; // Short name of course.
     fullname: string; // Long name of course.
     displayname?: string; // Course display name for lists.
-    enrolledusercount: number; // Number of enrolled users in this course.
+    enrolledusercount?: number; // Number of enrolled users in this course.
     idnumber: string; // Id number of course.
     visible: number; // 1 means visible, 0 means not yet visible course.
     summary?: string; // Summary.
@@ -2282,6 +2593,7 @@ export type CoreEnrolGetUsersCoursesWSResponse = {
     lang?: string; // Forced course language.
     enablecompletion?: boolean; // True if completion is enabled, otherwise false.
     completionhascriteria?: boolean; // If completion criteria is set.
+    completionusertracked?: boolean; // If the user is completion tracked.
     category?: number; // Course category id.
     progress?: number; // Progress percentage.
     completed?: boolean; // Whether the course is completed.
@@ -2736,6 +3048,19 @@ export type CoreMessageDeleteMessageWSResponse = {
 };
 
 /**
+ * Params of core_message_delete_message_for_all_users WS.
+ */
+export type CoreMessageDeleteMessageForAllUsersWSParams = {
+    messageid: number; // The message id.
+    userid: number; // The user id of who we want to delete the message for all users.
+};
+
+/**
+ * Data returned by core_message_delete_message_for_all_users WS.
+ */
+export type CoreMessageDeleteMessageForAllUsersWSResponse = CoreWSExternalWarning[];
+
+/**
  * Params of core_message_get_blocked_users WS.
  */
 export type CoreMessageGetBlockedUsersWSParams = {
@@ -2849,9 +3174,10 @@ export type CoreMessageGetConversationWSResponse = {
     name?: string; // The conversation name, if set.
     subname?: string; // A subtitle for the conversation name, if set.
     imageurl?: string; // A link to the conversation picture, if set.
-    type: number; // The type of the conversation (1=individual,2=group).
+    type: number; // The type of the conversation (1=individual,2=group,3=self).
     membercount: number; // Total number of conversation members.
-    isfavourite: boolean; // If the user marked conversation this conversation as a favourite.
+    ismuted: boolean; // If the user muted this conversation.
+    isfavourite: boolean; // If the user marked this conversation as a favourite.
     isread: boolean; // If the user has read all messages in the conversation.
     unreadcount?: number; // The number of unread messages in this conversation.
     members: {
@@ -2886,6 +3212,7 @@ export type CoreMessageGetConversationWSResponse = {
         text: string; // The text of the message.
         timecreated: number; // The timecreated timestamp for the message.
     }[];
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 };
 
 /**
@@ -2911,9 +3238,10 @@ export type CoreMessageGetConversationBetweenUsersWSResponse = {
     name?: string; // The conversation name, if set.
     subname?: string; // A subtitle for the conversation name, if set.
     imageurl?: string; // A link to the conversation picture, if set.
-    type: number; // The type of the conversation (1=individual,2=group).
+    type: number; // The type of the conversation (1=individual,2=group,3=self).
     membercount: number; // Total number of conversation members.
-    isfavourite: boolean; // If the user marked conversation this conversation as a favourite.
+    ismuted: boolean; // If the user muted this conversation.
+    isfavourite: boolean; // If the user marked this conversation as a favourite.
     isread: boolean; // If the user has read all messages in the conversation.
     unreadcount?: number; // The number of unread messages in this conversation.
     members: {
@@ -2948,6 +3276,7 @@ export type CoreMessageGetConversationBetweenUsersWSResponse = {
         text: string; // The text of the message.
         timecreated: number; // The timecreated timestamp for the message.
     }[];
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 };
 
 /**
@@ -2965,6 +3294,7 @@ export type CoreMessageGetConversationCountsWSResponse = {
     types: {
         1: number; // Total number of individual conversations.
         2: number; // Total number of group conversations.
+        3: number; // Total number of self conversations.
     };
 };
 
@@ -3072,6 +3402,9 @@ export type CoreMessageGetConversationsWSParams = {
     favourites?: boolean; // Whether to restrict the results to contain NO favourite
              // conversations (false), ONLY favourite conversation (true), or ignore any restriction altogether (null).
 
+    mergeself?: boolean; // Whether to include self-conversations (true) or ONLY private
+                 // conversations (false) when private conversations are requested.
+
 };
 
 /**
@@ -3083,9 +3416,10 @@ export type CoreMessageGetConversationsWSResponse = {
         name?: string; // The conversation name, if set.
         subname?: string; // A subtitle for the conversation name, if set.
         imageurl?: string; // A link to the conversation picture, if set.
-        type: number; // The type of the conversation (1=individual,2=group).
+        type: number; // The type of the conversation (1=individual,2=group,3=self).
         membercount: number; // Total number of conversation members.
-        isfavourite: boolean; // If the user marked conversation this conversation as a favourite.
+        ismuted: boolean; // If the user muted this conversation.
+        isfavourite: boolean; // If the user marked this conversation as a favourite.
         isread: boolean; // If the user has read all messages in the conversation.
         unreadcount?: number; // The number of unread messages in this conversation.
         members: {
@@ -3120,6 +3454,7 @@ export type CoreMessageGetConversationsWSResponse = {
             text: string; // The text of the message.
             timecreated: number; // The timecreated timestamp for the message.
         }[];
+        candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
     }[];
 };
 
@@ -3197,6 +3532,11 @@ export type CoreMessageGetMessagesWSResponse = {
         timeread: number; // Time read.
         usertofullname: string; // User to full name.
         userfromfullname: string; // User from full name.
+        component?: string; // The component that generated the notification.
+        eventtype?: string; // The type of notification.
+        customdata?: string; // Custom data to be passed to the message processor.
+                             // The data here is serialised using json_encode().
+
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -3214,6 +3554,65 @@ export type CoreMessageGetReceivedContactRequestsCountWSParams = {
 export type CoreMessageGetReceivedContactRequestsCountWSResponse = number;
 
 /**
+ * Params of core_message_get_self_conversation WS.
+ */
+export type CoreMessageGetSelfConversationWSParams = {
+    userid: number; // The id of the user who we are viewing self-conversations for.
+    messagelimit?: number; // Limit for number of messages.
+    messageoffset?: number; // Offset for messages list.
+    newestmessagesfirst?: boolean; // Order messages by newest first.
+};
+
+/**
+ * Data returned by core_message_get_self_conversation WS.
+ */
+export type CoreMessageGetSelfConversationWSResponse = {
+    id: number; // The conversation id.
+    name?: string; // The conversation name, if set.
+    subname?: string; // A subtitle for the conversation name, if set.
+    imageurl?: string; // A link to the conversation picture, if set.
+    type: number; // The type of the conversation (1=individual,2=group,3=self).
+    membercount: number; // Total number of conversation members.
+    ismuted: boolean; // If the user muted this conversation.
+    isfavourite: boolean; // If the user marked this conversation as a favourite.
+    isread: boolean; // If the user has read all messages in the conversation.
+    unreadcount?: number; // The number of unread messages in this conversation.
+    members: {
+        id: number; // The user id.
+        fullname: string; // The user's name.
+        profileurl: string; // The link to the user's profile page.
+        profileimageurl: string; // User picture URL.
+        profileimageurlsmall: string; // Small user picture URL.
+        isonline: boolean; // The user's online status.
+        showonlinestatus: boolean; // Show the user's online status?.
+        isblocked: boolean; // If the user has been blocked.
+        iscontact: boolean; // Is the user a contact?.
+        isdeleted: boolean; // Is the user deleted?.
+        canmessage: boolean; // If the user can be messaged.
+        requirescontact: boolean; // If the user requires to be contacts.
+        contactrequests?: { // The contact requests.
+            id: number; // The id of the contact request.
+            userid: number; // The id of the user who created the contact request.
+            requesteduserid: number; // The id of the user confirming the request.
+            timecreated: number; // The timecreated timestamp for the contact request.
+        }[];
+        conversations?: { // Conversations between users.
+            id: number; // Conversations id.
+            type: number; // Conversation type: private or public.
+            name: string; // Multilang compatible conversation name2.
+            timecreated: number; // The timecreated timestamp for the conversation.
+        }[];
+    }[];
+    messages: {
+        id: number; // The id of the message.
+        useridfrom: number; // The id of the user who sent the message.
+        text: string; // The text of the message.
+        timecreated: number; // The timecreated timestamp for the message.
+    }[];
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
+};
+
+/**
  * Params of core_message_get_unread_conversation_counts WS.
  */
 export type CoreMessageGetUnreadConversationCountsWSParams = {
@@ -3228,6 +3627,7 @@ export type CoreMessageGetUnreadConversationCountsWSResponse = {
     types: {
         1: number; // Total number of unread individual conversations.
         2: number; // Total number of unread group conversations.
+        3: number; // Total number of unread self conversations.
     };
 };
 
@@ -3539,6 +3939,19 @@ export type CoreMessageMessageSearchUsersWSResponse = {
 };
 
 /**
+ * Params of core_message_mute_conversations WS.
+ */
+export type CoreMessageMuteConversationsWSParams = {
+    userid: number; // The id of the user who is blocking.
+    conversationids: number[];
+};
+
+/**
+ * Data returned by core_message_mute_conversations WS.
+ */
+export type CoreMessageMuteConversationsWSResponse = CoreWSExternalWarning[];
+
+/**
  * Params of core_message_search_contacts WS.
  */
 export type CoreMessageSearchContactsWSParams = {
@@ -3579,6 +3992,7 @@ export type CoreMessageSendInstantMessagesWSResponse = {
     timecreated?: number; // The timecreated timestamp for the message.
     conversationid?: number; // The conversation id for this message.
     useridfrom?: number; // The user id who sent the message.
+    candeletemessagesforallusers?: boolean; // If the user can delete messages in the conversation for all users.
 }[];
 
 /**
@@ -3642,6 +4056,19 @@ export type CoreMessageUnblockUserWSParams = {
  * Data returned by core_message_unblock_user WS.
  */
 export type CoreMessageUnblockUserWSResponse = CoreWSExternalWarning[];
+
+/**
+ * Params of core_message_unmute_conversations WS.
+ */
+export type CoreMessageUnmuteConversationsWSParams = {
+    userid: number; // The id of the user who is unblocking.
+    conversationids: number[];
+};
+
+/**
+ * Data returned by core_message_unmute_conversations WS.
+ */
+export type CoreMessageUnmuteConversationsWSResponse = CoreWSExternalWarning[];
 
 /**
  * Params of core_message_unset_favourite_conversations WS.
@@ -3736,6 +4163,8 @@ export type CoreNotesGetCourseNotesWSResponse = {
         usermodified: number; // User id of the creator of this note.
         publishstate: string; // State of the note (i.e. draft, public, site).
     }[];
+    canmanagesystemnotes?: boolean; // Whether the user can manage notes at system level.
+    canmanagecoursenotes?: boolean; // Whether the user can manage notes at the given course.
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -3830,6 +4259,155 @@ export type CoreRatingGetItemRatingsWSResponse = {
     }[];
     warnings?: CoreWSExternalWarning[];
 };
+
+/**
+ * Params of core_tag_get_tag_areas WS.
+ */
+export type CoreTagGetTagAreasWSParams = {
+};
+
+/**
+ * Data returned by core_tag_get_tag_areas WS.
+ */
+export type CoreTagGetTagAreasWSResponse = {
+    areas: {
+        id: number; // Area id.
+        component: string; // Component the area is related to.
+        itemtype: string; // Type of item in the component.
+        enabled: boolean; // Whether this area is enabled.
+        tagcollid: number; // The tag collection this are belongs to.
+        callback: string; // Component callback for processing tags.
+        callbackfile: string; // Component callback file.
+        showstandard: number; // Return whether to display only standard, only non-standard or both tags.
+        multiplecontexts: boolean; // Whether the tag area allows tag instances to be created in multiple contexts.
+        locked?: boolean; // Whether the area is locked.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_tag_get_tag_cloud WS.
+ */
+export type CoreTagGetTagCloudWSParams = {
+    tagcollid?: number; // Tag collection id.
+    isstandard?: boolean; // Whether to return only standard tags.
+    limit?: number; // Maximum number of tags to retrieve.
+    sort?: string; // Sort order for display
+                 // (id, name, rawname, count, flag, isstandard, tagcollid).
+
+    search?: string; // Search string.
+    fromctx?: number; // Context id where this tag cloud is displayed.
+    ctx?: number; // Only retrieve tag instances in this context.
+    rec?: number; // Retrieve tag instances in the $ctx context and it's children.
+};
+
+/**
+ * Data returned by core_tag_get_tag_cloud WS.
+ */
+export type CoreTagGetTagCloudWSResponse = {
+    tags: {
+        name: string; // Tag name.
+        viewurl: string; // URL to view the tag index.
+        flag?: boolean; // Whether the tag is flagged as inappropriate.
+        isstandard?: boolean; // Whether is a standard tag or not.
+        count?: number; // Number of tag instances.
+        size?: number; // Proportional size to display the tag.
+    }[];
+    tagscount: number; // Number of tags returned.
+    totalcount: number; // Total count of tags.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_tag_get_tag_collections WS.
+ */
+export type CoreTagGetTagCollectionsWSParams = {
+};
+
+/**
+ * Data returned by core_tag_get_tag_collections WS.
+ */
+export type CoreTagGetTagCollectionsWSResponse = {
+    collections: {
+        id: number; // Collection id.
+        name: string; // Collection name.
+        isdefault: boolean; // Whether is the default collection.
+        component: string; // Component the collection is related to.
+        sortorder: number; // Collection ordering in the list.
+        searchable: boolean; // Whether the tag collection is searchable.
+        customurl: string; // Custom URL for the tag page instead of /tag/index.php.
+    }[];
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of core_tag_get_tagindex WS.
+ */
+export type CoreTagGetTagindexWSParams = {
+    tagindex: {
+        tag: string; // Tag name.
+        tc: number; // Tag collection id.
+        ta: number; // Tag area id.
+        excl?: boolean; // Exlusive mode for this tag area.
+        from?: number; // Context id where the link was displayed.
+        ctx?: number; // Context id where to search for items.
+        rec?: number; // Search in the context recursive.
+        page?: number; // Page number (0-based).
+    }; // Parameters.
+};
+
+/**
+ * Data returned by core_tag_get_tagindex WS.
+ */
+export type CoreTagGetTagindexWSResponse = {
+    tagid: number; // Tag id.
+    ta: number; // Tag area id.
+    component: string; // Component.
+    itemtype: string; // Itemtype.
+    nextpageurl?: string; // URL for the next page.
+    prevpageurl?: string; // URL for the next page.
+    exclusiveurl?: string; // URL for exclusive link.
+    exclusivetext?: string; // Text for exclusive link.
+    title: string; // Title.
+    content: string; // Title.
+    hascontent: number; // Whether the content is present.
+    anchor?: string; // Name of anchor.
+};
+
+/**
+ * Params of core_tag_get_tagindex_per_area WS.
+ */
+export type CoreTagGetTagindexPerAreaWSParams = {
+    tagindex: {
+        id?: number; // Tag id.
+        tag?: string; // Tag name.
+        tc?: number; // Tag collection id.
+        ta?: number; // Tag area id.
+        excl?: boolean; // Exlusive mode for this tag area.
+        from?: number; // Context id where the link was displayed.
+        ctx?: number; // Context id where to search for items.
+        rec?: number; // Search in the context recursive.
+        page?: number; // Page number (0-based).
+    }; // Parameters.
+};
+
+/**
+ * Data returned by core_tag_get_tagindex_per_area WS.
+ */
+export type CoreTagGetTagindexPerAreaWSResponse = {
+    tagid: number; // Tag id.
+    ta: number; // Tag area id.
+    component: string; // Component.
+    itemtype: string; // Itemtype.
+    nextpageurl?: string; // URL for the next page.
+    prevpageurl?: string; // URL for the next page.
+    exclusiveurl?: string; // URL for exclusive link.
+    exclusivetext?: string; // Text for exclusive link.
+    title: string; // Title.
+    content: string; // Title.
+    hascontent: number; // Whether the content is present.
+    anchor?: string; // Name of anchor.
+}[];
 
 /**
  * Params of core_user_add_user_device WS.
@@ -4205,6 +4783,7 @@ export type CoreWebserviceGetSiteInfoWSResponse = {
     siteid?: number; // Site course ID.
     sitecalendartype?: string; // Calendar type set in the site.
     usercalendartype?: string; // Calendar typed used by the user.
+    theme?: string; // Current theme for the user.
 };
 
 /**
@@ -4566,6 +5145,9 @@ export type MessagePopupGetPopupNotificationsWSResponse = {
         iconurl: string; // URL for notification icon.
         component?: string; // The component that generated the notification.
         eventtype?: string; // The type of notification.
+        customdata?: string; // Custom data to be passed to the message processor.
+                             // The data here is serialised using json_encode().
+
     }[];
     unreadcount: number; // The number of unread message for the given user.
 };
@@ -4624,6 +5206,7 @@ export type ModAssignGetAssignmentsWSResponse = {
             requireallteammemberssubmit: number; // If enabled, all team members must submit.
             teamsubmissiongroupingid: number; // The grouping id for the team submission groups.
             blindmarking: number; // If enabled, hide identities until reveal identities actioned.
+            hidegrader: number; // If enabled, hide grader to student.
             revealidentities: number; // Show identities for a blind marking assignment.
             attemptreopenmethod: string; // Method used to control opening new attempts.
             maxattempts: number; // Maximum number of attempts allowed.
@@ -4671,7 +5254,7 @@ export type ModAssignGetGradesWSResponse = {
             attemptnumber: number; // Attempt number.
             timecreated: number; // Grade creation time.
             timemodified: number; // Grade last modified time.
-            grader: number; // Grader.
+            grader: number; // Grader, -1 if grader is hidden.
             grade: string; // Grade.
             gradefordisplay?: string; // Grade rendered into a format suitable for display.
         }[];
@@ -4852,7 +5435,7 @@ export type ModAssignGetSubmissionStatusWSResponse = {
             attemptnumber: number; // Attempt number.
             timecreated: number; // Grade creation time.
             timemodified: number; // Grade last modified time.
-            grader: number; // Grader.
+            grader: number; // Grader, -1 if grader is hidden.
             grade: string; // Grade.
             gradefordisplay?: string; // Grade rendered into a format suitable for display.
         }; // Grade information.
@@ -4908,7 +5491,7 @@ export type ModAssignGetSubmissionStatusWSResponse = {
             attemptnumber: number; // Attempt number.
             timecreated: number; // Grade creation time.
             timemodified: number; // Grade last modified time.
-            grader: number; // Grader.
+            grader: number; // Grader, -1 if grader is hidden.
             grade: string; // Grade.
             gradefordisplay?: string; // Grade rendered into a format suitable for display.
         }; // Grade information.
@@ -5034,6 +5617,7 @@ export type ModAssignListParticipantsWSParams = {
     limit?: number; // Maximum number of records to return.
     onlyids?: boolean; // Do not return all user fields.
     includeenrolments?: boolean; // Do return courses where the user is enrolled.
+    tablesort?: boolean; // Apply current user table sorting preferences.
 };
 
 /**
@@ -5078,6 +5662,7 @@ export type ModAssignListParticipantsWSResponse = {
         name: string; // The name of the preferences.
         value: string; // The value of the preference.
     }[];
+    recordid: number; // Record id.
     groups?: { // User groups.
         id: number; // Group id.
         name: string; // Group name.
@@ -5956,6 +6541,18 @@ export type ModDataGetEntriesWSResponse = {
                 repositorytype?: string; // The repository type for the external files.
             }[];
         }[];
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     totalcount: number; // Total count of records.
     totalfilesize: number; // Total size (bytes) of the files included in the records.
@@ -6004,6 +6601,18 @@ export type ModDataGetEntryWSResponse = {
                 isexternalfile?: boolean; // Whether is an external file.
                 repositorytype?: string; // The repository type for the external files.
             }[];
+        }[];
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
         }[];
     };
     entryviewcontents?: string; // The entry as is rendered in the site.
@@ -6135,6 +6744,18 @@ export type ModDataSearchEntriesWSResponse = {
                 repositorytype?: string; // The repository type for the external files.
             }[];
         }[];
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     totalcount: number; // Total count of records returned by the search.
     maxcount?: number; // Total count of records that the user could see in the database
@@ -6222,6 +6843,7 @@ export type ModFeedbackGetAnalysisWSResponse = {
                 filepath: string; // Filepath.
                 filename: string; // Filename.
                 isdir: boolean; // Isdir.
+                isimage: boolean; // Isimage.
                 timemodified: number; // Timemodified.
                 timecreated: number; // Timecreated.
                 filesize: number; // Filesize.
@@ -6403,6 +7025,7 @@ export type ModFeedbackGetItemsWSResponse = {
             filepath: string; // Filepath.
             filename: string; // Filename.
             isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
             timemodified: number; // Timemodified.
             timecreated: number; // Timecreated.
             filesize: number; // Filesize.
@@ -6506,6 +7129,7 @@ export type ModFeedbackGetPageItemsWSResponse = {
             filepath: string; // Filepath.
             filename: string; // Filename.
             isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
             timemodified: number; // Timemodified.
             timecreated: number; // Timecreated.
             filesize: number; // Filesize.
@@ -6735,17 +7359,20 @@ export type ModForumAddDiscussionPostWSParams = {
                                              // (can be the initial discussion post.
 
     subject: string; // New post subject.
-    message: string; // New post message (only html format allowed).
+    message: string; // New post message (html assumed if messageformat is not provided).
     options?: { // Options.
         name: string; // The allowed keys (value format) are:
                                      // discussionsubscribe (bool); subscribe to the discussion?, default to true
+                                     // private (bool); make this reply private to the author of the parent post, default to false.
                                      // inlineattachmentsid              (int); the draft file area id for inline attachments
-                                     // attachmentsid       (int); the draft file area id for attachments.
+                                     // attachmentsid       (int); the draft file area id for attachments
+                                     // topreferredformat (bool); convert the message & messageformat to FORMAT_HTML, defaults to false.
 
         value: string; // The value of the option,
                                                          // this param is validated in the external function.
 
     }[];
+    messageformat?: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
 };
 
 /**
@@ -6754,6 +7381,107 @@ export type ModForumAddDiscussionPostWSParams = {
 export type ModForumAddDiscussionPostWSResponse = {
     postid: number; // New post id.
     warnings?: CoreWSExternalWarning[];
+    post: {
+        id: number; // Id.
+        subject: string; // Subject.
+        replysubject: string; // Replysubject.
+        message: string; // Message.
+        messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        author: {
+            id?: number; // Id.
+            fullname?: string; // Fullname.
+            groups?: { // Groups.
+                id: number; // Id.
+                name: string; // Name.
+                urls: {
+                    image?: string; // Image.
+                };
+            }[];
+            urls: {
+                profile?: string; // The URL for the use profile page.
+                profileimage?: string; // The URL for the use profile image.
+            };
+        };
+        discussionid: number; // Discussionid.
+        hasparent: boolean; // Hasparent.
+        parentid?: number; // Parentid.
+        timecreated: number; // Timecreated.
+        unread?: boolean; // Unread.
+        isdeleted: boolean; // Isdeleted.
+        isprivatereply: boolean; // Isprivatereply.
+        haswordcount: boolean; // Haswordcount.
+        wordcount?: number; // Wordcount.
+        capabilities: {
+            view: boolean; // Whether the user can view the post.
+            edit: boolean; // Whether the user can edit the post.
+            delete: boolean; // Whether the user can delete the post.
+            split: boolean; // Whether the user can split the post.
+            reply: boolean; // Whether the user can reply to the post.
+            selfenrol: boolean; // Whether the user can self enrol into the course.
+            export: boolean; // Whether the user can export the post.
+            controlreadstatus: boolean; // Whether the user can control the read status of the post.
+            canreplyprivately: boolean; // Whether the user can post a private reply.
+        };
+        urls?: {
+            view?: string; // The URL used to view the post.
+            viewisolated?: string; // The URL used to view the post in isolation.
+            viewparent?: string; // The URL used to view the parent of the post.
+            edit?: string; // The URL used to edit the post.
+            delete?: string; // The URL used to delete the post.
+            split?: string; // The URL used to split the discussion with the selected post being the first post in the new discussion.
+            reply?: string; // The URL used to reply to the post.
+            export?: string; // The URL used to export the post.
+            markasread?: string; // The URL used to mark the post as read.
+            markasunread?: string; // The URL used to mark the post as unread.
+            discuss?: string; // Discuss.
+        };
+        attachments: { // Attachments.
+            contextid: number; // Contextid.
+            component: string; // Component.
+            filearea: string; // Filearea.
+            itemid: number; // Itemid.
+            filepath: string; // Filepath.
+            filename: string; // Filename.
+            isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
+            timemodified: number; // Timemodified.
+            timecreated: number; // Timecreated.
+            filesize: number; // Filesize.
+            author: string; // Author.
+            license: string; // License.
+            filenameshort: string; // Filenameshort.
+            filesizeformatted: string; // Filesizeformatted.
+            icon: string; // Icon.
+            timecreatedformatted: string; // Timecreatedformatted.
+            timemodifiedformatted: string; // Timemodifiedformatted.
+            url: string; // Url.
+            urls: {
+                export?: string; // The URL used to export the attachment.
+            };
+            html: {
+                plagiarism?: string; // The HTML source for the Plagiarism Response.
+            };
+        }[];
+        tags?: { // Tags.
+            id: number; // The ID of the Tag.
+            tagid: number; // The tagid.
+            isstandard: boolean; // Whether this is a standard tag.
+            displayname: string; // The display name of the tag.
+            flag: boolean; // Wehther this tag is flagged.
+            urls: {
+                view: string; // The URL to view the tag.
+            };
+        }[];
+        html?: {
+            rating?: string; // The HTML source to rate the post.
+            taglist?: string; // The HTML source to view the list of tags.
+            authorsubheading?: string; // The HTML source to view the author details.
+        };
+    };
+    messages?: { // List of warnings.
+        type: string; // The classification to be used in the client side.
+        message: string; // Untranslated english message to explain the warning.
+    }[];
 };
 
 /**
@@ -6774,6 +7502,196 @@ export type ModForumCanAddDiscussionWSResponse = {
     canpindiscussions?: boolean; // True if the user can pin discussions, false otherwise.
     cancreateattachment?: boolean; // True if the user can add attachments, false otherwise.
     warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_forum_get_discussion_posts WS.
+ */
+export type ModForumGetDiscussionPostsWSParams = {
+    discussionid: number; // The ID of the discussion from which to fetch posts.
+    sortby?: string; // Sort by this element: id, created or modified.
+    sortdirection?: string; // Sort direction: ASC or DESC.
+};
+
+/**
+ * Data returned by mod_forum_get_discussion_posts WS.
+ */
+export type ModForumGetDiscussionPostsWSResponse = {
+    posts: {
+        id: number; // Id.
+        subject: string; // Subject.
+        replysubject: string; // Replysubject.
+        message: string; // Message.
+        messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        author: {
+            id?: number; // Id.
+            fullname?: string; // Fullname.
+            groups?: { // Groups.
+                id: number; // Id.
+                name: string; // Name.
+                urls: {
+                    image?: string; // Image.
+                };
+            }[];
+            urls: {
+                profile?: string; // The URL for the use profile page.
+                profileimage?: string; // The URL for the use profile image.
+            };
+        };
+        discussionid: number; // Discussionid.
+        hasparent: boolean; // Hasparent.
+        parentid?: number; // Parentid.
+        timecreated: number; // Timecreated.
+        unread?: boolean; // Unread.
+        isdeleted: boolean; // Isdeleted.
+        isprivatereply: boolean; // Isprivatereply.
+        haswordcount: boolean; // Haswordcount.
+        wordcount?: number; // Wordcount.
+        capabilities: {
+            view: boolean; // Whether the user can view the post.
+            edit: boolean; // Whether the user can edit the post.
+            delete: boolean; // Whether the user can delete the post.
+            split: boolean; // Whether the user can split the post.
+            reply: boolean; // Whether the user can reply to the post.
+            selfenrol: boolean; // Whether the user can self enrol into the course.
+            export: boolean; // Whether the user can export the post.
+            controlreadstatus: boolean; // Whether the user can control the read status of the post.
+            canreplyprivately: boolean; // Whether the user can post a private reply.
+        };
+        urls?: {
+            view?: string; // The URL used to view the post.
+            viewisolated?: string; // The URL used to view the post in isolation.
+            viewparent?: string; // The URL used to view the parent of the post.
+            edit?: string; // The URL used to edit the post.
+            delete?: string; // The URL used to delete the post.
+            split?: string; // The URL used to split the discussion with the selected post being the first post in the new discussion.
+            reply?: string; // The URL used to reply to the post.
+            export?: string; // The URL used to export the post.
+            markasread?: string; // The URL used to mark the post as read.
+            markasunread?: string; // The URL used to mark the post as unread.
+            discuss?: string; // Discuss.
+        };
+        attachments: { // Attachments.
+            contextid: number; // Contextid.
+            component: string; // Component.
+            filearea: string; // Filearea.
+            itemid: number; // Itemid.
+            filepath: string; // Filepath.
+            filename: string; // Filename.
+            isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
+            timemodified: number; // Timemodified.
+            timecreated: number; // Timecreated.
+            filesize: number; // Filesize.
+            author: string; // Author.
+            license: string; // License.
+            filenameshort: string; // Filenameshort.
+            filesizeformatted: string; // Filesizeformatted.
+            icon: string; // Icon.
+            timecreatedformatted: string; // Timecreatedformatted.
+            timemodifiedformatted: string; // Timemodifiedformatted.
+            url: string; // Url.
+            urls: {
+                export?: string; // The URL used to export the attachment.
+            };
+            html: {
+                plagiarism?: string; // The HTML source for the Plagiarism Response.
+            };
+        }[];
+        tags?: { // Tags.
+            id: number; // The ID of the Tag.
+            tagid: number; // The tagid.
+            isstandard: boolean; // Whether this is a standard tag.
+            displayname: string; // The display name of the tag.
+            flag: boolean; // Wehther this tag is flagged.
+            urls: {
+                view: string; // The URL to view the tag.
+            };
+        }[];
+        html?: {
+            rating?: string; // The HTML source to rate the post.
+            taglist?: string; // The HTML source to view the list of tags.
+            authorsubheading?: string; // The HTML source to view the author details.
+        };
+    }[];
+    ratinginfo?: {
+        contextid: number; // Context id.
+        component: string; // Context name.
+        ratingarea: string; // Rating area name.
+        canviewall?: boolean; // Whether the user can view all the individual ratings.
+        canviewany?: boolean; // Whether the user can view aggregate of ratings of others.
+        scales?: { // Different scales used information.
+            id: number; // Scale id.
+            courseid?: number; // Course id.
+            name?: string; // Scale name (when a real scale is used).
+            max: number; // Max value for the scale.
+            isnumeric: boolean; // Whether is a numeric scale.
+            items?: { // Scale items. Only returned for not numerical scales.
+                value: number; // Scale value/option id.
+                name: string; // Scale name.
+            }[];
+        }[];
+        ratings?: { // The ratings.
+            itemid: number; // Item id.
+            scaleid?: number; // Scale id.
+            userid?: number; // User who rated id.
+            aggregate?: number; // Aggregated ratings grade.
+            aggregatestr?: string; // Aggregated ratings as string.
+            aggregatelabel?: string; // The aggregation label.
+            count?: number; // Ratings count (used when aggregating).
+            rating?: number; // The rating the user gave.
+            canrate?: boolean; // Whether the user can rate the item.
+            canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
+        }[];
+    }; // Rating information.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_forum_get_forum_access_information WS.
+ */
+export type ModForumGetForumAccessInformationWSParams = {
+    forumid: number; // Forum instance id.
+};
+
+/**
+ * Data returned by mod_forum_get_forum_access_information WS.
+ */
+export type ModForumGetForumAccessInformationWSResponse = {
+    warnings?: CoreWSExternalWarning[];
+    canaddinstance?: boolean; // Whether the user has the capability mod/forum:addinstance allowed.
+    canviewdiscussion?: boolean; // Whether the user has the capability mod/forum:viewdiscussion allowed.
+    canviewhiddentimedposts?: boolean; // Whether the user has the capability mod/forum:viewhiddentimedposts allowed.
+    canstartdiscussion?: boolean; // Whether the user has the capability mod/forum:startdiscussion allowed.
+    canreplypost?: boolean; // Whether the user has the capability mod/forum:replypost allowed.
+    canaddnews?: boolean; // Whether the user has the capability mod/forum:addnews allowed.
+    canreplynews?: boolean; // Whether the user has the capability mod/forum:replynews allowed.
+    canviewrating?: boolean; // Whether the user has the capability mod/forum:viewrating allowed.
+    canviewanyrating?: boolean; // Whether the user has the capability mod/forum:viewanyrating allowed.
+    canviewallratings?: boolean; // Whether the user has the capability mod/forum:viewallratings allowed.
+    canrate?: boolean; // Whether the user has the capability mod/forum:rate allowed.
+    canpostprivatereply?: boolean; // Whether the user has the capability mod/forum:postprivatereply allowed.
+    canreadprivatereplies?: boolean; // Whether the user has the capability mod/forum:readprivatereplies allowed.
+    cancreateattachment?: boolean; // Whether the user has the capability mod/forum:createattachment allowed.
+    candeleteownpost?: boolean; // Whether the user has the capability mod/forum:deleteownpost allowed.
+    candeleteanypost?: boolean; // Whether the user has the capability mod/forum:deleteanypost allowed.
+    cansplitdiscussions?: boolean; // Whether the user has the capability mod/forum:splitdiscussions allowed.
+    canmovediscussions?: boolean; // Whether the user has the capability mod/forum:movediscussions allowed.
+    canpindiscussions?: boolean; // Whether the user has the capability mod/forum:pindiscussions allowed.
+    caneditanypost?: boolean; // Whether the user has the capability mod/forum:editanypost allowed.
+    canviewqandawithoutposting?: boolean; // Whether the user has the capability mod/forum:viewqandawithoutposting allowed.
+    canviewsubscribers?: boolean; // Whether the user has the capability mod/forum:viewsubscribers allowed.
+    canmanagesubscriptions?: boolean; // Whether the user has the capability mod/forum:managesubscriptions allowed.
+    canpostwithoutthrottling?: boolean; // Whether the user has the capability mod/forum:postwithoutthrottling allowed.
+    canexportdiscussion?: boolean; // Whether the user has the capability mod/forum:exportdiscussion allowed.
+    canexportpost?: boolean; // Whether the user has the capability mod/forum:exportpost allowed.
+    canexportownpost?: boolean; // Whether the user has the capability mod/forum:exportownpost allowed.
+    canaddquestion?: boolean; // Whether the user has the capability mod/forum:addquestion allowed.
+    canallowforcesubscribe?: boolean; // Whether the user has the capability mod/forum:allowforcesubscribe allowed.
+    cancanposttomygroups?: boolean; // Whether the user has the capability mod/forum:canposttomygroups allowed.
+    cancanoverridediscussionlock?: boolean; // Whether the user has the capability mod/forum:canoverridediscussionlock allowed.
+    cancanoverridecutoff?: boolean; // Whether the user has the capability mod/forum:canoverridecutoff allowed.
+    cancantogglefavourite?: boolean; // Whether the user has the capability mod/forum:cantogglefavourite allowed.
 };
 
 /**
@@ -6812,6 +7730,19 @@ export type ModForumGetForumDiscussionPostsWSResponse = {
         userfullname: string; // Post author full name.
         userpictureurl?: string; // Post author picture.
         deleted: boolean; // This post has been removed.
+        isprivatereply: boolean; // The post is a private reply.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -6843,6 +7774,60 @@ export type ModForumGetForumDiscussionPostsWSResponse = {
             canviewaggregate?: boolean; // Whether the user can view the aggregated grade.
         }[];
     }; // Rating information.
+    warnings?: CoreWSExternalWarning[];
+};
+
+/**
+ * Params of mod_forum_get_forum_discussions WS.
+ */
+export type ModForumGetForumDiscussionsWSParams = {
+    forumid: number; // Forum instance id.
+    sortorder?: number; // Sort by this element: numreplies, , created or timemodified.
+    page?: number; // Current page.
+    perpage?: number; // Items per page.
+    groupid?: number; // Group id.
+};
+
+/**
+ * Data returned by mod_forum_get_forum_discussions WS.
+ */
+export type ModForumGetForumDiscussionsWSResponse = {
+    discussions: {
+        id: number; // Post id.
+        name: string; // Discussion name.
+        groupid: number; // Group id.
+        timemodified: number; // Time modified.
+        usermodified: number; // The id of the user who last modified.
+        timestart: number; // Time discussion can start.
+        timeend: number; // Time discussion ends.
+        discussion: number; // Discussion id.
+        parent: number; // Parent id.
+        userid: number; // User who started the discussion id.
+        created: number; // Creation time.
+        modified: number; // Time modified.
+        mailed: number; // Mailed?.
+        subject: string; // The post subject.
+        message: string; // The post message.
+        messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        messagetrust: number; // Can we trust?.
+        messageinlinefiles?: CoreWSExternalFile[];
+        attachment: string; // Has attachments?.
+        attachments?: CoreWSExternalFile[];
+        totalscore: number; // The post message total score.
+        mailnow: number; // Mail now?.
+        userfullname: string; // Post author full name.
+        usermodifiedfullname: string; // Post modifier full name.
+        userpictureurl: string; // Post author picture.
+        usermodifiedpictureurl: string; // Post modifier picture.
+        numreplies: number; // The number of replies in the discussion.
+        numunread: number; // The number of unread discussions.
+        pinned: boolean; // Is the discussion pinned.
+        locked: boolean; // Is the discussion locked.
+        starred: boolean; // Is the discussion starred.
+        canreply: boolean; // Can the user reply to the discussion.
+        canlock: boolean; // Can the user lock the discussion.
+        canfavourite: boolean; // Can the user star the discussion.
+    }[];
     warnings?: CoreWSExternalWarning[];
 };
 
@@ -6888,11 +7873,12 @@ export type ModForumGetForumDiscussionsPaginatedWSResponse = {
         usermodifiedfullname: string; // Post modifier full name.
         userpictureurl: string; // Post author picture.
         usermodifiedpictureurl: string; // Post modifier picture.
-        numreplies: string; // The number of replies in the discussion.
+        numreplies: number; // The number of replies in the discussion.
         numunread: number; // The number of unread discussions.
         pinned: boolean; // Is the discussion pinned.
         locked: boolean; // Is the discussion locked.
         canreply: boolean; // Can the user reply to the discussion.
+        canlock: boolean; // Can the user lock the discussion.
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -6915,6 +7901,8 @@ export type ModForumGetForumsByCoursesWSResponse = {
     intro: string; // The forum intro.
     introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     introfiles?: CoreWSExternalFile[];
+    duedate?: number; // Duedate for the user.
+    cutoffdate?: number; // Cutoffdate for the user.
     assessed: number; // Aggregate type.
     assesstimestart: number; // Assess start time.
     assesstimefinish: number; // Assess finish time.
@@ -6939,6 +7927,201 @@ export type ModForumGetForumsByCoursesWSResponse = {
     istracked?: boolean; // If the user is tracking the forum.
     unreadpostscount?: number; // The number of unread posts for tracked forums.
 }[];
+
+/**
+ * Params of mod_forum_set_lock_state WS.
+ */
+export type ModForumSetLockStateWSParams = {
+    forumid: number; // Forum that the discussion is in.
+    discussionid: number; // The discussion to lock / unlock.
+    targetstate: number; // The timestamp for the lock state.
+};
+
+/**
+ * Data returned by mod_forum_set_lock_state WS.
+ */
+export type ModForumSetLockStateWSResponse = {
+    id: number; // The discussion we are locking.
+    locked: boolean; // The locked state of the discussion.
+    times: {
+        locked: number; // The locked time of the discussion.
+    };
+};
+
+/**
+ * Params of mod_forum_set_pin_state WS.
+ */
+export type ModForumSetPinStateWSParams = {
+    discussionid: number; // The discussion to pin or unpin.
+    targetstate: number; // The target state.
+};
+
+/**
+ * Data returned by mod_forum_set_pin_state WS.
+ */
+export type ModForumSetPinStateWSResponse = {
+    id: number; // Id.
+    forumid: number; // Forumid.
+    pinned: boolean; // Pinned.
+    locked: boolean; // Locked.
+    istimelocked: boolean; // Istimelocked.
+    name: string; // Name.
+    firstpostid: number; // Firstpostid.
+    group?: {
+        name: string; // Name.
+        urls: {
+            picture?: string; // Picture.
+            userlist?: string; // Userlist.
+        };
+    };
+    times: {
+        modified: number; // Modified.
+        start: number; // Start.
+        end: number; // End.
+        locked: number; // Locked.
+    };
+    userstate: {
+        subscribed: boolean; // Subscribed.
+        favourited: boolean; // Favourited.
+    };
+    capabilities: {
+        subscribe: boolean; // Subscribe.
+        move: boolean; // Move.
+        pin: boolean; // Pin.
+        post: boolean; // Post.
+        manage: boolean; // Manage.
+        favourite: boolean; // Favourite.
+    };
+    urls: {
+        view: string; // View.
+        viewlatest?: string; // Viewlatest.
+        viewfirstunread?: string; // Viewfirstunread.
+        markasread: string; // Markasread.
+        subscribe: string; // Subscribe.
+        pin?: string; // Pin.
+    };
+    timed: {
+        istimed?: boolean; // Istimed.
+        visible?: boolean; // Visible.
+    };
+};
+
+/**
+ * Params of mod_forum_set_subscription_state WS.
+ */
+export type ModForumSetSubscriptionStateWSParams = {
+    forumid: number; // Forum that the discussion is in.
+    discussionid: number; // The discussion to subscribe or unsubscribe.
+    targetstate: boolean; // The target state.
+};
+
+/**
+ * Data returned by mod_forum_set_subscription_state WS.
+ */
+export type ModForumSetSubscriptionStateWSResponse = {
+    id: number; // Id.
+    forumid: number; // Forumid.
+    pinned: boolean; // Pinned.
+    locked: boolean; // Locked.
+    istimelocked: boolean; // Istimelocked.
+    name: string; // Name.
+    firstpostid: number; // Firstpostid.
+    group?: {
+        name: string; // Name.
+        urls: {
+            picture?: string; // Picture.
+            userlist?: string; // Userlist.
+        };
+    };
+    times: {
+        modified: number; // Modified.
+        start: number; // Start.
+        end: number; // End.
+        locked: number; // Locked.
+    };
+    userstate: {
+        subscribed: boolean; // Subscribed.
+        favourited: boolean; // Favourited.
+    };
+    capabilities: {
+        subscribe: boolean; // Subscribe.
+        move: boolean; // Move.
+        pin: boolean; // Pin.
+        post: boolean; // Post.
+        manage: boolean; // Manage.
+        favourite: boolean; // Favourite.
+    };
+    urls: {
+        view: string; // View.
+        viewlatest?: string; // Viewlatest.
+        viewfirstunread?: string; // Viewfirstunread.
+        markasread: string; // Markasread.
+        subscribe: string; // Subscribe.
+        pin?: string; // Pin.
+    };
+    timed: {
+        istimed?: boolean; // Istimed.
+        visible?: boolean; // Visible.
+    };
+};
+
+/**
+ * Params of mod_forum_toggle_favourite_state WS.
+ */
+export type ModForumToggleFavouriteStateWSParams = {
+    discussionid: number; // The discussion to subscribe or unsubscribe.
+    targetstate: boolean; // The target state.
+};
+
+/**
+ * Data returned by mod_forum_toggle_favourite_state WS.
+ */
+export type ModForumToggleFavouriteStateWSResponse = {
+    id: number; // Id.
+    forumid: number; // Forumid.
+    pinned: boolean; // Pinned.
+    locked: boolean; // Locked.
+    istimelocked: boolean; // Istimelocked.
+    name: string; // Name.
+    firstpostid: number; // Firstpostid.
+    group?: {
+        name: string; // Name.
+        urls: {
+            picture?: string; // Picture.
+            userlist?: string; // Userlist.
+        };
+    };
+    times: {
+        modified: number; // Modified.
+        start: number; // Start.
+        end: number; // End.
+        locked: number; // Locked.
+    };
+    userstate: {
+        subscribed: boolean; // Subscribed.
+        favourited: boolean; // Favourited.
+    };
+    capabilities: {
+        subscribe: boolean; // Subscribe.
+        move: boolean; // Move.
+        pin: boolean; // Pin.
+        post: boolean; // Post.
+        manage: boolean; // Manage.
+        favourite: boolean; // Favourite.
+    };
+    urls: {
+        view: string; // View.
+        viewlatest?: string; // Viewlatest.
+        viewfirstunread?: string; // Viewfirstunread.
+        markasread: string; // Markasread.
+        subscribe: string; // Subscribe.
+        pin?: string; // Pin.
+    };
+    timed: {
+        istimed?: boolean; // Istimed.
+        visible?: boolean; // Visible.
+    };
+};
 
 /**
  * Params of mod_forum_view_forum WS.
@@ -7089,6 +8272,18 @@ export type ModGlossaryGetEntriesByAuthorWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7164,6 +8359,18 @@ export type ModGlossaryGetEntriesByAuthorIdWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7237,6 +8444,18 @@ export type ModGlossaryGetEntriesByCategoryWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
         categoryid?: number; // The category ID. This may be '-1' when the entry is not categorised.
         categoryname?: string; // The category name. May be empty when the entry is not categorised, or the request was limited to one category.
     }[];
@@ -7313,6 +8532,18 @@ export type ModGlossaryGetEntriesByDateWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7386,6 +8617,18 @@ export type ModGlossaryGetEntriesByLetterWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7462,6 +8705,18 @@ export type ModGlossaryGetEntriesBySearchWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7535,6 +8790,18 @@ export type ModGlossaryGetEntriesByTermWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7609,6 +8876,18 @@ export type ModGlossaryGetEntriesToApproveWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
@@ -7675,6 +8954,18 @@ export type ModGlossaryGetEntryByIdWSResponse = {
         casesensitive: boolean; // When true, the matching is case sensitive.
         fullmatch: boolean; // When true, the matching is done on full words only.
         approved: boolean; // Whether the entry was approved.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     };
     ratinginfo?: {
         contextid: number; // Context id.
@@ -9326,6 +10617,27 @@ export type ModResourceViewResourceWSResponse = {
 };
 
 /**
+ * Params of mod_scorm_get_scorm_access_information WS.
+ */
+export type ModScormGetScormAccessInformationWSParams = {
+    scormid: number; // Scorm instance id.
+};
+
+/**
+ * Data returned by mod_scorm_get_scorm_access_information WS.
+ */
+export type ModScormGetScormAccessInformationWSResponse = {
+    warnings?: CoreWSExternalWarning[];
+    canaddinstance?: boolean; // Whether the user has the capability mod/scorm:addinstance allowed.
+    canviewreport?: boolean; // Whether the user has the capability mod/scorm:viewreport allowed.
+    canskipview?: boolean; // Whether the user has the capability mod/scorm:skipview allowed.
+    cansavetrack?: boolean; // Whether the user has the capability mod/scorm:savetrack allowed.
+    canviewscores?: boolean; // Whether the user has the capability mod/scorm:viewscores allowed.
+    candeleteresponses?: boolean; // Whether the user has the capability mod/scorm:deleteresponses allowed.
+    candeleteownresponses?: boolean; // Whether the user has the capability mod/scorm:deleteownresponses allowed.
+};
+
+/**
  * Params of mod_scorm_get_scorm_attempt_count WS.
  */
 export type ModScormGetScormAttemptCountWSParams = {
@@ -9716,6 +11028,18 @@ export type ModWikiGetPageContentsWSResponse = {
         contentformat?: number; // Cachedcontent format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         caneditpage: boolean; // True if user can edit the page.
         version?: number; // Latest version of the page.
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }; // Page.
     warnings?: CoreWSExternalWarning[];
 };
@@ -9791,6 +11115,18 @@ export type ModWikiGetSubwikiPagesWSResponse = {
         cachedcontent?: string; // Page contents.
         contentformat?: number; // Cachedcontent format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         contentsize?: number; // Size of page contents in bytes (doesn't include size of attached files).
+        tags?: { // Tags.
+            id: number; // Tag id.
+            name: string; // Tag name.
+            rawname: string; // The raw, unnormalised name for the tag as entered by users.
+            isstandard: boolean; // Whether this tag is standard.
+            tagcollid: number; // Tag collection id.
+            taginstanceid: number; // Tag instance id.
+            taginstancecontextid: number; // Context the tag instance belongs to.
+            itemid: number; // Id of the record tagged.
+            ordering: number; // Tag ordering.
+            flag: number; // Whether the tag is flagged as inappropriate.
+        }[];
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -10711,6 +12047,7 @@ export type ReportInsightsSetNotusefulPredictionWSResponse = {
  */
 export type ToolLpDataForCourseCompetenciesPageWSParams = {
     courseid: number; // The course id.
+    moduleid?: number; // The module id.
 };
 
 /**
@@ -10831,7 +12168,98 @@ export type ToolLpDataForCourseCompetenciesPageWSResponse = {
             };
             pluginbaseurl: string; // Pluginbaseurl.
             pagecontextid: number; // Pagecontextid.
+            showlinks: boolean; // Showlinks.
         };
+        plans: {
+            name: string; // Name.
+            description: string; // Description.
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            userid: number; // Userid.
+            templateid: number; // Templateid.
+            origtemplateid: number; // Origtemplateid.
+            status: number; // Status.
+            duedate: number; // Duedate.
+            reviewerid: number; // Reviewerid.
+            id: number; // Id.
+            timecreated: number; // Timecreated.
+            timemodified: number; // Timemodified.
+            usermodified: number; // Usermodified.
+            statusname: string; // Statusname.
+            isbasedontemplate: boolean; // Isbasedontemplate.
+            canmanage: boolean; // Canmanage.
+            canrequestreview: boolean; // Canrequestreview.
+            canreview: boolean; // Canreview.
+            canbeedited: boolean; // Canbeedited.
+            isactive: boolean; // Isactive.
+            isdraft: boolean; // Isdraft.
+            iscompleted: boolean; // Iscompleted.
+            isinreview: boolean; // Isinreview.
+            iswaitingforreview: boolean; // Iswaitingforreview.
+            isreopenallowed: boolean; // Isreopenallowed.
+            iscompleteallowed: boolean; // Iscompleteallowed.
+            isunlinkallowed: boolean; // Isunlinkallowed.
+            isrequestreviewallowed: boolean; // Isrequestreviewallowed.
+            iscancelreviewrequestallowed: boolean; // Iscancelreviewrequestallowed.
+            isstartreviewallowed: boolean; // Isstartreviewallowed.
+            isstopreviewallowed: boolean; // Isstopreviewallowed.
+            isapproveallowed: boolean; // Isapproveallowed.
+            isunapproveallowed: boolean; // Isunapproveallowed.
+            duedateformatted: string; // Duedateformatted.
+            commentarea: {
+                component: string; // Component.
+                commentarea: string; // Commentarea.
+                itemid: number; // Itemid.
+                courseid: number; // Courseid.
+                contextid: number; // Contextid.
+                cid: string; // Cid.
+                autostart: boolean; // Autostart.
+                canpost: boolean; // Canpost.
+                canview: boolean; // Canview.
+                count: number; // Count.
+                collapsediconkey: string; // Collapsediconkey.
+                displaytotalcount: boolean; // Displaytotalcount.
+                displaycancel: boolean; // Displaycancel.
+                fullwidth: boolean; // Fullwidth.
+                linktext: string; // Linktext.
+                notoggle: boolean; // Notoggle.
+                template: string; // Template.
+                canpostorhascomments: boolean; // Canpostorhascomments.
+            };
+            reviewer?: {
+                id: number; // Id.
+                email: string; // Email.
+                idnumber: string; // Idnumber.
+                phone1: string; // Phone1.
+                phone2: string; // Phone2.
+                department: string; // Department.
+                institution: string; // Institution.
+                fullname: string; // Fullname.
+                identity: string; // Identity.
+                profileurl: string; // Profileurl.
+                profileimageurl: string; // Profileimageurl.
+                profileimageurlsmall: string; // Profileimageurlsmall.
+            };
+            template?: {
+                shortname: string; // Shortname.
+                description: string; // Description.
+                descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+                duedate: number; // Duedate.
+                visible: boolean; // Visible.
+                contextid: number; // Contextid.
+                id: number; // Id.
+                timecreated: number; // Timecreated.
+                timemodified: number; // Timemodified.
+                usermodified: number; // Usermodified.
+                duedateformatted: string; // Duedateformatted.
+                cohortscount: number; // Cohortscount.
+                planscount: number; // Planscount.
+                canmanage: boolean; // Canmanage.
+                canread: boolean; // Canread.
+                contextname: string; // Contextname.
+                contextnamenoprefix: string; // Contextnamenoprefix.
+            };
+            url: string; // Url.
+        }[];
     }[];
     manageurl: string; // Url to the manage competencies page.
     pluginbaseurl: string; // Url to the course competencies page.
@@ -10977,6 +12405,7 @@ export type ToolLpDataForPlanPageWSResponse = {
             };
             pluginbaseurl: string; // Pluginbaseurl.
             pagecontextid: number; // Pagecontextid.
+            showlinks: boolean; // Showlinks.
         };
         usercompetency?: {
             userid: number; // Userid.
@@ -11180,6 +12609,7 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
             hidden: boolean; // Hidden.
             timeaccess?: number; // Timeaccess.
             showshortname: boolean; // Showshortname.
+            coursecategory: string; // Coursecategory.
         }[];
         relatedcompetencies: { // Relatedcompetencies.
             shortname: string; // Shortname.
@@ -11260,7 +12690,9 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
             };
             pluginbaseurl: string; // Pluginbaseurl.
             pagecontextid: number; // Pagecontextid.
+            showlinks: boolean; // Showlinks.
         };
+        pluginbaseurl: string; // Pluginbaseurl.
     };
     user: {
         id: number; // Id.
@@ -11434,6 +12866,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
                 hidden: boolean; // Hidden.
                 timeaccess?: number; // Timeaccess.
                 showshortname: boolean; // Showshortname.
+                coursecategory: string; // Coursecategory.
             }[];
             relatedcompetencies: { // Relatedcompetencies.
                 shortname: string; // Shortname.
@@ -11514,7 +12947,9 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
                 };
                 pluginbaseurl: string; // Pluginbaseurl.
                 pagecontextid: number; // Pagecontextid.
+                showlinks: boolean; // Showlinks.
             };
+            pluginbaseurl: string; // Pluginbaseurl.
         };
         user: {
             id: number; // Id.
@@ -11670,6 +13105,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
         hidden: boolean; // Hidden.
         timeaccess?: number; // Timeaccess.
         showshortname: boolean; // Showshortname.
+        coursecategory: string; // Coursecategory.
     };
     coursemodules: { // Coursemodules.
         id: number; // Id.
@@ -11677,6 +13113,97 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
         url?: string; // Url.
         iconurl: string; // Iconurl.
     }[];
+    plans: { // Plans.
+        name: string; // Name.
+        description: string; // Description.
+        descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+        userid: number; // Userid.
+        templateid: number; // Templateid.
+        origtemplateid: number; // Origtemplateid.
+        status: number; // Status.
+        duedate: number; // Duedate.
+        reviewerid: number; // Reviewerid.
+        id: number; // Id.
+        timecreated: number; // Timecreated.
+        timemodified: number; // Timemodified.
+        usermodified: number; // Usermodified.
+        statusname: string; // Statusname.
+        isbasedontemplate: boolean; // Isbasedontemplate.
+        canmanage: boolean; // Canmanage.
+        canrequestreview: boolean; // Canrequestreview.
+        canreview: boolean; // Canreview.
+        canbeedited: boolean; // Canbeedited.
+        isactive: boolean; // Isactive.
+        isdraft: boolean; // Isdraft.
+        iscompleted: boolean; // Iscompleted.
+        isinreview: boolean; // Isinreview.
+        iswaitingforreview: boolean; // Iswaitingforreview.
+        isreopenallowed: boolean; // Isreopenallowed.
+        iscompleteallowed: boolean; // Iscompleteallowed.
+        isunlinkallowed: boolean; // Isunlinkallowed.
+        isrequestreviewallowed: boolean; // Isrequestreviewallowed.
+        iscancelreviewrequestallowed: boolean; // Iscancelreviewrequestallowed.
+        isstartreviewallowed: boolean; // Isstartreviewallowed.
+        isstopreviewallowed: boolean; // Isstopreviewallowed.
+        isapproveallowed: boolean; // Isapproveallowed.
+        isunapproveallowed: boolean; // Isunapproveallowed.
+        duedateformatted: string; // Duedateformatted.
+        commentarea: {
+            component: string; // Component.
+            commentarea: string; // Commentarea.
+            itemid: number; // Itemid.
+            courseid: number; // Courseid.
+            contextid: number; // Contextid.
+            cid: string; // Cid.
+            autostart: boolean; // Autostart.
+            canpost: boolean; // Canpost.
+            canview: boolean; // Canview.
+            count: number; // Count.
+            collapsediconkey: string; // Collapsediconkey.
+            displaytotalcount: boolean; // Displaytotalcount.
+            displaycancel: boolean; // Displaycancel.
+            fullwidth: boolean; // Fullwidth.
+            linktext: string; // Linktext.
+            notoggle: boolean; // Notoggle.
+            template: string; // Template.
+            canpostorhascomments: boolean; // Canpostorhascomments.
+        };
+        reviewer?: {
+            id: number; // Id.
+            email: string; // Email.
+            idnumber: string; // Idnumber.
+            phone1: string; // Phone1.
+            phone2: string; // Phone2.
+            department: string; // Department.
+            institution: string; // Institution.
+            fullname: string; // Fullname.
+            identity: string; // Identity.
+            profileurl: string; // Profileurl.
+            profileimageurl: string; // Profileimageurl.
+            profileimageurlsmall: string; // Profileimageurlsmall.
+        };
+        template?: {
+            shortname: string; // Shortname.
+            description: string; // Description.
+            descriptionformat?: number; // Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            duedate: number; // Duedate.
+            visible: boolean; // Visible.
+            contextid: number; // Contextid.
+            id: number; // Id.
+            timecreated: number; // Timecreated.
+            timemodified: number; // Timemodified.
+            usermodified: number; // Usermodified.
+            duedateformatted: string; // Duedateformatted.
+            cohortscount: number; // Cohortscount.
+            planscount: number; // Planscount.
+            canmanage: boolean; // Canmanage.
+            canread: boolean; // Canread.
+            contextname: string; // Contextname.
+            contextnamenoprefix: string; // Contextnamenoprefix.
+        };
+        url: string; // Url.
+    }[];
+    pluginbaseurl: string; // Pluginbaseurl.
 };
 
 /**
@@ -11714,6 +13241,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
                 hidden: boolean; // Hidden.
                 timeaccess?: number; // Timeaccess.
                 showshortname: boolean; // Showshortname.
+                coursecategory: string; // Coursecategory.
             }[];
             relatedcompetencies: { // Relatedcompetencies.
                 shortname: string; // Shortname.
@@ -11794,7 +13322,9 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
                 };
                 pluginbaseurl: string; // Pluginbaseurl.
                 pagecontextid: number; // Pagecontextid.
+                showlinks: boolean; // Showlinks.
             };
+            pluginbaseurl: string; // Pluginbaseurl.
         };
         user: {
             id: number; // Id.
@@ -12057,6 +13587,7 @@ export type ToolLpDataForUserEvidenceListPageWSResponse = {
             filepath: string; // Filepath.
             filename: string; // Filename.
             isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
             timemodified: number; // Timemodified.
             timecreated: number; // Timecreated.
             filesize: number; // Filesize.
@@ -12168,6 +13699,7 @@ export type ToolLpDataForUserEvidencePageWSResponse = {
             filepath: string; // Filepath.
             filename: string; // Filename.
             isdir: boolean; // Isdir.
+            isimage: boolean; // Isimage.
             timemodified: number; // Timemodified.
             timecreated: number; // Timecreated.
             filesize: number; // Filesize.
@@ -12246,6 +13778,31 @@ export type ToolLpDataForUserEvidencePageWSResponse = {
         userhasplan: boolean; // Userhasplan.
     };
     pluginbaseurl: string; // Url to the tool_lp plugin folder on this Moodle site.
+};
+
+/**
+ * Params of tool_mobile_call_external_functions WS.
+ */
+export type ToolMobileCallExternalFunctionsWSParams = {
+    requests: {
+        function: string; // Function name.
+        arguments?: string; // JSON-encoded object with named arguments.
+        settingraw?: boolean; // Return raw text.
+        settingfilter?: boolean; // Filter text.
+        settingfileurl?: boolean; // Rewrite plugin file URLs.
+        settinglang?: string; // Session language.
+    }[];
+};
+
+/**
+ * Data returned by tool_mobile_call_external_functions WS.
+ */
+export type ToolMobileCallExternalFunctionsWSResponse = {
+    responses: {
+        error: boolean; // Whether an exception was thrown.
+        data?: string; // JSON-encoded response data.
+        exception?: string; // JSON-encoed exception info.
+    }[];
 };
 
 /**
