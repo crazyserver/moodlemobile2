@@ -3594,7 +3594,7 @@ export type ModForumAddDiscussionWSParams = {
     forumid: number; // Forum instance ID.
     subject: string; // New Discussion subject.
     message: string; // New Discussion message (only html format allowed).
-    groupid?: number; // The group, default to -1.
+    groupid?: number; // The group, default to 0.
     options?: { // Options.
         name: string; // The allowed keys (value format) are:
                                      // discussionsubscribe (bool); subscribe to the discussion?, default to true
