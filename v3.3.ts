@@ -2216,7 +2216,7 @@ export type CoreUserGetCourseUserProfilesWSResponse = {
     }[];
     preferences?: { // Users preferences.
         name: string; // The name of the preferences.
-        value: string; // The value of the custom field.
+        value: string; // The value of the preference.
     }[];
     groups?: { // User groups.
         id: number; // Group id.
@@ -2313,7 +2313,7 @@ export type CoreUserGetUsersByFieldWSResponse = {
     }[];
     preferences?: { // Users preferences.
         name: string; // The name of the preferences.
-        value: string; // The value of the custom field.
+        value: string; // The value of the preference.
     }[];
 }[];
 
@@ -2417,7 +2417,7 @@ export type CoreWebserviceGetSiteInfoWSResponse = {
     firstname: string; // First name.
     lastname: string; // Last name.
     fullname: string; // User full name.
-    lang: string; // User language.
+    lang: string; // Current language.
     userid: number; // User id.
     siteurl: string; // Site url.
     userpictureurl: string; // The user profile picture.
@@ -2985,7 +2985,7 @@ export type ModAssignGetParticipantWSResponse = {
         }[];
         preferences?: { // Users preferences.
             name: string; // The name of the preferences.
-            value: string; // The value of the custom field.
+            value: string; // The value of the preference.
         }[];
     };
 };
@@ -3310,7 +3310,7 @@ export type ModAssignListParticipantsWSResponse = {
     }[];
     preferences?: { // Users preferences.
         name: string; // The name of the preferences.
-        value: string; // The value of the custom field.
+        value: string; // The value of the preference.
     }[];
     groups?: { // User groups.
         id: number; // Group id.
@@ -6529,10 +6529,16 @@ export type ModQuizGetAttemptDataWSResponse = {
         flagged: boolean; // Whether the question is flagged or not.
         number?: number; // Question ordering number in the quiz.
         state?: string; // The state where the question is in.
+                 // It will not be returned if the user cannot see it due to the quiz display correctness settings.
+
         status?: string; // Current formatted state of the question.
         blockedbyprevious?: boolean; // Whether the question is blocked by the previous question.
         mark?: string; // The mark awarded.
+                 // It will be returned only if the user is allowed to see it.
+
         maxmark?: number; // The maximum mark possible for this question attempt.
+                 // It will be returned only if the user is allowed to see it.
+
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -6592,10 +6598,16 @@ export type ModQuizGetAttemptReviewWSResponse = {
         flagged: boolean; // Whether the question is flagged or not.
         number?: number; // Question ordering number in the quiz.
         state?: string; // The state where the question is in.
+                 // It will not be returned if the user cannot see it due to the quiz display correctness settings.
+
         status?: string; // Current formatted state of the question.
         blockedbyprevious?: boolean; // Whether the question is blocked by the previous question.
         mark?: string; // The mark awarded.
+                 // It will be returned only if the user is allowed to see it.
+
         maxmark?: number; // The maximum mark possible for this question attempt.
+                 // It will be returned only if the user is allowed to see it.
+
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -6626,10 +6638,16 @@ export type ModQuizGetAttemptSummaryWSResponse = {
         flagged: boolean; // Whether the question is flagged or not.
         number?: number; // Question ordering number in the quiz.
         state?: string; // The state where the question is in.
+                 // It will not be returned if the user cannot see it due to the quiz display correctness settings.
+
         status?: string; // Current formatted state of the question.
         blockedbyprevious?: boolean; // Whether the question is blocked by the previous question.
         mark?: string; // The mark awarded.
+                 // It will be returned only if the user is allowed to see it.
+
         maxmark?: number; // The maximum mark possible for this question attempt.
+                 // It will be returned only if the user is allowed to see it.
+
     }[];
     warnings?: CoreWSExternalWarning[];
 };
