@@ -319,6 +319,7 @@ export type CoreCalendarGetActionEventsByTimesortWSParams = {
     timesortto?: number; // Time sort to.
     aftereventid?: number; // The last seen event id.
     limitnum?: number; // Limit number.
+    limittononsuspendedevents?: boolean; // Limit the events to courses the user is not suspended in.
 };
 
 /**
