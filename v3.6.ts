@@ -2759,6 +2759,7 @@ export type CoreMessageGetContactRequestsWSParams = {
 export type CoreMessageGetContactRequestsWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
+    profileurl: string; // The link to the user's profile page.
     profileimageurl: string; // User picture URL.
     profileimageurlsmall: string; // Small user picture URL.
     isonline: boolean; // The user's online status.
@@ -2846,6 +2847,7 @@ export type CoreMessageGetConversationWSResponse = {
     members: {
         id: number; // The user id.
         fullname: string; // The user's name.
+        profileurl: string; // The link to the user's profile page.
         profileimageurl: string; // User picture URL.
         profileimageurlsmall: string; // Small user picture URL.
         isonline: boolean; // The user's online status.
@@ -2907,6 +2909,7 @@ export type CoreMessageGetConversationBetweenUsersWSResponse = {
     members: {
         id: number; // The user id.
         fullname: string; // The user's name.
+        profileurl: string; // The link to the user's profile page.
         profileimageurl: string; // User picture URL.
         profileimageurlsmall: string; // Small user picture URL.
         isonline: boolean; // The user's online status.
@@ -2973,6 +2976,7 @@ export type CoreMessageGetConversationMembersWSParams = {
 export type CoreMessageGetConversationMembersWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
+    profileurl: string; // The link to the user's profile page.
     profileimageurl: string; // User picture URL.
     profileimageurlsmall: string; // Small user picture URL.
     isonline: boolean; // The user's online status.
@@ -3016,6 +3020,7 @@ export type CoreMessageGetConversationMessagesWSResponse = {
     members: {
         id: number; // The user id.
         fullname: string; // The user's name.
+        profileurl: string; // The link to the user's profile page.
         profileimageurl: string; // User picture URL.
         profileimageurlsmall: string; // Small user picture URL.
         isonline: boolean; // The user's online status.
@@ -3076,6 +3081,7 @@ export type CoreMessageGetConversationsWSResponse = {
         members: {
             id: number; // The user id.
             fullname: string; // The user's name.
+            profileurl: string; // The link to the user's profile page.
             profileimageurl: string; // User picture URL.
             profileimageurlsmall: string; // Small user picture URL.
             isonline: boolean; // The user's online status.
@@ -3123,6 +3129,7 @@ export type CoreMessageGetMemberInfoWSParams = {
 export type CoreMessageGetMemberInfoWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
+    profileurl: string; // The link to the user's profile page.
     profileimageurl: string; // User picture URL.
     profileimageurlsmall: string; // Small user picture URL.
     isonline: boolean; // The user's online status.
@@ -3241,6 +3248,7 @@ export type CoreMessageGetUserContactsWSParams = {
 export type CoreMessageGetUserContactsWSResponse = {
     id: number; // The user id.
     fullname: string; // The user's name.
+    profileurl: string; // The link to the user's profile page.
     profileimageurl: string; // User picture URL.
     profileimageurlsmall: string; // Small user picture URL.
     isonline: boolean; // The user's online status.
@@ -3469,6 +3477,7 @@ export type CoreMessageMessageSearchUsersWSResponse = {
     contacts: {
         id: number; // The user id.
         fullname: string; // The user's name.
+        profileurl: string; // The link to the user's profile page.
         profileimageurl: string; // User picture URL.
         profileimageurlsmall: string; // Small user picture URL.
         isonline: boolean; // The user's online status.
@@ -3494,6 +3503,7 @@ export type CoreMessageMessageSearchUsersWSResponse = {
     noncontacts: {
         id: number; // The user id.
         fullname: string; // The user's name.
+        profileurl: string; // The link to the user's profile page.
         profileimageurl: string; // User picture URL.
         profileimageurlsmall: string; // Small user picture URL.
         isonline: boolean; // The user's online status.
