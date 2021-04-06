@@ -949,8 +949,8 @@ export type CoreCalendarGetCalendarEventsWSResponse = {
  * Params of core_calendar_get_calendar_monthly_view WS.
  */
 export type CoreCalendarGetCalendarMonthlyViewWSParams = {
-    year: number; // Month to be viewed.
-    month: number; // Year to be viewed.
+    year: number; // Year to be viewed.
+    month: number; // Month to be viewed.
     courseid?: number; // Course being viewed.
     categoryid?: number; // Category being viewed.
     includenavigation?: boolean; // Whether to show course navigation.
