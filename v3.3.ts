@@ -4122,8 +4122,8 @@ export type ModDataGetEntriesWSResponse = {
             content: string; // Contents.
             content1: string; // Contents.
             content2: string; // Contents.
-            content3: boolean; // Contents.
-            content4: boolean; // Contents.
+            content3: string; // Contents.
+            content4: string; // Contents.
             files?: { // Files.
                 filename?: string; // File name.
                 filepath?: string; // File path.
@@ -4171,8 +4171,8 @@ export type ModDataGetEntryWSResponse = {
             content: string; // Contents.
             content1: string; // Contents.
             content2: string; // Contents.
-            content3: boolean; // Contents.
-            content4: boolean; // Contents.
+            content3: string; // Contents.
+            content4: string; // Contents.
             files?: { // Files.
                 filename?: string; // File name.
                 filepath?: string; // File path.
@@ -4271,8 +4271,8 @@ export type ModDataSearchEntriesWSResponse = {
             content: string; // Contents.
             content1: string; // Contents.
             content2: string; // Contents.
-            content3: boolean; // Contents.
-            content4: boolean; // Contents.
+            content3: string; // Contents.
+            content4: string; // Contents.
             files?: { // Files.
                 filename?: string; // File name.
                 filepath?: string; // File path.
