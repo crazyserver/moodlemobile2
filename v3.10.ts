@@ -7524,6 +7524,7 @@ export type ModFolderGetFoldersByCoursesWSResponse = {
         display: number; // Display type of folder contents on a separate page or inline.
         showexpanded: number; // 1 = expanded, 0 = collapsed for sub-folders.
         showdownloadfolder: number; // Whether to show the download folder button.
+        forcedownload: number; // Whether file download is forced.
         section: number; // Course section id.
         visible: number; // Module visibility.
         groupmode: number; // Group mode.
@@ -10726,6 +10727,7 @@ export type ModQuizGetAttemptDataWSResponse = {
         maxmark?: number; // The maximum mark possible for this question attempt.
                  // It will be returned only if the user is allowed to see it.
 
+        settings?: string; // Question settings (JSON encoded).
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -10799,6 +10801,7 @@ export type ModQuizGetAttemptReviewWSResponse = {
         maxmark?: number; // The maximum mark possible for this question attempt.
                  // It will be returned only if the user is allowed to see it.
 
+        settings?: string; // Question settings (JSON encoded).
     }[];
     warnings?: CoreWSExternalWarning[];
 };
@@ -10843,6 +10846,7 @@ export type ModQuizGetAttemptSummaryWSResponse = {
         maxmark?: number; // The maximum mark possible for this question attempt.
                  // It will be returned only if the user is allowed to see it.
 
+        settings?: string; // Question settings (JSON encoded).
     }[];
     warnings?: CoreWSExternalWarning[];
 };
