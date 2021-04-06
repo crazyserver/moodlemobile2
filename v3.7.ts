@@ -7371,6 +7371,7 @@ export type ModForumAddDiscussionPostWSResponse = {
     post: {
         id: number; // Id.
         subject: string; // Subject.
+        replysubject: string; // Replysubject.
         message: string; // Message.
         messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         author: {
@@ -7403,6 +7404,7 @@ export type ModForumAddDiscussionPostWSResponse = {
             delete: boolean; // Whether the user can delete the post.
             split: boolean; // Whether the user can split the post.
             reply: boolean; // Whether the user can reply to the post.
+            selfenrol: boolean; // Whether the user can self enrol into the course.
             export: boolean; // Whether the user can export the post.
             controlreadstatus: boolean; // Whether the user can control the read status of the post.
             canreplyprivately: boolean; // Whether the user can post a private reply.
@@ -7505,6 +7507,7 @@ export type ModForumGetDiscussionPostsWSResponse = {
     posts: {
         id: number; // Id.
         subject: string; // Subject.
+        replysubject: string; // Replysubject.
         message: string; // Message.
         messageformat: number; // Message format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         author: {
@@ -7537,6 +7540,7 @@ export type ModForumGetDiscussionPostsWSResponse = {
             delete: boolean; // Whether the user can delete the post.
             split: boolean; // Whether the user can split the post.
             reply: boolean; // Whether the user can reply to the post.
+            selfenrol: boolean; // Whether the user can self enrol into the course.
             export: boolean; // Whether the user can export the post.
             controlreadstatus: boolean; // Whether the user can control the read status of the post.
             canreplyprivately: boolean; // Whether the user can post a private reply.
