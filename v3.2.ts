@@ -3313,7 +3313,7 @@ export type ModChatGetChatsByCoursesWSResponse = {
         intro: string; // The Chat intro.
         introformat: number; // Intro format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         introfiles?: CoreWSExternalFile[];
-        chatmethod?: string; // Chat method (sockets, daemon).
+        chatmethod?: string; // Chat method (sockets, ajax, header_js).
         keepdays?: number; // Keep days.
         studentlogs?: number; // Student logs visible to everyone.
         chattime?: number; // Chat time.
