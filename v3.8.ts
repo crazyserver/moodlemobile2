@@ -1031,6 +1031,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSParams = {
     categoryid?: number; // Category being viewed.
     includenavigation?: boolean; // Whether to show course navigation.
     mini?: boolean; // Whether to return the mini month view or not.
+    day?: number; // Day to be viewed.
 };
 
 /**
