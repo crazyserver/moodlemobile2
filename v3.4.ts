@@ -4429,7 +4429,7 @@ export type ModChatViewChatWSResponse = {
  */
 export type ModChoiceDeleteChoiceResponsesWSParams = {
     choiceid: number; // Choice instance id.
-    responses?: number[]; // Array of response ids, empty for deleting all the user responses.
+    responses?: number[]; // Array of response ids, empty for deleting all the current user responses.
 };
 
 /**
@@ -5611,6 +5611,7 @@ export type ModForumGetForumDiscussionPostsWSResponse = {
         postread: boolean; // The post was read.
         userfullname: string; // Post author full name.
         userpictureurl?: string; // Post author picture.
+        deleted: boolean; // This post has been removed.
     }[];
     ratinginfo?: {
         contextid: number; // Context id.
