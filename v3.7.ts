@@ -43,6 +43,7 @@ export type BlockStarredcoursesGetStarredCoursesWSResponse = {
     summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     startdate: number; // Startdate.
     enddate: number; // Enddate.
+    visible: boolean; // Visible.
     fullnamedisplay: string; // Fullnamedisplay.
     viewurl: string; // Viewurl.
     courseimage: string; // Courseimage.
@@ -430,6 +431,7 @@ export type CoreCalendarGetActionEventsByCourseWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -532,6 +534,7 @@ export type CoreCalendarGetActionEventsByCoursesWSResponse = {
                 summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 startdate: number; // Startdate.
                 enddate: number; // Enddate.
+                visible: boolean; // Visible.
                 fullnamedisplay: string; // Fullnamedisplay.
                 viewurl: string; // Viewurl.
                 courseimage: string; // Courseimage.
@@ -637,6 +640,7 @@ export type CoreCalendarGetActionEventsByTimesortWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -771,6 +775,7 @@ export type CoreCalendarGetCalendarDayViewWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -918,6 +923,7 @@ export type CoreCalendarGetCalendarEventByIdWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -1087,6 +1093,7 @@ export type CoreCalendarGetCalendarMonthlyViewWSResponse = {
                     summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                     startdate: number; // Startdate.
                     enddate: number; // Enddate.
+                    visible: boolean; // Visible.
                     fullnamedisplay: string; // Fullnamedisplay.
                     viewurl: string; // Viewurl.
                     courseimage: string; // Courseimage.
@@ -1248,6 +1255,7 @@ export type CoreCalendarGetCalendarUpcomingViewWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -1349,6 +1357,7 @@ export type CoreCalendarSubmitCreateUpdateFormWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -1447,6 +1456,7 @@ export type CoreCalendarUpdateEventStartDayWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -2256,6 +2266,7 @@ export type CoreCourseGetEnrolledCoursesByTimelineClassificationWSResponse = {
         summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         startdate: number; // Startdate.
         enddate: number; // Enddate.
+        visible: boolean; // Visible.
         fullnamedisplay: string; // Fullnamedisplay.
         viewurl: string; // Viewurl.
         courseimage: string; // Courseimage.
@@ -2292,6 +2303,7 @@ export type CoreCourseGetRecentCoursesWSResponse = { // Courses.
     summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
     startdate: number; // Startdate.
     enddate: number; // Enddate.
+    visible: boolean; // Visible.
     fullnamedisplay: string; // Fullnamedisplay.
     viewurl: string; // Viewurl.
     courseimage: string; // Courseimage.
@@ -4918,7 +4930,7 @@ export type GradereportUserGetGradeItemsWSResponse = {
             numusers?: number; // Num users in course.
             averageformatted?: string; // Grade average.
             feedback?: string; // Grade feedback.
-            feedbackformat: number; // Feedback format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
+            feedbackformat?: number; // Feedback format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         }[];
     }[];
     warnings?: CoreWSExternalWarning[];
@@ -12586,6 +12598,7 @@ export type ToolLpDataForUserCompetencySummaryWSResponse = {
             summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
             startdate: number; // Startdate.
             enddate: number; // Enddate.
+            visible: boolean; // Visible.
             fullnamedisplay: string; // Fullnamedisplay.
             viewurl: string; // Viewurl.
             courseimage: string; // Courseimage.
@@ -12842,6 +12855,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
                 summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 startdate: number; // Startdate.
                 enddate: number; // Enddate.
+                visible: boolean; // Visible.
                 fullnamedisplay: string; // Fullnamedisplay.
                 viewurl: string; // Viewurl.
                 courseimage: string; // Courseimage.
@@ -13080,6 +13094,7 @@ export type ToolLpDataForUserCompetencySummaryInCourseWSResponse = {
         summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
         startdate: number; // Startdate.
         enddate: number; // Enddate.
+        visible: boolean; // Visible.
         fullnamedisplay: string; // Fullnamedisplay.
         viewurl: string; // Viewurl.
         courseimage: string; // Courseimage.
@@ -13215,6 +13230,7 @@ export type ToolLpDataForUserCompetencySummaryInPlanWSResponse = {
                 summaryformat: number; // Summary format (1 = HTML, 0 = MOODLE, 2 = PLAIN or 4 = MARKDOWN).
                 startdate: number; // Startdate.
                 enddate: number; // Enddate.
+                visible: boolean; // Visible.
                 fullnamedisplay: string; // Fullnamedisplay.
                 viewurl: string; // Viewurl.
                 courseimage: string; // Courseimage.
